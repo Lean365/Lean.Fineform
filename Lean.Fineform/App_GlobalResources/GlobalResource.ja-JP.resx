@@ -1,0 +1,1224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="menu_Work_Log" xml:space="preserve">
+    <value>作業ログ</value>
+  </data>
+  <data name="sys_Windows_Maxsize" xml:space="preserve">
+    <value>最大化</value>
+  </data>
+  <data name="menu_Pp_Sop_ASY" xml:space="preserve">
+    <value>組み立てSOP</value>
+  </data>
+  <data name="co_Dept_LD" xml:space="preserve">
+    <value>総務課</value>
+  </data>
+  <data name="co_Dept_GD" xml:space="preserve">
+    <value>总经室</value>
+  </data>
+  <data name="menu_Fico_Asset" xml:space="preserve">
+    <value>資産</value>
+  </data>
+  <data name="sys_Button_New_EC" xml:space="preserve">
+    <value>追加待ち</value>
+  </data>
+  <data name="Yf_Special" xml:space="preserve">
+    <value>専用部品</value>
+  </data>
+  <data name="menu_Oa_MGT_Weekly" xml:space="preserve">
+    <value>週報管理</value>
+  </data>
+  <data name="Query_Enddate" xml:space="preserve">
+    <value>終了日</value>
+  </data>
+  <data name="co_Dept_PE" xml:space="preserve">
+    <value>製造技術課</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Manufacturing" xml:space="preserve">
+    <value>製造費用</value>
+  </data>
+  <data name="co_Dept_P2D" xml:space="preserve">
+    <value>製造2課</value>
+  </data>
+  <data name="co_Dept_P1D" xml:space="preserve">
+    <value>製造1課</value>
+  </data>
+  <data name="rpt_Chart_Pcost" xml:space="preserve">
+    <value>製品原価</value>
+  </data>
+  <data name="menu_Qm_FQC" xml:space="preserve">
+    <value>製品検査</value>
+  </data>
+  <data name="menu_Pp_Defect_MOStatistics" xml:space="preserve">
+    <value>指図纏め</value>
+  </data>
+  <data name="menu_Pp_MO" xml:space="preserve">
+    <value>指図</value>
+  </data>
+  <data name="Query_Select" xml:space="preserve">
+    <value>指定なし</value>
+  </data>
+  <data name="Query_Select_Text" xml:space="preserve">
+    <value>指定</value>
+  </data>
+  <data name="menu_Sys_Title" xml:space="preserve">
+    <value>職名管理</value>
+  </data>
+  <data name="menu_Sys_TitleUser" xml:space="preserve">
+    <value>職名ユーザ</value>
+  </data>
+  <data name="menu_Qm_QC_Wages" xml:space="preserve">
+    <value>直接な賃率</value>
+  </data>
+  <data name="sys_Status_Pp_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Bu" xml:space="preserve">
+    <value>在庫金額．BU別</value>
+  </data>
+  <data name="rpt_Chart_buAmount" xml:space="preserve">
+    <value>在庫金額．BU別</value>
+  </data>
+  <data name="rpt_Chart_Invamt" xml:space="preserve">
+    <value>在庫金額</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Grid" xml:space="preserve">
+    <value>在庫テーブル</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Monthly" xml:space="preserve">
+    <value>月度在庫</value>
+  </data>
+  <data name="rpt_Charts_Loss" xml:space="preserve">
+    <value>月．損失工数</value>
+  </data>
+  <data name="rpt_Charts_Pass" xml:space="preserve">
+    <value>月．合格率</value>
+  </data>
+  <data name="rpt_Charts_Achieve" xml:space="preserve">
+    <value>月．達成率</value>
+  </data>
+  <data name="sys_Export_SheetReason" xml:space="preserve">
+    <value>原因明細</value>
+  </data>
+  <data name="rpt_Charts_Reason" xml:space="preserve">
+    <value>原因分析</value>
+  </data>
+  <data name="menu_Pp_ReasonType" xml:space="preserve">
+    <value>原因カテゴリ</value>
+  </data>
+  <data name="rpt_Charts_Cost_element" xml:space="preserve">
+    <value>原価要素</value>
+  </data>
+  <data name="rpt_Charts_Cost_Accountingtitle" xml:space="preserve">
+    <value>原価勘定</value>
+  </data>
+  <data name="menu_Fico_Costing" xml:space="preserve">
+    <value>原価分析</value>
+  </data>
+  <data name="menu_Pp_Ec_SAP_Data" xml:space="preserve">
+    <value>元データ</value>
+  </data>
+  <data name="menu_Fico_Period" xml:space="preserve">
+    <value>期間</value>
+  </data>
+  <data name="menu_Fico_Audit" xml:space="preserve">
+    <value>承認</value>
+  </data>
+  <data name="sys_Status_Enable" xml:space="preserve">
+    <value>有効する</value>
+  </data>
+  <data name="sys_Button_Setup" xml:space="preserve">
+    <value>印刷メンテナンス</value>
+  </data>
+  <data name="sys_Button_Preview" xml:space="preserve">
+    <value>印刷プレビュー</value>
+  </data>
+  <data name="sys_Button_Design" xml:space="preserve">
+    <value>印刷デザイン</value>
+  </data>
+  <data name="sys_Button_Print" xml:space="preserve">
+    <value>印刷</value>
+  </data>
+  <data name="menu_Sys_PowerRole" xml:space="preserve">
+    <value>役割権限</value>
+  </data>
+  <data name="menu_Sys_UserRolePower" xml:space="preserve">
+    <value>役割権限</value>
+  </data>
+  <data name="menu_Sys_Role" xml:space="preserve">
+    <value>役割管理</value>
+  </data>
+  <data name="menu_Sys_RoleUser" xml:space="preserve">
+    <value>役割ユーザ</value>
+  </data>
+  <data name="menu_Sys_Update" xml:space="preserve">
+    <value>一括更新</value>
+  </data>
+  <data name="Query_Supplier" xml:space="preserve">
+    <value>業者</value>
+  </data>
+  <data name="sys_Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="sys_Button_Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="sys_Button_New_Qm_Operation" xml:space="preserve">
+    <value>新規品質業務</value>
+  </data>
+  <data name="sys_Button_New_Qm_Waste" xml:space="preserve">
+    <value>新規廃棄業務</value>
+  </data>
+  <data name="sys_Button_New_Qm_Rework" xml:space="preserve">
+    <value>新規返修業務</value>
+  </data>
+  <data name="sys_Button_New" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="sys_Status_Disable" xml:space="preserve">
+    <value>無効する</value>
+  </data>
+  <data name="WindowsForm_Irrelevant" xml:space="preserve">
+    <value>無関係</value>
+  </data>
+  <data name="sys_Status_Pp_UnFinish" xml:space="preserve">
+    <value>未完成</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Unenforced" xml:space="preserve">
+    <value>未実施</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Unconfirmed" xml:space="preserve">
+    <value>未確認</value>
+  </data>
+  <data name="menu_Bpm_Todo" xml:space="preserve">
+    <value>未処理</value>
+  </data>
+  <data name="sys_Status_Unprocessed" xml:space="preserve">
+    <value>未処理</value>
+  </data>
+  <data name="Query_Goods" xml:space="preserve">
+    <value>完成品</value>
+  </data>
+  <data name="sys_Status_Pp_Finish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="sys_Iagree" xml:space="preserve">
+    <value>同意する</value>
+  </data>
+  <data name="co_Dept_CD" xml:space="preserve">
+    <value>通関課</value>
+  </data>
+  <data name="menu_Pp_LineStopType" xml:space="preserve">
+    <value>停止カテゴリ</value>
+  </data>
+  <data name="rpt_Charts_LineStop" xml:space="preserve">
+    <value>停線原因</value>
+  </data>
+  <data name="rpt_Chart_NeedQty" xml:space="preserve">
+    <value>所要量</value>
+  </data>
+  <data name="sys_Export_SheetLosstime" xml:space="preserve">
+    <value>損失工数明細</value>
+  </data>
+  <data name="menu_Bpm_Apply" xml:space="preserve">
+    <value>私の申請</value>
+  </data>
+  <data name="menu_Fm_My" xml:space="preserve">
+    <value>私のフォーム</value>
+  </data>
+  <data name="menu_Bpm_Signature" xml:space="preserve">
+    <value>署名管理</value>
+  </data>
+  <data name="menu_Sd_TransportationMethods" xml:space="preserve">
+    <value>輸送方式</value>
+  </data>
+  <data name="co_Dept_IQC" xml:space="preserve">
+    <value>受検課</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Implemented" xml:space="preserve">
+    <value>実施済み</value>
+  </data>
+  <data name="menu_Pp_OPH_Actual" xml:space="preserve">
+    <value>実績検索</value>
+  </data>
+  <data name="sys_Actual_Edit" xml:space="preserve">
+    <value>実績</value>
+  </data>
+  <data name="rpt_Charts_ActualExs" xml:space="preserve">
+    <value>実際費用</value>
+  </data>
+  <data name="co_Dept_PM" xml:space="preserve">
+    <value>生管課</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_ProdCost" xml:space="preserve">
+    <value>生産原価</value>
+  </data>
+  <data name="rpt_Charts_Actual" xml:space="preserve">
+    <value>生産実績</value>
+  </data>
+  <data name="MainTitle2" xml:space="preserve">
+    <value>生産日報</value>
+  </data>
+  <data name="sys_Export_SheetNormal" xml:space="preserve">
+    <value>生産明細</value>
+  </data>
+  <data name="menu_Pp_ProducingProgress" xml:space="preserve">
+    <value>生産進捗</value>
+  </data>
+  <data name="menu_Pp_MGT" xml:space="preserve">
+    <value>生産管理</value>
+  </data>
+  <data name="menu_Pp_Times" xml:space="preserve">
+    <value>生産工数</value>
+  </data>
+  <data name="menu_Pp_Defect_Production" xml:space="preserve">
+    <value>生産不具合</value>
+  </data>
+  <data name="menu_Rpt_ppcharts" xml:space="preserve">
+    <value>生産チャート</value>
+  </data>
+  <data name="menu_Pp_Manufacture_P1D" xml:space="preserve">
+    <value>P1D生産</value>
+  </data>
+  <data name="menu_Pp_Ec_MGT" xml:space="preserve">
+    <value>設計変更</value>
+  </data>
+  <data name="menu_Pp_Ec_Report" xml:space="preserve">
+    <value>設変諸表</value>
+  </data>
+  <data name="sys_Report_EC" xml:space="preserve">
+    <value>設変照会</value>
+  </data>
+  <data name="menu_Pp_Ec_Carryout" xml:space="preserve">
+    <value>設変実施</value>
+  </data>
+  <data name="MainTitle3" xml:space="preserve">
+    <value>設変情報</value>
+  </data>
+  <data name="menu_Pp_Ec_Query" xml:space="preserve">
+    <value>設変検索</value>
+  </data>
+  <data name="sys_Login_Account" xml:space="preserve">
+    <value>社員ID</value>
+  </data>
+  <data name="sys_Export_SheetActual" xml:space="preserve">
+    <value>入力明細</value>
+  </data>
+  <data name="menu_Sd_InboundQuery" xml:space="preserve">
+    <value>入庫検索</value>
+  </data>
+  <data name="Query_Em_EmptyText" xml:space="preserve">
+    <value>日付、ユーザなどを検索する。</value>
+  </data>
+  <data name="Query_Select_Date" xml:space="preserve">
+    <value>指定日付</value>
+  </data>
+  <data name="menu_Oa_MGT" xml:space="preserve">
+    <value>日常事務</value>
+  </data>
+  <data name="menu_Fico_Labor" xml:space="preserve">
+    <value>人工</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Confirmed" xml:space="preserve">
+    <value>確認済み</value>
+  </data>
+  <data name="menu_Sys_Power" xml:space="preserve">
+    <value>権限管理</value>
+  </data>
+  <data name="sys_Status_Pp_EC_All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="sys_Status_All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="sys_Status_Pp_All" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="menu_Qm_QC_Cost" xml:space="preserve">
+    <value>品質原価</value>
+  </data>
+  <data name="menu_Qm_QC_Operation" xml:space="preserve">
+    <value>品質業務</value>
+  </data>
+  <data name="menu_Qm_MGT" xml:space="preserve">
+    <value>品質管理</value>
+  </data>
+  <data name="menu_Rpt_qmcharts" xml:space="preserve">
+    <value>品質チャート</value>
+  </data>
+  <data name="co_Dept_QA" xml:space="preserve">
+    <value>品管課</value>
+  </data>
+  <data name="menu_Qm_QC" xml:space="preserve">
+    <value>品管</value>
+  </data>
+  <data name="menu_Mm_Inventory" xml:space="preserve">
+    <value>品番在庫</value>
+  </data>
+  <data name="menu_Pp_Ec_Outbound" xml:space="preserve">
+    <value>品番確認</value>
+  </data>
+  <data name="menu_Mm_Query" xml:space="preserve">
+    <value>品番検索</value>
+  </data>
+  <data name="menu_Mm_MGT" xml:space="preserve">
+    <value>品番管理</value>
+  </data>
+  <data name="Query_Pp_EmptyText" xml:space="preserve">
+    <value>品番、指図、Lot、機種などを検索する。</value>
+  </data>
+  <data name="Query_Pp_Daily_EmptyText" xml:space="preserve">
+    <value>品番、指図、Lot、機種などを検索する。</value>
+  </data>
+  <data name="Query_Pp_EC_EmptyText" xml:space="preserve">
+    <value>品番、設変番号、機種などを検索する。</value>
+  </data>
+  <data name="Query_Qm_EmptyText" xml:space="preserve">
+    <value>品番、機種などを検索する。</value>
+  </data>
+  <data name="Query_Enter_EmptyText" xml:space="preserve">
+    <value>品番、などを検索する</value>
+  </data>
+  <data name="Query_Items" xml:space="preserve">
+    <value>品番</value>
+  </data>
+  <data name="menu_Adm_Target" xml:space="preserve">
+    <value>年度目標</value>
+  </data>
+  <data name="rpt_Status_Details" xml:space="preserve">
+    <value>明細</value>
+  </data>
+  <data name="menu_Sd_SlaesData" xml:space="preserve">
+    <value>売上高</value>
+  </data>
+  <data name="sys_Help_Random" xml:space="preserve">
+    <value>乱数</value>
+  </data>
+  <data name="menu_Oa_MGT_Contacts" xml:space="preserve">
+    <value>連絡先</value>
+  </data>
+  <data name="menu_Pp_Kanban" xml:space="preserve">
+    <value>看板データ</value>
+  </data>
+  <data name="rpt_Chart_Accountingtitle" xml:space="preserve">
+    <value>勘定科目</value>
+  </data>
+  <data name="menu_Fico_Titles" xml:space="preserve">
+    <value>科目</value>
+  </data>
+  <data name="Query_Enddate_EmptyText" xml:space="preserve">
+    <value>開始日より大きい</value>
+  </data>
+  <data name="Query_Startdate_EmptyText" xml:space="preserve">
+    <value>開始日</value>
+  </data>
+  <data name="Query_Startdate" xml:space="preserve">
+    <value>開始日</value>
+  </data>
+  <data name="menu_Pp_Ec_OldStock" xml:space="preserve">
+    <value>旧品在庫</value>
+  </data>
+  <data name="sys_Grid_Pagecount" xml:space="preserve">
+    <value>件数：</value>
+  </data>
+  <data name="Query_Enter_Text" xml:space="preserve">
+    <value>検索したい文字列を入力する</value>
+  </data>
+  <data name="menu_Qm_AcceptanceType" xml:space="preserve">
+    <value>検収カテゴリ</value>
+  </data>
+  <data name="sys_Export_SheetFqc" xml:space="preserve">
+    <value>検査明細</value>
+  </data>
+  <data name="WindowsForm_Exemption" xml:space="preserve">
+    <value>検査免除</value>
+  </data>
+  <data name="menu_Qm_FQC_Query" xml:space="preserve">
+    <value>検査検索</value>
+  </data>
+  <data name="menu_Qm_InspectionType" xml:space="preserve">
+    <value>検査カテゴリ</value>
+  </data>
+  <data name="rpt_Chart_Formula" xml:space="preserve">
+    <value>計算数式</value>
+  </data>
+  <data name="menu_Sd_PlannedOrder" xml:space="preserve">
+    <value>計画SO</value>
+  </data>
+  <data name="co_Dept_TE" xml:space="preserve">
+    <value>技術課</value>
+  </data>
+  <data name="rpt_Stutas_Total" xml:space="preserve">
+    <value>集計</value>
+  </data>
+  <data name="menu_Mm_ModelRegion" xml:space="preserve">
+    <value>機種仕向地</value>
+  </data>
+  <data name="sys_Export_SheetModel" xml:space="preserve">
+    <value>機種明細</value>
+  </data>
+  <data name="rpt_Charts_Model" xml:space="preserve">
+    <value>機種達成率</value>
+  </data>
+  <data name="Query_Pp_Time_EmptyText" xml:space="preserve">
+    <value>機種などを検索する。</value>
+  </data>
+  <data name="Query_Model" xml:space="preserve">
+    <value>機種</value>
+  </data>
+  <data name="menu_Pp_MasterData" xml:space="preserve">
+    <value>マスタデータ</value>
+  </data>
+  <data name="menu_Oa_MGT_Meeting" xml:space="preserve">
+    <value>会議予約</value>
+  </data>
+  <data name="menu_Sys_Company" xml:space="preserve">
+    <value>会社情報</value>
+  </data>
+  <data name="menu_Sys_Dpets" xml:space="preserve">
+    <value>会社部門</value>
+  </data>
+  <data name="menu_Qm_FQC_PassReport" xml:space="preserve">
+    <value>合格率諸表</value>
+  </data>
+  <data name="MainTitle5" xml:space="preserve">
+    <value>合格率</value>
+  </data>
+  <data name="sys_Status_mm" xml:space="preserve">
+    <value>管理区分</value>
+  </data>
+  <data name="sys_Status_Outbound" xml:space="preserve">
+    <value>管理済み</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_General" xml:space="preserve">
+    <value>管理費用</value>
+  </data>
+  <data name="sys_Status_Notoutbound" xml:space="preserve">
+    <value>管理しない</value>
+  </data>
+  <data name="menu_Sys_Config" xml:space="preserve">
+    <value>構成</value>
+  </data>
+  <data name="Yf_General" xml:space="preserve">
+    <value>共有部品</value>
+  </data>
+  <data name="sys_Status_Common" xml:space="preserve">
+    <value>共通</value>
+  </data>
+  <data name="sys_Export_SheetTime" xml:space="preserve">
+    <value>工数明細</value>
+  </data>
+  <data name="menu_Pp_Times_Query" xml:space="preserve">
+    <value>工数検索</value>
+  </data>
+  <data name="menu_Pp_Manhours" xml:space="preserve">
+    <value>工時</value>
+  </data>
+  <data name="sys_Button_Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="sys_Export_SheetRework" xml:space="preserve">
+    <value>改修明細</value>
+  </data>
+  <data name="menu_Qm_QC_Rework" xml:space="preserve">
+    <value>改修対応</value>
+  </data>
+  <data name="sys_Status_Pp_Rework" xml:space="preserve">
+    <value>改修</value>
+  </data>
+  <data name="sys_Help_Encryption" xml:space="preserve">
+    <value>復号</value>
+  </data>
+  <data name="rpt_Chart_Fico_Expense" xml:space="preserve">
+    <value>費用明細</value>
+  </data>
+  <data name="menu_Fico_Expenses" xml:space="preserve">
+    <value>費用</value>
+  </data>
+  <data name="rpt_Charts_Contrast" xml:space="preserve">
+    <value>費用分析</value>
+  </data>
+  <data name="menu_Fico_ExpensesAnalysis" xml:space="preserve">
+    <value>分析</value>
+  </data>
+  <data name="menu_Qm_QC_Waste" xml:space="preserve">
+    <value>廃棄事故</value>
+  </data>
+  <data name="menu_Sd_SO" xml:space="preserve">
+    <value>販売注文</value>
+  </data>
+  <data name="menu_Sd_MGT" xml:space="preserve">
+    <value>販売管理</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Operation" xml:space="preserve">
+    <value>販売費用</value>
+  </data>
+  <data name="Sd_Sales_Data" xml:space="preserve">
+    <value>販売データ</value>
+  </data>
+  <data name="menu_Rpt_sdcharts" xml:space="preserve">
+    <value>販売チャート</value>
+  </data>
+  <data name="menu_Qm_FQC_AnalysisStrategy" xml:space="preserve">
+    <value>対策報告</value>
+  </data>
+  <data name="sys_Help_Calculator" xml:space="preserve">
+    <value>電卓</value>
+  </data>
+  <data name="menu_Sd_Customer" xml:space="preserve">
+    <value>得意先情報</value>
+  </data>
+  <data name="menu_Sd_CustomerMGT" xml:space="preserve">
+    <value>得意先</value>
+  </data>
+  <data name="menu_Pp_efficiency" xml:space="preserve">
+    <value>達成率</value>
+  </data>
+  <data name="MainTitle6" xml:space="preserve">
+    <value>達成率</value>
+  </data>
+  <data name="sys_Status_Processed" xml:space="preserve">
+    <value>処理済み</value>
+  </data>
+  <data name="MainTitle1" xml:space="preserve">
+    <value>出荷情報</value>
+  </data>
+  <data name="menu_Sd_OutboundQuery" xml:space="preserve">
+    <value>出荷検索</value>
+  </data>
+  <data name="menu_Sd_Shipment_MGT" xml:space="preserve">
+    <value>出荷管理</value>
+  </data>
+  <data name="rpt_Charts_Regin" xml:space="preserve">
+    <value>出荷．仕向地</value>
+  </data>
+  <data name="rpt_Charts_Dest" xml:space="preserve">
+    <value>出荷．目的地</value>
+  </data>
+  <data name="rpt_Charts_Bu" xml:space="preserve">
+    <value>出荷．BU別</value>
+  </data>
+  <data name="menu_Oa_MGT_Vehicle" xml:space="preserve">
+    <value>車両管理</value>
+  </data>
+  <data name="menu_Fico_Overtime" xml:space="preserve">
+    <value>残業</value>
+  </data>
+  <data name="co_Dept_PD" xml:space="preserve">
+    <value>採購課</value>
+  </data>
+  <data name="co_Dept_GA" xml:space="preserve">
+    <value>財務課</value>
+  </data>
+  <data name="menu_Fico_MGT" xml:space="preserve">
+    <value>財務管理</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Finance" xml:space="preserve">
+    <value>財務費用</value>
+  </data>
+  <data name="menu_Rpt_ficocharts" xml:space="preserve">
+    <value>財務チャート</value>
+  </data>
+  <data name="rpt_Chart_Materialcost" xml:space="preserve">
+    <value>材料費比率</value>
+  </data>
+  <data name="sys_Status_Requisition" xml:space="preserve">
+    <value>部門受領</value>
+  </data>
+  <data name="menu_Sys_Dept" xml:space="preserve">
+    <value>部門管理</value>
+  </data>
+  <data name="menu_Sys_DeptUser" xml:space="preserve">
+    <value>部門ユーザ</value>
+  </data>
+  <data name="co_Dept_MM" xml:space="preserve">
+    <value>部管課</value>
+  </data>
+  <data name="MainTitle4" xml:space="preserve">
+    <value>不良率</value>
+  </data>
+  <data name="rpt_Charts_Defect" xml:space="preserve">
+    <value>不具合数量</value>
+  </data>
+  <data name="menu_Pp_Defect_Query" xml:space="preserve">
+    <value>不具合検索</value>
+  </data>
+  <data name="menu_Pp_Defect_P2D" xml:space="preserve">
+    <value>P2D不具合管理</value>
+  </data>
+  <data name="sys_Export_SheetDefect" xml:space="preserve">
+    <value>不具合纏め</value>
+  </data>
+  <data name="menu_Pp_Defect_Type" xml:space="preserve">
+    <value>不具合カテゴリ</value>
+  </data>
+  <data name="menu_Qm_FQC_UnqualifiedNotice" xml:space="preserve">
+    <value>不合格通知</value>
+  </data>
+  <data name="rpt_Charts_Requisition" xml:space="preserve">
+    <value>補助材料受領</value>
+  </data>
+  <data name="menu_Fico_Countersignature" xml:space="preserve">
+    <value>稟議書</value>
+  </data>
+  <data name="sys_Button_View" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="sys_Button_Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="WindowsForm_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="rpt_Chart_Forecast" xml:space="preserve">
+    <value>比較Forecast_</value>
+  </data>
+  <data name="sys_Button_DeleteConfirmText" xml:space="preserve">
+    <value>本当に削除しますか？</value>
+  </data>
+  <data name="WindowsForm_SaveClose" xml:space="preserve">
+    <value>保存して閉じる</value>
+  </data>
+  <data name="WindowsForm_SaveMail" xml:space="preserve">
+    <value>保存してメールする</value>
+  </data>
+  <data name="menu_Sys_Log" xml:space="preserve">
+    <value>ログインログ</value>
+  </data>
+  <data name="sys_Button_List" xml:space="preserve">
+    <value>リスト</value>
+  </data>
+  <data name="sys_SignIn" xml:space="preserve">
+    <value>リーン Sign In</value>
+  </data>
+  <data name="rpt_Charts_LineLoss" xml:space="preserve">
+    <value>ライン損失工数</value>
+  </data>
+  <data name="sys_Export_SheetLine" xml:space="preserve">
+    <value>ライン明細</value>
+  </data>
+  <data name="Query_Pp_Line" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="menu_Pp_Line" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="sys_Msg_Login_Error" xml:space="preserve">
+    <value>ユーザー名またはパスワードが一致していません。ログインに失敗しました。</value>
+  </data>
+  <data name="sys_Msg_User_Invalid" xml:space="preserve">
+    <value>ユーザーが有効になっていません。</value>
+  </data>
+  <data name="menu_Sys_User" xml:space="preserve">
+    <value>ユーザ</value>
+  </data>
+  <data name="sys_Msg_Reselect" xml:space="preserve">
+    <value>もう一度選択してください</value>
+  </data>
+  <data name="sys_Menu" xml:space="preserve">
+    <value>メニュー</value>
+  </data>
+  <data name="menu_Sys_Menu" xml:space="preserve">
+    <value>メニュー</value>
+  </data>
+  <data name="sys_Alert_Title_Info" xml:space="preserve">
+    <value>メッセージ</value>
+  </data>
+  <data name="menu_Sys_Help" xml:space="preserve">
+    <value>マニュアル</value>
+  </data>
+  <data name="sys_Help_Manual" xml:space="preserve">
+    <value>マニュアル</value>
+  </data>
+  <data name="sys_Home" xml:space="preserve">
+    <value>ホーム</value>
+  </data>
+  <data name="menu_Oa_MGT_Helpdesk" xml:space="preserve">
+    <value>ヘルプデスク</value>
+  </data>
+  <data name="sys_Help" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="sys_Windows_Refresh" xml:space="preserve">
+    <value>ページ更新</value>
+  </data>
+  <data name="menu_Bpm_MGT" xml:space="preserve">
+    <value>フロー管理</value>
+  </data>
+  <data name="menu_Bpm_Template" xml:space="preserve">
+    <value>フローテンプレート</value>
+  </data>
+  <data name="menu_Bpm_Desgin" xml:space="preserve">
+    <value>フローデザイン</value>
+  </data>
+  <data name="sys_Help_FontIcon" xml:space="preserve">
+    <value>フォントアイコン</value>
+  </data>
+  <data name="menu_Fm_MGT" xml:space="preserve">
+    <value>フォーム管理</value>
+  </data>
+  <data name="menu_Fm_Desgin" xml:space="preserve">
+    <value>フォーム</value>
+  </data>
+  <data name="sys_Parameter_Error" xml:space="preserve">
+    <value>パラメータの間違いがある</value>
+  </data>
+  <data name="sys_Button_PwdEdit" xml:space="preserve">
+    <value>パスワード変更</value>
+  </data>
+  <data name="sys_Login_Password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="menu_Pp_Tracking" xml:space="preserve">
+    <value>トレーサビリティー</value>
+  </data>
+  <data name="sys_Msg_Noedit" xml:space="preserve">
+    <value>データは変更されていません</value>
+  </data>
+  <data name="sys_Msg_Nodata" xml:space="preserve">
+    <value>データなし.</value>
+  </data>
+  <data name="Query_Data_Empty" xml:space="preserve">
+    <value>データなし</value>
+  </data>
+  <data name="menu_Rpt" xml:space="preserve">
+    <value>チャート</value>
+  </data>
+  <data name="sys_Charts" xml:space="preserve">
+    <value>チャート</value>
+  </data>
+  <data name="rpt_Charts_Grid" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Signdate" xml:space="preserve">
+    <value>スプレッドシート</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Issuedate" xml:space="preserve">
+    <value>スプレッドシート</value>
+  </data>
+  <data name="sys_Export_Sheet" xml:space="preserve">
+    <value>スプレッドシート</value>
+  </data>
+  <data name="sys_Status_Pp_EC" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="sys_Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="menu_Em_MGT" xml:space="preserve">
+    <value>スケジュール管理</value>
+  </data>
+  <data name="menu_Em_Schedule" xml:space="preserve">
+    <value>スケジュール</value>
+  </data>
+  <data name="menu_Sd_InboundSerial" xml:space="preserve">
+    <value>シリアル入庫</value>
+  </data>
+  <data name="menu_Sd_OutboundSerial" xml:space="preserve">
+    <value>シリアル出荷</value>
+  </data>
+  <data name="sys_ExitConfirmText" xml:space="preserve">
+    <value>システムを終了しますか？</value>
+  </data>
+  <data name="menu_Sys_MGT" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="sys_Login" xml:space="preserve">
+    <value>サインイン</value>
+  </data>
+  <data name="sys_Exit" xml:space="preserve">
+    <value>サインアウト</value>
+  </data>
+  <data name="sys_Msg_PowerAuth_Error" xml:space="preserve">
+    <value>このユーザにはまだ権限がありません。</value>
+  </data>
+  <data name="rpt_Charts_Elements" xml:space="preserve">
+    <value>コスト要素</value>
+  </data>
+  <data name="sys_Status_Usecost" xml:space="preserve">
+    <value>コストアナリシス</value>
+  </data>
+  <data name="menu_Qm_ComplaintMGT" xml:space="preserve">
+    <value>クレーム</value>
+  </data>
+  <data name="menu_Qm_Complaint" xml:space="preserve">
+    <value>クレーム</value>
+  </data>
+  <data name="sys_Help_Calendar" xml:space="preserve">
+    <value>カレンダー</value>
+  </data>
+  <data name="menu_Fm_Category" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="menu_Oa_MGT_Notices" xml:space="preserve">
+    <value>お知らせ</value>
+  </data>
+  <data name="menu_Sys_Online" xml:space="preserve">
+    <value>オンライン</value>
+  </data>
+  <data name="sys_Alert_title_Error" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="sys_Alert_Title_Warning" xml:space="preserve">
+    <value>ウォーニング</value>
+  </data>
+  <data name="sys_Import_Sheet" xml:space="preserve">
+    <value>インポート</value>
+  </data>
+  <data name="menu_Em_My" xml:space="preserve">
+    <value>イベント</value>
+  </data>
+  <data name="menu_Yf_Query" xml:space="preserve">
+    <value>YiFeiデータ</value>
+  </data>
+  <data name="Yf_Supplier" xml:space="preserve">
+    <value>Yf_仕入先</value>
+  </data>
+  <data name="Yf_Ec" xml:space="preserve">
+    <value>Yf_設変</value>
+  </data>
+  <data name="Yf_MaterialSupplier" xml:space="preserve">
+    <value>Yf_品番仕入先</value>
+  </data>
+  <data name="Yf_Material" xml:space="preserve">
+    <value>Yf_品番情報</value>
+  </data>
+  <data name="Yf_Requisition" xml:space="preserve">
+    <value>Yf_購買依頼</value>
+  </data>
+  <data name="Yf_PurchasingPrice" xml:space="preserve">
+    <value>Yf_購買情報</value>
+  </data>
+  <data name="Yf_PurchaseOrder" xml:space="preserve">
+    <value>Yf_購買発注</value>
+  </data>
+  <data name="Yf_PurchasingPriceVal" xml:space="preserve">
+    <value>Yf_購買スケール</value>
+  </data>
+  <data name="Yf_Substitute" xml:space="preserve">
+    <value>Yf_代替材料</value>
+  </data>
+  <data name="Yf_DataView" xml:space="preserve">
+    <value>Yf_データ照会</value>
+  </data>
+  <data name="Yf_BOM" xml:space="preserve">
+    <value>Yf_BOM</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Work" xml:space="preserve">
+    <value>WIP</value>
+  </data>
+  <data name="sys_Help_Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="menu_Pp_Tracking_Process" xml:space="preserve">
+    <value>STD工程順</value>
+  </data>
+  <data name="menu_Pp_Sop_Query" xml:space="preserve">
+    <value>SOP確認</value>
+  </data>
+  <data name="sys_Tab_Oa_List_SapUser" xml:space="preserve">
+    <value>SAPユーザ</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q4" xml:space="preserve">
+    <value>Q4 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q3" xml:space="preserve">
+    <value>Q3 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q2" xml:space="preserve">
+    <value>Q2 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q1" xml:space="preserve">
+    <value>Q1 Forecast</value>
+  </data>
+  <data name="menu_Sys_ChangePassword" xml:space="preserve">
+    <value>PWD変更</value>
+  </data>
+  <data name="rpt_Charts_Tracking_Qty" xml:space="preserve">
+    <value>Process OPH</value>
+  </data>
+  <data name="rpt_Charts_Tracking" xml:space="preserve">
+    <value>Process Analysis</value>
+  </data>
+  <data name="menu_Pp_Sop_PCBA" xml:space="preserve">
+    <value>PCBA.SOP</value>
+  </data>
+  <data name="menu_Pp_OPH_Report" xml:space="preserve">
+    <value>OPH諸表</value>
+  </data>
+  <data name="sys_Export_SheetDaily" xml:space="preserve">
+    <value>OPH明細</value>
+  </data>
+  <data name="menu_Pp_OPH_Query" xml:space="preserve">
+    <value>OPH検索</value>
+  </data>
+  <data name="co_Dept_OEM" xml:space="preserve">
+    <value>OEM</value>
+  </data>
+  <data name="menu_Pp_Ec_Putinto" xml:space="preserve">
+    <value>LOT投入</value>
+  </data>
+  <data name="rpt_Charts_Progress" xml:space="preserve">
+    <value>LOT進捗</value>
+  </data>
+  <data name="menu_Pp_Defect_LotStatistics" xml:space="preserve">
+    <value>LOT纏め</value>
+  </data>
+  <data name="menu_Pp_Tracking_Lot" xml:space="preserve">
+    <value>LOTトレーサビリティー</value>
+  </data>
+  <data name="rpt_Charts_Direct" xml:space="preserve">
+    <value>Lot．直進率</value>
+  </data>
+  <data name="rpt_Charts_LotPass" xml:space="preserve">
+    <value>LOT．合格率</value>
+  </data>
+  <data name="Query_Pp_Defect_EmptyText" xml:space="preserve">
+    <value>Lot、機種などを検索する。</value>
+  </data>
+  <data name="Query_Pp_Lot" xml:space="preserve">
+    <value>LOT</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Lot" xml:space="preserve">
+    <value>LOT</value>
+  </data>
+  <data name="sys_Poster_Info" xml:space="preserve">
+    <value>Lean Manufacturing(リーン生産)</value>
+  </data>
+  <data name="co_Dept_IT" xml:space="preserve">
+    <value>IT</value>
+  </data>
+  <data name="sys_Msg_Login_Repeatedly" xml:space="preserve">
+    <value>IDはすでに登録されました。</value>
+  </data>
+  <data name="rpt_Chart_Fob" xml:space="preserve">
+    <value>FOB</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="rpt_Charts_Operating" xml:space="preserve">
+    <value>FC粗利</value>
+  </data>
+  <data name="rpt_Charts_Target" xml:space="preserve">
+    <value>DTA年度目標</value>
+  </data>
+  <data name="sys_Tab_Oa_List_MailList" xml:space="preserve">
+    <value>DTA連絡先</value>
+  </data>
+  <data name="sys_LeanName" xml:space="preserve">
+    <value>DTA リーン生産管理</value>
+  </data>
+  <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
+    <value>DBユーザー</value>
+  </data>
+  <data name="sys_Help_Htmlcolor" xml:space="preserve">
+    <value>ColorCodes</value>
+  </data>
+  <data name="menu_Rpt_pptackingcharts" xml:space="preserve">
+    <value>Charts</value>
+  </data>
+  <data name="sys_Button_Preview_A5" xml:space="preserve">
+    <value>A5印刷プレビュー</value>
+  </data>
+  <data name="sys_Button_Preview_A4" xml:space="preserve">
+    <value>A4印刷プレビュー</value>
+  </data>
+  <data name="sys_Msg_UploadFile" xml:space="preserve">
+    <value>5 MB以内のファイルをアップロードしてください。</value>
+  </data>
+  <data name="menu_Fico_Budget" xml:space="preserve">
+    <value>予算</value>
+  </data>
+  <data name="menu_Fico_RealTitles" xml:space="preserve">
+    <value>勘定科目</value>
+  </data>
+  <data name="menu_Pp_Defect_P1D" xml:space="preserve">
+    <value>P1D不具合管理</value>
+  </data>
+  <data name="menu_Pp_OPH" xml:space="preserve">
+    <value>OPH</value>
+  </data>
+  <data name="menu_Pp_Manufacture_P2D" xml:space="preserve">
+    <value>P2D生産</value>
+  </data>
+  <data name="menu_Pp_TL_Liaison" xml:space="preserve">
+    <value>連絡書</value>
+  </data>
+  <data name="menu_Pp_TL" xml:space="preserve">
+    <value>生産連絡書</value>
+  </data>
+  <data name="menu_Pp_TL_List" xml:space="preserve">
+    <value>リスト</value>
+  </data>
+  <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
+    <value>勘定科目</value>
+  </data>
+  <data name="menu_Pp_Sop" xml:space="preserve">
+    <value>SOP</value>
+  </data>
+  <data name="sys_Msg_TL_Repeat" xml:space="preserve">
+    <value>この番号はすでに入力されました。</value>
+  </data>
+  <data name="sys_Msg_TL_Empty" xml:space="preserve">
+    <value>技連番号は空栏にできません</value>
+  </data>
+  <data name="menu_Mm_Master" xml:space="preserve">
+    <value>品番情報</value>
+  </data>
+  <data name="Yf_Shipment" xml:space="preserve">
+    <value>Yf_出荷情報</value>
+  </data>
+  <data name="Yf_Sales" xml:space="preserve">
+    <value>Yf_注文書</value>
+  </data>
+  <data name="Yf_Slip" xml:space="preserve">
+    <value>Yf_売上高</value>
+  </data>
+  <data name="Yf_Assets" xml:space="preserve">
+    <value>Yf_固定資産</value>
+  </data>
+  <data name="rpt_Charts_FyJP" xml:space="preserve">
+    <value>年間(JP)</value>
+  </data>
+  <data name="Yf_StockOrder" xml:space="preserve">
+    <value>Yf_材料納入</value>
+  </data>
+  <data name="rpt_Charts_FyBuCN" xml:space="preserve">
+    <value>年間Bu(CN)</value>
+  </data>
+  <data name="rpt_Charts_FyBuJP" xml:space="preserve">
+    <value>年間Bu(JP)</value>
+  </data>
+  <data name="rpt_Charts_FyCN" xml:space="preserve">
+    <value>年間(CN)</value>
+  </data>
+  <data name="rpt_Charts_YearActual" xml:space="preserve">
+    <value>年度達成率</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Implemented" xml:space="preserve">
+    <value>実施点数</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
+    <value>未実施点数</value>
+  </data>
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+    <value>原因明細</value>
+  </data>
+</root>

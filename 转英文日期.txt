@@ -1,0 +1,12 @@
+	  ,CASE when MONTH([Porderdate])=1 then 'January '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=2 then 'February '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=3 then 'March '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=4 then 'April '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=5 then 'May '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=6 then 'June '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=7 then 'July '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=8 then 'August '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=9 then 'September '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=10 then 'October '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=11 then 'November '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate]))
+when MONTH([Porderdate])=12 then 'December '+convert(char(2),DAY([Porderdate]))+','+convert(char(4),YEAR([Porderdate])) end as idate

@@ -1,0 +1,115 @@
+﻿    /*水手蓝*/
+.icon-DarkBlue {
+    font-size: 18px;
+    opacity: .9;
+    color: #00477d;
+    text-align: center;
+}
+    /*午夜蓝*/
+.icon-CrayolaMidnightBlue {
+    font-size: 18px;
+    opacity: 1;
+    color: #003366;
+    text-align: center;
+}
+    /*品蓝，皇室蓝*/
+.icon-RoyalBlue {
+    font-size: 18px;
+    opacity: .9;
+    color: #4169e1;
+    text-align: center;
+}
+    /*珊瑚红*/
+.icon-Coral {
+    font-size: 18px;
+    opacity: .9;
+    color: #FF7F50;
+    text-align: center;
+}
+    /*柠檬绿*/
+.icon-LimeGreen {
+    font-size: 18px;
+    opacity: .9;
+    color: #32CD32;
+    text-align: center;
+}
+    /*绯红*/
+.icon-Crimson {
+    font-size: 18px;
+    opacity: .9;
+    color: #FF0000;
+    text-align: center;
+}
+    /*沙褐色*/
+.icon-Sandybrown {
+    font-size: 18px;
+    opacity: .9;
+    color: #F4A460;
+    text-align: center;
+}
+    /*番茄红*/
+.icon-Tomato {
+    font-size: 18px;
+    opacity: .9;
+    color: #FF6347;
+    text-align: center;
+}
+    /*小麦色*/
+.icon-Wheat {
+    font-size: 18px;
+    opacity: .9;
+    color: #F5DEB3;
+    text-align: center;
+}
+    /*橙红色*/
+.icon-OrangeRed {
+    font-size: 18px;
+    opacity: .9;
+    color: #FF4500;
+    text-align: center;
+}
+
+    /*多样性*/
+.theme-ravenclaw {
+    --fa-secondary-opacity: 1.0;
+    --fa-primary-color: rgb(4, 56, 161);
+    --fa-secondary-color: rgb(108, 108, 108);
+}
+.icon-font {
+    color: #FF4500;
+    font-size: 12px;
+    text-align: center;
+}
+
+/*旋转与翻转rotating*/
+/*fa-rotate-90 90°*/
+/*fa-rotate-180 180°*/
+/*fa-rotate-270 270°*/
+/*fa-flip-horizontal mirrors icon horizontally*/
+/*fa-flip-vertical mirrors icon vertically*/
+/*fa-flip-both mirrors icon vertically and horizontally (requires 5.7.0 or greater)*/
+/*动画spin*/
+/*fa-spin*/
+/*堆叠stacked*/
+/*<i class="far fa-circle fa-2x" > </i >*/
+/*<span class="fa-stack" style="vertical-align: top;" >*/
+/*<i class="far fa-circle fa-stack-2x" > </i >*/
+/*<i class="fas fa-flag fa-stack-1x" > </i >*/
+/*</span >*/
+/*<span class="fa-stack" style="vertical-align: top;" >*/
+/*<i class="fas fa-circle fa-stack-2x" > </i >*/
+/*<i class="fas fa-flag fa-stack-1x fa-inverse" > </i >*/
+/*</span >*/
+/*<i class="far fa-circle fa-2x" > </i >*/
+
+/*变换Power Transforms*/
+/*<div class="fa-4x" >*/
+/*<i class="fas fa-seedling" data-fa-transform="rotate-90" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="rotate-180" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="rotate-270" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="rotate-30" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="rotate--30" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="flip-v" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="flip-h" style="background:MistyRose" > </i >*/
+/*<i class="fas fa-seedling" data-fa-transform="flip-v flip-h" style="background:MistyRose" > </i >*/
+/*</div >*/

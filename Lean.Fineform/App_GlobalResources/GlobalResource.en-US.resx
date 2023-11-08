@@ -1,0 +1,1224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="menu_Work_Log" xml:space="preserve">
+    <value>WorkLog</value>
+  </data>
+  <data name="sys_Windows_Maxsize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="menu_Pp_Sop_ASY" xml:space="preserve">
+    <value>ASY.SOP</value>
+  </data>
+  <data name="co_Dept_LD" xml:space="preserve">
+    <value>LD</value>
+  </data>
+  <data name="co_Dept_GD" xml:space="preserve">
+    <value>GD</value>
+  </data>
+  <data name="menu_Fico_Asset" xml:space="preserve">
+    <value>Asset</value>
+  </data>
+  <data name="sys_Button_New_EC" xml:space="preserve">
+    <value>TobeNew</value>
+  </data>
+  <data name="Yf_Special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="menu_Oa_MGT_Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Query_Enddate" xml:space="preserve">
+    <value>Enddate</value>
+  </data>
+  <data name="co_Dept_PE" xml:space="preserve">
+    <value>PE</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Manufacturing" xml:space="preserve">
+    <value>MfgExs</value>
+  </data>
+  <data name="co_Dept_P2D" xml:space="preserve">
+    <value>P2D</value>
+  </data>
+  <data name="co_Dept_P1D" xml:space="preserve">
+    <value>P1D</value>
+  </data>
+  <data name="rpt_Chart_Pcost" xml:space="preserve">
+    <value>Product cost</value>
+  </data>
+  <data name="menu_Qm_FQC" xml:space="preserve">
+    <value>FQC</value>
+  </data>
+  <data name="menu_Pp_Defect_MOStatistics" xml:space="preserve">
+    <value>MoStatistics</value>
+  </data>
+  <data name="menu_Pp_MO" xml:space="preserve">
+    <value>MO</value>
+  </data>
+  <data name="Query_Select" xml:space="preserve">
+    <value>Not selected</value>
+  </data>
+  <data name="Query_Select_Text" xml:space="preserve">
+    <value>Please select</value>
+  </data>
+  <data name="menu_Sys_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="menu_Sys_TitleUser" xml:space="preserve">
+    <value>TitleUser</value>
+  </data>
+  <data name="menu_Qm_QC_Wages" xml:space="preserve">
+    <value>WagesRate</value>
+  </data>
+  <data name="sys_Status_Pp_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Bu" xml:space="preserve">
+    <value>Stock amount</value>
+  </data>
+  <data name="rpt_Chart_buAmount" xml:space="preserve">
+    <value>Stock amount</value>
+  </data>
+  <data name="rpt_Chart_Invamt" xml:space="preserve">
+    <value>Stock amount</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Grid" xml:space="preserve">
+    <value>Stock amount</value>
+  </data>
+  <data name="rpt_Chart_Invamt_Monthly" xml:space="preserve">
+    <value>Stock amount</value>
+  </data>
+  <data name="rpt_Charts_Loss" xml:space="preserve">
+    <value>LossTime</value>
+  </data>
+  <data name="rpt_Charts_Pass" xml:space="preserve">
+    <value>Pass</value>
+  </data>
+  <data name="rpt_Charts_Achieve" xml:space="preserve">
+    <value>Achievement</value>
+  </data>
+  <data name="sys_Export_SheetReason" xml:space="preserve">
+    <value>BadReasonDETL</value>
+  </data>
+  <data name="rpt_Charts_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="menu_Pp_ReasonType" xml:space="preserve">
+    <value>ReasonType</value>
+  </data>
+  <data name="rpt_Charts_Cost_element" xml:space="preserve">
+    <value>Cost element</value>
+  </data>
+  <data name="rpt_Charts_Cost_Accountingtitle" xml:space="preserve">
+    <value>Cost Accountingtitle</value>
+  </data>
+  <data name="menu_Fico_Costing" xml:space="preserve">
+    <value>Costing</value>
+  </data>
+  <data name="menu_Pp_Ec_SAP_Data" xml:space="preserve">
+    <value>SAPdata</value>
+  </data>
+  <data name="menu_Fico_Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="menu_Fico_Audit" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="sys_Status_Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="sys_Button_Setup" xml:space="preserve">
+    <value>PrintSetup</value>
+  </data>
+  <data name="sys_Button_Preview" xml:space="preserve">
+    <value>PrintPreview</value>
+  </data>
+  <data name="sys_Button_Design" xml:space="preserve">
+    <value>PrintDesign</value>
+  </data>
+  <data name="sys_Button_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="menu_Sys_PowerRole" xml:space="preserve">
+    <value>PowerRole</value>
+  </data>
+  <data name="menu_Sys_UserRolePower" xml:space="preserve">
+    <value>UserRolePower</value>
+  </data>
+  <data name="menu_Sys_Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="menu_Sys_RoleUser" xml:space="preserve">
+    <value>RoleUser</value>
+  </data>
+  <data name="menu_Sys_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Query_Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="sys_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="sys_Button_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="sys_Button_New_Qm_Operation" xml:space="preserve">
+    <value>NewOperationCost</value>
+  </data>
+  <data name="sys_Button_New_Qm_Waste" xml:space="preserve">
+    <value>NewWasteParts</value>
+  </data>
+  <data name="sys_Button_New_Qm_Rework" xml:space="preserve">
+    <value>NewReworkCost</value>
+  </data>
+  <data name="sys_Button_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="sys_Status_Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="WindowsForm_Irrelevant" xml:space="preserve">
+    <value>Irrelevant</value>
+  </data>
+  <data name="sys_Status_Pp_UnFinish" xml:space="preserve">
+    <value>UnFinished</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Unenforced" xml:space="preserve">
+    <value>Unenforced</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Unconfirmed" xml:space="preserve">
+    <value>Unconfirmed</value>
+  </data>
+  <data name="menu_Bpm_Todo" xml:space="preserve">
+    <value>Todo</value>
+  </data>
+  <data name="sys_Status_Unprocessed" xml:space="preserve">
+    <value>Unprocessed</value>
+  </data>
+  <data name="Query_Goods" xml:space="preserve">
+    <value>Goods</value>
+  </data>
+  <data name="sys_Status_Pp_Finish" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="sys_Iagree" xml:space="preserve">
+    <value>I Agree</value>
+  </data>
+  <data name="co_Dept_CD" xml:space="preserve">
+    <value>CD</value>
+  </data>
+  <data name="menu_Pp_LineStopType" xml:space="preserve">
+    <value>LineStopType</value>
+  </data>
+  <data name="rpt_Charts_LineStop" xml:space="preserve">
+    <value>LineStop Reason</value>
+  </data>
+  <data name="rpt_Chart_NeedQty" xml:space="preserve">
+    <value>Requirement</value>
+  </data>
+  <data name="sys_Export_SheetLosstime" xml:space="preserve">
+    <value>LossTimeDETL</value>
+  </data>
+  <data name="menu_Bpm_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="menu_Fm_My" xml:space="preserve">
+    <value>MyForm</value>
+  </data>
+  <data name="menu_Bpm_Signature" xml:space="preserve">
+    <value>Signature</value>
+  </data>
+  <data name="menu_Sd_TransportationMethods" xml:space="preserve">
+    <value>TransportationMethods</value>
+  </data>
+  <data name="co_Dept_IQC" xml:space="preserve">
+    <value>IQC</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Implemented" xml:space="preserve">
+    <value>Implemented</value>
+  </data>
+  <data name="menu_Pp_OPH_Actual" xml:space="preserve">
+    <value>ActualQuery</value>
+  </data>
+  <data name="sys_Actual_Edit" xml:space="preserve">
+    <value>Actual</value>
+  </data>
+  <data name="rpt_Charts_ActualExs" xml:space="preserve">
+    <value>ActualExs</value>
+  </data>
+  <data name="co_Dept_PM" xml:space="preserve">
+    <value>PM</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_ProdCost" xml:space="preserve">
+    <value>ProdCost</value>
+  </data>
+  <data name="rpt_Charts_Actual" xml:space="preserve">
+    <value>Actual</value>
+  </data>
+  <data name="MainTitle2" xml:space="preserve">
+    <value>Production daily</value>
+  </data>
+  <data name="sys_Export_SheetNormal" xml:space="preserve">
+    <value>ProDETL</value>
+  </data>
+  <data name="menu_Pp_ProducingProgress" xml:space="preserve">
+    <value>ProducingProgress</value>
+  </data>
+  <data name="menu_Pp_MGT" xml:space="preserve">
+    <value>Manufacture</value>
+  </data>
+  <data name="menu_Pp_Times" xml:space="preserve">
+    <value>ManHour</value>
+  </data>
+  <data name="menu_Pp_Defect_Production" xml:space="preserve">
+    <value>PoorProduction</value>
+  </data>
+  <data name="menu_Rpt_ppcharts" xml:space="preserve">
+    <value>PP Charts</value>
+  </data>
+  <data name="menu_Pp_Manufacture_P1D" xml:space="preserve">
+    <value>P1DManufacture</value>
+  </data>
+  <data name="menu_Pp_Ec_MGT" xml:space="preserve">
+    <value>EcManage</value>
+  </data>
+  <data name="menu_Pp_Ec_Report" xml:space="preserve">
+    <value>ECReport</value>
+  </data>
+  <data name="sys_Report_EC" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="menu_Pp_Ec_Carryout" xml:space="preserve">
+    <value>Carryout</value>
+  </data>
+  <data name="MainTitle3" xml:space="preserve">
+    <value>Design change information</value>
+  </data>
+  <data name="menu_Pp_Ec_Query" xml:space="preserve">
+    <value>ECQuery</value>
+  </data>
+  <data name="sys_Login_Account" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="sys_Export_SheetActual" xml:space="preserve">
+    <value>ActualDETL</value>
+  </data>
+  <data name="menu_Sd_InboundQuery" xml:space="preserve">
+    <value>InboundQuery</value>
+  </data>
+  <data name="Query_Em_EmptyText" xml:space="preserve">
+    <value>Search for date,user etc.</value>
+  </data>
+  <data name="Query_Select_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="menu_Oa_MGT" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="menu_Fico_Labor" xml:space="preserve">
+    <value>Labor</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="menu_Sys_Power" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="sys_Status_Pp_EC_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="sys_Status_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="sys_Status_Pp_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="menu_Qm_QC_Cost" xml:space="preserve">
+    <value>QCCost</value>
+  </data>
+  <data name="menu_Qm_QC_Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="menu_Qm_MGT" xml:space="preserve">
+    <value>QualityManage</value>
+  </data>
+  <data name="menu_Rpt_qmcharts" xml:space="preserve">
+    <value>QM Charts</value>
+  </data>
+  <data name="co_Dept_QA" xml:space="preserve">
+    <value>QA</value>
+  </data>
+  <data name="menu_Qm_QC" xml:space="preserve">
+    <value>QC</value>
+  </data>
+  <data name="menu_Mm_Inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="menu_Pp_Ec_Outbound" xml:space="preserve">
+    <value>MM Confirm</value>
+  </data>
+  <data name="menu_Mm_Query" xml:space="preserve">
+    <value>MaterielQuery</value>
+  </data>
+  <data name="menu_Mm_MGT" xml:space="preserve">
+    <value>Materiels</value>
+  </data>
+  <data name="Query_Pp_EmptyText" xml:space="preserve">
+    <value>Search for materials, ID, models, Order Lot etc.</value>
+  </data>
+  <data name="Query_Pp_Daily_EmptyText" xml:space="preserve">
+    <value>Search for materials, ID, models, Order Lot etc.</value>
+  </data>
+  <data name="Query_Pp_EC_EmptyText" xml:space="preserve">
+    <value>Search for materials, ec no, models, etc.</value>
+  </data>
+  <data name="Query_Qm_EmptyText" xml:space="preserve">
+    <value>Search for materials,  models etc.</value>
+  </data>
+  <data name="Query_Enter_EmptyText" xml:space="preserve">
+    <value>Materials</value>
+  </data>
+  <data name="Query_Items" xml:space="preserve">
+    <value>Materiels</value>
+  </data>
+  <data name="menu_Adm_Target" xml:space="preserve">
+    <value>Corp KPI</value>
+  </data>
+  <data name="rpt_Status_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="menu_Sd_SlaesData" xml:space="preserve">
+    <value>SalesData</value>
+  </data>
+  <data name="sys_Help_Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="menu_Oa_MGT_Contacts" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="menu_Pp_Kanban" xml:space="preserve">
+    <value>Kanban</value>
+  </data>
+  <data name="rpt_Chart_Accountingtitle" xml:space="preserve">
+    <value>Accountingtitle</value>
+  </data>
+  <data name="menu_Fico_Titles" xml:space="preserve">
+    <value>Acc.Title</value>
+  </data>
+  <data name="Query_Enddate_EmptyText" xml:space="preserve">
+    <value>Greater than the start date</value>
+  </data>
+  <data name="Query_Startdate_EmptyText" xml:space="preserve">
+    <value>start date</value>
+  </data>
+  <data name="Query_Startdate" xml:space="preserve">
+    <value>Startdate</value>
+  </data>
+  <data name="menu_Pp_Ec_OldStock" xml:space="preserve">
+    <value>OldStock</value>
+  </data>
+  <data name="sys_Grid_Pagecount" xml:space="preserve">
+    <value>Records:</value>
+  </data>
+  <data name="Query_Enter_Text" xml:space="preserve">
+    <value>Enter specific field query</value>
+  </data>
+  <data name="menu_Qm_AcceptanceType" xml:space="preserve">
+    <value>AccType</value>
+  </data>
+  <data name="sys_Export_SheetFqc" xml:space="preserve">
+    <value>GoodsDETL</value>
+  </data>
+  <data name="WindowsForm_Exemption" xml:space="preserve">
+    <value>Exemption</value>
+  </data>
+  <data name="menu_Qm_FQC_Query" xml:space="preserve">
+    <value>QCQuery</value>
+  </data>
+  <data name="menu_Qm_InspectionType" xml:space="preserve">
+    <value>InspectionType</value>
+  </data>
+  <data name="rpt_Chart_Formula" xml:space="preserve">
+    <value>Formula</value>
+  </data>
+  <data name="menu_Sd_PlannedOrder" xml:space="preserve">
+    <value>PlannedOrder</value>
+  </data>
+  <data name="co_Dept_TE" xml:space="preserve">
+    <value>ENG</value>
+  </data>
+  <data name="rpt_Stutas_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="menu_Mm_ModelRegion" xml:space="preserve">
+    <value>ModelRegion</value>
+  </data>
+  <data name="sys_Export_SheetModel" xml:space="preserve">
+    <value>ModelDETL</value>
+  </data>
+  <data name="rpt_Charts_Model" xml:space="preserve">
+    <value>ModelAchievement</value>
+  </data>
+  <data name="Query_Pp_Time_EmptyText" xml:space="preserve">
+    <value>Search for  models, Lot etc.</value>
+  </data>
+  <data name="Query_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="menu_Pp_MasterData" xml:space="preserve">
+    <value>MasterData</value>
+  </data>
+  <data name="menu_Oa_MGT_Meeting" xml:space="preserve">
+    <value>Meeting</value>
+  </data>
+  <data name="menu_Sys_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="menu_Sys_Dpets" xml:space="preserve">
+    <value>CoDpet</value>
+  </data>
+  <data name="menu_Qm_FQC_PassReport" xml:space="preserve">
+    <value>PassReport</value>
+  </data>
+  <data name="MainTitle5" xml:space="preserve">
+    <value>Pass rate</value>
+  </data>
+  <data name="sys_Status_mm" xml:space="preserve">
+    <value>Distinction</value>
+  </data>
+  <data name="sys_Status_Outbound" xml:space="preserve">
+    <value>Managed</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_General" xml:space="preserve">
+    <value>GeneralExs</value>
+  </data>
+  <data name="sys_Status_Notoutbound" xml:space="preserve">
+    <value>Not Managed</value>
+  </data>
+  <data name="menu_Sys_Config" xml:space="preserve">
+    <value>SysConfig</value>
+  </data>
+  <data name="Yf_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="sys_Status_Common" xml:space="preserve">
+    <value>Common</value>
+  </data>
+  <data name="sys_Export_SheetTime" xml:space="preserve">
+    <value>TimeSheetDETL</value>
+  </data>
+  <data name="menu_Pp_Times_Query" xml:space="preserve">
+    <value>ManHourQuery</value>
+  </data>
+  <data name="menu_Pp_Manhours" xml:space="preserve">
+    <value>Labortime</value>
+  </data>
+  <data name="sys_Button_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="sys_Export_SheetRework" xml:space="preserve">
+    <value>ReworkDETL</value>
+  </data>
+  <data name="menu_Qm_QC_Rework" xml:space="preserve">
+    <value>Rework</value>
+  </data>
+  <data name="sys_Status_Pp_Rework" xml:space="preserve">
+    <value>Rework</value>
+  </data>
+  <data name="sys_Help_Encryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="rpt_Chart_Fico_Expense" xml:space="preserve">
+    <value>Exs.Details</value>
+  </data>
+  <data name="menu_Fico_Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="rpt_Charts_Contrast" xml:space="preserve">
+    <value>Cost analyzing</value>
+  </data>
+  <data name="menu_Fico_ExpensesAnalysis" xml:space="preserve">
+    <value>Exs.Analysis</value>
+  </data>
+  <data name="menu_Qm_QC_Waste" xml:space="preserve">
+    <value>Waste</value>
+  </data>
+  <data name="menu_Sd_SO" xml:space="preserve">
+    <value>SalesOrder</value>
+  </data>
+  <data name="menu_Sd_MGT" xml:space="preserve">
+    <value>SalesManaged</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Operation" xml:space="preserve">
+    <value>OperationExs</value>
+  </data>
+  <data name="Sd_Sales_Data" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="menu_Rpt_sdcharts" xml:space="preserve">
+    <value>SD Charts</value>
+  </data>
+  <data name="menu_Qm_FQC_AnalysisStrategy" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="sys_Help_Calculator" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="menu_Sd_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="menu_Sd_CustomerMGT" xml:space="preserve">
+    <value>CustomerMGT</value>
+  </data>
+  <data name="menu_Pp_efficiency" xml:space="preserve">
+    <value>Activation</value>
+  </data>
+  <data name="MainTitle6" xml:space="preserve">
+    <value>Attainment rate</value>
+  </data>
+  <data name="sys_Status_Processed" xml:space="preserve">
+    <value>Processed</value>
+  </data>
+  <data name="MainTitle1" xml:space="preserve">
+    <value>Shipment</value>
+  </data>
+  <data name="menu_Sd_OutboundQuery" xml:space="preserve">
+    <value>OutboundQuery</value>
+  </data>
+  <data name="menu_Sd_Shipment_MGT" xml:space="preserve">
+    <value>ShipmentManaged</value>
+  </data>
+  <data name="rpt_Charts_Regin" xml:space="preserve">
+    <value>Regin</value>
+  </data>
+  <data name="rpt_Charts_Dest" xml:space="preserve">
+    <value>Destination</value>
+  </data>
+  <data name="rpt_Charts_Bu" xml:space="preserve">
+    <value>BusinessU</value>
+  </data>
+  <data name="menu_Oa_MGT_Vehicle" xml:space="preserve">
+    <value>Vehicle</value>
+  </data>
+  <data name="menu_Fico_Overtime" xml:space="preserve">
+    <value>WorkOvertime</value>
+  </data>
+  <data name="co_Dept_PD" xml:space="preserve">
+    <value>PD</value>
+  </data>
+  <data name="co_Dept_GA" xml:space="preserve">
+    <value>GA</value>
+  </data>
+  <data name="menu_Fico_MGT" xml:space="preserve">
+    <value>Financial</value>
+  </data>
+  <data name="sys_Tab_Fico_Expense_Finance" xml:space="preserve">
+    <value>FinanceExs</value>
+  </data>
+  <data name="menu_Rpt_ficocharts" xml:space="preserve">
+    <value>FICO Charts</value>
+  </data>
+  <data name="rpt_Chart_Materialcost" xml:space="preserve">
+    <value>Material cost ratio</value>
+  </data>
+  <data name="sys_Status_Requisition" xml:space="preserve">
+    <value>Dept Requisition</value>
+  </data>
+  <data name="menu_Sys_Dept" xml:space="preserve">
+    <value>Dept</value>
+  </data>
+  <data name="menu_Sys_DeptUser" xml:space="preserve">
+    <value>DeptUser</value>
+  </data>
+  <data name="co_Dept_MM" xml:space="preserve">
+    <value>MM</value>
+  </data>
+  <data name="MainTitle4" xml:space="preserve">
+    <value>Defective rate</value>
+  </data>
+  <data name="rpt_Charts_Defect" xml:space="preserve">
+    <value>DefectQty</value>
+  </data>
+  <data name="menu_Pp_Defect_Query" xml:space="preserve">
+    <value>PoorQuery</value>
+  </data>
+  <data name="menu_Pp_Defect_P2D" xml:space="preserve">
+    <value>P2DPoorManage</value>
+  </data>
+  <data name="sys_Export_SheetDefect" xml:space="preserve">
+    <value>DefectDETL</value>
+  </data>
+  <data name="menu_Pp_Defect_Type" xml:space="preserve">
+    <value>DefectsType</value>
+  </data>
+  <data name="menu_Qm_FQC_UnqualifiedNotice" xml:space="preserve">
+    <value>UnqualifiedNotice</value>
+  </data>
+  <data name="rpt_Charts_Requisition" xml:space="preserve">
+    <value>Excipient cost</value>
+  </data>
+  <data name="menu_Fico_Countersignature" xml:space="preserve">
+    <value>Countersignature</value>
+  </data>
+  <data name="sys_Button_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="sys_Button_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="WindowsForm_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="rpt_Chart_Forecast" xml:space="preserve">
+    <value>Comparison forcast</value>
+  </data>
+  <data name="sys_Button_DeleteConfirmText" xml:space="preserve">
+    <value>Are you sure to delete?</value>
+  </data>
+  <data name="WindowsForm_SaveClose" xml:space="preserve">
+    <value>Save&amp;Close</value>
+  </data>
+  <data name="WindowsForm_SaveMail" xml:space="preserve">
+    <value>Save&amp;Mailto</value>
+  </data>
+  <data name="menu_Sys_Log" xml:space="preserve">
+    <value>LoginLog</value>
+  </data>
+  <data name="sys_Button_List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="sys_SignIn" xml:space="preserve">
+    <value>LeanOne Sign In</value>
+  </data>
+  <data name="rpt_Charts_LineLoss" xml:space="preserve">
+    <value>Line LossTime</value>
+  </data>
+  <data name="sys_Export_SheetLine" xml:space="preserve">
+    <value>LineDETL</value>
+  </data>
+  <data name="Query_Pp_Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="menu_Pp_Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="sys_Msg_Login_Error" xml:space="preserve">
+    <value>Wrong username and password,Please input again.</value>
+  </data>
+  <data name="sys_Msg_User_Invalid" xml:space="preserve">
+    <value>User not enabled.</value>
+  </data>
+  <data name="menu_Sys_User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="sys_Msg_Reselect" xml:space="preserve">
+    <value>Please reselect</value>
+  </data>
+  <data name="sys_Menu" xml:space="preserve">
+    <value>MENU</value>
+  </data>
+  <data name="menu_Sys_Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="sys_Alert_Title_Info" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="menu_Sys_Help" xml:space="preserve">
+    <value>Lc Manual</value>
+  </data>
+  <data name="sys_Help_Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="sys_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="menu_Oa_MGT_Helpdesk" xml:space="preserve">
+    <value>Helpdesk</value>
+  </data>
+  <data name="sys_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="sys_Windows_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="menu_Bpm_MGT" xml:space="preserve">
+    <value>FlowManage</value>
+  </data>
+  <data name="menu_Bpm_Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="menu_Bpm_Desgin" xml:space="preserve">
+    <value>Desgin</value>
+  </data>
+  <data name="sys_Help_FontIcon" xml:space="preserve">
+    <value>Icon Font</value>
+  </data>
+  <data name="menu_Fm_MGT" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="menu_Fm_Desgin" xml:space="preserve">
+    <value>Desgin</value>
+  </data>
+  <data name="sys_Parameter_Error" xml:space="preserve">
+    <value>parameter error</value>
+  </data>
+  <data name="sys_Button_PwdEdit" xml:space="preserve">
+    <value>PWD Change</value>
+  </data>
+  <data name="sys_Login_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="menu_Pp_Tracking" xml:space="preserve">
+    <value>MFG.Traceability</value>
+  </data>
+  <data name="sys_Msg_Noedit" xml:space="preserve">
+    <value>Data not modified</value>
+  </data>
+  <data name="sys_Msg_Nodata" xml:space="preserve">
+    <value>Empty Data.</value>
+  </data>
+  <data name="Query_Data_Empty" xml:space="preserve">
+    <value>Data Empty</value>
+  </data>
+  <data name="menu_Rpt" xml:space="preserve">
+    <value>Charts</value>
+  </data>
+  <data name="sys_Charts" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="rpt_Charts_Grid" xml:space="preserve">
+    <value>Grid</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Signdate" xml:space="preserve">
+    <value>By login date</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Issuedate" xml:space="preserve">
+    <value>By issued date</value>
+  </data>
+  <data name="sys_Export_Sheet" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="sys_Status_Pp_EC" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="sys_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="menu_Em_MGT" xml:space="preserve">
+    <value>ScheduleManage</value>
+  </data>
+  <data name="menu_Em_Schedule" xml:space="preserve">
+    <value>ScheduleEvent</value>
+  </data>
+  <data name="menu_Sd_InboundSerial" xml:space="preserve">
+    <value>InboundSerial</value>
+  </data>
+  <data name="menu_Sd_OutboundSerial" xml:space="preserve">
+    <value>OutboundSerial</value>
+  </data>
+  <data name="sys_ExitConfirmText" xml:space="preserve">
+    <value>Are you sure to exit？</value>
+  </data>
+  <data name="menu_Sys_MGT" xml:space="preserve">
+    <value>SysSetting</value>
+  </data>
+  <data name="sys_Login" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="sys_Exit" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="sys_Msg_PowerAuth_Error" xml:space="preserve">
+    <value>This user has not been assigned permission.</value>
+  </data>
+  <data name="rpt_Charts_Elements" xml:space="preserve">
+    <value>Cost Elements</value>
+  </data>
+  <data name="sys_Status_Usecost" xml:space="preserve">
+    <value>Use Cost</value>
+  </data>
+  <data name="menu_Qm_ComplaintMGT" xml:space="preserve">
+    <value>ComplainMGT</value>
+  </data>
+  <data name="menu_Qm_Complaint" xml:space="preserve">
+    <value>Complain</value>
+  </data>
+  <data name="sys_Help_Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="menu_Fm_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="menu_Oa_MGT_Notices" xml:space="preserve">
+    <value>Notice</value>
+  </data>
+  <data name="menu_Sys_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="sys_Alert_title_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="sys_Alert_Title_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="sys_Import_Sheet" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="menu_Em_My" xml:space="preserve">
+    <value>MyEvent</value>
+  </data>
+  <data name="menu_Yf_Query" xml:space="preserve">
+    <value>YiFei Data</value>
+  </data>
+  <data name="Yf_Supplier" xml:space="preserve">
+    <value>Yf_Supplier</value>
+  </data>
+  <data name="Yf_Ec" xml:space="preserve">
+    <value>EC</value>
+  </data>
+  <data name="Yf_MaterialSupplier" xml:space="preserve">
+    <value>Yf_MaterialSupplier</value>
+  </data>
+  <data name="Yf_Material" xml:space="preserve">
+    <value>Yf_Materials</value>
+  </data>
+  <data name="Yf_Requisition" xml:space="preserve">
+    <value>Yf_Requisition</value>
+  </data>
+  <data name="Yf_PurchasingPrice" xml:space="preserve">
+    <value>Yf_Purchasing</value>
+  </data>
+  <data name="Yf_PurchaseOrder" xml:space="preserve">
+    <value>Yf_PurchaseOrder</value>
+  </data>
+  <data name="Yf_PurchasingPriceVal" xml:space="preserve">
+    <value>Yf_PurchasingScale</value>
+  </data>
+  <data name="Yf_Substitute" xml:space="preserve">
+    <value>Substitute</value>
+  </data>
+  <data name="Yf_DataView" xml:space="preserve">
+    <value>Yf_Data_View</value>
+  </data>
+  <data name="Yf_BOM" xml:space="preserve">
+    <value>Yf_BOM</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Work" xml:space="preserve">
+    <value>WIP</value>
+  </data>
+  <data name="sys_Help_Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="menu_Pp_Tracking_Process" xml:space="preserve">
+    <value>STD.Processing</value>
+  </data>
+  <data name="menu_Pp_Sop_Query" xml:space="preserve">
+    <value>Sop.Confirm</value>
+  </data>
+  <data name="sys_Tab_Oa_List_SapUser" xml:space="preserve">
+    <value>SAP ID</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q4" xml:space="preserve">
+    <value>Q4 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q3" xml:space="preserve">
+    <value>Q3 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q2" xml:space="preserve">
+    <value>Q2 Forecast</value>
+  </data>
+  <data name="rpt_Chart_Fc_Q1" xml:space="preserve">
+    <value>Q1 Forecast</value>
+  </data>
+  <data name="menu_Sys_ChangePassword" xml:space="preserve">
+    <value>Modify PWD</value>
+  </data>
+  <data name="rpt_Charts_Tracking_Qty" xml:space="preserve">
+    <value>Process OPH</value>
+  </data>
+  <data name="rpt_Charts_Tracking" xml:space="preserve">
+    <value>Process Analysis</value>
+  </data>
+  <data name="menu_Pp_Sop_PCBA" xml:space="preserve">
+    <value>PCBA.SOP</value>
+  </data>
+  <data name="menu_Pp_OPH_Report" xml:space="preserve">
+    <value>OPHReport</value>
+  </data>
+  <data name="sys_Export_SheetDaily" xml:space="preserve">
+    <value>OPHDETL</value>
+  </data>
+  <data name="menu_Pp_OPH_Query" xml:space="preserve">
+    <value>OPHQuery</value>
+  </data>
+  <data name="co_Dept_OEM" xml:space="preserve">
+    <value>OEM</value>
+  </data>
+  <data name="menu_Pp_Ec_Putinto" xml:space="preserve">
+    <value>Putinto</value>
+  </data>
+  <data name="rpt_Charts_Progress" xml:space="preserve">
+    <value>LOT Progress</value>
+  </data>
+  <data name="menu_Pp_Defect_LotStatistics" xml:space="preserve">
+    <value>LotStatistics</value>
+  </data>
+  <data name="menu_Pp_Tracking_Lot" xml:space="preserve">
+    <value>Lot Traceability</value>
+  </data>
+  <data name="rpt_Charts_Direct" xml:space="preserve">
+    <value>DDR</value>
+  </data>
+  <data name="rpt_Charts_LotPass" xml:space="preserve">
+    <value>LotPass</value>
+  </data>
+  <data name="Query_Pp_Defect_EmptyText" xml:space="preserve">
+    <value>Search for models, Lot etc.</value>
+  </data>
+  <data name="Query_Pp_Lot" xml:space="preserve">
+    <value>LOT</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Lot" xml:space="preserve">
+    <value>LOT</value>
+  </data>
+  <data name="sys_Poster_Info" xml:space="preserve">
+    <value>Lean Manufacturing</value>
+  </data>
+  <data name="co_Dept_IT" xml:space="preserve">
+    <value>IT</value>
+  </data>
+  <data name="sys_Msg_Login_Repeatedly" xml:space="preserve">
+    <value>Your account is already logged in.</value>
+  </data>
+  <data name="rpt_Chart_Fob" xml:space="preserve">
+    <value>FOB</value>
+  </data>
+  <data name="sys_Status_Pp_EC_Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="rpt_Charts_Operating" xml:space="preserve">
+    <value>Operating margin</value>
+  </data>
+  <data name="rpt_Charts_Target" xml:space="preserve">
+    <value>DTA Annual-Target</value>
+  </data>
+  <data name="sys_Tab_Oa_List_MailList" xml:space="preserve">
+    <value>Mail List</value>
+  </data>
+  <data name="sys_LeanName" xml:space="preserve">
+    <value>DTA Lean Manufacturing</value>
+  </data>
+  <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
+    <value>SYS ID</value>
+  </data>
+  <data name="sys_Help_Htmlcolor" xml:space="preserve">
+    <value>ColorCodes</value>
+  </data>
+  <data name="menu_Rpt_pptackingcharts" xml:space="preserve">
+    <value>Charts</value>
+  </data>
+  <data name="sys_Button_Preview_A5" xml:space="preserve">
+    <value>A5 PrintPreview</value>
+  </data>
+  <data name="sys_Button_Preview_A4" xml:space="preserve">
+    <value>PrintPreview</value>
+  </data>
+  <data name="sys_Msg_UploadFile" xml:space="preserve">
+    <value>Please upload files within 5MB.</value>
+  </data>
+  <data name="menu_Fico_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="menu_Fico_RealTitles" xml:space="preserve">
+    <value>RealTitles</value>
+  </data>
+  <data name="menu_Pp_Defect_P1D" xml:space="preserve">
+    <value>P1DPoorManage</value>
+  </data>
+  <data name="menu_Pp_OPH" xml:space="preserve">
+    <value>OPH</value>
+  </data>
+  <data name="menu_Pp_Manufacture_P2D" xml:space="preserve">
+    <value>P2DManufacture</value>
+  </data>
+  <data name="menu_Pp_TL_Liaison" xml:space="preserve">
+    <value>Technical liaison</value>
+  </data>
+  <data name="menu_Pp_TL" xml:space="preserve">
+    <value>TL MGT</value>
+  </data>
+  <data name="menu_Pp_TL_List" xml:space="preserve">
+    <value>LiaisonList</value>
+  </data>
+  <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="menu_Pp_Sop" xml:space="preserve">
+    <value>SOP</value>
+  </data>
+  <data name="sys_Msg_TL_Repeat" xml:space="preserve">
+    <value>This number has been entered.</value>
+  </data>
+  <data name="sys_Msg_TL_Empty" xml:space="preserve">
+    <value>Number cannot be empty</value>
+  </data>
+  <data name="menu_Mm_Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="Yf_Shipment" xml:space="preserve">
+    <value>Yf_Shipment</value>
+  </data>
+  <data name="Yf_Sales" xml:space="preserve">
+    <value>Yf_SalesOrder</value>
+  </data>
+  <data name="Yf_Slip" xml:space="preserve">
+    <value>Yf_SalesSlip</value>
+  </data>
+  <data name="Yf_Assets" xml:space="preserve">
+    <value>Yf_Assets</value>
+  </data>
+  <data name="rpt_Charts_FyJP" xml:space="preserve">
+    <value>Annually(JP)</value>
+  </data>
+  <data name="Yf_StockOrder" xml:space="preserve">
+    <value>Yf_StockOrder</value>
+  </data>
+  <data name="rpt_Charts_FyBuCN" xml:space="preserve">
+    <value>AnnuallyBu(CN)</value>
+  </data>
+  <data name="rpt_Charts_FyBuJP" xml:space="preserve">
+    <value>AnnuallyBu(JP)</value>
+  </data>
+  <data name="rpt_Charts_FyCN" xml:space="preserve">
+    <value>Annually(CN)</value>
+  </data>
+  <data name="rpt_Charts_YearActual" xml:space="preserve">
+    <value>Rchieving rate</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Implemented" xml:space="preserve">
+    <value>Implemented</value>
+  </data>
+  <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
+    <value>Unenforced</value>
+  </data>
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+    <value>ReasonClassify</value>
+  </data>
+</root>
