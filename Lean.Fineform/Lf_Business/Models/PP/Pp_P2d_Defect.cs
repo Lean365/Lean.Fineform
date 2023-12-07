@@ -35,6 +35,8 @@ namespace Lean.Fineform
 
         [StringLength(30)]
         public string Propcbcardno { get; set; }//卡号
+        [StringLength(30)]
+        public string Propcbchecktype { get; set; }//检查状况
 
 
         [StringLength(30)]

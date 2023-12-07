@@ -6682,6 +6682,429 @@ namespace Lean.Fineform
         {
             var str = new List<Pp_Reason>()
             {
+                
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="L",
+                        Reasoncntext="FCT",
+                        Reasonentext="FCT",
+                        Reasonjptext="FCT",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="L",
+                        Reasoncntext="烧录",
+                        Reasonentext="烧录",
+                        Reasonjptext="烧录",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="L",
+                        Reasoncntext="JTAG",
+                        Reasonentext="JTAG",
+                        Reasonjptext="JTAG",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="K",
+                        Reasoncntext="检查完",
+                        Reasonentext="检查完",
+                        Reasonjptext="检查完",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="K",
+                        Reasoncntext="检查中",
+                        Reasonentext="检查中",
+                        Reasonjptext="检查中",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="K",
+                        Reasoncntext="测试完",
+                        Reasonentext="测试完",
+                        Reasonjptext="测试完",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="K",
+                        Reasoncntext="测试中",
+                        Reasonentext="测试中",
+                        Reasonjptext="测试中",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="空焊",
+                        Reasonentext="空焊",
+                        Reasonjptext="空焊",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="连锡",
+                        Reasonentext="连锡",
+                        Reasonjptext="连锡",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="翘脚",
+                        Reasonentext="翘脚",
+                        Reasonjptext="翘脚",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="漏件",
+                        Reasonentext="漏件",
+                        Reasonjptext="漏件",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="位置偏移",
+                        Reasonentext="位置偏移",
+                        Reasonjptext="位置偏移",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="IC PIN 浮高",
+                        Reasonentext="IC PIN 浮高",
+                        Reasonjptext="IC PIN 浮高",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="IC PIN 竖立",
+                        Reasonentext="IC PIN 竖立",
+                        Reasonjptext="IC PIN 竖立",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="锡少",
+                        Reasonentext="锡少",
+                        Reasonjptext="锡少",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="翻面",
+                        Reasonentext="翻面",
+                        Reasonjptext="翻面",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="反面",
+                        Reasonentext="反面",
+                        Reasonjptext="反面",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="反向",
+                        Reasonentext="反向",
+                        Reasonjptext="反向",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="立碑",
+                        Reasonentext="立碑",
+                        Reasonjptext="立碑",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="发黄",
+                        Reasonentext="发黄",
+                        Reasonjptext="发黄",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="极性相违",
+                        Reasonentext="极性相违",
+                        Reasonjptext="极性相违",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="部品破损",
+                        Reasonentext="部品破损",
+                        Reasonjptext="部品破损",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="焊接不良",
+                        Reasonentext="焊接不良",
+                        Reasonjptext="焊接不良",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="红胶不良",
+                        Reasonentext="红胶不良",
+                        Reasonjptext="红胶不良",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="部品不良",
+                        Reasonentext="部品不良",
+                        Reasonjptext="部品不良",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="异物付着",
+                        Reasonentext="异物付着",
+                        Reasonjptext="异物付着",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="锡量过多",
+                        Reasonentext="锡量过多",
+                        Reasonjptext="锡量过多",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="错料",
+                        Reasonentext="错料",
+                        Reasonjptext="错料",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="基板不良",
+                        Reasonentext="基板不良",
+                        Reasonjptext="基板不良",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="底下有部品",
+                        Reasonentext="底下有部品",
+                        Reasonjptext="底下有部品",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="PCB不良",
+                        Reasonentext="PCB不良",
+                        Reasonjptext="PCB不良",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="多件",
+                        Reasonentext="多件",
+                        Reasonjptext="多件",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="生锡",
+                        Reasonentext="生锡",
+                        Reasonjptext="生锡",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="侧立",
+                        Reasonentext="侧立",
+                        Reasonjptext="侧立",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+                new Pp_Reason()
+                    {
+                        GUID= Guid.NewGuid(),
+                        Reasontype="H",
+                        Reasoncntext="撞件",
+                        Reasonentext="撞件",
+                        Reasonjptext="撞件",
+                        Remark="程序后台添加",
+                        isDelete=0,
+                        CreateTime  =DateTime.Now,
+                        Creator="Admin"
+                    },
+
                 new Pp_Reason()
                     {
                         GUID= Guid.NewGuid(),

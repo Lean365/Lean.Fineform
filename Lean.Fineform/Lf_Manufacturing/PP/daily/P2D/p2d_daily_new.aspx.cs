@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
+﻿using FineUIPro;
+using System;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using NPOI.SS.Formula.Functions;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 {
@@ -206,7 +196,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             var q = from a in DB.Pp_Lines
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                         //where b.Proecnno == strecn
-                    where a.lineclass == "M"
+                    where a.lineclass == "P"
 
                     select new
                     {
@@ -375,8 +365,10 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             try
             {
-                var res = (from p in DB.Pp_Durations
-                           orderby p.Prostime
+                var res = (from p in DB.Pp_Lines
+                               //where p.Proitem.Contains(prohbn.Text)
+                               where p.lineclass.Contains("P")
+                           orderby p.linename
                            //where p.Age > 30 && p.Department == "研发部"
                            select p).ToList();
 
@@ -392,7 +384,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                         // 添加父ID
                         //Pp_P2d_Output ID = Attach<Pp_P2d_Output>(Convert.ToInt32(ParentID));
                         item.Parent = ParentID;
-                        item.Prolinename = prolinename.SelectedItem.Text;
+                        item.Prolinename = res[i].linename.ToString();
                         item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         item.Prodirect = int.Parse(prodirect.Text);
                         item.Proindirect = int.Parse(proindirect.Text);
@@ -406,8 +398,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                         item.Totaltag = true;
                         item.Proorder = proorder.SelectedItem.Text;
                         item.GUID = Guid.Parse(OPHID);
-                        item.Prostime = res[i].Prostime.ToString();
-                        item.Proetime = res[i].Proetime.ToString();
+                        item.Prostime = "0"; //res[i].Prostime.ToString();
+                        item.Proetime = "0";// res[i].Proetime.ToString();
                         //item.Udf001 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         //item.Udf002 = this.prolinename.SelectedItem.Text;
                         item.Remark = remark.Text;
@@ -419,7 +411,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
                         //新增日志
 
-                        string Newtext = ParentID + "," + res[i].Prostime + "~" + res[i].Proetime + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
+                        string Newtext = ParentID + "," + res[i].linename + "~" + res[i].linename + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
                         string OperateType = "新增";
 
                         string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
@@ -667,7 +659,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
 
         #endregion
-
         #region Times
         //计算时间
         /// <summary>
@@ -684,13 +675,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             return dateDiff;
         }
         #endregion
-
-
-
-
-
-
-
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -701,11 +685,12 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                     var q = from a in DB.Pp_Orders
                             join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
                             //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
-                            where a.Porderno == proorder.SelectedItem.Text 
-                    //where a.Proecnmodel == strProecnmodel
-                    //where a.Proecnbomitem == strProecnbomitem
-                    //where a.Proecnoldhbn == strProecnoldhbn
-                    //where a.Proecnnewhbn == strProecnnewhbn
+                            where a.Porderno == proorder.SelectedItem.Text
+                            where b.Prowctext.Contains(prolinename.SelectedItem.Text.Substring(0,1))
+                            //where a.Proecnmodel == strProecnmodel
+                            //where a.Proecnbomitem == strProecnbomitem
+                            //where a.Proecnoldhbn == strProecnoldhbn
+                            //where a.Proecnnewhbn == strProecnnewhbn
                             orderby b.Propset descending
                             select new
                             {
@@ -734,13 +719,15 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                     {
 
                         // 切勿使用 source.Count() > 0
-                        var qs = q.Where(s=>s.Prowctext.Contains("一")).Distinct().Take(1).ToList();
+                        var qs = q.Where(s=>s.Prowctext.Contains(prolinename.SelectedItem.Text.Substring(0, 1))).Distinct().Take(1).ToList();
                         if (qs[0].Prost != 0)
                         {
                             prohbn.Text = qs[0].Porderhbn;
                             promodel.Text = qs[0].Promodel;
                             prolot.Text = qs[0].Porderlot;
                             prost.Text = qs[0].Prost.ToString();
+                            proshort.Text = qs[0].Proshort.ToString();
+                            prorate.Text = qs[0].Proshort.ToString();
                             prolotqty.Text = qs[0].Porderqty.ToString();
                             //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
                             prosn.Text = qs[0].Porderserial;
@@ -779,9 +766,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
             }
         }
-
-
-
         protected void prodirect_TextChanged(object sender, EventArgs e)
         {
             HourQty();

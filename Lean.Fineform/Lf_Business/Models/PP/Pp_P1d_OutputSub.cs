@@ -40,11 +40,14 @@ namespace Lean.Fineform
 
         [StringLength(20)]
         public string Prohbn { get; set; }//生产物料
-
-
+        [StringLength(20)]
+        public string Propcb { get; set; }//类别
 
 
         public Decimal Prost { get; set; }//工时
+        public Decimal Proshort { get; set; }//点数
+        public Decimal Prorate { get; set; }//汇率
+
 
         public Decimal Prostdcapacity { get; set; }//标准产能
         [Required]
@@ -54,7 +57,6 @@ namespace Lean.Fineform
 
         [StringLength(20)]
         public string Proetime { get; set; }//生产时间段
-
 
         public int Prorealqty { get; set; }//生产实绩
 
