@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lean.Fineform
 {
+    /// <summary>
+    /// 制一课
+    /// </summary>
     public class Pp_P1d_OutputSub : IKeyID
     {
         //生产日报SUB
