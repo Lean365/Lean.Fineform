@@ -116,11 +116,14 @@ namespace Lean.Fineform
         public DbSet<Pp_TrackingOutput> Pp_TrackingOutputs { get; set; }
         public DbSet<Pp_Tracking_time> Pp_Tracking_times { get; set; }
 
-        public DbSet<Pp_Output> Pp_Outputs { get; set; }
-        public DbSet<Pp_OutputSub> Pp_OutputSubs { get; set; }
+        public DbSet<Pp_P1d_Output> Pp_P1d_Outputs { get; set; }
+        public DbSet<Pp_P1d_OutputSub> Pp_P1d_OutputSubs { get; set; }
+        public DbSet<Pp_P2d_Output> Pp_P2d_Outputs { get; set; }
+        public DbSet<Pp_P2d_OutputSub> Pp_P2d_OutputSubs { get; set; }
         public DbSet<Pp_Kanban> Pp_Kanbans { get; set; }
-        public DbSet<Pp_Defect_P1d> Pp_Defect_P1ds { get; set; }
-        public DbSet<Pp_Defect_P2d> Pp_Defect_P2ds { get; set; }
+        public DbSet<Pp_P1d_Defect> Pp_P1d_Defects { get; set; }
+        public DbSet<Pp_P2d_Defect> Pp_P2d_Defects { get; set; }
+
         public DbSet<Pp_DefectTotal> Pp_DefectTotals { get; set; }
         public DbSet<Pp_Transport> Pp_Transports { get; set; }
         

@@ -31,7 +31,7 @@ namespace Lean.Fineform.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q_all = from p in DBCharts.Pp_OutputSubs
+            var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                         where p.Prodate.Contains(atedate)
                         where p.isDelete == 0
                         where p.Prorealtime != 0 || p.Prolinestopmin != 0

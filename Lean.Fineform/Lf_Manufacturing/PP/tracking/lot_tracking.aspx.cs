@@ -149,7 +149,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
             if (Grid1.RecordCount != 0)
             {
                 // 排列和数据库分页
-                //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                 // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                 //Grid1.RecordCount = GetTotalCount();
@@ -341,8 +341,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
-        //    DB.Pp_Outputs.Where(u => ids.Contains(u.ID)).Delete();
+        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
 
@@ -434,14 +434,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
             var q =
-                from p in DB.Pp_OutputSubs
-                join b in DB.Pp_Outputs on p.GUID equals b.GUID
+                from p in DB.Pp_P1d_OutputSubs
+                join b in DB.Pp_P1d_Outputs on p.GUID equals b.GUID
                 where p.isDelete == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }

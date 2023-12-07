@@ -41,7 +41,7 @@ namespace Lean.Fineform.Lf_Report
             context.Response.ContentType = "text/plain";
 
             var qs =
-                from p in DBCharts.Pp_OutputSubs
+                from p in DBCharts.Pp_P1d_OutputSubs
                 where p.isDelete == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { Prodate = p.Prodate.Substring(0, 4) } into g

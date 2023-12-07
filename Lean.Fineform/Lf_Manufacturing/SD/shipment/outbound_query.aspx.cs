@@ -98,7 +98,7 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
             if (Grid1.RecordCount != 0)
             {
                 // 排列和数据库分页
-                //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                 // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                 //Grid1.RecordCount = GetTotalCount();

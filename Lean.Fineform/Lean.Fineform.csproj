@@ -389,45 +389,47 @@
     <Content Include="Lf_Manufacturing\MM\YF_StockOrder.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_Substitute.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_Suppliers.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_daily.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_daily_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_daily_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_daily_sub_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_data_kanban.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_data_line.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_data_time.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_line.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_line_qty.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_model.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_opt.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_order_finish.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p1d_output_query.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_daily.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_daily_actual_query.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_daily_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_daily_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_daily_sub_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_line.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_line_qty.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_model.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_opt.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_order_finish.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\p2d_output_query.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_lot_finished.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p1d_defect_query.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_lot_finished.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_query.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_smt.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_sub_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_sub_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_kanban.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_kanban.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_time.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_time.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line_qty.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line_qty.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_model.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_model.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_opt.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_opt.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_order_finish.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_order_finish.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_lot_finished.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_lot_finished.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_smt.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_chart.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_tracking_chart.aspx" />
     <Content Include="Lf_Manufacturing\PP\timesheet\times_query.aspx" />
@@ -10621,8 +10623,10 @@
     <Compile Include="Lf_Business\Models\OA\Oa_Vehicle_Info.cs" />
     <Compile Include="Lf_Business\Models\OA\Oa_Vehicle_Maintain.cs" />
     <Compile Include="Lf_Business\Models\OA\Oa_Weekly.cs" />
-    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P2d.cs" />
-    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P1d.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P2d_Output.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P2d_OutputSub.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P2d_Defect.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_DefectCode.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_DefectTotal.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_Duration.cs" />
@@ -10637,8 +10641,8 @@
     <Compile Include="Lf_Business\Models\PP\Pp_Line.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_Manhour.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_Order.cs" />
-    <Compile Include="Lf_Business\Models\PP\Pp_Output.cs" />
-    <Compile Include="Lf_Business\Models\PP\Pp_OutputSub.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_Output.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_OutputSub.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_Reason.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_SapEcn.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_SapEcnSub.cs" />
@@ -13891,277 +13895,291 @@
     <Compile Include="Lf_Manufacturing\MM\YF_Suppliers.aspx.designer.cs">
       <DependentUpon>YF_Suppliers.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily.aspx.cs">
-      <DependentUpon>p1d_daily.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily.aspx.designer.cs">
-      <DependentUpon>p1d_daily.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_edit.aspx.cs">
-      <DependentUpon>p1d_daily_edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_edit.aspx.designer.cs">
-      <DependentUpon>p1d_daily_edit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_new.aspx.cs">
-      <DependentUpon>p1d_daily_new.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_new.aspx.designer.cs">
-      <DependentUpon>p1d_daily_new.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_sub_edit.aspx.cs">
-      <DependentUpon>p1d_daily_sub_edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_daily_sub_edit.aspx.designer.cs">
-      <DependentUpon>p1d_daily_sub_edit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_kanban.aspx.cs">
-      <DependentUpon>p1d_data_kanban.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_kanban.aspx.designer.cs">
-      <DependentUpon>p1d_data_kanban.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_line.aspx.cs">
-      <DependentUpon>p1d_data_line.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_line.aspx.designer.cs">
-      <DependentUpon>p1d_data_line.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_time.aspx.cs">
-      <DependentUpon>p1d_data_time.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_data_time.aspx.designer.cs">
-      <DependentUpon>p1d_data_time.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_line.aspx.cs">
-      <DependentUpon>p1d_output_line.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_line.aspx.designer.cs">
-      <DependentUpon>p1d_output_line.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_line_qty.aspx.cs">
-      <DependentUpon>p1d_output_line_qty.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_line_qty.aspx.designer.cs">
-      <DependentUpon>p1d_output_line_qty.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_model.aspx.cs">
-      <DependentUpon>p1d_output_model.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_model.aspx.designer.cs">
-      <DependentUpon>p1d_output_model.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_opt.aspx.cs">
-      <DependentUpon>p1d_output_opt.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_opt.aspx.designer.cs">
-      <DependentUpon>p1d_output_opt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_order_finish.aspx.cs">
-      <DependentUpon>p1d_output_order_finish.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_order_finish.aspx.designer.cs">
-      <DependentUpon>p1d_output_order_finish.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_query.aspx.cs">
-      <DependentUpon>p1d_output_query.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p1d_output_query.aspx.designer.cs">
-      <DependentUpon>p1d_output_query.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx.cs">
       <DependentUpon>p2d_daily.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx.designer.cs">
       <DependentUpon>p2d_daily.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_actual_query.aspx.cs">
-      <DependentUpon>p2d_daily_actual_query.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily.aspx.cs">
+      <DependentUpon>p1d_daily.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_actual_query.aspx.designer.cs">
-      <DependentUpon>p2d_daily_actual_query.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily.aspx.designer.cs">
+      <DependentUpon>p1d_daily.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx.cs">
       <DependentUpon>p2d_daily_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx.designer.cs">
       <DependentUpon>p2d_daily_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_new.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_edit.aspx.cs">
+      <DependentUpon>p1d_daily_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_edit.aspx.designer.cs">
+      <DependentUpon>p1d_daily_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.cs">
       <DependentUpon>p2d_daily_new.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_new.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.designer.cs">
       <DependentUpon>p2d_daily_new.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_sub_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_new.aspx.cs">
+      <DependentUpon>p1d_daily_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_new.aspx.designer.cs">
+      <DependentUpon>p1d_daily_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_sub_edit.aspx.cs">
       <DependentUpon>p2d_daily_sub_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_daily_sub_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_sub_edit.aspx.designer.cs">
       <DependentUpon>p2d_daily_sub_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_line.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_sub_edit.aspx.cs">
+      <DependentUpon>p1d_daily_sub_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_sub_edit.aspx.designer.cs">
+      <DependentUpon>p1d_daily_sub_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_kanban.aspx.cs">
+      <DependentUpon>p2d_data_kanban.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_kanban.aspx.designer.cs">
+      <DependentUpon>p2d_data_kanban.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_kanban.aspx.cs">
+      <DependentUpon>p1d_data_kanban.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_kanban.aspx.designer.cs">
+      <DependentUpon>p1d_data_kanban.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_line.aspx.cs">
+      <DependentUpon>p2d_data_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_line.aspx.designer.cs">
+      <DependentUpon>p2d_data_line.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_line.aspx.cs">
+      <DependentUpon>p1d_data_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_line.aspx.designer.cs">
+      <DependentUpon>p1d_data_line.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_time.aspx.cs">
+      <DependentUpon>p2d_data_time.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_data_time.aspx.designer.cs">
+      <DependentUpon>p2d_data_time.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_time.aspx.cs">
+      <DependentUpon>p1d_data_time.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_time.aspx.designer.cs">
+      <DependentUpon>p1d_data_time.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line.aspx.cs">
       <DependentUpon>p2d_output_line.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_line.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line.aspx.designer.cs">
       <DependentUpon>p2d_output_line.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_line_qty.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line.aspx.cs">
+      <DependentUpon>p1d_output_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line.aspx.designer.cs">
+      <DependentUpon>p1d_output_line.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line_qty.aspx.cs">
       <DependentUpon>p2d_output_line_qty.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_line_qty.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_line_qty.aspx.designer.cs">
       <DependentUpon>p2d_output_line_qty.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_model.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line_qty.aspx.cs">
+      <DependentUpon>p1d_output_line_qty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_line_qty.aspx.designer.cs">
+      <DependentUpon>p1d_output_line_qty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_model.aspx.cs">
       <DependentUpon>p2d_output_model.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_model.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_model.aspx.designer.cs">
       <DependentUpon>p2d_output_model.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_opt.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_model.aspx.cs">
+      <DependentUpon>p1d_output_model.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_model.aspx.designer.cs">
+      <DependentUpon>p1d_output_model.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_opt.aspx.cs">
       <DependentUpon>p2d_output_opt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_opt.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_opt.aspx.designer.cs">
       <DependentUpon>p2d_output_opt.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_order_finish.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_opt.aspx.cs">
+      <DependentUpon>p1d_output_opt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_opt.aspx.designer.cs">
+      <DependentUpon>p1d_output_opt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_order_finish.aspx.cs">
       <DependentUpon>p2d_output_order_finish.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_order_finish.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_order_finish.aspx.designer.cs">
       <DependentUpon>p2d_output_order_finish.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_query.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_order_finish.aspx.cs">
+      <DependentUpon>p1d_output_order_finish.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_order_finish.aspx.designer.cs">
+      <DependentUpon>p1d_output_order_finish.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_query.aspx.cs">
       <DependentUpon>p2d_output_query.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\p2d_output_query.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_query.aspx.designer.cs">
       <DependentUpon>p2d_output_query.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_query.aspx.cs">
+      <DependentUpon>p1d_output_query.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_output_query.aspx.designer.cs">
+      <DependentUpon>p1d_output_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect.aspx.cs">
       <DependentUpon>p1d_defect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect.aspx.designer.cs">
       <DependentUpon>p1d_defect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_edit.aspx.cs">
       <DependentUpon>p1d_defect_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_edit.aspx.designer.cs">
       <DependentUpon>p1d_defect_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_lot_finished.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_lot_finished.aspx.cs">
       <DependentUpon>p1d_defect_lot_finished.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_lot_finished.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_lot_finished.aspx.designer.cs">
       <DependentUpon>p1d_defect_lot_finished.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_new.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_new.aspx.cs">
       <DependentUpon>p1d_defect_new.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_new.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_new.aspx.designer.cs">
       <DependentUpon>p1d_defect_new.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx.cs">
       <DependentUpon>p1d_defect_order_totalled.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx.designer.cs">
       <DependentUpon>p1d_defect_order_totalled.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx.cs">
       <DependentUpon>p1d_defect_order_totalled_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_order_totalled_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx.designer.cs">
       <DependentUpon>p1d_defect_order_totalled_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_query.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx.cs">
       <DependentUpon>p1d_defect_query.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p1d_defect_query.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx.designer.cs">
       <DependentUpon>p1d_defect_query.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect.aspx.cs">
       <DependentUpon>p2d_defect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect.aspx.designer.cs">
       <DependentUpon>p2d_defect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_edit.aspx.cs">
       <DependentUpon>p2d_defect_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_edit.aspx.designer.cs">
       <DependentUpon>p2d_defect_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_lot_finished.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_lot_finished.aspx.cs">
       <DependentUpon>p2d_defect_lot_finished.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_lot_finished.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_lot_finished.aspx.designer.cs">
       <DependentUpon>p2d_defect_lot_finished.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_new.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx.cs">
       <DependentUpon>p2d_defect_new.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_new.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx.designer.cs">
       <DependentUpon>p2d_defect_new.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled.aspx.cs">
       <DependentUpon>p2d_defect_order_totalled.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled.aspx.designer.cs">
       <DependentUpon>p2d_defect_order_totalled.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled_edit.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled_edit.aspx.cs">
       <DependentUpon>p2d_defect_order_totalled_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_order_totalled_edit.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_order_totalled_edit.aspx.designer.cs">
       <DependentUpon>p2d_defect_order_totalled_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_query.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_query.aspx.cs">
       <DependentUpon>p2d_defect_query.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_query.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_query.aspx.designer.cs">
       <DependentUpon>p2d_defect_query.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_smt.aspx.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_smt.aspx.cs">
       <DependentUpon>p2d_defect_smt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\p2d_defect_smt.aspx.designer.cs">
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_smt.aspx.designer.cs">
       <DependentUpon>p2d_defect_smt.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\pp_chart.aspx.cs">
@@ -15396,8 +15414,6 @@
       <DependentUpon>DB_Serial.edmx</DependentUpon>
     </Content>
     <Content Include="Lf_Manufacturing\MM\AutoComplete_item.ashx" />
-    <Content Include="Lf_Manufacturing\PP\poor\p2d_defect_lot_finished.aspx.cs~RF3204ee8.TMP" />
-    <Content Include="Lf_Manufacturing\PP\timesheet\times_query.aspx.cs~RF167077f.TMP" />
     <Content Include="Lf_Office\EM\event_del.ashx" />
     <Content Include="Lf_Office\EM\event_edit.ashx" />
     <Content Include="Lf_Office\EM\event_new.ashx" />

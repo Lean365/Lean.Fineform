@@ -35,7 +35,7 @@ namespace Lean.Fineform.Lf_Report
 
             //查询在特定日期的全部未达成原因Probadcou，Probadmemo
             var q_all =
-                (from p in DBCharts.Pp_OutputSubs
+                (from p in DBCharts.Pp_P1d_OutputSubs
                      //join b in DB.proOutputs on p.OPHID equals b.OPHID
                  where p.Prodate.Substring(0, 6).CompareTo(atedate) == 0
                  where !string.IsNullOrEmpty(p.Probadcou)
@@ -61,7 +61,7 @@ namespace Lean.Fineform.Lf_Report
 
                              id = i++,
                              a.Probadcou,
-                             pid = (from o in DBCharts.Pp_OutputSubs
+                             pid = (from o in DBCharts.Pp_P1d_OutputSubs
                                     where o.Probadcou.Substring(0, 6) != a.Probadcou
                                     select o).Distinct().Count() + 1,
                              a.Probadmemo,

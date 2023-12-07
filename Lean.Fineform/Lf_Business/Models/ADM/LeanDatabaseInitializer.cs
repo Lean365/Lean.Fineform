@@ -14,12 +14,14 @@ namespace Lean.Fineform
         protected override void Seed(LeanContext context)
         {
 
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_Output', RESEED, 910000001)");
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_OutputSub', RESEED, 920000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P1d_Output', RESEED, 910000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P1d_OutputSub', RESEED, 920000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Output', RESEED, 910000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_OutputSub', RESEED, 920000001)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Qm_Outgoing', RESEED, 710000001)");
-           // context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Qm_Complaint', RESEED, 720000001)");
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_Defect_P1d', RESEED, 510000001)");
-            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_Defect_P2d', RESEED, 520000001)");
+            // context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Qm_Complaint', RESEED, 720000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P1d_Defect', RESEED, 510000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Defect', RESEED, 520000001)");
             context.Database.ExecuteSqlCommand(ProceduerHelper.DateProcedure);
 
 
@@ -64,9 +66,9 @@ namespace Lean.Fineform
 
             //更新部门
 
-            string UpdateDept = "update [dbo].[Adm_User] set DeptID=6 where Name='admin'";
+            //string UpdateDept = "update [dbo].[Adm_User] set DeptID=6 where Name='admin'";
 
-            context.Database.ExecuteSqlCommand(UpdateDept);
+            //context.Database.ExecuteSqlCommand(UpdateDept);
         }
 
         private static List<Adm_Menu> GetAdm_Menus(LeanContext context)
@@ -925,7 +927,7 @@ namespace Lean.Fineform
                                     ImageUrl = "~/Lf_Resources/menu/dept/p2d.png",
                                     ButtonName="Btn_LB_Pp_"+"ec_p2d",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcP2DView").FirstOrDefault<Adm_Power>()
-                                },                                
+                                },
                                 new Adm_Menu
                                 {
 
@@ -1008,7 +1010,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p1d_daily.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_daily.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_dreport.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
@@ -1021,7 +1023,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p1d_output_query.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_output_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
@@ -1033,7 +1035,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 130,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p1d_output_order_finish.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_order_finish.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/push.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_output_order_finish",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
@@ -1043,7 +1045,7 @@ namespace Lean.Fineform
                                     Name = "OPH报表",
                                     SortIndex = 140,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p1d_output_opt.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/reportl.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_output_opt",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
@@ -1053,7 +1055,7 @@ namespace Lean.Fineform
                                     Name = "看板管理",
                                     SortIndex = 150,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p1d_data_kanban.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_data_kanban.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/kanban.png",
                                     ButtonName="Btn_LB_Pp_"+"output_data_line",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreKanbanView").FirstOrDefault<Adm_Power>()
@@ -1079,7 +1081,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p1d_defect.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_bad.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
@@ -1091,7 +1093,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p1d_defect_order_totalled.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_order_totalled.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_line.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
@@ -1103,7 +1105,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 130,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p1d_defect_lot_finished.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_lot_finished.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/report.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_defect_lot_finished",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
@@ -1115,13 +1117,13 @@ namespace Lean.Fineform
 
                                     SortIndex = 140,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p1d_defect_query.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
                                     ButtonName="Btn_LB_Pp_"+"p1d_defect_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                             }
-                        },  
+                        },
                         new Adm_Menu {
                             Name="制二生产",
                             SortIndex=70,
@@ -1140,7 +1142,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p2d_daily.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_daily.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_dreport.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
@@ -1149,23 +1151,11 @@ namespace Lean.Fineform
                                 new Adm_Menu
                                 {
 
-                                    Name = "实绩查询",
-
-                                    SortIndex = 120,
-                                    Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p2d_daily_actual_query.aspx",
-                                    ImageUrl = "~/Lf_Resources/menu/actualquery.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_daily_actual_query",
-                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
-                                },
-                                new Adm_Menu
-                                {
-
                                     Name = "OPH查询",
 
                                     SortIndex = 130,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p2d_output_query.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_output_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
@@ -1177,7 +1167,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 140,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p2d_output_order_finish.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_order_finish.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/push.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_output_order_finish",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
@@ -1187,12 +1177,22 @@ namespace Lean.Fineform
                                     Name = "OPH报表",
                                     SortIndex = 150,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/p2d_output_opt.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/reportl.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_output_opt",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
-
+                                
+                                new Adm_Menu
+                                {
+                                    Name = "看板管理",
+                                    SortIndex = 150,
+                                    Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_data_kanban.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/kanban.png",
+                                    ButtonName="Btn_LB_Pp_"+"output_data_line",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreKanbanView").FirstOrDefault<Adm_Power>()
+                                },
                             }
                         },
                         new Adm_Menu {
@@ -1213,7 +1213,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p2d_defect.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_bad.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
@@ -1225,7 +1225,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p2d_defect_order_totalled.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_order_totalled.aspx",
                                     ImageUrl = "~/Lf_Resources/icon/tag_line.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
@@ -1237,7 +1237,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 130,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p2d_defect_lot_finished.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_lot_finished.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/report.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_defect_lot_finished",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
@@ -1249,7 +1249,7 @@ namespace Lean.Fineform
 
                                     SortIndex = 140,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/p2d_defect_query.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
                                     ButtonName="Btn_LB_Pp_"+"p2d_defect_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
@@ -1558,7 +1558,7 @@ namespace Lean.Fineform
                                     ButtonName="Btn_LB_Qm_"+"qm_charts",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>()
                                 },
-                                
+
                             }
                         },
 
@@ -2692,7 +2692,7 @@ namespace Lean.Fineform
                     GroupName = "导入管理",
                     NavigateUrl="~/Lf_Manufacturing/SD/forecast_inport.aspx",
                 },
-                
+
                 new Adm_Power
                 {
                     Name = "CoreInboundScanView",
@@ -5080,7 +5080,7 @@ namespace Lean.Fineform
                     GroupName = "导入管理",
                     NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_input.aspx",
                 },
-                
+
                 new Adm_Power
                 {
                     Name = "CoreKitInput",
@@ -5464,7 +5464,7 @@ namespace Lean.Fineform
 
                                         }
                                     },
-                                }, 
+                                },
                             },
 
                             new Adm_Dept

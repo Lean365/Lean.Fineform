@@ -180,7 +180,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 if (Grid2.RecordCount != 0)
                 {
                     // 排列和数据库分页
-                    //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                    //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                     // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                     //Grid1.RecordCount = GetTotalCount();
@@ -326,7 +326,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 if (Grid1.RecordCount != 0)
                 {
                     // 排列和数据库分页
-                    //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                    //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                     // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                     //Grid1.RecordCount = GetTotalCount();
@@ -505,7 +505,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "C100"  + "_FA_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -641,7 +641,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "H100" + "_FA_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

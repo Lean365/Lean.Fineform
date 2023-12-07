@@ -32,7 +32,7 @@ namespace Lean.Fineform
 
             //更新生产实绩
             var q =
-                    (from p in DB.Pp_OutputSubs
+                    (from p in DB.Pp_P1d_OutputSubs
                      where p.isDelete == 0
                      where p.Proorder == strPorder
                      where p.Prodate == strPdate
@@ -47,7 +47,7 @@ namespace Lean.Fineform
                 realQty = q[0].TotalQty;
             }
 
-            DB.Pp_Defect_P1ds
+            DB.Pp_P1d_Defects
               .Where(s => s.Proorder == strPorder)
               .Where(s => s.Prodate == strPdate)
               .Where(s => s.Prolinename == strPline)
@@ -65,7 +65,7 @@ namespace Lean.Fineform
 
             //更新生产实绩
             var q =
-                    (from p in DB.Pp_OutputSubs
+                    (from p in DB.Pp_P1d_OutputSubs
                      where p.isDelete == 0
                      where p.Proorder == strPorder
                      group p by p.Prolot into g
@@ -94,7 +94,7 @@ namespace Lean.Fineform
             int noQty = 0;
             int okQty = 0;
             var noqs =
-                from p in DB.Pp_Defect_P1ds
+                from p in DB.Pp_P1d_Defects
                 where p.isDelete == 0
                 where p.Proorder == strPorder
                 group p by new
@@ -132,8 +132,8 @@ namespace Lean.Fineform
                 noQty = noqty[0].TotalQty;
             }
             //统计无不良台数（无不良录入时）
-            var ids = new HashSet<string>(DB.Pp_Defect_P1ds.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
+            var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
 
             var okqty = (from a in results
                          group a by a.Proorder
@@ -167,7 +167,7 @@ namespace Lean.Fineform
             int noQty = 0;
 
             var noqs =
-                (from p in DB.Pp_Defect_P1ds
+                (from p in DB.Pp_P1d_Defects
                  where p.isDelete == 0
                  where p.Proorder == strPorder
                  where p.Prodate == strPdate
@@ -206,8 +206,8 @@ namespace Lean.Fineform
             int okQty = 0;
             //string strPorder, string strPdate, string strPline
             // assumes that the ID property is an int - change the generic type if it's not
-            var ids = new HashSet<string>(DB.Pp_Defect_P1ds.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
+            var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
 
             var q = (from a in results
                      group a by a.Proorder
@@ -230,7 +230,7 @@ namespace Lean.Fineform
         public static void badQtyTotal(string strPorder, string uid)
         {
             int BadTotalQty = 0;
-            var q = (from a in DB.Pp_Defect_P1ds
+            var q = (from a in DB.Pp_P1d_Defects
                      where a.Proorder == strPorder
                      group a by a.Proorder
                   into g
@@ -263,7 +263,7 @@ namespace Lean.Fineform
         {
             //求和
             var q =
-                (from p in DB.Pp_Defect_P1ds
+                (from p in DB.Pp_P1d_Defects
                  .Where(s => s.isDelete == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Prodate == pdate)
@@ -296,7 +296,7 @@ namespace Lean.Fineform
                 {
                     int cc = q[i].Probadamount;
 
-                    DB.Pp_Defect_P1ds
+                    DB.Pp_P1d_Defects
                          .Where(s => s.Prolinename == pline && s.Proorder == porder && s.Prodate == pdate)
 
                        .ToList()
@@ -308,7 +308,7 @@ namespace Lean.Fineform
             }
             //求和
             var qs =
-                (from p in DB.Pp_Defect_P1ds
+                (from p in DB.Pp_P1d_Defects
                  .Where(s => s.isDelete == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Proorder == porder)
@@ -334,7 +334,7 @@ namespace Lean.Fineform
             {
                 int ccs = qs[0].Probadamount;
 
-                DB.Pp_Defect_P1ds
+                DB.Pp_P1d_Defects
                      .Where(s => s.Proorder == porder)
                    .ToList()
                    .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
@@ -356,23 +356,23 @@ namespace Lean.Fineform
         public static void OrderFinish(Guid strGuid)
         {
 
-            Pp_Output current = DB.Pp_Outputs
+            Pp_P1d_Output current = DB.Pp_P1d_Outputs
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
 
             String OphOrder = current.Proorder;
 
-            //String SS = "SELECT[Proorder], SUM([Prorealqty])[Prorealqty]  FROM[OneHerba].[dbo].[Pp_Outputsubs] SUB" +
-            //           "   LEFT JOIN[dbo].[Pp_Outputs] OPH ON SUB.OPHID = OPH.OPHID WHERE [Proorder]='"+ OphOrder + "' GROUP BY[Proorder]" +
+            //String SS = "SELECT[Proorder], SUM([Prorealqty])[Prorealqty]  FROM[OneHerba].[dbo].[Pp_P1d_Outputsubs] SUB" +
+            //           "   LEFT JOIN[dbo].[Pp_P1d_Outputs] OPH ON SUB.OPHID = OPH.OPHID WHERE [Proorder]='"+ OphOrder + "' GROUP BY[Proorder]" +
             //           "   UNION ALL" +
             //           "   (SELECT Porderno, Porderqty FROM[dbo].[proOrders]" +
             //           "   WHERE Porderno = (" +
-            //           "   SELECT[Proorder] FROM[dbo].[Pp_Outputs] WHERE [Proorder]='" + OphOrder + "'));";
+            //           "   SELECT[Proorder] FROM[dbo].[Pp_P1d_Outputs] WHERE [Proorder]='" + OphOrder + "'));";
 
             //语句描述：连接查询表。
             var q =
-            from sub in DB.Pp_OutputSubs
-            join oph in DB.Pp_Outputs on sub.GUID equals oph.GUID
+            from sub in DB.Pp_P1d_OutputSubs
+            join oph in DB.Pp_P1d_Outputs on sub.GUID equals oph.GUID
 
             where oph.Proorder == OphOrder
             select new
@@ -405,7 +405,7 @@ namespace Lean.Fineform
             //语句描述：连接查询表。
             var qo =
                     from sub in DB.Pp_Orders
-                        //join oph in DB.Pp_Outputs on sub.OPHID equals oph.OPHID
+                        //join oph in DB.Pp_P1d_Outputs on sub.OPHID equals oph.OPHID
 
                     where sub.Porderno == OphOrder
                     select new
@@ -438,7 +438,7 @@ namespace Lean.Fineform
         {
             try
             {
-                var q_count = (from a in DB.Pp_OutputSubs
+                var q_count = (from a in DB.Pp_P1d_OutputSubs
                                where a.isDelete == 0
                                where a.Proorder.Contains(OrderNo)
                                group a by new

@@ -104,7 +104,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
             if (Grid1.RecordCount != 0)
             {
                 // 排列和数据库分页
-                //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                 // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                 //Grid1.RecordCount = GetTotalCount();
@@ -126,7 +126,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
         public void BindDDLLine()
         {
 
-            var q = from a in DB.Pp_Outputs
+            var q = from a in DB.Pp_P1d_Outputs
 
                     select new
                     {
@@ -220,8 +220,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
-        //    DB.Pp_Outputs.Where(u => ids.Contains(u.ID)).Delete();
+        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
 

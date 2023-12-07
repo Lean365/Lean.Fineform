@@ -40,7 +40,7 @@ namespace Lean.Fineform.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q_all = from p in DBCharts.Pp_OutputSubs
+            var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                         where p.Prodate.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Prodate.Substring(0, 6).CompareTo(atedate) <= 0
                         where p.isDelete == 0

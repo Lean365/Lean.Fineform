@@ -73,7 +73,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
 
             try
             {
-                var q_all = from a in DB.Pp_Outputs
+                var q_all = from a in DB.Pp_P1d_Outputs
                             where !(from d in DB.Pp_Tracking_times
                                                       where d.isDelete == 0
                                                       select d.Pro_Item)

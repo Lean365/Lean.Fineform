@@ -962,7 +962,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
         }
         private void BindDDLorder()
         {
-            var arrs = DB.Pp_OutputSubs.Select(a => a.Proorder).ToArray();
+            var arrs = DB.Pp_P1d_OutputSubs.Select(a => a.Proorder).ToArray();
 
             var q = from p in DB.Pp_Orders
                         //包含
@@ -1023,7 +1023,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
             if (this.qmOrder.SelectedIndex != 0 && this.qmOrder.SelectedIndex != -1)
             {
                 //查询LINQ去重复
-                var q = from a in DB.Pp_OutputSubs
+                var q = from a in DB.Pp_P1d_OutputSubs
                             //join b in DB.Ec_Subs on a.Porderhbn equals b.Ec_bomitem
                             //where b.Ec_no == strecn
                         where a.Proorder.Contains(this.qmOrder.SelectedItem.Text)
@@ -1378,7 +1378,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
             if (qmLine.SelectedIndex != -1 && qmLine.SelectedIndex != 0)
             {
 
-                var q = from a in DB.Pp_Outputs
+                var q = from a in DB.Pp_P1d_Outputs
                         join b in DB.Pp_Manhours on a.Prohbn equals b.Proitem
                         //where b.Ec_no == strecn
                         where a.Proorder.Contains(this.qmOrder.SelectedItem.Text)
@@ -1465,7 +1465,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                 if (qmLine.SelectedIndex != -1 && qmLine.SelectedIndex != 0)
                 {
 
-                    var q = from a in DB.Pp_Outputs
+                    var q = from a in DB.Pp_P1d_Outputs
                             join b in DB.Pp_Manhours on a.Prohbn equals b.Proitem
                             //where b.Ec_no == strecn
                             where a.Proorder.Contains(this.qmOrder.SelectedItem.Text)

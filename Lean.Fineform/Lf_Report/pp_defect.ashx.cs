@@ -36,7 +36,7 @@ namespace Lean.Fineform.Lf_Report
             //查询在特定日期的全部工单
             //查询在特定日期的全部工单
             var q = from a in DBCharts.Pp_DefectTotals
-                    //join b in DBCharts.Pp_Outputs on a.Prolot equals b.Prolot
+                    //join b in DBCharts.Pp_P1d_Outputs on a.Prolot equals b.Prolot
                     where a.isDelete == 0
                     //where b.isDelete == 0
                     where a.Prodate.Contains(atedate) 

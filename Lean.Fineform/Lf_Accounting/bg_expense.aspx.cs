@@ -94,7 +94,7 @@ namespace Lean.Fineform.Lf_Accounting
                 {
                     var q =
                     from p in DB.Fico_Expenses
-                        //join b in DB.Pp_Outputs on p.Parent.ID equals b.ID
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.UDF01 != "Exs."
                     where p.isDelete == 0
                     select new
@@ -116,7 +116,7 @@ namespace Lean.Fineform.Lf_Accounting
                     };
 
                     //var qss =
-                    //    from p in DB.Pp_Outputsubs
+                    //    from p in DB.Pp_P1d_Outputsubs
                     //    group p by new
                     //    {
                     //        p.Prolinename,
@@ -136,7 +136,7 @@ namespace Lean.Fineform.Lf_Accounting
                     //        Min = g.Sum(p => p.Prorealtime),
                     //    };
 
-                    //IQueryable<Pp_Output> q = DB.Pp_Outputs; //.Include(u => u.Dept);
+                    //IQueryable<Pp_P1d_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string searchText = ttbSearchMessage.Text.Trim();
@@ -166,7 +166,7 @@ namespace Lean.Fineform.Lf_Accounting
                     if (Grid1.RecordCount != 0)
                     {
                         // 排列和数据库分页
-                        //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                         // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                         //Grid1.RecordCount = GetTotalCount();
@@ -190,7 +190,7 @@ namespace Lean.Fineform.Lf_Accounting
                 if (rbtnSecondAuto.Checked)
                 {
                     var q = from p in DB.Fico_Expenses
-                                //join b in DB.Pp_Outputs on p.Parent.ID equals b.ID
+                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                             where p.isDelete == 0
                             where p.UDF01 == "Exs."
                             //where p.Bsdept != "DTA"
@@ -213,7 +213,7 @@ namespace Lean.Fineform.Lf_Accounting
                             };
 
                     //var qss =
-                    //    from p in DB.Pp_Outputsubs
+                    //    from p in DB.Pp_P1d_Outputsubs
                     //    group p by new
                     //    {
                     //        p.Prolinename,
@@ -233,7 +233,7 @@ namespace Lean.Fineform.Lf_Accounting
                     //        Min = g.Sum(p => p.Prorealtime),
                     //    };
 
-                    //IQueryable<Pp_Output> q = DB.Pp_Outputs; //.Include(u => u.Dept);
+                    //IQueryable<Pp_P1d_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string searchText = ttbSearchMessage.Text.Trim();
@@ -264,7 +264,7 @@ namespace Lean.Fineform.Lf_Accounting
                     if (Grid1.RecordCount != 0)
                     {
                         // 排列和数据库分页
-                        //q = SortAndPage<Pp_Outputsub>(q, Grid1);
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
 
                         // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
                         //Grid1.RecordCount = GetTotalCount();
@@ -385,8 +385,8 @@ namespace Lean.Fineform.Lf_Accounting
         //    // 执行数据库操作
         //    //DB.Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
-        //    DB.Pp_Outputs.Where(u => ids.Contains(u.ID)).Delete();
+        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
 
@@ -434,14 +434,14 @@ namespace Lean.Fineform.Lf_Accounting
 
             //    //删除日志
             //    //int userID = GetSelectedDataKeyID(Grid1);
-            //    Pp_Output current = DB.Pp_Outputs.Find(del_ID);
+            //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
             //    string Contectext = current.OPHID;
             //    string OperateType = current.ID.ToString();
             //    string OperateNotes = "Del* " + Contectext + "*Del 的记录已被删除";
             //    NetCountHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH删除", OperateNotes);
 
-            //    DB.Pp_Outputsubs.Where(l => l.Parent.ID == del_ID).Delete();
-            //    DB.Pp_Outputs.Where(l => l.ID == del_ID).Delete();
+            //    DB.Pp_P1d_Outputsubs.Where(l => l.Parent.ID == del_ID).Delete();
+            //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
 
 
@@ -582,7 +582,7 @@ namespace Lean.Fineform.Lf_Accounting
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_OPH_DATA";
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";

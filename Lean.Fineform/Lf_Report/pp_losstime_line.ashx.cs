@@ -36,7 +36,7 @@ namespace Lean.Fineform.Lf_Report
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
             var q_all =
-                from p in DBCharts.Pp_OutputSubs
+                from p in DBCharts.Pp_P1d_OutputSubs
                 where p.Prodate.Substring(0, 6).CompareTo(transdate) == 0
                 //where p.Prodate.CompareTo(enddate.ToString()) <= 0
                 where p.isDelete == 0

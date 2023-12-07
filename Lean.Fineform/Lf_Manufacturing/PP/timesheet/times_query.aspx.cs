@@ -92,8 +92,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             try
             {
                 var q =
-                    from p in DB.Pp_OutputSubs
-                        //join b in DB.Pp_Outputs on p.Parent.ID equals b.ID
+                    from p in DB.Pp_P1d_OutputSubs
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.isDelete == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
                     group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn } into g
@@ -218,8 +218,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
         private void BindList()
         {
             var q =
-                from p in DB.Pp_OutputSubs
-                    //join b in DB.Pp_Outputs on p.OPHID equals b.OPHID
+                from p in DB.Pp_P1d_OutputSubs
+                    //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
                 where p.isDelete == 0
                 //where p.Prorealqty != 0
                 group p by new { p.Prodate, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
@@ -442,7 +442,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //查询LINQ去重复
-            var q = from a in DB.Pp_OutputSubs
+            var q = from a in DB.Pp_P1d_OutputSubs
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
                     where a.isDelete == 0
@@ -588,7 +588,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             ExportFileName = Xlsbomitem + ".xlsx";
 
             var q =
-                from p in DB.Pp_OutputSubs
+                from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.isDelete == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
@@ -697,7 +697,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
             var q =
-                from p in DB.Pp_OutputSubs
+                from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.isDelete == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
@@ -807,7 +807,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             ExportFileName = Xlsbomitem + ".xlsx";
 
             var q =
-                from p in DB.Pp_OutputSubs
+                from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.isDelete == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
@@ -904,7 +904,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
             ExportFileName = XlsTitle + ".xlsx";
 
             var q =
-                from p in DB.Pp_OutputSubs
+                from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.isDelete == 0
                 where p.Prolinestopmin > 0

@@ -35,7 +35,7 @@ namespace Lean.Fineform.Lf_Report
 
             //查询在特定日期的全部工单
             var q_all =
-                from p in DBCharts.Pp_OutputSubs
+                from p in DBCharts.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.Prodate.Substring(0, 6).CompareTo(atedate) == 0
                 where p.Prolinestopmin > 0
@@ -51,7 +51,7 @@ namespace Lean.Fineform.Lf_Report
                 {
                     Prodate = p.Prodate.Substring(0, 6),
                     Prostopcou = (p.Prostopcou == null ? "其他" : (p.Prostopcou == "其它" ? "其他" : p.Prostopcou)),
-                    //numProbadcou = (from a in DBCharts.Pp_OutputSubs select a.Probadcou).Distinct().Count(),
+                    //numProbadcou = (from a in DBCharts.Pp_P1d_OutputSubs select a.Probadcou).Distinct().Count(),
 
                     p.Prolinestopmin,
                 };
