@@ -1,10 +1,10 @@
 ![Logo](https://github.com/Lean365/Lean.Fineform/blob/master/Lean.Fineform/Lf_Resources/images/login/Lean_Logo.png)
 
 ### Lean.Mes
-[![Release](1.01)](https://github.com/davischeng/LeanBench.Net/releases/latest) [![Language grade: C#](1.01)](https://github.com/davischeng/LeanBench.Net/releases/latest)
+[![Release](1.01)](https://github.com/Lean365/Lean.Fineform/releases) [![Language grade: C#](1.01)](https://github.com/Lean365/Lean.Fineform/releases)
 
-![screenshot](https://github.com/Lean365/Lean.Fineform/blob/master/Lean.Fineform/Lf_Resources/images/login/Lean_Logo.png)
-![screenshot](https://github.com/davischeng/LeanBench.Net/tree/master/LeanBench.Net/LB_Resources/svg/main.png)
+![screenshot](https://github.com/Lean365/Lean.Fineform/blob/master/Lean.Fineform/Lf_Resources/svg/login.png)
+![screenshot](https://github.com/Lean365/Lean.Fineform/blob/master/Lean.Fineform/Lf_Resources/svg/main.png)
 - **别名：Lean.Mes**
 --------
 - **项目背景**
