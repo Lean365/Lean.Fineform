@@ -158,14 +158,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// </remarks>
         protected global::FineUIPro.DropDownList proorder;
 
-        /// <summary>
-        /// prolot 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox prolot;
+
 
         /// <summary>
         /// FormRow10 控件。
@@ -184,10 +177,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prohbn;
-        protected global::FineUIPro.Label proshort;
-        protected global::FineUIPro.Label prorate;
-  
-
 
         /// <summary>
         /// promodel 控件。
@@ -242,6 +231,15 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prolotqty;
+
+        /// <summary>
+        /// prolot 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox prolot;
 
         /// <summary>
         /// prosn 控件。

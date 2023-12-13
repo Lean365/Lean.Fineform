@@ -34,6 +34,9 @@ namespace Lean.Fineform
 
         [StringLength(10)]
         public string D_SAP_COOIS_C008 { get; set; }//作业手顺
+
+        [StringLength(10)]
+        public string D_SAP_COOIS_C009 { get; set; }//订单类型
         [StringLength(255)]
         public string Udf001 { get; set; }
         [StringLength(255)]

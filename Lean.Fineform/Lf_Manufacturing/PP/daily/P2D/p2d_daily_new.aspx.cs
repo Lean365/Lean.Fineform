@@ -29,7 +29,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             get
             {
-                return "CoreP1DOutputNew";
+                return "CoreP2DOutputNew";
             }
         }
 
@@ -241,7 +241,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         //    //        return;
         //    //    }
 
-        //    //    Pp_P2d_Output current = DB.Pp_P2d_Outputs.Find(del_ID);
+        //    //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
         //    //    //删除日志
         //    //    string Newtext = current.ID + "," + current.Prolinename + "," + current.Prolot + "," + current.Prodate + "," + current.Prorealqty + "," + current.Prongclass + "," + current.Prongcode + "," + current.Probadqty + "," + current.Probadtotal + "," + current.Probadcou;
         //    //   string OperateType = "删除";//操作标记
@@ -280,7 +280,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
 
 
-            Pp_P2d_Output item = new Pp_P2d_Output();
+            Pp_P1d_Output item = new Pp_P1d_Output();
 
             //ophID();
             //item.OPHID = int.Parse(OPHID) + 1 + 1000;
@@ -336,7 +336,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             item.Remark = remark.Text;
             item.CreateTime = DateTime.Now;
             item.Creator = GetIdentityName();
-            DB.Pp_P2d_Outputs.Add(item);
+            DB.Pp_P1d_Outputs.Add(item);
             DB.SaveChanges();
             //读取ID值
             OPHID = item.GUID.ToString();
@@ -365,10 +365,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             try
             {
-                var res = (from p in DB.Pp_Lines
-                               //where p.Proitem.Contains(prohbn.Text)
-                               where p.lineclass.Contains("P")
-                           orderby p.linename
+                var res = (from p in DB.Pp_Durations
+                           orderby p.Prostime
                            //where p.Age > 30 && p.Department == "研发部"
                            select p).ToList();
 
@@ -379,12 +377,12 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                     //遍历
                     for (int i = 0; i < icount; i++)
                     {
-                        Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
+                        Pp_P1d_OutputSub item = new Pp_P1d_OutputSub();
 
                         // 添加父ID
-                        //Pp_P2d_Output ID = Attach<Pp_P2d_Output>(Convert.ToInt32(ParentID));
+                        //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
                         item.Parent = ParentID;
-                        item.Prolinename = res[i].linename.ToString();
+                        item.Prolinename = prolinename.SelectedItem.Text;
                         item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         item.Prodirect = int.Parse(prodirect.Text);
                         item.Proindirect = int.Parse(proindirect.Text);
@@ -398,20 +396,20 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                         item.Totaltag = true;
                         item.Proorder = proorder.SelectedItem.Text;
                         item.GUID = Guid.Parse(OPHID);
-                        item.Prostime = "0"; //res[i].Prostime.ToString();
-                        item.Proetime = "0";// res[i].Proetime.ToString();
+                        item.Prostime = res[i].Prostime.ToString();
+                        item.Proetime = res[i].Proetime.ToString();
                         //item.Udf001 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         //item.Udf002 = this.prolinename.SelectedItem.Text;
                         item.Remark = remark.Text;
                         item.CreateTime = DateTime.Now;
                         item.Creator = GetIdentityName();
                         item.isDelete = 0;
-                        DB.Pp_P2d_OutputSubs.Add(item);
+                        DB.Pp_P1d_OutputSubs.Add(item);
                         DB.SaveChanges();
 
                         //新增日志
 
-                        string Newtext = ParentID + "," + res[i].linename + "~" + res[i].linename + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
+                        string Newtext = ParentID + "," + res[i].Prostime + "~" + res[i].Proetime + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
                         string OperateType = "新增";
 
                         string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
@@ -503,8 +501,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             string strorder = proorder.SelectedItem.Text.Trim();
             string strlot = prolot.Text.Trim();
 
-            var line = (from p in DB.Pp_P2d_OutputSubs
-                            //join b in DB.Pp_P2d_Outputs on p.OPHID equals b.OPHID
+            var line = (from p in DB.Pp_P1d_OutputSubs
+                            //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
                         where p.Proorder == (strorder)
 
                         select new
@@ -519,7 +517,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                 }
             }
             var maxdate =
-                                    (from p in DB.Pp_P2d_OutputSubs
+                                    (from p in DB.Pp_P1d_OutputSubs
                                          //join b in DB.proOutputs on p.OPHID equals b.OPHID
                                      where p.Proorder == (strorder)
                                      //.Where(s => s.Prolot.Contains(strPlot))
@@ -536,7 +534,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             }
 
             var mindate =
-                        (from p in DB.Pp_P2d_OutputSubs
+                        (from p in DB.Pp_P1d_OutputSubs
                              //join b in DB.proOutputs on p.OPHID equals b.OPHID
                          where p.Proorder == (strorder)
                          //.Where(s => s.Prolot.Contains(strPlot))
@@ -659,6 +657,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
 
         #endregion
+
         #region Times
         //计算时间
         /// <summary>
@@ -675,6 +674,13 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             return dateDiff;
         }
         #endregion
+
+
+
+
+
+
+
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -685,12 +691,11 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                     var q = from a in DB.Pp_Orders
                             join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
                             //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
-                            where a.Porderno == proorder.SelectedItem.Text
-                            where b.Prowctext.Contains(prolinename.SelectedItem.Text.Substring(0,1))
-                            //where a.Proecnmodel == strProecnmodel
-                            //where a.Proecnbomitem == strProecnbomitem
-                            //where a.Proecnoldhbn == strProecnoldhbn
-                            //where a.Proecnnewhbn == strProecnnewhbn
+                            where a.Porderno == proorder.SelectedItem.Text 
+                    //where a.Proecnmodel == strProecnmodel
+                    //where a.Proecnbomitem == strProecnbomitem
+                    //where a.Proecnoldhbn == strProecnoldhbn
+                    //where a.Proecnnewhbn == strProecnnewhbn
                             orderby b.Propset descending
                             select new
                             {
@@ -719,15 +724,13 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                     {
 
                         // 切勿使用 source.Count() > 0
-                        var qs = q.Where(s=>s.Prowctext.Contains(prolinename.SelectedItem.Text.Substring(0, 1))).Distinct().Take(1).ToList();
+                        var qs = q.Where(s=>s.Prowctext.Contains("一")).Distinct().Take(1).ToList();
                         if (qs[0].Prost != 0)
                         {
                             prohbn.Text = qs[0].Porderhbn;
                             promodel.Text = qs[0].Promodel;
                             prolot.Text = qs[0].Porderlot;
                             prost.Text = qs[0].Prost.ToString();
-                            proshort.Text = qs[0].Proshort.ToString();
-                            prorate.Text = qs[0].Proshort.ToString();
                             prolotqty.Text = qs[0].Porderqty.ToString();
                             //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
                             prosn.Text = qs[0].Porderserial;
@@ -766,6 +769,9 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
             }
         }
+
+
+
         protected void prodirect_TextChanged(object sender, EventArgs e)
         {
             HourQty();

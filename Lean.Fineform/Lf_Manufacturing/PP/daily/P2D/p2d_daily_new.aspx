@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
 </head>
 <body>
@@ -53,8 +53,8 @@
                             <Items>
                                 <f:DropDownList runat="server" ID="prolinename" Label="生产班别" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ForceSelection="true" ShowRedStar="True" Required="True">
                                 </f:DropDownList>
-                                <f:TextBox runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
-                                </f:TextBox>
+                                <f:TextBox runat="server" ID="prolot" Label="批次" ShowRedStar="true"></f:TextBox>
+
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow10" runat="server">
@@ -70,14 +70,6 @@
                                 <f:Label ID="prost" runat="server" Label="工时" Text="0.00" ShowRedStar="True">
                                 </f:Label>
                                 <f:Label ID="prostdcapacity" runat="server" Label="标准产能" Text="0.00" ShowRedStar="True">
-                                </f:Label>
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow5" runat="server">
-                            <Items>
-                                <f:Label ID="proshort" runat="server" Label="点数" Text="0.00" ShowRedStar="True">
-                                </f:Label>
-                                <f:Label ID="prorate" runat="server" Label="汇率" Text="0.00" ShowRedStar="True">
                                 </f:Label>
                             </Items>
                         </f:FormRow>

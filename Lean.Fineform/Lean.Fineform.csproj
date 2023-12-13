@@ -389,12 +389,11 @@
     <Content Include="Lf_Manufacturing\MM\YF_StockOrder.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_Substitute.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_Suppliers.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_add.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_sub_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_sub_edit.aspx" />
@@ -13896,6 +13895,13 @@
     <Compile Include="Lf_Manufacturing\MM\YF_Suppliers.aspx.designer.cs">
       <DependentUpon>YF_Suppliers.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.cs">
+      <DependentUpon>p2d_daily_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.designer.cs">
+      <DependentUpon>p2d_daily_new.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx.cs">
       <DependentUpon>p2d_daily.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -13910,13 +13916,6 @@
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily.aspx.designer.cs">
       <DependentUpon>p1d_daily.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_add.aspx.cs">
-      <DependentUpon>p2d_daily_add.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_add.aspx.designer.cs">
-      <DependentUpon>p2d_daily_add.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx.cs">
       <DependentUpon>p2d_daily_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -13930,13 +13929,6 @@
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_edit.aspx.designer.cs">
       <DependentUpon>p1d_daily_edit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.cs">
-      <DependentUpon>p2d_daily_new.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx.designer.cs">
-      <DependentUpon>p2d_daily_new.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_daily_new.aspx.cs">
       <DependentUpon>p1d_daily_new.aspx</DependentUpon>

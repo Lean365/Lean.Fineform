@@ -64,7 +64,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_add.aspx", "新增") + Window1.GetMaximizeReference();
+            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_new.aspx", "新增") + Window1.GetMaximizeReference();
             //PageContext.RegisterStartupScript(Window1.GetMaximizeReference());
             //Window1.GetMaximizeReference();
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");

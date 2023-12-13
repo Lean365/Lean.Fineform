@@ -34,6 +34,9 @@ namespace Lean.Fineform
         [Required, StringLength(50)]
         public string Porderserial { get; set; }//序号
 
+        [Required, StringLength(10)]
+        public string Pordertype { get; set; }//订单类型
+
         [StringLength(255)]
         public string Udf001 { get; set; }
         [StringLength(255)]
