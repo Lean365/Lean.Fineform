@@ -38,7 +38,6 @@ namespace Lean.Fineform
         [StringLength(30)]
         public string Propcbchecktype { get; set; }//检查状况
 
-
         [StringLength(30)]
         public string Propcbcheckout { get; set; }//检出工程
         public int Pronobadqty { get; set; }//无不良数量
@@ -58,6 +57,9 @@ namespace Lean.Fineform
 
         [StringLength(200)]
         public string Probadprop { get; set; }//不良性质
+
+        [StringLength(200)]
+        public string Probadserial { get; set; }//序列号
         [StringLength(200)]
         public string Probadresponsibility { get; set; }//责任归属
 

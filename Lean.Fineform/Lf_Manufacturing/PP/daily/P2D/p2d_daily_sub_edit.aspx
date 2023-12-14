@@ -35,47 +35,34 @@
                         <%--<f:RowNumberField />--%>
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete" ToolTip="删除"
                             ConfirmText="确定删除此记录？" ConfirmTarget="Top" CommandName="Delete" Width="50px" />
-                        <f:BoundField DataField="Prostime" SortField="Prostime" Width="80px" HeaderText="开始时间" />
-                        <f:BoundField DataField="Proetime" SortField="Proetime" Width="80px" HeaderText="结束时间" />
+                        <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="80px" HeaderText="班组" />
+                        <f:BoundField DataField="Proorder" SortField="Proorder" Width="120px" HeaderText="生产工单" />
+                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="120px" HeaderText="生产机种" />
+                        <f:BoundField DataField="Prohbn" SortField="Prohbn" Width="120px" HeaderText="生产物料" />
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="120px" HeaderText="生产LOT" />
 
+                        <f:BoundField DataField="Prost" SortField="Prost" Width="120px" HeaderText="生产工时" />
+                        <f:BoundField DataField="Proshort" SortField="Proshort" Width="120px" HeaderText="生产点数" />
+                        <f:BoundField DataField="Prorate" SortField="Prorate" Width="120px" HeaderText="工时汇率" />
 
+                        <f:BoundField DataField="Propbctype" SortField="Propbctype" Width="120px" HeaderText="板别" />
+
+                        <f:RenderField Width="80px" ColumnID="Prodirect" DataField="Prodirect" HeaderText="直接人数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numProdirect" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="30" runat="server" AutoPostBack="true">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="80px" ColumnID="Proindirect" DataField="Proindirect" HeaderText="间接人数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numProindirect" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="15" runat="server" AutoPostBack="true">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
                         <f:RenderField Width="80px" ColumnID="Prorealqty" DataField="Prorealqty" HeaderText="生产实绩" FieldType="Int">
                             <Editor>
-                                <f:NumberBox ID="numProrealqty" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="1000" runat="server" AutoPostBack="true">
+                                <f:NumberBox ID="numProrealqty" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>
-                            </Editor>
-                        </f:RenderField>
-
-                        <f:RenderField Width="100px" ColumnID="Prostopcou" DataField="Prostopcou" HeaderText="停线原因" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProstopcou" runat="server" EnableMultiSelect="true">
-                                </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="150px" ColumnID="Prostopmemo" DataField="Prostopmemo" HeaderText="停线备注" FieldType="String">
-                            <Editor>
-                                <f:TextBox ID="txtProstopmemo" runat="server">
-                                </f:TextBox>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="100px" ColumnID="Prolinestopmin" DataField="Prolinestopmin" HeaderText="停线时间" FieldType="Int">
-                            <Editor>
-                                <f:NumberBox ID="numProlinestopmin" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
-                                </f:NumberBox>
-                            </Editor>
-                        </f:RenderField>
-                        <%--多选--%>
-                        <f:RenderField Width="150px" ColumnID="Probadcou" DataField="Probadcou" HeaderText="未达成原因"  FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProbadcou" runat="server" EnableMultiSelect="true">
-                                </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="150px" ColumnID="Probadmemo" DataField="Probadmemo" HeaderText="未达成备注" FieldType="String">
-                            <Editor>
-                                <f:TextBox ID="txtProbadmemo" runat="server">
-                                </f:TextBox>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="100px" ColumnID="Prolinemin" DataField="Prolinemin" HeaderText="生产工数" FieldType="Int">
@@ -84,10 +71,22 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:BoundField DataField="Prorealtime" SortField="Prorealtime" Width="120px" HeaderText="实绩工数" />
-                        <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="80px" HeaderText="班组" />
+
+                        <f:RenderField Width="100px" ColumnID="Prorealtime" DataField="Prorealtime" HeaderText="实绩工数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numProrealtime" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="100px" ColumnID="Propcbserial" DataField="Propcbserial" HeaderText="序列号" FieldType="String">
+                            <Editor>
+                                <f:TextBox ID="numPropcbserial" runat="server">
+                                </f:TextBox>
+                            </Editor>
+                        </f:RenderField>
+                        <%--<f:BoundField DataField="Prorealtime" SortField="Prorealtime" Width="120px" HeaderText="实绩工数" />--%>
                         <%--<f:BoundField DataField="Parent_ID" SortField="Parent_ID"  Width="80px" HeaderText="Parent_ID"/>--%>
-                        <f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="80px" HeaderText="标准产能" />
+                        <%--<f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="80px" HeaderText="标准产能" />--%>
                     </Columns>
                     <Toolbars>
                         <f:Toolbar runat="server" Position="Bottom">

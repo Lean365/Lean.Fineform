@@ -48,18 +48,7 @@ namespace Lean.Fineform
         public string D_SAP_ZPABD_S016 { get; set; }//	旧品处理	
         [StringLength(8)]
         public string D_SAP_ZPABD_S017 { get; set; }//	BOM生效日期	
-        [StringLength(255)]
-        public string Udf001 { get; set; }
-        [StringLength(255)]
-        public string Udf002 { get; set; }
-        [StringLength(255)]
-        public string Udf003 { get; set; }
 
-        public Decimal Udf004 { get; set; }
-
-        public Decimal Udf005 { get; set; }
-
-        public Decimal Udf006 { get; set; }
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记
 

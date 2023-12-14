@@ -24,7 +24,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             get
             {
-                return "CoreP1DOutputView";
+                return "CoreP21DOutputView";
             }
         }
 

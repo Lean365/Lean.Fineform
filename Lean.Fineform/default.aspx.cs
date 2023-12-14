@@ -50,8 +50,8 @@ namespace Lean.Fineform
 
         private void LoadData()
         {
-            // tbxUserName.Text="admin";
-            //tbxPassword.Text="Lean@office";
+             tbxUserName.Text="admin";
+            tbxPassword.Text= "admin";
             // 如果用户已经登录，则重定向到管理首页
             if (User.Identity.IsAuthenticated)
             {

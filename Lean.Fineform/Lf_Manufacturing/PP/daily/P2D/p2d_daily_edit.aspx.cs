@@ -38,7 +38,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             get
             {
-                return "CoreP1DOutputEdit";
+                return "CoreP2DOutputEdit";
             }
         }
 
@@ -202,8 +202,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         private void SaveSubItem()
         {
 
-
-            updateSuboph();
+            //无须更新单身
+            //updateSuboph();
 
         }
         private void updateSuboph()

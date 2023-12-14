@@ -87,6 +87,24 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         protected global::FineUIPro.Grid Grid1;
 
         /// <summary>
+        /// numProdirect 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProdirect;
+
+        /// <summary>
+        /// numProindirect 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProindirect;
+
+        /// <summary>
         /// numProrealqty 控件。
         /// </summary>
         /// <remarks>
@@ -96,51 +114,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         protected global::FineUIPro.NumberBox numProrealqty;
 
         /// <summary>
-        /// ddlProstopcou 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DropDownList ddlProstopcou;
-
-        /// <summary>
-        /// txtProstopmemo 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox txtProstopmemo;
-
-        /// <summary>
-        /// numProlinestopmin 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.NumberBox numProlinestopmin;
-
-        /// <summary>
-        /// ddlProbadcou 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DropDownList ddlProbadcou;
-
-        /// <summary>
-        /// txtProbadmemo 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox txtProbadmemo;
-
-        /// <summary>
         /// numProlinemin 控件。
         /// </summary>
         /// <remarks>
@@ -148,6 +121,24 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.NumberBox numProlinemin;
+
+        /// <summary>
+        /// numProrealtime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProrealtime;
+
+        /// <summary>
+        /// numPropcbserial 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox numPropcbserial;
 
         /// <summary>
         /// MemoText 控件。

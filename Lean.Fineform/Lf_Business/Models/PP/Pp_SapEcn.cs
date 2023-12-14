@@ -66,18 +66,7 @@ namespace Lean.Fineform
         public string D_SAP_ZPABD_Z026 { get; set; }//	相关图纸	
         [StringLength(4000)]
         public string D_SAP_ZPABD_Z027 { get; set; }//	设变内容	
-        [StringLength(255)]
-        public string Udf001 { get; set; }
-        [StringLength(255)]
-        public string Udf002 { get; set; }
-        [StringLength(255)]
-        public string Udf003 { get; set; }
 
-        public Decimal Udf004 { get; set; }
-
-        public Decimal Udf005 { get; set; }
-
-        public Decimal Udf006 { get; set; }
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记
 

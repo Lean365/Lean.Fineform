@@ -30,14 +30,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             get
             {
-                return "CoreP1DOutputSubEdit";
+                return "CoreP2DOutputSubEdit";
             }
         }
 
         #endregion
 
         #region Page_Load
-        public static string mysql, RealQty, StopCheck, StopMinute, StopText, ResonText, WorkText, strProline, strProdate, strProlot, strPromodel, strProst, strProstdcapacity, strProorder;
+        public static string mysql, strProorder, strProorderqty, strProlinename, strProdate, strProdirect, strProindirect, strProlot, strPromodel, strProhbn, strPropbctype, strProst, strProshort, strProrate, strProstdcapacity, strTotaltag, strProstime, strProetime, strProrealqty, strPropcbserial, strProlinestopmin, strProstopcou, strProstopmemo, strProbadcou, strProbadmemo, strProlinemin, strProrealtime, strProworkst, strProstdiff, strProqtydiff, strProratio, strUdf001, strUdf002, strUdf003, strUdf004, strUdf005, strUdf006, strisDelete, strRemark, strModifier, strModifyTime;
         public static int prorate;
         public static int ParentID, rowID;
         public static decimal orderqty, ophqty;
@@ -68,7 +68,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             userid = GetIdentityName();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
-            CheckPowerWithLinkButtonField("CoreP1DOutputDelete", Grid1, "deleteField");
+            CheckPowerWithLinkButtonField("CoreP2DOutputDelete", Grid1, "deleteField");
             ////CheckPowerWithButton("CoreProophp1dNew", btnP1dNew);
             ////CheckPowerWithButton("CoreProophp2dNew", btnP1dNew);
             //CheckPowerWithButton("CorePlutoExport2007", BtnExport);
@@ -87,8 +87,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             //ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-            BindDDLReason();
-            BindDDLStop();
+
             Rate();
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.生产工数为1时，参与OPH计划台数统计。</div><div>2.同一时段生产多个工单时，计划台数系统自动处理，作业工数计算方法：<strong>多个工单具体的实绩工数+停线时间</strong></div><div>3.实绩工数的计算公式：<strong>作业工数-停线时间</strong></div><div>4.实绩工数不能为负数</div><div>4.生产实绩不能超过工单数量</div>");
             //MemoText.Text = "填写说明" + Environment.NewLine + "1.作业工数为1时，参与OPH计划台数统计。" + Environment.NewLine +"2.同一时段多个工单生产时，";
@@ -106,7 +105,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             string[] strgroup = strtransmit.Split(',');
 
             ParentID = int.Parse(strgroup[0].ToString().Trim());
-            strProline = strgroup[1].ToString().Trim();
+            strProlinename = strgroup[1].ToString().Trim();
             strProdate = strgroup[2].ToString().Trim();
             strProlot = strgroup[3].ToString().Trim();
             strPromodel = strgroup[4].ToString().Trim();
@@ -157,156 +156,54 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             {
                 rowData["Prorealqty"] = rowDict["Prorealqty"];
                 item.Prorealqty = int.Parse(rowData["Prorealqty"].ToString());
-                RealQty = rowData["Prorealqty"].ToString();
+                strProrealqty = rowData["Prorealqty"].ToString();
 
             }
-            // 停线
-            //if (rowDict.ContainsKey("Prolinestop"))
-            //{
-            //    rowData["Prolinestop"] = rowDict["Prolinestop"];
-            //    item.Prolinestop = bool.Parse(rowData["Prolinestop"].ToString());
-            //    StopCheck = rowData["Prolinestop"].ToString();
-            //}
-            // 停线时间
-            if (rowDict.ContainsKey("Prolinestopmin"))
+            // 直接
+            if (rowDict.ContainsKey("Prodirect"))
             {
-                rowData["Prolinestopmin"] = rowDict["Prolinestopmin"];
-                item.Prolinestopmin = int.Parse(rowData["Prolinestopmin"].ToString());
-                StopMinute = rowData["Prolinestopmin"].ToString();
+                rowData["Prodirect"] = rowDict["Prodirect"];
+                item.Prodirect = int.Parse(rowData["Prodirect"].ToString());
+                strProdirect = rowData["Prodirect"].ToString();
             }
-            // 停线原因
-            if (rowDict.ContainsKey("Prostopcou"))
+            // 间接
+            if (rowDict.ContainsKey("Proindirect"))
             {
-                rowData["Prostopcou"] = rowDict["Prostopcou"];
-                item.Prostopcou = rowData["Prostopcou"].ToString();
-                StopText = rowData["Prostopcou"].ToString();
+                rowData["Proindirect"] = rowDict["Proindirect"];
+                item.Proindirect = int.Parse(rowData["Proindirect"].ToString());
+                strProindirect = rowData["Proindirect"].ToString();
             }
-            // 停线备注
-            if (rowDict.ContainsKey("Prostopmemo"))
-            {
-                rowData["Prostopmemo"] = rowDict["Prostopmemo"];
-                item.Prostopmemo = rowData["Prostopmemo"].ToString();
-                ResonText = rowData["Prostopmemo"].ToString();
-            }
-            // 原因
-            if (rowDict.ContainsKey("Probadcou"))
-            {
-                rowData["Probadcou"] = rowDict["Probadcou"];
-                item.Probadcou = rowData["Probadcou"].ToString();
-                ResonText = rowData["Probadcou"].ToString();
-            }
-            // 原因备注
-            if (rowDict.ContainsKey("Probadmemo"))
-            {
-                rowData["Probadmemo"] = rowDict["Probadmemo"];
-                item.Probadmemo = rowData["Probadmemo"].ToString();
-                ResonText = rowData["Probadmemo"].ToString();
-            }
-            // 生产工数
+            // 工数
             if (rowDict.ContainsKey("Prolinemin"))
             {
                 rowData["Prolinemin"] = rowDict["Prolinemin"];
-                item.Prolinemin = int.Parse(rowData["Prolinemin"].ToString());
-                WorkText = rowData["Prolinemin"].ToString();
+                item.Prolinemin = int.Parse( rowData["Prolinemin"].ToString());
+                strProlinemin = rowData["Prolinemin"].ToString();
             }
-
-
-            //直接人数
-            int di = main_item.Prodirect;
-
-            if (item.Prolinemin == 0)
+            // 实绩工数
+            if (rowDict.ContainsKey("Prorealtime"))
             {
-                TimeSpan RealTime = DateTime.Parse(item.Proetime).Subtract(DateTime.Parse(item.Prostime)).Duration();
-                //            //TimeSpan ND = DateTime.Parse(item.Proetime) - DateTime.Parse(item.Prostime);
-                item.Prorealtime = int.Parse(RealTime.TotalMinutes.ToString()) * di - item.Prolinestopmin;
-
-                item.Prolinemin = item.Prorealtime;
+                rowData["Prorealtime"] = rowDict["Prorealtime"];
+                item.Prorealtime = int.Parse(rowData["Prorealtime"].ToString());
+                strProrealtime = rowData["Prorealtime"].ToString();
             }
-            else
+            // 实绩工数
+            if (rowDict.ContainsKey("Propcbserial"))
             {
-                item.Prorealtime = item.Prolinemin - item.Prolinestopmin;
-
+                rowData["Propcbserial"] = rowDict["Propcbserial"];
+                item.Propcbserial = rowData["Propcbserial"].ToString();
+                strPropcbserial = rowData["Propcbserial"].ToString();
             }
-
-
-
-
-            if (item.Prolinemin == 1)
-            {
-                item.Prorealtime = 0;
-                // item.Prostdcapacity = prorate * item.Prorealtime / item.Prost / 100;
-            }
-            if (item.Prorealqty != 0)
-            {
-                //实际生产ST
-                //item.Proworkst = Convert.ToDecimal(item.Prodirect) * Convert.ToDecimal(item.Prorealtime) / Convert.ToDecimal(RealQty) * prorate / 100;
-                item.Proworkst = Convert.ToDecimal(item.Prorealtime) / Convert.ToDecimal(item.Prorealqty) * prorate / 100;
-
-                item.Prostdiff = main_item.Prost - item.Proworkst;
-                item.Proqtydiff = Convert.ToInt32(main_item.Prostdcapacity - Convert.ToDecimal(item.Prorealqty));
-
-                if (main_item.Prostdcapacity == 0)
-                {
-                    item.Proratio = 0;
-                }
-                else
-                {
-                    //计算每小时稼动率
-                    item.Proratio = Convert.ToInt32((Convert.ToDecimal(item.Prorealqty) / main_item.Prostdcapacity) * 100);
-                }
-            }
-            else
-            {
-                //item.Prorealtime = 0;
-                item.Proworkst = 0;
+            item.Proworkst = 0;
                 item.Prostdiff = 0;
                 item.Proratio = 0;
-            }
+
             item.ModifyTime = DateTime.Now;
             item.Modifier = userid;
 
             DB.SaveChanges();
 
-            //同一小时生产多个工单
-            var pcount = from a in DB.Pp_P2d_OutputSubs
-                             //join b in DB.Pp_P2d_OutputSubs on a.ID equals b.Parent.ID
-                         where a.Prostime == item.Prostime
-                         where a.Prodate == item.Prodate
-                         where a.Prolinename == item.Prolinename
-                         where a.Prorealqty != 0
-                         select a;
-            if (pcount.Any())
-            {
-                if (pcount.Count() > 1)
-                {
-
-                    Decimal stdqty = prorate * item.Prorealtime / item.Prost / 100;
-                    DB.Pp_P2d_OutputSubs
-                       .Where(s => s.Prostime == item.Prostime)
-                       .Where(s => s.Prodate == item.Prodate)
-                       .Where(s => s.Prolinename == item.Prolinename)
-                      .Where(s => s.Prorealqty != 0)
-                       .ToList()
-                       .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Modifier = userid; x.ModifyTime = DateTime.Now; });
-                    DB.SaveChanges();
-                    //item.Prostdcapacity = prorate * item.Prorealtime / item.Prost / 100;
-                }
-            }
-            DB.SaveChanges();
-
-            //改修工单 实绩与计划相同
-            DB.Pp_P2d_OutputSubs
-                   .Where(s => s.Parent == ParentID && s.Prorealqty > 0 && s.Proorder.Substring(0, 1) == "5")
-                   .ToList()
-                   .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = Convert.ToInt32((Convert.ToDecimal(x.Prorealqty) / x.Prostdcapacity) * 100); x.Modifier = userid; x.ModifyTime = DateTime.Now; });
-            DB.SaveChanges();
-
-            //还原标准产能及ST
-            DB.Pp_P2d_OutputSubs
-                   .Where(s => s.Parent == ParentID && s.Prorealqty == 0 && s.Proorder.Substring(0, 1) == "5")
-                   .ToList()
-                   .ForEach(x => { x.Prostdcapacity = Convert.ToDecimal(strProstdcapacity); x.Prostdiff = 0;x.Prolinemin = 0;x.Prorealtime = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = 0; x.Modifier = userid; x.ModifyTime = DateTime.Now; });
-            DB.SaveChanges();
+            
 
 
             //更新不良数据中的实绩生产数量，按日期，工单，班组
@@ -347,6 +244,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                         a.Probadcou,
                         a.Probadmemo,
                         a.Prolinemin,
+                        a.Propbctype,
+                        a.Propcbserial,
                         a.Prorealtime,
                         a.Proworkst,
                         a.Prostdiff,
@@ -522,7 +421,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             //修改前日志
             Pp_P2d_OutputSub item = DB.Pp_P2d_OutputSubs
             .Where(u => u.ID == rowID).FirstOrDefault();
-            string Newtext = item.ID + "," + item.GUID + "," + item.Proetime + "," + item.Prostime + "," + item.Prorealqty + "," + item.Prolinestopmin + "," + item.Prostopcou + "," + item.Prostopmemo + "," + item.Probadcou + "," + item.Probadmemo;
+            string Newtext = item.ID + "," + item.GUID + "," + item.Proetime + "," + item.Prostime + "," + item.Prorealqty + "," + item.Prodirect + "," + item.Proindirect + "," + item.Prorealtime + "," + item.Propcbserial ;
             string OperateType = "修改";//操作标记
             string OperateNotes = "beEdit生产OPH_SUB*" + Newtext + " *beEdit生产OPH_SUB 的记录将被修改";
 
@@ -536,7 +435,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             Pp_P2d_OutputSub item = DB.Pp_P2d_OutputSubs
                         .Where(u => u.ID == rowID).FirstOrDefault();
 
-            string Newtext = item.ID + "," + item.GUID + "," + item.Proetime + "," + item.Prostime + "," + RealQty + "," + StopMinute + "," + StopText + "," + ResonText;
+            string Newtext = item.ID + "," + item.GUID + "," + item.Proetime + "," + item.Prostime + "," + strProrealqty + "," + strProdirect + "," + strProdirect + "," + strProrealtime + "," + strPropcbserial;
             string OperateType = "修改";//操作标记
             string OperateNotes = "afEdit生产OPH_SUB* " + Newtext + " *afEdit生产OPH_SUB 的记录已被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩修改", OperateNotes);
@@ -550,65 +449,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
 
         #region DDLBindData
 
-        private void BindDDLStop()
-        {
-            //查询停线类别
-            var q = from a in DB.Pp_Reasons
-                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
-                        //where b.Proecnno == strecn
-                        //where b.Proecnbomitem == stritem
-                    where a.Reasontype == "S"
-                    select new
-                    {
-                        a.Reasoncntext,
-                        //a.Prostoptext
-
-                    };
-            //去重复
-            var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
-            //var list = (from c in DB.ProSapPorders
-            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
-            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
-            //3.2.将数据绑定到下拉框
-            ddlProstopcou.DataSource = qs;
-            ddlProstopcou.DataTextField = "Reasoncntext";
-            ddlProstopcou.DataValueField = "Reasoncntext";
-            ddlProstopcou.DataBind();
-            //将0行赋值DDL
 
 
-
-        }
-        private void BindDDLReason()
-        {
-
-            //查询原因类别
-            var q = from a in DB.Pp_Reasons
-                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
-                        //where b.Proecnno == strecn
-                        //where b.Proecnbomitem == stritem
-                    where a.Reasontype == "P"
-                    select new
-                    {
-                        a.Reasoncntext,
-                        //a.Prostoptext
-
-                    };
-            //去重复
-            var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
-            //var list = (from c in DB.ProSapPorders
-            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
-            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
-            //3.2.将数据绑定到下拉框
-            ddlProbadcou.DataSource = qs;
-            ddlProbadcou.DataTextField = "Reasoncntext";
-            ddlProbadcou.DataValueField = "Reasoncntext";
-            ddlProbadcou.DataBind();
-            //将0行赋值DDL
-
-
-
-        }
 
 
         #endregion

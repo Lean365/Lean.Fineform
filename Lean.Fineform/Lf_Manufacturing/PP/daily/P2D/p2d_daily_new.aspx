@@ -43,16 +43,16 @@
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:NumberBox ID="prodirect" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="20" MinValue="1">
-                                </f:NumberBox>
-                                <f:NumberBox ID="proindirect" runat="server" Label="间接人数" Text="0" MaxValue="10" MinValue="0">
-                                </f:NumberBox>
+                                <f:Label ID="prodirect" runat="server" Label="直接人数" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label ID="proindirect" runat="server" Label="间接人数" ShowRedStar="True">
+                                </f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow6" runat="server">
                             <Items>
-                                <f:DropDownList runat="server" ID="prolinename" Label="生产班别" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ForceSelection="true" ShowRedStar="True" Required="True">
-                                </f:DropDownList>
+                                <f:Label runat="server" ID="prolinename" Label="生产班别" ShowRedStar="True">
+                                </f:Label>
                                 <f:TextBox runat="server" ID="prolot" Label="批次" ShowRedStar="true"></f:TextBox>
 
                             </Items>

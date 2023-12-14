@@ -37,7 +37,8 @@ namespace Lean.Fineform
 
         [StringLength(20)]
         public string Prohbn { get; set; }//生产物料
-
+        [StringLength(20)]
+        public string Propbctype { get; set; }//生产板别
         public Decimal Prost { get; set; }//工时
 
         public Decimal Proshort { get; set; }//点数
@@ -54,6 +55,9 @@ namespace Lean.Fineform
 
 
         public int Prorealqty { get; set; }//生产实绩
+
+        [StringLength(2000)]
+        public string Propcbserial { get; set; }//序列号
 
         public int Prolinestopmin { get; set; }//停线时间
 

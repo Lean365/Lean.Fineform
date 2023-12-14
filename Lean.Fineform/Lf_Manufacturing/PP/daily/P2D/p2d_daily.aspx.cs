@@ -82,7 +82,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         private void BindGrid()
         {
             var LineType = (from a in DB.Pp_Lines
-                            where a.lineclass.Contains("M")
+                            where a.lineclass.Contains("P")
                             select new
                             {
                                 a.linename
@@ -121,7 +121,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                 q = q.Where(u => u.Prolinename.Contains(this.DDLline.SelectedText));
             }
             //查询包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.linename)).AsQueryable();
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == "制二课")).AsQueryable();
 
             // q = q.Where(u => u.Promodel != "0");
             //if (GetIdentityName() != "admin")
@@ -432,7 +432,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             if (e.CommandName == "Delete")
             {
                 // 在操作之前进行权限检查
-                if (!CheckPower("CoreP1DOutputDelete"))
+                if (!CheckPower("CoreP2DOutputDelete"))
                 {
                     CheckPowerFailWithAlert();
                     return;

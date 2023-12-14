@@ -89,7 +89,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
                 //查询在特定日期的全部工单
                 var q = from a in DB.Pp_DefectTotals
 
-                        join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
+                        join b in DB.Pp_P2d_Outputs on a.Prolot equals b.Prolot
                         where a.isDelete == 0
                         where b.isDelete == 0
                         //where a.Proorder.Substring(0, 2).Contains("44")

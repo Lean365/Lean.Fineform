@@ -139,7 +139,7 @@ namespace Lean.Fineform.Lf_Manufacturing.Master
             string checkItem = current.D_SAP_DEST_Z001;
             string checkModel = current.D_SAP_DEST_Z002;
             string ckeckRegion = current.D_SAP_DEST_Z003;
-            string checkScheduling = current.Udf004.ToString();
+            //string checkScheduling = current.Udf004.ToString();
 
             if (this.lblD_SAP_DEST_Z001.Text == checkItem)
             {

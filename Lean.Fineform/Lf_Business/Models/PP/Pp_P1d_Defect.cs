@@ -45,6 +45,13 @@ namespace Lean.Fineform
         public string Probadset { get; set; }//不良个所
         [StringLength(200)]
         public string Probadreason { get; set; }//不良原因
+        [StringLength(200)]
+        public string Probadserial { get; set; }//序列号
+        [StringLength(200)]
+        public string Probadresponsibility { get; set; }//责任归属
+
+        [StringLength(200)]
+        public string Probadrepairman { get; set; }//修理
         [StringLength(255)]
         public string Udf001 { get; set; }
         [StringLength(255)]

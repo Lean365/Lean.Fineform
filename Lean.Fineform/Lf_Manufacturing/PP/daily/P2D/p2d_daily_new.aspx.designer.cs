@@ -111,7 +111,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DropDownList prolinename;
+        protected global::FineUIPro.Label prolinename;
 
         /// <summary>
         /// FormRow1 控件。
@@ -129,7 +129,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox prodirect;
+        protected global::FineUIPro.Label prodirect;
 
         /// <summary>
         /// proindirect 控件。
@@ -138,7 +138,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox proindirect;
+        protected global::FineUIPro.Label proindirect;
 
         /// <summary>
         /// FormRow6 控件。

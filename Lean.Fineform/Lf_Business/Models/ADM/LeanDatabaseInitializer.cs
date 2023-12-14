@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using FineUIPro;
 using System.Security;
+using Lean.Fineform.Lf_Business.Models.YF;
 namespace Lean.Fineform
 {
     public class LeanDatabaseInitializer : DropCreateDatabaseIfModelChanges<LeanContext>  // DropCreateDatabaseAlways<BaseKitContext>  DropCreateDatabaseIfModelChanges<BaseKitContext>
@@ -1182,7 +1183,7 @@ namespace Lean.Fineform
                                     ButtonName="Btn_LB_Pp_"+"p2d_output_opt",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
-                                
+
                                 new Adm_Menu
                                 {
                                     Name = "看板管理",
@@ -6682,7 +6683,9 @@ namespace Lean.Fineform
         {
             var str = new List<Pp_Reason>()
             {
-                
+
+
+
                 new Pp_Reason()
                     {
                         GUID= Guid.NewGuid(),

@@ -29,7 +29,7 @@ namespace Lean.Fineform.Lf_Report
         {
             get
             {
-                return "CoreP1DOutputView";
+                return "CoreP2DOutputView";
             }
         }
 

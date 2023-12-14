@@ -101,9 +101,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
             //this.prodate.SelectedDate = DateTime.Now;
 
             DefDate.SelectedDate = DateTime.Now.AddDays(-1);
-            BindDDLDept();
-            BindDDLline();
 
+            BindDDLproOrder();
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.无不良台数不超过当天生产的实绩。</div><div>2.同LOT不同订单的集计系统自动处理。</div><div>3.不良集计是按选择的日期，批次对应工单的完成情况计算出来的。</div><div>4.OPH中没有不良的批次自动追加到不良集计中。</div>");
         }
 
@@ -155,22 +154,25 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLproOrder()
         {
 
-            var q=from p in DB.Pp_Orders
-                  where string.IsNullOrEmpty( p.Porderlot)
-                  select new
-                  {
-                      Prolot = p.Porderno + "," + p.Porderqty,
+            var a = from p in DB.Pp_P2d_Outputs
+                        //where string.IsNullOrEmpty( p.Porderlot)
+                    select p.Proorder;
+            var q = from e in DB.Pp_Orders
 
-                  };
+                    where a.Contains(e.Porderno)
+                    select new
+                    {
+                        e.Porderno
+                    };
 
-                var qs = q.Select(E => new { E.Prolot }).ToList().Distinct();
+            var qs = q.Select(E => new { E.Porderno }).ToList().Distinct();
                 //var list = (from c in DB.ProSapPorders
                 //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
                 //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
                 //3.2.将数据绑定到下拉框
                 proorder.DataSource = qs;
-                proorder.DataTextField = "Prolot";
-                proorder.DataValueField = "Prolot";
+                proorder.DataTextField = "Porderno";
+                proorder.DataValueField = "Porderno";
                 proorder.DataBind();
                 this.proorder.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
 
@@ -189,27 +191,28 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
                 Prodate = DefDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 //查询LINQ去重复
-                //var q = from a in DB.Pp_P1d_Outputs
-                //            //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                //            //where b.Proecnno == strecn
-                //        where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P2d_Defects
-                //                                               where d.isDelete == 0
-                //                                               where d.Prodate == Prodate
-                //                                               where d.Prolinename == a.Prolinename
-                //                                               select d.Prolot)
-                //                    .Contains(a.Prolot)//投入日期
-                //        select new
-                //        {
-
-                //            a.Prolinename
-
-                //        };
-                var q = from a in DB.Pp_Lines
-                        where a.lineclass.CompareTo("P") == 0
+                var q = from a in DB.Pp_P2d_OutputSubs
+                        where a.Proorder.Contains(proorder.SelectedItem.Text)
+                            //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
+                            //where b.Proecnno == strecn
+                        //where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P2d_Defects
+                        //                                       where d.isDelete == 0
+                        //                                       where d.Prodate == Prodate
+                        //                                       where d.Prolinename == a.Prolinename
+                        //                                       select d.Prolot)
+                        //            .Contains(a.Prolot)//投入日期
                         select new
                         {
-                            Prolinename=a.linename
+
+                            a.Prolinename
+
                         };
+                //var q = from a in DB.Pp_Lines
+                //        where a.lineclass.CompareTo("P") == 0
+                //        select new
+                //        {
+                //            Prolinename=a.linename
+                //        };
 
 
                 var qs = q.Select(E => new { E.Prolinename }).ToList().Distinct();
@@ -262,7 +265,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
 
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "D"
+                    where a.Reasontype == "H"
                     //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                     //where b.Proecnno == strecn
                     //where a.Prolineclass == "M"
@@ -361,38 +364,41 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
                 promodel.Text = "";
                 //proorder.Text = "";
                 proorderqty.Text = "0";
-                BindDDLproOrder();
+                //BindDDLproOrder();
             }
         }
 
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (proorder.SelectedIndex != -1 && proorder.SelectedIndex != 0 && prolinename.SelectedIndex != -1 && prolinename.SelectedIndex != 0)
+            if (proorder.SelectedIndex != -1 && proorder.SelectedIndex != 0 )
             {
-                this.prolot.Text = proorder.SelectedItem.Text;
-                string sorder = proorder.SelectedItem.Text.Substring(0, proorder.SelectedItem.Text.IndexOf(","));
+                BindDDLDept();
+                BindDDLline();
+                BindDDLpcbtype();
+                //    this.prolot.Text = proorder.SelectedItem.Text;
+                //    string sorder = proorder.SelectedItem.Text.Substring(0, proorder.SelectedItem.Text.IndexOf(","));
 
-                var q = from a in DB.Pp_Orders
-                        where a.Porderno.CompareTo(sorder) == 0
-                        select a;
-                var qs = q.ToList();
-                if (qs.Any())
-                {
-                    //this.proorder.Text = sorder;
-                    this.proorderqty.Text = proorder.SelectedItem.Text.Substring(proorder.SelectedItem.Text.IndexOf(",") + 1, proorder.SelectedItem.Text.Length - proorder.SelectedItem.Text.IndexOf(",") - 1);
+                //    var q = from a in DB.Pp_Orders
+                //            where a.Porderno.CompareTo(sorder) == 0
+                //            select a;
+                //    var qs = q.ToList();
+                //    if (qs.Any())
+                //    {
+                //        //this.proorder.Text = sorder;
+                //        this.proorderqty.Text = proorder.SelectedItem.Text.Substring(proorder.SelectedItem.Text.IndexOf(",") + 1, proorder.SelectedItem.Text.Length - proorder.SelectedItem.Text.IndexOf(",") - 1);
 
-                    string prohbn = qs[0].Porderhbn.ToString();
+                //        string prohbn = qs[0].Porderhbn.ToString();
 
-                    var q_model = from a in DB.Pp_Manhours
-                                  where a.Proitem.CompareTo(prohbn) == 0
-                                  select a;
-                    var q_mname = q_model.ToList();
-                    if (q_mname.Any())
-                    {
-                        this.promodel.Text = q_mname[0].Promodel.ToString();
+                //        var q_model = from a in DB.Pp_Manhours
+                //                      where a.Proitem.CompareTo(prohbn) == 0
+                //                      select a;
+                //        var q_mname = q_model.ToList();
+                //        if (q_mname.Any())
+                //        {
+                //            this.promodel.Text = q_mname[0].Promodel.ToString();
 
-                    }
-                }
+                //        }
+                //    }
             }
         }
 
