@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Manufacturing.Master
+namespace Fine.Lf_Manufacturing.Master
 {
     public partial class Pp_models_region : PageBase
     {
@@ -194,7 +187,7 @@ namespace Lean.Fineform.Lf_Manufacturing.Master
             //{
             //    object[] keys = Grid1.DataKeys[e.RowIndex];
             //    //labResult.Text = keys[0].ToString();
-            //    PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Report/pp_model_qrcode.aspx?GUID=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());//窗口最大化
+            //    PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Report/Pp_model_qrcode.aspx?GUID=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());//窗口最大化
 
             //}
             //Guid del_ID =Guid.Parse( GetSelectedDataKeyGUID(Grid1));

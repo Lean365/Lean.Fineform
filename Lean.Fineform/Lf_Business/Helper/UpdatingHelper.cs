@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Collections;
-using System.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-
-namespace Lean.Fineform
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine
 {
     public class UpdatingHelper : PageBase
     {
@@ -362,7 +353,7 @@ namespace Lean.Fineform
 
             String OphOrder = current.Proorder;
 
-            //String SS = "SELECT[Proorder], SUM([Prorealqty])[Prorealqty]  FROM[OneHerba].[dbo].[Pp_P1d_Outputsubs] SUB" +
+            //String SS = "SELECT[Proorder], SUM([Prorealqty])[Prorealqty]  FROM[OneHerba].[dbo].[Pp_P1d_OutputSubs] SUB" +
             //           "   LEFT JOIN[dbo].[Pp_P1d_Outputs] OPH ON SUB.OPHID = OPH.OPHID WHERE [Proorder]='"+ OphOrder + "' GROUP BY[Proorder]" +
             //           "   UNION ALL" +
             //           "   (SELECT Porderno, Porderqty FROM[dbo].[proOrders]" +

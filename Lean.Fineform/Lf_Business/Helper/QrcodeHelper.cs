@@ -10,7 +10,7 @@ using ThoughtWorks.QRCode.Codec;
 using ThoughtWorks.QRCode.Codec.Data;
 using System.Drawing;
 using System.IO;
-namespace Lean.Fineform
+namespace Fine
 {
     public class QrcodeHelper
     {

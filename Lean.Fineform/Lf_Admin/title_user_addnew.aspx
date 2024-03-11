@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="title_user_addnew.aspx.cs"
-    Inherits="Lean.Fineform.Lf_Admin.title_user_addnew" %>
+    Inherits="Fine.Lf_Admin.title_user_addnew" %>
 
 <!DOCTYPE html>
 <html>

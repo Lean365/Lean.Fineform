@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
-using System.Data;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.IO;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
+using System;
+using System.Data;
+using System.Linq;
+namespace Fine.Lf_Manufacturing.PP.poor
 {
     public partial class p2d_defect_order_totalled : PageBase
     {
@@ -307,7 +297,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prodate.Contains(searchText) || u.Udf001.Contains(searchText) || u.Prolot.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Prodate.Contains(searchText) || u.Promodel.Contains(searchText) || u.Prolot.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
             }
             else
             {

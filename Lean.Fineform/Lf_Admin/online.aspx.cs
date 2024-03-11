@@ -8,7 +8,7 @@ using FineUIPro;
 using System.Data.Entity;using System.Data.Entity.Validation;
 
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class online : PageBase
     {

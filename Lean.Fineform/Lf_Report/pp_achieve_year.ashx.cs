@@ -14,14 +14,14 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
-    /// pp_achieve_model 的摘要说明
+    /// Pp_achieve_model 的摘要说明
     /// </summary>
-    public class pp_achieve_year : IHttpHandler
+    public class Pp_achieve_year : IHttpHandler
     {
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
 

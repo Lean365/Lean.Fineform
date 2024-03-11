@@ -18,7 +18,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_data_time : PageBase
     {

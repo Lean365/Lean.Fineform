@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.FICO
 {
     //FOB
     public class Fico_Costing_FobData : IKeyGUID
@@ -56,23 +56,23 @@ namespace Lean.Fineform
         public string Bc_EffectiveStartDate { get; set; }//有效日期
         [Required, StringLength(8)]
         public string Bc_Balancedate { get; set; }////结算日期，登録日付
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF01 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF02 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF03 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF04 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF05 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF06 { get; set; }
-        public Decimal UDF51 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal UDF52 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal UDF53 { get; set; }
+        public int UDF53 { get; set; }
         public Decimal UDF54 { get; set; }
 
         public Decimal UDF55 { get; set; }

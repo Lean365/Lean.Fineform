@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="outbound_scan.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.SD.shipment.outbound_scan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="outbound_scan.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.shipment.outbound_scan" %>
 
 <!DOCTYPE html>
 

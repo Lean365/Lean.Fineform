@@ -14,7 +14,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Data.Entity.Validation;
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
 
     public partial class company_new : PageBase

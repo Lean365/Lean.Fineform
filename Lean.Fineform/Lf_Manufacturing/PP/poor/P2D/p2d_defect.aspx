@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_defect.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.poor.P2D.p2d_defect" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_defect.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.poor.p2d_defect" %>
 
 <!DOCTYPE html>
 

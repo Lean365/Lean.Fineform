@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="pp_defect.ashx.cs" Class="LeanWebform.Lf_Report.pp_defect" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Pp_defect.ashx.cs" Class="Fine.Lf_Report.Pp_defect" %>

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="title_edit.aspx.cs"
-    Inherits="Lean.Fineform.Lf_Admin.title_edit" %>
+    Inherits="Fine.Lf_Admin.title_edit" %>
 
 <!DOCTYPE html>
 <html>

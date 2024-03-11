@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Linq;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class StringUtil
     {

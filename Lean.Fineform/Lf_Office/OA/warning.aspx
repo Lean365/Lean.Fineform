@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="warning.aspx.cs" Inherits="Lean.Fineform.Lf_Office.OA.warning" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="warning.aspx.cs" Inherits="Fine.Lf_Office.OA.warning" %>
 
 <!DOCTYPE html>
 

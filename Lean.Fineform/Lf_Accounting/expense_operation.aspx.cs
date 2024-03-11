@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.FICO;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class expense_operation : PageBase
     {
@@ -72,7 +65,7 @@ namespace Lean.Fineform.Lf_Accounting
 
         private void BindGrid()
         {
-            //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+            //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
             IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
 

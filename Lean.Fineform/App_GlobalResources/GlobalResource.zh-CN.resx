@@ -138,7 +138,7 @@
   <data name="sys_Button_New_EC" xml:space="preserve">
     <value>待新增</value>
   </data>
-  <data name="Yf_Special" xml:space="preserve">
+  <data name="yf_Special" xml:space="preserve">
     <value>专用部品</value>
   </data>
   <data name="menu_Oa_MGT_Weekly" xml:space="preserve">
@@ -306,7 +306,7 @@
   <data name="sys_Status_Pp_EC_Unconfirmed" xml:space="preserve">
     <value>未确认</value>
   </data>
-  <data name="menu_Bpm_Todo" xml:space="preserve">
+  <data name="menu_BPM_Todo" xml:space="preserve">
     <value>待办事项</value>
   </data>
   <data name="sys_Status_Unprocessed" xml:space="preserve">
@@ -336,13 +336,13 @@
   <data name="sys_Export_SheetLosstime" xml:space="preserve">
     <value>损失工数明细</value>
   </data>
-  <data name="menu_Bpm_Apply" xml:space="preserve">
+  <data name="menu_BPM_Apply" xml:space="preserve">
     <value>我的申请</value>
   </data>
-  <data name="menu_Fm_My" xml:space="preserve">
+  <data name="menu_FM_My" xml:space="preserve">
     <value>我的表单</value>
   </data>
-  <data name="menu_Bpm_Signature" xml:space="preserve">
+  <data name="menu_BPM_Signature" xml:space="preserve">
     <value>签章管理</value>
   </data>
   <data name="menu_Sd_TransportationMethods" xml:space="preserve">
@@ -423,7 +423,7 @@
   <data name="menu_Sd_InboundQuery" xml:space="preserve">
     <value>入库查询</value>
   </data>
-  <data name="Query_Em_EmptyText" xml:space="preserve">
+  <data name="Query_EM_EmptyText" xml:space="preserve">
     <value>请输入日期，用户查询。</value>
   </data>
   <data name="Query_Select_Date" xml:space="preserve">
@@ -615,7 +615,7 @@
   <data name="menu_Sys_Config" xml:space="preserve">
     <value>系统配置</value>
   </data>
-  <data name="Yf_General" xml:space="preserve">
+  <data name="yf_General" xml:space="preserve">
     <value>共通部品</value>
   </data>
   <data name="sys_Status_Common" xml:space="preserve">
@@ -759,7 +759,7 @@
   <data name="menu_Pp_Defect_Query" xml:space="preserve">
     <value>不良查询</value>
   </data>
-  <data name="menu_Pp_Defect_P2D" xml:space="preserve">
+  <data name="menu_Pp_P2d_Defect" xml:space="preserve">
     <value>P2D不良</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
@@ -858,22 +858,22 @@
   <data name="sys_Windows_Refresh" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="menu_Bpm_MGT" xml:space="preserve">
+  <data name="menu_BPM_MGT" xml:space="preserve">
     <value>流程管理</value>
   </data>
-  <data name="menu_Bpm_Template" xml:space="preserve">
+  <data name="menu_BPM_Template" xml:space="preserve">
     <value>流程模板</value>
   </data>
-  <data name="menu_Bpm_Desgin" xml:space="preserve">
+  <data name="menu_BPM_Desgin" xml:space="preserve">
     <value>流程设计</value>
   </data>
   <data name="sys_Help_FontIcon" xml:space="preserve">
     <value>字体图标</value>
   </data>
-  <data name="menu_Fm_MGT" xml:space="preserve">
+  <data name="menu_FM_MGT" xml:space="preserve">
     <value>表单管理</value>
   </data>
-  <data name="menu_Fm_Desgin" xml:space="preserve">
+  <data name="menu_FM_Desgin" xml:space="preserve">
     <value>表单设计</value>
   </data>
   <data name="sys_Parameter_Error" xml:space="preserve">
@@ -921,10 +921,10 @@
   <data name="sys_Status" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="menu_Em_MGT" xml:space="preserve">
+  <data name="menu_EM_MGT" xml:space="preserve">
     <value>日程管理</value>
   </data>
-  <data name="menu_Em_Schedule" xml:space="preserve">
+  <data name="menu_EM_Schedule" xml:space="preserve">
     <value>日程事件</value>
   </data>
   <data name="menu_Sd_InboundSerial" xml:space="preserve">
@@ -963,7 +963,7 @@
   <data name="sys_Help_Calendar" xml:space="preserve">
     <value>日历</value>
   </data>
-  <data name="menu_Fm_Category" xml:space="preserve">
+  <data name="menu_FM_Category" xml:space="preserve">
     <value>表单类别</value>
   </data>
   <data name="menu_Oa_MGT_Notices" xml:space="preserve">
@@ -981,44 +981,44 @@
   <data name="sys_Import_Sheet" xml:space="preserve">
     <value>导入</value>
   </data>
-  <data name="menu_Em_My" xml:space="preserve">
+  <data name="menu_EM_My" xml:space="preserve">
     <value>我的日程</value>
   </data>
-  <data name="menu_Yf_Query" xml:space="preserve">
+  <data name="menu_YF_Query" xml:space="preserve">
     <value>易飞数据</value>
   </data>
-  <data name="Yf_Supplier" xml:space="preserve">
-    <value>Yf_供应商</value>
+  <data name="yf_Supplier" xml:space="preserve">
+    <value>YF_供应商</value>
   </data>
-  <data name="Yf_Ec" xml:space="preserve">
-    <value>Yf_设变</value>
+  <data name="yf_Ec" xml:space="preserve">
+    <value>YF_设变</value>
   </data>
-  <data name="Yf_MaterialSupplier" xml:space="preserve">
-    <value>Yf_品号供应商</value>
+  <data name="yf_MaterialSupplier" xml:space="preserve">
+    <value>YF_品号供应商</value>
   </data>
-  <data name="Yf_Material" xml:space="preserve">
-    <value>Yf_物料信息</value>
+  <data name="yf_Material" xml:space="preserve">
+    <value>YF_物料信息</value>
   </data>
-  <data name="Yf_Requisition" xml:space="preserve">
-    <value>Yf_请购信息</value>
+  <data name="yf_Requisition" xml:space="preserve">
+    <value>YF_请购信息</value>
   </data>
-  <data name="Yf_PurchasingPrice" xml:space="preserve">
-    <value>Yf_采购信息</value>
+  <data name="yf_PurchasingPrice" xml:space="preserve">
+    <value>YF_采购信息</value>
   </data>
-  <data name="Yf_PurchaseOrder" xml:space="preserve">
-    <value>Yf_采购订单</value>
+  <data name="yf_PurchaseOrder" xml:space="preserve">
+    <value>YF_采购订单</value>
   </data>
-  <data name="Yf_PurchasingPriceVal" xml:space="preserve">
-    <value>Yf_分量计价</value>
+  <data name="yf_PurchasingPriceVal" xml:space="preserve">
+    <value>YF_分量计价</value>
   </data>
-  <data name="Yf_Substitute" xml:space="preserve">
-    <value>Yf_替代料</value>
+  <data name="yf_Substitute" xml:space="preserve">
+    <value>YF_替代料</value>
   </data>
-  <data name="Yf_DataView" xml:space="preserve">
-    <value>Yf_数据查询</value>
+  <data name="yf_DataView" xml:space="preserve">
+    <value>YF_数据查询</value>
   </data>
-  <data name="Yf_BOM" xml:space="preserve">
-    <value>Yf_BOM</value>
+  <data name="yf_BOM" xml:space="preserve">
+    <value>YF_BOM</value>
   </data>
   <data name="sys_Status_Pp_EC_Work" xml:space="preserve">
     <value>WIP</value>
@@ -1149,7 +1149,7 @@
   <data name="menu_Fico_RealTitles" xml:space="preserve">
     <value>会计科目</value>
   </data>
-  <data name="menu_Pp_Defect_P1D" xml:space="preserve">
+  <data name="menu_Pp_P1d_Defect" xml:space="preserve">
     <value>P1D不良</value>
   </data>
   <data name="menu_Pp_OPH" xml:space="preserve">
@@ -1182,23 +1182,23 @@
   <data name="menu_Mm_Master" xml:space="preserve">
     <value>物料信息</value>
   </data>
-  <data name="Yf_Shipment" xml:space="preserve">
-    <value>Yf_出货信息</value>
+  <data name="yf_Shipment" xml:space="preserve">
+    <value>YF_出货信息</value>
   </data>
-  <data name="Yf_Sales" xml:space="preserve">
-    <value>Yf_销售信息</value>
+  <data name="yf_Sales" xml:space="preserve">
+    <value>YF_销售信息</value>
   </data>
-  <data name="Yf_Slip" xml:space="preserve">
-    <value>Yf_销货信息</value>
+  <data name="yf_Slip" xml:space="preserve">
+    <value>YF_销货信息</value>
   </data>
-  <data name="Yf_Assets" xml:space="preserve">
-    <value>Yf_固定资产</value>
+  <data name="yf_Assets" xml:space="preserve">
+    <value>YF_固定资产</value>
   </data>
   <data name="rpt_Charts_FyJP" xml:space="preserve">
     <value>年度销售(JP)</value>
   </data>
-  <data name="Yf_StockOrder" xml:space="preserve">
-    <value>Yf_进货信息</value>
+  <data name="yf_StockOrder" xml:space="preserve">
+    <value>YF_进货信息</value>
   </data>
   <data name="rpt_Charts_FyBuCN" xml:space="preserve">
     <value>年度BU(CN)</value>
@@ -1220,5 +1220,8 @@
   </data>
   <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
     <value>原因类别</value>
+  </data>
+  <data name="menu_Pp_Inspection" xml:space="preserve">
+    <value>PCBA检查</value>
   </data>
 </root>

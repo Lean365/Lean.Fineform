@@ -5,7 +5,7 @@ using System.Web;
 using System.Linq;
 using System.Data.Entity;using System.Data.Entity.Validation;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class MenuHelper
     {

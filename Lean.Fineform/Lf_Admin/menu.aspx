@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="menu.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.menu" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="menu.aspx.cs" Inherits="Fine.Lf_Admin.menu" %>
 
 <!DOCTYPE html>
 <html>

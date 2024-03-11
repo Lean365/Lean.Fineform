@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
-    public partial class pp_daily_report  : PageBase
+    public partial class Pp_daily_report  : PageBase
     {
         #region ViewPower
 

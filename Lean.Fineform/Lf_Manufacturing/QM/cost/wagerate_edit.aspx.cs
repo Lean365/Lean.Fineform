@@ -1,25 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using FineUIPro.Design;
-using System.Linq;
-using System.Data.Entity;
+using System;
 //using EntityFramework.Extensions;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
-
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+using System.Linq;
+namespace Fine.Lf_Manufacturing.QM.cost
 {
     public partial class wagerate_edit : PageBase
     {

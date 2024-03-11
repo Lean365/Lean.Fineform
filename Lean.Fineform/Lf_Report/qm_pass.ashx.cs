@@ -14,15 +14,15 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
-    /// qm_pass 的摘要说明
+    /// Qm_pass 的摘要说明
     /// </summary>
-    public class qm_pass : IHttpHandler
+    public class Qm_pass : IHttpHandler
     {
 
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
 

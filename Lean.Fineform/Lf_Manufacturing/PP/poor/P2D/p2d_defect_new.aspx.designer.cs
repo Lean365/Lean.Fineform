@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
+namespace Fine.Lf_Manufacturing.PP.poor
 {
 
 
@@ -232,13 +232,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.DropDownList ddlProngdept;
-        protected global::FineUIPro.DropDownList ddlPropcbtype;
-        protected global::FineUIPro.DropDownList ddlProlinename;
-        protected global::FineUIPro.DropDownList ddlProbadprop;
-        protected global::FineUIPro.DropDownList ddlProbadresponsibility;
-        protected global::FineUIPro.DropDownList ddlProbadrepairman;
 
-        
         /// <summary>
         /// numProbadqty 控件。
         /// </summary>

@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class costing_fc_q1 : PageBase
     {
@@ -60,7 +60,7 @@ namespace Lean.Fineform.Lf_Accounting
         //    {
         //        FY = q_ym[0].Btfy.ToString();
 
-        //        var q = (from a in DB.Sd_PsiDatas
+        //        var q = (from a in DB.Sd_Psis
         //                 where a.isDelete == 0
         //                 //where a.Bc_YM.CompareTo(thisQuarter1) >= 0
         //                 where a.Bc_FY.CompareTo(FY) == 0
@@ -171,7 +171,7 @@ namespace Lean.Fineform.Lf_Accounting
             {
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
-                var q_ver = (from a in DB.Sd_PsiDatas
+                var q_ver = (from a in DB.Sd_Psis
                             where a.Bc_FY.CompareTo(FY) == 0
                             where a.Bc_Balancedate.Substring(0, 6).CompareTo(edate) == 0
                             select new
@@ -193,7 +193,7 @@ namespace Lean.Fineform.Lf_Accounting
 
 
 
-                var q = from a in DB.Sd_PsiDatas
+                var q = from a in DB.Sd_Psis
                          where a.isDelete == 0
                          //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                          where a.Bc_FY.CompareTo(FY) ==0
@@ -260,7 +260,7 @@ namespace Lean.Fineform.Lf_Accounting
         }
         private void BindDDLItem()
         {
-            var q_ver = from a in DB.Sd_PsiDatas
+            var q_ver = from a in DB.Sd_Psis
                          where a.Bc_FY.CompareTo(FY) == 0
                          select new
                          {
@@ -315,7 +315,7 @@ namespace Lean.Fineform.Lf_Accounting
                 BindGrid();
             }
         }
-        protected void DDLItEm_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DDLItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(DDLItem.SelectedIndex!=0||DDLItem.SelectedIndex!=-1)
             {
@@ -392,7 +392,7 @@ namespace Lean.Fineform.Lf_Accounting
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = FY + "_Forecast";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -411,7 +411,7 @@ namespace Lean.Fineform.Lf_Accounting
             {
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
-                var q_ver = (from a in DB.Sd_PsiDatas
+                var q_ver = (from a in DB.Sd_Psis
                              where a.Bc_FY.CompareTo(FY) == 0
                              where a.Bc_Balancedate.Substring(0, 6).CompareTo(edate) == 0
                              select new
@@ -433,7 +433,7 @@ namespace Lean.Fineform.Lf_Accounting
 
 
 
-                var q = from a in DB.Sd_PsiDatas
+                var q = from a in DB.Sd_Psis
                         where a.isDelete == 0
                         //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                         where a.Bc_FY.CompareTo(FY) == 0

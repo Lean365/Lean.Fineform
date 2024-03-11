@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_p2d : PageBase
     {

@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
-namespace Lean.Fineform.Lf_Office.OA
+namespace Fine.Lf_Office.OA
 {
     public partial class warning : PageBase
     {

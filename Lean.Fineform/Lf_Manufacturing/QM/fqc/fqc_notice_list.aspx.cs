@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
+namespace Fine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_notice_list : PageBase
     {

@@ -5,8 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
-
-namespace Lean.Fineform.Lf_Accounting
+using Fine.Lf_Business.Models.PP;
+using Fine.Lf_Business.Models.OA;
+using Fine.Lf_Business.Models.MM;
+using Fine.Lf_Business.Models.FICO;
+using Fine.Lf_Business.Models.QM;
+using Fine.Lf_Business.Models.SD;
+namespace Fine.Lf_Accounting
 {
     public partial class costing_demandqty : PageBase
     {
@@ -55,7 +60,7 @@ namespace Lean.Fineform.Lf_Accounting
 
         private void BindGrid()
         {
-            IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
+            IQueryable<Sd_Mrp> q = DB.Sd_Mrps; //.Include(u => u.Dept);
 
 
             //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
@@ -92,7 +97,7 @@ namespace Lean.Fineform.Lf_Accounting
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Sd_MrpData>(q, Grid1);
+            q = SortAndPage<Sd_Mrp>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -152,7 +157,7 @@ namespace Lean.Fineform.Lf_Accounting
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "MRP_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

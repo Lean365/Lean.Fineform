@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Collections;
-using System.Configuration;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using System.Data.Entity.Validation;
-using System.Text;
-using ThoughtWorks;
-using ThoughtWorks.QRCode;
-using ThoughtWorks.QRCode.Codec;
-using ThoughtWorks.QRCode.Codec.Data;
-using System.Drawing;
-namespace Lean.Fineform.Lf_Manufacturing.Master
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.Master
 {
 
     public partial class Pp_models_region_new : PageBase

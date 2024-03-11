@@ -9,7 +9,7 @@ using System.Collections;
 using System.Configuration;
 using FineUIPro;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform
+namespace Fine
 {
     public class GridHelper
     {

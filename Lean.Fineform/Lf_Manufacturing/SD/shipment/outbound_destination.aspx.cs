@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
+namespace Fine.Lf_Manufacturing.SD.shipment
 {
     public partial class outbound_destination : PageBase
     {
@@ -73,9 +73,9 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
         private void BindGrid()
         {
 
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
-            //IQueryable<LeanWebform.Lc_BUS.Models.SD.DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
+            //IQueryable<Fine.Lc_BUS.Models.SD.DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
 
             var q = from a in DBSerial.DTASSET_SCANNER_OUT_SUB
                     orderby a.OUTS001 descending
@@ -268,9 +268,9 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
 
 
 
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
 

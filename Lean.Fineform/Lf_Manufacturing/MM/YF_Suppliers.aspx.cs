@@ -14,10 +14,10 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Data.Entity.Validation;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
 
-    public partial class Yf_Suppliers : PageBase
+    public partial class YF_Suppliers : PageBase
     {
 
 
@@ -37,8 +37,8 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         #endregion
 
         #region Page_Load
-        Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
-        Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+        Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+        Fine.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -73,7 +73,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             {
                 string searchText = C_Code.SelectedItem.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.PURMA Ccurrent = DBCYF.PURMA.Find(searchText); //.Include(u => u.Dept);
+                Fine.Lf_Business.Models.YF.PURMA Ccurrent = DBCYF.PURMA.Find(searchText); //.Include(u => u.Dept);
 
                 if (Ccurrent == null)
                 {
@@ -116,7 +116,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             {
                 string searchText = H_Code.SelectedItem.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.PURMA Hcurrent = DBHYF.PURMA.Find(searchText); //.Include(u => u.Dept);
+                Fine.Lf_Business.Models.YF.PURMA Hcurrent = DBHYF.PURMA.Find(searchText); //.Include(u => u.Dept);
 
                 if (Hcurrent == null)
                 {
@@ -155,7 +155,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         private void BindDDLH_code()
         {
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURMA> q = DBHYF.PURMA;
+            IQueryable<Fine.Lf_Business.Models.YF.PURMA> q = DBHYF.PURMA;
 
 
 
@@ -175,7 +175,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
         private void BindDDLC_code()
         {
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURMA> q = DBCYF.PURMA;
+            IQueryable<Fine.Lf_Business.Models.YF.PURMA> q = DBCYF.PURMA;
 
 
 

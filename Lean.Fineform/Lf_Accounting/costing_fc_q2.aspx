@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_fc_q2.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.costing_fc_q2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_fc_q2.aspx.cs" Inherits="Fine.Lf_Accounting.costing_fc_q2" %>
 
 <!DOCTYPE html>
 
@@ -40,7 +40,7 @@
                                     runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
                                 </f:DatePicker>
                                 
-                                <f:DropDownList ID="DDLItem" Label="<%$ Resources:GlobalResource,Query_Select_Text%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLItEm_SelectedIndexChanged">
+                                <f:DropDownList ID="DDLItem" Label="<%$ Resources:GlobalResource,Query_Select_Text%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLItem_SelectedIndexChanged">
                                 </f:DropDownList>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server"></f:ToolbarFill>
                                 <f:Button ID="BtnExport" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"

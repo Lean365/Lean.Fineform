@@ -12,9 +12,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_EC : PageBase
+    public partial class YF_EC : PageBase
     {
         #region ViewPower
 
@@ -83,9 +83,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         {
             try
             {
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                IQueryable<Lean.Fineform.Lf_Business.Models.YF.BOMTA> q = DBYF.BOMTA; //.Include(u => u.Dept);
+                IQueryable<Fine.Lf_Business.Models.YF.BOMTA> q = DBYF.BOMTA; //.Include(u => u.Dept);
 
                 string searchText = ttbSearchEcnsub.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -145,9 +145,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             if (!String.IsNullOrEmpty(ecnno))
             {
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                IQueryable<Lean.Fineform.Lf_Business.Models.YF.BOMTB> q = DBYF.BOMTB; //.Include(u => u.Dept);
+                IQueryable<Fine.Lf_Business.Models.YF.BOMTB> q = DBYF.BOMTB; //.Include(u => u.Dept);
 
                 q = q.Where(u => u.TB002.Contains(ecnno));
                 var qs = from a in q
@@ -207,9 +207,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             if (!String.IsNullOrEmpty(ecnno))
             {
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                IQueryable<Lean.Fineform.Lf_Business.Models.YF.BOMTC> q = DBYF.BOMTC; //.Include(u => u.Dept);
+                IQueryable<Fine.Lf_Business.Models.YF.BOMTC> q = DBYF.BOMTC; //.Include(u => u.Dept);
 
                 q = q.Where(u => u.TC002.Contains(ecnno));
 

@@ -13,7 +13,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform
+namespace Fine
 {
     public class Common : PageBase
     {

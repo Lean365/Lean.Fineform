@@ -15,7 +15,7 @@ using System.Configuration;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p2d_output_opt : PageBase
     {
@@ -28,7 +28,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         {
             get
             {
-                return "CoreP1DOutputView";
+                return "CoreP2DOutputView";
             }
         }
 

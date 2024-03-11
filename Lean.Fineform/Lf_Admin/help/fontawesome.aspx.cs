@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Admin.help
+namespace Fine.Lf_Admin.help
 {
     public partial class fontawesome : System.Web.UI.Page
     {

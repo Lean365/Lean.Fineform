@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine
 {
     //操作日志表
     public class Adm_OperateLog : IKeyGUID

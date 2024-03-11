@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_new.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.EC.ec_eng_new" %>
+﻿<%@ Page Language="C#"  ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_eng_new" %>
 
 <!DOCTYPE html>
 
@@ -163,7 +163,7 @@
                                 <f:Toolbar ID="Toolbar2" runat="server">
                                     <Items>
                                         <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
-                                        <f:DropDownList ID="DDL_Item" AutoPostBack="true" OnSelectedIndexChanged="DDL_ItEm_SelectedIndexChanged"
+                                        <f:DropDownList ID="DDL_Item" AutoPostBack="true" OnSelectedIndexChanged="DDL_Item_SelectedIndexChanged"
                                             runat="server">
                                         </f:DropDownList>
                                         <f:ToolbarFill ID="ToolbarFill2" runat="server"></f:ToolbarFill>

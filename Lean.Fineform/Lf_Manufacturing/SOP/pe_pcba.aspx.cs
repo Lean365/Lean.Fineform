@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.SOP
+namespace Fine.Lf_Manufacturing.SOP
 {
     public partial class pe_pcba : PageBase
     {

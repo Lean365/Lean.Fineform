@@ -4,7 +4,7 @@ using System.Web;
 using FineUIPro;
 using System.Linq;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class ConfigHelper
     {

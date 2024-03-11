@@ -40,7 +40,7 @@ using NPOI.XSSF.UserModel;//2007
 using System.Collections;
 using System.Text.RegularExpressions;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class NpoiHelper
     {

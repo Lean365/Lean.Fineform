@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Configuration;
 using FineUIPro;
-namespace Lean.Fineform
+namespace Fine
 {
     /// <summary> 
     /// SqlServer数据访问帮助类 

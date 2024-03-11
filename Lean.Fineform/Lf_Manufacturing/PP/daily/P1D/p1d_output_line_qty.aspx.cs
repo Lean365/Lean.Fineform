@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_output_line_qty : PageBase
     {
@@ -87,8 +87,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                 string MonthSql = "declare @sql varchar(8000) " +
             "set @sql = 'select left(Prodate,6)Prodate' " +
             "select @sql = @sql + ',isnull (sum(case Prolinename when ''' + Prolinename + ''' then Prorealqty end),0) as [' + Prolinename + ']' " +
-            "from(select distinct Prolinename from Pp_P1d_OutputSub) as a " +
-            "select @sql = @sql + ' from Pp_P1d_OutputSub group by left(Prodate,6) order by left(Prodate,6)' " +
+            "from(select distinct Prolinename from Pp_P1d_Outputsub) as a " +
+            "select @sql = @sql + ' from Pp_P1d_Outputsub group by left(Prodate,6) order by left(Prodate,6)' " +
             "exec(@sql)";
 
                 DataTable dtMonth = ConvertHelper.GetDataTable(MonthSql);
@@ -99,8 +99,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                 string LotSql = "declare @sql varchar(8000) "+
                             "set @sql = 'select left(Prodate,6)Prodate,Prolot' "+
                             "select @sql = @sql + ',isnull (sum(case Prolinename when ''' + Prolinename + ''' then Prorealqty end),0) as [' + Prolinename + ']' "+
-                            "from(select distinct Prolinename from Pp_P1d_OutputSub) as a "+
-                            "select @sql = @sql + ' from Pp_P1d_OutputSub group by left(Prodate,6),Prolot order by left(Prodate,6),Prolot' "+
+                            "from(select distinct Prolinename from Pp_P1d_Outputsub) as a "+
+                            "select @sql = @sql + ' from Pp_P1d_Outputsub group by left(Prodate,6),Prolot order by left(Prodate,6),Prolot' "+
                             "exec(@sql)";
            DataTable dtLot= ConvertHelper.GetDataTable(LotSql);
                 var Lot = from x in dtLot.AsEnumerable()
@@ -633,7 +633,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -787,7 +787,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

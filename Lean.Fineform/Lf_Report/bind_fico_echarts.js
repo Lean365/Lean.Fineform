@@ -942,9 +942,9 @@ function BindmyChart_CostingMaterialcost(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 103) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1139,9 +1139,9 @@ function BindmyChart_CostingNeedQty(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 103) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1336,9 +1336,9 @@ function BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, d
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 103) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1533,9 +1533,9 @@ function BindmyChart_CostingComparedForecast(name, value1, value2, value3, data)
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 103) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1731,9 +1731,9 @@ function BindmyChart_CostingProductCost(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 103) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1967,9 +1967,9 @@ function BindmyChart_CostingInvAMT(name, value1, value2, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 110) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -2203,9 +2203,9 @@ function BindmyChart_CostingInvAMTbu(name, value1, value2, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 110) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }

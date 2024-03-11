@@ -14,14 +14,14 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
-    /// pp_losstime_line 的摘要说明
+    /// Pp_losstime_line 的摘要说明
     /// </summary>
-    public class pp_losstime_line : IHttpHandler
+    public class Pp_losstime_line : IHttpHandler
     {
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
 

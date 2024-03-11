@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="corpkpi_new.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.corpkpi_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="corpkpi_new.aspx.cs" Inherits="Fine.Lf_Admin.corpkpi_new" %>
 
 <!DOCTYPE html>
 

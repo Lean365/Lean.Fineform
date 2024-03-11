@@ -15,7 +15,7 @@ using System.IO;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Collections;
-namespace Lean.Fineform
+namespace Fine
 {
     public class PageBase : System.Web.UI.Page
     {
@@ -88,16 +88,16 @@ namespace Lean.Fineform
         #endregion
         #region 实体上下文
 
-        public static LeanContext DB
+        public static FineContext DB
         {
             get
             {
                 // http://stackoverflow.com/questions/6334592/one-dbcontext-per-request-in-asp-net-mvc-without-ioc-container
-                if (!HttpContext.Current.Items.Contains("__LeanWebofrmContext"))
+                if (!HttpContext.Current.Items.Contains("__LeanBenchNetContext"))
                 {
-                    HttpContext.Current.Items["__LeanWebofrmContext"] = new LeanContext();
+                    HttpContext.Current.Items["__LeanBenchNetContext"] = new FineContext();
                 }
-                return HttpContext.Current.Items["__LeanWebofrmContext"] as LeanContext;
+                return HttpContext.Current.Items["__LeanBenchNetContext"] as FineContext;
             }
         }
 

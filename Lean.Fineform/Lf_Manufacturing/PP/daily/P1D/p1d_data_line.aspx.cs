@@ -16,9 +16,9 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
-    public partial class p1d_data_line : PageBase
+    public partial class output_data_line : PageBase
     {
         #region ViewPower
 

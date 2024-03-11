@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_Mm_outbound.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.EC.ec_Mm_outbound" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_Mm_outbound.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_Mm_outbound" %>
 
 <!DOCTYPE html>
 

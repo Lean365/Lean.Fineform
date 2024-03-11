@@ -16,7 +16,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class role_power_batch : PageBase
     {

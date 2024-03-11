@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" ValidateRequest="false" AutoEventWireup="true" CodeBehind="liaison_edit.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.TL.liaison_edit" %>
+﻿<%@ Page Language="C#" ValidateRequest="false" AutoEventWireup="true" CodeBehind="liaison_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.TL.liaison_edit" %>
 
 <!DOCTYPE html>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sys_map.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.sys_map" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sys_map.aspx.cs" Inherits="Fine.Lf_Admin.sys_map" %>
 
 <!DOCTYPE html>
 
@@ -29,28 +29,28 @@
                     <div class="container">
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_menu" EnablePostBack="true" IconAlign="Top" IconFontClass="fab fa-buromobelexperte" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Menu%>" OnClick="Btn_adm_menu_Click">
+                                <f:Button ID="Btn_Adm_menu" EnablePostBack="true" IconAlign="Top" IconFontClass="fab fa-buromobelexperte" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Menu%>" OnClick="Btn_Adm_menu_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_online" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-alt" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Online%>" OnClick="Btn_adm_online_Click">
+                                <f:Button ID="Btn_Adm_online" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-alt" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Online%>" OnClick="Btn_Adm_online_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_config" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-cogs" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Config%>" OnClick="Btn_adm_config_Click">
+                                <f:Button ID="Btn_Adm_config" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-cogs" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Config%>" OnClick="Btn_Adm_config_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_log" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-file-alt" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Log%>" OnClick="Btn_adm_log_Click">
+                                <f:Button ID="Btn_Adm_log" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-file-alt" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Log%>" OnClick="Btn_Adm_log_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_operatelog" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-file-code" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Work_Log%>" OnClick="Btn_adm_operatelog_Click">
+                                <f:Button ID="Btn_Adm_operatelog" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-file-code" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Work_Log%>" OnClick="Btn_Adm_operatelog_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
@@ -59,23 +59,23 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_dept" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bars" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Dept%>" OnClick="Btn_adm_dept_Click">
+                                <f:Button ID="Btn_Adm_dept" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bars" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Dept%>" OnClick="Btn_Adm_dept_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_dept_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-plus" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_DeptUser%>" OnClick="Btn_adm_dept_user_Click">
+                                <f:Button ID="Btn_Adm_dept_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-plus" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_DeptUser%>" OnClick="Btn_Adm_dept_user_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_title" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-graduate" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Title%>" OnClick="Btn_adm_title_Click">
+                                <f:Button ID="Btn_Adm_title" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-graduate" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Title%>" OnClick="Btn_Adm_title_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_title_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-cog" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_TitleUser%>" OnClick="Btn_adm_title_user_Click">
+                                <f:Button ID="Btn_Adm_title_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-cog" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_TitleUser%>" OnClick="Btn_Adm_title_user_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -83,53 +83,53 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-users" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_User%>" OnClick="Btn_adm_user_Click">
+                                <f:Button ID="Btn_Adm_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-users" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_User%>" OnClick="Btn_Adm_user_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_changepassword" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-exchange-alt" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_ChangePassword%>" OnClick="Btn_adm_changepassword_Click">
+                                <f:Button ID="Btn_Adm_changepassword" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-exchange-alt" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_ChangePassword%>" OnClick="Btn_Adm_changepassword_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_role" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-shield" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Role%>" OnClick="Btn_adm_role_Click">
+                                <f:Button ID="Btn_Adm_role" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-shield" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Role%>" OnClick="Btn_Adm_role_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_role_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-lock" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_RoleUser%>" OnClick="Btn_adm_role_user_Click">
+                                <f:Button ID="Btn_Adm_role_user" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-lock" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_RoleUser%>" OnClick="Btn_Adm_role_user_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_power" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-circle" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_Power%>" OnClick="Btn_adm_power_Click">
+                                <f:Button ID="Btn_Adm_power" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-circle" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_Power%>" OnClick="Btn_Adm_power_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_adm_role_power" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-check" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sys_PowerRole%>" OnClick="Btn_adm_role_power_Click">
+                                <f:Button ID="Btn_Adm_role_power" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-user-check" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sys_PowerRole%>" OnClick="Btn_Adm_role_power_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
                                 <f:Button ID="Btn_bpm_todolist" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-toggle-on" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Bpm_Todo%>" OnClick="Btn_bpm_todolist_Click">
+                                    Text="<%$ Resources:GlobalResource,menu_BPM_Todo%>" OnClick="Btn_bpm_todolist_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
                                 <f:Button ID="Btn_bpm_apply" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-tasks" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Bpm_Apply%>" OnClick="Btn_bpm_apply_Click">
+                                    Text="<%$ Resources:GlobalResource,menu_BPM_Apply%>" OnClick="Btn_bpm_apply_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
                                 <f:Button ID="Btn_bpm_desgin" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-sitemap" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Bpm_Desgin%>" OnClick="Btn_bpm_desgin_Click">
+                                    Text="<%$ Resources:GlobalResource,menu_BPM_Desgin%>" OnClick="Btn_bpm_desgin_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
                                 <f:Button ID="Btn_bpm_template" EnablePostBack="true" IconAlign="Top" IconFontClass="fab fa-elementor" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Bpm_Template%>" OnClick="Btn_bpm_template_Click">
+                                    Text="<%$ Resources:GlobalResource,menu_BPM_Template%>" OnClick="Btn_bpm_template_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -138,17 +138,17 @@
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
                                 <f:Button ID="Btn_bpm_signature" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-signature" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Bpm_Signature%>" OnClick="Btn_bpm_signature_Click">
+                                    Text="<%$ Resources:GlobalResource,menu_BPM_Signature%>" OnClick="Btn_bpm_signature_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Em_event" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-list" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Em_My%>" OnClick="Btn_Em_event_Click">
+                                <f:Button ID="Btn_em_event" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-list" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_EM_My%>" OnClick="Btn_em_event_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Em_schedule" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-calendar-alt" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Em_MGT%>" OnClick="Btn_Em_schedule_Click">
+                                <f:Button ID="Btn_em_schedule" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-calendar-alt" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_EM_MGT%>" OnClick="Btn_em_schedule_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
@@ -216,28 +216,28 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_line" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-sitemap" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Line%>" OnClick="Btn_pp_Pp_line_Click">
+                                <f:Button ID="Btn_Pp_Pp_line" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-sitemap" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Line%>" OnClick="Btn_Pp_Pp_line_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_order" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-folder-open" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_MO%>" OnClick="Btn_pp_Pp_order_Click">
+                                <f:Button ID="Btn_Pp_Pp_order" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-folder-open" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_MO%>" OnClick="Btn_Pp_Pp_order_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_manhour" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-clock" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Manhours%>" OnClick="Btn_pp_Pp_manhour_Click">
+                                <f:Button ID="Btn_Pp_Pp_manhour" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-clock" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Manhours%>" OnClick="Btn_Pp_Pp_manhour_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_reason" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-restore" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_ReasonType%>" OnClick="Btn_pp_Pp_reason_Click">
+                                <f:Button ID="Btn_Pp_Pp_reason" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-restore" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_ReasonType%>" OnClick="Btn_Pp_Pp_reason_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Qm_acceptcat" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-info" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_InspectionType%>" OnClick="Btn_pp_Qm_acceptcat_Click">
+                                <f:Button ID="Btn_Pp_Qm_acceptcat" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-info" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_InspectionType%>" OnClick="Btn_Pp_Qm_acceptcat_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -245,13 +245,13 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_transport" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-shipping-fast" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sd_TransportationMethods%>" OnClick="Btn_pp_Pp_transport_Click">
+                                <f:Button ID="Btn_Pp_Pp_transport" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-shipping-fast" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sd_TransportationMethods%>" OnClick="Btn_Pp_Pp_transport_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_Pp_efficiency" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-percent" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_efficiency%>" OnClick="Btn_pp_Pp_efficiency_Click">
+                                <f:Button ID="Btn_Pp_Pp_efficiency" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-percent" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_efficiency%>" OnClick="Btn_Pp_Pp_efficiency_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
@@ -260,8 +260,8 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_sys_Status_Ec__Lot" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-vector-square" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Ec_Putinto%>" OnClick="Btn_pp_sys_Status_Ec__Lot_Click">
+                                <f:Button ID="Btn_Pp_sys_Status_Ec__Lot" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-vector-square" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Ec_Putinto%>" OnClick="Btn_Pp_sys_Status_Ec__Lot_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
@@ -324,28 +324,28 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_daily" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-list-alt" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH%>" OnClick="Btn_pp_daily_Click">
+                                <f:Button ID="Btn_Pp_daily" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-list-alt" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH%>" OnClick="Btn_Pp_daily_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_daily_actual_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-building" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Actual%>" OnClick="Btn_pp_daily_actual_Query_Click">
+                                <f:Button ID="Btn_Pp_daily_actual_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-building" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Actual%>" OnClick="Btn_Pp_daily_actual_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_output_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Query%>" OnClick="Btn_pp_output_Query_Click">
+                                <f:Button ID="Btn_Pp_output_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Query%>" OnClick="Btn_Pp_output_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_output_order_finish" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-toilet-paper" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_ProducingProgress%>" OnClick="Btn_pp_output_order_finish_Click">
+                                <f:Button ID="Btn_Pp_output_order_finish" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-toilet-paper" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_ProducingProgress%>" OnClick="Btn_Pp_output_order_finish_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_output_opt" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Report%>" OnClick="Btn_pp_output_opt_Click">
+                                <f:Button ID="Btn_Pp_output_opt" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OPH_Report%>" OnClick="Btn_Pp_output_opt_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -353,53 +353,53 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_defect" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bug" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Production%>" OnClick="Btn_pp_defect_Click">
+                                <f:Button ID="Btn_Pp_defect" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bug" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Production%>" OnClick="Btn_Pp_defect_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_defect_order_totalled" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_MOStatistics%>" OnClick="Btn_pp_defect_order_totalled_Click">
+                                <f:Button ID="Btn_Pp_defect_order_totalled" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_MOStatistics%>" OnClick="Btn_Pp_defect_order_totalled_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_defect_lot_finished" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-large" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_LotStatistics%>" OnClick="Btn_pp_defect_lot_finished_Click">
+                                <f:Button ID="Btn_Pp_defect_lot_finished" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-large" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_LotStatistics%>" OnClick="Btn_Pp_defect_lot_finished_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_defect_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Query%>" OnClick="Btn_pp_defect_Query_Click">
+                                <f:Button ID="Btn_Pp_defect_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Query%>" OnClick="Btn_Pp_defect_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_times_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Times_Query%>" OnClick="Btn_pp_times_Query_Click">
+                                <f:Button ID="Btn_Pp_times_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_Times_Query%>" OnClick="Btn_Pp_times_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_qm_fqc" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-check-double" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC%>" OnClick="Btn_qm_fqc_Click">
+                                <f:Button ID="Btn_Qm_fqc" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-check-double" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC%>" OnClick="Btn_Qm_fqc_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_qm_fqc_notice" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-sticky-note" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_UnqualifiedNotice%>" OnClick="Btn_qm_fqc_notice_Click">
+                                <f:Button ID="Btn_Qm_fqc_notice" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-sticky-note" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_UnqualifiedNotice%>" OnClick="Btn_Qm_fqc_notice_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_qm_fqc_action" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-maximize" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_AnalysisStrategy%>" OnClick="Btn_qm_fqc_action_Click">
+                                <f:Button ID="Btn_Qm_fqc_action" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-maximize" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_AnalysisStrategy%>" OnClick="Btn_Qm_fqc_action_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_qm_fqc_count" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-drafting-compass" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_PassReport%>" OnClick="Btn_qm_fqc_count_Click">
+                                <f:Button ID="Btn_Qm_fqc_count" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-drafting-compass" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_PassReport%>" OnClick="Btn_Qm_fqc_count_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_qm_fqc_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_Query%>" OnClick="Btn_qm_fqc_Query_Click">
+                                <f:Button ID="Btn_Qm_fqc_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_FQC_Query%>" OnClick="Btn_Qm_fqc_Query_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -427,23 +427,23 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_inbound_scan" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-clipboard-list" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_InboundSerial%>" OnClick="Btn_pp_inbound_scan_Click">
+                                <f:Button ID="Btn_Pp_inbound_scan" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-clipboard-list" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_InboundSerial%>" OnClick="Btn_Pp_inbound_scan_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_outbound_scan" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-outdent" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OutboundSerial%>" OnClick="Btn_pp_outbound_scan_Click">
+                                <f:Button ID="Btn_Pp_outbound_scan" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-outdent" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OutboundSerial%>" OnClick="Btn_Pp_outbound_scan_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_inbound_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-indent" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_InboundQuery%>" OnClick="Btn_pp_inbound_Query_Click">
+                                <f:Button ID="Btn_Pp_inbound_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-indent" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_InboundQuery%>" OnClick="Btn_Pp_inbound_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_pp_outbound_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_OutboundQuery%>" OnClick="Btn_pp_outbound_Query_Click">
+                                <f:Button ID="Btn_Pp_outbound_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_OutboundQuery%>" OnClick="Btn_Pp_outbound_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">

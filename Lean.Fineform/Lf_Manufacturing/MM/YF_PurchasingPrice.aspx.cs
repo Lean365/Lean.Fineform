@@ -15,9 +15,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_PurchasingPrice : PageBase
+    public partial class YF_PurchasingPrice : PageBase
     {
         #region ViewPower
 
@@ -65,7 +65,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreKitOutput", BtnExport);
             //CheckPowerWithButton("CoreMMView", BtnVal);
 
-            //BtnVal.OnClientClick = Window1.GetShowReference("~/Lc_Yifei/Yf_PurchasingPriceVal.aspx", "易飞分量计价") + Window1.GetMaximizeReference();
+            //BtnVal.OnClientClick = Window1.GetShowReference("~/Lc_Yifei/YF_PurchasingPriceVal.aspx", "易飞分量计价") + Window1.GetMaximizeReference();
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
@@ -86,9 +86,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tl in DBYF.PURTL
                                join tm in DBYF.PURTM
@@ -229,7 +229,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
                 var q = from tl in DBYF.PURTL
                         join tm in DBYF.PURTM

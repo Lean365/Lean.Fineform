@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     public partial class cube_echarts_all : PageBase
     {

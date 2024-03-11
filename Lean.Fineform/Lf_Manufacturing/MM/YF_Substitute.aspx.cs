@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_Substitute : PageBase
+    public partial class YF_Substitute : PageBase
     {
         #region ViewPower
 
@@ -72,9 +72,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
         private void BindGrid()
         {
-            Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+           Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.BOMMB> q = DBYF.BOMMB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.BOMMB> q = DBYF.BOMMB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim().ToUpper();
@@ -257,9 +257,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
 
 
-            Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+           Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.BOMMB> q = DBYF.BOMMB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.BOMMB> q = DBYF.BOMMB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim().ToUpper();
@@ -284,7 +284,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 string Xlsbomitem, ExportFileName;
 
                 // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-                Xlsbomitem = searchText + "_Yf_Substitute";
+                Xlsbomitem = searchText + "_YF_Substitute";
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
 

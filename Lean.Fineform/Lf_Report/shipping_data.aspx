@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="shipping_data.aspx.cs" Inherits="Lean.Fineform.Lf_Report.shipping_data" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="shipping_data.aspx.cs" Inherits="Fine.Lf_Report.shipping_data" %>
 
 <!DOCTYPE html>
 

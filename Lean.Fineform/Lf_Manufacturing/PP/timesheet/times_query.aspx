@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="times_query.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.timesheet.times_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="times_query.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.timesheet.times_query" %>
 
 <!DOCTYPE html>
 

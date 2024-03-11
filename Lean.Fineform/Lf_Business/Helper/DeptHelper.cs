@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Linq;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class DeptHelper
     {

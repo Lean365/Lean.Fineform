@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.QM
+namespace Fine.Lf_Manufacturing.QM
 {
 
 
-    public partial class qm_chart
+    public partial class Qm_chart
     {
 
         /// <summary>

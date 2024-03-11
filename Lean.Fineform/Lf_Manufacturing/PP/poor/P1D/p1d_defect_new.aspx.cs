@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using Newtonsoft.Json.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-using System.ComponentModel;
-
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
+namespace Fine.Lf_Manufacturing.PP.poor
 {
 
     public partial class p1d_defect_new : PageBase
@@ -66,7 +54,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
 
 
             //linq查询空表没法显示字段名,只能查询非空表
-            //IQueryable<Pp_Defect_P1d> q = DB.Pp_P1d_Defects;
+            //IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects;
             //DefDatatable = CopyToDataTable(q);
 
             //获取SQL数据表
@@ -359,7 +347,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                         promodelqty.Text = "0";
                     }
                     //机种总数量不再需要
-                    //var modelqty = (from a in DB.Pp_P1d_Outputsubs
+                    //var modelqty = (from a in DB.Pp_P1d_OutputSubs
 
                     //                where a.Prolot == slot
 
@@ -389,7 +377,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
 
 
                 //ConnStr = "SELECT [Prolinename],[Prodate],[Prolot],sum([Prorealqty])[Prorealqty] " +
-                //            " FROM [dbo].[Pp_P1d_Outputsubs] where Prodate='" + this.DefDate.SelectedDate.Value.ToString("yyyyMMdd") + "' and  [Prolot] = '" + prolot.SelectedItem.Text + "' and  [Prolinename]='" + prolinename.SelectedItem.Text + "'" +
+                //            " FROM [dbo].[Pp_P1d_OutputSubs] where Prodate='" + this.DefDate.SelectedDate.Value.ToString("yyyyMMdd") + "' and  [Prolot] = '" + prolot.SelectedItem.Text + "' and  [Prolinename]='" + prolinename.SelectedItem.Text + "'" +
                 //            "  group by[Prolinename],[Prodate],[Prolot]";
 
                 //SqlDataAdapter DAstr1 = new SqlDataAdapter(ConnStr, AppConn);
@@ -598,7 +586,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 }
                 //else
                 //{
-                //    Pp_Defect_P1d item = new Pp_Defect_P1d();
+                //    Pp_P1d_Defect item = new Pp_P1d_Defect();
 
                 //    item.Prolot = this.prolot.Text;
                 //    //班组
@@ -614,7 +602,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
                 //    item.Prongdept = "OK";
                 //    //种类
-                //    Pp_Defect_P1dcode cclass = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode cclass = DB.Pp_P1d_Defectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
 
                 //    item.Prongclass = cclass.ngclass;
@@ -622,7 +610,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Proclassmatter = "OK";
 
                 //    //代码
-                //    Pp_Defect_P1dcode ccode = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode ccode = DB.Pp_P1d_Defectcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
 
 
@@ -781,7 +769,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
 
                 //else
                 //{
-                //    Pp_Defect_P1d item = new Pp_Defect_P1d();
+                //    Pp_P1d_Defect item = new Pp_P1d_Defect();
 
                 //    item.Prolot = this.prolot.Text;
                 //    //班组
@@ -796,7 +784,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
                 //    item.Prongdept = "OK";
                 //    //种类
-                //    Pp_Defect_P1dcode cclass = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode cclass = DB.Pp_P1d_Defectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
 
                 //    item.Prongclass = cclass.ngclass;
@@ -804,7 +792,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Proclassmatter = "OK";
 
                 //    //代码
-                //    Pp_Defect_P1dcode ccode = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode ccode = DB.Pp_P1d_Defectcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
 
 
@@ -993,7 +981,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
 
                 rowData["Probadset"] = rowDict["Probadset"];
 
-                item.Udf001 = rowData["Probadset"].ToString();
+                item.Probadset = rowData["Probadset"].ToString();
 
                 //ResonText = rowData["Probadnote"].ToString();
             }
@@ -1235,7 +1223,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
             ////更新生产实绩
             //int rQty = 0;
             //var q =
-            //        (from p in DB.Pp_P1d_Outputsubs
+            //        (from p in DB.Pp_P1d_OutputSubs
             //         where p.Poutputsubdel==false
             //         where p.Udf001 == strPorder
             //         where p.Prolinename== pline
@@ -1250,7 +1238,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
             //{
             //    rQty = q[0].TotalQty;
             //}
-            //DB.Pp_Defect_P1dcounts
+            //DB.Pp_P1d_Defectcounts
             //    //.Where(s => s.Prodate.Substring(0, 6) == pdate)
             //       .Where(s=>s.Proorder== strPorder)
             //       .ToList()

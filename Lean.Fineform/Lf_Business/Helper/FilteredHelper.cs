@@ -12,7 +12,7 @@ using System.IO;
 using FineUIPro;
 
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class FilteredHelper
     {

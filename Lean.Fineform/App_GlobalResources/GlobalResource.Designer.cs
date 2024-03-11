@@ -261,81 +261,81 @@ namespace Resources {
         /// <summary>
         ///   查找类似 Apply 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_Apply {
+        internal static string menu_BPM_Apply {
             get {
-                return ResourceManager.GetString("menu_Bpm_Apply", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_Apply", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Desgin 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_Desgin {
+        internal static string menu_BPM_Desgin {
             get {
-                return ResourceManager.GetString("menu_Bpm_Desgin", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_Desgin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 FlowManage 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_MGT {
+        internal static string menu_BPM_MGT {
             get {
-                return ResourceManager.GetString("menu_Bpm_MGT", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_MGT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Signature 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_Signature {
+        internal static string menu_BPM_Signature {
             get {
-                return ResourceManager.GetString("menu_Bpm_Signature", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_Signature", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Template 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_Template {
+        internal static string menu_BPM_Template {
             get {
-                return ResourceManager.GetString("menu_Bpm_Template", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_Template", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Todo 的本地化字符串。
         /// </summary>
-        internal static string menu_Bpm_Todo {
+        internal static string menu_BPM_Todo {
             get {
-                return ResourceManager.GetString("menu_Bpm_Todo", resourceCulture);
+                return ResourceManager.GetString("menu_BPM_Todo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 ScheduleManage 的本地化字符串。
         /// </summary>
-        internal static string menu_Em_MGT {
+        internal static string menu_EM_MGT {
             get {
-                return ResourceManager.GetString("menu_Em_MGT", resourceCulture);
+                return ResourceManager.GetString("menu_EM_MGT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 MyEvent 的本地化字符串。
         /// </summary>
-        internal static string menu_Em_My {
+        internal static string menu_EM_My {
             get {
-                return ResourceManager.GetString("menu_Em_My", resourceCulture);
+                return ResourceManager.GetString("menu_EM_My", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 ScheduleEvent 的本地化字符串。
         /// </summary>
-        internal static string menu_Em_Schedule {
+        internal static string menu_EM_Schedule {
             get {
-                return ResourceManager.GetString("menu_Em_Schedule", resourceCulture);
+                return ResourceManager.GetString("menu_EM_Schedule", resourceCulture);
             }
         }
         
@@ -459,36 +459,36 @@ namespace Resources {
         /// <summary>
         ///   查找类似 Category 的本地化字符串。
         /// </summary>
-        internal static string menu_Fm_Category {
+        internal static string menu_FM_Category {
             get {
-                return ResourceManager.GetString("menu_Fm_Category", resourceCulture);
+                return ResourceManager.GetString("menu_FM_Category", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Desgin 的本地化字符串。
         /// </summary>
-        internal static string menu_Fm_Desgin {
+        internal static string menu_FM_Desgin {
             get {
-                return ResourceManager.GetString("menu_Fm_Desgin", resourceCulture);
+                return ResourceManager.GetString("menu_FM_Desgin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 FormManage 的本地化字符串。
         /// </summary>
-        internal static string menu_Fm_MGT {
+        internal static string menu_FM_MGT {
             get {
-                return ResourceManager.GetString("menu_Fm_MGT", resourceCulture);
+                return ResourceManager.GetString("menu_FM_MGT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 MyForm 的本地化字符串。
         /// </summary>
-        internal static string menu_Fm_My {
+        internal static string menu_FM_My {
             get {
-                return ResourceManager.GetString("menu_Fm_My", resourceCulture);
+                return ResourceManager.GetString("menu_FM_My", resourceCulture);
             }
         }
         
@@ -619,24 +619,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 P1DPoorManage 的本地化字符串。
-        /// </summary>
-        internal static string menu_Pp_Defect_P1D {
-            get {
-                return ResourceManager.GetString("menu_Pp_Defect_P1D", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 P2DPoorManage 的本地化字符串。
-        /// </summary>
-        internal static string menu_Pp_Defect_P2D {
-            get {
-                return ResourceManager.GetString("menu_Pp_Defect_P2D", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 PoorProduction 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Defect_Production {
@@ -741,6 +723,15 @@ namespace Resources {
         internal static string menu_Pp_efficiency {
             get {
                 return ResourceManager.GetString("menu_Pp_efficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 PCBA INSP 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Inspection {
+            get {
+                return ResourceManager.GetString("menu_Pp_Inspection", resourceCulture);
             }
         }
         
@@ -858,6 +849,24 @@ namespace Resources {
         internal static string menu_Pp_OPH_Report {
             get {
                 return ResourceManager.GetString("menu_Pp_OPH_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 P1DPoorManage 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P1d_Defect {
+            get {
+                return ResourceManager.GetString("menu_Pp_P1d_Defect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 P2DPoorManage 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P2d_Defect {
+            get {
+                return ResourceManager.GetString("menu_Pp_P2d_Defect", resourceCulture);
             }
         }
         
@@ -1485,9 +1494,9 @@ namespace Resources {
         /// <summary>
         ///   查找类似 YiFei Data 的本地化字符串。
         /// </summary>
-        internal static string menu_Yf_Query {
+        internal static string menu_YF_Query {
             get {
-                return ResourceManager.GetString("menu_Yf_Query", resourceCulture);
+                return ResourceManager.GetString("menu_YF_Query", resourceCulture);
             }
         }
         
@@ -1503,9 +1512,9 @@ namespace Resources {
         /// <summary>
         ///   查找类似 Search for date,user etc. 的本地化字符串。
         /// </summary>
-        internal static string Query_Em_EmptyText {
+        internal static string Query_EM_EmptyText {
             get {
-                return ResourceManager.GetString("Query_Em_EmptyText", resourceCulture);
+                return ResourceManager.GetString("Query_EM_EmptyText", resourceCulture);
             }
         }
         
@@ -3211,164 +3220,164 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Yf_Assets 的本地化字符串。
+        ///   查找类似 YF_Assets 的本地化字符串。
         /// </summary>
-        internal static string Yf_Assets {
+        internal static string yf_Assets {
             get {
-                return ResourceManager.GetString("Yf_Assets", resourceCulture);
+                return ResourceManager.GetString("yf_Assets", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_BOM 的本地化字符串。
+        ///   查找类似 YF_BOM 的本地化字符串。
         /// </summary>
-        internal static string Yf_BOM {
+        internal static string yf_BOM {
             get {
-                return ResourceManager.GetString("Yf_BOM", resourceCulture);
+                return ResourceManager.GetString("yf_BOM", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Data_View 的本地化字符串。
+        ///   查找类似 YF_Data_View 的本地化字符串。
         /// </summary>
-        internal static string Yf_DataView {
+        internal static string yf_DataView {
             get {
-                return ResourceManager.GetString("Yf_DataView", resourceCulture);
+                return ResourceManager.GetString("yf_DataView", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 EC 的本地化字符串。
         /// </summary>
-        internal static string Yf_Ec {
+        internal static string yf_Ec {
             get {
-                return ResourceManager.GetString("Yf_Ec", resourceCulture);
+                return ResourceManager.GetString("yf_Ec", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 General 的本地化字符串。
         /// </summary>
-        internal static string Yf_General {
+        internal static string yf_General {
             get {
-                return ResourceManager.GetString("Yf_General", resourceCulture);
+                return ResourceManager.GetString("yf_General", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Materials 的本地化字符串。
+        ///   查找类似 YF_Materials 的本地化字符串。
         /// </summary>
-        internal static string Yf_Material {
+        internal static string yf_Material {
             get {
-                return ResourceManager.GetString("Yf_Material", resourceCulture);
+                return ResourceManager.GetString("yf_Material", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_MaterialSupplier 的本地化字符串。
+        ///   查找类似 YF_MaterialSupplier 的本地化字符串。
         /// </summary>
-        internal static string Yf_MaterialSupplier {
+        internal static string yf_MaterialSupplier {
             get {
-                return ResourceManager.GetString("Yf_MaterialSupplier", resourceCulture);
+                return ResourceManager.GetString("yf_MaterialSupplier", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_PurchaseOrder 的本地化字符串。
+        ///   查找类似 YF_PurchaseOrder 的本地化字符串。
         /// </summary>
-        internal static string Yf_PurchaseOrder {
+        internal static string yf_PurchaseOrder {
             get {
-                return ResourceManager.GetString("Yf_PurchaseOrder", resourceCulture);
+                return ResourceManager.GetString("yf_PurchaseOrder", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Purchasing 的本地化字符串。
+        ///   查找类似 YF_Purchasing 的本地化字符串。
         /// </summary>
-        internal static string Yf_PurchasingPrice {
+        internal static string yf_PurchasingPrice {
             get {
-                return ResourceManager.GetString("Yf_PurchasingPrice", resourceCulture);
+                return ResourceManager.GetString("yf_PurchasingPrice", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_PurchasingScale 的本地化字符串。
+        ///   查找类似 YF_PurchasingScale 的本地化字符串。
         /// </summary>
-        internal static string Yf_PurchasingPriceVal {
+        internal static string yf_PurchasingPriceVal {
             get {
-                return ResourceManager.GetString("Yf_PurchasingPriceVal", resourceCulture);
+                return ResourceManager.GetString("yf_PurchasingPriceVal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Requisition 的本地化字符串。
+        ///   查找类似 YF_Requisition 的本地化字符串。
         /// </summary>
-        internal static string Yf_Requisition {
+        internal static string yf_Requisition {
             get {
-                return ResourceManager.GetString("Yf_Requisition", resourceCulture);
+                return ResourceManager.GetString("yf_Requisition", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_SalesOrder 的本地化字符串。
+        ///   查找类似 YF_SalesOrder 的本地化字符串。
         /// </summary>
-        internal static string Yf_Sales {
+        internal static string yf_Sales {
             get {
-                return ResourceManager.GetString("Yf_Sales", resourceCulture);
+                return ResourceManager.GetString("yf_Sales", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Shipment 的本地化字符串。
+        ///   查找类似 YF_Shipment 的本地化字符串。
         /// </summary>
-        internal static string Yf_Shipment {
+        internal static string yf_Shipment {
             get {
-                return ResourceManager.GetString("Yf_Shipment", resourceCulture);
+                return ResourceManager.GetString("yf_Shipment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_SalesSlip 的本地化字符串。
+        ///   查找类似 YF_SalesSlip 的本地化字符串。
         /// </summary>
-        internal static string Yf_Slip {
+        internal static string yf_Slip {
             get {
-                return ResourceManager.GetString("Yf_Slip", resourceCulture);
+                return ResourceManager.GetString("yf_Slip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Special 的本地化字符串。
         /// </summary>
-        internal static string Yf_Special {
+        internal static string yf_Special {
             get {
-                return ResourceManager.GetString("Yf_Special", resourceCulture);
+                return ResourceManager.GetString("yf_Special", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_StockOrder 的本地化字符串。
+        ///   查找类似 YF_StockOrder 的本地化字符串。
         /// </summary>
-        internal static string Yf_StockOrder {
+        internal static string yf_StockOrder {
             get {
-                return ResourceManager.GetString("Yf_StockOrder", resourceCulture);
+                return ResourceManager.GetString("yf_StockOrder", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Substitute 的本地化字符串。
         /// </summary>
-        internal static string Yf_Substitute {
+        internal static string yf_Substitute {
             get {
-                return ResourceManager.GetString("Yf_Substitute", resourceCulture);
+                return ResourceManager.GetString("yf_Substitute", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Yf_Supplier 的本地化字符串。
+        ///   查找类似 YF_Supplier 的本地化字符串。
         /// </summary>
-        internal static string Yf_Supplier {
+        internal static string yf_Supplier {
             get {
-                return ResourceManager.GetString("Yf_Supplier", resourceCulture);
+                return ResourceManager.GetString("yf_Supplier", resourceCulture);
             }
         }
     }

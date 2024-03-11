@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.FICO;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.salesmanage
+namespace Fine.Lf_Manufacturing.SD.salesmanage
 {
     public partial class sales : PageBase
     {

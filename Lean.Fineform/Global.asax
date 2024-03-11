@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Lean.Fineform.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Fine.Global" Language="C#" %>

@@ -14,7 +14,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Data.Entity.Validation;
 
-namespace Lean.Fineform.Lc_MM
+namespace Fine.Lc_MM
 {
 
     public partial class material_query : PageBase

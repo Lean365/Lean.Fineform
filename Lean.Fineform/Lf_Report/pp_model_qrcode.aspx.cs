@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-namespace Lean.Fineform.Lf_Report
+using System;
+using System.Linq;
+namespace Fine.Lf_Report
 {
-    public partial class pp_model_qrcode : PageBase
+    public partial class Pp_model_qrcode : PageBase
     {
         #region ViewPower
 

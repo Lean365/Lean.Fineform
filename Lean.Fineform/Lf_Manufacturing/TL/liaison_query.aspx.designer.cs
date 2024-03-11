@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.TL
+namespace Fine.Lf_Manufacturing.TL
 {
 
 

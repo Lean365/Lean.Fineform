@@ -5,11 +5,8 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.PP
 {
-    /// <summary>
-    /// 制一课
-    /// </summary>
     public class Pp_P1d_OutputSub : IKeyID
     {
         //生产日报SUB
@@ -18,6 +15,10 @@ namespace Lean.Fineform
         [Required]
         public Guid GUID { get; set; }
         public int Parent { get; set; }
+
+        [Required, StringLength(20)]
+        //[Column("生产订单")]
+        public string Proordertype { get; set; }//生产订单类别
         [Required, StringLength(20)]
         //[Column("生产订单")]
         public string Proorder { get; set; }//生产订单
@@ -40,14 +41,11 @@ namespace Lean.Fineform
 
         [StringLength(20)]
         public string Prohbn { get; set; }//生产物料
-        [StringLength(20)]
-        public string Propcb { get; set; }//类别
+
+
 
 
         public Decimal Prost { get; set; }//工时
-        public Decimal Proshort { get; set; }//点数
-        public Decimal Prorate { get; set; }//汇率
-
 
         public Decimal Prostdcapacity { get; set; }//标准产能
         [Required]
@@ -57,6 +55,7 @@ namespace Lean.Fineform
 
         [StringLength(20)]
         public string Proetime { get; set; }//生产时间段
+
 
         public int Prorealqty { get; set; }//生产实绩
 
@@ -80,17 +79,28 @@ namespace Lean.Fineform
         public int Proratio { get; set; }//稼动率 （实际生产效率)
 
         [StringLength(255)]
-        public string Udf001 { get; set; }
+        public string UDF01 { get; set; }
         [StringLength(255)]
-        public string Udf002 { get; set; }
+        public string UDF02 { get; set; }
         [StringLength(255)]
-        public string Udf003 { get; set; }
+        public string UDF03 { get; set; }
+        [StringLength(500)]
+        public string UDF04 { get; set; }
+        [StringLength(500)]
+        public string UDF05 { get; set; }
+        [StringLength(500)]
+        public string UDF06 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal Udf004 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal Udf005 { get; set; }
+        public int UDF53 { get; set; }
+        public Decimal UDF54 { get; set; }
 
-        public Decimal Udf006 { get; set; }
+        public Decimal UDF55 { get; set; }
+
+        public Decimal UDF56 { get; set; }
+
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记
 

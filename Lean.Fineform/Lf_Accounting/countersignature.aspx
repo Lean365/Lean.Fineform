@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="countersignature.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.countersignature" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="countersignature.aspx.cs" Inherits="Fine.Lf_Accounting.countersignature" %>
 
 <!DOCTYPE html>
 <html>

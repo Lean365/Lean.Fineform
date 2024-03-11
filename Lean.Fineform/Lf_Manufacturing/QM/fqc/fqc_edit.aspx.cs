@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
+namespace Fine.Lf_Manufacturing.QM.fqc
 {
 
     public partial class fqc_edit : PageBase
@@ -628,12 +616,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                              b.qmJudgmentlevel,
                              a.qmCheckNotes,
                              b.qmIssueno,
-                             b.Udf001,
-                             b.Udf002,
-                             b.Udf003,
-                             b.Udf004,
-                             b.Udf005,
-                             b.Udf006,
+                             b.UDF01,
+                             b.UDF02,
+                             b.UDF03,
+                             b.UDF04,
+                             b.UDF05,
+                             b.UDF06,
+                             b.UDF51,
+                             b.UDF52,
+                             b.UDF53,
+                             b.UDF54,
+                             b.UDF55,
+                             b.UDF56,
+
                              b.isDelete,
                              b.Remark,
                              b.Creator,
@@ -660,12 +655,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                                                                       qmJudgmentlevel = a.qmJudgmentlevel,
                                                                       qmCheckNotes = a.qmCheckNotes,
                                                                       qmIssueno = a.qmIssueno,
-                                                                      Udf001 = a.Udf001,
-                                                                      Udf002 = a.Udf002,
-                                                                      Udf003 = a.Udf003,
-                                                                      Udf004 = a.Udf004,
-                                                                      Udf005 = a.Udf005,
-                                                                      Udf006 = a.Udf006,
+                                                                      UDF01 = a.UDF01,
+                                                                      UDF02 = a.UDF02,
+                                                                      UDF03 = a.UDF03,
+                                                                      UDF04 = a.UDF04,
+                                                                      UDF05 = a.UDF05,
+                                                                      UDF06 = a.UDF06,
+                                                                      UDF51 = a.UDF51,
+                                                                      UDF52 = a.UDF52,
+                                                                      UDF53 = a.UDF53,
+                                                                      UDF54 = a.UDF54,
+                                                                      UDF55 = a.UDF55,
+                                                                      UDF56 = a.UDF56,
+
                                                                       isDelete = a.isDelete,
                                                                       Remark = a.Remark,
                                                                       Creator = a.Creator,
@@ -836,12 +838,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                              b.qmSolutionsverify,
                              b.qmNotes,
                              b.qmIssueno,
-                             b.Udf001,
-                             b.Udf002,
-                             b.Udf003,
-                             b.Udf004,
-                             b.Udf005,
-                             b.Udf006,
+                             b.UDF01,
+                             b.UDF02,
+                             b.UDF03,
+                             b.UDF04,
+                             b.UDF05,
+                             b.UDF06,
+                             b.UDF51,
+                             b.UDF52,
+                             b.UDF53,
+                             b.UDF54,
+                             b.UDF55,
+                             b.UDF56,
+
                              b.isDelete,
                              b.Remark,
                              b.Creator,
@@ -880,12 +889,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                                                                   qmSolutionsverify = a.qmSolutionsverify,
                                                                   qmNotes = a.qmNotes,
                                                                   qmIssueno = a.qmIssueno,
-                                                                  Udf001 = a.Udf001,
-                                                                  Udf002 = a.Udf002,
-                                                                  Udf003 = a.Udf003,
-                                                                  Udf004 = a.Udf004,
-                                                                  Udf005 = a.Udf005,
-                                                                  Udf006 = a.Udf006,
+                                                                  UDF01 = a.UDF01,
+                                                                  UDF02 = a.UDF02,
+                                                                  UDF03 = a.UDF03,
+                                                                  UDF04 = a.UDF04,
+                                                                  UDF05 = a.UDF05,
+                                                                  UDF06 = a.UDF06,
+                                                                  UDF51 = a.UDF51,
+                                                                  UDF52 = a.UDF52,
+                                                                  UDF53 = a.UDF53,
+                                                                  UDF54 = a.UDF54,
+                                                                  UDF55 = a.UDF55,
+                                                                  UDF56 = a.UDF56,
+
                                                                   isDelete = a.isDelete,
                                                                   Remark = a.Remark,
                                                                   Creator = a.Creator,
@@ -1070,9 +1086,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                         item.qmProqty = decimal.Parse(dqmProqty);
                         //检验水准
                         item.qmSamplinglevel = dqmSamplinglevel;
-                        item.Udf004 = 0;
-                        item.Udf005 = 0;
-                        item.Udf006 = 0;
+                        item.UDF01 = "";
+                        item.UDF02 = "";
+                        item.UDF03 = "";
+                        item.UDF04 = "";
+                        item.UDF05 = "";
+                        item.UDF06 = "";
+                        item.UDF51 = 0;
+                        item.UDF52 = 0;
+                        item.UDF53 = 0;
+                        item.UDF54 = 0;
+                        item.UDF55 = 0;
+                        item.UDF56 = 0;
+
                         item.isDelete = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
@@ -1230,9 +1256,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
                         item.qmProqty = decimal.Parse(dqmProqty);
                         //检验水准
                         item.qmSamplinglevel = dqmSamplinglevel;
-                        item.Udf004 = 0;
-                        item.Udf005 = 0;
-                        item.Udf006 = 0;
+                        item.UDF01 = "";
+                        item.UDF02 = "";
+                        item.UDF03 = "";
+                        item.UDF04 = "";
+                        item.UDF05 = "";
+                        item.UDF06 = "";
+                        item.UDF51 = 0;
+                        item.UDF52 = 0;
+                        item.UDF53 = 0;
+                        item.UDF54 = 0;
+                        item.UDF55 = 0;
+                        item.UDF56 = 0;
+
                         item.isDelete = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
@@ -1344,12 +1380,19 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
             //rowData["qmProqty"] = 0;
             //rowData["qmSamplinglevel"] = "";
             //rowData["Remark"] = "";
-            rowData["Udf001"] = "";
-            rowData["Udf002"] = "";
-            rowData["Udf003"] = "";
-            rowData["Udf004"] = 0;
-            rowData["Udf005"] = 0;
-            rowData["Udf006"] = 0;
+            rowData["UDF01"] = "";
+            rowData["UDF02"] = "";
+            rowData["UDF03"] = "";
+            rowData["UDF04"] = "";
+            rowData["UDF05"] = "";
+            rowData["UDF06"] = "";
+            rowData["UDF51"] = 0;
+            rowData["UDF52"] = 0;
+            rowData["UDF53"] = 0;
+            rowData["UDF54"] = 0;
+            rowData["UDF55"] = 0;
+            rowData["UDF56"] = 0;
+
             rowData["GUID"] = Guid.NewGuid().ToString();
 
             rowData["isDelete"] = 0;

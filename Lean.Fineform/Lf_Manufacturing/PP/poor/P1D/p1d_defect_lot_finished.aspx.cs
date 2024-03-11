@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
+namespace Fine.Lf_Manufacturing.PP.poor
 {
     public partial class p1d_defect_lot_finished : PageBase
     {
@@ -465,12 +465,12 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
             string FsearchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(FsearchText))
             {
-                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "_" + FsearchText + "_" +  "DefectDetail";
+                Xlsbomitem = FsearchText + "_" + DPend.SelectedDate.Value.ToString("yyyyMM") + "DefectDetail";
             }
             else
 
             {
-                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetails";
+                Xlsbomitem = "DefectDetails_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 

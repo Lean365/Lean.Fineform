@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.MM
 {
-    public class Yf_Billofmaterial : IKeyGUID
+    public class YF_Billofmaterial : IKeyGUID
     {
         [Key]
         public Guid GUID { get; set; }

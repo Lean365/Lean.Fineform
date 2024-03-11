@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pd.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.EC.dept.pd" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pd.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.dept.pd" %>
 
 <!DOCTYPE html>
 

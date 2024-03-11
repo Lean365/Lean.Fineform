@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fyperiod.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.fyperiod" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fyperiod.aspx.cs" Inherits="Fine.Lf_Accounting.fyperiod" %>
 
 <!DOCTYPE html>
 

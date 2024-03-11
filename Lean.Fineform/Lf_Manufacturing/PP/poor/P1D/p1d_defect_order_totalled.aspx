@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_defect_order_totalled.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.poor.P1D.p1d_defect_order_totalled" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_defect_order_totalled.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.poor.p1d_defect_order_totalled" %>
 
 <!DOCTYPE html>
 

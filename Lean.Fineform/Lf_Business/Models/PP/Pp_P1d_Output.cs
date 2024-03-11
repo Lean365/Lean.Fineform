@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.PP
 {
     public class Pp_P1d_Output : IKeyID, IKeyGUID
     {
@@ -15,6 +15,9 @@ namespace Lean.Fineform
         public int ID { get; set; }
         [Required]
         public Guid GUID { get; set; }
+        [Required, StringLength(20)]
+        //[Column("生产订单")]
+        public string Proordertype { get; set; }//生产订单类别
 
         [Required, StringLength(20)]
         //[Column("生产订单")]
@@ -51,17 +54,28 @@ namespace Lean.Fineform
         public Decimal Prostdcapacity { get; set; }//标准产能     
 
         [StringLength(255)]
-        public string Udf001 { get; set; }
+        public string UDF01 { get; set; }
         [StringLength(255)]
-        public string Udf002 { get; set; }
+        public string UDF02 { get; set; }
         [StringLength(255)]
-        public string Udf003 { get; set; }
+        public string UDF03 { get; set; }
+        [StringLength(500)]
+        public string UDF04 { get; set; }
+        [StringLength(500)]
+        public string UDF05 { get; set; }
+        [StringLength(500)]
+        public string UDF06 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal Udf004 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal Udf005 { get; set; }
+        public int UDF53 { get; set; }
+        public Decimal UDF54 { get; set; }
 
-        public Decimal Udf006 { get; set; }
+        public Decimal UDF55 { get; set; }
+
+        public Decimal UDF56 { get; set; }
+
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记
 

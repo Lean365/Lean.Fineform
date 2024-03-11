@@ -14,7 +14,7 @@ using System.IO;
 
 using System.Text;
 
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_sap : PageBase
     {

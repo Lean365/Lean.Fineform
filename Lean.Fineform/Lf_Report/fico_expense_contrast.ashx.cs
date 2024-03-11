@@ -14,7 +14,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
     /// sys_Tab_Fico_Expense_contrast 的摘要说明
@@ -22,7 +22,7 @@ namespace Lean.Fineform.Lf_Report
     public class sys_Tab_Fico_Expense_contrast : IHttpHandler
     {
 
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
 

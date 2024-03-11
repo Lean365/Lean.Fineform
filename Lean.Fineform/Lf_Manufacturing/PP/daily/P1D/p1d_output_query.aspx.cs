@@ -18,7 +18,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_output_query : PageBase
     {
@@ -115,7 +115,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                     };
 
                 //var qss =
-                //    from p in DB.Pp_P1d_Outputsubs
+                //    from p in DB.Pp_P1d_OutputSubs
                 //    group p by new
                 //    {
                 //        p.Prolinename,
@@ -135,7 +135,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                 //        Min = g.Sum(p => p.Prorealtime),
                 //    };
 
-                //IQueryable<Pp_P1d_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
+                //IQueryable<Pp_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
 
                 // 在用户名称中搜索
                 string searchText = ttbSearchMessage.Text.Trim();
@@ -286,7 +286,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
         //    // 执行数据库操作
         //    //DB.Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
@@ -335,13 +335,13 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
 
             //    //删除日志
             //    //int userID = GetSelectedDataKeyID(Grid1);
-            //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
+            //    Pp_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
             //    string Contectext = current.OPHID;
             //    string OperateType = current.ID.ToString();
             //    string OperateNotes = "Del* " + Contectext + "*Del 的记录已被删除";
             //    NetCountHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH删除", OperateNotes);
 
-            //    DB.Pp_P1d_Outputsubs.Where(l => l.Parent.ID == del_ID).Delete();
+            //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
 
@@ -466,7 +466,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_OPH_DATA";
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";

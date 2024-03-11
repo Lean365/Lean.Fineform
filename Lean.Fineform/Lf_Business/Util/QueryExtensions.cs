@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Linq.Expressions;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public static class QueryExtensions
     {

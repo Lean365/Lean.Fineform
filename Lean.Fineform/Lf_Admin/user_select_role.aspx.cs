@@ -7,7 +7,7 @@ using System.Linq;
 using System.Data.Entity;using System.Data.Entity.Validation;
 using FineUIPro;
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class user_select_role : PageBase
     {

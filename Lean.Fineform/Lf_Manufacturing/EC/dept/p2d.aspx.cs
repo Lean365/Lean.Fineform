@@ -15,7 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.EC.dept
+namespace Fine.Lf_Manufacturing.EC.dept
 {
     public partial class p2d : PageBase
     {

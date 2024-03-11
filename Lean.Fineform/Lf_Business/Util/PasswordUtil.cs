@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Lean.Fineform
+namespace Fine
 {
 	/// <summary>
 	/// 单相混淆加密用户密码，并比较密码是否一致的类

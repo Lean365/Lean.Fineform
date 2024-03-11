@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Business.Models.YF
+namespace Fine.Lf_Business.Models.YF
 {
     using System;
     using System.Data.Entity;

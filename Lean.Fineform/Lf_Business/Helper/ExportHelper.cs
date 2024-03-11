@@ -18,7 +18,7 @@ using System.ComponentModel;
 using OfficeOpenXml.Style;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class ExportHelper
     {
@@ -1084,8 +1084,7 @@ namespace Lean.Fineform
 
                 if (q.Any())
                 {
-                    int Dx1 = 0;//图片左边相对excel格的位置(x偏移) 范围值为:0~1023,超过1023就到右侧相邻的单元格里了
-                    int Dy1 = 0;//图片上方相对excel格的位置(y偏移) 范围值为:0~256,超过256就到下方的单元格里了
+
                     int rowCout = dt.Rows.Count;
                     int PageCount = (int)Math.Ceiling(rowCout / 47.00);
 
@@ -1138,8 +1137,7 @@ namespace Lean.Fineform
                                 //Reset the image to the original size.
                                 picture.Resize();   //Note: Resize will reset client anchor you set.
                                 picture.LineStyle = LineStyle.DashDotGel;
-                                anchor.Dy1 = 20;//图片下移量
-                                anchor.Dx1 = 20;//图片右移量，通过图片下移和右移，使得图片能居中显示，因为图片不同文字，图片是浮在单元格上的，文字是钳在单元格里的
+
 
                                 //将图片文件读入一个字符串
                                 //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
@@ -1465,19 +1463,13 @@ namespace Lean.Fineform
                                 XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
                                 HttpRuntime.AppDomainAppPath.ToString();
 
-
-
                                 IDrawing patriarch = sheet.CreateDrawingPatriarch();
                                 //create the anchor
-                                XSSFClientAnchor anchor = new XSSFClientAnchor(255, 125, 1023, 150, 0, 0, 1, 1);
-                                //anchor.Dy1 = 200;//图片下移量
-                                //anchor.Dx1 = 200;//图片右移量，通过图片下移和右移，使得图片能居中显示，因为图片不同文字，图片是浮在单元格上的，文字是钳在单元格里的
+                                XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
                                 anchor.AnchorType = AnchorType.MoveDontResize;
                                 //load the picture and get the picture index in the workbook
                                 //first picture
                                 int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
-
-                                
                                 XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
                                 //Reset the image to the original size.
                                 picture.Resize();   //Note: Resize will reset client anchor you set.
@@ -1495,7 +1487,7 @@ namespace Lean.Fineform
                                 ////把图片插到相应的位置
                                 //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
                                 //pict.Resize();
-                                //cell.CellStyle = Centerstyle;
+                                cell.CellStyle = Centerstyle;
 
                                 //合并第一行第三列和第四列
                                 //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号

@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
 
 
@@ -111,7 +111,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolinename;
+        protected global::FineUIPro.DropDownList prolinename;
 
         /// <summary>
         /// FormRow1 控件。
@@ -129,7 +129,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prodirect;
+        protected global::FineUIPro.NumberBox prodirect;
 
         /// <summary>
         /// proindirect 控件。
@@ -138,7 +138,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label proindirect;
+        protected global::FineUIPro.NumberBox proindirect;
 
         /// <summary>
         /// FormRow6 控件。
@@ -158,7 +158,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// </remarks>
         protected global::FineUIPro.DropDownList proorder;
 
-
+        /// <summary>
+        /// prolot 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox prolot;
 
         /// <summary>
         /// FormRow10 控件。
@@ -213,7 +220,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prostdcapacity;
-
+        protected global::FineUIPro.Label txtProshort;
         /// <summary>
         /// FormRow4 控件。
         /// </summary>
@@ -231,15 +238,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prolotqty;
-
-        /// <summary>
-        /// prolot 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox prolot;
 
         /// <summary>
         /// prosn 控件。

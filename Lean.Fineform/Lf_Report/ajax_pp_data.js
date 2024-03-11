@@ -12,7 +12,7 @@
 function AjaxData_Pp_Actual() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_actual.ashx",
+        url: "/Lf_Report/Pp_actual.ashx",
         data: {
             TransDate: TransDates
         },
@@ -46,7 +46,7 @@ function AjaxData_Pp_Actual() {
 function AjaxData_Pp_Lastday_Actual() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_last_actual.ashx",
+        url: "/Lf_Report/Pp_last_actual.ashx",
         data: {
             TransDate: "DTA"
         },
@@ -79,7 +79,7 @@ function AjaxData_Pp_Lastday_Actual() {
 function AjaxData_Pp_Defect() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_defect.ashx",
+        url: "/Lf_Report/Pp_defect.ashx",
         data: {
             TransDate: TransDates
         },
@@ -113,7 +113,7 @@ function AjaxData_Pp_Reason() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_reason.ashx",
+        url: "/Lf_Report/Pp_reason.ashx",
         data: {
             TransDate: TransDates
         },
@@ -143,7 +143,7 @@ function AjaxData_Pp_Direct() {
    // debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_defect.ashx",
+        url: "/Lf_Report/Pp_defect.ashx",
         data: {
             TransDate: TransDates
         },
@@ -175,7 +175,7 @@ function AjaxData_Pp_Achieve() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_achieve.ashx",
+        url: "/Lf_Report/Pp_achieve.ashx",
         data: {
             TransDate: TransDates
         },
@@ -212,7 +212,7 @@ function AjaxData_Pp_Progress() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/pp_moprogress.ashx",
+        url: "/Lf_Report/Pp_moprogress.ashx",
         data: {
             TransDate: TransDates
         },
@@ -249,7 +249,7 @@ function AjaxData_Pp_LineLosstime() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/pp_losstime_line.ashx",
+        url: "/Lf_Report/Pp_losstime_line.ashx",
         data: {
             TransDate: TransDates
         },
@@ -288,7 +288,7 @@ function AjaxData_Pp_Losstime() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/pp_losstime.ashx",
+        url: "/Lf_Report/Pp_losstime.ashx",
         data: {
             TransDate: TransDates
         },
@@ -327,7 +327,7 @@ function AjaxData_Pp_Linestop() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/pp_reason_stopline.ashx",
+        url: "/Lf_Report/Pp_reason_stopline.ashx",
         data: {
             TransDate: TransDates
         },
@@ -359,7 +359,7 @@ function AjaxData_Pp_ModelAchieve() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_achieve_model.ashx",
+        url: "/Lf_Report/Pp_achieve_model.ashx",
         data: {
             TransDate: TransDates
         },
@@ -395,7 +395,7 @@ function AjaxData_Pp_YearAchieve() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_achieve_year.ashx",
+        url: "/Lf_Report/Pp_achieve_year.ashx",
         data: {
             TransDate: TransDates
         },
@@ -431,7 +431,7 @@ function AjaxData_Pp_YearAchieve() {
 function AjaxData_Pp_Tracking_Lot() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_tracking_lot.ashx",
+        url: "/Lf_Report/Pp_tracking_lot.ashx",
         data: {
             TransDate: TransDates
         },
@@ -469,7 +469,7 @@ function AjaxData_Pp_Tracking_Lot() {
 function AjaxData_Pp_Tracking_OPH() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/pp_tracking_lot.ashx",
+        url: "/Lf_Report/Pp_tracking_lot.ashx",
         data: {
             TransDate: TransDates
         },

@@ -14,7 +14,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
-namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
+namespace Fine.Lf_Manufacturing.PP.tracking
 {
     public partial class lot_tracking : PageBase
     {
@@ -341,7 +341,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
@@ -434,7 +434,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

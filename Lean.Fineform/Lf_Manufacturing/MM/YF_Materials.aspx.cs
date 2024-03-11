@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_Materials : PageBase
+    public partial class YF_Materials : PageBase
     {
         #region ViewPower
 
@@ -78,7 +78,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 string searchText = ttbSearchMessage.Text.Trim().ToUpper();
                 if (!String.IsNullOrEmpty(searchText.Trim()))
                 {
-                    Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+                   Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
                     var q_C100 = from ta in DBYFdta.INVMB
                                  join mv in DBYFdta.CMSMV on ta.MB067 equals mv.MV001
@@ -98,7 +98,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                     var qs_C100 = q_C100.Select(E => new {MB120="C100", MB001=E.MB001.Trim(),E.MB002, E.MB003, E.MB032, E.MB067, E.UDF05, E.UDF51, E.MB080 }).ToList().Distinct();
 
-                    Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+                   Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
                     var q_H100 = from ta in DBYFtac.INVMB
                                  join mv in DBYFtac.CMSMV on ta.MB067 equals mv.MV001
                                  select new
@@ -296,7 +296,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
             //labResult.Text = keys[0].ToString();
-            PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lc_Yifei/Yf_Materials_view.aspx?MB001=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+            PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lc_Yifei/YF_Materials_view.aspx?MB001=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
         }
 
         #endregion
@@ -315,7 +315,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             string searchText = ttbSearchMessage.Text.Trim().ToUpper();
             if (!String.IsNullOrEmpty(searchText.Trim()))
             {
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
                 var q_C100 = from ta in DBYFdta.INVMB
                              join mv in DBYFdta.CMSMV on ta.MB067 equals mv.MV001
@@ -335,7 +335,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 var qs_C100 = q_C100.Select(E => new { 工厂 = "C100", 物料=E.MB001.Trim(), 描述=E.MB002, 制造商品名=E.MB003, 主供应商=E.MB032, 采购人员=E.MB067, 最新业者=E.UDF05, 最新核价=E.UDF51, 制造商=E.MB080 }).ToList().Distinct();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
                 var q_H100 = from ta in DBYFtac.INVMB
                              join mv in DBYFtac.CMSMV on ta.MB067 equals mv.MV001
                              select new
@@ -369,7 +369,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                     string Xlsbomitem, ExportFileName;
 
                     // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-                    Xlsbomitem = searchText + "_Yf_Materials";
+                    Xlsbomitem = searchText + "_YF_Materials";
                     //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                     ExportFileName = Xlsbomitem + ".xlsx";
 

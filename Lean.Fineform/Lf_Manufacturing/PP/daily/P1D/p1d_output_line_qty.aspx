@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_output_line_qty.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.daily.P1D.p1d_output_line_qty" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_output_line_qty.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p1d_output_line_qty" %>
 
 <!DOCTYPE html>
 

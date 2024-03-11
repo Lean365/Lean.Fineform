@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material_query.aspx.cs" Inherits="Lean.Fineform.Lc_MM.material_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material_query.aspx.cs" Inherits="Fine.Lc_MM.material_query" %>
 
 <!DOCTYPE html>
 

@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System;
 //using EntityFramework.Extensions;
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p2d_daily : PageBase
     {
@@ -64,7 +54,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_new.aspx", "新增") + Window1.GetMaximizeReference();
+            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP//daily/p2d_daily_new.aspx", "新增") + Window1.GetMaximizeReference();
             //PageContext.RegisterStartupScript(Window1.GetMaximizeReference());
             //Window1.GetMaximizeReference();
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
@@ -87,7 +77,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                             {
                                 a.linename
                             }).ToList();
-            IQueryable<Pp_P2d_Output> q = DB.Pp_P2d_Outputs; //.Include(u => u.Dept);
+            IQueryable<Pp_P1d_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
 
 
             //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
@@ -121,8 +111,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                 q = q.Where(u => u.Prolinename.Contains(this.DDLline.SelectedText));
             }
             //查询包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == "制二课")).AsQueryable();
-
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.linename)).AsQueryable();
             // q = q.Where(u => u.Promodel != "0");
             //if (GetIdentityName() != "admin")
             //{)
@@ -139,7 +128,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             Grid1.RecordCount = q_include.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Pp_P2d_Output>(q_include, Grid1);
+            q = SortAndPage<Pp_P1d_Output>(q_include, Grid1);
 
             Grid1.DataSource = q_include;
             Grid1.DataBind();
@@ -148,15 +137,15 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         public void BindDDLLine()
         {
             var LineType = (from a in DB.Pp_Lines
-                            where a.lineclass.Contains("M")
-                            select new
-                            {
-                                a.linename
-                            }).ToList();
+                           where a.lineclass.Contains("P")
+                           select new
+                           {
+                               a.linename
+                           }).ToList();
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-            var q = from a in DB.Pp_P2d_Outputs
-                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+            var q = from a in DB.Pp_P1d_Outputs
+                    //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
                     select new
@@ -164,8 +153,6 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                         a.Prolinename
 
                     };
-
-
             //包含子集
             var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.linename));
 
@@ -252,8 +239,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P2d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
-        //    DB.Pp_P2d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
 
@@ -417,14 +404,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             {
 
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP//daily/p2d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
 
             }
             if (e.CommandName == "EditOphsub")
             {
 
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_sub_edit.aspx?Transtr=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP//daily/p2d_daily_sub_edit.aspx?Transtr=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
 
             }
             int del_ID = GetSelectedDataKeyID(Grid1);
@@ -439,19 +426,17 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                 }
                 //删除日志
                 //int userID = GetSelectedDataKeyID(Grid1);
-                Pp_P2d_Output current = DB.Pp_P2d_Outputs.Find(del_ID);
+                Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
                 string Contectext = current.ID.ToString() + "," + current.GUID.ToString();
                 string OperateType = "删除";//操作标记
                 string OperateNotes = "Del生产* " + Contectext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报删除标记", OperateNotes);
-                
-                DB.Pp_P2d_OutputSubs.Where(l => l.Parent == del_ID).DeleteFromQuery();
-                DB.Pp_P2d_Outputs.Where(l => l.ID == del_ID).DeleteFromQuery();
 
-                //更新订单已生产数量
-                UpdatingHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
 
-                OperateLogHelper.InsNetOperateNotes(GetIdentityName(), "修改", "生产管理", "生产订单修改", OperateNotes);
+                DB.Pp_P1d_OutputSubs.Where(l => l.Parent == del_ID).DeleteFromQuery();
+                DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).DeleteFromQuery();
+
+
 
 
             }
@@ -518,14 +503,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
             var q =
-                from p in DB.Pp_P2d_OutputSubs
-                join b in DB.Pp_P2d_Outputs on p.GUID equals b.GUID
+                from p in DB.Pp_P1d_OutputSubs
+                join b in DB.Pp_P1d_Outputs on p.GUID equals b.GUID
                 where p.isDelete == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
@@ -563,6 +548,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
             }
+            else
+            {
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
 
@@ -579,7 +566,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
                 {
                     q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
                 }
-
+            }
 
             var qs = from g in q
                      select new

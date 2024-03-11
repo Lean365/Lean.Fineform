@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="contact_query.aspx.cs" Inherits="Lean.Fineform.Lf_Office.OA.contact_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="contact_query.aspx.cs" Inherits="Fine.Lf_Office.OA.contact_query" %>
 
 <!DOCTYPE html>
 

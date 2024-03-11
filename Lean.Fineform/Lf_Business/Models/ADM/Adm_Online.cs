@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class Adm_Online : IKeyID
     {

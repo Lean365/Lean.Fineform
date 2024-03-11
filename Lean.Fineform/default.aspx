@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Lean.Fineform._default" Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Fine._default" Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 
 <!DOCTYPE html>
 

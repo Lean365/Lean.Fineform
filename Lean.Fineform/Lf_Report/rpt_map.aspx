@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="rpt_map.aspx.cs" Inherits="Lean.Fineform.Lf_Report.rpt_map" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="rpt_map.aspx.cs" Inherits="Fine.Lf_Report.rpt_map" %>
 
 <!DOCTYPE html>
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace Lean.Fineform
+namespace Fine
 {
     /// <summary>
     /// ¼ÓÃÜ×Ö·û´®Àà

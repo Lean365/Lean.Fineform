@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Manufacturing.Master
+namespace Fine.Lf_Manufacturing.Master
 {
     public partial class Qm_acceptcat : PageBase
     {

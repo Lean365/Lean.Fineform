@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ecn_report.aspx.cs" Inherits="Lean.Fineform.Lf_Report.ecn_report" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ecn_report.aspx.cs" Inherits="Fine.Lf_Report.ecn_report" %>
 
 <!DOCTYPE html>
 

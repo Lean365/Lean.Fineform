@@ -473,7 +473,7 @@ function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
                         color: function (params) {
                             if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value >=112) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }
@@ -1828,8 +1828,11 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#FF0000";
+                            } else if (params.value >= 112) {
+                                return "#1d953f";
+
                             }
                             return "#225a1f";
                         },
@@ -2125,8 +2128,11 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#FF0000";
+                            } else if (params.value >= 112) {
+                                return "#1d953f";
+
                             }
                             return "#225a1f";
                         },

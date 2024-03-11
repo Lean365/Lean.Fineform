@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using FineUIPro.Design;
-using System.Linq;
-using System.Data.Entity;
-
+using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
+using System.Linq;
 
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+namespace Fine.Lf_Manufacturing.QM.cost
 {
 
     public partial class rework_cost_edit : PageBase
@@ -75,7 +60,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
 
-            Qm_Reworkdata current = DB.Qm_Reworkdatas.Find(strGuid);
+            Qm_Rework current = DB.Qm_Reworks.Find(strGuid);
 
             if (current == null)
             {
@@ -225,7 +210,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         {
 
 
-            Qm_Reworkdata current = DB.Qm_Reworkdatas.Find(strGuid);
+            Qm_Rework current = DB.Qm_Reworks.Find(strGuid);
 
             string modi002 = (current.Qcrd009 + current.Qcrd010).ToString();
             string modi003 = current.Qcrd013.ToString();
@@ -284,7 +269,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             //string InputData = Qcrd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcrd002.Text.Trim() + Qcrd003.Text.Trim();
 
 
-            //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworkdatas.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
+            //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworks.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
 
             //if (Redata != null)
             //{
@@ -335,7 +320,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         private void SaveItem()//新增质量控制数据
         {
 
-            Qm_Reworkdata item = DB.Qm_Reworkdatas
+            Qm_Rework item = DB.Qm_Reworks
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
 

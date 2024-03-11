@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using FineUIPro.Design;
-using System.Linq;
-using System.Data.Entity;
-
+using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+namespace Fine.Lf_Manufacturing.QM.cost
 {
 
     public partial class waste_cost_new : PageBase
@@ -246,7 +231,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             string InputData = Qcwd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcwd002.Text.Trim() + Qcwd004.Text.Trim();
 
 
-            Qm_Wastedata Redata = DB.Qm_Wastedatas.Where(u => u.Qcwd001 + u.Qcwd002 + u.Qcwd004 == InputData).FirstOrDefault();
+            Qm_Waste Redata = DB.Qm_Wastes.Where(u => u.Qcwd001 + u.Qcwd002 + u.Qcwd004 == InputData).FirstOrDefault();
 
             if (Redata != null)
             {
@@ -315,7 +300,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         {
 
 
-            Qm_Wastedata item = new Qm_Wastedata();
+            Qm_Waste item = new Qm_Waste();
             item.Qcwd001 = Qcwd001.SelectedDate.Value.ToString("yyyyMMdd");
             item.Qcwd002 = Qcwd002.SelectedItem.Text;
             item.Qcwd003 = decimal.Parse(Qcwd003.Text);
@@ -340,7 +325,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             item.GUID = Guid.NewGuid();
             item.Creator = GetIdentityName();
             item.CreateTime = DateTime.Now;
-            DB.Qm_Wastedatas.Add(item);
+            DB.Qm_Wastes.Add(item);
             DB.SaveChanges();
 
             //新增日志

@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.PP
 {
     public class Pp_EcSop : IKeyGUID
     {
@@ -46,17 +46,17 @@ namespace Lean.Fineform
         public DateTime? pengpModifyTime { get; set; }///制技修改日期
 
 
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF01 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF02 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF03 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF04 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF05 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF06 { get; set; }
         public int UDF51 { get; set; }
 
@@ -69,10 +69,11 @@ namespace Lean.Fineform
 
         public Decimal UDF56 { get; set; }
 
-        [StringLength(5000)]
-        public string Remark { get; set; }//备注
         [Required]
-        public byte isDelete { get; set; }  //13	//	删除标记
+        public byte isDelete { get; set; }	//13	//	删除标记
+
+        [StringLength(400)]
+        public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }

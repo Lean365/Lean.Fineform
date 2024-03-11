@@ -6,7 +6,7 @@ using System.Net;
 using System.Web;
 using System.Runtime.InteropServices;
 
-namespace Lean.Fineform
+namespace Fine
 {
     /// <summary>
     /// 网络操作相关的类

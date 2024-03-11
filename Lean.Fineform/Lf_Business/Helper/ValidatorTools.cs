@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Lean.Fineform
+namespace Fine
 {
     /// <summary>
     /// 字符(串)验证、匹配工具类

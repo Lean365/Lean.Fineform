@@ -10,7 +10,7 @@ using System.Data;
 using Newtonsoft.Json.Linq;
 using AspNet = System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class role_power : PageBase
     {

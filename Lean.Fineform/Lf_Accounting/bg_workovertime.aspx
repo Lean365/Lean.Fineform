@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_workovertime.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.bg_workovertime" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_workovertime.aspx.cs" Inherits="Fine.Lf_Accounting.bg_workovertime" %>
 
 <!DOCTYPE html>
 

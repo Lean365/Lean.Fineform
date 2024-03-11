@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="lot_tracking_oph.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.tracking.lot_tracking_oph" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="lot_tracking_oph.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.tracking.lot_tracking_oph" %>
 
 <!DOCTYPE html>
 

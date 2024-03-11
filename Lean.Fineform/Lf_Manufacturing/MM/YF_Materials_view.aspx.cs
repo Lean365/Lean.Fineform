@@ -14,10 +14,10 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Data.Entity.Validation;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
 
-    public partial class Yf_Materials_view : PageBase
+    public partial class YF_Materials_view : PageBase
     {
 
 
@@ -68,9 +68,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             string  id = GetQueryValue("MB001");
 
 
-            Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+           Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-            Lean.Fineform.Lf_Business.Models.YF.INVMB Ccurrent = DBCYF.INVMB.Find(id); //.Include(u => u.Dept);
+           Fine.Lf_Business.Models.YF.INVMB Ccurrent = DBCYF.INVMB.Find(id); //.Include(u => u.Dept);
 
             if (Ccurrent == null)
             {
@@ -104,7 +104,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             CMB049.Text = Ccurrent.MB049.ToString();
             CMB050.Text = Ccurrent.MB050.ToString();
 
-            Lean.Fineform.Lf_Business.Models.YF.CMSMV CName = DBCYF.CMSMV.Find(Ccurrent.MB067);
+           Fine.Lf_Business.Models.YF.CMSMV CName = DBCYF.CMSMV.Find(Ccurrent.MB067);
             if (CName != null)
             {
                 CMB067.Text = CName.MV002;
@@ -123,9 +123,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             CUDF51.Text = Ccurrent.UDF51.ToString();
 
 
-            Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+           Fine.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
-            Lean.Fineform.Lf_Business.Models.YF.INVMB Hcurrent = DBHYF.INVMB.Find(id); //.Include(u => u.Dept);
+           Fine.Lf_Business.Models.YF.INVMB Hcurrent = DBHYF.INVMB.Find(id); //.Include(u => u.Dept);
 
             if (Hcurrent == null)
             {
@@ -158,7 +158,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             HMB049.Text = Hcurrent.MB049.ToString();
             HMB050.Text = Hcurrent.MB050.ToString();
 
-            Lean.Fineform.Lf_Business.Models.YF.CMSMV HName = DBHYF.CMSMV.Find(Ccurrent.MB067);
+           Fine.Lf_Business.Models.YF.CMSMV HName = DBHYF.CMSMV.Find(Ccurrent.MB067);
             if (HName != null)
             {
                 HMB067.Text = HName.MV002;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
     /// Fico_costing_materialcostratio 的摘要说明

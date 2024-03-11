@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material.aspx.cs" Inherits="Lean.Fineform.Lc_MM.material" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material.aspx.cs" Inherits="Fine.Lc_MM.material" %>
 
 <!DOCTYPE html>
 
@@ -35,7 +35,7 @@
                             OnTrigger1Click="ttbSearchMessage_Trigger1Click">
                         </f:TwinTriggerBox>
                         <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
-                        <f:Button ID="btnYFDataView" runat="server" IconUrl="~/Lf_Resources/menu/yf.png" EnablePostBack="true" Text="<%$ Resources:GlobalResource,Yf_DataView%>" OnClick="btnYFDataView_Click">
+                        <f:Button ID="btnYFDataView" runat="server" IconUrl="~/Lf_Resources/menu/yf.png" EnablePostBack="true" Text="<%$ Resources:GlobalResource,yf_DataView%>" OnClick="btnYFDataView_Click">
                         </f:Button>
                         <%--<f:Button ID="btnModelRegion" runat="server" IconUrl="~/Lf_Resources/menu/pro.png" EnablePostBack="true" Text="<%$ Resources:GlobalResource,Query_Model%>" OnClick="btnModelRegion_Click">
                         </f:Button>--%>

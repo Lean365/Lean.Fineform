@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
 
 

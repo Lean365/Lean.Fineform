@@ -22,7 +22,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Collections;
 using System.ComponentModel;
-namespace Lean.Fineform
+namespace Fine
 {
 
     public class EpplusHelper : IDisposable

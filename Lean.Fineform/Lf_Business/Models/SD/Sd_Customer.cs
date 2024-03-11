@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.SD
 {
     public class Sd_Customer : IKeyGUID
     {
@@ -23,24 +23,24 @@ namespace Lean.Fineform
 
         [StringLength(40)]
         public string Customer_Abbr { get; set; }//简称
-        
-        [StringLength(5000)]
+
+        [StringLength(255)]
         public string UDF01 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF02 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF03 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF04 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF05 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF06 { get; set; }
-        public Decimal UDF51 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal UDF52 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal UDF53 { get; set; }
+        public int UDF53 { get; set; }
         public Decimal UDF54 { get; set; }
 
         public Decimal UDF55 { get; set; }
@@ -60,5 +60,6 @@ namespace Lean.Fineform
         [StringLength(50)]
         public string Modifier { get; set; }
         public DateTime? ModifyTime { get; set; }
+
     }
 }

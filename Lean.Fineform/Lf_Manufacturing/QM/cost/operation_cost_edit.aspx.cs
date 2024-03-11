@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using FineUIPro.Design;
-using System.Linq;
-using System.Data.Entity;
-
+using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
+using System.Linq;
 
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+namespace Fine.Lf_Manufacturing.QM.cost
 {
 
     public partial class operation_cost_edit : PageBase
@@ -75,7 +60,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
 
-            Qm_Operationdata current = DB.Qm_Operationdatas.Find(strGuid);
+            Qm_Operation current = DB.Qm_Operations.Find(strGuid);
 
             if (current == null)
             {
@@ -158,7 +143,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         private void CheckData()
         {
 
-           Qm_Operationdata current = DB.Qm_Operationdatas.Find(strGuid);
+           Qm_Operation current = DB.Qm_Operations.Find(strGuid);
             string modi001 = current.Qcod003.ToString();
             string modi002 = current.Qcod008.ToString();
             string modi003 = current.Qcod012.ToString();
@@ -218,7 +203,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             //string InputData = Qcrd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcrd002.Text.Trim() + Qcrd003.Text.Trim();
 
 
-            //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworkdatas.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
+            //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworks.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
 
             //if (Redata != null)
             //{
@@ -269,7 +254,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         private void SaveItem()//新增质量控制数据
         {
 
-            Qm_Operationdata item = DB.Qm_Operationdatas
+            Qm_Operation item = DB.Qm_Operations
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
             //item.Qcod001 = Qcod001.Text;

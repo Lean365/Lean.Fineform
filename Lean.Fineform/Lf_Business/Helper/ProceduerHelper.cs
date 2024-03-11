@@ -5,7 +5,7 @@ using System.Linq;
 
 
 //使用Hashtable时，必须引入这个命名空间
-namespace Lean.Fineform
+namespace Fine
 {
     public class ProceduerHelper : PageBase
     {
@@ -36,7 +36,7 @@ namespace Lean.Fineform
         " SELECT @dDate = cast(@tempDate + '-01' + '-01' as DATETIME) " +
 
 
-        " INSERT INTO Adm_TheDate(TheYear, TheMonth, TheDay, TheWeekDay, TheWeeks, TheMonths, IsWorkDay,TheDatetime, Guid, Creator, CreateTime)" +
+        " INSERT INTO Adm_TheDate(TheYear, TheMonth, TheDay, TheWeekDay, TheWeeks, TheMonths, IsWorkDay,TheDatetime, Guid, UDF01,UDF02,UDF03,UDF04,UDF05,UDF06,UDF51,UDF52,UDF53,UDF54,UDF55,UDF56,isDelete,Creator, CreateTime)" +
         " SELECT DATENAME(yy, convert(varchar(20), dateadd(dd, number, convert(varchar(5), @dDate, 120) + '01-01'), 120)) AS TheYear" +
         " , DateName(month, convert(varchar(20), dateadd(dd, number, convert(varchar(5), @dDate, 120) + '01-01'), 120)) AS TheMonth" +
         " , DateName(day, convert(varchar(20), dateadd(dd, number, convert(varchar(5), @dDate, 120) + '01-01'), 120)) AS TheDay" +
@@ -46,7 +46,7 @@ namespace Lean.Fineform
         "  , CASE WHEN datename(WEEKDAY, dateadd(dd, number, convert(varchar(5), @dDate, 120) + '01-01')) IN('星期六', '星期日') THEN 0 ELSE 1 END AS IsWorkDay" +
         " ,convert(varchar(20),dateadd(dd,number,convert(varchar(5),@dDate,120)+'01-01'),120) as TheDatetime " +
             "  , NEWID() AS Guid" +
-        "  , @Year+'Admin' AS Creator" +
+        " ,''as UDF01,''as UDF02,''as UDF03,''as UDF04,''as UDF05,''as UDF06,0 as UDF51,0 as UDF52,0 as UDF53,0 as UDF54,0 as UDF55,0 as UDF56, 0 as isDelete, @Year+'Admin' AS Creator" +
         " , GETDATE() AS CreateTime" +
         " FROM master..spt_values" +
         " WHERE type = 'P'" +

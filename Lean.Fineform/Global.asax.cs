@@ -3,14 +3,14 @@ using System.Web;
 using System.Collections;
 using System.Data.Entity;
 using FineUIPro;
-namespace Lean.Fineform
+namespace Fine
 {
     public class Global : System.Web.HttpApplication
     {
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            Database.SetInitializer(new LeanDatabaseInitializer());
+            Database.SetInitializer(new FineDatabaseInitializer());
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace Lean.Fineform
         }
         protected virtual void Application_EndRequest()
         {
-            var context = HttpContext.Current.Items["__LeanWebformContext"] as LeanContext;
+            var context = HttpContext.Current.Items["__LeanBenchNetContext"] as FineContext;
 
 
             if (context != null)

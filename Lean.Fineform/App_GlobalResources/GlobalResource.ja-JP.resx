@@ -138,7 +138,7 @@
   <data name="sys_Button_New_EC" xml:space="preserve">
     <value>追加待ち</value>
   </data>
-  <data name="Yf_Special" xml:space="preserve">
+  <data name="yf_Special" xml:space="preserve">
     <value>専用部品</value>
   </data>
   <data name="menu_Oa_MGT_Weekly" xml:space="preserve">
@@ -306,7 +306,7 @@
   <data name="sys_Status_Pp_EC_Unconfirmed" xml:space="preserve">
     <value>未確認</value>
   </data>
-  <data name="menu_Bpm_Todo" xml:space="preserve">
+  <data name="menu_BPM_Todo" xml:space="preserve">
     <value>未処理</value>
   </data>
   <data name="sys_Status_Unprocessed" xml:space="preserve">
@@ -336,13 +336,13 @@
   <data name="sys_Export_SheetLosstime" xml:space="preserve">
     <value>損失工数明細</value>
   </data>
-  <data name="menu_Bpm_Apply" xml:space="preserve">
+  <data name="menu_BPM_Apply" xml:space="preserve">
     <value>私の申請</value>
   </data>
-  <data name="menu_Fm_My" xml:space="preserve">
+  <data name="menu_FM_My" xml:space="preserve">
     <value>私のフォーム</value>
   </data>
-  <data name="menu_Bpm_Signature" xml:space="preserve">
+  <data name="menu_BPM_Signature" xml:space="preserve">
     <value>署名管理</value>
   </data>
   <data name="menu_Sd_TransportationMethods" xml:space="preserve">
@@ -423,7 +423,7 @@
   <data name="menu_Sd_InboundQuery" xml:space="preserve">
     <value>入庫検索</value>
   </data>
-  <data name="Query_Em_EmptyText" xml:space="preserve">
+  <data name="Query_EM_EmptyText" xml:space="preserve">
     <value>日付、ユーザなどを検索する。</value>
   </data>
   <data name="Query_Select_Date" xml:space="preserve">
@@ -615,7 +615,7 @@
   <data name="menu_Sys_Config" xml:space="preserve">
     <value>構成</value>
   </data>
-  <data name="Yf_General" xml:space="preserve">
+  <data name="yf_General" xml:space="preserve">
     <value>共有部品</value>
   </data>
   <data name="sys_Status_Common" xml:space="preserve">
@@ -759,7 +759,7 @@
   <data name="menu_Pp_Defect_Query" xml:space="preserve">
     <value>不具合検索</value>
   </data>
-  <data name="menu_Pp_Defect_P2D" xml:space="preserve">
+  <data name="menu_Pp_P2d_Defect" xml:space="preserve">
     <value>P2D不具合管理</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
@@ -858,22 +858,22 @@
   <data name="sys_Windows_Refresh" xml:space="preserve">
     <value>ページ更新</value>
   </data>
-  <data name="menu_Bpm_MGT" xml:space="preserve">
+  <data name="menu_BPM_MGT" xml:space="preserve">
     <value>フロー管理</value>
   </data>
-  <data name="menu_Bpm_Template" xml:space="preserve">
+  <data name="menu_BPM_Template" xml:space="preserve">
     <value>フローテンプレート</value>
   </data>
-  <data name="menu_Bpm_Desgin" xml:space="preserve">
+  <data name="menu_BPM_Desgin" xml:space="preserve">
     <value>フローデザイン</value>
   </data>
   <data name="sys_Help_FontIcon" xml:space="preserve">
     <value>フォントアイコン</value>
   </data>
-  <data name="menu_Fm_MGT" xml:space="preserve">
+  <data name="menu_FM_MGT" xml:space="preserve">
     <value>フォーム管理</value>
   </data>
-  <data name="menu_Fm_Desgin" xml:space="preserve">
+  <data name="menu_FM_Desgin" xml:space="preserve">
     <value>フォーム</value>
   </data>
   <data name="sys_Parameter_Error" xml:space="preserve">
@@ -921,10 +921,10 @@
   <data name="sys_Status" xml:space="preserve">
     <value>ステータス</value>
   </data>
-  <data name="menu_Em_MGT" xml:space="preserve">
+  <data name="menu_EM_MGT" xml:space="preserve">
     <value>スケジュール管理</value>
   </data>
-  <data name="menu_Em_Schedule" xml:space="preserve">
+  <data name="menu_EM_Schedule" xml:space="preserve">
     <value>スケジュール</value>
   </data>
   <data name="menu_Sd_InboundSerial" xml:space="preserve">
@@ -963,7 +963,7 @@
   <data name="sys_Help_Calendar" xml:space="preserve">
     <value>カレンダー</value>
   </data>
-  <data name="menu_Fm_Category" xml:space="preserve">
+  <data name="menu_FM_Category" xml:space="preserve">
     <value>カテゴリ</value>
   </data>
   <data name="menu_Oa_MGT_Notices" xml:space="preserve">
@@ -981,44 +981,44 @@
   <data name="sys_Import_Sheet" xml:space="preserve">
     <value>インポート</value>
   </data>
-  <data name="menu_Em_My" xml:space="preserve">
+  <data name="menu_EM_My" xml:space="preserve">
     <value>イベント</value>
   </data>
-  <data name="menu_Yf_Query" xml:space="preserve">
+  <data name="menu_YF_Query" xml:space="preserve">
     <value>YiFeiデータ</value>
   </data>
-  <data name="Yf_Supplier" xml:space="preserve">
-    <value>Yf_仕入先</value>
+  <data name="yf_Supplier" xml:space="preserve">
+    <value>YF_仕入先</value>
   </data>
-  <data name="Yf_Ec" xml:space="preserve">
-    <value>Yf_設変</value>
+  <data name="yf_Ec" xml:space="preserve">
+    <value>YF_設変</value>
   </data>
-  <data name="Yf_MaterialSupplier" xml:space="preserve">
-    <value>Yf_品番仕入先</value>
+  <data name="yf_MaterialSupplier" xml:space="preserve">
+    <value>YF_品番仕入先</value>
   </data>
-  <data name="Yf_Material" xml:space="preserve">
-    <value>Yf_品番情報</value>
+  <data name="yf_Material" xml:space="preserve">
+    <value>YF_品番情報</value>
   </data>
-  <data name="Yf_Requisition" xml:space="preserve">
-    <value>Yf_購買依頼</value>
+  <data name="yf_Requisition" xml:space="preserve">
+    <value>YF_購買依頼</value>
   </data>
-  <data name="Yf_PurchasingPrice" xml:space="preserve">
-    <value>Yf_購買情報</value>
+  <data name="yf_PurchasingPrice" xml:space="preserve">
+    <value>YF_購買情報</value>
   </data>
-  <data name="Yf_PurchaseOrder" xml:space="preserve">
-    <value>Yf_購買発注</value>
+  <data name="yf_PurchaseOrder" xml:space="preserve">
+    <value>YF_購買発注</value>
   </data>
-  <data name="Yf_PurchasingPriceVal" xml:space="preserve">
-    <value>Yf_購買スケール</value>
+  <data name="yf_PurchasingPriceVal" xml:space="preserve">
+    <value>YF_購買スケール</value>
   </data>
-  <data name="Yf_Substitute" xml:space="preserve">
-    <value>Yf_代替材料</value>
+  <data name="yf_Substitute" xml:space="preserve">
+    <value>YF_代替材料</value>
   </data>
-  <data name="Yf_DataView" xml:space="preserve">
-    <value>Yf_データ照会</value>
+  <data name="yf_DataView" xml:space="preserve">
+    <value>YF_データ照会</value>
   </data>
-  <data name="Yf_BOM" xml:space="preserve">
-    <value>Yf_BOM</value>
+  <data name="yf_BOM" xml:space="preserve">
+    <value>YF_BOM</value>
   </data>
   <data name="sys_Status_Pp_EC_Work" xml:space="preserve">
     <value>WIP</value>
@@ -1149,7 +1149,7 @@
   <data name="menu_Fico_RealTitles" xml:space="preserve">
     <value>勘定科目</value>
   </data>
-  <data name="menu_Pp_Defect_P1D" xml:space="preserve">
+  <data name="menu_Pp_P1d_Defect" xml:space="preserve">
     <value>P1D不具合管理</value>
   </data>
   <data name="menu_Pp_OPH" xml:space="preserve">
@@ -1182,23 +1182,23 @@
   <data name="menu_Mm_Master" xml:space="preserve">
     <value>品番情報</value>
   </data>
-  <data name="Yf_Shipment" xml:space="preserve">
-    <value>Yf_出荷情報</value>
+  <data name="yf_Shipment" xml:space="preserve">
+    <value>YF_出荷情報</value>
   </data>
-  <data name="Yf_Sales" xml:space="preserve">
-    <value>Yf_注文書</value>
+  <data name="yf_Sales" xml:space="preserve">
+    <value>YF_注文書</value>
   </data>
-  <data name="Yf_Slip" xml:space="preserve">
-    <value>Yf_売上高</value>
+  <data name="yf_Slip" xml:space="preserve">
+    <value>YF_売上高</value>
   </data>
-  <data name="Yf_Assets" xml:space="preserve">
-    <value>Yf_固定資産</value>
+  <data name="yf_Assets" xml:space="preserve">
+    <value>YF_固定資産</value>
   </data>
   <data name="rpt_Charts_FyJP" xml:space="preserve">
     <value>年間(JP)</value>
   </data>
-  <data name="Yf_StockOrder" xml:space="preserve">
-    <value>Yf_材料納入</value>
+  <data name="yf_StockOrder" xml:space="preserve">
+    <value>YF_材料納入</value>
   </data>
   <data name="rpt_Charts_FyBuCN" xml:space="preserve">
     <value>年間Bu(CN)</value>
@@ -1220,5 +1220,8 @@
   </data>
   <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
     <value>原因明細</value>
+  </data>
+  <data name="menu_Pp_Inspection" xml:space="preserve">
+    <value>PCBA検査</value>
   </data>
 </root>

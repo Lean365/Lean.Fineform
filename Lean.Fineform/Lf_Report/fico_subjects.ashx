@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Fico_subjects.ashx.cs" Class="LeanWebform.Lf_Report.Fico_subjects" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Fico_subjects.ashx.cs" Class="Fine.Lf_Report.Fico_subjects" %>

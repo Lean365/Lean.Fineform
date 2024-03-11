@@ -5,7 +5,7 @@ using System.Web;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-namespace Lean.Fineform
+namespace Fine
 {
     public class GetAssemblyInfo
     {

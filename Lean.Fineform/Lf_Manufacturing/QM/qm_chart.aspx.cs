@@ -6,9 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
 
-namespace Lean.Fineform.Lf_Manufacturing.QM
+namespace Fine.Lf_Manufacturing.QM
 {
-    public partial class qm_chart : PageBase
+    public partial class Qm_chart : PageBase
     {
         #region ViewPower
 

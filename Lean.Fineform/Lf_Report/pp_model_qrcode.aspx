@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_model_qrcode.aspx.cs" Inherits="Lean.Fineform.Lf_Report.pp_model_qrcode" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_model_qrcode.aspx.cs" Inherits="Fine.Lf_Report.Pp_model_qrcode" %>
 
 <!DOCTYPE html>
 

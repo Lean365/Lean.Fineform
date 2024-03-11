@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="forecast.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.SD.salesmanage.forecast" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="forecast.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.salesmanage.forecast" %>
 
 <!DOCTYPE html>
 
@@ -40,7 +40,7 @@
                                 </f:DatePicker>
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server">
                                 </f:ToolbarFill>
-                                <f:DropDownList ID="DDLItem" Label="<%$ Resources:GlobalResource,Query_Items%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLItEm_SelectedIndexChanged">
+                                <f:DropDownList ID="DDLItem" Label="<%$ Resources:GlobalResource,Query_Items%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLItem_SelectedIndexChanged">
                                 </f:DropDownList>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server">
                                 </f:ToolbarFill>

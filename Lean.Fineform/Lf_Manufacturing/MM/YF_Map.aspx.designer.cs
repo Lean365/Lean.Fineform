@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
 
 
-    public partial class Yf_Map
+    public partial class YF_Map
     {
 
         /// <summary>
@@ -42,112 +42,112 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         protected global::FineUIPro.Panel Panel1;
 
         /// <summary>
-        /// Btn_Yf_Material 控件。
+        /// Btn_yf_Material 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_Material;
+        protected global::FineUIPro.Button Btn_yf_Material;
 
         /// <summary>
-        /// Btn_Yf_BOM 控件。
+        /// Btn_yf_BOM 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_BOM;
+        protected global::FineUIPro.Button Btn_yf_BOM;
 
         /// <summary>
-        /// Btn_Yf_PurchaseOrder 控件。
+        /// Btn_yf_PurchaseOrder 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_PurchaseOrder;
+        protected global::FineUIPro.Button Btn_yf_PurchaseOrder;
 
         /// <summary>
-        /// Btn_Yf_Requisition 控件。
+        /// Btn_yf_Requisition 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_Requisition;
+        protected global::FineUIPro.Button Btn_yf_Requisition;
 
         /// <summary>
-        /// Btn_Yf_PurchasingPrice 控件。
+        /// Btn_yf_PurchasingPrice 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_PurchasingPrice;
+        protected global::FineUIPro.Button Btn_yf_PurchasingPrice;
 
         /// <summary>
-        /// Btn_Yf_PurchasingPriceVal 控件。
+        /// Btn_yf_PurchasingPriceVal 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_PurchasingPriceVal;
+        protected global::FineUIPro.Button Btn_yf_PurchasingPriceVal;
 
         /// <summary>
-        /// Btn_Yf_Supplier 控件。
+        /// Btn_yf_Supplier 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_Supplier;
+        protected global::FineUIPro.Button Btn_yf_Supplier;
 
         /// <summary>
-        /// Btn_Yf_MaterialSupplier 控件。
+        /// Btn_yf_MaterialSupplier 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_MaterialSupplier;
+        protected global::FineUIPro.Button Btn_yf_MaterialSupplier;
 
         /// <summary>
-        /// Btn_Yf_change 控件。
+        /// Btn_yf_change 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_change;
+        protected global::FineUIPro.Button Btn_yf_change;
 
         /// <summary>
-        /// Btn_Yf_replace 控件。
+        /// Btn_yf_replace 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_replace;
+        protected global::FineUIPro.Button Btn_yf_replace;
 
         /// <summary>
-        /// Btn_Yf_Special_Material 控件。
+        /// Btn_yf_Special_Material 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_Special_Material;
+        protected global::FineUIPro.Button Btn_yf_Special_Material;
 
         /// <summary>
-        /// Btn_Yf_General_Material 控件。
+        /// Btn_yf_General_Material 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Yf_General_Material;
+        protected global::FineUIPro.Button Btn_yf_General_Material;
 
         /// <summary>
         /// Btn_Shipment 控件。

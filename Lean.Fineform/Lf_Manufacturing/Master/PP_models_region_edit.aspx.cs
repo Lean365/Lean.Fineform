@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Collections;
-using System.Configuration;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using System.Data.Entity.Validation;
-
-namespace Lean.Fineform.Lf_Manufacturing.Master
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.Master
 {
 
     public partial class Pp_models_region_edit : PageBase
@@ -139,7 +130,7 @@ namespace Lean.Fineform.Lf_Manufacturing.Master
             string checkItem = current.D_SAP_DEST_Z001;
             string checkModel = current.D_SAP_DEST_Z002;
             string ckeckRegion = current.D_SAP_DEST_Z003;
-            //string checkScheduling = current.Udf004.ToString();
+            string checkScheduling = current.UDF04.ToString();
 
             if (this.lblD_SAP_DEST_Z001.Text == checkItem)
             {

@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.PP
 {
     //生产不良
     public class Pp_P1d_Defect : IKeyID
@@ -45,25 +45,28 @@ namespace Lean.Fineform
         public string Probadset { get; set; }//不良个所
         [StringLength(200)]
         public string Probadreason { get; set; }//不良原因
-        [StringLength(200)]
-        public string Probadserial { get; set; }//序列号
-        [StringLength(200)]
-        public string Probadresponsibility { get; set; }//责任归属
-
-        [StringLength(200)]
-        public string Probadrepairman { get; set; }//修理
         [StringLength(255)]
-        public string Udf001 { get; set; }
+        public string UDF01 { get; set; }
         [StringLength(255)]
-        public string Udf002 { get; set; }
+        public string UDF02 { get; set; }
         [StringLength(255)]
-        public string Udf003 { get; set; }
+        public string UDF03 { get; set; }
+        [StringLength(500)]
+        public string UDF04 { get; set; }
+        [StringLength(500)]
+        public string UDF05 { get; set; }
+        [StringLength(500)]
+        public string UDF06 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal Udf004 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal Udf005 { get; set; }
+        public int UDF53 { get; set; }
+        public Decimal UDF54 { get; set; }
 
-        public Decimal Udf006 { get; set; }
+        public Decimal UDF55 { get; set; }
+
+        public Decimal UDF56 { get; set; }
 
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记

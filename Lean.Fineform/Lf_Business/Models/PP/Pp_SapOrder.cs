@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.PP
 {
     public class Pp_SapOrder : IKeyGUID
     {
@@ -34,9 +34,28 @@ namespace Lean.Fineform
 
         [StringLength(10)]
         public string D_SAP_COOIS_C008 { get; set; }//作业手顺
+        [StringLength(255)]
+        public string UDF01 { get; set; }
+        [StringLength(255)]
+        public string UDF02 { get; set; }
+        [StringLength(255)]
+        public string UDF03 { get; set; }
+        [StringLength(500)]
+        public string UDF04 { get; set; }
+        [StringLength(500)]
+        public string UDF05 { get; set; }
+        [StringLength(500)]
+        public string UDF06 { get; set; }
+        public int UDF51 { get; set; }
 
-        [StringLength(10)]
-        public string D_SAP_COOIS_C009 { get; set; }//订单类型
+        public int UDF52 { get; set; }
+
+        public int UDF53 { get; set; }
+        public Decimal UDF54 { get; set; }
+
+        public Decimal UDF55 { get; set; }
+
+        public Decimal UDF56 { get; set; }
 
         [Required]
         public byte isDelete { get; set; }	//13	//	删除标记
@@ -51,6 +70,7 @@ namespace Lean.Fineform
         [StringLength(50)]
         public string Modifier { get; set; }
         public DateTime? ModifyTime { get; set; }
+
 
 
     }

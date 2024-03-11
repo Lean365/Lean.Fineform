@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
+namespace Fine.Lf_Manufacturing.SD.shipment
 {
     public partial class outbound_scan : System.Web.UI.Page
     {

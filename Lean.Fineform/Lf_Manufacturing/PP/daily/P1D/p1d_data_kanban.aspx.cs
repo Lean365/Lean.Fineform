@@ -15,7 +15,7 @@ using System.Configuration;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_data_kanban : PageBase
     {

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="encryption.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.help.encryption" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="encryption.aspx.cs" Inherits="Fine.Lf_Admin.help.encryption" %>
 
 <!DOCTYPE html>
 

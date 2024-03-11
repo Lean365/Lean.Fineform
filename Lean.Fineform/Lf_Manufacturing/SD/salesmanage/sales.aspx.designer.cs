@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.salesmanage
+namespace Fine.Lf_Manufacturing.SD.salesmanage
 {
 
 

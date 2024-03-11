@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_grossmargin.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.costing_grossmargin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_grossmargin.aspx.cs" Inherits="Fine.Lf_Accounting.costing_grossmargin" %>
 
 <!DOCTYPE html>
 

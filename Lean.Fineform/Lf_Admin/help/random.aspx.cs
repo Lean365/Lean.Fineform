@@ -8,7 +8,7 @@ using System.Data.Entity;
 using FineUIPro;
 ////using EntityFramework.Extensions;
 
-namespace Lean.Fineform.Lf_Admin.help
+namespace Fine.Lf_Admin.help
 
 {
     public partial class random : PageBase

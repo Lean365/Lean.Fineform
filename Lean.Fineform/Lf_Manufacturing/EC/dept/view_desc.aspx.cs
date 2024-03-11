@@ -13,7 +13,7 @@ using System.Data;
 using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
-namespace Lean.Fineform.Lf_Manufacturing.EC.dept
+namespace Fine.Lf_Manufacturing.EC.dept
 {
     public partial class view_desc : PageBase
     {
@@ -127,7 +127,7 @@ namespace Lean.Fineform.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-        protected void DDL_ItEm_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DDL_Item_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDL_Item.SelectedIndex != -1 && DDL_Item.SelectedIndex != 0)
             {

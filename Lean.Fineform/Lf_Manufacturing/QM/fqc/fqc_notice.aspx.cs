@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
-namespace Lean.Fineform.Lf_Manufacturing.QM.fqc
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_notice : PageBase
     {

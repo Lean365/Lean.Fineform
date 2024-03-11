@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
 
 

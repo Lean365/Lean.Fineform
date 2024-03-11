@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class costing : PageBase
     {

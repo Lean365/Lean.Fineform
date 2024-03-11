@@ -15,9 +15,9 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.PP
+namespace Fine.Lf_Manufacturing.PP
 {
-    public partial class pp_tracking_chart : PageBase
+    public partial class Pp_tracking_chart : PageBase
     {
         #region ViewPower
 

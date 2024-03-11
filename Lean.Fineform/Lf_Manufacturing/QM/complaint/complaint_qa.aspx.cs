@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.complaint
+namespace Fine.Lf_Manufacturing.QM.complaint
 {
     public partial class complaint_qa : PageBase
     {

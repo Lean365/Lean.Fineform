@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-
+using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
-using Newtonsoft.Json.Linq;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_p2d_edit : PageBase
     {

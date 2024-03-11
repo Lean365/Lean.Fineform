@@ -15,9 +15,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_PurchasingPriceVal : PageBase
+    public partial class YF_PurchasingPriceVal : PageBase
     {
         #region ViewPower
 
@@ -92,9 +92,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tl in DBYF.PURTL
                         join tm in DBYF.PURTM
@@ -235,7 +235,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
                 var q = from tl in DBYF.PURTL
                         join tm in DBYF.PURTM

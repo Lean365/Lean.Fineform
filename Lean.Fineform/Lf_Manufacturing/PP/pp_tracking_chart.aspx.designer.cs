@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.PP
+namespace Fine.Lf_Manufacturing.PP
 {
 
 
-    public partial class pp_tracking_chart
+    public partial class Pp_tracking_chart
     {
 
         /// <summary>

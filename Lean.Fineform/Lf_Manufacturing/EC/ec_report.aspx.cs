@@ -12,7 +12,7 @@ using System.Data;
 using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_report : PageBase
     {

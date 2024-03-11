@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
 
 
-    public partial class pp_model_qrcode
+    public partial class Pp_model_qrcode
     {
 
         /// <summary>

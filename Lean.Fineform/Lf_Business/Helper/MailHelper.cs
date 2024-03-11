@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Net.Mail;
 using System.Text;
-namespace Lean.Fineform
+namespace Fine
 {
     public class MailHelper
     {

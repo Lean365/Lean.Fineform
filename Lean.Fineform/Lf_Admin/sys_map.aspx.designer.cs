@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
 
 
@@ -42,49 +42,49 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Panel Panel1;
 
         /// <summary>
-        /// Btn_adm_menu 控件。
+        /// Btn_Adm_menu 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_menu;
+        protected global::FineUIPro.Button Btn_Adm_menu;
 
         /// <summary>
-        /// Btn_adm_online 控件。
+        /// Btn_Adm_online 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_online;
+        protected global::FineUIPro.Button Btn_Adm_online;
 
         /// <summary>
-        /// Btn_adm_config 控件。
+        /// Btn_Adm_config 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_config;
+        protected global::FineUIPro.Button Btn_Adm_config;
 
         /// <summary>
-        /// Btn_adm_log 控件。
+        /// Btn_Adm_log 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_log;
+        protected global::FineUIPro.Button Btn_Adm_log;
 
         /// <summary>
-        /// Btn_adm_operatelog 控件。
+        /// Btn_Adm_operatelog 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_operatelog;
+        protected global::FineUIPro.Button Btn_Adm_operatelog;
 
         /// <summary>
         /// Btn_Adm_Institution 控件。
@@ -96,94 +96,94 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_Adm_Institution;
 
         /// <summary>
-        /// Btn_adm_dept 控件。
+        /// Btn_Adm_dept 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_dept;
+        protected global::FineUIPro.Button Btn_Adm_dept;
 
         /// <summary>
-        /// Btn_adm_dept_user 控件。
+        /// Btn_Adm_dept_user 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_dept_user;
+        protected global::FineUIPro.Button Btn_Adm_dept_user;
 
         /// <summary>
-        /// Btn_adm_title 控件。
+        /// Btn_Adm_title 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_title;
+        protected global::FineUIPro.Button Btn_Adm_title;
 
         /// <summary>
-        /// Btn_adm_title_user 控件。
+        /// Btn_Adm_title_user 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_title_user;
+        protected global::FineUIPro.Button Btn_Adm_title_user;
 
         /// <summary>
-        /// Btn_adm_user 控件。
+        /// Btn_Adm_user 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_user;
+        protected global::FineUIPro.Button Btn_Adm_user;
 
         /// <summary>
-        /// Btn_adm_changepassword 控件。
+        /// Btn_Adm_changepassword 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_changepassword;
+        protected global::FineUIPro.Button Btn_Adm_changepassword;
 
         /// <summary>
-        /// Btn_adm_role 控件。
+        /// Btn_Adm_role 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_role;
+        protected global::FineUIPro.Button Btn_Adm_role;
 
         /// <summary>
-        /// Btn_adm_role_user 控件。
+        /// Btn_Adm_role_user 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_role_user;
+        protected global::FineUIPro.Button Btn_Adm_role_user;
 
         /// <summary>
-        /// Btn_adm_power 控件。
+        /// Btn_Adm_power 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_power;
+        protected global::FineUIPro.Button Btn_Adm_power;
 
         /// <summary>
-        /// Btn_adm_role_power 控件。
+        /// Btn_Adm_role_power 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_adm_role_power;
+        protected global::FineUIPro.Button Btn_Adm_role_power;
 
         /// <summary>
         /// Btn_bpm_todolist 控件。
@@ -231,22 +231,22 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_bpm_signature;
 
         /// <summary>
-        /// Btn_Em_event 控件。
+        /// Btn_em_event 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Em_event;
+        protected global::FineUIPro.Button Btn_em_event;
 
         /// <summary>
-        /// Btn_Em_schedule 控件。
+        /// Btn_em_schedule 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Em_schedule;
+        protected global::FineUIPro.Button Btn_em_schedule;
 
         /// <summary>
         /// Btn_Fico_finance 控件。
@@ -357,67 +357,67 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_Mm_material_query;
 
         /// <summary>
-        /// Btn_pp_Pp_line 控件。
+        /// Btn_Pp_Pp_line 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_line;
+        protected global::FineUIPro.Button Btn_Pp_Pp_line;
 
         /// <summary>
-        /// Btn_pp_Pp_order 控件。
+        /// Btn_Pp_Pp_order 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_order;
+        protected global::FineUIPro.Button Btn_Pp_Pp_order;
 
         /// <summary>
-        /// Btn_pp_Pp_manhour 控件。
+        /// Btn_Pp_Pp_manhour 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_manhour;
+        protected global::FineUIPro.Button Btn_Pp_Pp_manhour;
 
         /// <summary>
-        /// Btn_pp_Pp_reason 控件。
+        /// Btn_Pp_Pp_reason 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_reason;
+        protected global::FineUIPro.Button Btn_Pp_Pp_reason;
 
         /// <summary>
-        /// Btn_pp_Qm_acceptcat 控件。
+        /// Btn_Pp_Qm_acceptcat 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Qm_acceptcat;
+        protected global::FineUIPro.Button Btn_Pp_Qm_acceptcat;
 
         /// <summary>
-        /// Btn_pp_Pp_transport 控件。
+        /// Btn_Pp_Pp_transport 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_transport;
+        protected global::FineUIPro.Button Btn_Pp_Pp_transport;
 
         /// <summary>
-        /// Btn_pp_Pp_efficiency 控件。
+        /// Btn_Pp_Pp_efficiency 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_Pp_efficiency;
+        protected global::FineUIPro.Button Btn_Pp_Pp_efficiency;
 
         /// <summary>
         /// Btn_Ec_ 控件。
@@ -429,13 +429,13 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_Ec_;
 
         /// <summary>
-        /// Btn_pp_sys_Status_Ec__Lot 控件。
+        /// Btn_Pp_sys_Status_Ec__Lot 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_sys_Status_Ec__Lot;
+        protected global::FineUIPro.Button Btn_Pp_sys_Status_Ec__Lot;
 
         /// <summary>
         /// Btn_Ec_view 控件。
@@ -537,139 +537,139 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_Ec_query;
 
         /// <summary>
-        /// Btn_pp_daily 控件。
+        /// Btn_Pp_daily 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_daily;
+        protected global::FineUIPro.Button Btn_Pp_daily;
 
         /// <summary>
-        /// Btn_pp_daily_actual_query 控件。
+        /// Btn_Pp_daily_actual_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_daily_actual_query;
+        protected global::FineUIPro.Button Btn_Pp_daily_actual_query;
 
         /// <summary>
-        /// Btn_pp_output_query 控件。
+        /// Btn_Pp_output_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_output_query;
+        protected global::FineUIPro.Button Btn_Pp_output_query;
 
         /// <summary>
-        /// Btn_pp_output_order_finish 控件。
+        /// Btn_Pp_output_order_finish 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_output_order_finish;
+        protected global::FineUIPro.Button Btn_Pp_output_order_finish;
 
         /// <summary>
-        /// Btn_pp_output_opt 控件。
+        /// Btn_Pp_output_opt 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_output_opt;
+        protected global::FineUIPro.Button Btn_Pp_output_opt;
 
         /// <summary>
-        /// Btn_pp_defect 控件。
+        /// Btn_Pp_defect 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_defect;
+        protected global::FineUIPro.Button Btn_Pp_defect;
 
         /// <summary>
-        /// Btn_pp_defect_order_totalled 控件。
+        /// Btn_Pp_defect_order_totalled 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_defect_order_totalled;
+        protected global::FineUIPro.Button Btn_Pp_defect_order_totalled;
 
         /// <summary>
-        /// Btn_pp_defect_lot_finished 控件。
+        /// Btn_Pp_defect_lot_finished 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_defect_lot_finished;
+        protected global::FineUIPro.Button Btn_Pp_defect_lot_finished;
 
         /// <summary>
-        /// Btn_pp_defect_query 控件。
+        /// Btn_Pp_defect_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_defect_query;
+        protected global::FineUIPro.Button Btn_Pp_defect_query;
 
         /// <summary>
-        /// Btn_pp_times_query 控件。
+        /// Btn_Pp_times_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_times_query;
+        protected global::FineUIPro.Button Btn_Pp_times_query;
 
         /// <summary>
-        /// Btn_qm_fqc 控件。
+        /// Btn_Qm_fqc 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_qm_fqc;
+        protected global::FineUIPro.Button Btn_Qm_fqc;
 
         /// <summary>
-        /// Btn_qm_fqc_notice 控件。
+        /// Btn_Qm_fqc_notice 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_qm_fqc_notice;
+        protected global::FineUIPro.Button Btn_Qm_fqc_notice;
 
         /// <summary>
-        /// Btn_qm_fqc_action 控件。
+        /// Btn_Qm_fqc_action 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_qm_fqc_action;
+        protected global::FineUIPro.Button Btn_Qm_fqc_action;
 
         /// <summary>
-        /// Btn_qm_fqc_count 控件。
+        /// Btn_Qm_fqc_count 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_qm_fqc_count;
+        protected global::FineUIPro.Button Btn_Qm_fqc_count;
 
         /// <summary>
-        /// Btn_qm_fqc_query 控件。
+        /// Btn_Qm_fqc_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_qm_fqc_query;
+        protected global::FineUIPro.Button Btn_Qm_fqc_query;
 
         /// <summary>
         /// Btn_sys_Button_New_Qm_Rework_cost 控件。
@@ -708,40 +708,40 @@ namespace Lean.Fineform.Lf_Admin
         protected global::FineUIPro.Button Btn_Sd_forecast;
 
         /// <summary>
-        /// Btn_pp_inbound_scan 控件。
+        /// Btn_Pp_inbound_scan 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_inbound_scan;
+        protected global::FineUIPro.Button Btn_Pp_inbound_scan;
 
         /// <summary>
-        /// Btn_pp_outbound_scan 控件。
+        /// Btn_Pp_outbound_scan 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_outbound_scan;
+        protected global::FineUIPro.Button Btn_Pp_outbound_scan;
 
         /// <summary>
-        /// Btn_pp_inbound_query 控件。
+        /// Btn_Pp_inbound_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_inbound_query;
+        protected global::FineUIPro.Button Btn_Pp_inbound_query;
 
         /// <summary>
-        /// Btn_pp_outbound_query 控件。
+        /// Btn_Pp_outbound_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_pp_outbound_query;
+        protected global::FineUIPro.Button Btn_Pp_outbound_query;
 
         /// <summary>
         /// Btn_sys_Charts 控件。

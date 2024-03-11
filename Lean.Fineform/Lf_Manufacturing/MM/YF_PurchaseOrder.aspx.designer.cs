@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
 
 
-    public partial class Yf_PurchaseOrder
+    public partial class YF_PurchaseOrder
     {
 
         /// <summary>

@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System;
 //using EntityFramework.Extensions;
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_daily : PageBase
     {
@@ -64,7 +54,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P1D/p1d_daily_new.aspx", "新增") + Window1.GetMaximizeReference();
+            btnP1dNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/p1d_daily_new.aspx", "新增") + Window1.GetMaximizeReference();
             //PageContext.RegisterStartupScript(Window1.GetMaximizeReference());
             //Window1.GetMaximizeReference();
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
@@ -252,7 +242,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
@@ -417,14 +407,14 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             {
 
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P1D/p1d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/p1d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
 
             }
             if (e.CommandName == "EditOphsub")
             {
 
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P1D/p1d_daily_sub_edit.aspx?Transtr=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/p1d_daily_sub_edit.aspx?Transtr=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
 
             }
             int del_ID = GetSelectedDataKeyID(Grid1);
@@ -518,7 +508,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

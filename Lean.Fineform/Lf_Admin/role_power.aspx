@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="role_power.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.role_power" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="role_power.aspx.cs" Inherits="Fine.Lf_Admin.role_power" %>
 
 <!DOCTYPE html>
 <html>

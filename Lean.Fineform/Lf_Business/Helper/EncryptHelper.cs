@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections;
 using System.Text.RegularExpressions;
 using FineUIPro;
-namespace Lean.Fineform
+namespace Fine
 {
     public class EncryptHelper
     {

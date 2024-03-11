@@ -15,9 +15,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_StockOrder : PageBase
+    public partial class YF_StockOrder : PageBase
     {
         #region ViewPower
 
@@ -69,8 +69,8 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            //Btn_H100_Bo.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/Yf_StockOrder.aspx", "进货") + Window1.GetMaximizeReference();
-            //Btn_C100_Bo.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/MM/Yf_StockOrder.aspx", "进货") + Window1.GetMaximizeReference();
+            //Btn_H100_Bo.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/YF_StockOrder.aspx", "进货") + Window1.GetMaximizeReference();
+            //Btn_C100_Bo.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/MM/YF_StockOrder.aspx", "进货") + Window1.GetMaximizeReference();
             //btnP1d.OnClientClick = Window1.GetShowReference("~/PlutoProinfo/probad_p1d_new.aspx", "P1D新增不良记录");
             //btnP2d.OnClientClick = Window1.GetShowReference("~/PlutoProinfo/probad_p2d_new.aspx", "P2D新增不良记录");
 
@@ -93,9 +93,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tg in DBYF.PURTG
                         join th in DBYF.PURTH
@@ -256,9 +256,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tg in DBYF.PURTG
                         join th in DBYF.PURTH
@@ -540,7 +540,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "C100"  + "_Bo_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -552,9 +552,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tg in DBYF.PURTG
                         join th in DBYF.PURTH
@@ -693,7 +693,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "H100"+"_Bo_List_" + H_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + H_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -705,9 +705,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
 
-                //IQueryable<Lean.Fineform.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tg in DBYF.PURTG
                         join th in DBYF.PURTH

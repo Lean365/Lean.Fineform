@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.MM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_BOM : PageBase
+    public partial class YF_BOM : PageBase
     {
         #region ViewPower
 
@@ -71,7 +65,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
         {
 
 
-            var q = from a in DB.Yf_Billofmaterials
+            var q = from a in DB.YF_Billofmaterials
                     select new
                     {
                         Serialno = a.Serialno.Substring(0, a.Serialno.Length-4),
@@ -93,9 +87,9 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
         private void BindGrid()
         {
-            //Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+            //Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
-            IQueryable<Yf_Billofmaterial> q = DB.Yf_Billofmaterials; //.Include(u => u.Dept);
+            IQueryable<YF_Billofmaterial> q = DB.YF_Billofmaterials; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = SerialNo.SelectedItem.Text.Trim().ToUpper();
@@ -108,7 +102,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 Grid1.RecordCount = q.Count();
 
                 // 排列和数据库分页
-                //q = SortAndPage<Yf_Billofmaterial>(q, Grid1);
+                //q = SortAndPage<YF_Billofmaterial>(q, Grid1);
 
                 Grid1.DataSource = q;
                 Grid1.DataBind();
@@ -254,7 +248,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
 
 
-            IQueryable<Yf_Billofmaterial> q = DB.Yf_Billofmaterials; //.Include(u => u.Dept);
+            IQueryable<YF_Billofmaterial> q = DB.YF_Billofmaterials; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = SerialNo.SelectedItem.Text.Trim().ToUpper();
@@ -296,7 +290,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
                 string Xlsbomitem, ExportFileName;
 
                 // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-                Xlsbomitem = searchText + "_Yf_BOMList";
+                Xlsbomitem = searchText + "_YF_BOMList";
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
 

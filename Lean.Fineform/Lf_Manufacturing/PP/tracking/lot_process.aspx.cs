@@ -14,7 +14,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
-namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
+namespace Fine.Lf_Manufacturing.PP.tracking
 {
     public partial class lot_process : PageBase
     {
@@ -220,7 +220,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.tracking
         //    // 执行数据库操作
         //    //DB.Adm_Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Adm_Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 

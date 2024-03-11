@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Lean.Fineform
+namespace Fine
 {
     //词典
     public class Adm_TheDict : IKeyGUID
@@ -37,23 +37,23 @@ namespace Lean.Fineform
         [StringLength(4000)]
         public string Example { get; set; }
 
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF01 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF02 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF03 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF04 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF05 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF06 { get; set; }
-        public Decimal UDF51 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal UDF52 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal UDF53 { get; set; }
+        public int UDF53 { get; set; }
         public Decimal UDF54 { get; set; }
 
         public Decimal UDF55 { get; set; }

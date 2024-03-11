@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.MM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lc_MM
+namespace Fine.Lc_MM
 {
     public partial class material : PageBase
     {
@@ -217,11 +210,11 @@ namespace Lean.Fineform.Lc_MM
         }
         protected void btnYFDataView_Click(object sender, EventArgs e)
         {
-            string Yf_DataView = global::Resources.GlobalResource.Yf_DataView;
+            string yf_DataView = global::Resources.GlobalResource.yf_DataView;
 
 
 
-            PageContext.RegisterStartupScript("top.addExampleTab('Yf_DataView','/Lc_Yifei/Yf_Map.aspx','" + Yf_DataView + "', '/res/Menu/yf.png', '', true, ''); ");
+            PageContext.RegisterStartupScript("top.addExampleTab('yf_DataView','/Lc_Yifei/YF_Map.aspx','" + yf_DataView + "', '/res/Menu/yf.png', '', true, ''); ");
         }
         #endregion
 

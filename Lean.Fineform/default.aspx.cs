@@ -11,7 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Collections;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public partial class _default : PageBase
     {
@@ -208,7 +208,7 @@ namespace Lean.Fineform
                     {
                         //already login            
                         strKey = idE.Key.ToString();
-                        hOnline[strKey] = "LeanWebformXX";//将当前用户已经在全局变量中的值设置为XX
+                        hOnline[strKey] = "LeanBenchXX";//将当前用户已经在全局变量中的值设置为XX
                         break;
                     }
                 }

@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P2D
+namespace Fine.Lf_Manufacturing.PP.daily
 {
 
 

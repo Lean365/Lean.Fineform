@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.FICO;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System;
+using System.Data;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class expense : PageBase
     {
@@ -143,7 +129,7 @@ namespace Lean.Fineform.Lf_Accounting
                 }
                 if (rbtnThirdAuto.Checked)
                 {
-                    //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
                     IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
 
@@ -170,7 +156,7 @@ namespace Lean.Fineform.Lf_Accounting
                 }
                 if (rbtnFourthAuto.Checked)
                 {
-                    //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
                     IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
 
@@ -196,7 +182,7 @@ namespace Lean.Fineform.Lf_Accounting
                 }
                 if (rbtnFifthAuto.Checked)
                 {
-                    //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
                     IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
 
@@ -223,7 +209,7 @@ namespace Lean.Fineform.Lf_Accounting
                 }
                 if (rbtnSixthAuto.Checked)
                 {
-                    //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
                     IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
 
@@ -347,7 +333,7 @@ namespace Lean.Fineform.Lf_Accounting
         //    // 执行数据库操作
         //    //DB.Users.Where(u => ids.Contains(u.UserID)).ToList().ForEach(u => DB.Users.Remove(u));
         //    //DB.SaveChanges();
-        //    DB.Pp_P1d_Outputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
+        //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
 
@@ -396,13 +382,13 @@ namespace Lean.Fineform.Lf_Accounting
 
             //    //删除日志
             //    //int userID = GetSelectedDataKeyID(Grid1);
-            //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
+            //    Pp_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
             //    string Contectext = current.OPHID;
             //    string OperateType = current.ID.ToString();
             //    string OperateNotes = "Del* " + Contectext + "*Del 的记录已被删除";
             //    NetCountHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH删除", OperateNotes);
 
-            //    DB.Pp_P1d_Outputsubs.Where(l => l.Parent.ID == del_ID).Delete();
+            //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
 
@@ -550,7 +536,7 @@ namespace Lean.Fineform.Lf_Accounting
             {
                 Xlsbomitem =  "费用明细对比_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";

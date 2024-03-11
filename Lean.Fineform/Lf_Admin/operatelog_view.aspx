@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="operatelog_view.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.operatelog_view" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="operatelog_view.aspx.cs" Inherits="Fine.Lf_Admin.operatelog_view" %>
 
 <!DOCTYPE html>
 

@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
+namespace Fine.Lf_Manufacturing.SD.shipment
 {
     public partial class outbound_query : PageBase
     {
@@ -73,7 +73,7 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
 
         private void BindGrid()
         {
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
             var q = from a in  DBSerial.DTASSET_SCANNER_OUT_SUB
 
                     select a; //.Include(u => u.Dept);
@@ -259,9 +259,9 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
 
 
 
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
 
             var qs = q.Select(a =>
                         new

@@ -8,7 +8,7 @@ using System;
 using System.Reflection;
 using FineUIPro;
 
-namespace Lean.Fineform
+namespace Fine
 {
 	/// <summary>
 	/// 注意约束，所转化涉及到的对象必须加上 [DataContractAttribute]  [DataMember(Name = "name")]

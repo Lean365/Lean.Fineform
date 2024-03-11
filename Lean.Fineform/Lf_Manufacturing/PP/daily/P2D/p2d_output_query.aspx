@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_output_query.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.daily.P2D.p2d_output_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_output_query.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p2d_output_query" %>
 
 <!DOCTYPE html>
 

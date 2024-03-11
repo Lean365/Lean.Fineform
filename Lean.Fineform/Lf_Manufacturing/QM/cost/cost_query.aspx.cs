@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+using System.Linq;
+namespace Fine.Lf_Manufacturing.QM.cost
 {
 
     public partial class cost_query : PageBase
@@ -86,7 +79,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         private void BindGrid()
         {
 
-            IQueryable<Qm_Operationdata> q = DB.Qm_Operationdatas; //.Include(u => u.Dept);
+            IQueryable<Qm_Operation> q = DB.Qm_Operations; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             //string searchText = ttbSearchMessage.Text.Trim();
@@ -119,7 +112,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Qm_Operationdata>(q, Grid1);
+            q = SortAndPage<Qm_Operation>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -239,7 +232,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
 
             //删除日志
             //int userID = GetSelectedDataKeyID(Grid1);
-            Qm_Operationdata current = DB.Qm_Operationdatas.Find(del_ID);
+            Qm_Operation current = DB.Qm_Operations.Find(del_ID);
             string Deltext = current.Qcod001 + "," + current.Qcod002 + "," + current.Qcod003 + "," + current.Qcod004 + "," + current.Qcod005 + "," + current.Qcod006;
             string OperateType = "删除";
             string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";

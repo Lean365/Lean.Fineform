@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="qm_pass_lot.ashx.cs" Class="LeanWebform.Lf_Report.qm_pass_lot" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Qm_pass_lot.ashx.cs" Class="Fine.Lf_Report.Qm_pass_lot" %>

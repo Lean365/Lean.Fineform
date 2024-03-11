@@ -19,7 +19,7 @@ using System.Text;
 using System.Data.Entity.Validation;
 using System.Dynamic;
 using System.ComponentModel;
-namespace Lean.Fineform
+namespace Fine
 
 {
     /// <summary>

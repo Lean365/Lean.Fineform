@@ -242,6 +242,9 @@ function BindmyChart_Qm_Pass(name, value1, value2, value3) {
                         color: function (params) {
                             if (params.value < 98) {
                                 return "#FF0000";
+                            } else if (params.value >= 98) {
+                                return "#1d953f";
+
                             }
                             return "#225a1f";
                         },
@@ -506,6 +509,9 @@ function BindmyChart_Qm_LotPass(name, value1, value2, value3) {
                         color: function (params) {
                             if (params.value < 98) {
                                 return "#FF0000";
+                            } else if (params.value >= 98) {
+                                return "#1d953f";
+
                             }
                             return "#225a1f";
                         },

@@ -18,7 +18,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using System.Media;
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class operatelog : PageBase
     {

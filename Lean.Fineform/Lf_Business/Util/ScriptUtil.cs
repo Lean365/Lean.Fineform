@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Web;
 using System.Web.Security;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class ScriptUtil
     {

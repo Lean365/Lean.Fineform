@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class costing_grossmargin : PageBase
     {
@@ -74,7 +74,7 @@ namespace Lean.Fineform.Lf_Accounting
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
             string FobDate = dt.AddMonths(-1).ToString("yyyyMMdd").Substring(0, 6);
-            //var q_sales = from a in DB.Sd_FcDatas
+            //var q_sales = from a in DB.Sd_Fcs
             //              join b in DB.Pp_SapModelDests on a.Bc_Item equals b.D_SAP_DEST_Z001
 
             //              where a.Bc_YM.CompareTo(FY) == 0
@@ -83,7 +83,7 @@ namespace Lean.Fineform.Lf_Accounting
 
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
-            var q = from a in DB.Sd_FcDatas
+            var q = from a in DB.Sd_Fcs
                     select new
                     {
                         a.Bc_YM,
@@ -223,7 +223,7 @@ namespace Lean.Fineform.Lf_Accounting
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "DTA-TAC_GrossProfit_" + DPend.SelectedDate.Value.ToString("yyyyMM") ;
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -233,7 +233,7 @@ namespace Lean.Fineform.Lf_Accounting
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
-            //var q_sales = from a in DB.Sd_FcDatas
+            //var q_sales = from a in DB.Sd_Fcs
             //              join b in DB.Pp_SapModelDests on a.Bc_Item equals b.D_SAP_DEST_Z001
 
             //              where a.Bc_YM.CompareTo(FY) == 0
@@ -242,7 +242,7 @@ namespace Lean.Fineform.Lf_Accounting
 
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
-            var q = from a in DB.Sd_FcDatas
+            var q = from a in DB.Sd_Fcs
                     select new
                     {
                         a.Bc_YM,

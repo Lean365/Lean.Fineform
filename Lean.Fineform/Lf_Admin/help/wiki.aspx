@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wiki.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.help.wiki" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wiki.aspx.cs" Inherits="Fine.Lf_Admin.help.wiki" %>
 
 <!DOCTYPE html>
 

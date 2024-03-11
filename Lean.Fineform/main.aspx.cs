@@ -12,7 +12,7 @@ using System.Collections;
 using System.Data.Entity.Validation;
 
 
-namespace Lean.Fineform
+namespace Fine
 {
     public partial class main : PageBase
     {
@@ -239,33 +239,33 @@ namespace Lean.Fineform
                         
 
                     case "流程管理": 
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_MGT; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_MGT; break;
                     case "待办事项":
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_Todo; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_Todo; break;
                     case "我的申请":
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_Apply; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_Apply; break;
                     case "流程设计":
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_Desgin; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_Desgin; break;
                     case "流程模板":
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_Template; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_Template; break;
                     case "签章管理":
-                        node.Text = global::Resources.GlobalResource.menu_Bpm_Signature; break;
+                        node.Text = global::Resources.GlobalResource.menu_BPM_Signature; break;
 
                     case "日程事件":
-                        node.Text = global::Resources.GlobalResource.menu_Em_Schedule; break;
+                        node.Text = global::Resources.GlobalResource.menu_EM_Schedule; break;
                     case "我的日程":
-                        node.Text = global::Resources.GlobalResource.menu_Em_My; break;
+                        node.Text = global::Resources.GlobalResource.menu_EM_My; break;
                     case "日程管理":
-                        node.Text = global::Resources.GlobalResource.menu_Em_MGT; break;
+                        node.Text = global::Resources.GlobalResource.menu_EM_MGT; break;
 
                     case "表单管理":
-                        node.Text = global::Resources.GlobalResource.menu_Fm_MGT; break;
+                        node.Text = global::Resources.GlobalResource.menu_FM_MGT; break;
                     case "我的表单":
-                        node.Text = global::Resources.GlobalResource.menu_Fm_My; break;
+                        node.Text = global::Resources.GlobalResource.menu_FM_My; break;
                     case "表单设计":
-                        node.Text = global::Resources.GlobalResource.menu_Fm_Desgin; break;
+                        node.Text = global::Resources.GlobalResource.menu_FM_Desgin; break;
                     case "表单类别":
-                        node.Text = global::Resources.GlobalResource.menu_Fm_Category; break;
+                        node.Text = global::Resources.GlobalResource.menu_FM_Category; break;
 
                     case "财务管理":
                         node.Text = global::Resources.GlobalResource.menu_Fico_MGT; break;
@@ -308,7 +308,7 @@ namespace Lean.Fineform
                     case "查询":
                         node.Text = global::Resources.GlobalResource.menu_Mm_Query; break;
                     case "易飞数据":
-                        node.Text = global::Resources.GlobalResource.menu_Yf_Query; break;
+                        node.Text = global::Resources.GlobalResource.menu_YF_Query; break;
 
                     case "生产管理": node.Text = global::Resources.GlobalResource.menu_Pp_MGT; break;
 
@@ -356,8 +356,9 @@ namespace Lean.Fineform
                     case "OPH报表": node.Text = global::Resources.GlobalResource.menu_Pp_OPH_Report; break;
                     case "看板管理": node.Text = global::Resources.GlobalResource.menu_Pp_Kanban; break;
 
-                    case "制一不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_P1D; break;
-                    case "制二不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_P2D; break;
+                    case "制一不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Defect; break;
+                    case "制二不良": node.Text = global::Resources.GlobalResource.menu_Pp_P2d_Defect; break;
+                    case "工程检查": node.Text = global::Resources.GlobalResource.menu_Pp_Inspection; break;
                     case "生产不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_Production; break;
                     case "工单统计": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_MOStatistics; break;
                     case "LOT集计": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_LotStatistics; break;

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.FICO;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class acctitle : PageBase
     {
@@ -103,7 +96,7 @@ namespace Lean.Fineform.Lf_Accounting
                 Alert.ShowInTop("异常3:" + Message);
 
             }
-            //Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+            //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
 
 

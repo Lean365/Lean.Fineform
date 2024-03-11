@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD
+namespace Fine.Lf_Manufacturing.SD
 {
     public partial class Sd_chart : PageBase
     {

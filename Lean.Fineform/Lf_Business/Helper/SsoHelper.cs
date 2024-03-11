@@ -13,7 +13,7 @@ using System.Text;
 using System.Web.SessionState;
 using System.IO;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class SsoHelper
     {

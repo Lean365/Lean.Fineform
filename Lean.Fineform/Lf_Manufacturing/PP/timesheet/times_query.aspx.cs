@@ -20,7 +20,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using NPOI.SS.Formula.Functions;
 
-namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
+namespace Fine.Lf_Manufacturing.PP.timesheet
 {
     public partial class times_query : PageBase
     {
@@ -763,7 +763,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
                              原因 = g.Probadcou,
                              说明 = g.Probadmemo,
                              次数 = g.numProstopcou,
-                             比例 = (g.numProstopcou/Allcount),
+                             比例 = (g.numProstopcou/Allcount)*100,
 
                          };
 
@@ -813,7 +813,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.timesheet
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 where p.Prostopmemo != ""
                 where p.Prostopmemo != null
-                where p.Udf001.Substring(0, 2) == "54"
+                where p.Proordertype.Substring(0, 2) == "54"
                 //where p.Probadcou != ""
                 //where p.Probadcou != null
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Probadcou, p.Probadmemo, p.Prostopmemo }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.Master
+namespace Fine.Lf_Manufacturing.Master
 {
     public partial class Pp_models_region_view : PageBase
     {
@@ -65,8 +59,8 @@ namespace Lean.Fineform.Lf_Manufacturing.Master
 
             lblD_SAP_DEST_Z003.Text = current.D_SAP_DEST_Z002;
             lblD_SAP_DEST_Z004.Text = current.D_SAP_DEST_Z003;
-            //lblUdf004.Text = current.Udf004.ToString();
-            //imgModelQrcode.ImageUrl = current.Udf001;
+            lblUdf004.Text = current.UDF04.ToString();
+            imgModelQrcode.ImageUrl = current.UDF01;
             this.imgModelQrcode.ImageWidth = Unit.Pixel(64);
             this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
 

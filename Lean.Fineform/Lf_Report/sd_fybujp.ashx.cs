@@ -14,7 +14,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
     /// Sd_fybujp 的摘要说明
@@ -23,7 +23,7 @@ namespace Lean.Fineform.Lf_Report
     {
 
         //映射
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
         public void ProcessRequest(HttpContext context)

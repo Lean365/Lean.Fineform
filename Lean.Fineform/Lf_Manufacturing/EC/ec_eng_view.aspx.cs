@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_eng_view : PageBase
     {

@@ -138,7 +138,7 @@
   <data name="sys_Button_New_EC" xml:space="preserve">
     <value>TobeNew</value>
   </data>
-  <data name="Yf_Special" xml:space="preserve">
+  <data name="yf_Special" xml:space="preserve">
     <value>Special</value>
   </data>
   <data name="menu_Oa_MGT_Weekly" xml:space="preserve">
@@ -306,7 +306,7 @@
   <data name="sys_Status_Pp_EC_Unconfirmed" xml:space="preserve">
     <value>Unconfirmed</value>
   </data>
-  <data name="menu_Bpm_Todo" xml:space="preserve">
+  <data name="menu_BPM_Todo" xml:space="preserve">
     <value>Todo</value>
   </data>
   <data name="sys_Status_Unprocessed" xml:space="preserve">
@@ -336,13 +336,13 @@
   <data name="sys_Export_SheetLosstime" xml:space="preserve">
     <value>LossTimeDETL</value>
   </data>
-  <data name="menu_Bpm_Apply" xml:space="preserve">
+  <data name="menu_BPM_Apply" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="menu_Fm_My" xml:space="preserve">
+  <data name="menu_FM_My" xml:space="preserve">
     <value>MyForm</value>
   </data>
-  <data name="menu_Bpm_Signature" xml:space="preserve">
+  <data name="menu_BPM_Signature" xml:space="preserve">
     <value>Signature</value>
   </data>
   <data name="menu_Sd_TransportationMethods" xml:space="preserve">
@@ -378,7 +378,7 @@
   <data name="sys_Export_SheetNormal" xml:space="preserve">
     <value>ProDETL</value>
   </data>
-    <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
     <value>ReasonClassify</value>
   </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
@@ -426,7 +426,7 @@
   <data name="menu_Sd_InboundQuery" xml:space="preserve">
     <value>InboundQuery</value>
   </data>
-  <data name="Query_Em_EmptyText" xml:space="preserve">
+  <data name="Query_EM_EmptyText" xml:space="preserve">
     <value>Search for date,user etc.</value>
   </data>
   <data name="Query_Select_Date" xml:space="preserve">
@@ -618,7 +618,7 @@
   <data name="menu_Sys_Config" xml:space="preserve">
     <value>SysConfig</value>
   </data>
-  <data name="Yf_General" xml:space="preserve">
+  <data name="yf_General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="sys_Status_Common" xml:space="preserve">
@@ -762,7 +762,7 @@
   <data name="menu_Pp_Defect_Query" xml:space="preserve">
     <value>PoorQuery</value>
   </data>
-  <data name="menu_Pp_Defect_P2D" xml:space="preserve">
+  <data name="menu_Pp_P2d_Defect" xml:space="preserve">
     <value>P2DPoorManage</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
@@ -861,22 +861,22 @@
   <data name="sys_Windows_Refresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
-  <data name="menu_Bpm_MGT" xml:space="preserve">
+  <data name="menu_BPM_MGT" xml:space="preserve">
     <value>FlowManage</value>
   </data>
-  <data name="menu_Bpm_Template" xml:space="preserve">
+  <data name="menu_BPM_Template" xml:space="preserve">
     <value>Template</value>
   </data>
-  <data name="menu_Bpm_Desgin" xml:space="preserve">
+  <data name="menu_BPM_Desgin" xml:space="preserve">
     <value>Desgin</value>
   </data>
   <data name="sys_Help_FontIcon" xml:space="preserve">
     <value>Icon Font</value>
   </data>
-  <data name="menu_Fm_MGT" xml:space="preserve">
+  <data name="menu_FM_MGT" xml:space="preserve">
     <value>FormManage</value>
   </data>
-  <data name="menu_Fm_Desgin" xml:space="preserve">
+  <data name="menu_FM_Desgin" xml:space="preserve">
     <value>Desgin</value>
   </data>
   <data name="sys_Parameter_Error" xml:space="preserve">
@@ -924,10 +924,10 @@
   <data name="sys_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="menu_Em_MGT" xml:space="preserve">
+  <data name="menu_EM_MGT" xml:space="preserve">
     <value>ScheduleManage</value>
   </data>
-  <data name="menu_Em_Schedule" xml:space="preserve">
+  <data name="menu_EM_Schedule" xml:space="preserve">
     <value>ScheduleEvent</value>
   </data>
   <data name="menu_Sd_InboundSerial" xml:space="preserve">
@@ -966,7 +966,7 @@
   <data name="sys_Help_Calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>
-  <data name="menu_Fm_Category" xml:space="preserve">
+  <data name="menu_FM_Category" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="menu_Oa_MGT_Notices" xml:space="preserve">
@@ -984,44 +984,44 @@
   <data name="sys_Import_Sheet" xml:space="preserve">
     <value>Import</value>
   </data>
-  <data name="menu_Em_My" xml:space="preserve">
+  <data name="menu_EM_My" xml:space="preserve">
     <value>MyEvent</value>
   </data>
-  <data name="menu_Yf_Query" xml:space="preserve">
+  <data name="menu_YF_Query" xml:space="preserve">
     <value>YiFei Data</value>
   </data>
-  <data name="Yf_Supplier" xml:space="preserve">
-    <value>Yf_Supplier</value>
+  <data name="yf_Supplier" xml:space="preserve">
+    <value>YF_Supplier</value>
   </data>
-  <data name="Yf_Ec" xml:space="preserve">
+  <data name="yf_Ec" xml:space="preserve">
     <value>EC</value>
   </data>
-  <data name="Yf_MaterialSupplier" xml:space="preserve">
-    <value>Yf_MaterialSupplier</value>
+  <data name="yf_MaterialSupplier" xml:space="preserve">
+    <value>YF_MaterialSupplier</value>
   </data>
-  <data name="Yf_Material" xml:space="preserve">
-    <value>Yf_Materials</value>
+  <data name="yf_Material" xml:space="preserve">
+    <value>YF_Materials</value>
   </data>
-  <data name="Yf_Requisition" xml:space="preserve">
-    <value>Yf_Requisition</value>
+  <data name="yf_Requisition" xml:space="preserve">
+    <value>YF_Requisition</value>
   </data>
-  <data name="Yf_PurchasingPrice" xml:space="preserve">
-    <value>Yf_Purchasing</value>
+  <data name="yf_PurchasingPrice" xml:space="preserve">
+    <value>YF_Purchasing</value>
   </data>
-  <data name="Yf_PurchaseOrder" xml:space="preserve">
-    <value>Yf_PurchaseOrder</value>
+  <data name="yf_PurchaseOrder" xml:space="preserve">
+    <value>YF_PurchaseOrder</value>
   </data>
-  <data name="Yf_PurchasingPriceVal" xml:space="preserve">
-    <value>Yf_PurchasingScale</value>
+  <data name="yf_PurchasingPriceVal" xml:space="preserve">
+    <value>YF_PurchasingScale</value>
   </data>
-  <data name="Yf_Substitute" xml:space="preserve">
+  <data name="yf_Substitute" xml:space="preserve">
     <value>Substitute</value>
   </data>
-  <data name="Yf_DataView" xml:space="preserve">
-    <value>Yf_Data_View</value>
+  <data name="yf_DataView" xml:space="preserve">
+    <value>YF_Data_View</value>
   </data>
-  <data name="Yf_BOM" xml:space="preserve">
-    <value>Yf_BOM</value>
+  <data name="yf_BOM" xml:space="preserve">
+    <value>YF_BOM</value>
   </data>
   <data name="sys_Status_Pp_EC_Work" xml:space="preserve">
     <value>WIP</value>
@@ -1152,7 +1152,7 @@
   <data name="menu_Fico_RealTitles" xml:space="preserve">
     <value>RealTitles</value>
   </data>
-  <data name="menu_Pp_Defect_P1D" xml:space="preserve">
+  <data name="menu_Pp_P1d_Defect" xml:space="preserve">
     <value>P1DPoorManage</value>
   </data>
   <data name="menu_Pp_OPH" xml:space="preserve">
@@ -1185,23 +1185,23 @@
   <data name="menu_Mm_Master" xml:space="preserve">
     <value>Master</value>
   </data>
-  <data name="Yf_Shipment" xml:space="preserve">
-    <value>Yf_Shipment</value>
+  <data name="yf_Shipment" xml:space="preserve">
+    <value>YF_Shipment</value>
   </data>
-  <data name="Yf_Sales" xml:space="preserve">
-    <value>Yf_SalesOrder</value>
+  <data name="yf_Sales" xml:space="preserve">
+    <value>YF_SalesOrder</value>
   </data>
-  <data name="Yf_Slip" xml:space="preserve">
-    <value>Yf_SalesSlip</value>
+  <data name="yf_Slip" xml:space="preserve">
+    <value>YF_SalesSlip</value>
   </data>
-  <data name="Yf_Assets" xml:space="preserve">
-    <value>Yf_Assets</value>
+  <data name="yf_Assets" xml:space="preserve">
+    <value>YF_Assets</value>
   </data>
   <data name="rpt_Charts_FyJP" xml:space="preserve">
     <value>Annually(JP)</value>
   </data>
-  <data name="Yf_StockOrder" xml:space="preserve">
-    <value>Yf_StockOrder</value>
+  <data name="yf_StockOrder" xml:space="preserve">
+    <value>YF_StockOrder</value>
   </data>
   <data name="rpt_Charts_FyBuCN" xml:space="preserve">
     <value>AnnuallyBu(CN)</value>
@@ -1220,5 +1220,8 @@
   </data>
   <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
     <value>Unenforced</value>
+  </data>
+  <data name="menu_Pp_Inspection" xml:space="preserve">
+    <value>PCBA INSP</value>
   </data>
 </root>

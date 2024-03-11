@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_daily.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.daily.P2D.p2d_daily" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_daily.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p2d_daily" %>
 
 <!DOCTYPE html>
 
@@ -52,7 +52,7 @@
                                 </f:Button>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server">
                                 </f:ToolbarFill>
-                                <f:Button ID="btnP1dNew" runat="server" Icon="Add" EnablePostBack="false" Text="<%$ Resources:GlobalResource,sys_Button_New%>" CssClass="marginr" Pressed="True">
+                                <f:Button ID="btnP1dNew" runat="server" Icon="Add" EnablePostBack="false" Text="<%$ Resources:GlobalResource,sys_Button_New%>">
                                 </f:Button>
                             </Items>
                         </f:Toolbar>
@@ -82,15 +82,14 @@
 
                         <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="60px" HeaderText="班别" />
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="日期" />
-                        <%--<f:BoundField DataField="Prodirect" SortField="Prodirect" Width="50px" HeaderText="直接" />--%>
-                        <%--<f:BoundField DataField="Proindirect" SortField="Proindirect" Width="50px" HeaderText="间接" />--%>
-                        <f:BoundField DataField="Prohbn" SortField="Prohbn" Width="150px" HeaderText="物料" />
-                        <f:BoundField DataField="Prolot" SortField="Prolot" Width="120px" HeaderText="LOT" />
-                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="150px" HeaderText="机种" />
-                        <%--<f:BoundField DataField="Prost" SortField="Prost" Width="80px" HeaderText="工时" />--%>
-                        <%--<f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="60px" HeaderText="产能" />--%>
-                        <f:BoundField DataField="Proorder" SortField="Proorder" Width="120px" HeaderText="生产工单" />
-                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" Width="120px" HeaderText="工单数量" />
+                        <f:BoundField DataField="Prodirect" SortField="Prodirect" Width="50px" HeaderText="直接" />
+                        <f:BoundField DataField="Proindirect" SortField="Proindirect" Width="50px" HeaderText="间接" />
+                        <f:BoundField DataField="Prolot" SortField="Prolot" Width="100px" HeaderText="LOT" />
+                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="100px" HeaderText="机种" />
+                        <f:BoundField DataField="Prost" SortField="Prost" Width="80px" HeaderText="工时" />
+                        <f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="60px" HeaderText="产能" />
+                        <f:BoundField DataField="Proorder" SortField="Proorder" Width="60px" HeaderText="订单" />
+
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"
                             HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>"
                             ToolTip="<%$ Resources:GlobalResource,sys_Button_Delete%>" ConfirmText="<%$ Resources:GlobalResource,sys_Button_DeleteConfirmText%>"

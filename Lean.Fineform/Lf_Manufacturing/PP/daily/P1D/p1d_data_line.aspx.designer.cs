@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
 
 
-    public partial class p1d_data_line
+    public partial class output_data_line
     {
 
         /// <summary>

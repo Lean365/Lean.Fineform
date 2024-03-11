@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="expense_general.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.expense_general" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="expense_general.aspx.cs" Inherits="Fine.Lf_Accounting.expense_general" %>
 
 <!DOCTYPE html>
 

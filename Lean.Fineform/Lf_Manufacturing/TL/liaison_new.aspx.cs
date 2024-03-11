@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Xml;
-using System.Text;
+using System.Data.Entity.Validation;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-
-namespace Lean.Fineform.Lf_Manufacturing.TL
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.TL
 {
     public partial class liaison_new : PageBase
     {

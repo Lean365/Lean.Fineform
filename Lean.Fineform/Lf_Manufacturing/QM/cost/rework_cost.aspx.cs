@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+using System;
 using System.Data;
-using System.Xml;
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+using System.Linq;
+namespace Fine.Lf_Manufacturing.QM.cost
 {
     public partial class rework_cost : PageBase
     {
@@ -85,7 +78,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         private void BindGrid()
         {
 
-            IQueryable<Qm_Reworkdata> q = DB.Qm_Reworkdatas; //.Include(u => u.Dept);
+            IQueryable<Qm_Rework> q = DB.Qm_Reworks; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             //string searchText = ttbSearchMessage.Text.Trim();
@@ -118,7 +111,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Qm_Reworkdata>(q, Grid1);
+            q = SortAndPage<Qm_Rework>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -238,7 +231,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
 
             //删除日志
             //int userID = GetSelectedDataKeyID(Grid1);
-            Qm_Reworkdata current = DB.Qm_Reworkdatas.Find(del_ID);
+            Qm_Rework current = DB.Qm_Reworks.Find(del_ID);
             string Deltext = current.Qcrd001 + "," + current.Qcrd002 + "," + current.Qcrd003 + "," + current.Qcrd004 + "," + current.Qcrd005 + "," + current.Qcrd006;
             string OperateType = "删除";
             string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_badcategory.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.Master.Pp_badcategory" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_badcategory.aspx.cs" Inherits="Fine.Lf_Manufacturing.Master.Pp_badcategory" %>
 
 <!DOCTYPE html>
 

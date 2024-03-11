@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="acctitle.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.acctitle" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="acctitle.aspx.cs" Inherits="Fine.Lf_Accounting.acctitle" %>
 
 <!DOCTYPE html>
 

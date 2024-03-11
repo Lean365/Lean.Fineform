@@ -15,9 +15,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_SalesSlip : PageBase
+    public partial class YF_SalesSlip : PageBase
     {
         #region ViewPower
 
@@ -92,7 +92,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
                 var q = from tg in DBYFdta.COPTG
                              join th in DBYFdta.COPTH on new
@@ -231,7 +231,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
                 var q = from tg in DBYFtac.COPTG
                         join th in DBYFtac.COPTH on new
                         { TG001 = tg.TG001, TG002 = tg.TG002 }
@@ -489,7 +489,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "C100"  + "_SS_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -501,7 +501,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Lean.Fineform.Lf_Business.Models.YF.Yifei_DTAEntities();
+               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
 
                 var q = from tg in DBYFdta.COPTG
                         join th in DBYFdta.COPTH on new
@@ -617,7 +617,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P1d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
+            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "H100" + "_SS_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
@@ -628,7 +628,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
             {
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-                Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Lean.Fineform.Lf_Business.Models.YF.Yifei_TACEntities();
+               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
                 var q = from tg in DBYFtac.COPTG
                         join th in DBYFtac.COPTH on new
                         { TG001 = tg.TG001, TG002 = tg.TG002 }

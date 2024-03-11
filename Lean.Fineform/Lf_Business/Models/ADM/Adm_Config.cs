@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class Adm_Config : IKeyID
     {

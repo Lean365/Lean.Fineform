@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-//using EntityFramework.Extensions;
-using System.Data.SqlClient;
-using System.Data;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.IO;
 using Newtonsoft.Json.Linq;
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.poor
 {
     public partial class p2d_defect : PageBase
     {
@@ -60,7 +51,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/p2d_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
@@ -220,7 +211,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P2D
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/p2d_defect_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
 
             }
 

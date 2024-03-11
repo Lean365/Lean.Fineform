@@ -9,7 +9,7 @@ using FineUIPro;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class dept_user_addnew : PageBase
     {

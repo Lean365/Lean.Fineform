@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Lean.Fineform.Lf_Accounting
+namespace Fine.Lf_Accounting
 {
     public partial class costing_inventoryamt_chart : PageBase
     {

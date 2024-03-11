@@ -14,17 +14,17 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lf_Report
+namespace Fine.Lf_Report
 {
     /// <summary>
     /// shipment_bucode 的摘要说明
     /// </summary>
     public class shipment_bucode : IHttpHandler
     {
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
 
-        
-        Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DB_Serial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+
+        Fine.Lf_Business.Models.YF.LeanSerialEntities DB_Serial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
         JavaScriptSerializer jsS = new JavaScriptSerializer();
         List<object> lists = new List<object>();
         public void ProcessRequest(HttpContext context)

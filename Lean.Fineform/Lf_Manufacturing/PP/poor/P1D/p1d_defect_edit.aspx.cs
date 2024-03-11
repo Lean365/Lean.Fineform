@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Validation;
-
-namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.poor
 {
 
     public partial class p1d_defect_edit : PageBase
@@ -57,11 +49,11 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
         {
             userid = GetIdentityName();
             //linq查询空表没法显示字段名,只能查询非空表
-            //IQueryable<Pp_Defect_P1d> q = DB.Pp_P1d_Defects;
+            //IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects;
             //DefDatatable = CopyToDataTable(q);
 
             //获取SQL数据表
-            DefDatatable = ConvertHelper.GetDataTable("SELECT * FROM Pp_Defect_P1d");
+            DefDatatable = ConvertHelper.GetDataTable("SELECT * FROM Pp_P1d_Defect");
 
             //DefDatatable = ConvertHelper.LinqConvertToDataTable(q);
 
@@ -458,7 +450,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 }
                 //else
                 //{
-                //    Pp_Defect_P1d item = new Pp_Defect_P1d();
+                //    Pp_P1d_Defect item = new Pp_P1d_Defect();
 
                 //    item.Prolot = this.prolot.Text;
                 //    //班组
@@ -474,7 +466,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
                 //    item.Prongdept = "OK";
                 //    //种类
-                //    Pp_Defect_P1dcode cclass = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode cclass = DB.Pp_P1d_Defectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
 
                 //    item.Prongclass = cclass.ngclass;
@@ -482,7 +474,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.poor.P1D
                 //    item.Proclassmatter = "OK";
 
                 //    //代码
-                //    Pp_Defect_P1dcode ccode = DB.Pp_Defect_P1dcodes
+                //    Pp_P1d_Defectcode ccode = DB.Pp_P1d_Defectcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
 
 

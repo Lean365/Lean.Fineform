@@ -725,9 +725,9 @@ function BindmyChart_Sd_FyJPStats(name, value1, value2) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 98) {
+                            if (params.value < 112) {
                                 return "#ed1941";
-                            } else if (params.value = 110) {
+                            } else if (params.value >= 112) {
                                 return "#1d953f";
 
                             }

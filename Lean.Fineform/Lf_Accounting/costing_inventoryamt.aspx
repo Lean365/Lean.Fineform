@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_inventoryamt.aspx.cs" Inherits="Lean.Fineform.Lf_Accounting.costing_inventoryamt" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_inventoryamt.aspx.cs" Inherits="Fine.Lf_Accounting.costing_inventoryamt" %>
 
 <!DOCTYPE html>
 

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Lean.Fineform.Lf_Manufacturing.Master
+namespace Fine.Lf_Manufacturing.Master
 {
     public partial class Pp_badcategory_new : System.Web.UI.Page
     {

@@ -13,7 +13,7 @@ function AjaxData_Qm_Pass() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/qm_pass.ashx",
+        url: "/Lf_Report/Qm_pass.ashx",
         data: {
             TransDate: TransDates
         },
@@ -47,7 +47,7 @@ function AjaxData_LotPass() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/qm_pass_lot.ashx",
+        url: "/Lf_Report/Qm_pass_lot.ashx",
         data: {
             TransDate: TransDates
         },

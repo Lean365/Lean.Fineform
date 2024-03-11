@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.MM
+namespace Fine.Lf_Manufacturing.MM
 {
-    public partial class Yf_General_Material : PageBase
+    public partial class YF_General_Material : PageBase
     {
         #region ViewPower
 
@@ -72,7 +72,7 @@ namespace Lean.Fineform.Lf_Manufacturing.MM
 
         private void BindGrid()
         {
-            var qs = from a in DB.Yf_Billofmaterials
+            var qs = from a in DB.YF_Billofmaterials
                      join b in DB.Pp_SapModelDests on a.Serialno.Substring(0, a.Serialno.Length - 4) equals b.D_SAP_DEST_Z001
                      where a.ProcurementRegion == "D"
                      group a by new

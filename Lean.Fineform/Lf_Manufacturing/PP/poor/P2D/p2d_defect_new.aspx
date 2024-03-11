@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_defect_new.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.poor.P2D.p2d_defect_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_defect_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.poor.p2d_defect_new" %>
 
 <!DOCTYPE html>
 
@@ -47,8 +47,8 @@
                             <Items>
                                 <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="DefDate" ShowRedStar="True" OnTextChanged="DefDate_TextChanged" TabIndex="1" FocusOnPageLoad="true">
                                 </f:DatePicker>
-<%--                                <f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
-                                </f:DropDownList>--%>
+                                <f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
+                                </f:DropDownList>
                                 <f:DropDownList runat="server" ID="proorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="proorder_SelectedIndexChanged" TabIndex="3">
                                 </f:DropDownList>
                             </Items>
@@ -96,35 +96,11 @@
                     <Columns>
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete" ToolTip="删除"
                             ConfirmText="确定删除此记录？" ConfirmTarget="Top" CommandName="Delete" Width="50px" />
-                        <f:RenderField Width="200px" ColumnID="Prolinename" DataField="Prolinename" HeaderText="生产组别" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProlinename" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
-                                </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
+
                         <f:RenderField Width="200px" ColumnID="Prongdept" DataField="Prongdept" HeaderText="不良区分" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlProngdept" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Propcbtype" SortField="Propcbtype" DataField="Propcbtype" HeaderText="板别" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlPropcbtype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
-                                </f:DropDownList>
-
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Propcbcardno" SortField="Propcbcardno" DataField="Propcbcardno" HeaderText="卡号" FieldType="String">
-                            <Editor>
-                                <f:TextBox ID="TextBox1" Required="true" runat="server" Text="">
-                                </f:TextBox>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Propcbcheckout" SortField="Propcbcheckout" DataField="Propcbcheckout" HeaderText="检出工程" FieldType="String">
-                            <Editor>
-                                <f:TextBox ID="txtPropcbcheckout" Required="true" runat="server" Text="">
-                                </f:TextBox>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="100px" ColumnID="Probadqty" DataField="Probadqty" HeaderText="不具合数量" FieldType="Int">
@@ -139,9 +115,9 @@
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadset" DataField="Probadset" HeaderText="不良个所" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Udf001" DataField="Udf001" HeaderText="不良个所" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadset" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtUdf001" Required="true" runat="server" Text="NG">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
@@ -149,24 +125,6 @@
                             <Editor>
                                 <f:TextBox ID="txtProbadreason" Required="true" runat="server" Text="NG">
                                 </f:TextBox>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Probadprop" SortField="Probadprop" DataField="Probadprop" HeaderText="不良性质" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProbadprop" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
-                                </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Probadresponsibility" SortField="Probadresponsibility" DataField="Probadresponsibility" HeaderText="责任归属" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProbadresponsibility" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
-                                </f:DropDownList>
-                            </Editor>
-                        </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Probadrepairman" SortField="Probadrepairman" DataField="Probadrepairman" HeaderText="修理" FieldType="String">
-                            <Editor>
-                                <f:DropDownList ID="ddlProbadrepairman" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
-                                </f:DropDownList>
                             </Editor>
                         </f:RenderField>
                     </Columns>

@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System;
+using System.Collections.Generic;
 //using EntityFramework.Extensions;
-using System.Data.SqlClient;
 using System.Data;
-using System.Xml;
-using System.Reflection;
-using System.Text;
-using System.IO;
-
-using System.Text.RegularExpressions;
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_daily_sub_edit : PageBase
     {
@@ -330,7 +321,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
         {
             //只能查询非空表，否则不能获取ID，请使用ConvertHelper.GetDataTable()函数
 
-            //IQueryable<Pp_P1d_OutputSub> q = DB.Pp_P1d_OutputSubs;
+            //IQueryable<Pp_P1d_Outputsub> q = DB.Pp_P1d_OutputSubs;
             //DataTable OptDatatable =ConvertHelper.IEnumerableConvertToDataTable(q);
             var q = from a in DB.Pp_P1d_OutputSubs
                     where a.Parent == ParentID
@@ -352,12 +343,19 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                         a.Prostdiff,
                         a.Proqtydiff,
                         a.Proratio,
-                        a.Udf001,
-                        a.Udf002,
-                        a.Udf003,
-                        a.Udf004,
-                        a.Udf005,
-                        a.Udf006,
+                        a.UDF01,
+                        a.UDF02,
+                        a.UDF03,
+                        a.UDF04,
+                        a.UDF05,
+                        a.UDF06,
+                        a.UDF51,
+                        a.UDF52,
+                        a.UDF53,
+                        a.UDF54,
+                        a.UDF55,
+                        a.UDF56,
+
                         a.isDelete,
                         a.Remark,
                         a.Creator,

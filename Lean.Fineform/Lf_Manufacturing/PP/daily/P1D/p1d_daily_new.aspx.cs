@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
+﻿using Fine.Lf_Business.Models.PP;
+using FineUIPro;
+using System;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using NPOI.SS.Formula.Functions;
-
-namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
+using System.Linq;
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.PP.daily
 {
 
     public partial class p1d_daily_new : PageBase
@@ -25,7 +15,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
         public static int rowID, delrowID, editrowID, totalSum;
 
         public static string userid, badSum;
-        public static string Prolot, Prolinename, Prodate, Prorealqty,strPline, strmaxDate, strminDate, Probadqty, Probadtotal, Probadcou;
+        public static string Prolot, Prolinename, Prodate, Prorealqty, strPline, strmaxDate, strminDate, Probadqty, Probadtotal, Probadcou;
         public static string mysql;
 
         public int Prorate, ParentID;
@@ -82,16 +72,18 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
 
         private void LoadData()
         {
-            //上月第一天
-            DateTime last = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01")).AddMonths(-1);
-            //本月第一天时间 
-            DateTime dt = DateTime.Today; 
-            DateTime dt_First = dt.AddDays(-(dt.Day) + 1);
 
+            DateTime nowDt = DateTime.Now;
+            //上月第一天
+            DateTime lastFirst = nowDt.AddDays(1 - nowDt.Day).AddMonths(-1);
+            //上月最后一天
+            DateTime lastFinal = nowDt.AddDays(1 - nowDt.Day).AddMonths(-1);
+
+            //本月第一天时间 
+            DateTime dt_First = new DateTime(nowDt.Year, nowDt.Month, 1);
 
             //本月最后一天时间 
-            DateTime dt2 = dt.AddMonths(1); 
-            DateTime dt_Last = dt2.AddDays(-(dt.Day));
+            DateTime dt_Final = nowDt.AddDays(1 - nowDt.Day).AddMonths(1).AddDays(-1);
 
 
 
@@ -107,8 +99,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
 
             //DateTime editDate = Convert.ToDateTime(DateTime.ParseExact(prodate.SelectedDate.Value.ToString("yyyyMMdd"), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture));
 
-            //上个月
-            DateTime lastDate = DateTime.Now.AddMonths(-1);
+
             //通过DateTIme.Compare()进行比较（）
             int compNum = DateTime.Compare(Date10, nowDate);
             //int compEdit= DateTime.Compare(nowDate, editDate);
@@ -121,7 +112,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
 
                 this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
                 this.prodate.MinDate = dt_First;
-                this.prodate.MaxDate = dt_Last;
+                this.prodate.MaxDate = dt_Final;
 
 
             }
@@ -129,8 +120,8 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
             {
 
                 this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
-                this.prodate.MinDate = last;
-                this.prodate.MaxDate = dt_Last;
+                this.prodate.MinDate = lastFirst;
+                this.prodate.MaxDate = dt_Final;
 
             }
             userid = GetIdentityName();
@@ -251,7 +242,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
         //    //        return;
         //    //    }
 
-        //    //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
+        //    //    Pp_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
         //    //    //删除日志
         //    //    string Newtext = current.ID + "," + current.Prolinename + "," + current.Prolot + "," + current.Prodate + "," + current.Prorealqty + "," + current.Prongclass + "," + current.Prongcode + "," + current.Probadqty + "," + current.Probadtotal + "," + current.Probadcou;
         //    //   string OperateType = "删除";//操作标记
@@ -390,7 +381,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                         Pp_P1d_OutputSub item = new Pp_P1d_OutputSub();
 
                         // 添加父ID
-                        //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
+                        //Pp_Output ID = Attach<Pp_Output>(Convert.ToInt32(ParentID));
                         item.Parent = ParentID;
                         item.Prolinename = prolinename.SelectedItem.Text;
                         item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
@@ -565,7 +556,7 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                .Where(s => s.Proorder == strorder)
 
                .ToList()
-               .ForEach(x => { x.Prolinename = strPline; x.Prodate = sedate; x.Modifier =GetIdentityName(); x.ModifyTime = DateTime.Now; });
+               .ForEach(x => { x.Prolinename = strPline; x.Prodate = sedate; x.Modifier = GetIdentityName(); x.ModifyTime = DateTime.Now; });
             DB.SaveChanges();
 
 
@@ -701,11 +692,12 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                     var q = from a in DB.Pp_Orders
                             join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
                             //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
-                            where a.Porderno == proorder.SelectedItem.Text 
-                    //where a.Proecnmodel == strProecnmodel
-                    //where a.Proecnbomitem == strProecnbomitem
-                    //where a.Proecnoldhbn == strProecnoldhbn
-                    //where a.Proecnnewhbn == strProecnnewhbn
+                            where a.Porderno == proorder.SelectedItem.Text
+                            //where a.Proecnmodel == strProecnmodel
+                            //where a.Proecnbomitem == strProecnbomitem
+                            //where a.Proecnoldhbn == strProecnoldhbn
+                            //where a.Proecnnewhbn == strProecnnewhbn
+
                             orderby b.Propset descending
                             select new
                             {
@@ -729,12 +721,31 @@ namespace Lean.Fineform.Lf_Manufacturing.PP.daily.P1D
                                 //c.D_SAP_ZCA1D_Z033,
 
                             };
-                    
+
                     if (q.Any())
                     {
 
+                        var maxst = from a in q
+                                   group a by new { a.Porderlot,a.Porderhbn, a.Promodel, a.Prost, a.Porderqty, a.Porderserial }
+                             into g
+                                   select new
+                                   {
+                                       //最大ST
+                                       Prost = g.Max(x => x.Prost),
+                                       //物料
+                                       g.Key.Porderhbn,
+                                       //机种
+                                       g.Key.Promodel,
+                                       //数量
+                                       g.Key.Porderqty,
+                                       //序列号
+                                       g.Key.Porderserial,
+                                       //批次
+                                       g.Key.Porderlot
+                                   };
+
                         // 切勿使用 source.Count() > 0
-                        var qs = q.Where(s=>s.Prowctext.Contains("一")).Distinct().Take(1).ToList();
+                        var qs = maxst.Distinct().Take(1).ToList();
                         if (qs[0].Prost != 0)
                         {
                             prohbn.Text = qs[0].Porderhbn;

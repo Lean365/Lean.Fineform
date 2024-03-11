@@ -1,26 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.QM;
 using FineUIPro;
-using FineUIPro.Design;
-using System.Linq;
-using System.Data.Entity;
-
+using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 
-namespace Lean.Fineform.Lf_Manufacturing.QM.cost
+namespace Fine.Lf_Manufacturing.QM.cost
 {
 
     public partial class operation_cost_new : PageBase
@@ -165,7 +151,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             string InputData = Qcod001.SelectedDate.Value.ToString("yyyyMMdd");
 
 
-            Qm_Operationdata Redata = DB.Qm_Operationdatas.Where(u => u.Qcod001 == InputData).FirstOrDefault();
+            Qm_Operation Redata = DB.Qm_Operations.Where(u => u.Qcod001 == InputData).FirstOrDefault();
 
             if (Redata != null)
             {
@@ -217,7 +203,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
         {
 
 
-            Qm_Operationdata item = new Qm_Operationdata();
+            Qm_Operation item = new Qm_Operation();
             item.Qcod001 = Qcod001.SelectedDate.Value.ToString("yyyyMM");
             item.Qcod002 = decimal.Parse(Qcod002.Text);
             item.Qcod003 = decimal.Parse(Qcod003.Text);
@@ -259,7 +245,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             item.GUID = Guid.NewGuid();
             item.Creator = GetIdentityName();
             item.CreateTime = DateTime.Now;
-            DB.Qm_Operationdatas.Add(item);
+            DB.Qm_Operations.Add(item);
             DB.SaveChanges();
 
             //新增日志
@@ -277,7 +263,7 @@ namespace Lean.Fineform.Lf_Manufacturing.QM.cost
             //string InputDate = Qcod001.SelectedDate.Value.ToString("yyyyMM").Trim();
 
 
-            //sys_Button_New_Qm_Operationdata operationdata = DB.Qm_Operationdatas.Where(u => u.Qcod001 == InputDate).FirstOrDefault();
+            //sys_Button_New_Qm_Operationdata operationdata = DB.Qm_Operations.Where(u => u.Qcod001 == InputDate).FirstOrDefault();
 
             //if (operationdata != null)
             //{

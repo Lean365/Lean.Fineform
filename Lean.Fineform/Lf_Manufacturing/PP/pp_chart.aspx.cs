@@ -6,9 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using FineUIPro;
 
-namespace Lean.Fineform.Lf_Manufacturing.PP
+namespace Fine.Lf_Manufacturing.PP
 {
-    public partial class pp_chart : PageBase
+    public partial class Pp_chart : PageBase
     {
         #region ViewPower
 

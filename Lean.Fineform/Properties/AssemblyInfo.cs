@@ -1,17 +1,16 @@
-﻿using NPOI.SS.Formula.Functions;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Lean Manufacturing")]
-[assembly: AssemblyDescription("DTA Manufacturing Execution System")]
+[assembly: AssemblyTitle("Lean365")]
+[assembly: AssemblyDescription("Lean Manufacturing")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Lean365.Inc")]
-[assembly: AssemblyProduct("LeanPRD.Net")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("Lean365.net")]
+[assembly: AssemblyProduct("Lean365.Net")]
+[assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("Lean365")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用 "*":
-[assembly: AssemblyVersion( "2023.11.*")]
-//[assembly: AssemblyFileVersion("2023.11.07.*")]
+[assembly: AssemblyVersion("2024.03.16.032")]
+[assembly: AssemblyFileVersion("2024.03.16.032")]

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.33414.496
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lean.Fineform", "Lean.Fineform\Lean.Fineform.csproj", "{066F9F7D-A077-4B48-8CE2-657F3526181A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fine", "Lean.Fineform\Fine.csproj", "{066F9F7D-A077-4B48-8CE2-657F3526181A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

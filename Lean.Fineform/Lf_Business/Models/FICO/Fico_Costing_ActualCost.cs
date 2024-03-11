@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lean.Fineform
+namespace Fine.Lf_Business.Models.FICO
 {
     //预算实绩对比
     public class Fico_Costing_ActualCost : IKeyGUID
@@ -51,23 +51,23 @@ namespace Lean.Fineform
         [Required, StringLength(50)]
         public string Bc_ExpCategory { get; set; }//费用分类
 
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF01 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF02 { get; set; }
-        [StringLength(5000)]
+        [StringLength(255)]
         public string UDF03 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF04 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF05 { get; set; }
-        [StringLength(5000)]
+        [StringLength(500)]
         public string UDF06 { get; set; }
-        public Decimal UDF51 { get; set; }
+        public int UDF51 { get; set; }
 
-        public Decimal UDF52 { get; set; }
+        public int UDF52 { get; set; }
 
-        public Decimal UDF53 { get; set; }
+        public int UDF53 { get; set; }
         public Decimal UDF54 { get; set; }
 
         public Decimal UDF55 { get; set; }

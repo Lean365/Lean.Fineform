@@ -107,7 +107,7 @@ maxRequestLength 就是请求报文大小限制，该大小应该要比设置的
 
 ```
 net
-    App_Code
+    APp_Code
         Config.cs
         Handler.cs
         PathFormatter.cs
@@ -121,14 +121,14 @@ net
     Web.config
 ```
 
-App_Code 上的文件是应用程序的源码。
+APp_Code 上的文件是应用程序的源码。
 
 - Config.cs 负责读取配置文件
 - Handler.cs 是请求处理器的基类，提供了一些基本对象的访问以及输出控制。如果需要增加处理器，应该从该基类继承
 - PathFormatter.cs 解析 PathFormat，把信息填充为运行时信息。
 - *Handler.cs 是各种处理器，处理各种 UEditor 需要的请求。
 
-Bin 里面的是应用程序的依赖库，当前依赖 Newtonsoft 的 Json 库。Bin 目录和 App_Code 目录受应用程序保护，不用担心被用户访问到。
+Bin 里面的是应用程序的依赖库，当前依赖 Newtonsoft 的 Json 库。Bin 目录和 APp_Code 目录受应用程序保护，不用担心被用户访问到。
 
 config.json 是 UEditor 后端的配置文件，上一节已经介绍了比较重要的配置项。
 

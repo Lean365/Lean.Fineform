@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Lean.Fineform.Lf_Admin.help
+namespace Fine.Lf_Admin.help
 {
 
 

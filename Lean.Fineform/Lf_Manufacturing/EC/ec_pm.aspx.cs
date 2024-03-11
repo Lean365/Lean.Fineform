@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 
 
 
-namespace Lean.Fineform.Lf_Manufacturing.EC
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_pm : PageBase
     {

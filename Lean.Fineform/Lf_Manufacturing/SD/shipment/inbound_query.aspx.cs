@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml;
 
-namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
+namespace Fine.Lf_Manufacturing.SD.shipment
 {
     public partial class inbound_query : PageBase
     {
@@ -72,10 +72,10 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
 
         private void BindGrid()
         {
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
             
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
@@ -85,7 +85,7 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Lean.Fineform.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB>(q, Grid1);
+            q = SortAndPage<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -232,9 +232,9 @@ namespace Lean.Fineform.Lf_Manufacturing.SD.shipment
 
 
 
-            Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Lean.Fineform.Lf_Business.Models.YF.LeanSerialEntities();
+           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
 
-            IQueryable<Lean.Fineform.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
+            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
 

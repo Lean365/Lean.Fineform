@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Fine.Lf_Business.Models.PP;
 using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Xml;
-using System.Text;
+using System.Data.Entity.Validation;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-
-namespace Lean.Fineform.Lf_Manufacturing.EC
+using System.Web.UI.WebControls;
+namespace Fine.Lf_Manufacturing.EC
 {
     public partial class ec_eng_new : PageBase
     {
@@ -317,7 +310,7 @@ namespace Lean.Fineform.Lf_Manufacturing.EC
             BindGrid();
         }
 
-        protected void DDL_ItEm_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DDL_Item_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(DDL_Item.SelectedIndex!=-1&& DDL_Item.SelectedIndex!=0)
             {
@@ -431,8 +424,8 @@ namespace Lean.Fineform.Lf_Manufacturing.EC
                 }
                 
                 item.Ec_leader = Ec_leader.SelectedItem.Text;//DTA担当
-
-                item.Ec_lossamount = decimal.Parse(Ec_lossamount.Text);//金额 
+                //金额 
+                item.Ec_lossamount = int.Parse(Ec_lossamount.Text);//金额 
                 item.Ec_distinction = int.Parse(Ec_distinction.SelectedValue);
                 item.Ec_entrydate = DateTime.Now.ToString("yyyyMMdd");
                 //技联NO Ec_letterno

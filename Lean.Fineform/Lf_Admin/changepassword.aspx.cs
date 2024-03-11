@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using FineUIPro;
 using System.Linq;
 
-namespace Lean.Fineform.Lf_Admin
+namespace Fine.Lf_Admin
 {
     public partial class changepassword : PageBase
     {

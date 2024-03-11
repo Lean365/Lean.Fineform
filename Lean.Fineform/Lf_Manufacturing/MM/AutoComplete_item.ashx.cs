@@ -15,14 +15,14 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text;
 
-namespace Lean.Fineform.Lc_MM
+namespace Fine.Lc_MM
 {
     /// <summary>
     /// AutoComplete_item 的摘要说明
     /// </summary>
     public class AutoComplete_item : IHttpHandler
     {
-        LeanContext DBCharts = new LeanContext();
+        FineContext DBCharts = new FineContext();
         public void ProcessRequest(HttpContext context)
         {
             //System.Threading.Thread.Sleep(2000);

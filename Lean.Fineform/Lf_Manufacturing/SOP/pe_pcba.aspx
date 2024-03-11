@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pe_pcba.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.SOP.pe_pcba" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pe_pcba.aspx.cs" Inherits="Fine.Lf_Manufacturing.SOP.pe_pcba" %>
 
 <!DOCTYPE html>
 

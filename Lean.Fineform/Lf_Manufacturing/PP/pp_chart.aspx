@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_chart.aspx.cs" Inherits="Lean.Fineform.Lf_Manufacturing.PP.pp_chart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_chart.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.Pp_chart" %>
 
 <!DOCTYPE html>
 
@@ -96,12 +96,12 @@
     <%--jquery.js--%>
     <script type="text/javascript" src="/Lf_Resources/echarts/package/dist/echarts.min.js"></script>
     <script src="/Lf_Report/ajax_Fico_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_pp_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/ajax_Pp_data.js" type="text/javascript"></script>
     <script src="/Lf_Report/ajax_Sd_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_qm_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/ajax_Qm_data.js" type="text/javascript"></script>
     <script src="/Lf_Report/bind_Fico_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_pp_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_qm_echarts.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_Pp_echarts.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_Qm_echarts.js" type="text/javascript"></script>
     <script src="/Lf_Report/bind_Sd_echarts.js" type="text/javascript"></script>
     <%-- Echarts.js --%>
 

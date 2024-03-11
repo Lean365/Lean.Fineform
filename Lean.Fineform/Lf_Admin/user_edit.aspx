@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="user_edit.aspx.cs" Inherits="Lean.Fineform.Lf_Admin.user_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="user_edit.aspx.cs" Inherits="Fine.Lf_Admin.user_edit" %>
 
 <!DOCTYPE html>
 <html>

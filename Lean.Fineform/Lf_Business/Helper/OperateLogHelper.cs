@@ -19,7 +19,7 @@ using System.Configuration;
 using System.Collections;
 
 
-namespace Lean.Fineform
+namespace Fine
 {
     public class OperateLogHelper : PageBase
     {
