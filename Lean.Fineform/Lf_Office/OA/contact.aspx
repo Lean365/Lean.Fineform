@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="contact.aspx.cs" Inherits="Fine.Lf_Office.OA.contact" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="contact.aspx.cs" Inherits="LeanFine.Lf_Office.OA.contact" %>
 
 <!DOCTYPE html>
 

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.EC
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec_p2d : PageBase
     {
@@ -28,14 +22,15 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static String mysql, strecnno, tracestr;
         public int selID;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             //numBEbudgetmoney.Attributes.Add("Value", "0名");
             //numBEbudgetmoney.Attributes.Add("OnFocus", "if(this.value=='0') {this.value=''}");
             //numBEbudgetmoney.Attributes.Add("OnBlur", "if(this.value==''){this.value='0'}");
@@ -44,11 +39,8 @@ namespace Fine.Lf_Manufacturing.EC
                 LoadData();
 
                 //btnDel.OnClientClick = Grid2.GetNoSelectionAlertReference(" 请至少选择一项！") + GetDeleteScript(Grid2); // 删除选中行客户端脚本定义 .就这一句就可以了。（和官网的一至）
-
-
             }
         }
-
 
         private void LoadData()
         {
@@ -65,10 +57,7 @@ namespace Fine.Lf_Manufacturing.EC
             Grid2.PageSize = ConfigHelper.PageSize;
 
             BindGrid2();
-
         }
-
-
 
         private void BindGrid1()
         {
@@ -79,11 +68,11 @@ namespace Fine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDelete == 0
+                            where b.isDeleted == 0
                             //where b.Ec_iqcdate != ""
                             //where b.Ec_pmcdate != ""
                             where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                            
+
                             where b.isConfirm == 1 || b.isConfirm == 3
                             orderby b.Ec_entrydate descending
                             //where a.Remark.Contains("OK") == false
@@ -125,10 +114,10 @@ namespace Fine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDelete == 0
+                            where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                                                                       //where b.Ec_pmcdate != ""
-                                                                       //where c.D_SAP_ZCA1D_Z030 == "C003" || c.D_SAP_ZCA1D_Z010 == "E"
+                                                                     //where b.Ec_pmcdate != ""
+                                                                     //where c.D_SAP_ZCA1D_Z030 == "C003" || c.D_SAP_ZCA1D_Z010 == "E"
 
                             //where a.Remark.Contains("OK") == false
                             where b.isConfirm == 1 || b.isConfirm == 3
@@ -170,7 +159,7 @@ namespace Fine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                             join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDelete == 0
+                            where b.isDeleted == 0
 
                             //where a.Remark.Contains("OK") == false
                             //where c.D_SAP_ZCA1D_Z030 == "C003" || c.D_SAP_ZCA1D_Z010 == "E"
@@ -243,7 +232,6 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-
         private void BindGrid2()
         {
             if (Grid1.SelectedRowIndex < 0)
@@ -257,8 +245,6 @@ namespace Fine.Lf_Manufacturing.EC
 
             int roleID = GetSelectedDataKeyID(Grid1);
 
-
-
             if (!String.IsNullOrEmpty(strecnno))
             {
                 if (rbtnFirstAuto.Checked)
@@ -268,13 +254,13 @@ namespace Fine.Lf_Manufacturing.EC
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDelete == 0
+                              where b.isDeleted == 0
                               where b.isConfirm == 1 || b.isConfirm == 3
                               select new
                               {
                                   a.Ec_documents,
-                                  Ec_p2ddate = b.Ec_p2ddate == null ? "" : b.Ec_p2ddate,                                  
-                                  b.Ec_p2dlot,                                  
+                                  Ec_p2ddate = b.Ec_p2ddate == null ? "" : b.Ec_p2ddate,
+                                  b.Ec_p2dlot,
                                   b.Ec_p2dnote,
                                   b.Ec_model,
                                   b.Ec_bomno,
@@ -288,12 +274,9 @@ namespace Fine.Lf_Manufacturing.EC
                                   c.D_SAP_ZCA1D_Z005,
                               };
 
-
                     //查询LINQ去重复
-                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate,  E.Ec_p2dlot,  E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
+                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate, E.Ec_p2dlot, E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
 
-
-                   
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid2.RecordCount = GridHelper.GetTotalCount(q);
                     if (Grid2.RecordCount != 0)
@@ -309,27 +292,21 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
-
-
                 }
                 else if (rbtnSecondAuto.Checked)
                 {
-
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               where !string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDelete == 0
+                              where b.isDeleted == 0
                               where b.isConfirm == 1 || b.isConfirm == 3
                               select new
                               {
@@ -349,15 +326,11 @@ namespace Fine.Lf_Manufacturing.EC
                                   c.D_SAP_ZCA1D_Z005,
                               };
 
-
                     //查询LINQ去重复
-                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate,  E.Ec_p2dlot,  E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
-
-
+                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate, E.Ec_p2dlot, E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
 
                     //q = q.Where(u => u.Ec_p2ddate != ""|| u.Ec_p2ddate != null);
                     //q = q.Where(u => u.Ec_p2ddate != null);
-
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid2.RecordCount = GridHelper.GetTotalCount(q);
@@ -374,25 +347,21 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
                 }
                 else if (rbtnThirdAuto.Checked)
                 {
-
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               //where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDelete == 0
+                              where b.isDeleted == 0
                               where b.isConfirm == 1 || b.isConfirm == 3
                               select new
                               {
@@ -413,10 +382,7 @@ namespace Fine.Lf_Manufacturing.EC
                               };
 
                     //查询LINQ去重复
-                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate,  E.Ec_p2dlot,  E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
-
-
-                   
+                    var q = sub.Select(E => new { E.Ec_documents, E.D_SAP_ZCA1D_Z005, E.Ec_p2ddate, E.Ec_p2dlot, E.Ec_p2dnote, E.Ec_model, E.Ec_bomno, E.Ec_bomsubitem, E.Ec_newitem, E.Ec_newset, E.Ec_no, E.Ec_olditem, E.Ec_oldset, E.Ec_pmclot }).Distinct();
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -433,15 +399,12 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
                 }
             }
             else
@@ -453,17 +416,17 @@ namespace Fine.Lf_Manufacturing.EC
             //ecnno = "";
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void ttbSearchEcnsub_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchEcnsub.ShowTrigger1 = true;
             BindGrid1();
             BindGrid2();
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -491,6 +454,7 @@ namespace Fine.Lf_Manufacturing.EC
             }
             strecnno = "";
         }
+
         protected void ttbSearchEcnsub_Trigger1Click(object sender, EventArgs e)
         {
             ttbSearchEcnsub.Text = String.Empty;
@@ -523,8 +487,7 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid2();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region Grid1 Events
 
@@ -542,13 +505,12 @@ namespace Fine.Lf_Manufacturing.EC
 
         protected void Grid1_RowClick(object sender, GridRowClickEventArgs e)
         {
-
-            object[] keys = Grid1.DataKeys[e.RowIndex];            
+            object[] keys = Grid1.DataKeys[e.RowIndex];
             strecnno = keys[1].ToString();
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -583,16 +545,12 @@ namespace Fine.Lf_Manufacturing.EC
                     where a.Ec_no.Contains(strecnno)
                     select new
                     {
-
                         a.Ec_distinction,
-
-
                     };
 
             var qs = q.ToList();
             //ID,Ec_no,Ec_model,Ec_bomitem,Ec_olditem,Ec_newitem
             object[] keys = Grid2.DataKeys[e.RowIndex];
-
 
             if (keys[0] == null)
             {
@@ -648,33 +606,18 @@ namespace Fine.Lf_Manufacturing.EC
             int DelID = Convert.ToInt32(Grid2.DataKeys[e.RowIndex][0]);//GetSelectedDataKeyID(Grid2);
 
             BindGrid2();
-
         }
 
         protected void Grid2_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
-        #endregion
+        #endregion Grid2 Events
 
-        #region Other Events
-
-
-
-        #endregion
-
-        #region NetOperateNotes
-
-        #endregion
         protected void Window3_Close(object sender, EventArgs e)
         {
             BindGrid1();
             BindGrid2();
         }
-
-
     }
 }
-
-

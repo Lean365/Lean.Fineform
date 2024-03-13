@@ -1,17 +1,17 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
-    public partial class Pp_reason_edit : PageBase
+namespace LeanFine.Lf_Manufacturing.Master
+{
+    public partial class pp_reason_edit : PageBase
     {
         //
-        
+
         #region ViewPower
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +33,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,13 +49,13 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("guid"));
+            Guid id = Guid.Parse(GetQueryValue("guid"));
             Pp_Reason current = DB.Pp_Reasons.Find(id);
 
             if (current == null)
@@ -72,13 +71,9 @@ namespace Fine.Lf_Manufacturing.Master
             Reasonentext.Text = current.Reasonentext;
             Reasonjptext.Text = current.Reasonjptext;
 
-
-
             Remark.Text = current.Remark;
 
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -90,33 +85,25 @@ namespace Fine.Lf_Manufacturing.Master
             // 初始化用户所属职称
             //InitUserTitle(current);
             //修改前日志
-            string BeforeModi = current.Reasontype+","+current.Reasoncntext + "," + current.Reasonentext + "," + current.Reasonjptext;
+            string BeforeModi = current.Reasontype + "," + current.Reasoncntext + "," + current.Reasonentext + "," + current.Reasonjptext;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "异常原因修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Pp_Reason current = DB.Pp_Reasons.Find(id);
             string modi001 = current.Reasontype;
             string modi002 = current.Reasoncntext;
             string modi003 = current.Reasonentext;
             string modi004 = current.Reasonjptext;
-
 
             if (this.Reasontype.Text == modi001)
             {
@@ -126,14 +113,12 @@ namespace Fine.Lf_Manufacturing.Master
                     {
                         if (this.Reasonjptext.Text == modi004)
                         {
-
-                                Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, "警告提示", MessageBoxIcon.Information);
-                                //Alert alert = new Alert();
-                                //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
-                                //alert.IconFont = IconFont.Warning;
-                                //alert.Target = Target.Top;
-                                //Alert.ShowInTop();
-
+                            Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, "警告提示", MessageBoxIcon.Information);
+                            //Alert alert = new Alert();
+                            //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
+                            //alert.IconFont = IconFont.Warning;
+                            //alert.Target = Target.Top;
+                            //Alert.ShowInTop();
                         }
                     }
                 }
@@ -141,12 +126,10 @@ namespace Fine.Lf_Manufacturing.Master
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -160,7 +143,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -170,7 +152,6 @@ namespace Fine.Lf_Manufacturing.Master
             //}
             //string InputData = LC001.Text.Trim();
 
-
             //proCheckInsClass Redata = DB.proCheckInsClasss.Where(u => u.LC001 == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -178,41 +159,34 @@ namespace Fine.Lf_Manufacturing.Master
             //    Alert.ShowInTop("数据,检验方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-            Guid id =Guid.Parse( GetQueryValue("guid"));
+            Guid id = Guid.Parse(GetQueryValue("guid"));
             Pp_Reason item = DB.Pp_Reasons
 
                 .Where(u => u.GUID == id).FirstOrDefault();
-
-
 
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Reasoncntext = Reasoncntext.Text;
             item.Reasonentext = Reasonentext.Text;
             item.Reasonjptext = Reasonjptext.Text;
 
-
-
             // 添加所有用户
 
-
             item.Remark = Remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = Reasontype.Text+","+ Reasoncntext.Text.Trim() + "," + Reasonentext.Text.Trim() + "," + Reasonjptext.Text.Trim();
-            string OperateType ="修改";
+            string ModifiedText = Reasontype.Text + "," + Reasoncntext.Text.Trim() + "," + Reasonentext.Text.Trim() + "," + Reasonjptext.Text.Trim();
+            string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "异常原因修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -227,9 +201,9 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
-            SaveItem();
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -264,15 +238,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

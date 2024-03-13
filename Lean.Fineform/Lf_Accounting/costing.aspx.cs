@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing : PageBase
     {
@@ -23,8 +17,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         #region Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -32,20 +28,11 @@ namespace Fine.Lf_Accounting
                 LoadData();
             }
         }
+
         private void LoadData()
         {
-
         }
 
-
-        #endregion
-        #region Event
-
-        #endregion
-
-        #region Export
-
-        #endregion
+        #endregion Load
     }
-
 }

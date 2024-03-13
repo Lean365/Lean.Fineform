@@ -1,36 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_losstime 的摘要说明
+    /// pp_losstime 的摘要说明
     /// </summary>
-    public class Pp_losstime : IHttpHandler
+    public class pp_losstime : IHttpHandler
     {
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
             string transdate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
             DateTime enddate = DateTime.ParseExact(transdate + "01", "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
             string startdate = enddate.AddYears(-1).AddMonths(+1).ToString("yyyyMMdd").Substring(0, 6);
-
 
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
@@ -39,7 +31,7 @@ namespace Fine.Lf_Report
                 from p in DBCharts.Pp_P1d_OutputSubs
                 where p.Prodate.Substring(0, 6).CompareTo(startdate) >= 0
                 where p.Prodate.Substring(0, 6).CompareTo(transdate) <= 0
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { Prodate = p.Prodate.Substring(0, 6) } into g
                 select new
@@ -49,7 +41,6 @@ namespace Fine.Lf_Report
                     Prolosstime = g.Sum(p => p.Prolinestopmin),
                     Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
                     Lossrate = g.Sum(p => p.Prolinestopmin) / ((Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin)),
-
                 };
             var q = (from a in q_all
                      select a).ToList()
@@ -76,7 +67,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -84,7 +74,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

@@ -1,10 +1,8 @@
-
 /*
     Main color: #674595
     Second color: #744DA9
     Border color: #AD9BC6
 */
-
 
 /* Content */
 .f-widget-content {
@@ -78,7 +76,6 @@
         .f-state-active a:visited {
             color: #674595;
         }
-
 
     .f-state-highlight,
     .f-widget-content .f-state-highlight,
@@ -156,7 +153,6 @@
     color: #ff6c6c;
 }
 
-
 /* Round corner */
 .f-corner-all,
 .f-corner-top,
@@ -190,10 +186,10 @@
 .f-tabstrip-header .f-tabstrip-header-inkbar {
     background-color: #674595;
 }
+
 .f-tabstrip-inkbar > .f-tabstrip-header .f-tab-header.f-state-active {
     background-color: #fafafa;
 }
-
 
 /* Special - f-widget-header */
 /*.f-widget-header {
@@ -236,7 +232,6 @@
     border-color: #ddd;
 }
 
-
 /* Special - TabStrip */
 .f-tabstrip-plain > .f-panel-bodyct > .f-panel-body,
 .f-tabstrip-plain > .f-panel-header,
@@ -264,12 +259,10 @@
     background-color: #fff;
 }
 
-
 /* Special - Grid selected cell */
 .f-grid-selectedcell-border {
     border-color: #ddd !important;
 }
-
 
 /* Special - Grid selected row */
 .f-grid-row.f-state-active {
@@ -282,7 +275,6 @@
 
     .f-grid-row.f-state-active .f-icon {
     }
-
 
 /* Special - Tree header style */
 .f-tree-headerstyle .f-panel-body {
@@ -346,7 +338,7 @@
 .bgpanel .f-widget-content,
 .bgpanel a,
 .bgpanel .f-icon {
-	color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
     .bgpanel a:hover,
@@ -362,12 +354,9 @@
         color: #fff;
     }
 
-
 .bgpanel .f-mainheader {
     background-color: #674595;
 }
-
-
 
 /* Special - TabStrip style for center region */
 .centerregion,
@@ -380,15 +369,11 @@
     border-top-width: 1px;
 }
 
-
 /* Special - MessageBoxIcon */
 .f-messagebox-icon.f-messageicon-information,
 .f-messagebox-icon.f-messageicon-question {
     color: #674595;
 }
-
-
-
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -417,7 +402,6 @@
     ::-webkit-scrollbar-thumb:active {
         background-color: rgba(0, 0, 0, .3);
     }
-
 
 /* Special - progressbar */
 .f-progressbar {

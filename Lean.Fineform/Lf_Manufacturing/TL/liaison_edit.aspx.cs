@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +8,8 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.TL
+
+namespace LeanFine.Lf_Manufacturing.TL
 {
     public partial class liaison_edit : PageBase
     {
@@ -24,17 +25,20 @@ namespace Fine.Lf_Manufacturing.TL
                 return "CoreTlEdit";
             }
         }
-        #endregion
+
+        #endregion ViewPower
+
         public static long iFileSizeLimit = Convert.ToInt32(ConfigurationManager.AppSettings["FileSizeLimit"]);
+
         #region Page_Load
 
         public static string strWhouse, strPur, isCheck, strEol, fullname, shortname, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc, oldEc_distinction, oldisModifysop, oldisComfirm;
         public static string strID, strEc_no, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -66,14 +70,12 @@ namespace Fine.Lf_Manufacturing.TL
 
         private void BindDDLtype()
         {
-
             var q = from a in DB.Qm_DocNumbers
                     where a.Doctype == "A"
                     select new
                     {
                         a.Docname,
                         a.Docnumber
-
                     };
             var qs = q.Select(E => new { E.Docnumber, E.Docname }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -86,9 +88,8 @@ namespace Fine.Lf_Manufacturing.TL
             ddlPbook.DataBind();
 
             this.ddlPbook.SelectedIndex = 0;
-
-
         }
+
         private void BindDDLUserlist()//ERP设变技术担当
         {
             var q_user = from a in DB.Adm_Users
@@ -108,9 +109,8 @@ namespace Fine.Lf_Manufacturing.TL
 
             // 选中根节点
             this.Ec_leader.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
         }
+
         private void BindDDLModel()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
@@ -141,9 +141,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             this.Ec_model.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         private void BindDDLModelist()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
@@ -174,9 +173,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             //this.Ec_modellist.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         private void BindDDLRegion()//ERP设变技术担当
         {
             var q_region = from a in DB.Pp_Manhours
@@ -186,11 +184,8 @@ namespace Fine.Lf_Manufacturing.TL
                                a.Prodesc
                            };
 
-
             // 绑定到下拉列表（启用模拟树功能）
             var qs = q_region.Select(E => new { E.Prodesc }).ToList().Distinct();
-
-
 
             Ec_region.DataTextField = "Prodesc";
             Ec_region.DataValueField = "Prodesc";
@@ -200,9 +195,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             //this.Ec_region.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         //#region InitOldItem
 
         //private void InitOldItem()
@@ -211,7 +205,6 @@ namespace Fine.Lf_Manufacturing.TL
         //    string selectJobTitleURL = String.Format("../plutoProinfo/item_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
         //    Ec_olditem.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_olditem.ClientID, hfSelectedDhbn.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
-
 
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
@@ -229,7 +222,6 @@ namespace Fine.Lf_Manufacturing.TL
         //    Ec_newitem.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_newitem.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
 
-
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
         //    //PageContext.RegisterStartupScript(Window1.GetSaveStateReference(tbSelectedDhbn.ClientID)
@@ -246,7 +238,6 @@ namespace Fine.Lf_Manufacturing.TL
         //    Ec_detail.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_detail.ClientID, hfSelectedModel.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
 
-
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
         //    //PageContext.RegisterStartupScript(Window1.GetSaveStateReference(tbSelectedDhbn.ClientID)
@@ -255,14 +246,9 @@ namespace Fine.Lf_Manufacturing.TL
         //}
         //#endregion
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
-
 
         private void BindData()
         {
@@ -274,7 +260,7 @@ namespace Fine.Lf_Manufacturing.TL
                 //                " GROUP BY D_SAP_ZPABD_Z001,D_SAP_ZPABD_Z002,D_SAP_ZPABD_Z003,D_SAP_ZPABD_Z027,D_SAP_ZPABD_Z005,D_SAP_ZPABD_Z025,D_SAP_ZPABD_Z012,D_SAP_ZPABD_Z013,[D_SAP_ZPABD_Z004] ORDER BY D_SAP_ZPABD_Z005 DESC;";
                 Guid id = Guid.Parse(GetQueryValue("GUID"));
                 var q = from a in DB.Pp_Liaisons
-                        //join b in DB.Pp_SapEcns on a.Ec_no equals b.D_SAP_ZPABD_Z001
+                            //join b in DB.Pp_SapEcns on a.Ec_no equals b.D_SAP_ZPABD_Z001
                         where a.GUID == id
                         select new
                         {
@@ -290,7 +276,6 @@ namespace Fine.Lf_Manufacturing.TL
                             a.Ec_eppletterdoc,
                             a.Ec_teppletterno,
                             a.Ec_teppletterdoc,
-
                         };
                 var qs = q.Select(a => new
                 {
@@ -306,8 +291,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Ec_eppletterdoc = a.Ec_eppletterdoc == null ? "" : a.Ec_eppletterdoc,
                     Ec_teppletterno = a.Ec_teppletterno == null ? "" : a.Ec_teppletterno,
                     Ec_teppletterdoc = a.Ec_teppletterdoc == null ? "" : a.Ec_teppletterdoc,
-
-
                 }).ToList();
                 if (qs.Any())
                 {
@@ -364,7 +347,6 @@ namespace Fine.Lf_Manufacturing.TL
                         //this.txtUploadFile.Text = Base64DEncrypt.EncodeBase64(npath);
                         //this.txtUploadFile.Text = this.txtUploadFile.Text + nfile;
                         this.oldEc_letterdoc.Text = shortname;
-
                     }
                     //Ec_eppletterno.Text = "";
                     if (qs[0].Ec_eppletterno.Length != 0)
@@ -384,8 +366,6 @@ namespace Fine.Lf_Manufacturing.TL
                         //this.txtUploadFile.Text = Base64DEncrypt.EncodeBase64(npath);
                         //this.txtUploadFile.Text = this.txtUploadFile.Text + nfile;
                         this.oldEc_eppletterdoc.Text = shortname;
-
-
                     }
                     //Ec_documents
 
@@ -407,10 +387,7 @@ namespace Fine.Lf_Manufacturing.TL
                         //this.txtUploadFile.Text = Base64DEncrypt.EncodeBase64(npath);
                         //this.txtUploadFile.Text = this.txtUploadFile.Text + nfile;
                         this.oldEc_teppletterdoc.Text = shortname;
-
-
                     }
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -424,7 +401,6 @@ namespace Fine.Lf_Manufacturing.TL
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
@@ -483,8 +459,7 @@ namespace Fine.Lf_Manufacturing.TL
             item.Ec_model = Ec_model.SelectedItem.Text;//设变内容
 
             item.Ec_enterdate = this.Ec_enterdate.SelectedDate.Value.ToString("yyyyMMdd"); //金额
-                                                                 //设变Ec_documents
-
+                                                                                           //设变Ec_documents
 
             //技联Ec_letterno
 
@@ -508,14 +483,11 @@ namespace Fine.Lf_Manufacturing.TL
             Pbookdoc();
             if (!String.IsNullOrEmpty(txtPbookdoc))
             {
-
                 //技联Ec_letterdoc  Ec_letterno
                 item.Ec_letterdoc = txtPbookdoc;
             }
             else
             {
-
-
                 //item.Ec_letterdoc = "";
 
                 if (oldEc_letterdoc.Text == "-")
@@ -526,8 +498,6 @@ namespace Fine.Lf_Manufacturing.TL
                 //{
                 //    item.Ec_letterdoc = "../../Lf_Documents/ecdocs/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + oldEc_letterdoc.Text;
                 //}
-
-
             }
             //P番Ec_eppletterno
             if (!string.IsNullOrEmpty(Ec_eppletterno.Text.ToUpper()))
@@ -542,13 +512,10 @@ namespace Fine.Lf_Manufacturing.TL
             Ppbookdoc();
             if (!String.IsNullOrEmpty(txtPpbookdoc))
             {
-
-
                 item.Ec_eppletterdoc = txtPpbookdoc;
             }
             else
             {
-
                 //item.Ec_eppletterdoc = "";
                 if (oldEc_eppletterdoc.Text == "-")
                 {
@@ -558,32 +525,25 @@ namespace Fine.Lf_Manufacturing.TL
                 //{
                 //    item.Ec_eppletterdoc = "../../Lf_Documents/ecdocs/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + oldEc_eppletterdoc.Text;
                 //}
-
             }
-
 
             //P番Ec_eppletterno(TCJ)
             if (!string.IsNullOrEmpty(Ec_teppletterno.Text.ToUpper()))
             {
                 item.Ec_teppletterno = "P-" + Ec_teppletterno.Text.ToUpper();
-
-
             }
             else
             {
                 item.Ec_teppletterno = "";
-
             }
             //P番Ec_eppletterdoc(TCJ)
             Pjpbookdoc();
             if (!String.IsNullOrEmpty(txtPjpbookdoc))
             {
-
                 item.Ec_teppletterdoc = txtPjpbookdoc;
             }
             else
             {
-
                 //item.Ec_teppletterdoc = "";
                 if (oldEc_teppletterdoc.Text == "-")
                 {
@@ -593,19 +553,14 @@ namespace Fine.Lf_Manufacturing.TL
                 //{
                 //    item.Ec_teppletterdoc = "../../Lf_Documents/ecdocs/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + oldEc_teppletterdoc.Text;
                 //}
-
             }
-            
 
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Pp_EcSubs.Add(item);
             DB.SaveChanges();
-
-
-
-
         }
+
         //技联
         private void Pbookdoc()
         {
@@ -618,7 +573,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -646,6 +600,7 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
+
         //P番
         private void Ppbookdoc()
         {
@@ -658,7 +613,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -682,6 +636,7 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
+
         //P番
         private void Pjpbookdoc()
         {
@@ -694,7 +649,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -718,7 +672,6 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
-
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
@@ -901,22 +854,20 @@ namespace Fine.Lf_Manufacturing.TL
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Events
 
         #region NetOperateNotes
+
         private void InsNetOperateNotes()
         {
-
             //修改日志
             string Newtext = Ec_issuedate.Text + "," + Ec_letterno.Text + "," + Ec_leader.Text + "," + txtPbookdoc + "," + txtPpbookdoc + "," + "," + txtPjpbookdoc;
             string OperateType = "修改";//操作标记
             string OperateNotes = "Edit技术* " + Newtext + " *Edit技术 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "技联信息修改", OperateNotes);
-
         }
 
-        #endregion
-
-
+        #endregion NetOperateNotes
     }
 }

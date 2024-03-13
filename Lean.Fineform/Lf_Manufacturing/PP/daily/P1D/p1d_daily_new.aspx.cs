@@ -1,14 +1,14 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.PP.daily
-{
 
+namespace LeanFine.Lf_Manufacturing.PP.daily
+{
     public partial class p1d_daily_new : PageBase
     {
         public static string lclass, OPHID, ConnStr, nclass, ncode;
@@ -33,7 +33,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -54,39 +54,30 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             if (rate == null)
             {
-
                 //Alert alert = new Alert();
                 //alert.Message = "请维护 " + inputDate + " 生产赁率！";
                 //alert.IconUrl = "~/Lf_Resources/images/message/warring.png";
                 //alert.Target = Target.Top;
                 Alert.ShowInTop("请维护 " + inputDate + " 生产赁率！", MessageBoxIcon.Warning);
 
-
                 //return;
                 PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-
             }
-
         }
-
 
         private void LoadData()
         {
-
             DateTime nowDt = DateTime.Now;
             //上月第一天
             DateTime lastFirst = nowDt.AddDays(1 - nowDt.Day).AddMonths(-1);
             //上月最后一天
             DateTime lastFinal = nowDt.AddDays(1 - nowDt.Day).AddMonths(-1);
 
-            //本月第一天时间 
+            //本月第一天时间
             DateTime dt_First = new DateTime(nowDt.Year, nowDt.Month, 1);
 
-            //本月最后一天时间 
+            //本月最后一天时间
             DateTime dt_Final = nowDt.AddDays(1 - nowDt.Day).AddMonths(1).AddDays(-1);
-
-
-
 
             //每月10号
             //string Date10 = DateTime.Now.ToString("yyyyMM10");
@@ -99,30 +90,21 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             //DateTime editDate = Convert.ToDateTime(DateTime.ParseExact(prodate.SelectedDate.Value.ToString("yyyyMMdd"), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture));
 
-
             //通过DateTIme.Compare()进行比较（）
             int compNum = DateTime.Compare(Date10, nowDate);
             //int compEdit= DateTime.Compare(nowDate, editDate);
 
-
-
-
             if (compNum == -1)
             {
-
                 this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
                 this.prodate.MinDate = dt_First;
                 this.prodate.MaxDate = dt_Final;
-
-
             }
             if (compNum == 1)
             {
-
                 this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
                 this.prodate.MinDate = lastFirst;
                 this.prodate.MaxDate = dt_Final;
-
             }
             userid = GetIdentityName();
             //Publisher.Text = GetIdentityName();
@@ -136,23 +118,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             BindDDLorder();
 
             BindDDLline();
-
-
-
-
-
-
         }
 
+        #endregion Page_Load
 
-
-
-
-
-
-        #endregion
-        #region BindGrid
-        #endregion
         #region BindDDLData
 
         //DDL查询LOT
@@ -166,12 +135,12 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         //where b.Proecnno == strecn
                         //where b.Proecnbomitem == stritem
                     where a.Porderqty - a.Porderreal > 0
+                    where a.Pordertype.Contains("ZDTA") || a.Pordertype.Contains("ZDTB")
                     orderby a.Porderno
                     select new
                     {
                         //b.Proecnmodel,
                         a.Porderno
-
                     };
 
             var qs = q.Select(E => new { E.Porderno }).ToList().Distinct();
@@ -185,14 +154,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
             proorder.DataBind();
         }
 
-
-
-
-
         //DDL查询班组
         private void BindDDLline()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Lines
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
@@ -203,7 +167,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     {
                         a.linecode,
                         a.linename,
-
                     };
 
             var qs = q.Select(E => new { E.linecode, E.linename }).ToList().Distinct();
@@ -215,20 +178,20 @@ namespace Fine.Lf_Manufacturing.PP.daily
             prolinename.DataTextField = "linename";
             prolinename.DataValueField = "linename";
             prolinename.DataBind();
-
-
         }
+
         //DDL查询不良各类
 
-        #endregion
-        #region Events        
+        #endregion BindDDLData
+
+        #region Events
+
         //protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         //{
         //    //object[] keys = Grid1.DataKeys[e.RowIndex];
 
         //    ////selID = Convert.ToInt32(keys[0].ToString());
         //    //string ss = keys[1].ToString();
-
 
         //    ////获取ID号
         //    //int del_ID = Convert.ToInt32(Grid1.DataKeys[e.RowIndex][0]);
@@ -250,10 +213,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
         //    //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报删除", OperateNotes);
         //    //    //删除记录
         //    //    //DB.Pp_Ecns.Where(l => l.ID == del_ID).Delete();
-        //    //    current.isDelete = 1;
+        //    //    current.isDeleted = 1;
         //    //    DB.SaveChanges();
         //    //    //重新绑定
-
 
         //    //}
         //}
@@ -264,7 +226,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
         //    CheckPowerWithLinkButtonField("CoreOutputDelete", Grid1, "deleteField");
         //    // 设置LinkButtonField的点击客户端事件
 
-
         //}
         private void OPHRate()//稼动率
         {
@@ -272,15 +233,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
                 .OrderByDescending(u => u.Proratedate).FirstOrDefault();
 
-
             Prorate = current.Prorate;
         }
 
-
         private void SaveItem()//新增生产日报单头
         {
-
-
             Pp_P1d_Output item = new Pp_P1d_Output();
 
             //ophID();
@@ -289,7 +246,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //item.Prolineclass = prolinename.SelectedValue.ToString();
 
             item.Prolinename = prolinename.SelectedItem.Text;
-
 
             item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
             item.Prodirect = int.Parse(prodirect.Text);
@@ -324,7 +280,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //item.Prolinestop = prolinestop.Checked;
             //item.Prolinestopmin = int.Parse(prolinestopmin.Text);
 
-
             //item.Probadcou = probadcou.Text;
 
             ////string sss = proetime.SelectedDate.Value.Subtract(prostime.SelectedDate.Value).Duration().TotalMinutes.ToString();//计算时间差（分钟）
@@ -333,9 +288,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //item.Proratio = int.Parse(proratio.Text);
             // 添加所有用户
 
-            item.isDelete = 0;
+            item.isDeleted = 0;
             item.Remark = remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_P1d_Outputs.Add(item);
             DB.SaveChanges();
@@ -349,13 +304,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             string OperateNotes = "New生产OPH* " + Contectext + " *New生产OPH 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报新增", OperateNotes);
 
-
             SaveSubItem();
-
-
-
-
-
         }
 
         //新增新增生产日报单身
@@ -402,9 +351,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         //item.Udf001 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         //item.Udf002 = this.prolinename.SelectedItem.Text;
                         item.Remark = remark.Text;
-                        item.CreateTime = DateTime.Now;
+                        item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
-                        item.isDelete = 0;
+                        item.isDeleted = 0;
                         DB.Pp_P1d_OutputSubs.Add(item);
                         DB.SaveChanges();
 
@@ -417,10 +366,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
                     }
                 }
-
-
-
-
             }
             catch (ArgumentNullException Message)
             {
@@ -453,9 +398,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
-
-
         }
 
         /// <summary>
@@ -463,8 +405,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// </summary>
         private void SaveDefect()
         {
-
-            Pp_DefectTotal item = new Pp_DefectTotal();
+            Pp_Defect_Total item = new Pp_Defect_Total();
 
             item.Prolot = prolot.Text;
             item.Prolinename = prolinename.SelectedItem.Text;
@@ -476,13 +417,13 @@ namespace Fine.Lf_Manufacturing.PP.daily
             item.Probadtotal = 0;
             item.Prodirectrate = 0;
             item.Probadrate = 0;
-            item.isDelete = 0;
+            item.isDeleted = 0;
             item.Remark = "";
             item.Promodel = promodel.Text;
             item.GUID = Guid.NewGuid();
             item.Creator = GetIdentityName();
-            item.CreateTime = DateTime.Now;
-            DB.Pp_DefectTotals.Add(item);
+            item.CreateDate = DateTime.Now;
+            DB.Pp_Defect_Totals.Add(item);
             DB.SaveChanges();
 
             //新增日志
@@ -497,7 +438,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// </summary>
         private void SaveDefectUpdate()
         {
-
             //判断重复
             string strorder = proorder.SelectedItem.Text.Trim();
             string strlot = prolot.Text.Trim();
@@ -552,13 +492,12 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
 
             string sedate = strminDate + "~" + strmaxDate;
-            DB.Pp_DefectTotals
+            DB.Pp_Defect_Totals
                .Where(s => s.Proorder == strorder)
 
                .ToList()
-               .ForEach(x => { x.Prolinename = strPline; x.Prodate = sedate; x.Modifier = GetIdentityName(); x.ModifyTime = DateTime.Now; });
+               .ForEach(x => { x.Prolinename = strPline; x.Prodate = sedate; x.Modifier = GetIdentityName(); x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
-
 
             //新增日志
             string Contectext = strorder + "," + strlot + "," + strPline + "," + sedate;
@@ -569,14 +508,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             strmaxDate = "";
             strminDate = "";
             sedate = "";
-
         }
-
-
-
-
-
-
 
         /// <summary>
         /// 保存数据
@@ -586,10 +518,8 @@ namespace Fine.Lf_Manufacturing.PP.daily
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             Distinctdata();
-
-
-
         }
+
         //判断OPH重复单头
         private void Distinctdata()
         {
@@ -633,8 +563,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //判断重复
             string input = proorder.SelectedItem.Text.Trim();
 
-
-            Pp_DefectTotal current = DB.Pp_DefectTotals.Where(u => u.Proorder == input).FirstOrDefault();
+            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input).FirstOrDefault();
 
             if (current != null)
             {
@@ -645,21 +574,15 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 SaveDefect();
             }
 
-
-
             //表格数据已重新绑定
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-
-
         }
 
-
-
-
-        #endregion
+        #endregion Events
 
         #region Times
+
         //计算时间
         /// <summary>
         /// 计算时间差
@@ -674,17 +597,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
             dateDiff = ts.Days.ToString() + "天" + ts.Hours.ToString() + "小时" + ts.Minutes.ToString() + "分钟" + ts.Seconds.ToString() + "秒";
             return dateDiff;
         }
-        #endregion
 
-
-
-
-
-
+        #endregion Times
 
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (this.proorder.SelectedIndex != -1 && this.proorder.SelectedIndex != 0)
             {
                 try
@@ -719,30 +636,28 @@ namespace Fine.Lf_Manufacturing.PP.daily
                                 b.Prodesc,
                                 a.Porderreal
                                 //c.D_SAP_ZCA1D_Z033,
-
                             };
 
                     if (q.Any())
                     {
-
                         var maxst = from a in q
-                                   group a by new { a.Porderlot,a.Porderhbn, a.Promodel, a.Prost, a.Porderqty, a.Porderserial }
+                                    group a by new { a.Porderlot, a.Porderhbn, a.Promodel, a.Prost, a.Porderqty, a.Porderserial }
                              into g
-                                   select new
-                                   {
-                                       //最大ST
-                                       Prost = g.Max(x => x.Prost),
-                                       //物料
-                                       g.Key.Porderhbn,
-                                       //机种
-                                       g.Key.Promodel,
-                                       //数量
-                                       g.Key.Porderqty,
-                                       //序列号
-                                       g.Key.Porderserial,
-                                       //批次
-                                       g.Key.Porderlot
-                                   };
+                                    select new
+                                    {
+                                        //最大ST
+                                        Prost = g.Max(x => x.Prost),
+                                        //物料
+                                        g.Key.Porderhbn,
+                                        //机种
+                                        g.Key.Promodel,
+                                        //数量
+                                        g.Key.Porderqty,
+                                        //序列号
+                                        g.Key.Porderserial,
+                                        //批次
+                                        g.Key.Porderlot
+                                    };
 
                         // 切勿使用 source.Count() > 0
                         var qs = maxst.Distinct().Take(1).ToList();
@@ -763,7 +678,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                             Alert.ShowInTop("ST为0！", String.Empty, ActiveWindow.GetHideReference());
                             return;
                         }
-
                     }
                     else
                     {
@@ -772,7 +686,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         return;
                     }
                 }
-
                 catch (ArgumentNullException Message)
                 {
                     Alert.ShowInTop("异常1:" + Message);
@@ -784,20 +697,14 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 catch (Exception Message)
                 {
                     Alert.ShowInTop("异常3:" + Message);
-
                 }
-
-
             }
         }
-
-
 
         protected void prodirect_TextChanged(object sender, EventArgs e)
         {
             HourQty();
         }
-
 
         //计算标准产能
         /// <summary>
@@ -805,7 +712,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// </summary>
         private void HourQty()
         {
-
             decimal stdiff = (decimal.Parse(prost.Text));
             if (stdiff != 0)
             {
@@ -814,15 +720,5 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.0");
             }
         }
-
-
-
-
-
-
-
-
-
     }
-
 }

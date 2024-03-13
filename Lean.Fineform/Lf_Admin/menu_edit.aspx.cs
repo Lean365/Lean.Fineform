@@ -1,13 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class menu_edit : PageBase
     {
@@ -24,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -61,7 +58,6 @@ namespace Fine.Lf_Admin
                 tbxViewPower.Text = current.ViewPower.Name;
             }
 
-
             // 绑定上级菜单下拉列表
             BindDDL(current);
 
@@ -72,7 +68,6 @@ namespace Fine.Lf_Admin
             {
                 iconList.SelectedValue = current.ImageUrl;
             }
-
         }
 
         public void InitIconList(FineUIPro.RadioButtonList iconList)
@@ -107,7 +102,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -146,13 +141,10 @@ namespace Fine.Lf_Admin
 
             DB.SaveChanges();
 
-
             //FineUIPro.Alert.ShowInTop("保存成功！", String.Empty, FineUIPro.Alert.DefaultIcon, FineUIPro.ActiveWindow.GetHidePostBackReference());
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
-        #endregion
-
+        #endregion Events
     }
 }

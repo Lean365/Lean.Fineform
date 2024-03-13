@@ -1,15 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+
 //using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user : PageBase
     {
@@ -26,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -44,8 +40,6 @@ namespace Fine.Lf_Admin
             CheckPowerWithButton("CoreUserEdit", btnChangeEnableUsers);
             CheckPowerWithButton("CoreUserDelete", btnDeleteSelected);
             CheckPowerWithButton("CoreUserNew", btnNew);
-
-
 
             ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -81,7 +75,7 @@ namespace Fine.Lf_Admin
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText)||u.Address.Contains(searchText));
+                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText) || u.Address.Contains(searchText));
             }
 
             //if (GetIdentityName() != "admin")
@@ -105,7 +99,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -130,8 +124,6 @@ namespace Fine.Lf_Admin
             CheckPowerWithLinkButtonField("CoreUserEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreUserDelete", Grid1, "deleteField");
             CheckPowerWithLinkButtonField("CoreUserChangePassword", Grid1, "pwdeditField");
-
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
@@ -145,7 +137,6 @@ namespace Fine.Lf_Admin
                 deleteField.Enabled = false;
                 deleteField.ToolTip = "不能删除超级管理员！";
             }
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -178,7 +169,6 @@ namespace Fine.Lf_Admin
             //DB.SaveChanges();
             DB.Adm_Users.Where(u => ids.Contains(u.ID)).DeleteFromQuery();
 
-
             // 重新绑定表格
             BindGrid();
         }
@@ -192,7 +182,6 @@ namespace Fine.Lf_Admin
         {
             SetSelectedUsersEnableStatus(false);
         }
-
 
         private void SetSelectedUsersEnableStatus(bool enabled)
         {
@@ -222,21 +211,18 @@ namespace Fine.Lf_Admin
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/user_view.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             if (e.CommandName == "PwdEdit")
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/user_changepassword.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             if (e.CommandName == "Edit")
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/user_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             int userID = GetSelectedDataKeyID(Grid1);
             string userName = GetSelectedDataKey(Grid1, 1);
@@ -273,7 +259,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -281,7 +266,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

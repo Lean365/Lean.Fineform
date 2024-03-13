@@ -11,8 +11,7 @@
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-
-function BindmyChart_Qm_Pass(name, value1, value2, value3) {
+function BindmyChart_QM_Pass(name, value1, value2, value3) {
     var PassChart = echarts.init(document.getElementById('PassLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -216,7 +215,6 @@ function BindmyChart_Qm_Pass(name, value1, value2, value3) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -244,7 +242,6 @@ function BindmyChart_Qm_Pass(name, value1, value2, value3) {
                                 return "#FF0000";
                             } else if (params.value >= 98) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -280,7 +277,7 @@ function BindmyChart_Qm_Pass(name, value1, value2, value3) {
     PassChart.setOption(option);
     PassChart.resize();
 }
-function BindmyChart_Qm_LotPass(name, value1, value2, value3) {
+function BindmyChart_QM_LotPass(name, value1, value2, value3) {
     var PassChart = echarts.init(document.getElementById('LotpassLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -483,7 +480,6 @@ function BindmyChart_Qm_LotPass(name, value1, value2, value3) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -511,7 +507,6 @@ function BindmyChart_Qm_LotPass(name, value1, value2, value3) {
                                 return "#FF0000";
                             } else if (params.value >= 98) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-namespace Fine.Lf_Report
+
+namespace LeanFine.Lf_Report
 {
     public partial class cube_echarts_all : PageBase
     {
@@ -22,7 +17,8 @@ namespace Fine.Lf_Report
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -30,6 +26,7 @@ namespace Fine.Lf_Report
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 权限检查
@@ -48,8 +45,8 @@ namespace Fine.Lf_Report
             {
                 DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
-
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -62,12 +59,11 @@ namespace Fine.Lf_Report
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
-
     }
-
 }

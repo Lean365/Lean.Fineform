@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
 
 

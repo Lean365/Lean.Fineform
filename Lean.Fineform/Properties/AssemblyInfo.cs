@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // 有关程序集的常规信息通过下列特性集
@@ -31,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用 "*":
-[assembly: AssemblyVersion("2024.03.16.032")]
-[assembly: AssemblyFileVersion("2024.03.16.032")]
+[assembly: AssemblyVersion("0.0.2024.*")]
+//[assembly: AssemblyFileVersion("0.0.2024.1421")]

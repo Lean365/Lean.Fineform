@@ -1,25 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_grossmargin : PageBase
     {
@@ -36,9 +20,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -46,6 +31,7 @@ namespace Fine.Lf_Accounting
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 每页记录数
@@ -55,8 +41,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -64,7 +48,6 @@ namespace Fine.Lf_Accounting
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
-
         }
 
         private void BindGrid()
@@ -79,8 +62,7 @@ namespace Fine.Lf_Accounting
 
             //              where a.Bc_YM.CompareTo(FY) == 0
             //              where a.Bc_FiscalPeriod.CompareTo(FM) == 0
-            //              select new { 
-
+            //              select new {
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
             var q = from a in DB.Sd_Fcs
@@ -98,16 +80,12 @@ namespace Fine.Lf_Accounting
                         a.Bc_Discontinued,
                         a.Bc_Balancedate,
                     };
-            
 
             //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
-
             // 在用户名称中搜索
-
-
 
             if (!string.IsNullOrEmpty(edate))
             {
@@ -115,8 +93,8 @@ namespace Fine.Lf_Accounting
             }
             q = q.Distinct();
             var qs = from a in q.Distinct()
-                     join b in DB.Fico_Costing_FobDatas on a.Bc_ForecastItem equals b.Bc_Item
-                     where b.Bc_YM.CompareTo(FobDate) ==0
+                     join b in DB.Fico_Costing_Fobs on a.Bc_ForecastItem equals b.Bc_Item
+                     where b.Bc_YM.CompareTo(FobDate) == 0
                      select new
                      {
                          a.Bc_ForecastItem,
@@ -130,19 +108,14 @@ namespace Fine.Lf_Accounting
                          a.Bc_MovingAverage,
                          a.Bc_PerUnit,
                          a.Bc_ExchangeRate,
-                         DTA_GrossProfit=b.Bc_DtaFob-(a.Bc_MovingAverage/ a.Bc_PerUnit),
-                         DTA_GrossProfitRate= (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) / b.Bc_DtaFob,
-                         TAC_FOB= b.Bc_TcjFob*a.Bc_ExchangeRate,
-                         TAC_GrossProfit = b.Bc_TcjFob * a.Bc_ExchangeRate- b.Bc_DtaFob,
-                         TAC_GrossProfitRate =(b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob)/ (b.Bc_TcjFob * a.Bc_ExchangeRate),
-                         DTA_TAC_GrossProfit=( b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit))+ (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob),
-                         DTA_TAC_GrossProfitRate =( (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) + (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob))/ (b.Bc_TcjFob * a.Bc_ExchangeRate)
-
-
-
-
+                         DTA_GrossProfit = b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit),
+                         DTA_GrossProfitRate = (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) / b.Bc_DtaFob,
+                         TAC_FOB = b.Bc_TcjFob * a.Bc_ExchangeRate,
+                         TAC_GrossProfit = b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob,
+                         TAC_GrossProfitRate = (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob) / (b.Bc_TcjFob * a.Bc_ExchangeRate),
+                         DTA_TAC_GrossProfit = (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) + (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob),
+                         DTA_TAC_GrossProfitRate = ((b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) + (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob)) / (b.Bc_TcjFob * a.Bc_ExchangeRate)
                      };
-
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = GridHelper.GetTotalCount(qs);
@@ -159,8 +132,6 @@ namespace Fine.Lf_Accounting
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -168,9 +139,11 @@ namespace Fine.Lf_Accounting
                 Grid1.DataBind();
             }
         }
-        #endregion
+
+        #endregion Load
 
         #region Event
+
         //protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         //{
         //    Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -189,6 +162,7 @@ namespace Fine.Lf_Accounting
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -202,15 +176,17 @@ namespace Fine.Lf_Accounting
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
 
-        #endregion
+        #endregion Event
 
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -224,7 +200,7 @@ namespace Fine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "DTA-TAC_GrossProfit_" + DPend.SelectedDate.Value.ToString("yyyyMM") ;
+            Xlsbomitem = "DTA-TAC_GrossProfit_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -238,8 +214,7 @@ namespace Fine.Lf_Accounting
 
             //              where a.Bc_YM.CompareTo(FY) == 0
             //              where a.Bc_FiscalPeriod.CompareTo(FM) == 0
-            //              select new { 
-
+            //              select new {
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
             var q = from a in DB.Sd_Fcs
@@ -258,15 +233,11 @@ namespace Fine.Lf_Accounting
                         a.Bc_Balancedate,
                     };
 
-
             //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
-
             // 在用户名称中搜索
-
-
 
             if (!string.IsNullOrEmpty(edate))
             {
@@ -274,22 +245,21 @@ namespace Fine.Lf_Accounting
             }
             q = q.Distinct();
             var qs = from a in q.Distinct()
-                     join b in DB.Fico_Costing_FobDatas on a.Bc_ForecastItem equals b.Bc_Item
+                     join b in DB.Fico_Costing_Fobs on a.Bc_ForecastItem equals b.Bc_Item
                      where b.Bc_YM.CompareTo(BomDate) == 0
                      select new
                      {
-
-                         品目=a.Bc_ForecastItem,
-                         品目テキスト=a.Bc_ForecastItemText,
-                         代表機種=a.Bc_ForecastModelName,
-                         EOL=a.Bc_Discontinued,
-                         TAC_FOBu=b.Bc_TcjFob,
-                         通貨T=b.Bc_TcjCurrency,
-                         DTA_FOB=b.Bc_DtaFob,
-                         通貨D=b.Bc_DtaCurrency,
-                         DTA_移動平均原価=a.Bc_MovingAverage,
-                         per=a.Bc_PerUnit,
-                         為替レート=a.Bc_ExchangeRate,
+                         品目 = a.Bc_ForecastItem,
+                         品目テキスト = a.Bc_ForecastItemText,
+                         代表機種 = a.Bc_ForecastModelName,
+                         EOL = a.Bc_Discontinued,
+                         TAC_FOBu = b.Bc_TcjFob,
+                         通貨T = b.Bc_TcjCurrency,
+                         DTA_FOB = b.Bc_DtaFob,
+                         通貨D = b.Bc_DtaCurrency,
+                         DTA_移動平均原価 = a.Bc_MovingAverage,
+                         per = a.Bc_PerUnit,
+                         為替レート = a.Bc_ExchangeRate,
                          DTA粗利額 = b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit),
                          DTA粗利率 = (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) / b.Bc_DtaFob,
                          TAC_FOBc = b.Bc_TcjFob * a.Bc_ExchangeRate,
@@ -297,10 +267,6 @@ namespace Fine.Lf_Accounting
                          TAC粗利率 = (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob) / (b.Bc_TcjFob * a.Bc_ExchangeRate),
                          TACDTA粗利額 = (b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) + (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob),
                          TACDTA粗利率 = ((b.Bc_DtaFob - (a.Bc_MovingAverage / a.Bc_PerUnit)) + (b.Bc_TcjFob * a.Bc_ExchangeRate - b.Bc_DtaFob)) / (b.Bc_TcjFob * a.Bc_ExchangeRate)
-
-
-
-
                      };
             if (qs.Any())
             {
@@ -315,9 +281,8 @@ namespace Fine.Lf_Accounting
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
         }
-        #endregion
-    }
 
+        #endregion Export
+    }
 }

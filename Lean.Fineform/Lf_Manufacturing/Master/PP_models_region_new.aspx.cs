@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_models_region_new : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,23 +23,23 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string tmpRootDir;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
         private void LoadData()
         {
-             tmpRootDir = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath.ToString());//获取程序根目录
+            tmpRootDir = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath.ToString());//获取程序根目录
             labResult.Text = "";// String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.班组类别：制二课请输入：P,制一课请输入：M,品保部请输入：Q</div><div>2.班组类别：只能输入P，Q,M。</div>");
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -54,28 +52,23 @@ namespace Fine.Lf_Manufacturing.Master
             BindDDLHBN();
         }
 
-
-
         private void BindDDLHBN()//物料信息
         {
             var q = from a in DB.Pp_SapMaterials
-                    where a.D_SAP_ZCA1D_Z004!="ROH"
-                    where a.D_SAP_ZCA1D_Z010!="F"
-                    where a.D_SAP_ZCA1D_Z011!="50"
-                    where a.D_SAP_ZCA1D_Z002!="" && !(from d in DB.Pp_SapModelDests
-                      where d.isDelete == 0
+                    where a.D_SAP_ZCA1D_Z004 != "ROH"
+                    where a.D_SAP_ZCA1D_Z010 != "F"
+                    where a.D_SAP_ZCA1D_Z011 != "50"
+                    where a.D_SAP_ZCA1D_Z002 != "" && !(from d in DB.Pp_SapModelDests
+                                                        where d.isDeleted == 0
 
-                      where d.D_SAP_DEST_Z001 == a.D_SAP_ZCA1D_Z002
-                      select d.D_SAP_DEST_Z001)
+                                                        where d.D_SAP_DEST_Z001 == a.D_SAP_ZCA1D_Z002
+                                                        select d.D_SAP_DEST_Z001)
                        .Contains(a.D_SAP_ZCA1D_Z002)
                     select new
                     {
                         a.D_SAP_ZCA1D_Z002,
-
                     };
-            var qs = q.Select(E => new { E.D_SAP_ZCA1D_Z002}).ToList().Distinct();
-
-
+            var qs = q.Select(E => new { E.D_SAP_ZCA1D_Z002 }).ToList().Distinct();
 
             // 绑定到下拉列表（启用模拟树功能）
 
@@ -86,15 +79,12 @@ namespace Fine.Lf_Manufacturing.Master
 
             // 选中根节点
             this.ddlD_SAP_DEST_Z001.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void ddlD_SAP_DEST_Z001_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlD_SAP_DEST_Z001.SelectedIndex == -1 && ddlD_SAP_DEST_Z001.SelectedIndex == 0)
@@ -107,13 +97,11 @@ namespace Fine.Lf_Manufacturing.Master
                     lblD_SAP_ZCA1D_Z005.Text = q[0].D_SAP_ZCA1D_Z005.ToString();
                 }
             }
-
         }
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Pp_SapModelDest item = new Pp_SapModelDest();
             item.D_SAP_DEST_Z001 = ddlD_SAP_DEST_Z001.SelectedItem.Text;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -125,7 +113,7 @@ namespace Fine.Lf_Manufacturing.Master
             item.GUID = Guid.NewGuid();
             // 添加所有用户
             item.Remark = tbxRemark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_SapModelDests.Add(item);
             DB.SaveChanges();
@@ -135,9 +123,8 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种新增", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ////判断修改内容
@@ -145,7 +132,6 @@ namespace Fine.Lf_Manufacturing.Master
             //proLine current = DB.proLines.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
-
 
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -159,7 +145,6 @@ namespace Fine.Lf_Manufacturing.Master
             //判断重复
             string InputData = ddlD_SAP_DEST_Z001.SelectedItem.Text.Trim();
 
-
             Pp_SapModelDest redata = DB.Pp_SapModelDests.Where(u => u.D_SAP_DEST_Z001 == InputData).FirstOrDefault();
 
             if (redata != null)
@@ -168,6 +153,7 @@ namespace Fine.Lf_Manufacturing.Master
                 return;
             }
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -209,16 +195,13 @@ namespace Fine.Lf_Manufacturing.Master
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
         //protected void numUdf004_TextChanged(object sender, EventArgs e)
         //{
-
         //    //item.D_SAP_DEST_Z001 = ddlD_SAP_DEST_Z001.SelectedItem.Text;
         //    ////item.Prolineclass = prolinename.SelectedValue.ToString();
         //    //item.D_SAP_DEST_Z002 = tbxD_SAP_DEST_Z002.Text;
         //    //item.D_SAP_DEST_Z003 = tbxD_SAP_DEST_Z003.Text;
         //    //item.Udf004 = Decimal.Parse(numUdf004.Text);
-            
 
         //    //string imgPath = Request.ApplicationPath;
         //    string ModelQRCode =DateTime.Now.ToString("yyyyMMdd")+","+ ddlD_SAP_DEST_Z001.SelectedItem.Text + "," + tbxD_SAP_DEST_Z002.Text + "," + tbxD_SAP_DEST_Z003.Text + "," + numUdf004.Text;
@@ -234,14 +217,6 @@ namespace Fine.Lf_Manufacturing.Master
         //    this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
         //}
 
-
-
-
-
-
-        #endregion
-
-
-
+        #endregion Events
     }
 }

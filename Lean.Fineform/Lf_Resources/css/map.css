@@ -1,67 +1,67 @@
-﻿    /*水手蓝*/
+﻿/*水手蓝*/
 .icon-DarkBlue {
     font-size: 18px;
     opacity: .9;
     color: #00477d;
     text-align: center;
 }
-    /*午夜蓝*/
+/*午夜蓝*/
 .icon-CrayolaMidnightBlue {
     font-size: 18px;
     opacity: 1;
     color: #003366;
     text-align: center;
 }
-    /*品蓝，皇室蓝*/
+/*品蓝，皇室蓝*/
 .icon-RoyalBlue {
     font-size: 18px;
     opacity: .9;
     color: #4169e1;
     text-align: center;
 }
-    /*珊瑚红*/
+/*珊瑚红*/
 .icon-Coral {
     font-size: 18px;
     opacity: .9;
     color: #FF7F50;
     text-align: center;
 }
-    /*柠檬绿*/
+/*柠檬绿*/
 .icon-LimeGreen {
     font-size: 18px;
     opacity: .9;
     color: #32CD32;
     text-align: center;
 }
-    /*绯红*/
+/*绯红*/
 .icon-Crimson {
     font-size: 18px;
     opacity: .9;
     color: #FF0000;
     text-align: center;
 }
-    /*沙褐色*/
+/*沙褐色*/
 .icon-Sandybrown {
     font-size: 18px;
     opacity: .9;
     color: #F4A460;
     text-align: center;
 }
-    /*番茄红*/
+/*番茄红*/
 .icon-Tomato {
     font-size: 18px;
     opacity: .9;
     color: #FF6347;
     text-align: center;
 }
-    /*小麦色*/
+/*小麦色*/
 .icon-Wheat {
     font-size: 18px;
     opacity: .9;
     color: #F5DEB3;
     text-align: center;
 }
-    /*橙红色*/
+/*橙红色*/
 .icon-OrangeRed {
     font-size: 18px;
     opacity: .9;
@@ -69,12 +69,13 @@
     text-align: center;
 }
 
-    /*多样性*/
+/*多样性*/
 .theme-ravenclaw {
     --fa-secondary-opacity: 1.0;
     --fa-primary-color: rgb(4, 56, 161);
     --fa-secondary-color: rgb(108, 108, 108);
 }
+
 .icon-font {
     color: #FF4500;
     font-size: 12px;

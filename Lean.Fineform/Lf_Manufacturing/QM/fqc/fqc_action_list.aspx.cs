@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.QM.fqc
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_action_list : PageBase
     {
@@ -29,7 +22,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -51,7 +44,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithButton("CoreNoticeDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreNoticeNew", btnNew);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -66,20 +58,16 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             try
             {
-
                 var q = from a in DB.Qm_Outgoings
                             //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                        where a.isDelete == 0
-                        where a.qmRejectqty!=0
+                        where a.isDeleted == 0
+                        where a.qmRejectqty != 0
                         where !(from d in DB.Qm_Improvements
-                               select d.qmInspector + d.qmProlot + d.qmOrder + d.qmModels + d.qmMaterial + d.qmCheckdate+d.qmRejectqty.ToString())
+                                select d.qmInspector + d.qmProlot + d.qmOrder + d.qmModels + d.qmMaterial + d.qmCheckdate + d.qmRejectqty.ToString())
                                 .Contains(a.qmInspector + a.qmProlot + a.qmOrder + a.qmModels + a.qmMaterial + a.qmCheckdate + a.qmRejectqty.ToString())
                         //where b.Ec_no == strecn
                         //where a.Prodate == sdate//投入日期
@@ -96,7 +84,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                             a.qmProqty,
                             a.qmRejectqty,
                         };
-
 
                 // 在用户名称中搜索
                 string searchText = ttbSearchMessage.Text.Trim();
@@ -199,7 +186,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -222,13 +210,11 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithWindowField("CoreNoticeEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreNoticeDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
             CheckPowerWithLinkButtonField("CoreFqcActionNew", Grid1, "ActionAdd");
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -255,7 +241,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -263,7 +248,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        #endregion
+        #endregion Events
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -272,16 +257,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/fqc/fqc_action_new.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
         }
-
 
         protected void btnClose_Click(object sender, EventArgs e)
         {
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
-
     }
 }

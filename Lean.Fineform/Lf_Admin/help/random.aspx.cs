@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
+﻿using FineUIPro;
+using System;
+
 ////using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin.help
+namespace LeanFine.Lf_Admin.help
 
 {
     public partial class random : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -28,14 +21,15 @@ namespace Fine.Lf_Admin.help
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //this.Numtrand.Text = "0";
             //this.Txtrand.Text = "";
             Txtstr();
-
         }
+
         public void Txtstr()
         {
             Txtrandom1.Text = "";
@@ -60,21 +54,18 @@ namespace Fine.Lf_Admin.help
                 }
                 else
                 {
-
                     Txtrandom1.Text = Txtrandom1.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
                     Txtrandom2.Text = Txtrandom2.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
                     Txtrandom3.Text = Txtrandom3.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
                     Txtrandom4.Text = Txtrandom4.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
                     Txtrandom5.Text = Txtrandom5.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
                     //Txtrandom6.Text = Txtrandom6.Text + "\r\n" + GetRandomString(int.Parse(Numtrand.Text), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(1), Convert.ToBoolean(0), Txtrand.Text);
-
                 }
-
             }
-
         }
+
         ///<summary>
-        ///生成随机字符串 
+        ///生成随机字符串
         ///</summary>
         ///<param name="length">目标字符串的长度</param>
         ///<param name="useNum">是否包含数字，1=包含，默认为包含</param>
@@ -100,19 +91,15 @@ namespace Fine.Lf_Admin.help
             return s;
         }
 
-
-
         protected void Window1_Close(object sender, EventArgs e)
         {
-
         }
 
         protected void Btn1_Click(object sender, EventArgs e)
         {
             if (Numtrand.Text == "")
             {
-
-                Alert.ShowInTop("请确认输入的位数大于0",MessageBoxIcon.Error);
+                Alert.ShowInTop("请确认输入的位数大于0", MessageBoxIcon.Error);
                 //Alert.ShowInTop("您所使用的登录ID已经在线了！您不能重复登录！");
                 return;
             }
@@ -126,7 +113,6 @@ namespace Fine.Lf_Admin.help
         {
             if (this.Txtrand.Text == "")
             {
-
                 Alert.ShowInTop("请确认输入的特定字符不为空", MessageBoxIcon.Error);
                 //Alert.ShowInTop("您所使用的登录ID已经在线了！您不能重复登录！");
                 return;
@@ -161,9 +147,7 @@ namespace Fine.Lf_Admin.help
                 {
                     Txtstr();
                 }
-
             }
         }
-
     }
 }

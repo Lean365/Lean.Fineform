@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-namespace Fine.Lf_Manufacturing.QM.fqc
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_notice_new : PageBase
     {
@@ -28,7 +22,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -50,7 +44,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithButton("CoreNoticeDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreNoticeNew", btnNew);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -65,14 +58,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             try
             {
-
                 var qss = from a in DB.Pp_SapEcnSubs
                               //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
                           join b in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals b.D_SAP_DEST_Z001
@@ -90,15 +79,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 var ss = from b in qss
                          where b.D_SAP_DEST_Z002 != ""
                          where b.D_SAP_ZPABD_S001 != "" && !(from d in DB.Pp_EcSubs
-                                                             where d.isDelete == 0
+                                                             where d.isDeleted == 0
                                                              select d.Ec_no)
                                                           .Contains(b.D_SAP_ZPABD_S001)
                          select new
                          {
                              b.D_SAP_ZPABD_S001
                          };
-
-
 
                 var q = from a in DB.Pp_SapEcns
                         where a.D_SAP_ZPABD_Z001 != "" && (from b in ss
@@ -123,7 +110,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    q = q.Where(u => u.D_SAP_ZPABD_Z001.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                    q = q.Where(u => u.D_SAP_ZPABD_Z001.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                 }
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -220,7 +207,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -243,13 +231,11 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithWindowField("CoreNoticeEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreNoticeDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
             CheckPowerWithLinkButtonField("CoreEcENGNew", Grid1, "EcnAdd");
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -276,7 +262,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -284,7 +269,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        #endregion
+        #endregion Events
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -293,9 +278,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/ec_eng_new.aspx?ECNNO=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
         }
+
         protected void Grid1_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
@@ -307,7 +292,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //Window2.GetShowReference("~/plutoErpinfo/bomlist_view.aspx", "弹出窗口二");
             //Response.Redirect("~/plutoErpinfo/bomlist_view.aspx?ItemMaster=" + keys[1].ToString() + "");
 
-
             //labResult.Text = keys[0].ToString();
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/dept/view_desc.aspx?Ec_no=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
         }
@@ -316,7 +300,5 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         {
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_output_query.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p2d_output_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_output_query.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.daily.P2D.p2d_output_query" %>
 
 <!DOCTYPE html>
 
@@ -94,14 +94,16 @@
                         <f:BoundField DataField="Proorder" SortField="Proorder" Width="100px" HeaderText="订单" />
                         <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="100px" HeaderText="班别" />
                         <f:BoundField DataField="Prodirect" SortField="Prodirect" Width="104px" HeaderText="直接人数" />
-                        <f:BoundField DataField="Prospendtime" SortField="Prospendtime" ColumnID="Prospendtime" Width="104px" HeaderText="投入工数" />
+                        <%--<f:BoundField DataField="Prospendtime" SortField="Prospendtime" ColumnID="Prospendtime" Width="104px" HeaderText="投入工数" />--%>
                         <f:BoundField DataField="Promodel" SortField="Promodel" Width="102px" HeaderText="机种" />
                         <f:BoundField DataField="Prohbn" SortField="Prohbn" Width="103px" HeaderText="物料" />
+                        <f:BoundField DataField="Propbctype" SortField="Propbctype" Width="80px" HeaderText="板别" />
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="103px" HeaderText="批次" />
+                        <f:BoundField DataField="Proshort" SortField="Proshort" Width="104px" HeaderText="Short" />
                         <f:BoundField DataField="Prost" SortField="Prost" Width="104px" HeaderText="ST" />
-                        <f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" ColumnID="Prostdcapacity" Width="106px" HeaderText="计划台数" DataFormatString="{0:F0}" />
+                        <%--<f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" ColumnID="Prostdcapacity" Width="106px" HeaderText="计划台数" DataFormatString="{0:F0}" />--%>
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="107px" HeaderText="实绩台数" />
-                        <f:BoundField DataField="Proratio" SortField="Proratio" ColumnID="Proratio" Width="108px" HeaderText="达成率" DataFormatString="{0:p0}" />
+                        <%--<f:BoundField DataField="Proratio" SortField="Proratio" ColumnID="Proratio" Width="108px" HeaderText="达成率" DataFormatString="{0:p0}" />--%>
 
                         <f:BoundField DataField="Prolotqty" SortField="Prolotqty" Width="100px" HeaderText="订单数量" />
 

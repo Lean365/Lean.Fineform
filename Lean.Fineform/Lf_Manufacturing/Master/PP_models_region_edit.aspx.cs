@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_models_region_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,15 +23,16 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string tmpRootDir;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -51,8 +50,8 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -67,15 +66,13 @@ namespace Fine.Lf_Manufacturing.Master
                 return;
             }
 
-
-
             lblD_SAP_DEST_Z001.Text = current.D_SAP_DEST_Z001;
-            string qItem= current.D_SAP_DEST_Z001;
+            string qItem = current.D_SAP_DEST_Z001;
             var q = (from a in DB.Mm_Materials
-                     where a.MatItem==(qItem)
+                     where a.MatItem == (qItem)
                      select a);
             var qs = q.ToList();
-            if(qs.Any())
+            if (qs.Any())
             {
                 lblD_SAP_ZCA1D_Z005.Text = qs[0].MatDescription.ToString();
             }
@@ -91,8 +88,6 @@ namespace Fine.Lf_Manufacturing.Master
             tbxRemark.Text = current.Remark;
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -111,13 +106,7 @@ namespace Fine.Lf_Manufacturing.Master
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种仕向修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -138,32 +127,28 @@ namespace Fine.Lf_Manufacturing.Master
                 {
                     if (this.tbxD_SAP_DEST_Z003.Text == ckeckRegion)
 
+                        Alert.ShowInTop("数据没有被修改", "警告提示", MessageBoxIcon.Information);
+                    //Alert alert = new Alert();
+                    //alert.Message = "数据没有被修改";
+                    //alert.MessageBoxIcon = (MessageBoxIcon)Enum.Parse(typeof(MessageBoxIcon), "Information", true);
 
-                            Alert.ShowInTop("数据没有被修改", "警告提示", MessageBoxIcon.Information);
-                            //Alert alert = new Alert();
-                            //alert.Message = "数据没有被修改";
-                            //alert.MessageBoxIcon = (MessageBoxIcon)Enum.Parse(typeof(MessageBoxIcon), "Information", true);
+                    //"Information" Text = "消息"
+                    //"Warning" Text = "警告"
+                    //"Question" Text = "问题"
+                    // "Error" Text = "错误"
+                    //"Success" Text = "成功"
+                    //alert.IconFont = IconFont.Warning;
+                    //alert.Icon = Icon.Error;
+                    //alert.IconUrl = "~/Lf_Resources/images/warning.png";
 
-                            //"Information" Text = "消息"   
-                            //"Warning" Text = "警告"       
-                            //"Question" Text = "问题"          
-                            // "Error" Text = "错误"            
-                            //"Success" Text = "成功"
-                            //alert.IconFont = IconFont.Warning;
-                            //alert.Icon = Icon.Error;
-                            //alert.IconUrl = "~/Lf_Resources/images/warning.png";
-
-                            //alert.Target = Target.Top;
-                            //alert.Show();
-                            //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-
+                    //alert.Target = Target.Top;
+                    //alert.Show();
+                    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
                 }
             }
 
-
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
-
 
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
@@ -173,6 +158,7 @@ namespace Fine.Lf_Manufacturing.Master
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -181,16 +167,13 @@ namespace Fine.Lf_Manufacturing.Master
 
                 .Where(u => u.GUID == id).FirstOrDefault();
 
-
-
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             //item.D_SAP_DEST_Z001 = lblD_SAP_DEST_Z001.Text;
             item.D_SAP_DEST_Z002 = tbxD_SAP_DEST_Z002.Text;
             item.D_SAP_DEST_Z003 = tbxD_SAP_DEST_Z003.Text;
 
-
             item.Remark = tbxRemark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -200,8 +183,6 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种仕向修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -253,12 +234,11 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
+
         //protected void numUdf004_TextChanged(object sender, EventArgs e)
         //{
         //    tmpRootDir = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath.ToString());//获取程序根目录
-            
 
-            
         //    string strKey = lblD_SAP_DEST_Z001.Text;//匹配字符串
 
         //    DirectoryInfo myDir = new DirectoryInfo(tmpRootDir + "oneFile\\qrcode\\");
@@ -273,19 +253,15 @@ namespace Fine.Lf_Manufacturing.Master
         //        }
         //    }
 
-
-
         //    //item.D_SAP_DEST_Z001 = ddlD_SAP_DEST_Z001.SelectedItem.Text;
         //    ////item.Prolineclass = prolinename.SelectedValue.ToString();
         //    //item.D_SAP_DEST_Z002 = tbxD_SAP_DEST_Z002.Text;
         //    //item.D_SAP_DEST_Z003 = tbxD_SAP_DEST_Z003.Text;
         //    //item.Udf004 = Decimal.Parse(numUdf004.Text);
 
-
         //    //string imgPath = Request.ApplicationPath;
 
         //        string ModelQRCode = DateTime.Now.ToString("yyyyMMdd") + "," + lblD_SAP_DEST_Z001.Text +","+ tbxD_SAP_DEST_Z002.Text + "," + tbxD_SAP_DEST_Z003.Text + "," + numUdf004.Text;
-
 
         //        QrcodeHelper.QRCodeHandler qr = new QrcodeHelper.QRCodeHandler();
         //        string path = tmpRootDir + "oneFile\\qrcode\\";
@@ -297,17 +273,8 @@ namespace Fine.Lf_Manufacturing.Master
         //        this.imgModelQrcode.ImageWidth = Unit.Pixel(64);
         //        this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
 
-
         //}
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

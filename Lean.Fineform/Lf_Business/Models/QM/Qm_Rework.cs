@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fine.Lf_Business.Models.QM
+namespace LeanFine.Lf_Business.Models.QM
 {
     public class Qm_Rework : IKeyGUID
     {
@@ -18,6 +14,7 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(50)]
         public string Qcrd002 { get; set; }	    //	机种
+
         [StringLength(50)]
         public string Qcrd003 { get; set; }	    //	Lot
 
@@ -42,11 +39,14 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(500)]
         public string Qcrd017 { get; set; }     //	备注
+
         [StringLength(50)]
         public string Qcrdqarec { get; set; }     //	品质问题対応记录者
+
         //不良对应
         [StringLength(8)]
         public string Qcrd018 { get; set; }     //日期
+
         [StringLength(500)]
         public string Qcrd019 { get; set; }	    //	不良内容
 
@@ -64,15 +64,19 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(50)]
         public string Qcrd028 { get; set; }	    //	顾客名
+
         [StringLength(50)]
         public string Qcrd029 { get; set; }     //	Debit Note No
+
         public Decimal Qcrd030 { get; set; }    //	请求费用
         public Decimal Qcrd031 { get; set; }	//	其他费用
 
         [StringLength(500)]
         public string Qcrd032 { get; set; }     //	备注
+
         [StringLength(50)]
         public string Qcrdmcrec { get; set; }     //	生管品质问题対応记录者
+
         [StringLength(8)]
         public string Qcrd033 { get; set; }     //日期
 
@@ -84,7 +88,7 @@ namespace Fine.Lf_Business.Models.QM
         public Int64 Qcrd037 { get; set; }	    //	再检查时间(分)
         public Decimal Qcrd038 { get; set; }	//	交通费、旅费
         public Decimal Qcrd039 { get; set; }	//	仓库管理费
-        public Decimal Qcrd040{ get; set; }	//	选别・改修其他费用
+        public Decimal Qcrd040 { get; set; }	//	选别・改修其他费用
 
         [StringLength(500)]
         public string Qcrd041 { get; set; }	    //	选别・改修备注
@@ -93,17 +97,22 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(50)]
         public string Qcrd043 { get; set; }	    //	顾客名
+
         [StringLength(50)]
         public string Qcrd044 { get; set; }     //	Debit Note No
+
         public Decimal Qcrd045 { get; set; }    //	请求费用
         public Decimal Qcrd046 { get; set; }	//	其他费用
 
         [StringLength(500)]
         public string Qcrd047 { get; set; } //	备注
+
         [StringLength(50)]
         public string Qcrdassrec { get; set; }     //	M/L不良改修対応记录者
+
         [StringLength(8)]
         public string Qcrd048 { get; set; }     //日期
+
         [StringLength(500)]
         public string Qcrd049 { get; set; }     //不良内容
 
@@ -121,28 +130,37 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(50)]
         public string Qcrd058 { get; set; }	    //	顾客名
+
         [StringLength(50)]
         public string Qcrd059 { get; set; }     //	Debit Note No
+
         public Decimal Qcrd060 { get; set; }    //	请求费用
         public Decimal Qcrd061 { get; set; }    //	其他费用
 
         [StringLength(500)]
         public string Qcrd062 { get; set; }	//	备注
+
         [StringLength(50)]
         public string Qcrdpcbrec { get; set; }	    //	PCBA不良改修対応记录者
 
         [StringLength(255)]
         public string UDF01 { get; set; }
+
         [StringLength(255)]
         public string UDF02 { get; set; }
+
         [StringLength(255)]
         public string UDF03 { get; set; }
+
         [StringLength(500)]
         public string UDF04 { get; set; }
+
         [StringLength(500)]
         public string UDF05 { get; set; }
+
         [StringLength(500)]
         public string UDF06 { get; set; }
+
         public int UDF51 { get; set; }
 
         public int UDF52 { get; set; }
@@ -155,19 +173,19 @@ namespace Fine.Lf_Business.Models.QM
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDelete { get; set; }	//13	//	删除标记
+        public byte isDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }
-        public DateTime? CreateTime { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         public string Modifier { get; set; }
-        public DateTime? ModifyTime { get; set; }
 
-
+        public DateTime? ModifyDate { get; set; }
     }
 }

@@ -9,13 +9,11 @@
  * Date: 2020-04-16T16:01Z
  */
 
-
 //出货仕向地
 function AjaxData_Sd_Regin() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
-//debugger;
+    //debugger;
     $.ajax({
-
         url: "/Lf_Report/shipment_regin.ashx",
         data: {
             TransDate: TransDates
@@ -32,7 +30,7 @@ function AjaxData_Sd_Regin() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Sd_Regin(name, value, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_Regin(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
@@ -61,7 +59,7 @@ function AjaxData_Sd_Destination() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Sd_Destination(name, value, data);          //调用封装好的DestmyChart
+                BindmyChart_SD_Destination(name, value, data);          //调用封装好的DestmyChart
             }
         },
         error: function (msg) {
@@ -90,7 +88,7 @@ function AjaxData_Sd_BuCode() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Sd_BuCode(name, value, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_BuCode(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
@@ -103,7 +101,7 @@ function AjaxData_Sd_BuCode() {
 function AjaxData_Sd_FyJPStats() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Sd_fyjp.ashx",
+        url: "/Lf_Report/sd_fyjp.ashx",
         data: {
             TransDate: TransDates
         },
@@ -122,7 +120,7 @@ function AjaxData_Sd_FyJPStats() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_Sd_FyJPStats(name, value1, value2, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_FyJPStats(name, value1, value2, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
@@ -135,7 +133,7 @@ function AjaxData_Sd_FyJPStats() {
 function AjaxData_Sd_FyCNStats() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Sd_fycn.ashx",
+        url: "/Lf_Report/sd_fycn.ashx",
         data: {
             TransDate: TransDates
         },
@@ -154,7 +152,7 @@ function AjaxData_Sd_FyCNStats() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_Sd_FyCNStats(name, value1, value2, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_FyCNStats(name, value1, value2, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
@@ -167,7 +165,7 @@ function AjaxData_Sd_FyCNStats() {
 function AjaxData_Sd_FyBuJPStats() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Sd_fybujp.ashx",
+        url: "/Lf_Report/sd_fybujp.ashx",
         data: {
             TransDate: TransDates
         },
@@ -184,9 +182,9 @@ function AjaxData_Sd_FyBuJPStats() {
                 for (var i = 0; i < list.length; i++) {
                     name.push(list[i].name);
                     value.push(list[i].value);
-                   // value2.push(list[i].value2);
+                    // value2.push(list[i].value2);
                 }
-                BindmyChart_Sd_FyBuJPStats(name, value, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_FyBuJPStats(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
@@ -199,7 +197,7 @@ function AjaxData_Sd_FyBuJPStats() {
 function AjaxData_Sd_FyBuCNStats() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Sd_fybucn.ashx",
+        url: "/Lf_Report/sd_fybucn.ashx",
         data: {
             TransDate: TransDates
         },
@@ -218,7 +216,7 @@ function AjaxData_Sd_FyBuCNStats() {
                     value.push(list[i].value);
                     //value2.push(list[i].value2);
                 }
-                BindmyChart_Sd_FyBuCNStats(name, value, data);          //调用封装好的ReginmyChart
+                BindmyChart_SD_FyBuCNStats(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {

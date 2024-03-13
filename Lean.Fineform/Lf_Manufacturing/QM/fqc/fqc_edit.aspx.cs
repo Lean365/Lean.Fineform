@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,14 +7,15 @@ using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.QM.fqc
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
-
     public partial class fqc_edit : PageBase
     {
         public static DataTable CheckD;
+
         //是否添加到末尾 false=末尾,true=开头
         private bool AppendToEnd = false;
+
         public string issueNo;
         public static string mysql, userid;
         public decimal qaQTY, mcQTY;
@@ -34,7 +35,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,7 +43,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -53,7 +53,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
             mysql = "select * from [dbo].[Qm_Outgoing];";
-            CheckD =ConvertHelper.GetDataTable(mysql);
+            CheckD = ConvertHelper.GetDataTable(mysql);
             // 新增数据初始值
             JObject defaultObj = new JObject();
             defaultObj.Add("qmAcceptqty", "0");
@@ -85,7 +85,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -116,13 +115,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindTextData();
             BindCheckNum();
 
-
             //修改前日志
             string BeforeModi = current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmCheckmethod + "," + current.qmSamplingQty + "," + current.qmJudgment + "," + current.qmJudgmentlevel + "," + current.qmRejectqty + "," + current.qmCheckNotes;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "产品检验修改", OperateNotes);
         }
+
         private void BindCheckNum()
         {
             var qCty = from a in DB.Qm_Outgoings
@@ -134,7 +133,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                        select new
                        {
-
                            Cnum = g.Count()
                        };
             var qcs = qCty.ToList();
@@ -148,16 +146,16 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 qmCheckout.Text = "1";
             }
         }
+
         private void BindGrid()
         {
-
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
 
             string mocorder = qmOrder.Text;
             string mocline = qmLine.Text;
-            q = q.Where(u => u.isDelete == 0 && u.qmOrder.Contains(mocorder));
+            q = q.Where(u => u.isDeleted == 0 && u.qmOrder.Contains(mocorder));
             q = q.Where(u => u.qmLine.Contains(mocline));
 
             //if (GetIdentityName() != "admin")
@@ -192,22 +190,18 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
             OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-
-
-
-
         }
+
         private void BindStock()
         {
             var q =
                    from p in DB.Qm_Outgoings
                    where p.qmOrder == this.qmOrder.Text
-                   where p.isDelete == 0
+                   where p.isDeleted == 0
                    group p by p.qmOrder into g
                    select new
                    {
@@ -228,6 +222,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 SurplusNum.Text = this.qmOrderqty.Text;
             }
         }
+
         private void BindTextData()
         {
             int id = GetQueryIntValue("id");
@@ -250,8 +245,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                     {
                         a.Protext,
                         a.Prodesc,
-
-
                     };
 
             var qs = q.Select(E => new
@@ -260,14 +253,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 E.Prodesc,
             }).ToList();
 
-
             if (qs.Any())
             {
                 LaText.Text = qs[0].Protext.ToString();//物料TXT
 
                 LaOrgin.Text = qs[0].Prodesc.ToString();//仕向
             }
-
         }
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
@@ -292,17 +283,16 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 string DelTxt = current.ID + "," + current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmCheckmethod;
                 string DelOperateType = "修改";
                 string DelOperateNotes = "beDel* " + DelTxt + " *beDel 的记录可能将被修改";
-                OperateLogHelper.InsNetOperateNotes(userid,DelOperateType, "质量管理", "产品检验删除", DelOperateNotes);
+                OperateLogHelper.InsNetOperateNotes(userid, DelOperateType, "质量管理", "产品检验删除", DelOperateNotes);
                 //删除记录
                 //DB.proDefects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
                 //重新绑定
                 BindGrid();
-
             }
         }
 
@@ -311,26 +301,22 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreFqcEdit", Grid1, "deleteField");
             // 设置LinkButtonField的点击客户端事件
-
-
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             //int id = GetQueryIntValue("id");
             //Qm_Outgoing current = DB.Qm_Outgoings.Find(id);
-
-
 
             ////int id = GetQueryIntValue("id");
             ////proLinestop current = DB.proLinestops.Find(id);
             //////decimal cQcpd005 = current.Qcpd005;
             ////string checkdata1 = current.Prostoptext;
-
 
             ////if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             ////{
@@ -344,7 +330,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             ////string InputData = Qcpd003.Text.Trim();
 
-
             ////proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             ////if (redata != null)
@@ -353,7 +338,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ////    return;
             ////}
             ////string InputData = qmLine.Text.Trim()+ qmCheckdate.Text.Trim() + qmOrder.Text.Trim() + qmModels.Text.Trim() + qmMaterial.Text.Trim() + qmProlot.Text.Trim() + qmLotserial.Text.Trim();
-
 
             ////Qm_Outgoing Redata = DB.Qm_Outgoings.Where(u => u.qmLine == InputData).FirstOrDefault();
 
@@ -421,7 +405,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //    }
             //}
 
-
             //if (qaQTY > mcQTY)
             //{
             //    //入库超出日志
@@ -445,6 +428,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             EditFqcDataRow();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
+
         //判断下拉列表选项
         private void CheckDDLData()
         {
@@ -492,6 +476,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //}
             CheckData();
         }
+
         //发行NO，Uint64格式
         public void BindissueNoData()
         {
@@ -510,13 +495,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             {
                 issueNo = (UInt64.Parse(qs[0].issueNo) + 1).ToString();
-
             }
             else
             {
                 issueNo = qmCheckdate.Text + "001";
             }
         }
+
         //新增不良联络及分析对策数据
         private void SaveNotice()
         {
@@ -532,7 +517,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -542,7 +527,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -566,9 +551,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                                                                    GUID = Guid.NewGuid(),// Qacheckguid.Text;//GUID
                                                                                          //item.htmlRemark = htmlRemark.Text;
                                                                    Creator = GetIdentityName(),
-                                                                   CreateTime = DateTime.Now,
-
-
+                                                                   CreateDate = DateTime.Now,
                                                                }).ToList();
                     DB.BulkInsert(AddUnqualifiedList);
                     DB.BulkSaveChanges();
@@ -599,7 +582,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -629,12 +612,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDelete,
+                             b.isDeleted,
                              b.Remark,
                              b.Creator,
-                             b.CreateTime,
+                             b.CreateDate,
                              b.Modifier,
-                             b.ModifyTime,
+                             b.ModifyDate,
                          }).ToList();
                 if (q.Any())
                 {
@@ -668,20 +651,17 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                                                                       UDF55 = a.UDF55,
                                                                       UDF56 = a.UDF56,
 
-                                                                      isDelete = a.isDelete,
+                                                                      isDeleted = a.isDeleted,
                                                                       Remark = a.Remark,
                                                                       Creator = a.Creator,
-                                                                      CreateTime = a.CreateTime,
+                                                                      CreateDate = a.CreateDate,
                                                                       Modifier = GetIdentityName(),
-                                                                      ModifyTime = DateTime.Now,
-
-
+                                                                      ModifyDate = DateTime.Now,
                                                                   }).ToList();
                     DB.BulkUpdate(UpdateUnqualifiedList);
                     DB.BulkSaveChanges();
                 }
             }
-
 
             //Qm_Unqualified item = new Qm_Unqualified();
             //item.qmInspector = qmInspector.SelectedItem.Text; //检查人员
@@ -701,7 +681,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //item.GUID = Guid.NewGuid();// Qacheckguid.Text;//GUID
             ////item.htmlRemark = htmlRemark.Text;
             //item.Creator = GetIdentityName();
-            //item.CreateTime = DateTime.Now;
+            //item.CreateDate = DateTime.Now;
 
             //DB.Qm_Unqualifieds.Add(item);
             //DB.SaveChanges();
@@ -712,6 +692,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string OperateNotes = "New* " + Newtext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不合格通知新增", OperateNotes);
         }
+
         private void SaveAction()
         {
             BindissueNoData();
@@ -726,7 +707,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -736,7 +717,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -776,9 +757,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                                                                qmIssueno = issueNo,//发行NO
                                                                                    //Remark =a. htmlRemark.Text,
                                                                Creator = GetIdentityName(),
-                                                               CreateTime = DateTime.Now,
-
-
+                                                               CreateDate = DateTime.Now,
                                                            }).ToList();
                     DB.BulkInsert(AddImproveList);
                     DB.BulkSaveChanges();
@@ -809,7 +788,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -851,12 +830,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDelete,
+                             b.isDeleted,
                              b.Remark,
                              b.Creator,
-                             b.CreateTime,
+                             b.CreateDate,
                              b.Modifier,
-                             b.ModifyTime,
+                             b.ModifyDate,
                          }).ToList();
                 if (q.Any())
                 {
@@ -902,14 +881,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                                                                   UDF55 = a.UDF55,
                                                                   UDF56 = a.UDF56,
 
-                                                                  isDelete = a.isDelete,
+                                                                  isDeleted = a.isDeleted,
                                                                   Remark = a.Remark,
                                                                   Creator = a.Creator,
-                                                                  CreateTime = a.CreateTime,
+                                                                  CreateDate = a.CreateDate,
                                                                   Modifier = GetIdentityName(),
-                                                                  ModifyTime = DateTime.Now,
-
-
+                                                                  ModifyDate = DateTime.Now,
                                                               }).ToList();
                     DB.BulkUpdate(UpdateImproveList);
                     DB.BulkSaveChanges();
@@ -949,7 +926,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //item.qmIssueno = issueNo;//发行NO
             ////item.Remark = htmlRemark.Text;
             //item.Creator = GetIdentityName();
-            //item.CreateTime = DateTime.Now;
+            //item.CreateDate = DateTime.Now;
 
             //DB.Qm_Improvements.Add(item);
             //DB.SaveChanges();
@@ -967,7 +944,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             SaveAction();
         }
 
-
         //判断操作类型
 
         private void EditFqcDataRow()
@@ -983,8 +959,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 string DelTxt = current.ID + "," + current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmCheckmethod;
                 string DelOperateType = current.ID.ToString();
                 string DelOperateNotes = "beEdit* " + DelTxt + " *beEdit 的记录可能将被修改";
-                OperateLogHelper.InsNetOperateNotes(userid,DelOperateType, "质量管理", "产品检验", DelOperateNotes);
-                current.isDelete = 1;
+                OperateLogHelper.InsNetOperateNotes(userid, DelOperateType, "质量管理", "产品检验", DelOperateNotes);
+                current.isDeleted = 1;
                 DB.SaveChanges();
                 //重新绑定
                 BindGrid();
@@ -1001,7 +977,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                 UpdateFqcDataRow(modifiedDict[rowIndex], row);
             }
-
 
             // 新增数据
             List<Dictionary<string, object>> newAddedList = Grid1.GetNewAddedList();
@@ -1024,14 +999,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                         //Get the DataTable of a DataRow
                         DataTable tb = rowData.Table.NewRow().Table;
 
-
                         foreach (DataColumn col in tb.Columns)
                         {
                             //最后一条记录
                             tb.Rows[tb.Rows.Count - 1]["ID"].ToString();
                             //第一条记录
                             tb.Rows[0]["ID"].ToString();
-
 
                             dqmSamplinglevel = tb.Rows[0]["qmSamplinglevel"].ToString();
                             dqmCheckmethod = tb.Rows[0]["qmCheckmethod"].ToString();
@@ -1045,7 +1018,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                             //Probadtotal = tb.Rows[tb.Rows.Count - 1]["Probadtotal"].ToString();
                             dqmCheckNotes = tb.Rows[0]["qmCheckNotes"].ToString();
                             dqmSpecialNotes = tb.Rows[0]["qmSpecialNotes"].ToString();
-
                         }
                         Qm_Outgoing item = new Qm_Outgoing();
                         //检查员
@@ -1099,22 +1071,20 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                         item.UDF55 = 0;
                         item.UDF56 = 0;
 
-                        item.isDelete = 0;
+                        item.isDeleted = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
 
-                        item.CreateTime = DateTime.Now;
+                        item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
                         DB.Qm_Outgoings.Add(item);
                         DB.SaveChanges();
-
-
 
                         //新建日志
                         string NewText = qmInspector.Text + "," + qmLine.Text + "," + qmOrder.Text + "," + qmModels.Text + "," + qmMaterial.Text + "," + qmCheckdate.Text + "," + qmProlot.Text + "," + qmLotserial.Text + "," + ddlqmCheckmethod.Text + "," + numqmSamplingQty.Text + "," + ddlqmJudgment.Text + "," + ddlqmJudgmentlevel.Text + "," + numqmRejectqty.Text + "," + htmlqmCheckNotes.Text;
                         string NewOperateType = "新增";
                         string NewOperateNotes = "New*产品检验 " + NewText + " New*产品检验 的记录已经新增";
-                        OperateLogHelper.InsNetOperateNotes(userid,NewOperateType, "质量管理", "产品检验新增", NewOperateNotes);
+                        OperateLogHelper.InsNetOperateNotes(userid, NewOperateType, "质量管理", "产品检验新增", NewOperateNotes);
                     }
                 }
                 //else
@@ -1146,7 +1116,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //    proDefectcode ccode = DB.proDefectcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
 
-
                 //    item.Prongcode = ccode.ngcode;
 
                 //    item.Prongmatter = "OK";
@@ -1159,13 +1128,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
 
-                //    item.CreateTime = DateTime.Now;
+                //    item.CreateDate = DateTime.Now;
                 //    item.CreateUser = GetIdentityName();
                 //    DB.proDefects.Add(item);
                 //    DB.SaveChanges();
-
-
-
 
                 //    //新建日志
                 //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
@@ -1180,9 +1146,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 {
                     for (int i = newAddedList.Count - 1; i >= 0; i--)
                     {
-
-                        //遍历枚举类型Sample的各个枚举名称 
-
+                        //遍历枚举类型Sample的各个枚举名称
 
                         DataRow rowData = CreateNewData(CheckD, newAddedList[i]);
 
@@ -1194,7 +1158,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                         //Get the DataTable of a DataRow
                         DataTable tb = rowData.Table.NewRow().Table;
-
 
                         foreach (DataColumn col in tb.Columns)
                         {
@@ -1215,7 +1178,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                             //Probadtotal = tb.Rows[tb.Rows.Count - 1]["Probadtotal"].ToString();
                             dqmCheckNotes = tb.Rows[0]["qmCheckNotes"].ToString();
                             dqmSpecialNotes = tb.Rows[0]["qmSpecialNotes"].ToString();
-
                         }
                         Qm_Outgoing item = new Qm_Outgoing();
                         //检查员
@@ -1269,22 +1231,20 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                         item.UDF55 = 0;
                         item.UDF56 = 0;
 
-                        item.isDelete = 0;
+                        item.isDeleted = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
 
-                        item.CreateTime = DateTime.Now;
+                        item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
                         DB.Qm_Outgoings.Add(item);
                         DB.SaveChanges();
-
-
 
                         //新建日志
                         string NewText = qmInspector.Text + "," + qmLine.Text + "," + qmOrder.Text + "," + qmModels.Text + "," + qmMaterial.Text + "," + qmCheckdate.Text + "," + qmProlot.Text + "," + qmLotserial.Text + "," + ddlqmCheckmethod.Text + "," + numqmSamplingQty.Text + "," + ddlqmJudgment.Text + "," + ddlqmJudgmentlevel.Text + "," + numqmRejectqty.Text + "," + htmlqmCheckNotes.Text;
                         string NewOperateType = "新增";
                         string NewOperateNotes = "New产品检验* " + NewText + " *New产品检验 的记录已经新增";
-                        OperateLogHelper.InsNetOperateNotes(userid,NewOperateType, "质量管理", "产品检验新增", NewOperateNotes);
+                        OperateLogHelper.InsNetOperateNotes(userid, NewOperateType, "质量管理", "产品检验新增", NewOperateNotes);
                     }
                 }
                 //else
@@ -1315,7 +1275,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //    proDefectcode ccode = DB.proDefectcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
 
-
                 //    item.Prongcode = ccode.ngcode;
 
                 //    item.Prongmatter = "OK";
@@ -1328,13 +1287,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
 
-                //    item.CreateTime = DateTime.Now;
+                //    item.CreateDate = DateTime.Now;
                 //    item.CreateUser = GetIdentityName();
                 //    DB.proDefects.Add(item);
                 //    DB.SaveChanges();
-
-
-
 
                 //    //新建日志
                 //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
@@ -1343,7 +1299,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //    NetCountHelper.NetLogRecord(userid, NewOperateType, "不具合管理", "不具合新增", NewOperateNotes);
 
                 //}
-
             }
 
             //labResult.Text = String.Format("用户修改的数据：<pre>{0}</pre>", Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
@@ -1352,6 +1307,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）"+ Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
         }
+
         //新增行内容补充
         private DataRow CreateNewData(DataTable table, Dictionary<string, object> newAddedData)
         {
@@ -1395,21 +1351,20 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             rowData["GUID"] = Guid.NewGuid().ToString();
 
-            rowData["isDelete"] = 0;
-            rowData["CreateTime"] = DateTime.Now;
+            rowData["isDeleted"] = 0;
+            rowData["CreateDate"] = DateTime.Now;
             rowData["CreateUser"] = GetIdentityName();
-            //item.CreateTime = DateTime.Now;
+            //item.CreateDate = DateTime.Now;
             //item.CreateUser = GetIdentityName();
             //table.Rows.Add(rowData);
             InsertFqcDataRow(newAddedData, rowData);
 
             return rowData;
         }
+
         //修改内容提交
         private static void UpdateFqcDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
-
-
             Qm_Outgoing item = DB.Qm_Outgoings
 
                 .Where(u => u.ID == editrowID).FirstOrDefault();
@@ -1448,18 +1403,14 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             // 不良数量
             if (rowDict.ContainsKey("qmSamplingQty"))
             {
-
                 rowData["qmSamplingQty"] = rowDict["qmSamplingQty"];
                 item.qmSamplingQty = decimal.Parse(rowData["qmSamplingQty"].ToString());
-
 
                 //StopMinute = rowData["Probadqty"].ToString();
             }
             // 不良总数
             if (rowDict.ContainsKey("qmJudgment"))
             {
-
-
                 rowData["qmJudgment"] = rowDict["qmJudgment"];
                 item.qmJudgment = rowData["qmJudgment"].ToString();
                 //StopText = rowData["Probadtotal"].ToString();
@@ -1467,7 +1418,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             // 改善对策
             if (rowDict.ContainsKey("qmAcceptqty"))
             {
-
                 rowData["qmAcceptqty"] = rowDict["qmAcceptqty"];
 
                 item.qmAcceptqty = decimal.Parse(rowData["qmAcceptqty"].ToString());
@@ -1476,7 +1426,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (rowDict.ContainsKey("qmJudgmentlevel"))
             {
-
                 rowData["qmJudgmentlevel"] = rowDict["qmJudgmentlevel"];
 
                 item.qmJudgmentlevel = rowData["qmJudgmentlevel"].ToString();
@@ -1485,7 +1434,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (rowDict.ContainsKey("qmRejectqty"))
             {
-
                 rowData["qmRejectqty"] = rowDict["qmRejectqty"];
 
                 item.qmRejectqty = decimal.Parse(rowData["qmRejectqty"].ToString());
@@ -1494,7 +1442,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (rowDict.ContainsKey("qmCheckNotes"))
             {
-
                 rowData["qmCheckNotes"] = rowDict["qmCheckNotes"];
 
                 item.qmCheckNotes = rowData["qmCheckNotes"].ToString();
@@ -1503,14 +1450,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (rowDict.ContainsKey("qmSpecialNotes"))
             {
-
                 rowData["qmSpecialNotes"] = rowDict["qmSpecialNotes"];
 
                 item.qmSpecialNotes = rowData["qmSpecialNotes"].ToString();
 
                 //ResonText = rowData["Probadnote"].ToString();
             }
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = userid;
 
             DB.SaveChanges();
@@ -1523,8 +1469,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string AfterModi = edititem.ID + "," + edititem.ID + "," + edititem.qmInspector + "," + edititem.qmLine + "," + edititem.qmOrder + "," + edititem.qmModels + "," + edititem.qmMaterial + "," + edititem.qmCheckdate + "," + edititem.qmProlot + "," + edititem.qmLotserial + "," + edititem.qmCheckmethod + "," + edititem.qmSamplingQty + "," + edititem.qmJudgment + "," + edititem.qmJudgmentlevel + "," + item.qmRejectqty + "," + edititem.qmCheckNotes + "," + edititem.qmAcceptqty + "," + edititem.qmOrderqty + "," + edititem.qmCheckout + "," + edititem.qmProqty + "," + edititem.qmSamplinglevel;
             string AfterOperateType = "修改";
             string AfterOperateNotes = "afEdit产品检验* " + AfterModi + " *afEdit产品检验 的记录已经将被修改";
-            OperateLogHelper.InsNetOperateNotes(userid,AfterOperateType, "质量管理", "产品检验修改", AfterOperateNotes);
+            OperateLogHelper.InsNetOperateNotes(userid, AfterOperateType, "质量管理", "产品检验修改", AfterOperateNotes);
         }
+
         //获取新增行内容
         private void InsertFqcDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
@@ -1553,8 +1500,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindFqcDataRow("qmCheckNotes", rowDict, rowData);
             // 对策
             BindFqcDataRow("qmSpecialNotes", rowDict, rowData);
-
         }
+
         //根据字段获取信息
         private void BindFqcDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
         {
@@ -1563,10 +1510,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 rowData[columnName] = rowDict[columnName];
             }
         }
+
         // 根据行ID来获取行数据
         private DataRow FindRowByID(int rowID)
         {
-
             //mysql = "select* from[dbo].[proDefects];";
             //DataTable table = GetDataTable.Getdt(mysql);
             foreach (DataRow row in CheckD.Rows)
@@ -1609,8 +1556,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             return maxID + 1;
         }
 
-
-
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -1625,7 +1570,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 ratio += Convert.ToDecimal(row["qmRejectqty"]);
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -1634,9 +1578,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             summary.Add("qmRejectqty", ratio.ToString("F0"));
 
             Grid1.SummaryData = summary;
-
         }
-        #endregion
+
+        #endregion Events
+
         #region DDLBindData
 
         private void BindDDLcLevel()
@@ -1649,7 +1594,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                     select new
                     {
                         a.cLevel,
-
                     };
 
             var qs = q.Select(E => new { E.cLevel }).ToList().Distinct();
@@ -1661,8 +1605,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ddlqmSamplinglevel.DataTextField = "cLevel";
             ddlqmSamplinglevel.DataValueField = "cLevel";
             ddlqmSamplinglevel.DataBind();
-
-
         }
 
         private void BindDDLStdClass()
@@ -1676,8 +1618,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ddlqmJudgment.DataValueField = "Checkcntext";
             ddlqmJudgment.DataSource = q;
             ddlqmJudgment.DataBind();
-
-
         }
 
         private void BindDDLLevel()
@@ -1693,7 +1633,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                     {
                         a.Checktype,
                         a.Checkcntext
-
                     };
 
             var qs = q.Select(E => new { E.Checktype, E.Checkcntext }).ToList().Distinct();
@@ -1705,8 +1644,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ddlqmJudgmentlevel.DataTextField = "Checkcntext";
             ddlqmJudgmentlevel.DataValueField = "Checkcntext";
             ddlqmJudgmentlevel.DataBind();
-
-
         }
 
         private void BindDDLInsClass()
@@ -1720,17 +1657,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ddlqmCheckmethod.DataValueField = "Checkcntext";
             ddlqmCheckmethod.DataSource = q;
             ddlqmCheckmethod.DataBind();
-
-
-
-
         }
 
-
-
-        #endregion
-
-
-
+        #endregion DDLBindData
     }
 }

@@ -1,12 +1,12 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
-    public partial class Pp_transport : PageBase
+    public partial class pp_transport : PageBase
     {
         #region ViewPower
 
@@ -21,12 +21,12 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
         //
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -50,7 +50,7 @@ namespace Fine.Lf_Manufacturing.Master
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_transport_new.aspx", "新增");
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_Transport_new.aspx", "新增");
             //btnP2d.OnClientClick = Window1.GetShowReference("~/PlutoProinfo/probad_p2d_new.aspx", "P2D新增不良记录");
 
             // 每页记录数
@@ -60,8 +60,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             IQueryable<Pp_Transport> q = DB.Pp_Transports; //.Include(u => u.Dept);
@@ -70,9 +68,9 @@ namespace Fine.Lf_Manufacturing.Master
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Transportype.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Transportype.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -94,7 +92,7 @@ namespace Fine.Lf_Manufacturing.Master
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -116,13 +114,10 @@ namespace Fine.Lf_Manufacturing.Master
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreTransportEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreTransportDelete", Grid1, "deleteField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -161,15 +156,9 @@ namespace Fine.Lf_Manufacturing.Master
         //    //DB.SaveChanges();
         //    DB.proReasons.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -177,8 +166,7 @@ namespace Fine.Lf_Manufacturing.Master
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_transport_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_Transport_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -191,16 +179,15 @@ namespace Fine.Lf_Manufacturing.Master
                     return;
                 }
                 Pp_Transport current = DB.Pp_Transports.Find(del_ID);
-                string Deltext = current.Transportype+","+current.Transportcntext;
+                string Deltext = current.Transportype + "," + current.Transportcntext;
                 string OperateType = "删除";
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "运输方式删除", OperateNotes);
 
-
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
                 BindGrid();
             }
@@ -216,7 +203,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -224,13 +210,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

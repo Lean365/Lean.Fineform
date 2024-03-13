@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Fine
+namespace LeanFine
 {
     public class DeptHelper
     {
@@ -55,11 +53,9 @@ namespace Fine
                     dept.IsTreeLeaf = false;
                 }
                 level--;
-
             }
 
             return count;
         }
-
     }
 }

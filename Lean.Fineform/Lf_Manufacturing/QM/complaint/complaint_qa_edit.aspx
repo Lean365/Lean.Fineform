@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="complaint_qa_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.QM.complaint.complaint_qa_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="complaint_qa_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.QM.complaint.complaint_qa_edit" %>
 
 <!DOCTYPE html>
 

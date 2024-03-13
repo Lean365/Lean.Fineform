@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Data;
-using System.Xml;
-using System.Data.SqlClient;
-using System.Collections;
-using System.Configuration;
-using FineUIPro;
-using Newtonsoft.Json.Linq;
-namespace Fine
+using System.Linq;
+
+namespace LeanFine
 {
     public class GridHelper
     {
-
         /// <summary>
         /// 模拟返回总项数
         /// </summary>
@@ -29,14 +22,11 @@ namespace Fine
         /// <returns></returns>
         public static DataTable GetPagedDataTable(FineUIPro.Grid grid, IQueryable q)
         {
-            
             int pageIndex = grid.PageIndex;
             int pageSize = grid.PageSize;
 
             string sortField = grid.SortField;
             string sortDirection = grid.SortDirection;
-            
-  
 
             DataTable table2 = ConvertHelper.LinqConvertToDataTable(q);
 
@@ -61,6 +51,7 @@ namespace Fine
 
             return paged;
         }
+
         /// <summary>
         /// DataTable分页并取出指定页码的数据
         /// </summary>
@@ -105,7 +96,8 @@ namespace Fine
             var totalPage = (totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0);
             return totalPage;
         }
-        public static DataTable GetPagedDataTabled(FineUIPro.Grid grid,DataTable dt)
+
+        public static DataTable GetPagedDataTabled(FineUIPro.Grid grid, DataTable dt)
         {
             int pageIndex = grid.PageIndex;
             int pageSize = grid.PageSize;
@@ -137,13 +129,12 @@ namespace Fine
             return paged;
         }
 
-        #region  取DataTable列名至表格
-        public static void AddDefColumInGrid(DataColumnCollection cols,FineUIPro.Grid grid)
-        {
+        #region 取DataTable列名至表格
 
+        public static void AddDefColumInGrid(DataColumnCollection cols, FineUIPro.Grid grid)
+        {
             foreach (DataColumn col in cols)
             {
-
                 FineUIPro.BoundField bf = new FineUIPro.BoundField();
                 grid.Columns.Add(bf);
                 bf.HeaderText = col.ColumnName;
@@ -153,10 +144,11 @@ namespace Fine
                 bf.DataField = col.ColumnName;
                 bf.SortField = col.ColumnName;
                 bf.TextAlign = FineUIPro.TextAlign.Center;
-
             }
         }
-        #endregion
+
+        #endregion 取DataTable列名至表格
+
         //合计表格
         /// <summary>
         /// 表格合计
@@ -166,7 +158,7 @@ namespace Fine
         /// <param name="sumTotala 合计字段"></param>
         /// <param name="sumTotalb 合计字段"></param>
         /// <param name="sumTotalc sumTotalb/sumTotala"></param>
-        public static void OutputSummaryData(DataTable source, FineUIPro.Grid grid,string sumTotala,string sumTotalb,string sumTotalc)
+        public static void OutputSummaryData(DataTable source, FineUIPro.Grid grid, string sumTotala, string sumTotalb, string sumTotalc)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -179,7 +171,6 @@ namespace Fine
                 ratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -188,7 +179,6 @@ namespace Fine
             summary.Add("sumTotalc", ratio.ToString("p0"));
 
             grid.SummaryData = summary;
-
         }
     }
 }

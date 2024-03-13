@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text;
+﻿using Newtonsoft.Json.Linq;
 using System.Data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.IO;
 
-using FineUIPro;
-
-
-namespace Fine
+namespace LeanFine
 {
     public class FilteredHelper
     {
         public delegate bool FilterDataRowItemDelegate(object sourceObj, string fillteredOperator, JToken fillteredObj, string column);
+
         public FilterDataRowItemDelegate FilterDataRowItem
         {
             get;
@@ -24,7 +14,7 @@ namespace Fine
         }
 
         // 表格过滤
-        public DataTable GetFilteredTable(JArray filteredData,DataTable source)
+        public DataTable GetFilteredTable(JArray filteredData, DataTable source)
         {
             // 示例使用的模拟数据是一次性返回的，因此我们需要新建一个 DataTable 来过滤返回的数据
             // 注：实际应用环境请不要这么做！！！（可以将过滤条件直接用于数据库检索）
@@ -52,7 +42,6 @@ namespace Fine
 
             return result;
         }
-
 
         private bool CheckDataRow(DataRow row, JObject filteredObj)
         {
@@ -106,9 +95,5 @@ namespace Fine
                 return FilterDataRowItem(rowitemData, itemOperator, itemValue, columnID);
             }
         }
-
-
-
     }
-
 }

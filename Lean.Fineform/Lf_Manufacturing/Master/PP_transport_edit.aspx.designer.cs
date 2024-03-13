@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
 
 
-    public partial class Pp_transport_edit
+    public partial class pp_transport_edit
     {
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fqc_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.QM.fqc.fqc_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fqc_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.QM.fqc.fqc_edit" %>
 
 <!DOCTYPE html>
 

@@ -1,30 +1,16 @@
-﻿using System.Data;
-using System.Web;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using FineUIPro;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Drawing.Chart;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.Entity;using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-namespace Fine
-{
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Linq;
 
+namespace LeanFine
+{
     public class EpplusHelper : IDisposable
     {
         public ExcelPackage ExcelPackage { get; private set; }
@@ -41,9 +27,9 @@ namespace Fine
             {
                 fs = File.Create(filePath);
                 ExcelPackage = new ExcelPackage(fs);
-
             }
         }
+
         /// <summary>
         /// 获取sheet，没有时创建
         /// </summary>
@@ -58,6 +44,7 @@ namespace Fine
             }
             return ws;
         }
+
         /// <summary>
         /// 使用EPPlus导出Excel(xlsx)
         /// </summary>
@@ -67,24 +54,24 @@ namespace Fine
         {
             AppendSheetToWorkBook(sourceTable, true);
         }
+
         /// <summary>
         /// 使用EPPlus导出Excel(xlsx)
         /// </summary>
         /// <param name="ExcelPackage">ExcelPackage</param>
         /// <param name="sourceTable">数据源</param>
-        /// <param name="isDeleteSameNameSheet">是否删除同名的sheet</param>
-        public void AppendSheetToWorkBook(DataTable sourceTable, bool isDeleteSameNameSheet)
+        /// <param name="isDeletedSameNameSheet">是否删除同名的sheet</param>
+        public void AppendSheetToWorkBook(DataTable sourceTable, bool isDeletedSameNameSheet)
         {
             //Create the worksheet
 
-            ExcelWorksheet ws = AddSheet(sourceTable.TableName, isDeleteSameNameSheet);
+            ExcelWorksheet ws = AddSheet(sourceTable.TableName, isDeletedSameNameSheet);
 
             //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
             ws.Cells["A1"].LoadFromDataTable(sourceTable, true);
 
             //Format the row
             FromatRow(sourceTable.Rows.Count, sourceTable.Columns.Count, ws);
-
         }
 
         /// <summary>
@@ -100,6 +87,7 @@ namespace Fine
                 ExcelPackage.Workbook.Worksheets.Delete(sheet);
             }
         }
+
         /// <summary>
         /// 导出列表到excel，已存在同名sheet将删除已存在的
         /// </summary>
@@ -111,6 +99,7 @@ namespace Fine
         {
             AppendSheetToWorkBook(list, sheetName, true);
         }
+
         /// <summary>
         /// 导出列表到excel，已存在同名sheet将删除已存在的
         /// </summary>
@@ -118,14 +107,13 @@ namespace Fine
         /// <param name="ExcelPackage"></param>
         /// <param name="list">数据源</param>
         /// <param name="sheetName">sheet名称</param>
-        /// <param name="isDeleteSameNameSheet">是否删除已存在的同名sheet，false时将重命名导出的sheet</param>
-        public void AppendSheetToWorkBook<T>(IEnumerable<T> list, string sheetName, bool isDeleteSameNameSheet)
+        /// <param name="isDeletedSameNameSheet">是否删除已存在的同名sheet，false时将重命名导出的sheet</param>
+        public void AppendSheetToWorkBook<T>(IEnumerable<T> list, string sheetName, bool isDeletedSameNameSheet)
         {
-            ExcelWorksheet ws = AddSheet(sheetName, isDeleteSameNameSheet);
+            ExcelWorksheet ws = AddSheet(sheetName, isDeletedSameNameSheet);
 
             //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
             ws.Cells["A1"].LoadFromCollection(list, true);
-
         }
 
         /// <summary>
@@ -148,6 +136,7 @@ namespace Fine
 
             pic.SetPosition(3, 0, 6, 0);
         }
+
         /// <summary>
         /// 文字绘制图片
         /// </summary>
@@ -203,6 +192,7 @@ namespace Fine
             }
             return dataTable;
         }
+
         /// <summary>
         /// 插入行
         /// </summary>
@@ -234,11 +224,11 @@ namespace Fine
         /// </summary>
         /// <param name="ExcelPackage">ExcelPackage</param>
         /// <param name="sheetName">sheet名称</param>
-        /// <param name="isDeleteSameNameSheet">如果存在同名的sheet是否删除</param>
+        /// <param name="isDeletedSameNameSheet">如果存在同名的sheet是否删除</param>
         /// <returns></returns>
-        private ExcelWorksheet AddSheet(string sheetName, bool isDeleteSameNameSheet)
+        private ExcelWorksheet AddSheet(string sheetName, bool isDeletedSameNameSheet)
         {
-            if (isDeleteSameNameSheet)
+            if (isDeletedSameNameSheet)
             {
                 DeleteSheet(sheetName);
             }
@@ -288,15 +278,12 @@ namespace Fine
 
         public void Dispose()
         {
-
             ExcelPackage.Dispose();
             if (fs != null)
             {
                 fs.Dispose();
                 fs.Close();
             }
-
         }
-
     }
 }

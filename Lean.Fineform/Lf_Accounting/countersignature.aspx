@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="countersignature.aspx.cs" Inherits="Fine.Lf_Accounting.countersignature" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="countersignature.aspx.cs" Inherits="LeanFine.Lf_Accounting.countersignature" %>
 
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@
                                             </ItemTemplate>
                                         </f:TemplateField>
                                         <f:BoundField runat="server" ID="OPTIONREMARK" ColumnID="OPTIONREMARK" DataField="OPTIONREMARK" HeaderText="办理意见" HeaderTextAlign="Center" TextAlign="Left" ExpandUnusedSpace="true" MinWidth="150px" />
-                                        <f:BoundField runat="server" ID="CREATETIME" ColumnID="CREATETIME" DataField="CREATETIME" HeaderText="操作时间" HeaderTextAlign="Center" TextAlign="Left" DataFormatString="{0:yyyy-MM-dd HH:mm:ss}" Width="150" />
+                                        <f:BoundField runat="server" ID="CreateDate" ColumnID="CreateDate" DataField="CreateDate" HeaderText="操作时间" HeaderTextAlign="Center" TextAlign="Left" DataFormatString="{0:yyyy-MM-dd HH:mm:ss}" Width="150" />
                                     </Columns>
                                 </f:Grid>
                             </Items>

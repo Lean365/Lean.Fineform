@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_line_edit : PageBase
     {
-
-        
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +31,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,13 +47,13 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Pp_Line current = DB.Pp_Lines.Find(id);
 
             if (current == null)
@@ -65,8 +62,6 @@ namespace Fine.Lf_Manufacturing.Master
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
-
 
             lineclass.Text = current.lineclass;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -77,8 +72,6 @@ namespace Fine.Lf_Manufacturing.Master
             remark.Text = current.Remark;
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -97,13 +90,7 @@ namespace Fine.Lf_Manufacturing.Master
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -125,10 +112,10 @@ namespace Fine.Lf_Manufacturing.Master
                     //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
                     //alert.MessageBoxIcon = (MessageBoxIcon)Enum.Parse(typeof(MessageBoxIcon), "Information", true);
 
-                    //"Information" Text = "消息"   
-                    //"Warning" Text = "警告"       
-                    //"Question" Text = "问题"          
-                    // "Error" Text = "错误"            
+                    //"Information" Text = "消息"
+                    //"Warning" Text = "警告"
+                    //"Question" Text = "问题"
+                    // "Error" Text = "错误"
                     //"Success" Text = "成功"
                     //alert.IconFont = IconFont.Warning;
                     //alert.Icon = Icon.Error;
@@ -140,10 +127,8 @@ namespace Fine.Lf_Manufacturing.Master
                 }
             }
 
-
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
-
 
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
@@ -153,6 +138,7 @@ namespace Fine.Lf_Manufacturing.Master
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -160,8 +146,6 @@ namespace Fine.Lf_Manufacturing.Master
             Pp_Line item = DB.Pp_Lines
 
                 .Where(u => u.GUID == id).FirstOrDefault();
-
-
 
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.linecode = linecode.Text;
@@ -172,9 +156,8 @@ namespace Fine.Lf_Manufacturing.Master
 
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -184,8 +167,6 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -200,9 +181,9 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
-            SaveItem();
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -237,15 +218,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

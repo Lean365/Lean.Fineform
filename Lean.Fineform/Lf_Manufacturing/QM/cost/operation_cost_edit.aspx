@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="operation_cost_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.QM.cost.operation_cost_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="operation_cost_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.QM.cost.operation_cost_edit" %>
 
 <!DOCTYPE html>
 

@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Qm_pass 的摘要说明
+    /// qm_pass 的摘要说明
     /// </summary>
-    public class Qm_pass : IHttpHandler
+    public class qm_pass : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -36,7 +28,7 @@ namespace Fine.Lf_Report
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
             var q_all = from a in DBCharts.Qm_Outgoings
-                        where a.isDelete == 0
+                        where a.isDeleted == 0
                         where a.qmCheckdate.Substring(0, 6).CompareTo(sdate) >= 0
                         where a.qmCheckdate.Substring(0, 6).CompareTo(atedate) <= 0
                         select a;
@@ -46,7 +38,6 @@ namespace Fine.Lf_Report
                            {
                                // p.qmProlot,
                                qmCheckdate = p.qmCheckdate.Substring(0, 6),
-
                            }
 
                                 into g
@@ -59,8 +50,6 @@ namespace Fine.Lf_Report
                                Rqty = g.Sum(p => p.qmRejectqty),
                                Passrate = g.Sum(p => p.qmAcceptqty) / g.Sum(p => p.qmProqty),
                                Failurerate = g.Sum(p => p.qmRejectqty) / g.Sum(p => p.qmProqty),
-
-
                            };
             var q = (from a in q_counts
                      select a).ToList()
@@ -86,7 +75,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -94,7 +82,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

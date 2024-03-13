@@ -165,7 +165,7 @@
   <data name="menu_Qm_FQC" xml:space="preserve">
     <value>FQC</value>
   </data>
-  <data name="menu_Pp_Defect_MOStatistics" xml:space="preserve">
+  <data name="menu_pp_defect_MOStatistics" xml:space="preserve">
     <value>MoStatistics</value>
   </data>
   <data name="menu_Pp_MO" xml:space="preserve">
@@ -390,7 +390,7 @@
   <data name="menu_Pp_Times" xml:space="preserve">
     <value>ManHour</value>
   </data>
-  <data name="menu_Pp_Defect_Production" xml:space="preserve">
+  <data name="menu_pp_defect_Production" xml:space="preserve">
     <value>PoorProduction</value>
   </data>
   <data name="menu_Rpt_ppcharts" xml:space="preserve">
@@ -759,7 +759,7 @@
   <data name="rpt_Charts_Defect" xml:space="preserve">
     <value>DefectQty</value>
   </data>
-  <data name="menu_Pp_Defect_Query" xml:space="preserve">
+  <data name="menu_pp_defect_Query" xml:space="preserve">
     <value>PoorQuery</value>
   </data>
   <data name="menu_Pp_P2d_Defect" xml:space="preserve">
@@ -768,7 +768,7 @@
   <data name="sys_Export_SheetDefect" xml:space="preserve">
     <value>DefectDETL</value>
   </data>
-  <data name="menu_Pp_Defect_Type" xml:space="preserve">
+  <data name="menu_pp_defect_Type" xml:space="preserve">
     <value>DefectsType</value>
   </data>
   <data name="menu_Qm_FQC_UnqualifiedNotice" xml:space="preserve">
@@ -1080,10 +1080,10 @@
   <data name="rpt_Charts_Progress" xml:space="preserve">
     <value>LOT Progress</value>
   </data>
-  <data name="menu_Pp_Defect_LotStatistics" xml:space="preserve">
+  <data name="menu_pp_defect_LotStatistics" xml:space="preserve">
     <value>LotStatistics</value>
   </data>
-  <data name="menu_Pp_Tracking_Lot" xml:space="preserve">
+  <data name="menu_pp_tracking_lot" xml:space="preserve">
     <value>Lot Traceability</value>
   </data>
   <data name="rpt_Charts_Direct" xml:space="preserve">
@@ -1092,7 +1092,7 @@
   <data name="rpt_Charts_LotPass" xml:space="preserve">
     <value>LotPass</value>
   </data>
-  <data name="Query_Pp_Defect_EmptyText" xml:space="preserve">
+  <data name="Query_pp_defect_EmptyText" xml:space="preserve">
     <value>Search for models, Lot etc.</value>
   </data>
   <data name="Query_Pp_Lot" xml:space="preserve">
@@ -1126,7 +1126,7 @@
     <value>Mail List</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>DTA Lean Manufacturing</value>
+    <value>Lean Manufacturing-DTA</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>SYS ID</value>

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
     public partial class YF_Materials : PageBase
     {
@@ -28,11 +21,9 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,12 +43,10 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-
 
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/bad_p2d_new.aspx", "P2D新增不良记录");
 
@@ -68,17 +57,14 @@ namespace Fine.Lf_Manufacturing.MM
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             try
             {
                 string searchText = ttbSearchMessage.Text.Trim().ToUpper();
                 if (!String.IsNullOrEmpty(searchText.Trim()))
                 {
-                   Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+                    Lf_Business.Models.YF.Yifei_DTA_Entities DBYFdta = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
                     var q_C100 = from ta in DBYFdta.INVMB
                                  join mv in DBYFdta.CMSMV on ta.MB067 equals mv.MV001
@@ -96,9 +82,9 @@ namespace Fine.Lf_Manufacturing.MM
 
                     q_C100 = q_C100.Where(u => u.MB001.Contains(searchText.Trim()));
 
-                    var qs_C100 = q_C100.Select(E => new {MB120="C100", MB001=E.MB001.Trim(),E.MB002, E.MB003, E.MB032, E.MB067, E.UDF05, E.UDF51, E.MB080 }).ToList().Distinct();
+                    var qs_C100 = q_C100.Select(E => new { MB120 = "C100", MB001 = E.MB001.Trim(), E.MB002, E.MB003, E.MB032, E.MB067, E.UDF05, E.UDF51, E.MB080 }).ToList().Distinct();
 
-                   Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+                    Lf_Business.Models.YF.Yifei_TAC_Entities DBYFtac = new Lf_Business.Models.YF.Yifei_TAC_Entities();
                     var q_H100 = from ta in DBYFtac.INVMB
                                  join mv in DBYFtac.CMSMV on ta.MB067 equals mv.MV001
                                  select new
@@ -115,14 +101,12 @@ namespace Fine.Lf_Manufacturing.MM
 
                     q_H100 = q_H100.Where(u => u.MB001.Contains(searchText));
 
-
-                    var qs_H100 = q_H100.Select(E => new { MB120 = "H100", MB001=E.MB001.Trim(), E.MB002, E.MB003,E.MB032,E.MB067,E.UDF05,E.UDF51, E.MB080 }).ToList().Distinct();
+                    var qs_H100 = q_H100.Select(E => new { MB120 = "H100", MB001 = E.MB001.Trim(), E.MB002, E.MB003, E.MB032, E.MB067, E.UDF05, E.UDF51, E.MB080 }).ToList().Distinct();
 
                     var q = qs_C100.Union(qs_H100);
                     q = q.OrderBy(a => a.MB001);
 
                     // 在用户名称中搜索
-
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q.AsQueryable());
@@ -139,16 +123,12 @@ namespace Fine.Lf_Manufacturing.MM
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
                         Grid1.DataSource = "";
                         Grid1.DataBind();
                     }
-
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -162,11 +142,10 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -189,13 +168,10 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -210,6 +186,7 @@ namespace Fine.Lf_Manufacturing.MM
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -228,12 +205,10 @@ namespace Fine.Lf_Manufacturing.MM
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -262,10 +237,10 @@ namespace Fine.Lf_Manufacturing.MM
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
@@ -284,14 +259,15 @@ namespace Fine.Lf_Manufacturing.MM
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void Grid1_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
@@ -299,7 +275,7 @@ namespace Fine.Lf_Manufacturing.MM
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lc_Yifei/YF_Materials_view.aspx?MB001=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
         }
 
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -315,7 +291,7 @@ namespace Fine.Lf_Manufacturing.MM
             string searchText = ttbSearchMessage.Text.Trim().ToUpper();
             if (!String.IsNullOrEmpty(searchText.Trim()))
             {
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYFdta = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
                 var q_C100 = from ta in DBYFdta.INVMB
                              join mv in DBYFdta.CMSMV on ta.MB067 equals mv.MV001
@@ -325,17 +301,17 @@ namespace Fine.Lf_Manufacturing.MM
                                  ta.MB002,
                                  ta.MB003,
                                  ta.MB032,
-                                 MB067=mv.MV002,
+                                 MB067 = mv.MV002,
                                  ta.UDF05,
                                  ta.UDF51,
                                  ta.MB080,
-                             }; 
+                             };
 
                 q_C100 = q_C100.Where(u => u.MB001.Contains(searchText.Trim()));
 
-                var qs_C100 = q_C100.Select(E => new { 工厂 = "C100", 物料=E.MB001.Trim(), 描述=E.MB002, 制造商品名=E.MB003, 主供应商=E.MB032, 采购人员=E.MB067, 最新业者=E.UDF05, 最新核价=E.UDF51, 制造商=E.MB080 }).ToList().Distinct();
+                var qs_C100 = q_C100.Select(E => new { 工厂 = "C100", 物料 = E.MB001.Trim(), 描述 = E.MB002, 制造商品名 = E.MB003, 主供应商 = E.MB032, 采购人员 = E.MB067, 最新业者 = E.UDF05, 最新核价 = E.UDF51, 制造商 = E.MB080 }).ToList().Distinct();
 
-               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+                Lf_Business.Models.YF.Yifei_TAC_Entities DBYFtac = new Lf_Business.Models.YF.Yifei_TAC_Entities();
                 var q_H100 = from ta in DBYFtac.INVMB
                              join mv in DBYFtac.CMSMV on ta.MB067 equals mv.MV001
                              select new
@@ -352,14 +328,12 @@ namespace Fine.Lf_Manufacturing.MM
 
                 q_H100 = q_H100.Where(u => u.MB001.Contains(searchText));
 
-
-                var qs_H100 = q_H100.Select(E => new { 工厂 = "H100", 物料=E.MB001.Trim(), 描述=E.MB002, 制造商品名 = E.MB003, 主供应商=E.MB032, 采购人员=E.MB067, 最新业者=E.UDF05, 最新核价=E.UDF51, 制造商 = E.MB080 }).ToList().Distinct();
+                var qs_H100 = q_H100.Select(E => new { 工厂 = "H100", 物料 = E.MB001.Trim(), 描述 = E.MB002, 制造商品名 = E.MB003, 主供应商 = E.MB032, 采购人员 = E.MB067, 最新业者 = E.UDF05, 最新核价 = E.UDF51, 制造商 = E.MB080 }).ToList().Distinct();
 
                 var q = qs_C100.Union(qs_H100);
                 q = q.OrderBy(a => a.物料);
 
                 // 在用户名称中搜索
-
 
                 // 在查询添加之后，排序和分页之前获取总记录数
                 if (q.AsQueryable().Any())
@@ -373,27 +347,18 @@ namespace Fine.Lf_Manufacturing.MM
                     //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                     ExportFileName = Xlsbomitem + ".xlsx";
 
-
                     ConvertHelper.LinqConvertToDataTable(q.AsQueryable());
                     Grid1.AllowPaging = false;
                     ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(q.AsQueryable()), Xlsbomitem, ExportFileName);
                     Grid1.AllowPaging = true;
-
-
                 }
                 else
                 {
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                 }
-
-
             }
-
-
         }
 
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

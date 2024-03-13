@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fine.Lf_Business.Models.QM
+namespace LeanFine.Lf_Business.Models.QM
 {
     public class Qm_Complaint : IKeyGUID
     {
-
         [Key]
         public Guid GUID { get; set; }
 
@@ -50,16 +46,18 @@ namespace Fine.Lf_Business.Models.QM
 
         [Required, StringLength(2000)]
         public string Cc_DefectNotes { get; set; }//症状
+
         [Required, StringLength(2000)]
         public string Cc_Rootcauseanalysis { get; set; }//分析
 
-
         [StringLength(50)]
         public string qaModifier { get; set; }//QA登录
-        public DateTime? qaModifyTime { get; set; }//QA登录日期
+
+        public DateTime? qaModifyDate { get; set; }//QA登录日期
 
         [StringLength(20)]
         public string Cc_Line { get; set; }//班别
+
         [StringLength(8)]
         public string Cc_ProcessDate { get; set; }//处理日期
 
@@ -68,8 +66,10 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(4000)]
         public string Cc_Reasons { get; set; }//原因分析P1D
+
         [StringLength(40)]
         public string Cc_Operator { get; set; }//作业员
+
         [StringLength(4000)]
         public string Cc_Station { get; set; }//工位
 
@@ -81,25 +81,33 @@ namespace Fine.Lf_Business.Models.QM
 
         [StringLength(50)]
         public string p1dModifier { get; set; }//制一课登录
-        public DateTime? p1dModifyTime { get; set; }//制一课登录日期
+
+        public DateTime? p1dModifyDate { get; set; }//制一课登录日期
+
         [Required, StringLength(40)]
-        public string Cc_Discover { get; set; }//承认部门        
+        public string Cc_Discover { get; set; }//承认部门
 
         [Required, StringLength(8)]
         public string Cc_ReceivedDate { get; set; }//承认日期
 
         [StringLength(255)]
         public string UDF01 { get; set; }
+
         [StringLength(255)]
         public string UDF02 { get; set; }
+
         [StringLength(255)]
         public string UDF03 { get; set; }
+
         [StringLength(500)]
         public string UDF04 { get; set; }
+
         [StringLength(500)]
         public string UDF05 { get; set; }
+
         [StringLength(500)]
         public string UDF06 { get; set; }
+
         public int UDF51 { get; set; }
 
         public int UDF52 { get; set; }
@@ -112,18 +120,19 @@ namespace Fine.Lf_Business.Models.QM
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDelete { get; set; }	//13	//	删除标记
+        public byte isDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }
-        public DateTime? CreateTime { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         public string Modifier { get; set; }
-        public DateTime? ModifyTime { get; set; }
 
+        public DateTime? ModifyDate { get; set; }
     }
 }

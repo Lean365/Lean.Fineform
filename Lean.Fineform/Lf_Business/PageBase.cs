@@ -1,21 +1,19 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Reflection;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Threading;
-using FineUIPro;
-using System.IO;
-using System.Globalization;
 using System.Web.UI.WebControls;
-using System.Collections;
-namespace Fine
+
+namespace LeanFine
 {
     public class PageBase : System.Web.UI.Page
     {
@@ -23,17 +21,17 @@ namespace Fine
 
         // Session key
         private static readonly string SK_ONLINE_UPDATE_TIME = "OnlineUpdateTime";
+
         //private static readonly string SK_USER_ROLE_ID = "UserRoleId";
 
         private static readonly string CHECK_POWER_FAIL_PAGE_MESSAGE = "您无权访问此页面！";
         private static readonly string CHECK_POWER_FAIL_ACTION_MESSAGE = "您无权进行此操作！";
 
+        #endregion 只读静态变量
 
-
-        #endregion
         #region 上传文件类型判断
 
-        protected readonly static List<string> VALID_FILE_TYPES = new List<string> { "jpg", "png", "pdf", "doc", "xls", "ppt", "docx", "pptx", "xlsx" };
+        protected static readonly List<string> VALID_FILE_TYPES = new List<string> { "jpg", "png", "pdf", "doc", "xls", "ppt", "docx", "pptx", "xlsx" };
 
         protected static bool ValidateFileType(string fileName)
         {
@@ -54,9 +52,10 @@ namespace Fine
             }
         }
 
+        #endregion 上传文件类型判断
 
-        #endregion
         #region 判断文件大小
+
         /// <summary>
         /// 获取文件大小
         /// </summary>
@@ -64,7 +63,6 @@ namespace Fine
         /// <returns></returns>
         protected static long GetFileSize(string filePath)
         {
-
             long temp = 0;
             if (!String.IsNullOrEmpty(filePath))
             {
@@ -85,25 +83,25 @@ namespace Fine
             }
             return temp;
         }
-        #endregion
+
+        #endregion 判断文件大小
+
         #region 实体上下文
 
-        public static FineContext DB
+        public static LeanFineContext DB
         {
             get
             {
                 // http://stackoverflow.com/questions/6334592/one-dbcontext-per-request-in-asp-net-mvc-without-ioc-container
-                if (!HttpContext.Current.Items.Contains("__LeanBenchNetContext"))
+                if (!HttpContext.Current.Items.Contains("__Lean365NetContext"))
                 {
-                    HttpContext.Current.Items["__LeanBenchNetContext"] = new FineContext();
+                    HttpContext.Current.Items["__Lean365NetContext"] = new LeanFineContext();
                 }
-                return HttpContext.Current.Items["__LeanBenchNetContext"] as FineContext;
+                return HttpContext.Current.Items["__Lean365NetContext"] as LeanFineContext;
             }
         }
 
-
-
-        #endregion
+        #endregion 实体上下文
 
         #region 浏览权限
 
@@ -118,13 +116,12 @@ namespace Fine
             }
         }
 
-        #endregion
+        #endregion 浏览权限
 
         #region 页面初始化
 
         protected override void OnInit(EventArgs e)
         {
-            
             base.OnInit(e);
 
             // 此用户是否有访问此页面的权限
@@ -155,8 +152,8 @@ namespace Fine
             CheckOtherLogin();
             // 设置页面标题
             Page.Title = ConfigHelper.Title;
-			
-			// 禁用表单的自动完成功能
+
+            // 禁用表单的自动完成功能
             Form.Attributes["autocomplete"] = "off";
         }
 
@@ -174,7 +171,7 @@ namespace Fine
             return false;
         }
 
-        #endregion
+        #endregion 页面初始化
 
         #region 请求参数
 
@@ -185,7 +182,6 @@ namespace Fine
         {
             return Request.QueryString[queryKey];
         }
-
 
         /// <summary>
         /// 获取查询字符串中的参数值
@@ -205,9 +201,10 @@ namespace Fine
             return queryIntValue;
         }
 
-        #endregion
+        #endregion 请求参数
 
         #region 表格相关
+
         //查询ID
         protected int GetSelectedDataKeyID(Grid grid)
         {
@@ -219,14 +216,15 @@ namespace Fine
             }
             return id;
         }
+
         //查询GUID
         protected string GetSelectedDataKeyGUID(Grid grid)
         {
-            string guid="";
+            string guid = "";
             int rowIndex = grid.SelectedRowIndex;
             if (rowIndex >= 0)
             {
-                guid =grid.DataKeys[rowIndex][0].ToString();
+                guid = grid.DataKeys[rowIndex][0].ToString();
             }
             return guid;
         }
@@ -257,6 +255,7 @@ namespace Fine
 
             return ids;
         }
+
         protected List<string> GetSelectedDataKeyGUIDs(Grid grid)
         {
             List<string> ids = new List<string>();
@@ -268,7 +267,7 @@ namespace Fine
             return ids;
         }
 
-        #endregion
+        #endregion 表格相关
 
         #region EF相关
 
@@ -289,7 +288,6 @@ namespace Fine
             return Sort(q, grid).Skip(grid.PageIndex * grid.PageSize).Take(grid.PageSize);
         }
 
-
         // 附加实体到数据库上下文中（首先在Local中查找实体是否存在，不存在才Attach，否则会报错）
         // http://patrickdesjardins.com/blog/entity-framework-4-3-an-object-with-the-same-key-already-exists-in-the-objectstatemanager
         protected T Attach<T>(int keyID) where T : class, IKeyID, new()
@@ -304,7 +302,7 @@ namespace Fine
         }
 
         // 向现有实体集合中添加新项
-        protected void AddEntities<T>(ICollection<T> existItems, int[] newItemIDs) where T : class,  IKeyID, new()
+        protected void AddEntities<T>(ICollection<T> existItems, int[] newItemIDs) where T : class, IKeyID, new()
         {
             foreach (int roleID in newItemIDs)
             {
@@ -315,7 +313,7 @@ namespace Fine
 
         // 替换现有实体集合中的所有项
         // http://stackoverflow.com/questions/2789113/entity-framework-update-entity-along-with-child-entities-add-update-as-necessar
-        protected void ReplaceEntities<T>(ICollection<T> existEntities, int[] newEntityIDs) where T : class,  IKeyID, new()
+        protected void ReplaceEntities<T>(ICollection<T> existEntities, int[] newEntityIDs) where T : class, IKeyID, new()
         {
             if (newEntityIDs.Length == 0)
             {
@@ -339,7 +337,7 @@ namespace Fine
         // http://patrickdesjardins.com/blog/validation-failed-for-one-or-more-entities-see-entityvalidationerrors-property-for-more-details-2
         // ((System.Data.Entity.Validation.DbEntityValidationException)$exception).EntityValidationErrors
 
-        #endregion
+        #endregion EF相关
 
         #region 在线用户相关
 
@@ -382,7 +380,6 @@ namespace Fine
 
             // 记录本次更新时间
             Session[SK_ONLINE_UPDATE_TIME] = now;
-
         }
 
         /// <summary>
@@ -395,7 +392,7 @@ namespace Fine
             return DB.Adm_Onlines.Where(o => o.UpdateTime > lastM).Count();
         }
 
-        #endregion
+        #endregion 在线用户相关
 
         #region 当前登录用户信息
 
@@ -439,7 +436,6 @@ namespace Fine
             return String.Empty;
         }
 
-
         /// <summary>
         /// 创建表单验证的票证并存储在客户端Cookie中
         /// </summary>
@@ -476,7 +472,7 @@ namespace Fine
             Response.Cookies.Add(cookie);
         }
 
-        #endregion
+        #endregion 当前登录用户信息
 
         #region 权限检查
 
@@ -551,7 +547,7 @@ namespace Fine
             return (List<string>)Session["UserPowerList"];
         }
 
-        #endregion
+        #endregion 权限检查
 
         #region 权限相关
 
@@ -633,7 +629,7 @@ namespace Fine
             btn.ConfirmTarget = Target.Top;
         }
 
-        #endregion
+        #endregion 权限相关
 
         #region 产品版本
 
@@ -643,7 +639,7 @@ namespace Fine
             return String.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
         }
 
-        #endregion
+        #endregion 产品版本
 
         #region 模拟树的下拉列表
 
@@ -656,7 +652,6 @@ namespace Fine
         {
             return ResolveDDL<T>(mys, currentId, true);
         }
-
 
         // 将一个树型结构放在一个下列列表中可供选择
         protected List<T> ResolveDDL<T>(List<T> source, int currentID, bool addRootNode) where T : Adm_ICustomTree, ICloneable, IKeyID, new()
@@ -721,7 +716,7 @@ namespace Fine
             return result;
         }
 
-        #endregion
+        #endregion 模拟树的下拉列表
 
         #region 日志记录
 
@@ -734,10 +729,10 @@ namespace Fine
                 Date = DateTime.Now
             });
             DB.SaveChanges();
-
         }
 
-        #endregion
+        #endregion 日志记录
+
         /// <summary>
         /// 多语言选项
         /// </summary>
@@ -753,13 +748,13 @@ namespace Fine
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(UserCulture);
             }
         }
+
         /// <summary>
         /// 检查用户重复登录SSO
         /// </summary>
         /// <param name="context"></param>
         protected void CheckOtherLogin()
         {
-
             Hashtable hOnline = (Hashtable)Application["Online"];//获取已经存储的application值
             if (hOnline != null)
             {

@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.OA;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.OA;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Office.OA
+namespace LeanFine.Lf_Office.OA
 {
     public partial class contact : PageBase
     {
@@ -21,11 +21,9 @@ namespace Fine.Lf_Office.OA
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,7 +43,6 @@ namespace Fine.Lf_Office.OA
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,8 +58,6 @@ namespace Fine.Lf_Office.OA
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             try
@@ -76,9 +71,9 @@ namespace Fine.Lf_Office.OA
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDelete == 0);
+                    q = q.Where(u => u.isDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("A") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -112,9 +107,9 @@ namespace Fine.Lf_Office.OA
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDelete == 0);
+                    q = q.Where(u => u.isDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("C") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -148,9 +143,9 @@ namespace Fine.Lf_Office.OA
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDelete == 0);
+                    q = q.Where(u => u.isDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("B") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -177,7 +172,6 @@ namespace Fine.Lf_Office.OA
                     Grid1.DataBind();
                 }
             }
-
             catch (ArgumentNullException Message)
             {
                 Alert.ShowInTop("异常1:" + Message);
@@ -189,15 +183,14 @@ namespace Fine.Lf_Office.OA
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-            #endregion
+        #endregion Page_Load
 
-            #region Events
+        #region Events
 
-            protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
+        protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
@@ -216,13 +209,10 @@ namespace Fine.Lf_Office.OA
             CheckPowerWithLinkButtonField("CoreAddressEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreAddressDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -237,6 +227,7 @@ namespace Fine.Lf_Office.OA
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -255,12 +246,10 @@ namespace Fine.Lf_Office.OA
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -269,7 +258,6 @@ namespace Fine.Lf_Office.OA
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Office.OA/address.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -289,10 +277,10 @@ namespace Fine.Lf_Office.OA
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "日常办公", "通讯信息删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
                 BindGrid();
@@ -308,6 +296,7 @@ namespace Fine.Lf_Office.OA
         {
             BindGrid();
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -330,7 +319,6 @@ namespace Fine.Lf_Office.OA
             {
                 BindGrid();
             }
-
         }
 
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
@@ -340,11 +328,6 @@ namespace Fine.Lf_Office.OA
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
-
-
-
-        #endregion
+        #endregion Events
     }
 }

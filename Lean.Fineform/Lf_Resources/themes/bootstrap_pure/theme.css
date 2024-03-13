@@ -1,4 +1,3 @@
-
 /*
     Main color: #428BCA
     Border color: #99C1E2
@@ -23,7 +22,6 @@
     .f-widget-header a {
         color: #555;
     }
-
 
     .f-state-default,
     .f-widget-content .f-state-default,
@@ -74,7 +72,6 @@
             color: #428BCA;
         }
 
-
     .f-state-highlight,
     .f-widget-content .f-state-highlight,
     .f-widget-header .f-state-highlight {
@@ -118,7 +115,6 @@
         .f-state-disabled .f-icon {
             filter: alpha(opacity=50);
         }
-
 
 .f-icon,
 .f-widget-content .f-icon {
@@ -215,12 +211,10 @@
     border-color: #e5e5e5;
 }
 
-
 /* Special */
 .f-accordion > .f-panel-bodyct > .f-panel-body {
     background-color: #f5f5f5;
 }
-
 
 .f-tree-headerstyle .f-panel-body {
     background-color: #f5f5f5;
@@ -230,7 +224,6 @@
 .f-tree-minimode-item-inner {
     border-color: #e5e5e5;
 }
-
 
 .f-tabstrip-plain > .f-panel-bodyct > .f-panel-body,
 .f-tabstrip-plain > .f-panel-header,
@@ -259,20 +252,20 @@
 }
 
 .f-tabstrip-header .f-tab-header.f-state-active:after {
-	background-color: #fff;
+    background-color: #fff;
 }
+
 .f-tab-header.f-state-active .f-icon {
-	color: #428BCA;
+    color: #428BCA;
 }
 
 .f-tabstrip-header .f-tabstrip-header-inkbar {
-	background-color: #428BCA;
+    background-color: #428BCA;
 }
+
 .f-tabstrip-inkbar > .f-tabstrip-header .f-tab-header.f-state-active {
-	background-color: #fff;
+    background-color: #fff;
 }
-
-
 
 .f-grid-selectedcell-border {
     border-color: #d5d5d5 !important;
@@ -329,7 +322,6 @@
         border-width: 1px;
     }
 
-
     .f-btn .f-icon {
         color: #888;
     }
@@ -366,7 +358,6 @@
 .f-state-default .f-btn .f-icon {
     color: #fff;
 }
-
 
 .f-btn.f-btn-gray.f-state-default {
     background-color: #abbac3;
@@ -464,8 +455,6 @@
     border-color: #303030;
 }
 
-
-
 .f-accordionpane-selected > .f-accordionpane-header,
 .f-accordionpane-hover > .f-accordionpane-header {
     background-color: #fff;
@@ -539,7 +528,6 @@
     background-color: #fcfcfc;
 }
 
-
 /* .f-tabstrip-theme-simple */
 .f-tabstrip-header-top.f-tabstrip.f-tabstrip-theme-simple > .f-tabstrip-header .f-tab-header.f-state-active {
     border-top-color: #4c8fbd !important;
@@ -547,13 +535,11 @@
     padding-top: 9px;
 }
 
-
 .f-tabstrip-header-bottom.f-tabstrip.f-tabstrip-theme-simple > .f-tabstrip-header .f-tab-header.f-state-active {
     border-bottom-width: 2px;
     border-bottom-color: #4c8fbd !important;
     padding-bottom: 7px;
 }
-
 
 /* .f-largemode .f-largespacemode */
 .f-largemode .f-tabstrip-header-top.f-tabstrip.f-tabstrip-theme-simple > .f-tabstrip-header .f-tab-header.f-state-active,
@@ -582,7 +568,6 @@
         padding-bottom: 2px;
     }
 
-
 /* .f-compactmode */
 .f-compactmode .f-tabstrip-header-top.f-tabstrip.f-tabstrip-theme-simple > .f-tabstrip-header .f-tab-header.f-state-active {
     padding-top: 5px;
@@ -601,9 +586,6 @@
     .f-compactmode .f-btn.f-btn-small {
         border-width: 1px;
     }
-
-
-
 
 /* Default page CSS */
 /*
@@ -637,30 +619,28 @@
     border-color: #0A76C3 !important;
 }
 
-
 /* Special - MessageBoxIcon */
 .f-messagebox-icon.f-messageicon-information,
 .f-messagebox-icon.f-messageicon-question {
     color: #428BCA;
 }
 
-
 body.f-body-bgcolor {
     background-color: #eee;
 }
-            mytable .myicon
-             {
-                width: 40px;
-                font-size: 30px;
-                opacity: .5;
-                filter: alpha(opacity=50);
-                text-align: center;
-            }
-            mytable .mybtnicon
-             {
-                width: 40px;
-                font-size: 30px;
-                opacity: .5;
-                color:red;
-                text-align: center;
-            }
+
+mytable .myicon {
+    width: 40px;
+    font-size: 30px;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    text-align: center;
+}
+
+mytable .mybtnicon {
+    width: 40px;
+    font-size: 30px;
+    opacity: .5;
+    color: red;
+    text-align: center;
+}

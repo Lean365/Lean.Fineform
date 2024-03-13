@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Admin.help
+namespace LeanFine.Lf_Admin.help
 {
 
 

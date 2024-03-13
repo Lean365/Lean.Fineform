@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="power_edit.aspx.cs" Inherits="Fine.Lf_Admin.power_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="power_edit.aspx.cs" Inherits="LeanFine.Lf_Admin.power_edit" %>
 
 <!DOCTYPE html>
 <html>

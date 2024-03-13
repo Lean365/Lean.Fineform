@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Collections;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Collections;
 using System.Text.RegularExpressions;
-using FineUIPro;
-namespace Fine
+
+namespace LeanFine
 {
     public class EncryptHelper
     {
@@ -23,7 +20,6 @@ namespace Fine
         {
             try
             {
-
                 key = key.PadRight(32, ' ');
                 RijndaelManaged aes = new RijndaelManaged();
 
@@ -32,7 +28,6 @@ namespace Fine
                 aes.Mode = CipherMode.ECB;
                 aes.IV = iv;
                 aes.Padding = PaddingMode.PKCS7;  //
-
 
                 ICryptoTransform rijndaelDecrypt = aes.CreateDecryptor();
                 byte[] inputData = Convert.FromBase64String(decryptString);
@@ -44,11 +39,8 @@ namespace Fine
             {
                 //Alert.ShowInTop(ex.Message.ToString(), MessageBoxIcon.Error);
                 throw ex;
-
             }
         }
-
-
 
         /// <summary>
         /// 加密
@@ -64,12 +56,10 @@ namespace Fine
 
             byte[] iv = Encoding.UTF8.GetBytes(ivString.Substring(0, 16));
 
-
             aes.Key = Encoding.UTF8.GetBytes(key.Substring(0, 32));
             aes.Mode = CipherMode.ECB;
             aes.IV = iv;
             aes.Padding = PaddingMode.PKCS7; //
-
 
             ICryptoTransform rijndaelEncrypt = aes.CreateEncryptor();
             byte[] inputData = Encoding.UTF8.GetBytes(encriyptString);
@@ -78,10 +68,8 @@ namespace Fine
             return Convert.ToBase64String(encryptedData);
         }
 
-
-
-
         #region Base64加密
+
         /// <summary>
         /// Base64加密
         /// </summary>
@@ -143,9 +131,11 @@ namespace Fine
                 throw ex;
             }
         }
-        #endregion
+
+        #endregion Base64加密
 
         #region Base64解密
+
         /// <summary>
         /// Base64解密
         /// </summary>
@@ -214,7 +204,9 @@ namespace Fine
                 throw ex;
             }
         }
-        #endregion
+
+        #endregion Base64解密
+
         /// <summary>
         /// MD5加密字符串
         /// </summary>
@@ -243,6 +235,7 @@ namespace Fine
             //md4j = ret.ToString();
             return ret.ToString();
         }
+
         /// <summary>
         /// 解密
         /// </summary>
@@ -269,6 +262,7 @@ namespace Fine
             cs.FlushFinalBlock();
             return Encoding.Default.GetString(ms.ToArray());
         }
+
         /// <summary>
         /// 32位MD5加密
         /// </summary>
@@ -285,9 +279,12 @@ namespace Fine
             }
             return sBuilder.ToString();
         }
+
         //默认密钥向量
         private static byte[] Keys = { 0x13, 0x24, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
         /**//// <summary>
+
             /// DES加密字符串
             /// </summary>
             /// <param name="encryptString">待加密的字符串</param>
@@ -314,6 +311,7 @@ namespace Fine
         }
 
         /**//// <summary>
+
             /// DES解密字符串
             /// </summary>
             /// <param name="decryptString">待解密的字符串</param>
@@ -363,6 +361,7 @@ namespace Fine
             var val = rdnumber.Next(0, 99999);
             return c + val.ToString().PadLeft(5, '0');
         }
+
         /// <summary>
         /// SHA256加密
         /// </summary>
@@ -381,6 +380,7 @@ namespace Fine
             }
             return sb.ToString();
         }
+
         /// <summary>
         /// SHA1加密
         /// </summary>
@@ -399,6 +399,7 @@ namespace Fine
             }
             return sb.ToString();
         }
+
         /// <summary>
         /// SHA384加密
         /// </summary>
@@ -417,6 +418,7 @@ namespace Fine
             }
             return sb.ToString();
         }
+
         /// <summary>
         /// SHA512加密
         /// </summary>

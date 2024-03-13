@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
-namespace Fine
+namespace LeanFine
 {
     /// <summary>
     /// 加密字符串类
     /// </summary>
     public class EncryptionUtil
     {
-
         /// <summary>
         /// 创建字符串的MD5哈希值
         /// </summary>

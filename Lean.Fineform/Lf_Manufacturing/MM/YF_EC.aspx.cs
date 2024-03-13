@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.YF;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
     public partial class YF_EC : PageBase
     {
@@ -29,15 +22,16 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static String mysql, ecnno, tracestr, strecnno;
 
         public int selID;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             //numBEbudgetmoney.Attributes.Add("Value", "0名");
             //numBEbudgetmoney.Attributes.Add("OnFocus", "if(this.value=='0') {this.value=''}");
             //numBEbudgetmoney.Attributes.Add("OnBlur", "if(this.value==''){this.value='0'}");
@@ -46,11 +40,8 @@ namespace Fine.Lf_Manufacturing.MM
                 LoadData();
 
                 //btnDel.OnClientClick = Grid2.GetNoSelectionAlertReference(" 请至少选择一项！") + GetDeleteScript(Grid2); // 删除选中行客户端脚本定义 .就这一句就可以了。（和官网的一至）
-
-
             }
         }
-
 
         private void LoadData()
         {
@@ -73,19 +64,15 @@ namespace Fine.Lf_Manufacturing.MM
             // 每页记录数
             Grid3.PageSize = ConfigHelper.PageSize;
             BindGrid3();
-
-
         }
-
-
 
         private void BindGrid1()
         {
             try
             {
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-                IQueryable<Fine.Lf_Business.Models.YF.BOMTA> q = DBYF.BOMTA; //.Include(u => u.Dept);
+                IQueryable<BOMTA> q = DBYF.BOMTA; //.Include(u => u.Dept);
 
                 string searchText = ttbSearchEcnsub.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -104,11 +91,8 @@ namespace Fine.Lf_Manufacturing.MM
                 //    GridHelper.GetPagedDataTable(Grid1, q);
                 //}
 
-
                 Grid1.DataSource = qs;
                 Grid1.DataBind();
-
-
 
                 Grid1.SelectedRowIndex = 0;
             }
@@ -123,12 +107,8 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
-
-
-
 
         private void BindGrid2()
         {
@@ -140,21 +120,17 @@ namespace Fine.Lf_Manufacturing.MM
                 return;
             }
 
-
-
             if (!String.IsNullOrEmpty(ecnno))
             {
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
-
-                IQueryable<Fine.Lf_Business.Models.YF.BOMTB> q = DBYF.BOMTB; //.Include(u => u.Dept);
+                IQueryable<BOMTB> q = DBYF.BOMTB; //.Include(u => u.Dept);
 
                 q = q.Where(u => u.TB002.Contains(ecnno));
                 var qs = from a in q
                          join b in DBYF.BOMTA on a.TB002 equals b.TA002
                          select new
                          {
-                             
                              a.TB002,
                              a.TB003,
                              a.TB004,
@@ -163,7 +139,6 @@ namespace Fine.Lf_Manufacturing.MM
                              a.TB108,
                              b.TA005,
                              b.TA003,
-
                          };
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -191,7 +166,6 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-
         private void BindGrid3()
         {
             if (Grid1.SelectedRowIndex < 0)
@@ -202,17 +176,13 @@ namespace Fine.Lf_Manufacturing.MM
                 return;
             }
 
-
-
             if (!String.IsNullOrEmpty(ecnno))
             {
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
-
-                IQueryable<Fine.Lf_Business.Models.YF.BOMTC> q = DBYF.BOMTC; //.Include(u => u.Dept);
+                IQueryable<BOMTC> q = DBYF.BOMTC; //.Include(u => u.Dept);
 
                 q = q.Where(u => u.TC002.Contains(ecnno));
-
 
                 // 在查询添加之后，排序和分页之前获取总记录数
                 Grid3.RecordCount = GridHelper.GetTotalCount(q);
@@ -239,9 +209,10 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void ttbSearchEcnsub_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchEcnsub.ShowTrigger1 = true;
@@ -263,7 +234,6 @@ namespace Fine.Lf_Manufacturing.MM
         {
             int pageindex1 = Grid2.PageIndex;
 
-
             Grid2.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             // 更改每页显示数目时，防止 PageIndex 越界
@@ -273,7 +243,6 @@ namespace Fine.Lf_Manufacturing.MM
             }
 
             BindGrid2();
-
         }
 
         protected void ddlGridPageSize2_SelectedIndexChanged(object sender, EventArgs e)
@@ -289,7 +258,8 @@ namespace Fine.Lf_Manufacturing.MM
             }
             BindGrid3();
         }
-        #endregion
+
+        #endregion Events
 
         #region Grid1 Events
 
@@ -308,7 +278,6 @@ namespace Fine.Lf_Manufacturing.MM
 
         protected void Grid1_RowClick(object sender, GridRowClickEventArgs e)
         {
-
             object[] keys = Grid1.DataKeys[e.RowIndex];
             ecnno = keys[0].ToString();
             strecnno = keys[0].ToString();
@@ -316,7 +285,7 @@ namespace Fine.Lf_Manufacturing.MM
             BindGrid3();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -328,7 +297,7 @@ namespace Fine.Lf_Manufacturing.MM
             // 设置LinkButtonField的点击客户端事件
             //LinkButtonField deleteField = Grid1.FindColumn("Delete") as LinkButtonField;
             //deleteField.OnClientClick = GetDeleteScript(Grid1);
-           // CheckPowerWithLinkButtonField("CoreEcMMEdit", Grid2, "editField");
+            // CheckPowerWithLinkButtonField("CoreEcMMEdit", Grid2, "editField");
         }
 
         protected void Grid2_Sort(object sender, GridSortEventArgs e)
@@ -347,15 +316,14 @@ namespace Fine.Lf_Manufacturing.MM
         protected void Grid2_RowCommand(object sender, GridCommandEventArgs e)
         {
             BindGrid2();
-
         }
 
         protected void Grid2_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
-        #endregion
+        #endregion Grid2 Events
+
         #region Grid3 Events
 
         protected void Grid3_PreDataBound(object sender, EventArgs e)
@@ -387,21 +355,12 @@ namespace Fine.Lf_Manufacturing.MM
             //参数传递
 
             BindGrid3();
-
         }
 
         protected void Grid3_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
-        #endregion
-
-
-
-
-
-
+        #endregion Grid3 Events
     }
 }
-

@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.YF;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
-
     public partial class YF_Suppliers : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -34,17 +22,17 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
-        Fine.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+
+        private Lf_Business.Models.YF.Yifei_DTA_Entities DBCYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
+        private Lf_Business.Models.YF.Yifei_TAC_Entities DBHYF = new Lf_Business.Models.YF.Yifei_TAC_Entities();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -61,19 +49,17 @@ namespace Fine.Lf_Manufacturing.MM
             //InitNoticeDept();
             BindDDLH_code();
             BindDDLC_code();
-
-
         }
+
         private void BindDataC()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
 
             if (C_Code.SelectedIndex != 0 && C_Code.SelectedIndex != -1)
             {
                 string searchText = C_Code.SelectedItem.Text.Trim().ToUpper();
 
-                Fine.Lf_Business.Models.YF.PURMA Ccurrent = DBCYF.PURMA.Find(searchText); //.Include(u => u.Dept);
+                PURMA Ccurrent = DBCYF.PURMA.Find(searchText); //.Include(u => u.Dept);
 
                 if (Ccurrent == null)
                 {
@@ -103,11 +89,9 @@ namespace Fine.Lf_Manufacturing.MM
                 C_MA049.Text = Ccurrent.MA049;
                 C_MA051.Text = Ccurrent.MA051;
                 C_MA055.Text = Ccurrent.MA055;
-
-
-
             }
         }
+
         private void BindDataH()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -116,7 +100,7 @@ namespace Fine.Lf_Manufacturing.MM
             {
                 string searchText = H_Code.SelectedItem.Text.Trim().ToUpper();
 
-                Fine.Lf_Business.Models.YF.PURMA Hcurrent = DBHYF.PURMA.Find(searchText); //.Include(u => u.Dept);
+                PURMA Hcurrent = DBHYF.PURMA.Find(searchText); //.Include(u => u.Dept);
 
                 if (Hcurrent == null)
                 {
@@ -145,19 +129,12 @@ namespace Fine.Lf_Manufacturing.MM
                 H_MA049.Text = Hcurrent.MA049;
                 H_MA051.Text = Hcurrent.MA051;
                 H_MA055.Text = Hcurrent.MA055;
-
-
-
             }
-
         }
 
         private void BindDDLH_code()
         {
-
-            IQueryable<Fine.Lf_Business.Models.YF.PURMA> q = DBHYF.PURMA;
-
-
+            IQueryable<PURMA> q = DBHYF.PURMA;
 
             var qs = q.Select(E => new { E.MA001 }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -172,12 +149,9 @@ namespace Fine.Lf_Manufacturing.MM
             this.H_Code.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-
         private void BindDDLC_code()
         {
-            IQueryable<Fine.Lf_Business.Models.YF.PURMA> q = DBCYF.PURMA;
-
-
+            IQueryable<PURMA> q = DBCYF.PURMA;
 
             var qs = q.Select(E => new { E.MA001 }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -191,20 +165,10 @@ namespace Fine.Lf_Manufacturing.MM
             this.C_Code.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void H_Code_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindDataH();
@@ -214,8 +178,7 @@ namespace Fine.Lf_Manufacturing.MM
         {
             BindDataC();
         }
-        #endregion
 
-
+        #endregion Events
     }
 }

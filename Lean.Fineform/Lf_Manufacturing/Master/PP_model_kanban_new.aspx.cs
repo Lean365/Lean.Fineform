@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_model_kanban_new : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,23 +23,23 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        public static string tmpRootDir,tmpQRCodePath;
+
+        public static string tmpRootDir, tmpQRCodePath;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
         private void LoadData()
         {
-             tmpRootDir = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath.ToString());//获取程序根目录
+            tmpRootDir = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath.ToString());//获取程序根目录
             //labResult.Text = "";// String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.班组类别：制二课请输入：P,制一课请输入：M,品保部请输入：Q</div><div>2.班组类别：只能输入P，Q,M。</div>");
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -54,14 +52,12 @@ namespace Fine.Lf_Manufacturing.Master
             BindDDLproLine();
         }
 
-
         private void BindDDLproLine()
         {
-
             var q = from p in DB.Pp_Lines
                     where p.lineclass.Contains("M")
-                    //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) && 
-                    //(from d in DB.Pp_Defects
+                    //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) &&
+                    //(from d in DB.pp_defects
                     // where d.Prongbdel == false
                     // where d.Prodate== Prodate
                     // where d.Prolinename== pline
@@ -70,7 +66,6 @@ namespace Fine.Lf_Manufacturing.Master
                     select new
                     {
                         Line = p.linename,
-
                     };
 
             var qs = q.Select(E => new { E.Line }).ToList().Distinct();
@@ -83,24 +78,22 @@ namespace Fine.Lf_Manufacturing.Master
             ddlP_Kanban_Line.DataValueField = "Line";
             ddlP_Kanban_Line.DataBind();
             this.ddlP_Kanban_Line.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
         }
+
         private void BindDDLproOrder()//工单信息
         {
-
             var q = from p in DB.Pp_Orders
-                    //where p.Porderhbn.Contains(Pitem)
-                    //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) && 
-                    //(from d in DB.Pp_Defects
-                    // where d.Prongbdel == false
-                    // where d.Prodate== Prodate
-                    // where d.Prolinename== pline
-                    // select d.Prolot)
-                    //  .Contains(p.Prolot)
+                        //where p.Porderhbn.Contains(Pitem)
+                        //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) &&
+                        //(from d in DB.pp_defects
+                        // where d.Prongbdel == false
+                        // where d.Prodate== Prodate
+                        // where d.Prolinename== pline
+                        // select d.Prolot)
+                        //  .Contains(p.Prolot)
                     select new
                     {
                         Porderno = p.Porderno,
-
                     };
 
             var qs = q.Select(E => new { E.Porderno }).ToList().Distinct();
@@ -115,20 +108,18 @@ namespace Fine.Lf_Manufacturing.Master
             this.ddlP_Kanban_Order.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void ddlP_Kanban_Line_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlP_Kanban_Line.SelectedIndex != -1 || ddlP_Kanban_Line.SelectedIndex != 0)
             {
                 BindDDLproOrder();
             }
-
         }
+
         protected void ddlP_Kanban_Order_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlP_Kanban_Order.SelectedIndex != -1 || ddlP_Kanban_Order.SelectedIndex != 0)
@@ -137,11 +128,11 @@ namespace Fine.Lf_Manufacturing.Master
                 var qOrder = (from a in DB.Pp_Orders
                               where a.Porderno == orderno
                               select a).ToList();
-                if(qOrder.Any())
+                if (qOrder.Any())
                 {
                     lblP_Kanban_Lot.Text = qOrder[0].Porderlot.ToString();
                     lblP_Kanban_Item.Text = qOrder[0].Porderhbn.ToString();
-                    string bhn= qOrder[0].Porderhbn.ToString();
+                    string bhn = qOrder[0].Porderhbn.ToString();
                     var qName = (from a in DB.Mm_Materials
                                  where a.MatItem.Contains(bhn)
                                  select a).ToList();
@@ -157,19 +148,13 @@ namespace Fine.Lf_Manufacturing.Master
                         lblP_Kanban_Model.Text = qModel[0].D_SAP_DEST_Z002.ToString();
                         lblP_Kanban_Region.Text = qModel[0].D_SAP_DEST_Z003.ToString();
                     }
-
                 }
-
-
             }
         }
-
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Pp_Kanban item = new Pp_Kanban();
             item.P_Kanban_Date = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd");
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -180,23 +165,22 @@ namespace Fine.Lf_Manufacturing.Master
             item.P_Kanban_Model = lblP_Kanban_Model.Text;
             item.P_Kanban_Region = lblP_Kanban_Region.Text;
             item.P_Kanban_Process = int.Parse(numP_Kanban_Process.Text);
-            item.UDF01= tmpQRCodePath; 
+            item.UDF01 = tmpQRCodePath;
             item.GUID = Guid.NewGuid();
             // 添加所有用户
             item.Remark = tbxRemark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_Kanbans.Add(item);
             DB.SaveChanges();
 
             //新增日志
-            string Contectext = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd")+","+ ddlP_Kanban_Line.SelectedItem.Text + "," +ddlP_Kanban_Order.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text + "," + lblP_Kanban_Model.Text + "," + lblP_Kanban_Region.Text;
+            string Contectext = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + ddlP_Kanban_Order.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text + "," + lblP_Kanban_Model.Text + "," + lblP_Kanban_Region.Text;
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种看板新增", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ////判断修改内容
@@ -204,7 +188,6 @@ namespace Fine.Lf_Manufacturing.Master
             //proLine current = DB.proLines.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
-
 
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -221,24 +204,19 @@ namespace Fine.Lf_Manufacturing.Master
             {
                 if (ddlP_Kanban_Order.SelectedIndex != 0 || ddlP_Kanban_Order.SelectedIndex != -1)
                 {
+                    string InputData = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + ddlP_Kanban_Line.SelectedItem.Text + ddlP_Kanban_Order.SelectedItem.Text + lblP_Kanban_Lot.Text + lblP_Kanban_Item.Text + lblP_Kanban_Model.Text + lblP_Kanban_Region.Text;
 
-                        string InputData = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + ddlP_Kanban_Line.SelectedItem.Text + ddlP_Kanban_Order.SelectedItem.Text + lblP_Kanban_Lot.Text +lblP_Kanban_Item.Text+ lblP_Kanban_Model.Text + lblP_Kanban_Region.Text;
+                    Pp_Kanban redata = DB.Pp_Kanbans.Where(u => u.P_Kanban_Date + u.P_Kanban_Line + u.P_Kanban_Order + u.P_Kanban_Lot + u.P_Kanban_Item + u.P_Kanban_Model + u.P_Kanban_Region == (InputData)).FirstOrDefault();
 
-
-
-                        Pp_Kanban redata = DB.Pp_Kanbans.Where(u => u.P_Kanban_Date + u.P_Kanban_Line +u.P_Kanban_Order + u.P_Kanban_Lot + u.P_Kanban_Item  + u.P_Kanban_Model + u.P_Kanban_Region == (InputData)).FirstOrDefault();
-
-                        if (redata != null)
-                        {
-                            Alert.Show("基本信息,此机种看板< " + InputData + ">已经存在！修改即可");
-                            return;
-                        }
-
-
+                    if (redata != null)
+                    {
+                        Alert.Show("基本信息,此机种看板< " + InputData + ">已经存在！修改即可");
+                        return;
+                    }
                 }
             }
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -280,11 +258,10 @@ namespace Fine.Lf_Manufacturing.Master
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
         protected void numP_Kanban_Process_TextChanged(object sender, EventArgs e)
         {
-            string ModelQRCode = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text + "," + lblP_Kanban_Model.Text+","+lblP_Kanban_Region.Text+","+numP_Kanban_Process.Text;
-            string ImgName = (dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text).Replace(" ","");
+            string ModelQRCode = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text + "," + lblP_Kanban_Model.Text + "," + lblP_Kanban_Region.Text + "," + numP_Kanban_Process.Text;
+            string ImgName = (dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text).Replace(" ", "");
             QrcodeHelper.QRCodeHandler qr = new QrcodeHelper.QRCodeHandler();
             string path = tmpRootDir + "oneFile\\qrcode\\";
             string qrString = ModelQRCode;                         //二维码字符串
@@ -297,17 +274,6 @@ namespace Fine.Lf_Manufacturing.Master
             this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
         }
 
-
-
-
-
-
-
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

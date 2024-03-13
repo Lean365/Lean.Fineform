@@ -1,17 +1,17 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_manhour_edit : PageBase
     {
         public string Cmc001, Cmc002, Cmc004, Cmc005, Cmc008;
-        
+
         #region ViewPower
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +33,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,7 +49,6 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
 
         private void BindData()
@@ -81,20 +79,17 @@ namespace Fine.Lf_Manufacturing.Master
             Proset.Text = current.Proset;
             Prodesc.Text = current.Prodesc;
 
-
-
-
-
-
             //修改前日志
             string BeforeModi = current.Prodate + "," + current.Proitem + "," + current.Proshort + "," + current.Prorate + "," + current.Prost;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "生产工时修改", OperateNotes);
-
         }
-        #endregion
+
+        #endregion Page_Load
+
         #region Events
+
         private void CheckData()
         {
             //判断修改内容
@@ -112,9 +107,9 @@ namespace Fine.Lf_Manufacturing.Master
             {
                 if (this.Proitem.Text == Cmc002)
                 {
-                    if (Decimal.Parse( this.Proshort.Text) == Decimal.Parse(Cmc004))
+                    if (Decimal.Parse(this.Proshort.Text) == Decimal.Parse(Cmc004))
                     {
-                        if (Decimal.Parse(this.Prost.Text) == Decimal.Parse( Cmc005))
+                        if (Decimal.Parse(this.Prost.Text) == Decimal.Parse(Cmc005))
                         {
                             if (Decimal.Parse(this.Prorate.Text) == Decimal.Parse(Cmc008))
                             {
@@ -132,12 +127,10 @@ namespace Fine.Lf_Manufacturing.Master
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -151,7 +144,6 @@ namespace Fine.Lf_Manufacturing.Master
             //判断重复
             //string InputData = Proitem.Text.Trim();
 
-
             //proManhour redata = DB.Pp_Manhours.Where(u => u.Proitem == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -159,8 +151,6 @@ namespace Fine.Lf_Manufacturing.Master
             //    Alert.ShowInTop("基本信息,物料< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
-
         }
 
         //字段赋值，保存
@@ -171,17 +161,13 @@ namespace Fine.Lf_Manufacturing.Master
             Pp_Manhour item = DB.Pp_Manhours
                 .Where(u => u.GUID == guid).FirstOrDefault();
 
-
             item.Prodate = this.Prodate.SelectedDate.Value.ToString("yyyyMMdd");
             item.Proshort = decimal.Parse(this.Proshort.Text);
             item.Prorate = decimal.Parse(Prorate.Text);
             item.Prost = decimal.Parse(Prost.Text);
 
-
-
-            
             item.Remark = Remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -192,8 +178,6 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "生产工时修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -208,9 +192,9 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
-            SaveItem();
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -245,8 +229,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
+        #endregion Events
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.dept.p2d" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.dept.p2d" %>
 
 <!DOCTYPE html>
 
@@ -70,7 +70,7 @@
                         <f:BoundField DataField="Ec_p2dnote" ColumnID="Ec_p2dnote" SortField="Ec_p2dnote"  EnableLock="true" Width="100px" HeaderText="说明"/> 
  
                         <f:BoundField DataField="p2dModifier" ColumnID="p2dModifier" SortField="p2dModifier"  EnableLock="true" Width="100px" HeaderText="登录人员"/>
-                        <f:BoundField DataField="p2dModifyTime" ColumnID="p2dModifyTime" SortField="p2dModifyTime"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
+                        <f:BoundField DataField="p2dModifyDate" ColumnID="p2dModifyDate" SortField="p2dModifyDate"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
                     </Columns>
                 </f:Grid>
             </Items>

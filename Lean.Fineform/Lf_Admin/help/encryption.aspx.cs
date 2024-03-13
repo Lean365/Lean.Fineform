@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
+
 //using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin.help
+namespace LeanFine.Lf_Admin.help
 
 {
     public partial class encryption : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -28,21 +20,21 @@ namespace Fine.Lf_Admin.help
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //this.Numtrand.Text = "0";
             //this.Txtrand.Text = "";
             Txtstr();
-
         }
+
         public void Txtstr()
         {
-            
-
         }
+
         ///<summary>
-        ///生成随机字符串 
+        ///生成随机字符串
         ///</summary>
         ///<param name="length">目标字符串的长度</param>
         ///<param name="useNum">是否包含数字，1=包含，默认为包含</param>
@@ -68,11 +60,8 @@ namespace Fine.Lf_Admin.help
             return s;
         }
 
-
-
         protected void Window1_Close(object sender, EventArgs e)
         {
-
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -129,7 +118,6 @@ namespace Fine.Lf_Admin.help
             if (!String.IsNullOrEmpty(TextArea1.Text))
             {
                 TextArea2.Text = EncryptHelper.MD5Encrypt(TextArea1.Text);
-
             }
         }
 
@@ -143,7 +131,6 @@ namespace Fine.Lf_Admin.help
 
         protected void Button11_Click(object sender, EventArgs e)
         {
-
         }
 
         protected void Button9_Click(object sender, EventArgs e)

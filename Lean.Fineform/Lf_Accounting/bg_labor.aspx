@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_labor.aspx.cs" Inherits="Fine.Lf_Accounting.bg_labor" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_labor.aspx.cs" Inherits="LeanFine.Lf_Accounting.bg_labor" %>
 
 <!DOCTYPE html>
 

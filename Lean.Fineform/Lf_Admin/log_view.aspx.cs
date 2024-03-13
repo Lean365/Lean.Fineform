@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
+using System.Web.UI.WebControls;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class log_view : PageBase
     {
@@ -25,7 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -51,13 +46,13 @@ namespace Fine.Lf_Admin
             }
 
             //string ss = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>"+ log.Level + "</div><div>2.附件大小规定：单一文件不能超10Mb，如果同时上付多个附件，附件总大小不能超过10Mb，否则请逐个上传</div><div>3.请添加中文翻译内容</div><div>4.担当者不能为空</div><div>4.修改管理区分时，设变单身数据将重新导入，之前各部门填写的资料全部作废</div>");
-            LoginLogger.Text = "用户："+ log.UserID+"-"+log.UserName +Environment.NewLine + "日期：" + log.Date.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine +  "级别：" + log.Level + Environment.NewLine + "信息：" + log.Message + Environment.NewLine + "事务：" + log.Exception;
-
+            LoginLogger.Text = "用户：" + log.UserID + "-" + log.UserName + Environment.NewLine + "日期：" + log.Date.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + "级别：" + log.Level + Environment.NewLine + "信息：" + log.Message + Environment.NewLine + "事务：" + log.Exception;
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         private void BindData()
         {
             try
@@ -81,8 +76,6 @@ namespace Fine.Lf_Admin
                             a.Level,
                             a.Thread,
                             a.Exception,
-
-
                         };
                 var qs = q.Select(a => new
                 {
@@ -98,7 +91,6 @@ namespace Fine.Lf_Admin
                 if (qs.Any())
                 {
                     LoginLogger.Text = "用户：" + qs[0].UserID + "-" + qs[0].UserName + Environment.NewLine + "日期：" + qs[0].Date.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + "级别：" + qs[0].Level + Environment.NewLine + "信息：" + qs[0].Message + Environment.NewLine + "事务：" + qs[0].Exception;
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -112,10 +104,9 @@ namespace Fine.Lf_Admin
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
-        #endregion
 
+        #endregion Events
     }
 }

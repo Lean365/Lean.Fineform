@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using FineUIPro;
+using System;
+
 //using EntityFramework.Extensions;
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-namespace Fine.Lf_Manufacturing.PP.tracking
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.PP.tracking
 {
     public partial class lot_process : PageBase
     {
@@ -31,7 +23,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -45,13 +37,9 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         private void LoadData()
         {
-
-
             CheckPowerWithButton("CoreTrackingNew", btnNew);
 
-
-           btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/tracking/lot_process_new.aspx", "新增") + Window1.GetMaximizeReference();
-
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/tracking/lot_process_new.aspx", "新增") + Window1.GetMaximizeReference();
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
@@ -60,44 +48,34 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-            var q = from p in DB.Pp_Tracking_times
-                        //join b in DB.Pp_Tracking_times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
-                        where p.isDelete == 0
-                        select new
-                        {
-
-                            p.Pro_Item,
-                            p.Pro_Model,
-                            p.Pro_Region,
-                            p.Pro_Manhour,
-                            Pro_Process = (p.Pro_Process.Length == 1 ? "0" + p.Pro_Process : p.Pro_Process),
-                            p.Pro_Tractime,
-
-                            
-                        };
-
-
+            var q = from p in DB.Pp_Tracking_Times
+                        //join b in DB.Pp_Tracking_Times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
+                    where p.isDeleted == 0
+                    select new
+                    {
+                        p.Pro_Item,
+                        p.Pro_Model,
+                        p.Pro_Region,
+                        p.Pro_Manhour,
+                        Pro_Process = (p.Pro_Process.Length == 1 ? "0" + p.Pro_Process : p.Pro_Process),
+                        p.Pro_Tractime,
+                    };
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
 
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Pro_Item.ToString().Contains(searchText) || u.Pro_Process.ToString().Contains(searchText) || u.Pro_Model.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Pro_Item.ToString().Contains(searchText) || u.Pro_Process.ToString().Contains(searchText) || u.Pro_Model.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             if (this.DDLModel.SelectedIndex != -1 && this.DDLModel.SelectedIndex != 0)
             {
-
                 q = q.Where(u => u.Pro_Model.Contains(this.DDLModel.SelectedText));
             }
             q.Distinct().ToList();
-
-
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = GridHelper.GetTotalCount(q.AsQueryable());
@@ -114,8 +92,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -123,19 +99,15 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 Grid1.DataBind();
             }
         }
+
         public void BindDDLLine()
         {
-
             var q = from a in DB.Pp_P1d_Outputs
 
                     select new
                     {
                         a.Promodel
-
                     };
-
-
-
 
             var qs = q.Select(E => new { E.Promodel, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -148,10 +120,9 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             DDLModel.DataBind();
 
             this.DDLModel.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -187,8 +158,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -206,7 +175,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -222,10 +190,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
         //    //DB.SaveChanges();
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
-
-
-
-
 
         //    // 重新绑定表格
         //    BindGrid();
@@ -248,18 +212,15 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
-        #endregion
+        #endregion Events
 
         protected void DDLModel_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLModel.SelectedIndex != -1 && DDLModel.SelectedIndex != 0)
             {
-
                 BindGrid();
             }
         }
-
 
         protected void BtnList_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
@@ -274,35 +235,29 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             Xlsbomitem = "Lot_Process_Times";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
-            var q = from p in DB.Pp_Tracking_times
-                        //join b in DB.Pp_Tracking_times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
-                    where p.isDelete == 0
+            var q = from p in DB.Pp_Tracking_Times
+                        //join b in DB.Pp_Tracking_Times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
+                    where p.isDeleted == 0
                     select new
                     {
-
-                        ItemMaster=p.Pro_Item,
-                        ModelName=p.Pro_Model,
-                        Region=p.Pro_Region,
-                        ST=p.Pro_Manhour,
-                        Process= (p.Pro_Process.Length == 1 ? "0" + p.Pro_Process : p.Pro_Process),
-                        Tractime=p.Pro_Tractime,
-
-
+                        ItemMaster = p.Pro_Item,
+                        ModelName = p.Pro_Model,
+                        Region = p.Pro_Region,
+                        ST = p.Pro_Manhour,
+                        Process = (p.Pro_Process.Length == 1 ? "0" + p.Pro_Process : p.Pro_Process),
+                        Tractime = p.Pro_Tractime,
                     };
-
-
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
 
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.ItemMaster.ToString().Contains(searchText) || u.Process.ToString().Contains(searchText) || u.ModelName.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.ItemMaster.ToString().Contains(searchText) || u.Process.ToString().Contains(searchText) || u.ModelName.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             if (this.DDLModel.SelectedIndex != -1 && this.DDLModel.SelectedIndex != 0)
             {
-
                 q = q.Where(u => u.ModelName.Contains(this.DDLModel.SelectedText));
             }
 
@@ -319,9 +274,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
         }
-
-
     }
 }

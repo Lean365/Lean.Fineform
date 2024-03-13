@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_daily_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p2d_daily_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_daily_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.daily.P2D.p2d_daily_new" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,42 +36,43 @@
                                 <f:DatePicker FocusOnPageLoad="true" runat="server" Required="true" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择生产日期"
                                     ID="prodate" ShowRedStar="True">
                                 </f:DatePicker>
-                                <f:DropDownList runat="server" ID="prolinename" Label="生产班别" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ForceSelection="true" ShowRedStar="True" Required="True">
+                                <f:DropDownList ID="proorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="true" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
                                 </f:DropDownList>
+
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:NumberBox ID="prodirect" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="20" MinValue="1">
-                                </f:NumberBox>
-                                <f:NumberBox ID="proindirect" runat="server" Label="间接人数" Text="0" MaxValue="5" MinValue="0">
-                                </f:NumberBox>
+                                <%--<f:Label ID="prodirect" runat="server" Label="直接人数" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label ID="proindirect" runat="server" Label="间接人数" ShowRedStar="True">
+                                </f:Label>--%>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow6" runat="server">
                             <Items>
-                                <f:DropDownList ID="proorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="true" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
-                                </f:DropDownList>
-                                <f:TextBox runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
-                                </f:TextBox>
+                                <f:Label runat="server" ID="pordertype" Label="类别" ShowRedStar="True">
+                                </f:Label>
+
+                                <f:TextBox runat="server" ID="prolot" Label="批次" ShowRedStar="true"></f:TextBox>
+
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow10" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="prohbn" Label="品号" ShowRedStar="True">
-                                </f:Label>
                                 <f:Label ID="promodel" runat="server" Label="机种">
                                 </f:Label>
+                                <f:Label runat="server" ID="prohbn" Label="品号" ShowRedStar="True">
+                                </f:Label>
+
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:Label ID="prost" runat="server" Label="工时" Text="0.00" ShowRedStar="True">
+                                <%--<f:Label ID="prost" runat="server" Label="工时" Text="0.00" ShowRedStar="True">
                                 </f:Label>
                                 <f:Label ID="prostdcapacity" runat="server" Label="标准产能" Text="0.00" ShowRedStar="True">
-                                </f:Label>
-                                <f:Label ID="txtProshort" runat="server" Text="0.00" ShowRedStar="true"></f:Label>
-
+                                </f:Label>--%>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow4" runat="server">

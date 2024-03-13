@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-//using EntityFramework.Extensions;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 
-namespace Fine.Lf_Manufacturing.PP
+//using EntityFramework.Extensions;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.PP
 {
     public partial class Pp_tracking_chart : PageBase
     {
@@ -32,7 +22,7 @@ namespace Fine.Lf_Manufacturing.PP
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -46,22 +36,17 @@ namespace Fine.Lf_Manufacturing.PP
 
         private void LoadData()
         {
-
-
             //本月第一天
             //DPend.SelectedDate = DateTime.Now;
 
-
-
             BindDDLModel();
-
         }
 
         public void BindDDLModel()
         {
             string edate = DateTime.Now.ToString("yyyyMMdd");
 
-            var q_all = from a in DB.Pp_TrackingCounts
+            var q_all = from a in DB.Pp_Tracking_Counts
                         orderby a.Pro_Date descending
                         select a;
             //q_all.OrderByDescending(u=>u.Pro_Date);
@@ -72,12 +57,8 @@ namespace Fine.Lf_Manufacturing.PP
 
                     select new
                     {
-                         Transtring=a.Pro_Date+","+ a.Pro_Model + "," + a.Pro_Lot + "," + a.Pro_Item ,
-
+                        Transtring = a.Pro_Date + "," + a.Pro_Model + "," + a.Pro_Lot + "," + a.Pro_Item,
                     };
-
-
-
 
             var qs = q.Select(E => new { E.Transtring, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -90,22 +71,8 @@ namespace Fine.Lf_Manufacturing.PP
             DDLModel.DataBind();
 
             this.DDLModel.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
         }
 
-
-
-        #endregion
-
-        #region Events
-
-
-
-
-
-        #endregion
-
-
-
+        #endregion Page_Load
     }
 }

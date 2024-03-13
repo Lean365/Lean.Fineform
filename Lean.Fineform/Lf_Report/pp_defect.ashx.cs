@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_defect 的摘要说明
+    /// pp_defect 的摘要说明
     /// </summary>
-    public class Pp_defect : IHttpHandler
+    public class pp_defect : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -35,11 +26,11 @@ namespace Fine.Lf_Report
 
             //查询在特定日期的全部工单
             //查询在特定日期的全部工单
-            var q = from a in DBCharts.Pp_DefectTotals
-                    //join b in DBCharts.Pp_P1d_Outputs on a.Prolot equals b.Prolot
-                    where a.isDelete == 0
-                    //where b.isDelete == 0
-                    where a.Prodate.Contains(atedate) 
+            var q = from a in DBCharts.Pp_Defect_Totals
+                        //join b in DBCharts.PP_Outputs on a.Prolot equals b.Prolot
+                    where a.isDeleted == 0
+                    //where b.isDeleted == 0
+                    where a.Prodate.Contains(atedate)
                     //where a.Prorealqty != a.Pronobadqty
                     select new
                     {
@@ -49,7 +40,6 @@ namespace Fine.Lf_Report
                         a.Prorealqty,
                         a.Pronobadqty,
                         a.Probadtotal,
-
                     };
             q = q.Distinct();
             //查询在特定日期的全部批次并统计
@@ -88,7 +78,7 @@ namespace Fine.Lf_Report
                     Probadrate = p.Probadrate.ToString("0.00"),
                 }
                 ).ToList();
-   
+
             if (qss.Any())
             {
                 DataSet ds = new DataSet();
@@ -106,7 +96,6 @@ namespace Fine.Lf_Report
             }
         }
 
-
         public bool IsReusable
         {
             get
@@ -114,7 +103,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

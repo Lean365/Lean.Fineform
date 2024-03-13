@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-namespace Fine.Lf_Report
+﻿using FineUIPro;
+using System;
+
+namespace LeanFine.Lf_Report
 {
-    public partial class Pp_daily_report  : PageBase
+    public partial class pp_daily_report : PageBase
     {
         #region ViewPower
 
@@ -22,9 +18,10 @@ namespace Fine.Lf_Report
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -44,24 +41,21 @@ namespace Fine.Lf_Report
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            //btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_models_region_new.aspx", "新增");
+            //btnNew.OnClientClick = Window1.GetShowReference("~/LB_Manufacturing/Master/PP_models_region_new.aspx", "新增");
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/bad_p2d_new.aspx", "P2D新增不良记录");
-
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Event
+
         protected void btn_PrintPreview_Click(object sender, EventArgs e)
         {
-
             PageContext.RegisterStartupScript("javascript:CreatePrintPage();LODOP.PREVIEW();");
         }
 
@@ -69,6 +63,7 @@ namespace Fine.Lf_Report
         {
             PageContext.RegisterStartupScript("javascript:CreatePrintPage();LODOP.PRINT_DESIGN();");
         }
-        #endregion
+
+        #endregion Event
     }
 }

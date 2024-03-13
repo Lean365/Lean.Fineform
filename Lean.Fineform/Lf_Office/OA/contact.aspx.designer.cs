@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Office.OA
+namespace LeanFine.Lf_Office.OA
 {
 
 

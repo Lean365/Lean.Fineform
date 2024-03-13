@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_eng_view.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_eng_view" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_eng_view.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_eng_view" %>
 
 <!DOCTYPE html>
 
@@ -106,7 +106,7 @@
                         <f:HyperLinkField DataTextField="Ec_letterno" Width="100px" HeaderText="技联NO." MinWidth="100px" DataNavigateUrlFields="Ec_letterdoc" />
                         <f:HyperLinkField DataTextField="Ec_eppletterno" Width="100px" HeaderText="P番(DTA)" MinWidth="100px" DataNavigateUrlFields="Ec_eppletterdoc" />
                         <f:HyperLinkField DataTextField="Ec_teppletterno" Width="100px" HeaderText="P番(TCJ)" MinWidth="100px" DataNavigateUrlFields="Ec_teppletterdoc" />
-                        <f:RenderField DataField="CreateTime" ColumnID="CreateTime" SortField="CreateTime" EnableLock="true" Width="120px" HeaderText="登录日期" FieldType="Date"
+                        <f:RenderField DataField="CreateDate" ColumnID="CreateDate" SortField="CreateDate" EnableLock="true" Width="120px" HeaderText="登录日期" FieldType="Date"
                             Renderer="Date" RendererArgument="yyyyMMdd" />
 
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"

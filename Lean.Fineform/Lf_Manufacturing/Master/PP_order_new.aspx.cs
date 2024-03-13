@@ -1,18 +1,18 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_order_new : PageBase
     {
-        // 
+        //
         public string DDLValue;
-        
+
         #region ViewPower
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -34,9 +34,7 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -54,13 +52,10 @@ namespace Fine.Lf_Manufacturing.Master
             BindDDLModel();
             Porderdate.SelectedDate = DateTime.Now;
             Porderdate.MinDate = DateTime.Now;
-
         }
 
         private void BindDDLModel()
         {
-
-
             var list = (from c in DB.Pp_Manhours
                         group c by new { c.Promodel } into g
                         //where c.Promodel.Contains(this.MC003.SelectedItem.Text)
@@ -75,9 +70,6 @@ namespace Fine.Lf_Manufacturing.Master
             MC003.DataTextField = "Promodel";
             MC003.DataValueField = "Promodel";
             MC003.DataBind();
-
-
-
         }
 
         private void BindDDLItem()
@@ -91,19 +83,15 @@ namespace Fine.Lf_Manufacturing.Master
             Porderhbn.DataTextField = "Proitem";
             Porderhbn.DataValueField = "Proitem";
             Porderhbn.DataBind();
-
-
         }
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             //int id = GetQueryIntValue("id");
             //proMovingpricedata current = DB.proMovingpricedatas.Find(id);
             //string modi001 = current.Qcpd002;
@@ -135,12 +123,10 @@ namespace Fine.Lf_Manufacturing.Master
             //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             //}
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -154,7 +140,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             string InputData = Porderdate.Text.Trim() + Porderhbn.Text.Trim() + Porderlot.Text.Trim();
 
-
             Pp_Order redata = DB.Pp_Orders.Where(u => u.Porderdate + u.Porderhbn + u.Porderlot == InputData).FirstOrDefault();
 
             if (redata != null)
@@ -166,9 +151,9 @@ namespace Fine.Lf_Manufacturing.Master
             SaveItem();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
+
         private void CheckDDLData()
         {
-
             if (this.MC003.SelectedItem.Text == "请选择")
             {
                 Alert.ShowInTop("下拉列表请选择正确的项目！", "错误提示", MessageBoxIcon.Error);
@@ -182,15 +167,15 @@ namespace Fine.Lf_Manufacturing.Master
 
             CheckData();
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Pp_Order item = new Pp_Order();
 
             item.Porderno = this.Porderno.Text.ToUpper();
             item.Porderhbn = this.Porderhbn.SelectedText;
-            item.Porderlot = this.Porderlot.Text.ToUpper(); 
+            item.Porderlot = this.Porderlot.Text.ToUpper();
 
             item.Porderqty = decimal.Parse(this.Porderqty.Text);
             item.Porderreal = 0;
@@ -201,7 +186,7 @@ namespace Fine.Lf_Manufacturing.Master
             // 添加所有用户
 
             item.Remark = Remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_Orders.Add(item);
             DB.SaveChanges();
@@ -211,8 +196,6 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "新增";
             string OperateNotes = "New* " + Newtext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "订单新增", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -227,8 +210,8 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckDDLData();
+            {
+                CheckDDLData();
             }
             catch (ArgumentNullException Message)
             {
@@ -266,14 +249,12 @@ namespace Fine.Lf_Manufacturing.Master
         protected void MC003_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindDDLItem();
-
         }
 
         protected void Porderhbn_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Porderhbn.SelectedIndex != -1 && Porderhbn.SelectedIndex != 0)
             {
-
                 Pp_Manhour item = DB.Pp_Manhours
 
                     .Where(u => u.Proitem == this.Porderhbn.SelectedText).FirstOrDefault();
@@ -298,11 +279,9 @@ namespace Fine.Lf_Manufacturing.Master
                 //    .Where(u => u.XB002 == this.MC008.SelectedText.Substring(8, 2)).FirstOrDefault();
                 //    this.MC005.Text = itema.XB001;
                 //}
-
             }
         }
-        #endregion
 
-
+        #endregion Events
     }
 }

@@ -1,20 +1,16 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 
-
-namespace Fine.Lf_Manufacturing.QM.fqc
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
-
     public partial class fqc_notice_edit : PageBase
     {
         //日志配置文件调用
-       // private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        // private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
-        
         #region ViewPower
 
         /// <summary>
@@ -28,7 +24,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -36,7 +32,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -54,15 +49,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //mocToDropDownList();
 
             BindData();
-
         }
-
 
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Unqualified current = DB.Qm_Unqualifieds.Find(id);
 
             if (current == null)
@@ -84,20 +77,15 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             qmCheckdate.Text = current.qmCheckdate;
             qmProlot.Text = current.qmProlot;
 
-            qmCheckNotes.Text= current.qmCheckNotes;
-
+            qmCheckNotes.Text = current.qmCheckNotes;
 
             qmLotserial.Text = current.qmLotserial;
             qmRejectqty.Text = current.qmRejectqty.ToString();
             qmJudgmentlevel.Text = current.qmJudgmentlevel;
 
-
             Remark.Text = current.Remark;
 
-
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -109,23 +97,20 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             // 初始化用户所属职称
             //InitUserTitle(current);
             //修改前日志
-            string BeforeModi = current.qmIssueno+","+ current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmRegion + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmRejectqty + "," + current.qmJudgmentlevel + "," + current.qmCheckNotes;
-            string OperateType ="修改";
+            string BeforeModi = current.qmIssueno + "," + current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmRegion + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmRejectqty + "," + current.qmJudgmentlevel + "," + current.qmCheckNotes;
+            string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "产品检验修改", OperateNotes);
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Unqualified current = DB.Qm_Unqualifieds.Find(id);
             string modi001 = current.qmInspector;
             string modi002 = current.qmLine;
@@ -143,8 +128,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                         {
                             if (this.qmMaterial.Text == modi005)
                             {
-                                
-                                
                                 //Alert alert = new Alert();
                                 //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
                                 //alert.IconUrl = "~/Lf_Resources/images/success.png";
@@ -158,12 +141,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -177,7 +158,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -187,7 +167,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //}
             //string InputData = qmCheckNotes.Text.Trim();
 
-
             //Qm_Improvement Redata = DB.Qm_Improvements.Where(u => u.qmCheckNotes == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -195,8 +174,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //    Alert.ShowInTop("分析对策数据,判定说明说明方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
+
         //字段赋值，保存
         private void SaveItem()//新增质量控制数据
         {
@@ -211,7 +190,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             item.Remark = Remark.Text;
 
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -221,10 +200,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不合格通知书修改", OperateNotes);
-
-
         }
+
         public decimal qaQTY, mcQTY;
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             ////工单未入库数量
@@ -252,9 +231,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //    qaQTY = 0;
             //}
 
-
-
-
             //if (qaQTY > mcQTY)
             //{
             //    //登录日志写入
@@ -265,19 +241,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             SaveItem();
 
-
-
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
-        #region BindData
 
-
-
-
-        #endregion
-
-
-
+        #endregion Events
     }
 }

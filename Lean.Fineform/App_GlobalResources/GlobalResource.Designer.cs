@@ -603,45 +603,45 @@ namespace Resources {
         /// <summary>
         ///   查找类似 LotStatistics 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Defect_LotStatistics {
+        internal static string menu_pp_defect_LotStatistics {
             get {
-                return ResourceManager.GetString("menu_Pp_Defect_LotStatistics", resourceCulture);
+                return ResourceManager.GetString("menu_pp_defect_LotStatistics", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 MoStatistics 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Defect_MOStatistics {
+        internal static string menu_pp_defect_MOStatistics {
             get {
-                return ResourceManager.GetString("menu_Pp_Defect_MOStatistics", resourceCulture);
+                return ResourceManager.GetString("menu_pp_defect_MOStatistics", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 PoorProduction 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Defect_Production {
+        internal static string menu_pp_defect_Production {
             get {
-                return ResourceManager.GetString("menu_Pp_Defect_Production", resourceCulture);
+                return ResourceManager.GetString("menu_pp_defect_Production", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 PoorQuery 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Defect_Query {
+        internal static string menu_pp_defect_Query {
             get {
-                return ResourceManager.GetString("menu_Pp_Defect_Query", resourceCulture);
+                return ResourceManager.GetString("menu_pp_defect_Query", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 DefectsType 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Defect_Type {
+        internal static string menu_pp_defect_Type {
             get {
-                return ResourceManager.GetString("menu_Pp_Defect_Type", resourceCulture);
+                return ResourceManager.GetString("menu_pp_defect_Type", resourceCulture);
             }
         }
         
@@ -981,9 +981,9 @@ namespace Resources {
         /// <summary>
         ///   查找类似 Lot Traceability 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Tracking_Lot {
+        internal static string menu_pp_tracking_lot {
             get {
-                return ResourceManager.GetString("menu_Pp_Tracking_Lot", resourceCulture);
+                return ResourceManager.GetString("menu_pp_tracking_lot", resourceCulture);
             }
         }
         
@@ -1593,9 +1593,9 @@ namespace Resources {
         /// <summary>
         ///   查找类似 Search for models, Lot etc. 的本地化字符串。
         /// </summary>
-        internal static string Query_Pp_Defect_EmptyText {
+        internal static string Query_pp_defect_EmptyText {
             get {
-                return ResourceManager.GetString("Query_Pp_Defect_EmptyText", resourceCulture);
+                return ResourceManager.GetString("Query_pp_defect_EmptyText", resourceCulture);
             }
         }
         
@@ -2680,7 +2680,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 DTA Lean Manufacturing 的本地化字符串。
+        ///   查找类似 Lean Manufacturing-DTA 的本地化字符串。
         /// </summary>
         internal static string sys_LeanName {
             get {

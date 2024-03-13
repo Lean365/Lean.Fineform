@@ -1,12 +1,12 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.PP.daily
-{
 
+namespace LeanFine.Lf_Manufacturing.PP.daily
+{
     public partial class p1d_daily_edit : PageBase
     {
         public int SubOphID, Prorate;
@@ -15,10 +15,8 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
         public static string userid, badSum;
 
-
-
         public int ParentID;
-        
+
         #region ViewPower
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -40,25 +38,20 @@ namespace Fine.Lf_Manufacturing.PP.daily
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
 
         private void LoadData()
         {
-
-
             userid = GetIdentityName();
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
             //BindDDLclass();
             //赋值
             BindData();
-
-
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -73,7 +66,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 return;
             }
 
-
             proorder.Text = current.Proorder;
             prodate.Text = current.Prodate;
             // 选中当前节点的父节点
@@ -86,10 +78,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             promodel.Text = current.Promodel;
             prost.Text = current.Prost.ToString();
             //prosubst.Text = current.Prosubst.ToString();
-
-
-
-
 
             prostdcapacity.Text = current.Prostdcapacity.ToString();
 
@@ -121,13 +109,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
             string OperateNotes = "*beEdit生产OPH " + BeforeModi + " *beEdit生产OPH 的记录可能将被修改";
 
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH修改", OperateNotes);
-
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -135,14 +119,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
         private void SaveItem()//新增生产日报单头
         {
-
-
             int id = GetQueryIntValue("id");
             Pp_P1d_Output item = DB.Pp_P1d_Outputs
 
                 .Where(u => u.ID == id).FirstOrDefault();
-
-
 
             item.Prodirect = int.Parse(prodirect.Text);
             item.Proindirect = int.Parse(proindirect.Text);
@@ -153,14 +133,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
             item.Promodel = promodel.Text;
             item.Prost = Decimal.Parse(prost.Text);
 
-
-
             //item.Prosubst = Decimal.Parse(prosubst.Text);
             item.Prostdcapacity = Decimal.Parse(prostdcapacity.Text);
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Proophs.Add(item);
             DB.SaveChanges();
@@ -172,8 +149,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             string OperateType = "修改";
             string OperateNotes = "*afEdit生产OPH " + ModifiedText + "*afEdit生产OPH 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH修改", OperateNotes);
-
-
         }
 
         private void OPHRate()//稼动率
@@ -182,20 +157,18 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
                 .OrderByDescending(u => u.Proratedate).FirstOrDefault();
 
-
             Prorate = current.Prorate;
         }
+
         //新增新增生产日报单身
         /// <summary>
         /// 新增单身数据
         /// </summary>
         private void SaveSubItem()
         {
-
-
             updateSuboph();
-
         }
+
         private void updateSuboph()
         {
             int iid = GetQueryIntValue("id");
@@ -211,14 +184,15 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     .Where(s => s.Prolinemin != 0)
 
                     .ToList()
-                    .ForEach(x => {
+                    .ForEach(x =>
+                    {
                         x.Prodirect = int.Parse(prodirect.Text);
                         x.Proindirect = int.Parse(proindirect.Text);
                         x.Prostdcapacity = Decimal.Parse(prostdcapacity.Text);
                         x.Prolinemin = int.Parse(prodirect.Text) * 60 - x.Prolinestopmin;
                         x.Prorealtime = int.Parse(prodirect.Text) * 60 - x.Prolinestopmin;
-                        x.Modifier =GetIdentityName();
-                        x.ModifyTime = DateTime.Now;
+                        x.Modifier = GetIdentityName();
+                        x.ModifyDate = DateTime.Now;
                     });
                 DB.SaveChanges();
             }
@@ -229,9 +203,8 @@ namespace Fine.Lf_Manufacturing.PP.daily
             string OperateNotes = "*afEdit生产OPH_SUB " + ModifiedText + "*afEdit生产OPH_SUB 的记录已修改";
 
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH修改", OperateNotes);
-
-
         }
+
         //新增新增生产日报单身
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -239,38 +212,31 @@ namespace Fine.Lf_Manufacturing.PP.daily
             if (int.Parse(proindirect.Text) > int.Parse(prodirect.Text))
             {
                 Alert.ShowInTop("间接人数大于直接人数！");
-
-
             }
 
             //保存OPH数据
             SaveItem();
 
-
-
             //保存不具合数据
             //EditDefectDataRow();
             //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）");
 
-
             //更新不具合总数量
             //BindTotal();
-
-
 
             //表格数据已重新绑定
             //BindGrid();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-
         }
-        #endregion
+
+        #endregion Events
+
         //计算标准产能
         /// <summary>
         /// 标准产能计算
         /// </summary>
         private void HourQty()
         {
-
             decimal stdiff = (decimal.Parse(prost.Text));
             if (stdiff != 0)
             {
@@ -278,15 +244,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 decimal rate = (decimal)Prorate / 100;
                 prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.00");
             }
-
         }
+
         protected void prodirect_TextChanged(object sender, EventArgs e)
         {
             HourQty();
         }
-
-
-
-
     }
 }

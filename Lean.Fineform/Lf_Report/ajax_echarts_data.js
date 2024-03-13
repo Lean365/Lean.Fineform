@@ -9,7 +9,6 @@
  * Date: 2020-04-16T16:01Z
  */
 
-
 function AjaxDestLineChart() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
@@ -27,7 +26,7 @@ function AjaxDestLineChart() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                LineChart(name, value);     //调用封装好的Line    
+                LineChart(name, value);     //调用封装好的Line
             }
         },
         error: function (msg) {
@@ -63,7 +62,3 @@ function AjaxDestRadarChart() {
     //---------------------------------------------------------------------------
 }
 // debugger;
-
-
-
-

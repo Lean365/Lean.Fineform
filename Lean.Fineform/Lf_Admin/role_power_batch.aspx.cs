@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
-using System.Text.RegularExpressions;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
-using Newtonsoft.Json.Linq;
+using System.Data.Entity;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class role_power_batch : PageBase
     {
@@ -33,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -44,12 +33,13 @@ namespace Fine.Lf_Admin
                 LoadData();
             }
         }
+
         private void LoadData()
         {
-
-
         }
-        #endregion
+
+        #endregion Page_Load
+
         #region Event
 
         protected void BtnBatch_Click(object sender, EventArgs e)
@@ -77,7 +67,6 @@ namespace Fine.Lf_Admin
                         // 当前角色新的权限列表
                         List<int> newPowerIDs = new List<int>();
 
-
                         foreach (string item in strPowerArray)
                         {
                             if (item.Any())
@@ -86,26 +75,21 @@ namespace Fine.Lf_Admin
                             }
                         }
 
-
-
                         Adm_Role role = DB.Adm_Roles.Include(r => r.Powers).Where(r => r.ID == f).FirstOrDefault();
 
                         ReplaceEntities<Adm_Power>(role.Powers, newPowerIDs.ToArray());
 
                         DB.SaveChanges();
                         //Alert.ShowInTop("批量更新角色权限成功！");
-
                     }
-
                 }
             }
-
         }
 
         private void ClonePower()
         {
-
         }
-        #endregion
+
+        #endregion Event
     }
 }

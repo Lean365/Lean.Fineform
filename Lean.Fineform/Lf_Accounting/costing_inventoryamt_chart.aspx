@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_inventoryamt_chart.aspx.cs" Inherits="Fine.Lf_Accounting.costing_inventoryamt_chart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="costing_inventoryamt_chart.aspx.cs" Inherits="LeanFine.Lf_Accounting.costing_inventoryamt_chart" %>
 
 <!DOCTYPE html>
 

@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,9 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-
-
-namespace Fine.Lf_Manufacturing.SOP
+namespace LeanFine.Lf_Manufacturing.SOP
 {
     public partial class pe_pcba_edit : PageBase
     {
@@ -26,15 +24,16 @@ namespace Fine.Lf_Manufacturing.SOP
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string strEc_no, strEc_model;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -58,26 +57,18 @@ namespace Fine.Lf_Manufacturing.SOP
             //InitNewItem();
             //InitOldItem();
             //InitModel();
-
-
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         private void BindGrid()
         {
             try
             {
-
                 var q = from a in DB.Pp_EcSops
-                        //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
+                            //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
                         where a.Ec_no == strEc_no
                         where a.Ec_model == strEc_model
                         //where a.Ec_bomitem == strEc_bomitem
@@ -94,7 +85,6 @@ namespace Fine.Lf_Manufacturing.SOP
                             a.Ec_leader,
                             a.Ec_model,
                             a.pengaModifier,
-
                         };
                 bool sss = q.Any();
                 if (q.Any())
@@ -109,8 +99,6 @@ namespace Fine.Lf_Manufacturing.SOP
                         a.Ec_leader,
                         a.Ec_model,
                         a.pengaModifier,
-
-
                     }).Distinct();
 
                     Grid1.RecordCount = GridHelper.GetTotalCount(qs);
@@ -130,12 +118,7 @@ namespace Fine.Lf_Manufacturing.SOP
                         Grid1.DataSource = "";
                         Grid1.DataBind();
                     }
-
-
-
-
                 }
-
             }
             catch (ArgumentNullException Message)
             {
@@ -148,17 +131,16 @@ namespace Fine.Lf_Manufacturing.SOP
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         private void BindData()
         {
             try
             {
-
                 var q = from a in DB.Pp_EcSops
-                        //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                        //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
+                            //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
                         where a.Ec_no == strEc_no
                         where a.Ec_model == strEc_model
                         //where a.Ec_bomitem == strEc_bomitem
@@ -175,10 +157,8 @@ namespace Fine.Lf_Manufacturing.SOP
                             a.Ec_leader,
                             a.Ec_model,
                             a.pengpModifier,
-
-
                         };
-               
+
                 if (q.Any())
                 { // 切勿使用 source.Count() > 0
                     var qs = q.Select(E => new
@@ -190,7 +170,6 @@ namespace Fine.Lf_Manufacturing.SOP
                         E.Ec_leader,
                         E.Ec_model,
                         E.pengpModifier,
-
                     }).Distinct().ToList();
 
                     //var qs = q.Distinct().ToList();
@@ -218,14 +197,11 @@ namespace Fine.Lf_Manufacturing.SOP
 
                     // Ec_mmlotno.Text = qs[0].Ec_p2dlotsn;
 
-
                     //Ec_mmlotno.Text = qs[0].Ec_mmlotno;
                     //Ec_mmnote.Text = qs[0].Ec_mmnote;
-                   // Ec_pengnote.Text = qs[0].Ec_pengpnote;
+                    // Ec_pengnote.Text = qs[0].Ec_pengpnote;
 
                     // Ec_p2dlotsn.Text = qs[0].Ec_p2dlotsn;
-
-
 
                     //Ec_p2dnote.Text = qs[0].Ec_p2dnote;
 
@@ -242,7 +218,6 @@ namespace Fine.Lf_Manufacturing.SOP
                         if (q_name.Any())
                         {
                             pengpModifier.Text = q_name[0].ChineseName;//担当
-
                         }
                     }
                     else
@@ -254,23 +229,14 @@ namespace Fine.Lf_Manufacturing.SOP
                         if (q_name.Any())
                         {
                             pengpModifier.Text = q_name[0].ChineseName;//担当
-
                         }
                     }
 
-
                     Ec_model.Text = qs[0].Ec_model;//设变机种
 
-
                     //Ec_pmclot.Text = qs[0].Ec_qalot.Trim();//生管批次
-
-
-
-
-
                 }
             }
-
             catch (ArgumentNullException Message)
             {
                 Alert.ShowInTop("异常1:" + Message);
@@ -282,26 +248,24 @@ namespace Fine.Lf_Manufacturing.SOP
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
-
-
         }
+
         protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
         {
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -309,7 +273,6 @@ namespace Fine.Lf_Manufacturing.SOP
             Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
-
         }
 
         //字段赋值，保存
@@ -345,8 +308,8 @@ namespace Fine.Lf_Manufacturing.SOP
                          //where b.Ec_no == strecn
                          //where a.Prodate == sdate//投入日期
                          select a).ToList();
-                List<Pp_EcSop> UpdateList = (from item in q
-                                              select new Pp_EcSop
+                List<Pp_Ec_Sop> UpdateList = (from item in q
+                                              select new Pp_Ec_Sop
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -355,21 +318,17 @@ namespace Fine.Lf_Manufacturing.SOP
                                                   Ec_leader = item.Ec_leader,
                                                   Ec_entrydate = item.Ec_entrydate,
 
-
                                                   ispengaModifysop = item.ispengaModifysop,
                                                   Ec_pengadate = item.Ec_pengadate,
                                                   Ec_penganote = item.Ec_penganote,
                                                   pengaModifier = item.pengaModifier,
-                                                  pengaModifyTime = item.pengaModifyTime,
+                                                  pengaModifyDate = item.pengaModifyDate,
 
                                                   Ec_pengpdate = Ec_pengdate.SelectedDate.Value.ToString("yyyyMMdd"),
                                                   ispengpModifysop = isSop,
                                                   Ec_pengpnote = "-",
-                                                  pengpModifier= GetIdentityName(),
-                                                  pengpModifyTime = DateTime.Now,
-
-
-
+                                                  pengpModifier = GetIdentityName(),
+                                                  pengpModifyDate = DateTime.Now,
 
                                                   UDF01 = item.UDF01,
                                                   UDF02 = item.UDF02,
@@ -383,19 +342,16 @@ namespace Fine.Lf_Manufacturing.SOP
                                                   UDF54 = item.UDF54,
                                                   UDF55 = item.UDF55,
                                                   UDF56 = item.UDF56,
-                                                  isDelete = item.isDelete,
+                                                  isDeleted = item.isDeleted,
                                                   Remark = item.Remark,
 
                                                   Creator = item.Creator,
-                                                  CreateTime = item.CreateTime,
+                                                  CreateDate = item.CreateDate,
                                                   Modifier = GetIdentityName(),
-                                                  ModifyTime = DateTime.Now,
-
+                                                  ModifyDate = DateTime.Now,
                                               }).ToList();
                 DB.BulkUpdate(UpdateList);
                 DB.BulkSaveChanges();
-
-
             }
             catch (ArgumentNullException Message)
             {
@@ -431,32 +387,28 @@ namespace Fine.Lf_Manufacturing.SOP
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             SaveItem();
             InsNetOperateNotes();
-
         }
 
-
-        #endregion
+        #endregion Events
 
         #region NetOperateNotes
+
         private void InsNetOperateNotes()
         {
             //发送邮件通知
             //Mailto();
 
             //新增日志
-            string Newtext = Ec_issuedate.Text + "," + Ec_no.Text + "," + Ec_pengdate.Text  + "," + isengModifysop.SelectedValue ;
+            string Newtext = Ec_issuedate.Text + "," + Ec_no.Text + "," + Ec_pengdate.Text + "," + isengModifysop.SelectedValue;
             string OperateType = "修改";//操作标记
             string OperateNotes = "Edit制技* " + Newtext + " *Edit制技 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "设变修改", OperateNotes);
-
         }
-        #endregion
 
-
+        #endregion NetOperateNotes
     }
 }

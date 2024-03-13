@@ -1,28 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace Fine.Lf_Business.Models.PP
+namespace LeanFine.Lf_Business.Models.PP
 {
     public class Pp_P2d_OutputSub : IKeyID
     {
         //生产日报SUB
         [Required, Key]
         public int ID { get; set; }
+
         [Required]
         public Guid GUID { get; set; }
+
         public int Parent { get; set; }
 
         [Required, StringLength(20)]
-        //[Column("生产订单")]
         public string Proordertype { get; set; }//生产订单类别
+
         [Required, StringLength(20)]
-        //[Column("生产订单")]
         public string Proorder { get; set; }//生产订单
+
         [Required]
         public Decimal Proorderqty { get; set; }//订单台数
+
         [StringLength(20)]
         public string Prolinename { get; set; }//生产组别
 
@@ -35,27 +35,31 @@ namespace Fine.Lf_Business.Models.PP
 
         [StringLength(20)]
         public string Prolot { get; set; }//生产LOT
+
         [StringLength(50)]
-        public string Promodel { get; set; }//机种名   
+        public string Promodel { get; set; }//机种名
 
         [StringLength(20)]
         public string Prohbn { get; set; }//生产物料
+
         [StringLength(20)]
         public string Propcbatype { get; set; }//生产板别
+
         public Decimal Prost { get; set; }//工时
 
         public Decimal Proshort { get; set; }//点数
         public Decimal Prorate { get; set; }//汇率
 
         public Decimal Prostdcapacity { get; set; }//标准产能
+
         [Required]
         public bool Totaltag { get; set; }//是否参与计算标记
+
         [StringLength(20)]
         public string Prostime { get; set; }//生产时间段
 
         [StringLength(20)]
         public string Proetime { get; set; }//生产时间段
-
 
         public int Prorealqty { get; set; }//生产实绩
 
@@ -66,10 +70,13 @@ namespace Fine.Lf_Business.Models.PP
 
         [StringLength(200)]
         public string Prostopcou { get; set; }//停线原因
+
         [StringLength(200)]
         public string Prostopmemo { get; set; }//停线备注
+
         [StringLength(300)]
         public string Probadcou { get; set; }//未达成原因
+
         [StringLength(300)]
         public string Probadmemo { get; set; }//未达成备注
 
@@ -81,19 +88,24 @@ namespace Fine.Lf_Business.Models.PP
         public int Proqtydiff { get; set; }//预计投入台数
         public int Proratio { get; set; }//稼动率 （实际生产效率)
 
-
         [StringLength(255)]
         public string UDF01 { get; set; }
+
         [StringLength(255)]
         public string UDF02 { get; set; }
+
         [StringLength(255)]
         public string UDF03 { get; set; }
+
         [StringLength(500)]
         public string UDF04 { get; set; }
+
         [StringLength(500)]
         public string UDF05 { get; set; }
+
         [StringLength(500)]
         public string UDF06 { get; set; }
+
         public int UDF51 { get; set; }
 
         public int UDF52 { get; set; }
@@ -104,22 +116,21 @@ namespace Fine.Lf_Business.Models.PP
         public Decimal UDF55 { get; set; }
 
         public Decimal UDF56 { get; set; }
+
         [Required]
-        public byte isDelete { get; set; }	//13	//	删除标记
+        public byte isDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }
-        public DateTime? CreateTime { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         public string Modifier { get; set; }
-        public DateTime? ModifyTime { get; set; }
 
-
-
-
+        public DateTime? ModifyDate { get; set; }
     }
 }

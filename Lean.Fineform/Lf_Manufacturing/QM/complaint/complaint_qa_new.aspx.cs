@@ -1,16 +1,15 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.complaint
+
+namespace LeanFine.Lf_Manufacturing.QM.complaint
 {
     public partial class complaint_qa_new : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -24,17 +23,17 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string txtRefdoc;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -53,12 +52,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_ReceivedDate.SelectedDate = DateTime.Now;
             Cc_Order.Text = "--";
             Cc_Serialno.Text = "--";
-            Cc_DefectsQty .Text= "1";
+            Cc_DefectsQty.Text = "1";
             BindissueNoData();
             BindDDLCustomer();
             BindDDLModel();
         }
-
 
         //发行NO
         public void BindissueNoData()
@@ -78,7 +76,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
 
             {
                 Cc_DocNo.Text = (UInt64.Parse(qs[0].issueNo) + 1).ToString();
-
             }
             else
             {
@@ -89,11 +86,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
         public void BindDDLCustomer()
         {
             var q_Customer = from a in DB.Sd_Customers
-                         select new
-                         {
-                             a.Customer_ID,
-                             a.Customer_Abbr
-                         };
+                             select new
+                             {
+                                 a.Customer_ID,
+                                 a.Customer_Abbr
+                             };
 
             // 绑定到下拉列表（启用模拟树功能）
             // 绑定到下拉列表（启用模拟树功能）
@@ -104,16 +101,17 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_Customer.DataBind();
             this.Cc_Customer.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
+
         public void BindDDLModel()
         {
             var q_Model = from a in DB.Pp_Manhours
                           join b in DB.Mm_Materials on a.Proitem equals b.MatItem
-                          where b.MatType.CompareTo("FERT")==0
-                         select new
-                         {
-                             Model=a.Promodel
-                         };
-            q_Model = q_Model.OrderBy(u=>u.Model);
+                          where b.MatType.CompareTo("FERT") == 0
+                          select new
+                          {
+                              Model = a.Promodel
+                          };
+            q_Model = q_Model.OrderBy(u => u.Model);
 
             // 绑定到下拉列表（启用模拟树功能）
             // 绑定到下拉列表（启用模拟树功能）
@@ -124,6 +122,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_Model.DataBind();
             this.Cc_Model.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
+
         private void Refdoc()
         {
             if (Cc_Reference.HasFile)
@@ -135,7 +134,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -160,15 +158,14 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 SimpleForm1.Reset();
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Qm_Complaint item = new Qm_Complaint();
 
             item.GUID = Guid.NewGuid();
@@ -199,7 +196,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //item.Cc_Reference = Cc_Reference.Text;
 
             item.qaModifier = GetIdentityName();
-            item.qaModifyTime = DateTime.Now;
+            item.qaModifyDate = DateTime.Now;
             item.Cc_Ddescription = "";
             item.Cc_Reasons = "";
             item.Cc_Operator = "";
@@ -207,14 +204,14 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             item.Cc_Lot = "";
             item.Cc_CorrectActions = "";
             //item.p1dModifier = "";
-            //item.p1dModifyTime = "";
+            //item.p1dModifyDate = "";
             item.Cc_Discover = GetIdentityName();
             item.Cc_ReceivedDate = Cc_ReceivedDate.Text;
             item.UDF01 = "";
             item.UDF02 = "";
             item.UDF03 = "";
             item.UDF04 = "";
-            item.UDF05 ="";
+            item.UDF05 = "";
             item.UDF06 = "";
             item.UDF51 = 0;
             item.UDF52 = 0;
@@ -222,10 +219,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             item.UDF54 = 0;
             item.UDF55 = 0;
             item.UDF56 = 0;
-            item.isDelete = 0;
+            item.isDeleted = 0;
             item.Remark = remark.Text;
 
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Qm_Complaints.Add(item);
             DB.SaveChanges();
@@ -235,9 +232,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "客诉信息", "记录新增", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ////判断修改内容
@@ -245,17 +241,14 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             {
                 Alert.ShowInTop("没有选择客户！");
                 return;
-
             }
             if (this.Cc_Model.SelectedIndex == 0 || this.Cc_Model.SelectedIndex == -1)
             {
                 Alert.ShowInTop("没有选择客户！");
                 return;
-
             }
             //判断重复
             string InputData = Cc_IssuesNo.Text.Trim();
-
 
             Qm_Complaint redata = DB.Qm_Complaints.Where(u => u.Cc_IssuesNo == InputData).FirstOrDefault();
 
@@ -265,6 +258,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 return;
             }
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -305,15 +299,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

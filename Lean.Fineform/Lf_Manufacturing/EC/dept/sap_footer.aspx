@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sap_footer.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.dept.sap_footer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sap_footer.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.dept.sap_footer" %>
 
 <!DOCTYPE html>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YF_Map.aspx.cs" Inherits="Fine.Lf_Manufacturing.MM.YF_Map" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YF_Map.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.MM.YF_Map" %>
 
 <!DOCTYPE html>
 
@@ -29,22 +29,22 @@
                     <div class="container">
                         <div class="row row-cols-4 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf1.png" runat="server"
+                                <f:Button ID="Btn_yf_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_mm.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Material%>" OnClick="Btn_yf_Material_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_BOM" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf8.png" runat="server"
+                                <f:Button ID="Btn_yf_BOM" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_bom.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_BOM%>" OnClick="Btn_yf_BOM_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_PurchaseOrder" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf2.png" runat="server"
+                                <f:Button ID="Btn_yf_PurchaseOrder" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_pur.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_PurchaseOrder%>" OnClick="Btn_yf_PurchaseOrder_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_Requisition" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf3.png" runat="server"
+                                <f:Button ID="Btn_yf_Requisition" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_app.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Requisition%>" OnClick="Btn_yf_Requisition_Click">
                                 </f:Button>
                             </div>
@@ -53,22 +53,22 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-4 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_PurchasingPrice" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf4.png" runat="server"
+                                <f:Button ID="Btn_yf_PurchasingPrice" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_price.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_PurchasingPrice%>" OnClick="Btn_yf_PurchasingPrice_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_PurchasingPriceVal" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf5.png" runat="server"
+                                <f:Button ID="Btn_yf_PurchasingPriceVal" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_feng.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_PurchasingPriceVal%>" OnClick="Btn_yf_PurchasingPriceVal_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_Supplier" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf6.png" runat="server"
+                                <f:Button ID="Btn_yf_Supplier" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_sup.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Supplier%>" OnClick="Btn_yf_Supplier_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_MaterialSupplier" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf7.png" runat="server"
+                                <f:Button ID="Btn_yf_MaterialSupplier" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_sup.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_MaterialSupplier%>" OnClick="Btn_yf_MaterialSupplier_Click">
                                 </f:Button>
                             </div>
@@ -76,22 +76,22 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-4 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_change" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf4.png" runat="server"
+                                <f:Button ID="Btn_yf_change" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_ec.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Ec%>" OnClick="Btn_yf_change_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_replace" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf5.png" runat="server"
+                                <f:Button ID="Btn_yf_replace" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_ec.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Substitute%>" OnClick="Btn_yf_replace_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_Special_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf6.png" runat="server"
+                                <f:Button ID="Btn_yf_Special_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_ec.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_Special%>" OnClick="Btn_yf_Special_Material_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_yf_General_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf7.png" runat="server"
+                                <f:Button ID="Btn_yf_General_Material" EnablePostBack="true" IconAlign="Top" IconUrl="~/Lf_Resources/icon/yf_ec.png" runat="server"
                                     Text="<%$ Resources:GlobalResource,yf_General%>" OnClick="Btn_yf_General_Material_Click">
                                 </f:Button>
                             </div>

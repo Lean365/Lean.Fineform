@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Sd_chart.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.Sd_chart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Sd_chart.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.SD.Sd_chart" %>
 
 <!DOCTYPE html>
 

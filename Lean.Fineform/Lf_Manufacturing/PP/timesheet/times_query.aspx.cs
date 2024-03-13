@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
-using NPOI.SS.Formula.Functions;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.PP.timesheet
+namespace LeanFine.Lf_Manufacturing.PP.timesheet
 {
     public partial class times_query : PageBase
     {
@@ -37,7 +22,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -71,7 +56,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
@@ -85,8 +69,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             BindDDLLine();
         }
 
-
-
         private void BindGrid()
         {
             try
@@ -94,7 +76,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 var q =
                     from p in DB.Pp_P1d_OutputSubs
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                    where p.isDelete == 0
+                    where p.isDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
                     group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn } into g
                     select new
@@ -107,8 +89,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                         Proworktime = g.Sum(p => p.Prorealtime),
                         Prolosstime = g.Sum(p => p.Prolinestopmin),
                         Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
-
-
                     };
 
                 //var qss =
@@ -139,13 +119,11 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
-
-                    q = q.Where(u => u.Promodel.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Prolot.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                    q = q.Where(u => u.Promodel.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Prolot.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                 }
 
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -171,7 +149,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 //{
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
-
 
                 // 在查询添加之后，排序和分页之前获取总记录数
                 Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -211,7 +188,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
@@ -220,7 +196,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 //where p.Prorealqty != 0
                 group p by new { p.Prodate, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
@@ -235,25 +211,19 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     Probadmemo = g.Key.Probadmemo,
                     Prolinemin = g.Key.Prolinemin,
                     Prolinestopmin = g.Key.Prolinestopmin,
-
-
-
                 };
-
-
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
 
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
             else
             {
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -269,11 +239,10 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 }
             }
 
-
             ConvertHelper.LinqConvertToDataTable(q);
-
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -309,8 +278,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -328,7 +295,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -345,15 +311,10 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
         //    DB.proOutputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.proOutputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -400,9 +361,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             //    DB.proOutputsubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.proOutputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -417,7 +375,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -425,18 +382,17 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             BindGrid();
         }
 
-
-
-
-        #endregion
+        #endregion Events
 
         public decimal Allcount;
+
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
             ttbSearchMessage.Text = "";
 
             BindGrid();
         }
+
         public void BindDDLLine()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -445,7 +401,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q = from a in DB.Pp_P1d_OutputSubs
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
-                    where a.isDelete == 0
+                    where a.isDeleted == 0
                     //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                     //where b.Ec_no == strecn
                     // where a.lineclass == "M"
@@ -454,7 +410,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     {
                         //a.linecode,
                         a.Prolinename,
-
                     };
 
             var qs = q.Select(E => new { E.Prolinename }).ToList().Distinct();
@@ -488,6 +443,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 BindDDLLine();
             }
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -502,7 +458,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 ratio += Convert.ToDecimal(row["Prospendtime"]);
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -511,7 +466,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             summary.Add("Prospendtime", ratio.ToString("F0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -559,8 +513,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             }
         }
 
-
-
         protected void BtnLoss_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
@@ -590,7 +542,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
@@ -610,17 +562,10 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     Probadmemo = g.Key.Probadmemo,
                     Prolinemin = g.Key.Prolinemin,
                     Prolinestopmin = g.Key.Prolinestopmin,
-
-
-
                 };
-
-
-
 
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -699,7 +644,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
 
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Probadcou, p.Probadmemo }
@@ -710,14 +655,12 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     Probadcou = g.Key.Probadcou,
                     Probadmemo = g.Key.Probadmemo,
                     numProstopcou = g.Count(),
-
                 };
-
 
             var qs_c =
                 (from p in q
                      //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                     //where p.isDelete == 0
+                     //where p.isDeleted == 0
                  where p.Prodate.CompareTo(sdate) == 0 && !string.IsNullOrEmpty(p.Probadcou)
 
                  group p by new { Prodate = sdate }
@@ -725,19 +668,14 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                  select new
                  {
                      Prodate = g.Key.Prodate,
-                     Allcount =g.Sum (p => p.numProstopcou)
-
+                     Allcount = g.Sum(p => p.numProstopcou)
                  }).ToList();
             if (qs_c.Any())
             {
-
                 Allcount = qs_c[0].Allcount;
             }
 
             // 在用户名称中搜索
-
-
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -753,7 +691,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             q = q.Where(u => u.Probadmemo != "NULL");
             if (q.Any())
             {
-
                 var qs = from g in q
 
                          orderby g.numProstopcou descending
@@ -763,8 +700,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                              原因 = g.Probadcou,
                              说明 = g.Probadmemo,
                              次数 = g.numProstopcou,
-                             比例 = (g.numProstopcou/Allcount)*100,
-
+                             比例 = (g.numProstopcou / Allcount) * 100,
                          };
 
                 ConvertHelper.LinqConvertToDataTable(qs);
@@ -780,6 +716,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
         }
+
         protected void BtnRework_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
@@ -809,7 +746,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 where p.Prostopmemo != ""
                 where p.Prostopmemo != null
@@ -825,19 +762,12 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     Probadcou = g.Key.Probadcou,
                     Probadmemo = g.Key.Probadmemo,
                     numProstopcou = g.Count(),
-
-
-
-
                 };
-
-
 
             // 在用户名称中搜索
 
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -860,7 +790,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                              原因 = g.Probadcou,
                              说明 = g.Probadmemo,
                              次数 = g.numProstopcou,
-
                          };
 
                 ConvertHelper.LinqConvertToDataTable(qs);
@@ -906,7 +835,7 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 where p.Prolinestopmin > 0
 
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Prostopcou }
@@ -916,17 +845,12 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                     Prodate = g.Key.Prodate,
                     Prostopcou = (g.Key.Prostopcou == "其它" ? "其他" : (string.IsNullOrEmpty(g.Key.Prostopcou) ? "其他" : g.Key.Prostopcou)),
                     Prolinestopmin = g.Sum(p => p.Prolinestopmin),
-
-
                 };
-
-
 
             // 在用户名称中搜索
 
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -942,7 +866,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
 
             if (q.Any())
             {
-
                 var qs = from p in q
 
                          orderby p.Prolinestopmin descending
@@ -954,8 +877,6 @@ namespace Fine.Lf_Manufacturing.PP.timesheet
                              日期 = g.Key.Prodate,
                              原因 = g.Key.Prostopcou,
                              损失工数 = g.Sum(p => p.Prolinestopmin),
-
-
                          };
 
                 ConvertHelper.LinqConvertToDataTable(qs);

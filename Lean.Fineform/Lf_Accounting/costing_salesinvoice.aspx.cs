@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
-using System.Data;
-using System.Xml;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
+using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_salesinvoice : PageBase
     {
@@ -29,9 +21,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -39,6 +32,7 @@ namespace Fine.Lf_Accounting
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 每页记录数
@@ -48,8 +42,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -57,26 +49,23 @@ namespace Fine.Lf_Accounting
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
-
         }
 
         private void BindGrid()
         {
             try
             {
-
                 if (rbtnFirstAuto.Checked)
                 {
-
                     DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
                     string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
                     string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
-                    var q_BomCost = from a in DB.Fico_Costing_BomCosts
+                    var q_BomCost = from a in DB.Fico_Costing_Bom_Costs
                                     where a.Bc_YM.CompareTo(BomDate) == 0
                                     select a;
 
-                    var q_SalesInv = from b in DB.Fico_Costing_SalesInvoices
+                    var q_SalesInv = from b in DB.Fico_Costing_Sales_Billings
                                      where b.Bc_YM.CompareTo(InvDate) == 0
                                      select b;
 
@@ -90,7 +79,6 @@ namespace Fine.Lf_Accounting
                                       a.Bc_SalesQty,
                                       a.Bc_BusinessAmount,
                                       b.Bc_MovingCost,
-
                                   };
 
                     var q = from a in q_Pivot
@@ -102,15 +90,12 @@ namespace Fine.Lf_Accounting
                           into g
                             select new
                             {
-
                                 g.Key.Bc_ProfitCenter,
-
 
                                 Bc_BusinessAmount = g.Sum(p => p.Bc_BusinessAmount),
 
                                 Materialfee = g.Sum(p => p.Bc_SalesQty) * g.Key.Bc_MovingCost,
                                 //Materialrate = (g.Sum(p => p.Bc_SalesQty) * g.Key.Bc_MovingCost) / g.Sum(p => p.Bc_BusinessAmount),
-
                             };
 
                     var q_count = from a in q
@@ -124,10 +109,8 @@ namespace Fine.Lf_Accounting
                                       g.Key.Bc_ProfitCenter,
                                       Bc_BusinessAmount = g.Sum(p => p.Bc_BusinessAmount),
                                       Materialfee = g.Sum(p => p.Materialfee),
-                                      Materialrate = g.Sum(p =>p.Materialfee)  / g.Sum(p => p.Bc_BusinessAmount),
+                                      Materialrate = g.Sum(p => p.Materialfee) / g.Sum(p => p.Bc_BusinessAmount),
                                   };
-
-
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q_count);
@@ -156,16 +139,15 @@ namespace Fine.Lf_Accounting
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-
                     DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
                     string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
                     string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
-                    var q_BomCost = from a in DB.Fico_Costing_BomCosts
+                    var q_BomCost = from a in DB.Fico_Costing_Bom_Costs
                                     where a.Bc_YM.CompareTo(BomDate) == 0
                                     select a;
 
-                    var q_SalesInv = from b in DB.Fico_Costing_SalesInvoices
+                    var q_SalesInv = from b in DB.Fico_Costing_Sales_Billings
                                      where b.Bc_YM.CompareTo(InvDate) == 0
                                      select b;
 
@@ -179,7 +161,6 @@ namespace Fine.Lf_Accounting
                                       a.Bc_SalesQty,
                                       a.Bc_BusinessAmount,
                                       b.Bc_MovingCost,
-
                                   };
 
                     var q = from a in q_Pivot
@@ -202,7 +183,6 @@ namespace Fine.Lf_Accounting
                                 g.Key.Bc_MovingCost,
                                 Materialfee = g.Sum(p => p.Bc_SalesQty) * g.Key.Bc_MovingCost,
                                 Materialrate = (g.Sum(p => p.Bc_SalesQty) * g.Key.Bc_MovingCost) / g.Sum(p => p.Bc_BusinessAmount),
-
                             };
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -242,12 +222,13 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
-        #endregion
+
+        #endregion Load
 
         #region Event
+
         //protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         //{
         //    Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -266,6 +247,7 @@ namespace Fine.Lf_Accounting
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -279,10 +261,12 @@ namespace Fine.Lf_Accounting
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         protected void rblEnableStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -301,8 +285,8 @@ namespace Fine.Lf_Accounting
             {
                 BindGrid();
             }
-
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -317,7 +301,6 @@ namespace Fine.Lf_Accounting
                 ratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             summary.Add("Bc_SalesQty", "本月材料费比率:");
 
@@ -326,11 +309,12 @@ namespace Fine.Lf_Accounting
             summary.Add("Materialrate", ratio.ToString("p2"));
 
             Grid1.SummaryData = summary;
-
         }
-        #endregion
+
+        #endregion Event
 
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -344,7 +328,7 @@ namespace Fine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "MaterialCostRatio_"+DPend.SelectedDate.Value.ToString("yyyyMM") ;
+            Xlsbomitem = "MaterialCostRatio_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -363,10 +347,8 @@ namespace Fine.Lf_Accounting
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
+        }
 
-
+        #endregion Export
     }
-        #endregion
-    }
-
 }

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class dept_user : PageBase
     {
@@ -24,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -41,10 +39,8 @@ namespace Fine.Lf_Admin
             // 权限检查
             CheckPowerWithButton("CoreDeptUserNew", btnNew);
             CheckPowerWithButton("CoreDeptUserDelete", btnDeleteSelected);
-            
 
             ResolveDeleteButtonForGrid(btnDeleteSelected, Grid2, "确定要从当前部门移除选中的{0}项记录吗？");
-
 
             BindGrid1();
 
@@ -105,8 +101,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -117,8 +112,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region Grid1 Events
 
@@ -127,7 +121,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -176,7 +170,6 @@ namespace Fine.Lf_Admin
             int deptID = GetSelectedDataKeyID(Grid1);
             List<int> userIDs = GetSelectedDataKeyIDs(Grid2);
 
-
             /*
             Dept dept = DB.Depts.Include(d => d.Users)
                 .Where(d => d.ID == deptID)
@@ -201,14 +194,12 @@ namespace Fine.Lf_Admin
 
             DB.SaveChanges();
 
-
             // 清空当前选中的项
             Grid2.SelectedRowIndexArray = null;
 
             // 重新绑定表格
             BindGrid2();
         }
-
 
         protected void Grid2_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -224,9 +215,7 @@ namespace Fine.Lf_Admin
                     return;
                 }
 
-                
                 int deptID = GetSelectedDataKeyID(Grid1);
-
 
                 Adm_User user = DB.Adm_Users.Include(u => u.Dept)
                     .Where(u => u.ID == userID)
@@ -240,7 +229,6 @@ namespace Fine.Lf_Admin
                 }
 
                 BindGrid2();
-
             }
         }
 
@@ -257,7 +245,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript(Window1.GetShowReference(addUrl, "添加用户到当前部门"));
         }
 
-        #endregion
-
+        #endregion Grid2 Events
     }
 }

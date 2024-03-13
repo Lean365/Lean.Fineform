@@ -1,10 +1,11 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.fqc
+
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc : PageBase
     {
@@ -21,9 +22,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
-        #region Page_Load 
+        #region Page_Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -62,22 +64,19 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u=> u.qmModels.ToString().Contains(searchText) || u.qmMaterial.ToString().Contains(searchText));
+                q = q.Where(u => u.qmModels.ToString().Contains(searchText) || u.qmMaterial.ToString().Contains(searchText));
             }
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -89,7 +88,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
             {
-
                 q = q.Where(u => u.qmLine.Contains(this.DDLline.SelectedText));
             }
 
@@ -114,8 +112,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             Grid1.DataSource = q;
             Grid1.DataBind();
-
         }
+
         public void BindDDLLine()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -127,11 +125,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                     select new
                     {
                         a.qmLine
-
                     };
-
-
-
 
             var qs = q.Select(E => new { E.qmLine, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -144,17 +138,19 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             DDLline.DataBind();
             this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
             {
-
                 BindGrid();
             }
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
@@ -172,6 +168,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 BindGrid();
             }
         }
+
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -192,13 +189,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             CheckPowerWithLinkButtonField("CoreFqcDelete", Grid1, "deleteField");
             CheckPowerWithLinkButtonField("CoreFqcEdit", Grid1, "editField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -231,16 +225,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         //    //DB.SaveChanges();
         //    DB.pqQachecks.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //    NetLogRecord();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -251,9 +239,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/fqc/fqc_edit.aspx?ID=" + str_ID + "&type=1") + Window1.GetMaximizeReference());
-
             }
-
 
             if (e.CommandName == "Delete")
             {
@@ -267,19 +253,17 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //删除日志
                 //int userID = GetSelectedDataKeyID(Grid1);
                 Qm_Outgoing current = DB.Qm_Outgoings.Find(str_ID);
-                string Deltext = current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmCheckmethod + "," + current.qmSamplingQty + "," + current.qmJudgment + "," + current.qmJudgmentlevel + "," + current.qmRejectqty + "," + current.qmJudgment + "," + current.qmAcceptqty + "," + current.qmOrderqty + "," + current.qmCheckout + "," + current.qmProqty ;
+                string Deltext = current.qmInspector + "," + current.qmLine + "," + current.qmOrder + "," + current.qmModels + "," + current.qmMaterial + "," + current.qmCheckdate + "," + current.qmProlot + "," + current.qmLotserial + "," + current.qmCheckmethod + "," + current.qmSamplingQty + "," + current.qmJudgment + "," + current.qmJudgmentlevel + "," + current.qmRejectqty + "," + current.qmJudgment + "," + current.qmAcceptqty + "," + current.qmOrderqty + "," + current.qmCheckout + "," + current.qmProqty;
                 string OperateType = "删除";
                 string OperateNotes = "Del产品检验记录* " + Deltext + "*Del产品检验记录 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "产品检验记录删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
-
                 BindGrid();
-
             }
         }
 
@@ -293,7 +277,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -301,9 +284,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        #endregion
-
-
+        #endregion Events
 
         protected void BtnList_Click(object sender, EventArgs e)
         {
@@ -319,7 +300,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string Xlsbomitem, ExportFileName;
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
@@ -328,7 +309,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -340,7 +320,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
             {
-
                 q = q.Where(u => u.qmLine.Contains(this.DDLline.SelectedText));
             }
             var qs = from a in q
@@ -364,7 +343,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          生产订单数量 = a.qmOrderqty,
                          检验次数 = a.qmCheckout,
                          生产数 = a.qmProqty,
-
                      };
             Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Inspect Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
@@ -379,7 +357,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             if (ExportTB != null && ExportTB.Rows.Count > 0)
             {
-
                 ExportHelper.EpplustoXLSXfile(ExportTB, Xlsbomitem, ExportFileName);
             }
             else
@@ -387,8 +364,5 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 Alert.ShowInTop("没有数据被导出！", "警告提示", MessageBoxIcon.Warning);
             }
         }
-
-
-
     }
 }

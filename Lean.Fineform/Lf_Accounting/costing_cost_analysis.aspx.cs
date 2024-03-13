@@ -1,25 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System;
+using System.Data;
+using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_cost_analysis : PageBase
     {
@@ -36,10 +21,12 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string Xlsbomitem, ExportFileName;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -70,8 +57,6 @@ namespace Fine.Lf_Accounting
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
-
             //本月最后一天
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
@@ -80,10 +65,7 @@ namespace Fine.Lf_Accounting
             ddlGridPageSize.SelectedValue = "5000";
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -95,8 +77,6 @@ namespace Fine.Lf_Accounting
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (rbtnFirstAuto.Checked)
                 {
-
-
                     var q_all = from a in DB.Fico_Costing_HistInventorys
                                 where a.Bc_YM.CompareTo(BomDate) <= 0
                                 select a;
@@ -112,7 +92,7 @@ namespace Fine.Lf_Accounting
                                        b.Bc_MovingAverage
                                    };
 
-                    var q_Bom = from a in DB.Fico_Costing_BomCosts
+                    var q_Bom = from a in DB.Fico_Costing_Bom_Costs
                                 where a.Bc_Balancedate.Substring(0, 6).CompareTo(BomDate) == 0
                                 select a;
 
@@ -125,7 +105,6 @@ namespace Fine.Lf_Accounting
                                 a.Bc_MovingCost,
                                 Bc_MovingAverage = b.Bc_MovingAverage / 1000,
                                 Bc_Diff = b.Bc_MovingAverage / 1000 - a.Bc_MovingCost,
-
                             };
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -143,8 +122,6 @@ namespace Fine.Lf_Accounting
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -154,13 +131,9 @@ namespace Fine.Lf_Accounting
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-
-
-                    var q = from a in DB.Fico_Costing_FobDatas
-                                    where a.Bc_YM.CompareTo(InvDate) == 0
-                                    select a;
-
-
+                    var q = from a in DB.Fico_Costing_Fobs
+                            where a.Bc_YM.CompareTo(InvDate) == 0
+                            select a;
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -188,7 +161,6 @@ namespace Fine.Lf_Accounting
                     }
                 }
 
-
                 // q = q.Where(u => u.Promodel != "0");
                 //if (GetIdentityName() != "admin")
                 //{)
@@ -200,8 +172,6 @@ namespace Fine.Lf_Accounting
                 //{
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
-
-
 
                 ttbSearchMessage.Text = "";
             }
@@ -216,11 +186,10 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -256,8 +225,6 @@ namespace Fine.Lf_Accounting
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -275,7 +242,6 @@ namespace Fine.Lf_Accounting
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -292,15 +258,10 @@ namespace Fine.Lf_Accounting
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -347,9 +308,6 @@ namespace Fine.Lf_Accounting
             //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -363,7 +321,6 @@ namespace Fine.Lf_Accounting
         {
             BindGrid();
         }
-
 
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -390,13 +347,9 @@ namespace Fine.Lf_Accounting
             {
                 BindGrid();
             }
-
         }
 
-
-        #endregion
-
-
+        #endregion Events
 
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
@@ -406,6 +359,7 @@ namespace Fine.Lf_Accounting
                 BindGrid();
             }
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -421,7 +375,6 @@ namespace Fine.Lf_Accounting
                 ratio = rTotal / Ytoal;
             }
 
-
             JObject summary = new JObject();
             summary.Add("Bc_TitleName", "(CNY)合计");
             summary.Add("BC_BudgetAmt", Ytoal.ToString("F2"));
@@ -430,7 +383,6 @@ namespace Fine.Lf_Accounting
             //summary.Add("Bediffmoney", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -445,7 +397,6 @@ namespace Fine.Lf_Accounting
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
 
-
             if (rbtnFirstAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -456,7 +407,6 @@ namespace Fine.Lf_Accounting
             }
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

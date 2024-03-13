@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class company : PageBase
     {
@@ -25,7 +19,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -47,10 +41,8 @@ namespace Fine.Lf_Admin
 
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Admin/company_new.aspx", "新增");
 
-
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
-
 
             BindGrid();
         }
@@ -65,7 +57,7 @@ namespace Fine.Lf_Admin
             {
                 q = q.Where(r => r.ShortName.Contains(searchText));
             }
-            q = q.Where(r => r.isDelete==0 && r.isEnabled==0);
+            q = q.Where(r => r.isDeleted == 0 && r.isEnabled == 0);
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
@@ -76,7 +68,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -120,7 +112,6 @@ namespace Fine.Lf_Admin
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/company_edit.aspx?GUID=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
-
             }
             //int del_ID = GetSelectedDataKeyID(Grid1);
 
@@ -138,17 +129,14 @@ namespace Fine.Lf_Admin
                 //int userID = GetSelectedDataKeyID(Grid1);
                 Adm_Institution current = DB.Adm_Institutions.Find(Guid.Parse(del_guid));
 
-
-
                 string Newtext = current.ShortName;
                 string OperateType = "删除";//操作标记
                 string OperateNotes = "Del管理员* " + Newtext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "公司部门", "公司信息删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 current.isEnabled = 1;
                 DB.SaveChanges();
-
 
                 BindGrid();
             }
@@ -159,7 +147,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

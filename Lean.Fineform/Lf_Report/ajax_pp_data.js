@@ -12,7 +12,7 @@
 function AjaxData_Pp_Actual() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_actual.ashx",
+        url: "/Lf_Report/pp_actual.ashx",
         data: {
             TransDate: TransDates
         },
@@ -46,7 +46,7 @@ function AjaxData_Pp_Actual() {
 function AjaxData_Pp_Lastday_Actual() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_last_actual.ashx",
+        url: "/Lf_Report/pp_last_actual.ashx",
         data: {
             TransDate: "DTA"
         },
@@ -79,7 +79,7 @@ function AjaxData_Pp_Lastday_Actual() {
 function AjaxData_Pp_Defect() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_defect.ashx",
+        url: "/Lf_Report/pp_defect.ashx",
         data: {
             TransDate: TransDates
         },
@@ -113,7 +113,7 @@ function AjaxData_Pp_Reason() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_reason.ashx",
+        url: "/Lf_Report/pp_reason.ashx",
         data: {
             TransDate: TransDates
         },
@@ -138,12 +138,12 @@ function AjaxData_Pp_Reason() {
     });
     //---------------------------------------------------------------------------
 }
-//直行率
-function AjaxData_Pp_Direct() {
-   // debugger;
+//直行率(Rolled Throughout Yield)
+function AjaxData_Pp_Rty() {
+    // debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_defect.ashx",
+        url: "/Lf_Report/pp_output_rolledthroughout_yield.ashx",
         data: {
             TransDate: TransDates
         },
@@ -161,7 +161,7 @@ function AjaxData_Pp_Direct() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Direct(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindmyChart_Pp_Rty(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
@@ -171,11 +171,11 @@ function AjaxData_Pp_Direct() {
     //---------------------------------------------------------------------------
 }
 //达成率
-function AjaxData_Pp_Achieve() {
+function AjaxData_Pp_Achieving_Rate() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_achieve.ashx",
+        url: "/Lf_Report/pp_output_achieving_rate.ashx",
         data: {
             TransDate: TransDates
         },
@@ -197,7 +197,7 @@ function AjaxData_Pp_Achieve() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Achieve(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindmyChart_Pp_Achieving_Rate(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
@@ -212,7 +212,7 @@ function AjaxData_Pp_Progress() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/Pp_moprogress.ashx",
+        url: "/Lf_Report/pp_moprogress.ashx",
         data: {
             TransDate: TransDates
         },
@@ -249,7 +249,7 @@ function AjaxData_Pp_LineLosstime() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/Pp_losstime_line.ashx",
+        url: "/Lf_Report/pp_losstime_line.ashx",
         data: {
             TransDate: TransDates
         },
@@ -288,7 +288,7 @@ function AjaxData_Pp_Losstime() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/Pp_losstime.ashx",
+        url: "/Lf_Report/pp_losstime.ashx",
         data: {
             TransDate: TransDates
         },
@@ -327,7 +327,7 @@ function AjaxData_Pp_Linestop() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/Pp_reason_stopline.ashx",
+        url: "/Lf_Report/pp_reason_stopline.ashx",
         data: {
             TransDate: TransDates
         },
@@ -343,7 +343,6 @@ function AjaxData_Pp_Linestop() {
                 for (var i = 0; i < list.length; i++) {
                     name.push(list[i].name);
                     value.push(list[i].value);
-
                 }
                 BindmyChart_Pp_Linestop(name, value, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
@@ -359,7 +358,7 @@ function AjaxData_Pp_ModelAchieve() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_achieve_model.ashx",
+        url: "/Lf_Report/pp_achieve_model.ashx",
         data: {
             TransDate: TransDates
         },
@@ -395,7 +394,7 @@ function AjaxData_Pp_YearAchieve() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_achieve_year.ashx",
+        url: "/Lf_Report/pp_achieve_year.ashx",
         data: {
             TransDate: TransDates
         },
@@ -415,9 +414,8 @@ function AjaxData_Pp_YearAchieve() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
-
                 }
-                BindmyChart_Pp_YearAchieve(name, value1, value2, value3,data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindmyChart_Pp_YearAchieve(name, value1, value2, value3, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
@@ -431,7 +429,7 @@ function AjaxData_Pp_YearAchieve() {
 function AjaxData_Pp_Tracking_Lot() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_tracking_lot.ashx",
+        url: "/Lf_Report/pp_tracking_lot.ashx",
         data: {
             TransDate: TransDates
         },
@@ -454,7 +452,6 @@ function AjaxData_Pp_Tracking_Lot() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
-
                 }
                 BindmyChart_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value5, data);          //调用封装好的ActualmyChart
             }
@@ -469,7 +466,7 @@ function AjaxData_Pp_Tracking_Lot() {
 function AjaxData_Pp_Tracking_OPH() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Pp_tracking_lot.ashx",
+        url: "/Lf_Report/pp_tracking_lot.ashx",
         data: {
             TransDate: TransDates
         },
@@ -492,7 +489,6 @@ function AjaxData_Pp_Tracking_OPH() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
-
                 }
                 BindmyChart_Pp_Ttacking_OPH(name, value3, value4, value5, data);          //调用封装好的ActualmyChart
             }

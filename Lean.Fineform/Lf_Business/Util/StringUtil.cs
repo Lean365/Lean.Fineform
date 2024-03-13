@@ -1,15 +1,11 @@
 using System;
 using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
 using System.Linq;
 
-namespace Fine
+namespace LeanFine
 {
     public class StringUtil
     {
-
         public static int[] GetIntArrayFromString(string commaSeparatedString)
         {
             if (String.IsNullOrEmpty(commaSeparatedString))
@@ -27,6 +23,5 @@ namespace Fine
             JSBeautifyLib.JSBeautify jsb = new JSBeautifyLib.JSBeautify(source, new JSBeautifyLib.JSBeautifyOptions());
             return jsb.GetResult();
         }
-
     }
 }

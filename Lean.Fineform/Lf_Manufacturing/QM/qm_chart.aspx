@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Qm_chart.aspx.cs" Inherits="Fine.Lf_Manufacturing.QM.Qm_chart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Qm_chart.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.QM.Qm_chart" %>
 
 <!DOCTYPE html>
 
@@ -167,9 +167,9 @@
             } else if (tabIndex === 1) {
                 AjaxData_Pp_Reason();
             } else if (tabIndex === 2) {
-                AjaxData_Pp_Direct();
+                AjaxData_Pp_Rty();
             } else if (tabIndex === 3) {
-                AjaxData_Pp_Achieve();
+                AjaxData_Pp_Achieving_Rate();
             } else if (tabIndex === 4) {
                 AjaxData_Qm_Pass();
             } else if (tabIndex === 5) {

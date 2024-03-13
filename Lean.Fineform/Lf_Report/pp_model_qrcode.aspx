@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_model_qrcode.aspx.cs" Inherits="Fine.Lf_Report.Pp_model_qrcode" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_model_qrcode.aspx.cs" Inherits="LeanFine.Lf_Report.pp_model_qrcode" %>
 
 <!DOCTYPE html>
 
@@ -31,13 +31,13 @@
                         </f:Button>
                         <f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
                         </f:ToolbarSeparator>
-                        <f:Button ID="btn_PrintPreview" ValidateForms="SimpleForm1" IconUrl="~/Lf_Resources/icon/PrintView.png"
+                        <f:Button ID="btn_PrintPreview" ValidateForms="SimpleForm1" IconUrl="~/LB_Resources/icon/PrintView.png"
                             EnablePostBack="false" OnClientClick="CreatePages_A5_PREVIEW()" runat="server" Text="<%$ Resources:GlobalResource,sys_Button_Preview_A5%>">
                         </f:Button>
-                        <f:Button ID="btn_PrintDesign" ValidateForms="SimpleForm1" IconUrl="~/Lf_Resources/icon/PrintDesign.png"
+                        <f:Button ID="btn_PrintDesign" ValidateForms="SimpleForm1" IconUrl="~/LB_Resources/icon/PrintDesign.png"
                             EnablePostBack="false" OnClientClick="CreatePages_A114_PREVIEW()" runat="server" Text="<%$ Resources:GlobalResource,sys_Button_Preview_A4%>">
                         </f:Button>
-                        <f:Button ID="btn_PrintSetup" ValidateForms="SimpleForm1" IconUrl="~/Lf_Resources/icon/PrintDesign.png"
+                        <f:Button ID="btn_PrintSetup" ValidateForms="SimpleForm1" IconUrl="~/LB_Resources/icon/PrintDesign.png"
                             EnablePostBack="false" OnClientClick="CreateAllPages_SETUP()" runat="server" Text="<%$ Resources:GlobalResource,sys_Button_Setup%>">
                         </f:Button>
                     </Items>
@@ -167,7 +167,7 @@
                 LODOP.ADD_PRINT_BARCODE(2, 19, 64, 64, "QRCode", strPdate + "," + strPline + "," + strPmodel + "," + strPlot + "," + strPregion + "," + i + "SEQ");
 
                 //打印LOGO
-                //LODOP.ADD_PRINT_HTM(10, 85, 83, 20, "<img src='/Lf_Resources/images/FileLogo.png'/>");
+                //LODOP.ADD_PRINT_HTM(10, 85, 83, 20, "<img src='/LB_Resources/images/FileLogo.png'/>");
                 //LODOP.SET_PRINT_STYLEA(0, "Stretch", 1);
                 //打印标题
                 //LODOP.ADD_PRINT_TEXT(12, 200, 300, 30, "东莞蒂雅克电子有限公司");
@@ -219,7 +219,7 @@
                 LODOP.ADD_PRINT_BARCODE(2, 19, 96, 96, "QRCode", strPdate + "," + strPline + "," + strPmodel + "," + strPlot + "," + strPregion + "," + strPitem + "," + i + "SEQ");
 
                 //打印LOGO
-                //LODOP.ADD_PRINT_HTM(10, 85, 83, 20, "<img src='/Lf_Resources/images/FileLogo.png'/>");
+                //LODOP.ADD_PRINT_HTM(10, 85, 83, 20, "<img src='/LB_Resources/images/FileLogo.png'/>");
                 //LODOP.SET_PRINT_STYLEA(0, "Stretch", 1);
                 //打印标题
                 //LODOP.ADD_PRINT_TEXT(12, 200, 300, 30, "东莞蒂雅克电子有限公司");

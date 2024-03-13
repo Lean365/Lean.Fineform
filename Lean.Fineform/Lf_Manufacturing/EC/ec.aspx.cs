@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
-namespace Fine.Lf_Manufacturing.EC
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec : PageBase
     {
@@ -31,9 +22,10 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, myrexname, xlsname;
         public static DataTable table;
         //
@@ -76,25 +68,20 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
-
 
                 if (rbtnFirstAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -106,7 +93,7 @@ namespace Fine.Lf_Manufacturing.EC
                              select new
                              {
                                  a.Ec_issuedate,
-                                 a.Ec_leader,                                 
+                                 a.Ec_leader,
                                  a.Ec_distinction,
                                  a.Ec_no,
                                  b.Ec_entrydate,
@@ -131,8 +118,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -153,7 +138,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var qs = q.Select(E =>
@@ -161,7 +145,7 @@ namespace Fine.Lf_Manufacturing.EC
                     {
                         E.Ec_issuedate,
                         E.Ec_leader,
-                        E.Ec_distinction,                                           
+                        E.Ec_distinction,
                         E.Ec_no,
                         E.Ec_entrydate,
                         E.Ec_qadate,
@@ -202,23 +186,19 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
                         Grid1.DataSource = "";
                         Grid1.DataBind();
                     }
-
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -254,8 +234,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -276,7 +254,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var qs = q.Select(E =>
@@ -325,8 +302,6 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -336,11 +311,10 @@ namespace Fine.Lf_Manufacturing.EC
                 }
                 if (rbtnThirdAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -376,8 +350,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -398,7 +370,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var qs = q.Select(E =>
@@ -446,8 +417,6 @@ namespace Fine.Lf_Manufacturing.EC
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -488,6 +457,7 @@ namespace Fine.Lf_Manufacturing.EC
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
@@ -505,6 +475,7 @@ namespace Fine.Lf_Manufacturing.EC
                 BindGrid();
             }
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -513,7 +484,6 @@ namespace Fine.Lf_Manufacturing.EC
             {
                 return;
             }
-
 
             if (rbtnFirstAuto.Checked)
             {
@@ -527,9 +497,9 @@ namespace Fine.Lf_Manufacturing.EC
             {
                 BindGrid();
             }
-
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -546,8 +516,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -560,70 +528,59 @@ namespace Fine.Lf_Manufacturing.EC
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
             DataRowView row = e.DataItem as DataRowView;
             if (row != null)
             {
                 if (e.Values[3].ToString() == "◎未处理")
                 {
-
                     e.Values[3] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[3]);
                 }
                 if (e.Values[4].ToString() == "◎未处理")
                 {
-
                     e.Values[4] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[4]);
                 }
                 if (e.Values[5].ToString() == "◎未处理")
                 {
-
                     e.Values[5] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[5]);
                 }
                 if (e.Values[6].ToString() == "◎未处理")
                 {
-
                     e.Values[6] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[6]);
                 }
                 if (e.Values[7].ToString() == "◎未处理")
                 {
-
                     e.Values[7] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[7]);
                 }
                 if (e.Values[8].ToString() == "◎未处理")
                 {
-
                     e.Values[8] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[8]);
                 }
                 if (e.Values[9].ToString() == "◎未处理")
                 {
-
                     e.Values[9] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[9]);
                 }
                 if (e.Values[10].ToString() == "◎未处理")
                 {
-
                     e.Values[10] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[10]);
                 }
                 if (e.Values[11].ToString() == "◎未处理")
                 {
-
                     e.Values[11] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[11]);
                 }
                 if (e.Values[12].ToString() == "◎未处理")
                 {
-
                     e.Values[12] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[12]);
                 }
             }
-
         }
+
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -634,7 +591,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -642,11 +598,12 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-        #endregion
+        #endregion Events
+
         #region ExportExcel
+
         protected void BtnIssueExport_Click(object sender, EventArgs e)
         {
-
             // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
             {
@@ -659,16 +616,14 @@ namespace Fine.Lf_Manufacturing.EC
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
 
                 if (rbtnFirstAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -679,8 +634,8 @@ namespace Fine.Lf_Manufacturing.EC
                              select new
                              {
                                  a.Ec_issuedate,
-                                 a.Ec_leader,                                 
-                                 Ec_distinction = (a.Ec_distinction==1 ? "全仕向" : a.Ec_distinction == 2 ? "部管" : a.Ec_distinction == 3 ? "内部" : a.Ec_distinction == 4 ? "技术" : a.Ec_distinction.ToString()),
+                                 a.Ec_leader,
+                                 Ec_distinction = (a.Ec_distinction == 1 ? "全仕向" : a.Ec_distinction == 2 ? "部管" : a.Ec_distinction == 3 ? "内部" : a.Ec_distinction == 4 ? "技术" : a.Ec_distinction.ToString()),
                                  a.Ec_no,
                                  b.Ec_entrydate,
                                  Ec_pmcdate = (b.Ec_pmcdate.ToString() == "" ? "◎未处理" : b.Ec_pmcdate == null ? "◎未处理" : b.Ec_pmcdate.ToString()),
@@ -704,8 +659,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -726,7 +679,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var Q_Distinct = q.Select(E =>
@@ -768,7 +720,7 @@ namespace Fine.Lf_Manufacturing.EC
                                 发行日期 = E.Ec_issuedate,
                                 设变号码 = E.Ec_no,
                                 机种名称 = E.Ec_model,
-                                成品物料=E.Ec_bomitem,
+                                成品物料 = E.Ec_bomitem,
                                 品管登录 = E.Ec_qadate,
                                 生管登录 = E.Ec_pmcdate,
                                 部管登录 = E.Ec_mmdate,
@@ -776,7 +728,7 @@ namespace Fine.Lf_Manufacturing.EC
                                 受检登录 = E.Ec_iqcdate,
                                 制一登录 = E.Ec_p1ddate,
                                 制二登录 = E.Ec_p2ddate,
-                                管理区分=E.Ec_distinction,
+                                管理区分 = E.Ec_distinction,
                             });
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -797,15 +749,13 @@ namespace Fine.Lf_Manufacturing.EC
                     {
                         Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                     }
-
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -841,8 +791,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -863,7 +811,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var Q_Distinct = q.Select(E =>
@@ -937,11 +884,10 @@ namespace Fine.Lf_Manufacturing.EC
                 }
                 if (rbtnThirdAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -977,8 +923,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -999,7 +943,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var Q_Distinct = q.Select(E =>
@@ -1070,7 +1013,7 @@ namespace Fine.Lf_Manufacturing.EC
                         Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                     }
                 }
-                }
+            }
             catch (ArgumentNullException Message)
             {
                 Alert.ShowInTop("空参数传递(err:null):" + Message);
@@ -1102,13 +1045,10 @@ namespace Fine.Lf_Manufacturing.EC
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
-
         }
 
         protected void BtnEntryExport_Click(object sender, EventArgs e)
         {
-
             // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
             {
@@ -1121,18 +1061,16 @@ namespace Fine.Lf_Manufacturing.EC
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
 
                 if (rbtnFirstAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                              where string.IsNullOrEmpty(b.Ec_qadate)
                              //where b.Ec_distinction == 1
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -1166,7 +1104,6 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
                              });
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -1187,7 +1124,6 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
 
                     var Q_Distinct = q.Select(E =>
@@ -1255,17 +1191,15 @@ namespace Fine.Lf_Manufacturing.EC
                     {
                         Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                     }
-
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                              where !string.IsNullOrEmpty(b.Ec_qadate)
                              //where b.Ec_distinction == 1
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -1300,12 +1234,9 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
-
                              });
                     string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
@@ -1321,11 +1252,9 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-
 
                     var Q_Distinct = q.Select(E =>
                     new
@@ -1395,11 +1324,10 @@ namespace Fine.Lf_Manufacturing.EC
                 }
                 if (rbtnThirdAuto.Checked)
                 {
-
                     var q =
                             (from a in DB.Pp_Ecs
                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
+                             where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
                              where a.Ec_distinction != 4
@@ -1433,11 +1361,9 @@ namespace Fine.Lf_Manufacturing.EC
                                  a.Ec_eppletterdoc,
                                  a.Ec_teppletterno,
                                  a.Ec_teppletterdoc,
-
                              });
                     string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
@@ -1453,11 +1379,9 @@ namespace Fine.Lf_Manufacturing.EC
                         {
                             q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                         }
-
                     }
                     //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                     //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-
 
                     var Q_Distinct = q.Select(E =>
                     new
@@ -1525,7 +1449,6 @@ namespace Fine.Lf_Manufacturing.EC
                         Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                     }
                 }
-
             }
             catch (ArgumentNullException Message)
             {
@@ -1558,8 +1481,6 @@ namespace Fine.Lf_Manufacturing.EC
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
-
         }
 
         protected void BtnUnenforced_Click(object sender, EventArgs e)
@@ -1576,23 +1497,20 @@ namespace Fine.Lf_Manufacturing.EC
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
-
-
 
                 var q =
                         (from a in DB.Pp_Ecs
                          join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                         where b.isDelete == 0
+                         where b.isDeleted == 0
                          where b.Ec_newitem != "0"
                          where !b.Ec_pmcmemo.Contains("EOL")
                          where a.Ec_distinction != 4
                          where a.Ec_distinction != 2
-                             //where string.IsNullOrEmpty(b.Ec_qadate)
-                             //where b.Ec_qadate == null
+                         //where string.IsNullOrEmpty(b.Ec_qadate)
+                         //where b.Ec_qadate == null
 
-                             orderby a.Ec_issuedate, b.Ec_model, b.Ec_olditem, b.Ec_newitem
+                         orderby a.Ec_issuedate, b.Ec_model, b.Ec_olditem, b.Ec_newitem
                          select new
                          {
                              a.Ec_issuedate,
@@ -1609,8 +1527,6 @@ namespace Fine.Lf_Manufacturing.EC
                              b.Ec_qadate,
                              b.Ec_model,
                              b.Ec_bomitem,
-
-
                          });
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -1631,10 +1547,7 @@ namespace Fine.Lf_Manufacturing.EC
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                     }
-
                 }
-
-
 
                 var Q_Distinct = q.Select(E =>
                         new
@@ -1659,8 +1572,8 @@ namespace Fine.Lf_Manufacturing.EC
 
                 var q_All = from a in Q_Distinct
                             where !(from d in DB.Pp_EcSubs
-                                   where !string.IsNullOrEmpty(d.Ec_qadate)
-                                   select d.Ec_no)
+                                    where !string.IsNullOrEmpty(d.Ec_qadate)
+                                    select d.Ec_no)
                                  .Contains(a.Ec_no)
                             select a;
                 var qs = q_All.Select(E =>
@@ -1700,8 +1613,6 @@ namespace Fine.Lf_Manufacturing.EC
                 {
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                 }
-
-
             }
             catch (ArgumentNullException Message)
             {
@@ -1734,7 +1645,6 @@ namespace Fine.Lf_Manufacturing.EC
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
         }
 
         protected void BtnImplemented_Click(object sender, EventArgs e)
@@ -1751,91 +1661,83 @@ namespace Fine.Lf_Manufacturing.EC
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
 
+                var q =
+                        (from a in DB.Pp_Ecs
+                         join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                         where b.isDeleted == 0
+                         where b.Ec_newitem != "0"
+                         where !b.Ec_pmcmemo.Contains("EOL")
+                         where a.Ec_distinction != 4
+                         where a.Ec_distinction != 2
+                         //where string.IsNullOrEmpty(b.Ec_qadate)
+                         //where b.Ec_qadate == null
 
+                         orderby a.Ec_issuedate, b.Ec_model, b.Ec_olditem, b.Ec_newitem
+                         select new
+                         {
+                             a.Ec_issuedate,
+                             a.Ec_leader,
+                             Ec_distinction = (a.Ec_distinction == 1 ? "全仕向" : a.Ec_distinction == 2 ? "部管" : a.Ec_distinction == 3 ? "内部" : a.Ec_distinction == 4 ? "技术" : a.Ec_distinction.ToString()),
+                             a.Ec_no,
+                             b.Ec_entrydate,
+                             b.Ec_pmcdate,
+                             b.Ec_mmdate,
+                             b.Ec_purdate,
+                             b.Ec_iqcdate,
+                             b.Ec_p1ddate,
+                             b.Ec_p2ddate,
+                             b.Ec_qadate,
+                             b.Ec_model,
+                             b.Ec_bomitem,
+                         });
+                //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
+                //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
+                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
 
-                    var q =
-                            (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             where b.isDelete == 0
-                             where b.Ec_newitem != "0"
-                             where !b.Ec_pmcmemo.Contains("EOL")
-                             where a.Ec_distinction != 4
-                             where a.Ec_distinction != 2
-                             //where string.IsNullOrEmpty(b.Ec_qadate)
-                             //where b.Ec_qadate == null
-
-                             orderby a.Ec_issuedate, b.Ec_model, b.Ec_olditem, b.Ec_newitem
-                             select new
-                             {
-                                 a.Ec_issuedate,
-                                 a.Ec_leader,
-                                 Ec_distinction = (a.Ec_distinction == 1 ? "全仕向" : a.Ec_distinction == 2 ? "部管" : a.Ec_distinction == 3 ? "内部" : a.Ec_distinction == 4 ? "技术" : a.Ec_distinction.ToString()),
-                                 a.Ec_no,
-                                 b.Ec_entrydate,
-                                 b.Ec_pmcdate,
-                                b.Ec_mmdate,
-                                 b.Ec_purdate,
-                                 b.Ec_iqcdate,
-                                 b.Ec_p1ddate,
-                                 b.Ec_p2ddate,
-                                 b.Ec_qadate,
-                                 b.Ec_model,
-                                 b.Ec_bomitem,
-
-
-                             });
-                    //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                    //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
-                    if (!String.IsNullOrEmpty(searchText))
+                if (!String.IsNullOrEmpty(searchText))
+                {
+                    q = q.Where(u => u.Ec_model.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_issuedate.Contains(searchText));
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(sdate))
                     {
-                        q = q.Where(u => u.Ec_model.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_issuedate.Contains(searchText));
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
                     }
-                    else
+                    if (!string.IsNullOrEmpty(edate))
                     {
-                        if (!string.IsNullOrEmpty(sdate))
-                        {
-                            q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
-                        }
-                        if (!string.IsNullOrEmpty(edate))
-                        {
-                            q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
-                        }
-
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                     }
+                }
 
-
-
-            var Q_Distinct = q.Select(E =>
-                    new
-                    {
-                        E.Ec_issuedate,
-                        E.Ec_leader,
-                        E.Ec_distinction,
-                        E.Ec_no,
-                        E.Ec_entrydate,
-                        E.Ec_qadate,
-                        E.Ec_pmcdate,
-                        E.Ec_mmdate,
-                        E.Ec_purdate,
-                        E.Ec_iqcdate,
-                        E.Ec_p1ddate,
-                        E.Ec_p2ddate,
-                        E.Ec_model,
-                        E.Ec_bomitem,
-                    }).Distinct();
+                var Q_Distinct = q.Select(E =>
+                        new
+                        {
+                            E.Ec_issuedate,
+                            E.Ec_leader,
+                            E.Ec_distinction,
+                            E.Ec_no,
+                            E.Ec_entrydate,
+                            E.Ec_qadate,
+                            E.Ec_pmcdate,
+                            E.Ec_mmdate,
+                            E.Ec_purdate,
+                            E.Ec_iqcdate,
+                            E.Ec_p1ddate,
+                            E.Ec_p2ddate,
+                            E.Ec_model,
+                            E.Ec_bomitem,
+                        }).Distinct();
 
                 //查询完全实施点数
 
                 var q_All = from a in Q_Distinct
                             where (from d in DB.Pp_EcSubs
-                                  where !string.IsNullOrEmpty(d.Ec_qadate)
-                                  select d.Ec_no)
+                                   where !string.IsNullOrEmpty(d.Ec_qadate)
+                                   select d.Ec_no)
                                  .Contains(a.Ec_no)
                             select a;
                 var qs = q_All.Select(E =>
@@ -1857,26 +1759,24 @@ namespace Fine.Lf_Manufacturing.EC
                                 管理区分 = E.Ec_distinction,
                             });
 
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    if (qs.Any())
-                    {
-                        int c = GridHelper.GetTotalCount(qs);
-                        ConvertHelper.LinqConvertToDataTable(qs);
-                        Xlsbomitem = "ec_Implemented_List";
-                        //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                        ExportFileName = Xlsbomitem + ".xlsx";
-                        //Grid1.AllowPaging = false;
-                        ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
-                        //Grid1.AllowPaging = true;
-                    }
-                    else
+                // 在查询添加之后，排序和分页之前获取总记录数
+                // 在查询添加之后，排序和分页之前获取总记录数
+                if (qs.Any())
+                {
+                    int c = GridHelper.GetTotalCount(qs);
+                    ConvertHelper.LinqConvertToDataTable(qs);
+                    Xlsbomitem = "ec_Implemented_List";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
+                    ExportFileName = Xlsbomitem + ".xlsx";
+                    //Grid1.AllowPaging = false;
+                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    //Grid1.AllowPaging = true;
+                }
+                else
 
-                    {
-                        Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
-                    }
-
- 
+                {
+                    Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
+                }
             }
             catch (ArgumentNullException Message)
             {
@@ -1909,12 +1809,8 @@ namespace Fine.Lf_Manufacturing.EC
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
         }
 
-
-
-
-        #endregion
+        #endregion ExportExcel
     }
 }

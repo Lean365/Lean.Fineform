@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,6 +10,7 @@ using System.Web;
 public static class Config
 {
     private static bool noCache = true;
+
     private static JObject BuildItems()
     {
         var json = File.ReadAllText(HttpContext.Current.Server.MapPath("config.json"));
@@ -30,8 +28,8 @@ public static class Config
             return _Items;
         }
     }
-    private static JObject _Items;
 
+    private static JObject _Items;
 
     public static T GetValue<T>(string key)
     {

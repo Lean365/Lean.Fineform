@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
 
-namespace Fine
+namespace LeanFine
 {
     public class MenuHelper
     {
@@ -37,7 +34,6 @@ namespace Fine
             ResolveMenuCollection(dbMenus, null, 0);
         }
 
-
         private static int ResolveMenuCollection(List<Adm_Menu> dbMenus, Adm_Menu parentMenu, int level)
         {
             int count = 0;
@@ -62,6 +58,5 @@ namespace Fine
 
             return count;
         }
-
     }
 }

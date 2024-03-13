@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
 using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
-using System.Text;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_last_actual 的摘要说明
+    /// pp_last_actual 的摘要说明
     /// </summary>
-    public class Pp_last_actual : IHttpHandler
+    public class pp_last_actual : IHttpHandler
     {
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -33,7 +25,7 @@ namespace Fine.Lf_Report
             context.Response.ContentType = "text/plain";
             var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                         where p.Prodate.Contains(atedate)
-                        where p.isDelete == 0
+                        where p.isDeleted == 0
                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         select new
                         {
@@ -84,7 +76,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -92,7 +83,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

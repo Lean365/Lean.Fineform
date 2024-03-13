@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.PP.daily
+namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 {
 
 
@@ -105,13 +105,13 @@ namespace Fine.Lf_Manufacturing.PP.daily
         protected global::FineUIPro.DatePicker prodate;
 
         /// <summary>
-        /// prolinename 控件。
+        /// pordertype 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DropDownList prolinename;
+        protected global::FineUIPro.Label pordertype;
 
         /// <summary>
         /// FormRow1 控件。
@@ -129,7 +129,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox prodirect;
+        protected global::FineUIPro.Label prodirect;
 
         /// <summary>
         /// proindirect 控件。
@@ -138,7 +138,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox proindirect;
+        protected global::FineUIPro.Label proindirect;
 
         /// <summary>
         /// FormRow6 控件。
@@ -158,14 +158,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// </remarks>
         protected global::FineUIPro.DropDownList proorder;
 
-        /// <summary>
-        /// prolot 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox prolot;
+
 
         /// <summary>
         /// FormRow10 控件。
@@ -220,7 +213,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prostdcapacity;
-        protected global::FineUIPro.Label txtProshort;
+
         /// <summary>
         /// FormRow4 控件。
         /// </summary>
@@ -238,6 +231,15 @@ namespace Fine.Lf_Manufacturing.PP.daily
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label prolotqty;
+
+        /// <summary>
+        /// prolot 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox prolot;
 
         /// <summary>
         /// prosn 控件。

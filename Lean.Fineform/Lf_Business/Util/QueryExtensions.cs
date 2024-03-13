@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Linq.Expressions;
 
-namespace Fine
+namespace LeanFine
 {
     public static class QueryExtensions
     {
@@ -60,7 +58,6 @@ namespace Fine
             return source.Provider.CreateQuery<T>(methodCallExpression);
         }
 
-
         // http://FineUIPro.com/bbs/forum.php?mod=viewthread&tid=3844
 
         public enum EOrderType
@@ -70,6 +67,7 @@ namespace Fine
             ThenBy = 2,
             ThenByDescending = 3
         }
+
         /// <summary>
         /// 升序排序
         /// </summary>
@@ -93,6 +91,7 @@ namespace Fine
         {
             return ApplyOrder<T>(source, property, EOrderType.OrderByDescending);
         }
+
         /// <summary>
         /// 应用排序
         /// </summary>
@@ -111,7 +110,7 @@ namespace Fine
             Expression expr = arg;
             foreach (string prop in props)
             {
-                // use reflection (not ComponentModel) to mirror LINQ 
+                // use reflection (not ComponentModel) to mirror LINQ
                 System.Reflection.PropertyInfo pi = type.GetProperty(prop);
                 expr = Expression.Property(expr, pi);
                 type = pi.PropertyType;
@@ -126,6 +125,7 @@ namespace Fine
                             .Invoke(null, new object[] { source, lambda });
             return (IOrderedQueryable<T>)result;
         }
+
         /// <summary>
         /// ThenBy
         /// </summary>
@@ -149,6 +149,5 @@ namespace Fine
         {
             return ApplyOrder<T>(source, property, EOrderType.ThenByDescending);
         }
-
     }
 }

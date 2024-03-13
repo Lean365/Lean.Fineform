@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Fine
+﻿namespace LeanFine
 {
     public interface IKeyID
     {
         int ID { get; set; }
-
     }
 }

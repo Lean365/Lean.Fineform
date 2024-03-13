@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,8 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-
-namespace Fine.Lf_Manufacturing.EC
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec_balance_edit : PageBase
     {
@@ -25,15 +24,16 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        public static string strecn, stritem,  strmodel;
+
+        public static string strecn, stritem, strmodel;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,7 +50,6 @@ namespace Fine.Lf_Manufacturing.EC
             //InitNoticeDept();
             //BindDroplist();
 
-
             //获取通过窗体传递的值
             string strtransmit = GetQueryValue("Ec_no");
             //转字符串组
@@ -60,44 +59,38 @@ namespace Fine.Lf_Manufacturing.EC
             strmodel = strgroup[1].ToString().Trim();
             stritem = strgroup[2].ToString().Trim();
 
-
-
-
             BindData();
-
-
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
         private void BindData()
         {
             var q = (from item in DB.Pp_EcBalances
-                    join a in DB.Pp_SapMaterials on item.Ec_olditem equals a.D_SAP_ZCA1D_Z002
-                    where item.Ec_no.Contains(strecn)
-                    where item.Ec_olditem.Contains(stritem)
-                    where item.Ec_model.Contains(strmodel)
-                    select new
-                    {
-  
-                        item.Ec_olditem,
-                        item.Ec_oldqty,
-                        item.Ec_poqty,
-                        item.Ec_balanceqty,
-                        item.Ec_newitem,
-                        item.Ec_precess,
-                        item.Ec_note,
-                        item.Ec_no,
-                        item.Ec_issuedate,
-                        item.Ec_status,
-                        item.Ec_model,
-                        item.Ec_item,
-                        item.isEnd,
-                        a.D_SAP_ZCA1D_Z033,
-
-                    }).ToList();
-            if(q.Any())
+                     join a in DB.Pp_SapMaterials on item.Ec_olditem equals a.D_SAP_ZCA1D_Z002
+                     where item.Ec_no.Contains(strecn)
+                     where item.Ec_olditem.Contains(stritem)
+                     where item.Ec_model.Contains(strmodel)
+                     select new
+                     {
+                         item.Ec_olditem,
+                         item.Ec_oldqty,
+                         item.Ec_poqty,
+                         item.Ec_balanceqty,
+                         item.Ec_newitem,
+                         item.Ec_precess,
+                         item.Ec_note,
+                         item.Ec_no,
+                         item.Ec_issuedate,
+                         item.Ec_status,
+                         item.Ec_model,
+                         item.Ec_item,
+                         item.isEnd,
+                         a.D_SAP_ZCA1D_Z033,
+                     }).ToList();
+            if (q.Any())
             {
                 Ec_balancedate.SelectedDate = DateTime.Now;
                 Ec_no.Text = q[0].Ec_no;
@@ -113,47 +106,43 @@ namespace Fine.Lf_Manufacturing.EC
                 Ec_olditem.Text = q[0].Ec_olditem;
                 Ec_newitem.Text = q[0].Ec_newitem;
             }
-
-
         }
-
 
         //字段赋值，保存
 
         private void SaveItem()//修改设变平衡表
         {
+            var q = (from item in DB.Pp_EcBalances
 
-          var q=  (from item in DB.Pp_EcBalances
-
-             where item.Ec_no.Contains(strecn)
-             where item.Ec_olditem.Contains(stritem)
-             where item.Ec_model.Contains(strmodel)
-             select new
-             {
-                 item.GUID,
-                 item.Ec_olditem,
-                 item.Ec_oldqty,
-                 item.Ec_poqty,
-                 item.Ec_balanceqty,
-                 item.Ec_newitem,
-                 item.Ec_newqty,
-                 item.Ec_precess,
-                 item.Ec_note,
-                 item.Ec_no,
-                 item.Ec_issuedate,
-                 item.Ec_status,
-                 item.Ec_model,
-                 item.Ec_item,
-                 item.isEnd,
-                 item.Creator,
-                 item.CreateTime,
-                 item.isDelete,
-             }).ToList();
-            List<Pp_EcBalance> UpdateList = (from item in q
-                                              select new Pp_EcBalance
+                     where item.Ec_no.Contains(strecn)
+                     where item.Ec_olditem.Contains(stritem)
+                     where item.Ec_model.Contains(strmodel)
+                     select new
+                     {
+                         item.GUID,
+                         item.Ec_olditem,
+                         item.Ec_oldqty,
+                         item.Ec_poqty,
+                         item.Ec_balanceqty,
+                         item.Ec_newitem,
+                         item.Ec_newqty,
+                         item.Ec_precess,
+                         item.Ec_note,
+                         item.Ec_no,
+                         item.Ec_issuedate,
+                         item.Ec_status,
+                         item.Ec_model,
+                         item.Ec_item,
+                         item.isEnd,
+                         item.Creator,
+                         item.CreateDate,
+                         item.isDeleted,
+                     }).ToList();
+            List<Pp_Ec_Balance> UpdateList = (from item in q
+                                              select new Pp_Ec_Balance
                                               {
                                                   GUID = item.GUID,
-                                                  Ec_balancedate= Ec_balancedate.SelectedDate.Value.ToString("yyyyMMdd"),
+                                                  Ec_balancedate = Ec_balancedate.SelectedDate.Value.ToString("yyyyMMdd"),
                                                   Ec_olditem = item.Ec_olditem,
                                                   Ec_oldqty = item.Ec_oldqty,
                                                   Ec_poqty = Decimal.Parse(Ec_poqty.Text),
@@ -169,20 +158,16 @@ namespace Fine.Lf_Manufacturing.EC
                                                   Ec_item = item.Ec_item,
                                                   isEnd = item.isEnd,
                                                   Creator = item.Creator,
-                                                  CreateTime = item.CreateTime,
-                                                  isDelete = item.isDelete,
+                                                  CreateDate = item.CreateDate,
+                                                  isDeleted = item.isDeleted,
                                                   Modifier = GetIdentityName(),
-                                                  ModifyTime = DateTime.Now,
+                                                  ModifyDate = DateTime.Now,
                                               }).ToList();
 
             DB.BulkUpdate(UpdateList);
             DB.BulkSaveChanges();
-
-
-
-
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -232,21 +217,20 @@ namespace Fine.Lf_Manufacturing.EC
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
+
+        #endregion Events
 
         #region NetOperateNotes
+
         private void InsNetOperateNotes()
         {
-
-
             //修改日志
             string Newtext = Ec_issuedate.Text + Ec_no.Text;
             string OperateType = "修改";//操作标记
             string OperateNotes = "Edit生管* " + Newtext + " *Edit生管 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "旧品在库修改", OperateNotes);
         }
-        #endregion
 
-
+        #endregion NetOperateNotes
     }
 }

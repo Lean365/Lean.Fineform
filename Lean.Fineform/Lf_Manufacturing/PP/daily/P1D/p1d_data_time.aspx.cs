@@ -1,24 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
-namespace Fine.Lf_Manufacturing.PP.daily
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_data_time : PageBase
     {
@@ -35,7 +22,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Init
 
@@ -62,7 +49,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             if (q.Any())
             {
-
                 List<string> DimensionList = new List<string>() { "Date", "Lot", "Line" };
 
                 string DynamicColumn = "Time";
@@ -70,13 +56,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
                 DataTable result = ConvertHelper.DataTableRowToCol(ConvertHelper.IEnumerableConvertToDataTable(q), DimensionList, DynamicColumn, out AllDynamicColumn);
 
-
                 GridHelper.AddDefColumInGrid(result.Columns, Grid1);
             }
-
         }
 
-        #endregion
+        #endregion Page_Init
 
         #region Page_Load
 
@@ -98,7 +82,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -110,20 +93,14 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
-
             DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
-
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -142,7 +119,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                          Qty = a.Prorealqty,
                      }).ToList();
 
-
             if (q.Any())
             {
                 List<string> DimensionList = new List<string>() { "Date", "Lot", "Line" };
@@ -158,21 +134,16 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     var qs = from a in result.AsEnumerable().AsQueryable()
                              select a;
 
-
-
                     DataTable table = GridHelper.GetPagedDataTabled(Grid1, result);
                     Grid1.DataSource = (table);
                     Grid1.DataBind();
-
                 }
             }
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
@@ -187,7 +158,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -199,18 +169,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
 
-
-        #endregion
-
-
-
-
-
-
+        #endregion Events
     }
 }

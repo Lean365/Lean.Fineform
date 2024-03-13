@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.PP.poor
-{
 
+namespace LeanFine.Lf_Manufacturing.PP.poor
+{
     public partial class p1d_defect_order_totalled_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,18 +23,18 @@ namespace Fine.Lf_Manufacturing.PP.poor
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
         public static string mysql, userid, ConnStr;
         public static int rowID, delrowID, editrowID, totalSum;
         public static string Prolot, Prolinename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -48,26 +46,21 @@ namespace Fine.Lf_Manufacturing.PP.poor
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-
-
-
             BindData();
 
             //UpdateQty();
             //DefDate.SelectedDate = DateTime.Now.AddDays(-1);
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
             Guid id = Guid.Parse(GetQueryValue("GUID"));
 
-            var current = (from a in DB.Pp_DefectTotals
+            var current = (from a in DB.Pp_Defect_Totals
                            where a.GUID == (id)
                            select a).ToList();
-
-
 
             if (!current.Any())
             {
@@ -76,24 +69,13 @@ namespace Fine.Lf_Manufacturing.PP.poor
                 return;
             }
 
-
-
             DefDate.Text = current[0].Prodate;
             // 选中当前节点的父节点
             prolinename.Text = current[0].Prolinename;
 
             prolot.Text = current[0].Prolot;
 
-
-
-
-
-
-
             promodel.Text = current[0].Promodel;
-
-
-
 
             proorderqty.Text = current[0].Proorderqty.ToString();
 
@@ -115,7 +97,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                 prorealqty.Text = current[0].Prorealqty.ToString();
             }
 
-
             if (current[0].Pronobadqty != 0)
             {
                 pronobadqty.Text = current[0].Pronobadqty.ToString();
@@ -124,7 +105,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
             {
                 pronobadqty.Text = current[0].Prorealqty.ToString();
             }
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -143,16 +123,12 @@ namespace Fine.Lf_Manufacturing.PP.poor
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "系统管理", "不具合修改", OperateNotes);
         }
 
-
-
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
-
             if (Decimal.Parse(pronobadqty.Text) > Decimal.Parse(prorealqty.Text))
             {
                 Alert.ShowInTop("无不良台数不能大于生产台数");
                 return;
-
             }
             if (Decimal.Parse(pronobadqty.Text) <= Decimal.Parse(prorealqty.Text))
             {
@@ -160,9 +136,8 @@ namespace Fine.Lf_Manufacturing.PP.poor
                 UpdateOqty();
                 PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
-
-
         }
+
         private void UpdateOqty()
         {
             var q = (from a in DB.Pp_P1d_Defects
@@ -170,20 +145,19 @@ namespace Fine.Lf_Manufacturing.PP.poor
                      select a).ToList();
             if (q.Any())
             {
-
                 for (int i = 0; i < q.Count(); i++)
                 {
                     int iid = q[i].ID;
                     Pp_P1d_Defect item = DB.Pp_P1d_Defects
                      .Where(u => u.ID == iid).FirstOrDefault();
                     item.Pronobadqty = int.Parse(pronobadqty.Text);//无不良台数更新
-                    item.ModifyTime = DateTime.Now;
+                    item.ModifyDate = DateTime.Now;
                     item.Modifier = GetIdentityName();
                     DB.SaveChanges();
                 }
             }
-
         }
+
         public void UpdateDefectQty()
         {
             string dd = DefDate.Text.Substring(0, 6);
@@ -199,7 +173,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                     p.Prolot,
                     // p.Prodate,
                     //p.Prolinename,
-
                 }
 
                     into g
@@ -209,7 +182,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                     // Prolinename = g.Key.Prolinename,
                     Prolot = g.Key.Prolot,
                     Prorealqty = g.Sum(p => p.Prorealqty),
-
                 };
 
             //判断查询是否为空
@@ -237,42 +209,32 @@ namespace Fine.Lf_Manufacturing.PP.poor
                                 .Where(u => u.ID == iid).FirstOrDefault();
                             if (current != null)
                             {
-
                                 current.Prorealqty = qs[0].Prorealqty;
                                 //current.Prongmatter = qs[0].Prorealqty.ToString();
                                 current.Modifier = GetIdentityName();
-                                current.ModifyTime = DateTime.Now;
+                                current.ModifyDate = DateTime.Now;
                                 DB.SaveChanges();
                             }
-
                         }
                     }
                 }
             }
         }
 
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
         private void SaveItem()//新增生产日报单头
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
-            Pp_DefectTotal item = DB.Pp_DefectTotals
+            Pp_Defect_Total item = DB.Pp_Defect_Totals
 
                 .Where(u => u.GUID == (id)).FirstOrDefault();
             //liclass();
             //ngclass();
             //ngcode();
             //item.ID = GetQueryIntValue("id");
-
-
-
 
             //item.Prongdept = Prongdept.SelectedItem.Text;
 
@@ -288,14 +250,13 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
             //// 添加所有用户
 
-
             //item.Remark = remark.Text;
             item.Prorealqty = int.Parse(prorealqty.Text);
             item.Pronobadqty = int.Parse(pronobadqty.Text);
             item.Prodirectrate = (decimal)int.Parse(pronobadqty.Text) / int.Parse(prorealqty.Text);
 
             item.Modifier = GetIdentityName();
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
 
             //DB.Probads.Add(item);
             DB.SaveChanges();
@@ -305,15 +266,9 @@ namespace Fine.Lf_Manufacturing.PP.poor
             string OperateType = "修改";
             string OperateNotes = "afEdit生产不良* " + ModifiedText + "*afEdit生产不良 的订单记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "系统管理", "不具合修改", OperateNotes);
-
-
         }
 
-
-        #endregion
-
-        #region BindDataToDropDownList
-        #endregion
+        #endregion Events
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
@@ -352,8 +307,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
-
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

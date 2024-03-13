@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_transport_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.Master.Pp_transport_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_transport_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.Master.pp_transport_new" %>
 
 <!DOCTYPE html>
 

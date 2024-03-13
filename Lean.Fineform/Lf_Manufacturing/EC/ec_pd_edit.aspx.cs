@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,8 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-
-namespace Fine.Lf_Manufacturing.EC
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec_pd_edit : PageBase
     {
@@ -25,23 +24,23 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static Decimal strinv;
         public static string strMailto, strID, strEc_no, strEc_newitem, strdist, strpurchaser;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
 
         private void LoadData()
         {
-            
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
@@ -56,13 +55,9 @@ namespace Fine.Lf_Manufacturing.EC
             strEc_newitem = strgroup[5].ToString().Trim();
             strdist = strgroup[6].ToString().Trim();
 
-
             BindData();
             BindDataBala();
-
         }
-
-
 
         //#region InitOldItem
 
@@ -72,7 +67,6 @@ namespace Fine.Lf_Manufacturing.EC
         //    string selectJobTitleURL = String.Format("../plutoProinfo/item_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
         //    Ec_olditem.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_olditem.ClientID, hfSelectedDhbn.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
-
 
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
@@ -90,7 +84,6 @@ namespace Fine.Lf_Manufacturing.EC
         //    Ec_newitem.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_newitem.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
 
-
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
         //    //PageContext.RegisterStartupScript(Window1.GetSaveStateReference(tbSelectedDhbn.ClientID)
@@ -107,7 +100,6 @@ namespace Fine.Lf_Manufacturing.EC
         //    Ec_detail.OnClientTriggerClick = Window1.GetSaveStateReference(Ec_detail.ClientID, hfSelectedModel.ClientID)
         //            + Window1.GetShowReference(selectJobTitleURL, "物料");
 
-
         //    //string openUrl = String.Format("../plutoProinfo/Ohbn_select.aspx?ids=<script>{0}</script>", hfSelectedDhbn.GetValueReference());
 
         //    //PageContext.RegisterStartupScript(Window1.GetSaveStateReference(tbSelectedDhbn.ClientID)
@@ -116,9 +108,7 @@ namespace Fine.Lf_Manufacturing.EC
         //}
         //#endregion
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -136,7 +126,7 @@ namespace Fine.Lf_Manufacturing.EC
                         //where a.Ec_bomitem == strEc_bomitem
                         //where a.Ec_olditem == strEc_olditem
                         where b.Ec_newitem == strEc_newitem
-                        
+
                         //where a.Ec_purdate == ""
                         select new
                         {
@@ -157,9 +147,8 @@ namespace Fine.Lf_Manufacturing.EC
                             b.Ec_newitem,
                             b.Ec_bstock,
                             b.Ec_pmclot,
-                            
-                            //c.D_SAP_ZCA1D_Z033,
 
+                            //c.D_SAP_ZCA1D_Z033,
                         };
                 //bool sss = q.Any();
                 if (q.Any())
@@ -183,7 +172,7 @@ namespace Fine.Lf_Manufacturing.EC
                         E.Ec_newitem,
                         E.Ec_bstock,
                         E.Ec_pmclot,
-                       
+
                         //E.D_SAP_ZCA1D_Z033,
                     }).Distinct().ToList();
 
@@ -193,7 +182,6 @@ namespace Fine.Lf_Manufacturing.EC
 
                     if (!string.IsNullOrEmpty(ss))
                     {
-
                         Ec_purdate.SelectedDate = DateTime.ParseExact(ss, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
                     }
                     else
@@ -201,11 +189,9 @@ namespace Fine.Lf_Manufacturing.EC
                         Ec_purdate.SelectedDate = DateTime.Now;
                     }
 
-
                     Ec_pursupplier.Text = qs[0].Ec_pursupplier;
 
                     Ec_purorder.Text = qs[0].Ec_purorder;
-
 
                     if (string.IsNullOrEmpty(qs[0].Ec_purnote))
                     {
@@ -215,7 +201,6 @@ namespace Fine.Lf_Manufacturing.EC
                     {
                         Ec_purnote.Text = qs[0].Ec_pmcmemo;//处理方式
                     }
-                   
 
                     Ec_no.Text = qs[0].Ec_no;//设变号码
                     Ec_issuedate.Text = qs[0].Ec_issuedate;//发行日期
@@ -225,16 +210,14 @@ namespace Fine.Lf_Manufacturing.EC
                     Ec_model.Text = qs[0].Ec_model;//设变机种
                     Ec_bomitem.Text = qs[0].Ec_bomitem;//成品
 
-
                     Ec_olditem.Text = qs[0].Ec_olditem;//旧物料
                     Ec_newitem.Text = qs[0].Ec_newitem;//新物料
 
                     Ec_bstock.Text = qs[0].Ec_bstock.ToString();//旧品在库
                     ProInv.Text = strinv.ToString();//旧品在库
                     Ec_pmclot.Text = qs[0].Ec_pmclot;//预定LoT
-                    
-                    Ec_pur.Text = strpurchaser;
 
+                    Ec_pur.Text = strpurchaser;
                 }
             }
             catch (ArgumentNullException Message)
@@ -248,20 +231,17 @@ namespace Fine.Lf_Manufacturing.EC
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
-
 
             //destid = mydt.Rows[0][55].ToString();//实施区分
             //distid = mydt.Rows[0][54].ToString();//管理区分
             //issuedate= mydt.Rows[0][28].ToString();
         }
+
         private void BindDataStockQty()
         {
             try
             {
-
                 var q = from a in DB.Pp_SapMaterials
                             //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
@@ -269,7 +249,6 @@ namespace Fine.Lf_Manufacturing.EC
                         select new
                         {
                             a.D_SAP_ZCA1D_Z033,
-
                         };
                 bool sss = q.Any();
                 if (q.Any())
@@ -287,7 +266,6 @@ namespace Fine.Lf_Manufacturing.EC
                 {
                     strinv = 0;
                 }
-
             }
             catch (ArgumentNullException Message)
             {
@@ -300,14 +278,13 @@ namespace Fine.Lf_Manufacturing.EC
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         private void BindDataPurchaser()
         {
             try
             {
-
                 var q = from a in DB.Pp_SapMaterials
                             //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
@@ -315,7 +292,6 @@ namespace Fine.Lf_Manufacturing.EC
                         select new
                         {
                             a.D_SAP_ZCA1D_Z009,
-
                         };
                 bool sss = q.Any();
                 if (q.Any())
@@ -333,7 +309,6 @@ namespace Fine.Lf_Manufacturing.EC
                 {
                     strpurchaser = "ZZZ";
                 }
-
             }
             catch (ArgumentNullException Message)
             {
@@ -346,9 +321,9 @@ namespace Fine.Lf_Manufacturing.EC
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         private void BindDataBala()
         {
             try
@@ -371,8 +346,6 @@ namespace Fine.Lf_Manufacturing.EC
                             a.Ec_newitem,
                             a.Ec_no,
                             a.Ec_issuedate,
-
-
                         };
                 bool sss = q.Any();
                 if (q.Any())
@@ -393,7 +366,6 @@ namespace Fine.Lf_Manufacturing.EC
 
                     Ec_poqty.Text = qs[0].Ec_poqty.ToString();
                     Ec_balanceqty.Text = qs[0].Ec_balanceqty.ToString();
-
                 }
                 else
                 {
@@ -412,15 +384,12 @@ namespace Fine.Lf_Manufacturing.EC
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
         }
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             //查询设变从表并循环添加
             var q = (from a in DB.Pp_EcSubs
                          //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
@@ -439,122 +408,123 @@ namespace Fine.Lf_Manufacturing.EC
                      //where a.Prodate == sdate//投入日期
                      select a).ToList();
             List<Pp_EcSub> UpdateList = (from item in q
-                                          select new Pp_EcSub
-                                          {
-                                              GUID = item.GUID,
-                                              Ec_no = item.Ec_no,
-                                              Ec_model = item.Ec_model,
-                                              Ec_bomitem = item.Ec_bomitem,
-                                              Ec_bomsubitem = item.Ec_bomsubitem,
-                                              Ec_olditem = item.Ec_olditem,
-                                              Ec_oldtext = item.Ec_oldtext,
-                                              Ec_oldqty = item.Ec_oldqty,
-                                              Ec_oldset = item.Ec_oldset,
-                                              Ec_newitem = item.Ec_newitem,
-                                              Ec_newtext = item.Ec_newtext,
-                                              Ec_newqty = item.Ec_newqty,
-                                              Ec_newset = item.Ec_newset,
-                                              Ec_bomno = item.Ec_bomno,
-                                              Ec_change = item.Ec_change,
-                                              Ec_local = item.Ec_local,
-                                              Ec_note = item.Ec_note,
-                                              Ec_process = item.Ec_process,
+                                         select new Pp_EcSub
+                                         {
+                                             GUID = item.GUID,
+                                             Ec_no = item.Ec_no,
+                                             Ec_model = item.Ec_model,
+                                             Ec_bomitem = item.Ec_bomitem,
+                                             Ec_bomsubitem = item.Ec_bomsubitem,
+                                             Ec_olditem = item.Ec_olditem,
+                                             Ec_oldtext = item.Ec_oldtext,
+                                             Ec_oldqty = item.Ec_oldqty,
+                                             Ec_oldset = item.Ec_oldset,
+                                             Ec_newitem = item.Ec_newitem,
+                                             Ec_newtext = item.Ec_newtext,
+                                             Ec_newqty = item.Ec_newqty,
+                                             Ec_newset = item.Ec_newset,
+                                             Ec_bomno = item.Ec_bomno,
+                                             Ec_change = item.Ec_change,
+                                             Ec_local = item.Ec_local,
+                                             Ec_note = item.Ec_note,
+                                             Ec_process = item.Ec_process,
 
-                                              Ec_procurement = item.Ec_procurement,
-                                              Ec_location = item.Ec_location,
-                                              Ec_eol = item.Ec_eol,
-                                              isCheck = item.isCheck,
-                                              isConfirm = item.isConfirm,
+                                             Ec_procurement = item.Ec_procurement,
+                                             Ec_location = item.Ec_location,
+                                             Ec_eol = item.Ec_eol,
+                                             isCheck = item.isCheck,
+                                             isConfirm = item.isConfirm,
 
-                                              Ec_bomdate = item.Ec_bomdate,
-                                              Ec_entrydate = item.Ec_entrydate,
-                                              Ec_pmcdate = item.Ec_pmcdate,
-                                              Ec_pmclot = item.Ec_pmclot,
-                                              Ec_pmcmemo = item.Ec_pmcmemo,
-                                              Ec_pmcnote = item.Ec_pmcnote,
-                                              Ec_bstock = item.Ec_bstock,
-                                              pmcModifier = item.pmcModifier,
-                                              pmcModifyTime = item.pmcModifyTime,
+                                             Ec_bomdate = item.Ec_bomdate,
+                                             Ec_entrydate = item.Ec_entrydate,
+                                             Ec_pmcdate = item.Ec_pmcdate,
+                                             Ec_pmclot = item.Ec_pmclot,
+                                             Ec_pmcmemo = item.Ec_pmcmemo,
+                                             Ec_pmcnote = item.Ec_pmcnote,
+                                             Ec_bstock = item.Ec_bstock,
+                                             pmcModifier = item.pmcModifier,
+                                             pmcModifyDate = item.pmcModifyDate,
 
-                                              Ec_p2ddate = item.Ec_p2ddate,
-                                              Ec_p2dlot = item.Ec_p2dlot,
-                                              Ec_p2dnote = item.Ec_p2dnote,
-                                              p2dModifier = item.p2dModifier,
-                                              p2dModifyTime = item.p2dModifyTime,
+                                             Ec_p2ddate = item.Ec_p2ddate,
+                                             Ec_p2dlot = item.Ec_p2dlot,
+                                             Ec_p2dnote = item.Ec_p2dnote,
+                                             p2dModifier = item.p2dModifier,
+                                             p2dModifyDate = item.p2dModifyDate,
 
-                                              Ec_mmdate = item.Ec_mmdate,//投入日期
-                                              Ec_mmlot = item.Ec_mmlot,
-                                              Ec_mmlotno = item.Ec_mmlotno,
-                                              Ec_mmnote = item.Ec_mmnote,
-                                              mmModifier = item.mmModifier,
-                                              mmModifyTime = item.mmModifyTime,
+                                             Ec_mmdate = item.Ec_mmdate,//投入日期
+                                             Ec_mmlot = item.Ec_mmlot,
+                                             Ec_mmlotno = item.Ec_mmlotno,
+                                             Ec_mmnote = item.Ec_mmnote,
+                                             mmModifier = item.mmModifier,
+                                             mmModifyDate = item.mmModifyDate,
 
-                                              Ec_purdate = Ec_purdate.SelectedDate.Value.ToString("yyyyMMdd"),
-                                              Ec_purorder = Ec_purorder.Text.ToUpper(),
-                                              Ec_pursupplier = Ec_pursupplier.Text.ToUpper(),
-                                              Ec_purnote = Ec_purnote.Text.ToUpper(),
-                                              ppModifier = GetIdentityName(),
-                                              ppModifyTime = DateTime.Now,
+                                             Ec_purdate = Ec_purdate.SelectedDate.Value.ToString("yyyyMMdd"),
+                                             Ec_purorder = Ec_purorder.Text.ToUpper(),
+                                             Ec_pursupplier = Ec_pursupplier.Text.ToUpper(),
+                                             Ec_purnote = Ec_purnote.Text.ToUpper(),
+                                             ppModifier = GetIdentityName(),
+                                             ppModifyDate = DateTime.Now,
 
-                                              Ec_iqcdate = item.Ec_iqcdate,
-                                              Ec_iqcorder = item.Ec_iqcorder,
-                                              Ec_iqcnote = item.Ec_iqcnote,
-                                              iqcModifier = item.iqcModifier,
-                                              iqcModifyTime = item.iqcModifyTime,
-                                              Ec_p1ddate = item.Ec_p1ddate,
-                                              Ec_p1dline = item.Ec_p1dline,
-                                              Ec_p1dlot = item.Ec_p1dlot,
-                                              Ec_p1dnote = item.Ec_p1dnote,
-                                              p1dModifier = item.p1dModifier,
-                                              p1dModifyTime = item.p1dModifyTime,
-                                              Ec_qadate = item.Ec_qadate,
-                                              Ec_qalot = item.Ec_qalot,
-                                              Ec_qanote = item.Ec_qanote,
-                                              qaModifier = item.qaModifier,
-                                              qaModifyTime = item.qaModifyTime,
-                                              UDF01 = item.UDF01,
-                                              UDF02 = item.UDF02,
-                                              UDF03 = item.UDF03,
-                                              UDF04 = item.UDF04,
-                                              UDF05 = item.UDF05,
-                                              UDF06 = item.UDF06,
-                                              UDF51 = item.UDF51,
-                                              UDF52 = item.UDF52,
-                                              UDF53 = item.UDF53,
-                                              UDF54 = item.UDF54,
-                                              UDF55 = item.UDF55,
-                                              UDF56 = item.UDF56,
-                                              isDelete = item.isDelete,
-                                              Remark = item.Remark,
-                                              Creator = item.Creator,
-                                              CreateTime = item.CreateTime,
-                                              Modifier = item.Modifier,
-                                              ModifyTime = item.ModifyTime,
-                                          }).ToList();
+                                             Ec_iqcdate = item.Ec_iqcdate,
+                                             Ec_iqcorder = item.Ec_iqcorder,
+                                             Ec_iqcnote = item.Ec_iqcnote,
+                                             iqcModifier = item.iqcModifier,
+                                             iqcModifyDate = item.iqcModifyDate,
+                                             Ec_p1ddate = item.Ec_p1ddate,
+                                             Ec_p1dline = item.Ec_p1dline,
+                                             Ec_p1dlot = item.Ec_p1dlot,
+                                             Ec_p1dnote = item.Ec_p1dnote,
+                                             p1dModifier = item.p1dModifier,
+                                             p1dModifyDate = item.p1dModifyDate,
+                                             Ec_qadate = item.Ec_qadate,
+                                             Ec_qalot = item.Ec_qalot,
+                                             Ec_qanote = item.Ec_qanote,
+                                             qaModifier = item.qaModifier,
+                                             qaModifyDate = item.qaModifyDate,
+                                             UDF01 = item.UDF01,
+                                             UDF02 = item.UDF02,
+                                             UDF03 = item.UDF03,
+                                             UDF04 = item.UDF04,
+                                             UDF05 = item.UDF05,
+                                             UDF06 = item.UDF06,
+                                             UDF51 = item.UDF51,
+                                             UDF52 = item.UDF52,
+                                             UDF53 = item.UDF53,
+                                             UDF54 = item.UDF54,
+                                             UDF55 = item.UDF55,
+                                             UDF56 = item.UDF56,
+                                             isDeleted = item.isDeleted,
+                                             Remark = item.Remark,
+                                             Creator = item.Creator,
+                                             CreateDate = item.CreateDate,
+                                             Modifier = item.Modifier,
+                                             ModifyDate = item.ModifyDate,
+                                         }).ToList();
             DB.BulkUpdate(UpdateList);
             DB.BulkSaveChanges();
         }
+
         private void SaveBala()//修改设变平衡表
         {            //查询设变从表并循环添加
             var q = (from a in DB.Pp_EcBalances
-                        //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                        //join b in DB.Pp_EcSubs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
-                        //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
-                        //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
-                        //                                   select d.D_SAP_ZCA1D_Z002)
-                        //                                .Contains(a.D_SAP_ZPABD_S002)
-                        //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
-                        //                                   select d.D_SAP_DEST_Z001)
-                        //                                 .Contains(a.D_SAP_ZPABD_S002)
-                    where a.Ec_no.Contains(strEc_no)
-                    //where a.Ec_olditem.Contains(strEc_olditem)
-                    where a.Ec_newitem.Contains(strEc_newitem)
-                    //where b.Ec_no == strecn
-                    //where a.Prodate == sdate//投入日期
-                    select a).ToList();
+                         //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
+                         //join b in DB.Pp_EcSubs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
+                         //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
+                         //                                   select d.D_SAP_ZCA1D_Z002)
+                         //                                .Contains(a.D_SAP_ZPABD_S002)
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
+                         //                                   select d.D_SAP_DEST_Z001)
+                         //                                 .Contains(a.D_SAP_ZPABD_S002)
+                     where a.Ec_no.Contains(strEc_no)
+                     //where a.Ec_olditem.Contains(strEc_olditem)
+                     where a.Ec_newitem.Contains(strEc_newitem)
+                     //where b.Ec_no == strecn
+                     //where a.Prodate == sdate//投入日期
+                     select a).ToList();
 
-            List<Pp_EcBalance> List = (from a in q
-                                        select new Pp_EcBalance
+            List<Pp_Ec_Balance> List = (from a in q
+                                        select new Pp_Ec_Balance
                                         {
                                             GUID = a.GUID,
                                             Ec_no = a.Ec_no, //设变号码
@@ -576,19 +546,17 @@ namespace Fine.Lf_Manufacturing.EC
                                             Ec_note = Ec_purnote.Text.ToUpper(),
                                             //item.Ec_issuedate = "";
                                             isEnd = 0,
-                                            isDelete = 0,
+                                            isDeleted = 0,
                                             Remark = "",
                                             Creator = GetIdentityName(),
-                                            CreateTime = DateTime.Now,
+                                            CreateDate = DateTime.Now,
                                         }).ToList();
-
-
 
             DB.BulkUpdate(List);
 
             DB.BulkSaveChanges();
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -606,14 +574,12 @@ namespace Fine.Lf_Manufacturing.EC
 
                 //string[] sArray = str.Split('/');
 
-
                 //foreach (string i in sArray)
                 //{
                 //    string ecndate = Ec_issuedate.Text.Trim();
                 //    string ecnno = Ec_no.Text.Trim();
                 //    string ecnmodel = i.ToString().Replace("-", "").Replace(" ", "").ToUpper();
                 //    Ec_ user = DB.Pp_EcSubs.Where(u => u.Ec_issuedate + u.Ec_no + u.Ec_model == ecndate + ecnno + ecnmodel).FirstOrDefault();
-
 
                 //    if (user != null)
                 //    {
@@ -669,12 +635,7 @@ namespace Fine.Lf_Manufacturing.EC
                     }
                 }
 
-
-
-
                 SaveItem();
-
-
 
                 SaveBala();
 
@@ -714,7 +675,8 @@ namespace Fine.Lf_Manufacturing.EC
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-        #endregion
+        #endregion Events
+
         private void Mailto()
         {
             var q = from a in DB.Adm_Users
@@ -736,7 +698,8 @@ namespace Fine.Lf_Manufacturing.EC
             MailHelper.SendEmail(strMailto, mailTitle, mailBody);
             strMailto = "";
         }
-        #region NetOperateNotes        
+
+        #region NetOperateNotes
 
         private void InsNetOperateNotes()
         {
@@ -747,10 +710,8 @@ namespace Fine.Lf_Manufacturing.EC
             string OperateType = "修改";//操作标记
             string OperateNotes = "Edit采购* " + Newtext + " *Edit采购 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "设变修改", OperateNotes);
-
         }
-        #endregion
 
-
+        #endregion NetOperateNotes
     }
 }

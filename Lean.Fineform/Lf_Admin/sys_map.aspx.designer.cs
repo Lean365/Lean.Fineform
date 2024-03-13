@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
 
 
@@ -384,31 +384,31 @@ namespace Fine.Lf_Admin
         protected global::FineUIPro.Button Btn_Pp_Pp_manhour;
 
         /// <summary>
-        /// Btn_Pp_Pp_reason 控件。
+        /// Btn_Pp_Pp_Reason 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_Pp_reason;
+        protected global::FineUIPro.Button Btn_Pp_Pp_Reason;
 
         /// <summary>
-        /// Btn_Pp_Qm_acceptcat 控件。
+        /// Btn_Pp_qm_acceptcat 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_Qm_acceptcat;
+        protected global::FineUIPro.Button Btn_Pp_qm_acceptcat;
 
         /// <summary>
-        /// Btn_Pp_Pp_transport 控件。
+        /// Btn_Pp_Pp_Transport 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_Pp_transport;
+        protected global::FineUIPro.Button Btn_Pp_Pp_Transport;
 
         /// <summary>
         /// Btn_Pp_Pp_efficiency 控件。
@@ -582,40 +582,40 @@ namespace Fine.Lf_Admin
         protected global::FineUIPro.Button Btn_Pp_output_opt;
 
         /// <summary>
-        /// Btn_Pp_defect 控件。
+        /// Btn_pp_defect 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_defect;
+        protected global::FineUIPro.Button Btn_pp_defect;
 
         /// <summary>
-        /// Btn_Pp_defect_order_totalled 控件。
+        /// Btn_pp_defect_order_totalled 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_defect_order_totalled;
+        protected global::FineUIPro.Button Btn_pp_defect_order_totalled;
 
         /// <summary>
-        /// Btn_Pp_defect_lot_finished 控件。
+        /// Btn_pp_defect_lot_finished 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_defect_lot_finished;
+        protected global::FineUIPro.Button Btn_pp_defect_lot_finished;
 
         /// <summary>
-        /// Btn_Pp_defect_query 控件。
+        /// Btn_pp_defect_query 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Button Btn_Pp_defect_query;
+        protected global::FineUIPro.Button Btn_pp_defect_query;
 
         /// <summary>
         /// Btn_Pp_times_query 控件。

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using FineUIPro;
-namespace Fine.Lf_Admin
+
+namespace LeanFine.Lf_Admin
 {
     public partial class default_echarts : PageBase
     {
@@ -22,9 +19,10 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         public static string DivText;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -32,23 +30,22 @@ namespace Fine.Lf_Admin
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-           
-
             //大于15号
 
             DateTime d1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15);
 
-           if(DateTime.Now>=d1)
+            if (DateTime.Now >= d1)
             {
                 DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
-           else
+            else
             {
                 DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
@@ -60,20 +57,18 @@ namespace Fine.Lf_Admin
 
             BindData();
         }
+
         private void BindData()
         {
             string selectYearAreaStart = DPend.SelectedDate.Value.ToString("yyyyMM");
             string fy;
             var fm = (from a in DB.Fico_Periods
-                     where a.Btfm.Contains(selectYearAreaStart)
-                     select a).ToList();
+                      where a.Btfm.Contains(selectYearAreaStart)
+                      select a).ToList();
 
             if (fm.Any())
             {
-                fy = fm[0].Btfy.Substring(2,4).ToString();
-
-
-
+                fy = fm[0].Btfy.Substring(2, 4).ToString();
 
                 var langstr = Session["PreferredCulture"];
                 if (Session["PreferredCulture"] != null)//先判断百session是否存在 （sessionname表示你度session的名称）
@@ -89,7 +84,7 @@ namespace Fine.Lf_Admin
                         if (q.Any())
                         {
                             this.TargetText.InnerHtml = q[0].CorpTarget_CN.Replace("\r\n", "<br/>");
-                            
+
                             //DivText = q[0].CorpTarget_CN.Replace("\r\n ", " <br/> ");
                         }
                         var qf = (from a in DB.Adm_Formulas
@@ -98,11 +93,10 @@ namespace Fine.Lf_Admin
                                   select a).ToList();
                         if (qf.Any())
                         {
-                            this.FormulaText.InnerHtml = qf[0].Formula_CN.Replace("\r\n", "<br/>"); 
+                            this.FormulaText.InnerHtml = qf[0].Formula_CN.Replace("\r\n", "<br/>");
 
                             //DivText = q[0].CorpTarget_CN.Replace("\r\n ", " <br/> ");
                         }
-
                     }
                     if (LangStr.ToLower().Contains("ja"))
                     {
@@ -112,7 +106,7 @@ namespace Fine.Lf_Admin
                                  select a).ToList();
                         if (q.Any())
                         {
-                            this.TargetText.InnerHtml = q[0].CorpTarget_JA.Replace("\r\n", "<br/>"); 
+                            this.TargetText.InnerHtml = q[0].CorpTarget_JA.Replace("\r\n", "<br/>");
 
                             //DivText = q[0].CorpTarget_CN.Replace("\r\n ", " <br/> ");
                         }
@@ -122,7 +116,7 @@ namespace Fine.Lf_Admin
                                   select a).ToList();
                         if (qf.Any())
                         {
-                            this.FormulaText.InnerHtml = qf[0].Formula_JA.Replace("\r\n", "<br/>"); 
+                            this.FormulaText.InnerHtml = qf[0].Formula_JA.Replace("\r\n", "<br/>");
 
                             //DivText = q[0].CorpTarget_CN.Replace("\r\n ", " <br/> ");
                         }
@@ -135,7 +129,7 @@ namespace Fine.Lf_Admin
                                  select a).ToList();
                         if (q.Any())
                         {
-                            this.TargetText.InnerHtml = q[0].CorpTarget_EN.Replace("\r\n", "<br/>"); 
+                            this.TargetText.InnerHtml = q[0].CorpTarget_EN.Replace("\r\n", "<br/>");
 
                             //DivText = q[0].CorpTarget_CN.Replace("\r\n ", " <br/> ");
                         }
@@ -152,17 +146,12 @@ namespace Fine.Lf_Admin
                     }
                 }
             }
-
-
-
-
-
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindData();
                 //PageContext.RegisterStartupScript("<script>updateChartInTabStrip();</script>");
 
@@ -170,8 +159,5 @@ namespace Fine.Lf_Admin
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
-
-
     }
-
 }

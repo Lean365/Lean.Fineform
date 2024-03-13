@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fine
+namespace LeanFine
 {
     public class Adm_Menu : Adm_ICustomTree, IKeyID, ICloneable
     {
@@ -20,6 +18,7 @@ namespace Fine
 
         [StringLength(200)]
         public string NavigateUrl { get; set; }
+
         [StringLength(200)]
         public string ButtonName { get; set; }
 
@@ -29,16 +28,10 @@ namespace Fine
         [Required]
         public int SortIndex { get; set; }
 
-       
         public virtual Adm_Menu Parent { get; set; }
         public virtual ICollection<Adm_Menu> Children { get; set; }
 
-
-
-        public virtual Adm_Power ViewPower {get; set;}
-
-
-
+        public virtual Adm_Power ViewPower { get; set; }
 
         /// <summary>
         /// 菜单在树形结构中的层级（从0开始）
@@ -58,10 +51,10 @@ namespace Fine
         [NotMapped]
         public bool IsTreeLeaf { get; set; }
 
-
         public object Clone()
         {
-            Adm_Menu menu = new Adm_Menu { 
+            Adm_Menu menu = new Adm_Menu
+            {
                 ID = ID,
                 Name = Name,
                 ImageUrl = ImageUrl,

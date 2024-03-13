@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
 
 

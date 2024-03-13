@@ -1,14 +1,14 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
-    public partial class Qm_acceptcat_edit : PageBase
+namespace LeanFine.Lf_Manufacturing.Master
+{
+    public partial class qm_acceptcat_edit : PageBase
     {
         //
 
@@ -25,7 +25,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +33,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,8 +49,8 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -72,13 +71,9 @@ namespace Fine.Lf_Manufacturing.Master
             Checkentext.Text = current.Checkentext;
             Checkjptext.Text = current.Checkjptext;
 
-
-
             Remark.Text = current.Remark;
 
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -90,33 +85,25 @@ namespace Fine.Lf_Manufacturing.Master
             // 初始化用户所属职称
             //InitUserTitle(current);
             //修改前日志
-            string BeforeModi = current.Checktype.ToString()+","+Checkcntext.Text + "," + Checkentext.Text + "," + Checkjptext.Text;
+            string BeforeModi = current.Checktype.ToString() + "," + Checkcntext.Text + "," + Checkentext.Text + "," + Checkjptext.Text;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "品管类别修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_CheckType current = DB.Qm_CheckTypes.Find(id);
             string modi001 = current.Checktype;
             string modi002 = current.Checkcntext;
             string modi003 = current.Checkentext;
             string modi004 = current.Checkjptext;
-
 
             if (this.Checktype.Text == modi001)
             {
@@ -126,14 +113,12 @@ namespace Fine.Lf_Manufacturing.Master
                     {
                         if (this.Checkjptext.Text == modi004)
                         {
-
                             Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, "警告提示", MessageBoxIcon.Information);
                             //Alert alert = new Alert();
                             //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
                             //alert.IconFont = IconFont.Warning;
                             //alert.Target = Target.Top;
                             //Alert.ShowInTop();
-
                         }
                     }
                 }
@@ -141,12 +126,10 @@ namespace Fine.Lf_Manufacturing.Master
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -160,7 +143,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -170,7 +152,6 @@ namespace Fine.Lf_Manufacturing.Master
             //}
             //string InputData = LC001.Text.Trim();
 
-
             //proCheckInsClass Redata = DB.proCheckInsClasss.Where(u => u.LC001 == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -178,8 +159,8 @@ namespace Fine.Lf_Manufacturing.Master
             //    Alert.ShowInTop("数据,检验方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -188,31 +169,24 @@ namespace Fine.Lf_Manufacturing.Master
 
                 .Where(u => u.GUID == id).FirstOrDefault();
 
-
-
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Checkcntext = Checkcntext.Text;
             item.Checkentext = Checkentext.Text;
             item.Checkjptext = Checkjptext.Text;
 
-
-
             // 添加所有用户
 
-
             item.Remark = Remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = Checktype.Text+","+ Checkcntext.Text.Trim() + "," + Checkentext.Text.Trim() + "," + Checkjptext.Text.Trim();
+            string ModifiedText = Checktype.Text + "," + Checkcntext.Text.Trim() + "," + Checkentext.Text.Trim() + "," + Checkjptext.Text.Trim();
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "品管类别修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -264,15 +238,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
 
-namespace Fine.Lf_Manufacturing.QM
+namespace LeanFine.Lf_Manufacturing.QM
 {
     public partial class Qm_chart : PageBase
     {
@@ -23,7 +17,8 @@ namespace Fine.Lf_Manufacturing.QM
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,13 +26,12 @@ namespace Fine.Lf_Manufacturing.QM
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
-
-
 
             //大于15号
 
@@ -51,8 +45,8 @@ namespace Fine.Lf_Manufacturing.QM
             {
                 DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
-
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -65,12 +59,11 @@ namespace Fine.Lf_Manufacturing.QM
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
-
     }
-
 }

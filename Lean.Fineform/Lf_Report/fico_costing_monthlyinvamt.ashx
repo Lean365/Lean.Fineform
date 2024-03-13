@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Fico_costing_monthlyinvamt.ashx.cs" Class="Fine.Lf_Report.Fico_costing_monthlyinvamt" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="fico_costing_monthlyinvamt.ashx.cs" Class="LeanFine.Lf_Report.fico_costing_monthlyinvamt" %>

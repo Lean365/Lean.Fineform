@@ -1,31 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// sys_Tab_Fico_Expense_actual 的摘要说明
+    /// sys_Tab_FICO_Expense_actual 的摘要说明
     /// </summary>
-    public class sys_Tab_Fico_Expense_actual : IHttpHandler
+    public class sys_Tab_FICO_Expense_actual : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
-
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -35,10 +26,10 @@ namespace Fine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q_all = from p in DBCharts.Fico_Costing_ActualCosts
+            var q_all = from p in DBCharts.Fico_Costing_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDelete == 0
+                        where p.isDeleted == 0
                         where p.Bc_ExpCategory == "Exs."
 
                         select new
@@ -47,7 +38,6 @@ namespace Fine.Lf_Report
                             p.BC_BudgetAmt,
                             p.Bc_ActualAmt,
                             p.Bc_TitleNote,
-
                         };
 
             var qs =
@@ -56,7 +46,7 @@ namespace Fine.Lf_Report
                 select new
                 {
                     g.Key.Bc_YM,
-                    g.Key.Bc_TitleNote,                    
+                    g.Key.Bc_TitleNote,
                     Bc_ActualAmt = g.Sum(p => p.Bc_ActualAmt),
                 };
             var q = (from a in qs
@@ -65,7 +55,6 @@ namespace Fine.Lf_Report
                          u.Bc_YM,
                          u.Bc_TitleNote,
                          u.Bc_ActualAmt,
-
                      });
             q = q.OrderByDescending(u => u.Bc_ActualAmt);
             DataSet ds = new DataSet();
@@ -82,7 +71,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -90,7 +78,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_bomcost : PageBase
     {
@@ -32,9 +20,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -42,6 +31,7 @@ namespace Fine.Lf_Accounting
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 每页记录数
@@ -51,8 +41,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -60,7 +48,6 @@ namespace Fine.Lf_Accounting
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
-
         }
 
         private void BindGrid()
@@ -71,31 +58,31 @@ namespace Fine.Lf_Accounting
                         where a.Bc_YM.CompareTo(edate) <= 0
                         select a;
 
-            var q_Moving=from a in q_all
-                         group a by a.Bc_Item into grp
-                       let maxFM = grp.Max(a => a.Bc_YM)
-                       from b in grp
-                       where b.Bc_YM == maxFM
-                       select new { 
-                       b.Bc_Item,
-                       b.Bc_MovingAverage
-                       };
+            var q_Moving = from a in q_all
+                           group a by a.Bc_Item into grp
+                           let maxFM = grp.Max(a => a.Bc_YM)
+                           from b in grp
+                           where b.Bc_YM == maxFM
+                           select new
+                           {
+                               b.Bc_Item,
+                               b.Bc_MovingAverage
+                           };
 
-            var q_Bom = from a in DB.Fico_Costing_BomCosts
+            var q_Bom = from a in DB.Fico_Costing_Bom_Costs
                         where a.Bc_Balancedate.Substring(0, 6).CompareTo(edate) == 0
                         select a;
 
             var q = from a in q_Bom
-                         join b in q_Moving on a.Bc_Item equals b.Bc_Item
-                         select new
-                         {
-                             a.Bc_Item,
-                             a.Bc_ItemText,
-                             a.Bc_MovingCost,
-                             Bc_MovingAverage = b.Bc_MovingAverage / 1000,
-                             Bc_Diff = b.Bc_MovingAverage / 1000 - a.Bc_MovingCost,
-
-                         };
+                    join b in q_Moving on a.Bc_Item equals b.Bc_Item
+                    select new
+                    {
+                        a.Bc_Item,
+                        a.Bc_ItemText,
+                        a.Bc_MovingCost,
+                        Bc_MovingAverage = b.Bc_MovingAverage / 1000,
+                        Bc_Diff = b.Bc_MovingAverage / 1000 - a.Bc_MovingCost,
+                    };
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -112,8 +99,6 @@ namespace Fine.Lf_Accounting
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -121,9 +106,11 @@ namespace Fine.Lf_Accounting
                 Grid1.DataBind();
             }
         }
-        #endregion
+
+        #endregion Load
 
         #region Event
+
         //protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         //{
         //    Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -142,6 +129,7 @@ namespace Fine.Lf_Accounting
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -155,15 +143,17 @@ namespace Fine.Lf_Accounting
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
 
-        #endregion
+        #endregion Event
 
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -198,7 +188,7 @@ namespace Fine.Lf_Accounting
                                b.Bc_MovingAverage
                            };
 
-            var q_Bom = from a in DB.Fico_Costing_BomCosts
+            var q_Bom = from a in DB.Fico_Costing_Bom_Costs
                         where a.Bc_Balancedate.Substring(0, 6).CompareTo(edate) == 0
                         select a;
 
@@ -206,14 +196,12 @@ namespace Fine.Lf_Accounting
                     join b in q_Moving on a.Bc_Item equals b.Bc_Item
                     select new
                     {
-                       物料= a.Bc_Item,
+                        物料 = a.Bc_Item,
                         物料描述 = a.Bc_ItemText,
                         材料费 = a.Bc_MovingCost,
                         移动平均 = b.Bc_MovingAverage / 1000,
-                        生产成本 =b.Bc_MovingAverage / 1000 - a.Bc_MovingCost,
-
+                        生产成本 = b.Bc_MovingAverage / 1000 - a.Bc_MovingCost,
                     };
-
 
             if (q.Any())
             {
@@ -228,9 +216,8 @@ namespace Fine.Lf_Accounting
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
         }
-        #endregion
-    }
 
+        #endregion Export
+    }
 }

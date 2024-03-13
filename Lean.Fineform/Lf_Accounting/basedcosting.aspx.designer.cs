@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
 
 

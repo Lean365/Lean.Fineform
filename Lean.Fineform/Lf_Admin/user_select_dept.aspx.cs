@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using System.Linq;
-using FineUIPro;
-using System.Transactions;
-using System.Text;
+﻿using FineUIPro;
+using System;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user_select_dept : PageBase
     {
@@ -26,7 +18,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,7 +34,6 @@ namespace Fine.Lf_Admin
         {
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-
             _deptID = GetQueryIntValue("ids");
 
             // 绑定列表
@@ -57,6 +48,7 @@ namespace Fine.Lf_Admin
 
         // 当前部门ID
         private int _deptID;
+
         // 用来在表格渲染时记录选中的行索引
         private int _selectedRowIndex = -1;
 
@@ -66,7 +58,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -83,7 +75,6 @@ namespace Fine.Lf_Admin
         //    PageContext.RegisterStartupScript(String.Format("selectDept({0},{1});", JsHelper.Enquote(deptName), JsHelper.Enquote(deptID)));
         //}
 
-
         protected void Grid1_RowDataBound(object sender, FineUIPro.GridRowEventArgs e)
         {
             // 行绑定后，确定应该选择哪一行
@@ -93,8 +84,7 @@ namespace Fine.Lf_Admin
                 _selectedRowIndex = e.RowIndex;
             }
         }
-        
-        #endregion
 
+        #endregion Events
     }
 }

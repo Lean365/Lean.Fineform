@@ -1,17 +1,10 @@
-﻿using System;
+﻿//using EntityFramework.Extensions;
+using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Linq;
 
-//using EntityFramework.Extensions;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
-
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class log : PageBase
     {
@@ -28,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -75,9 +68,7 @@ namespace Fine.Lf_Admin
             string uid = GetIdentityName();
             if (uid != "admin")
             {
-
-                    q = q.Where(l => l.Message.Contains(uid));
-
+                q = q.Where(l => l.Message.Contains(uid));
             }
 
             // 过滤搜索范围
@@ -94,25 +85,27 @@ namespace Fine.Lf_Admin
                     case "TODAY":
                         q = q.Where(l => l.Date >= today);
                         break;
+
                     case "LAST3DAYS":
                         q = q.Where(l => l.Date >= Pastday3);
                         break;
+
                     case "LAST7DAYS":
                         q = q.Where(l => l.Date >= Pastday7);
                         break;
+
                     case "LASTMONTH":
                         q = q.Where(l => l.Date >= Pastmonth);
                         break;
+
                     case "LASTYEAR":
                         q = q.Where(l => l.Date >= Pastyear);
                         break;
                 }
             }
 
-
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
-
 
             // 排列和分页
             q = SortAndPage<Adm_Log>(q, Grid1);
@@ -121,7 +114,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -148,17 +141,15 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreLogView", Grid1, "viewField");
         }
 
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
         }
@@ -196,7 +187,6 @@ namespace Fine.Lf_Admin
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/log_view.aspx?ID=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
-
             }
         }
 
@@ -207,7 +197,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

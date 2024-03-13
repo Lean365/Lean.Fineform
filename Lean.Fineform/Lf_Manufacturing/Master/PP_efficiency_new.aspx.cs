@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_efficiency_new : PageBase
     {
-
-       
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,9 +31,8 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-                
+
                 this.Proratedate.SelectedDate = DateTime.Now;
             }
         }
@@ -51,18 +48,12 @@ namespace Fine.Lf_Manufacturing.Master
 
             // 初始化用户所属部门
             //InitNoticeDept();
-
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         private void CheckData()
         {
             ////判断修改内容
@@ -70,7 +61,6 @@ namespace Fine.Lf_Manufacturing.Master
             //proLine current = DB.proLines.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
-
 
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -103,24 +93,20 @@ namespace Fine.Lf_Manufacturing.Master
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Prorate = int.Parse(Prorate.Text);
 
-
             item.GUID = Guid.NewGuid();
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_Efficiencys.Add(item);
             DB.SaveChanges();
 
             //新增日志
-            string Newtext = this.Proratedate.SelectedDate.Value.ToString("yyyyMM")+","+Prorate.Text;
+            string Newtext = this.Proratedate.SelectedDate.Value.ToString("yyyyMM") + "," + Prorate.Text;
             string OperateType = "新增";
             string OperateNotes = "New* " + Newtext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "赁率新增", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -135,8 +121,9 @@ namespace Fine.Lf_Manufacturing.Master
                 Alert.ShowInTop("基本信息,日期< " + InputData + ">已经存在！修改即可");
                 return;
             }
-            try { 
-            SaveItem();
+            try
+            {
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -171,15 +158,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

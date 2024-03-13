@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
+﻿using FineUIPro;
+using System;
+
 //using EntityFramework.Extensions;
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-namespace Fine.Lf_Manufacturing.PP.tracking
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.PP.tracking
 {
     public partial class lot_tracking_oph : PageBase
     {
@@ -31,7 +23,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -45,7 +37,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         private void LoadData()
         {
-
             //BindDDLGUID();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
@@ -76,13 +67,11 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-            var q_all = from p in DB.Pp_TrackingOutputs
-                        
-                        where p.isDelete == 0
+            var q_all = from p in DB.Pp_Tracking_Outputs
+
+                        where p.isDeleted == 0
                         select new
                         {
                             p.Pro_Date,
@@ -96,23 +85,18 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                             p.Pro_MaxTime,
                             p.Pro_MinTime,
                             p.Pro_StdDev,
-
                         };
-
-
-
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
 
             if (!String.IsNullOrEmpty(searchText))
             {
-                q_all = q_all.Where(u => u.Pro_Model.ToString().Contains(searchText) || u.Pro_Process.ToString().Contains(searchText) || u.Pro_Item.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q_all = q_all.Where(u => u.Pro_Model.ToString().Contains(searchText) || u.Pro_Process.ToString().Contains(searchText) || u.Pro_Item.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -124,26 +108,16 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             }
             if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
             {
-
                 q_all = q_all.Where(u => u.Pro_Line.Contains(this.DDLline.SelectedText));
             }
             if (this.DDLModel.SelectedIndex != -1 && this.DDLModel.SelectedIndex != 0)
             {
-
                 q_all = q_all.Where(u => u.Pro_Model.Contains(this.DDLModel.SelectedText));
             }
             if (this.DDLLot.SelectedIndex != -1 && this.DDLLot.SelectedIndex != 0)
             {
-
                 q_all = q_all.Where(u => u.Pro_Lot.Contains(this.DDLLot.SelectedText));
             }
-
-
-
-
-
-
-
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = GridHelper.GetTotalCount(q_all.AsQueryable());
@@ -160,8 +134,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -169,6 +141,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 Grid1.DataBind();
             }
         }
+
         public void BindDDLLine()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -180,11 +153,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                     select new
                     {
                         a.Pro_Line
-
                     };
-
-
-
 
             var qs = q.Select(E => new { E.Pro_Line, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -197,8 +166,8 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             DDLline.DataBind();
 
             this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
         }
+
         public void BindDDLModel()
         {
             if (DDLline.SelectedIndex != 0 || DDLline.SelectedIndex != -1)
@@ -206,7 +175,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 string line = DDLline.SelectedItem.Text;
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-                var q = from a in DB.Pp_TrackingCounts
+                var q = from a in DB.Pp_Tracking_Counts
                             //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                         where a.Pro_Date.CompareTo(sdate) >= 0
                         where a.Pro_Date.CompareTo(edate) <= 0
@@ -214,11 +183,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                         select new
                         {
                             a.Pro_Model,
-
                         };
-
-
-
 
                 var qs = q.Select(E => new { E.Pro_Model, }).ToList().Distinct();
                 //var list = (from c in DB.ProSapPorders
@@ -231,9 +196,9 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 DDLModel.DataBind();
 
                 this.DDLModel.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
             }
         }
+
         public void BindDDLLot()
         {
             if (DDLModel.SelectedIndex != 0 || DDLModel.SelectedIndex != -1)
@@ -243,7 +208,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-                var q = from a in DB.Pp_TrackingCounts
+                var q = from a in DB.Pp_Tracking_Counts
                             //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                         where a.Pro_Date.CompareTo(sdate) >= 0
                         where a.Pro_Date.CompareTo(edate) <= 0
@@ -252,11 +217,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                         select new
                         {
                             a.Pro_Lot,
-
                         };
-
-
-
 
                 var qs = q.Select(E => new { E.Pro_Lot, }).ToList().Distinct();
                 //var list = (from c in DB.ProSapPorders
@@ -269,11 +230,10 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 DDLLot.DataBind();
 
                 this.DDLLot.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -309,8 +269,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -328,7 +286,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -345,15 +302,10 @@ namespace Fine.Lf_Manufacturing.PP.tracking
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -370,7 +322,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -383,7 +334,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             if (DPstart.SelectedDate.HasValue)
             {
                 BindDDLLine();
-
             }
         }
 
@@ -392,11 +342,10 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             if (DPend.SelectedDate.HasValue)
             {
                 BindDDLLine();
-
             }
         }
 
-        #endregion
+        #endregion Events
 
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -406,6 +355,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 BindGrid();
             }
         }
+
         protected void DDLModel_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLModel.SelectedIndex != -1 && DDLModel.SelectedIndex != 0)
@@ -414,11 +364,11 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 BindGrid();
             }
         }
+
         protected void DDLLot_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLLot.SelectedIndex != -1 && DDLLot.SelectedIndex != 0)
             {
-
                 BindGrid();
             }
         }
@@ -443,7 +393,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                 join b in DB.Pp_P1d_Outputs on p.GUID equals b.GUID
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
@@ -466,25 +416,19 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                     g.Key.Probadmemo,
                     g.Key.Prolinemin,
                     g.Key.Prolinestopmin,
-
-
-
                 };
-
-
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
 
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
             else
             {
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -532,9 +476,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
         }
-
-
     }
 }

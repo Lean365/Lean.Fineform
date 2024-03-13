@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.TL
+namespace LeanFine.Lf_Manufacturing.TL
 {
     public partial class liaison_query : PageBase
     {
@@ -29,7 +22,7 @@ namespace Fine.Lf_Manufacturing.TL
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -51,7 +44,6 @@ namespace Fine.Lf_Manufacturing.TL
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -67,17 +59,12 @@ namespace Fine.Lf_Manufacturing.TL
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             try
             {
-
                 var q = from a in DB.Pp_Liaisons
                         select a;
-
 
                 // 在用户名称中搜索
                 string searchText = ttbSearchMessage.Text.Trim();
@@ -88,7 +75,6 @@ namespace Fine.Lf_Manufacturing.TL
                 if (this.DDLModel.SelectedIndex != 0 && this.DDLModel.SelectedIndex != -1)
                 {
                     q = q.Where(u => u.Ec_model.Contains(DDLModel.SelectedItem.Text));
-
                 }
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -185,9 +171,11 @@ namespace Fine.Lf_Manufacturing.TL
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         private void BindDDLModel()//ERP设变技术担当
         {
             var q = from a in DB.Pp_Liaisons
@@ -207,9 +195,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             this.DDLModel.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -228,13 +215,10 @@ namespace Fine.Lf_Manufacturing.TL
             // 数据绑定之前，进行权限检查
             //CheckPowerWithLinkButtonField("CoreTlEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreTlDelete", Grid1, "deleteField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -261,6 +245,7 @@ namespace Fine.Lf_Manufacturing.TL
         {
             BindGrid();
         }
+
         protected void DDLModel_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
@@ -272,6 +257,7 @@ namespace Fine.Lf_Manufacturing.TL
 
             BindGrid();
         }
+
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             //if (e.CommandName == "Edit")
@@ -299,26 +285,21 @@ namespace Fine.Lf_Manufacturing.TL
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "技联信息删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             //    BindGrid();
             //}
         }
 
-
         protected void btnClose_Click(object sender, EventArgs e)
         {
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

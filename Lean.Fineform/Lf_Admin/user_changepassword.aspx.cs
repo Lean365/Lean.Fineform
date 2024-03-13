@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.Entity;using System.Data.Entity.Validation;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using FineUIPro;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user_changepassword : PageBase
     {
@@ -24,7 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -48,10 +44,8 @@ namespace Fine.Lf_Admin
             {
                 var qs = q.ToList();
 
-                    labUserName.Text = qs[0].Name;
-                    labUserRealName.Text = qs[0].ChineseName;
-
-
+                labUserName.Text = qs[0].Name;
+                labUserRealName.Text = qs[0].ChineseName;
             }
             else
             {
@@ -60,17 +54,14 @@ namespace Fine.Lf_Admin
                 return;
             }
 
-            
             //if (current.Name == "admin" && GetIdentityName() != "admin")
             //{
             //    Alert.ShowInTop("你无权编辑超级管理员！", String.Empty, ActiveWindow.GetHideReference());
             //    return;
             //}
-
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -84,7 +75,7 @@ namespace Fine.Lf_Admin
             //Alert.ShowInTop("保存成功！", String.Empty, Alert.DefaultIcon, ActiveWindow.GetHidePostBackReference());
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
+        #endregion Events
     }
 }

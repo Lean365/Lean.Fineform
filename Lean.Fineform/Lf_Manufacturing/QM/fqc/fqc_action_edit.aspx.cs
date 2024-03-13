@@ -1,20 +1,16 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 
-
-namespace Fine.Lf_Manufacturing.QM.fqc
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
-
     public partial class fqc_action_edit : PageBase
     {
         //日志配置文件调用
         //private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
-        
         #region ViewPower
 
         /// <summary>
@@ -28,7 +24,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -36,7 +32,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -46,17 +41,14 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-
             BindData();
-
         }
-
 
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Improvement current = DB.Qm_Improvements.Find(id);
 
             if (current == null)
@@ -65,7 +57,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
 
             qmIssueno.Text = current.qmIssueno;
             qmInspector.Text = current.qmInspector;
@@ -99,7 +90,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             {
                 qmDirectreason.Text = current.qmDirectreason.ToString();
             }
-
 
             if (current.qmIndirectreason.ToString() == "Wait for Reply")
             {
@@ -138,7 +128,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 qmIndirectsolutions.Text = current.qmIndirectsolutions.ToString();
             }
 
-
             if (current.qmVerify.ToString() == "Wait for Reply")
             {
                 qmVerify.Text = "";
@@ -153,12 +142,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             if (current.qmCarryoutverify == true)
             {
                 qmCarryoutverify.Checked = true;
-
             }
             else
             {
                 qmCarryoutverify.Checked = false;
-
             }
             if (current.qmDirectreason.ToString() == "Wait for Reply")
             {
@@ -189,10 +176,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             qmCarryoutverify.Text = current.qmCarryoutverify.ToString();
             Remark.Text = current.Remark;
 
-
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -210,15 +194,11 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不良对策修改", OperateNotes);
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Improvement current = DB.Qm_Improvements.Find(id);
             string modi001 = current.qmPersonnel;
@@ -251,12 +231,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -270,7 +248,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -280,7 +257,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //}
             //string InputData = qmCheckNotes.Text.Trim();
 
-
             //Qm_Improvement Redata = DB.Qm_Improvements.Where(u => u.qmCheckNotes == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -288,9 +264,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //    Alert.ShowInTop("分析对策数据,判定说明说明方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
+
         #region Events
+
         private void SaveItem()//新增质量控制数据
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
@@ -332,9 +309,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             item.qmSolutionsverify = qmSolutionsverify.Text;
             item.qmNotes = qmNotes.Text;
 
-
             item.Remark = Remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -344,10 +320,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不良对策修改", OperateNotes);
-
-
         }
+
         public decimal qaQTY, mcQTY;
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             ////工单未入库数量
@@ -375,9 +351,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //    qaQTY = 0;
             //}
 
-
-
-
             //if (qaQTY > mcQTY)
             //{
             //    //登录日志写入
@@ -388,17 +361,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             CheckData();
             SaveItem();
 
-
-
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
+
+        #endregion Events
+
         #region DDLBindData
-
-
-
-
-
 
         protected void qmDirectreason_TextChanged(object sender, EventArgs e)
         {
@@ -423,7 +391,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             qmDisposal.Text = StringHelper.ToDBC(qmDisposal.Text.ToString().Trim());//全角半角转换
             StringHelper.strToUpper(qmDisposal.Text.ToString().Trim());//大小写转换
             //qmDisposal.Text = StringHelper.CNYcurD(qmDisposal.Text.ToString().Trim());//会计金额大写转换
-
         }
 
         protected void qmDirectsolutions_TextChanged(object sender, EventArgs e)
@@ -458,11 +425,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //qmNotes.Text = StringHelper.CNYcurD(qmNotes.Text.ToString().Trim());//会计金额大写转换
         }
 
-
-
-        #endregion
-
-
-
+        #endregion DDLBindData
     }
 }

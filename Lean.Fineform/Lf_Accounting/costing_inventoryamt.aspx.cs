@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_inventoryamt : PageBase
     {
@@ -32,9 +20,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, myrexname, xlsname;
         public static DataTable table;
         //
@@ -49,7 +38,6 @@ namespace Fine.Lf_Accounting
 
         private void LoadData()
         {
-            
             //rbtnFirstAuto.Text=global::Resources.GlobalResource.Unenforced;
             //本月第一天
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
@@ -59,7 +47,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreProbadp1dNew", btnP1d);
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
             CheckPowerWithButton("CoreKitOutput", BtnExport);
-
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -76,8 +63,6 @@ namespace Fine.Lf_Accounting
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             if (rbtnFirstAuto.Checked)
@@ -87,21 +72,18 @@ namespace Fine.Lf_Accounting
 
                 var q = from a in DB.Fico_Costing_HistInventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
-                        where a.isDelete == 0
+                        where a.isDeleted == 0
                         select a;
 
                 //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
 
                 //q.Where(u => u.Prodate.Contains(sdate));
 
-
                 // 在用户名称中搜索
-
 
                 if (!string.IsNullOrEmpty(FY))
                 {
                     q = q.Where(u => u.Bc_YM.CompareTo(FY) == 0);
-
                 }
 
                 var q_count = from a in q
@@ -113,13 +95,9 @@ namespace Fine.Lf_Accounting
                                   Bc_Assessment = (g.Key.Bc_Assessment.CompareTo("Z792") == 0 ? "成品" : (g.Key.Bc_Assessment.CompareTo("Z300") == 0 ? "原材料" : (g.Key.Bc_Assessment.CompareTo("Z790") == 0 ? "半成品" : g.Key.Bc_Assessment))),
                                   Bc_Totalinventory = g.Sum(a => a.Bc_Totalinventory),
                                   Bc_Totalamount = g.Sum(a => a.Bc_Totalamount),
-
                               };
 
-
-
                 //q = q.Where(u => u.Bc_MaterialType.CompareTo("FERT") == 0);
-
 
                 // q = q.Where(u => u.Promodel != "0");
                 //if (GetIdentityName() != "admin")
@@ -142,8 +120,6 @@ namespace Fine.Lf_Accounting
 
                     Grid1.DataSource = table;
                     Grid1.DataBind();
-
-
                 }
                 else
                 {
@@ -158,21 +134,18 @@ namespace Fine.Lf_Accounting
 
                 var q = from a in DB.Fico_Costing_HistInventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
-                        where a.isDelete == 0
+                        where a.isDeleted == 0
                         select a;
 
                 //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
 
                 //q.Where(u => u.Prodate.Contains(sdate));
 
-
                 // 在用户名称中搜索
-
 
                 if (!string.IsNullOrEmpty(FY))
                 {
                     q = q.Where(u => u.Bc_YM.CompareTo(FY) == 0);
-
                 }
 
                 var q_count = from a in q
@@ -185,13 +158,9 @@ namespace Fine.Lf_Accounting
                                   Bc_Assessment = (g.Key.Bc_Assessment.CompareTo("Z792") == 0 ? "成品" : (g.Key.Bc_Assessment.CompareTo("Z300") == 0 ? "原材料" : (g.Key.Bc_Assessment.CompareTo("Z790") == 0 ? "半成品" : g.Key.Bc_Assessment))),
                                   Bc_Totalinventory = g.Sum(a => a.Bc_Totalinventory),
                                   Bc_Totalamount = g.Sum(a => a.Bc_Totalamount),
-
                               };
 
-
-
                 //q = q.Where(u => u.Bc_MaterialType.CompareTo("FERT") == 0);
-
 
                 // q = q.Where(u => u.Promodel != "0");
                 //if (GetIdentityName() != "admin")
@@ -214,8 +183,6 @@ namespace Fine.Lf_Accounting
 
                     Grid1.DataSource = table;
                     Grid1.DataBind();
-
-
                 }
                 else
                 {
@@ -224,6 +191,7 @@ namespace Fine.Lf_Accounting
                 }
             }
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -233,7 +201,6 @@ namespace Fine.Lf_Accounting
                 return;
             }
 
-
             if (rbtnFirstAuto.Checked)
             {
                 BindGrid();
@@ -242,17 +209,19 @@ namespace Fine.Lf_Accounting
             {
                 BindGrid();
             }
-
-
         }
-        #endregion
+
+        #endregion Page_Load
+
         #region Event
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -268,12 +237,10 @@ namespace Fine.Lf_Accounting
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
 
         protected void DPend_TextChanged(object sender, EventArgs e)
@@ -290,10 +257,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-
-        #endregion
+        #endregion Event
 
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -327,8 +294,7 @@ namespace Fine.Lf_Accounting
             }
             Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
         }
-        #endregion
 
+        #endregion Export
     }
-
 }

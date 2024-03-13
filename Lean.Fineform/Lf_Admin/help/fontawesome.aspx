@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fontawesome.aspx.cs" Inherits="Fine.Lf_Admin.help.fontawesome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fontawesome.aspx.cs" Inherits="LeanFine.Lf_Admin.help.fontawesome" %>
 
 <!DOCTYPE html>
 

@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.QM.complaint
+namespace LeanFine.Lf_Manufacturing.QM.complaint
 {
     public partial class complaint : PageBase
     {
@@ -32,11 +22,9 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,7 +45,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -74,88 +61,19 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
-
 
                 if (rbtnFirstAuto.Checked)
                 {
                     var q =
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() == "" || a.Cc_ProcessDate == null
-                                                 //where b.Ec_distinction == 1
-                                                 where a.isDelete == 0
-
-                                     select new
-                                     {
-                                         a.Cc_ReceivingDate,
-                                         a.Cc_Customer,
-                                         a.Cc_IssuesNo,                                        
-                                         a.Cc_Model,
-                                         a.Cc_Issues,
-                                         a.Cc_Reasons,
-                                         Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
-                                     });
-
-
-                    // 在用户名称中搜索
-
-                    if (!String.IsNullOrEmpty(searchText))
-                    {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
-                    }
-                    var qs = q.Select(a =>
-                    new
-                    {
-                        a.Cc_ReceivingDate,
-                        a.Cc_Customer,
-                        a.Cc_IssuesNo,
-                        a.Cc_Model,
-                        a.Cc_Issues,
-                        a.Cc_Reasons,
-                        a.Cc_ProcessDate,
-
-
-                    }).Distinct();
-
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    Grid1.RecordCount = GridHelper.GetTotalCount(qs);
-                    if (Grid1.RecordCount != 0)
-                    {
-                        // 排列和数据库分页
-                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
-
-                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
-                        //Grid1.RecordCount = GetTotalCount();
-
-                        // 2.获取当前分页数据
-                        DataTable table = GridHelper.GetPagedDataTable(Grid1, qs);
-
-                        Grid1.DataSource = table;
-                        Grid1.DataBind();
-
-
-                    }
-                    else
-                    {
-                        Grid1.DataSource = "";
-                        Grid1.DataBind();
-                    }
-
-                }
-                if (rbtnSecondAuto.Checked)
-                {
-                    var q =
-                            (from a in DB.Qm_Complaints
-                             where a.Cc_ProcessDate.ToString() != "" || a.Cc_ProcessDate != null
                              //where b.Ec_distinction == 1
-                             where a.isDelete == 0
+                             where a.isDeleted == 0
 
                              select new
                              {
@@ -168,12 +86,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                                  Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
                              });
 
-
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     var qs = q.Select(a =>
                     new
@@ -184,10 +101,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                         a.Cc_Model,
                         a.Cc_Issues,
                         a.Cc_Reasons,
-
                         a.Cc_ProcessDate,
-
-
                     }).Distinct();
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -205,8 +119,66 @@ namespace Fine.Lf_Manufacturing.QM.complaint
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
+                    }
+                    else
+                    {
+                        Grid1.DataSource = "";
+                        Grid1.DataBind();
+                    }
+                }
+                if (rbtnSecondAuto.Checked)
+                {
+                    var q =
+                            (from a in DB.Qm_Complaints
+                             where a.Cc_ProcessDate.ToString() != "" || a.Cc_ProcessDate != null
+                             //where b.Ec_distinction == 1
+                             where a.isDeleted == 0
 
+                             select new
+                             {
+                                 a.Cc_ReceivingDate,
+                                 a.Cc_Customer,
+                                 a.Cc_IssuesNo,
+                                 a.Cc_Model,
+                                 a.Cc_Issues,
+                                 a.Cc_Reasons,
+                                 Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
+                             });
 
+                    // 在用户名称中搜索
+
+                    if (!String.IsNullOrEmpty(searchText))
+                    {
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                    }
+                    var qs = q.Select(a =>
+                    new
+                    {
+                        a.Cc_ReceivingDate,
+                        a.Cc_Customer,
+                        a.Cc_IssuesNo,
+                        a.Cc_Model,
+                        a.Cc_Issues,
+                        a.Cc_Reasons,
+
+                        a.Cc_ProcessDate,
+                    }).Distinct();
+
+                    // 在查询添加之后，排序和分页之前获取总记录数
+                    Grid1.RecordCount = GridHelper.GetTotalCount(qs);
+                    if (Grid1.RecordCount != 0)
+                    {
+                        // 排列和数据库分页
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
+
+                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
+                        //Grid1.RecordCount = GetTotalCount();
+
+                        // 2.获取当前分页数据
+                        DataTable table = GridHelper.GetPagedDataTable(Grid1, qs);
+
+                        Grid1.DataSource = table;
+                        Grid1.DataBind();
                     }
                     else
                     {
@@ -218,9 +190,9 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 {
                     var q =
                             (from a in DB.Qm_Complaints
-                                 //where a.p1dModifyTime.ToString() == "" || a.p1dModifyTime == null
+                                 //where a.p1dModifyDate.ToString() == "" || a.p1dModifyDate == null
                                  //where b.Ec_distinction == 1
-                             where a.isDelete == 0
+                             where a.isDeleted == 0
 
                              select new
                              {
@@ -233,12 +205,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                                  Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
                              });
 
-
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     var qs = q.Select(a =>
                     new
@@ -250,8 +221,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                         a.Cc_Issues,
                         a.Cc_Reasons,
                         a.Cc_ProcessDate,
-
-
                     }).Distinct();
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -269,8 +238,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -312,9 +279,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -323,7 +291,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             {
                 return;
             }
-
 
             if (rbtnFirstAuto.Checked)
             {
@@ -337,8 +304,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             {
                 BindGrid();
             }
-
         }
+
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -359,13 +326,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //CheckPowerWithLinkButtonField("CoreComplaintP1DEdit", Grid1, "p1deditField");
             //CheckPowerWithLinkButtonField("CoreComplaintDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -380,6 +344,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -398,12 +363,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -425,10 +388,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "客诉信息删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             //    BindGrid();
@@ -445,34 +408,31 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
             DataRowView row = e.DataItem as DataRowView;
             if (row != null)
             {
-
                 if (e.Values[7].ToString() == "◎未处理")
                 {
-
                     e.Values[7] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[7]);
                 }
-                
             }
-
         }
-        #endregion
+
+        #endregion Events
+
         #region ExportExcel
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {
-
             // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
             {
@@ -485,9 +445,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
-
 
                 if (rbtnFirstAuto.Checked)
                 {
@@ -495,7 +453,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() == "" || a.Cc_ProcessDate == null
                              //where b.Ec_distinction == 1
-                             where a.isDelete == 0
+                             where a.isDeleted == 0
 
                              select new
                              {
@@ -508,12 +466,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                                  Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
                              });
 
-
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     var qs = q.Select(a =>
                     new
@@ -525,8 +482,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                         投诉事项 = a.Cc_Issues,
                         原因分析 = a.Cc_Reasons,
                         处理日期 = a.Cc_ProcessDate,
-
-
                     }).Distinct();
 
                     int c = GridHelper.GetTotalCount(qs);
@@ -537,7 +492,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                     //Grid1.AllowPaging = false;
                     ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
                     //Grid1.AllowPaging = true;
-
                 }
                 if (rbtnSecondAuto.Checked)
                 {
@@ -545,7 +499,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() != "" || a.Cc_ProcessDate != null
                              //where b.Ec_distinction == 1
-                             where a.isDelete == 0
+                             where a.isDeleted == 0
 
                              select new
                              {
@@ -558,12 +512,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                                  Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
                              });
 
-
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     var qs = q.Select(a =>
                     new
@@ -575,8 +528,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                         投诉事项 = a.Cc_Issues,
                         原因分析 = a.Cc_Reasons,
                         处理日期 = a.Cc_ProcessDate,
-
-
                     }).Distinct();
 
                     int c = GridHelper.GetTotalCount(qs);
@@ -592,9 +543,9 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 {
                     var q =
                             (from a in DB.Qm_Complaints
-                                 //where a.p1dModifyTime.ToString() == "" || a.p1dModifyTime == null
+                                 //where a.p1dModifyDate.ToString() == "" || a.p1dModifyDate == null
                                  //where b.Ec_distinction == 1
-                             where a.isDelete == 0
+                             where a.isDeleted == 0
 
                              select new
                              {
@@ -607,12 +558,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                                  Cc_ProcessDate = (a.Cc_ProcessDate.ToString() == "" ? "◎未处理" : a.Cc_ProcessDate == null ? "◎未处理" : a.Cc_ProcessDate.ToString()),
                              });
 
-
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Cc_Model.Contains(searchText) ); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Cc_Model.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     var qs = q.Select(a =>
                     new
@@ -624,8 +574,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                         投诉事项 = a.Cc_Issues,
                         原因分析 = a.Cc_Reasons,
                         处理日期 = a.Cc_ProcessDate,
-
-
                     }).Distinct();
 
                     int c = GridHelper.GetTotalCount(qs);
@@ -669,12 +617,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                     msg += item.FirstOrDefault().ErrorMessage;
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
-
-
         }
 
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

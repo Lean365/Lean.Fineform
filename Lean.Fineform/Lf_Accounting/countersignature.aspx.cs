@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class countersignature : PageBase
     {
@@ -21,11 +16,11 @@ namespace Fine.Lf_Accounting
                 return "CoreCountersignatureView";
             }
         }
-        #endregion
-        
+
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

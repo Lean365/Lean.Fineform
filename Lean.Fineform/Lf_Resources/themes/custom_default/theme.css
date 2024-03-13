@@ -1,9 +1,7 @@
-
 /*
     Main color: #466596
     Border color: #9BACC6
 */
-
 
 /* Content */
 .f-widget-content {
@@ -77,7 +75,6 @@
         .f-state-active a:visited {
             color: #466596;
         }
-
 
     .f-state-highlight,
     .f-widget-content .f-state-highlight,
@@ -155,7 +152,6 @@
     color: #ff6c6c;
 }
 
-
 /* Round corner */
 .f-corner-all,
 .f-corner-top,
@@ -185,7 +181,6 @@
     border-bottom-right-radius: 4px;
 }
 
-
 /* CheckBox - RadioButton */
 .f-checkbox.f-checked {
     background-color: #466596;
@@ -206,7 +201,7 @@
 }
 
 .f-menu-item-icon.f-menu-radiobutton.f-checked {
-	color: #466596;
+    color: #466596;
 }
 
 /* Special - header active state */
@@ -221,7 +216,6 @@
 .f-grid-colheader.f-state-hover {
     border-color: #c5c5c5;
 }
-
 
 /* Special - TabStrip */
 .f-tabstrip-plain > .f-panel-bodyct > .f-panel-body,
@@ -250,29 +244,26 @@
     background-color: #fff;
 }
 
-
 .f-tabstrip-header .f-tab-header.f-state-active:after {
-	background-color: #f3f3f3;
+    background-color: #f3f3f3;
 }
+
 .f-tab-header.f-state-active .f-icon {
-	color: #466596;
+    color: #466596;
 }
 
 .f-tabstrip-header .f-tabstrip-header-inkbar {
-	background-color: #466596;
+    background-color: #466596;
 }
+
 .f-tabstrip-inkbar > .f-tabstrip-header .f-tab-header.f-state-active {
-	background-color: #f3f3f3;
+    background-color: #f3f3f3;
 }
-
-
 
 /* Special - Grid selected cell */
 .f-grid-selectedcell-border {
     border-color: #c5c5c5 !important;
 }
-
-
 
 /* Special - Grid selected row */
 .f-grid-row.f-state-active {
@@ -305,7 +296,6 @@
     border-color: #c5c5c5 !important;
 }
 
-
 /* Special - Button pressed state */
 .f-btn.f-state-active {
     background-color: #466596;
@@ -315,7 +305,6 @@
     .f-btn.f-state-active .f-icon {
         color: #fff;
     }
-
 
 /* Special - Main header */
 .f-widget-header.f-mainheader {
@@ -329,21 +318,16 @@
         color: #444;
     }
 
-
 /* Special - Sub header */
 .f-widget-header.f-subheader {
     background-color: #fff;
 }
-
-
-
 
 /* Special - MessageBoxIcon */
 .f-messagebox-icon.f-messageicon-information,
 .f-messagebox-icon.f-messageicon-question {
     color: #466596;
 }
-
 
 body.f-body-bgcolor {
     background-color: #f3f3f3;

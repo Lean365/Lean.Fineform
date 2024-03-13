@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.SD;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.SD;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.SD.salesmanage
+namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 {
     public partial class customer : PageBase
     {
@@ -21,11 +21,9 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,7 +43,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,8 +58,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             IQueryable<Sd_Customer> q = DB.Sd_Customers; //.Include(u => u.Dept);
@@ -71,9 +66,9 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Customer_ID.Contains(searchText) || u.Customer_Name.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Customer_ID.Contains(searchText) || u.Customer_Name.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -95,7 +90,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -118,13 +113,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             CheckPowerWithLinkButtonField("CoreCustomerEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreCustomerDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -139,6 +131,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -157,12 +150,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -171,7 +162,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/SD/salesmanage/customer_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -191,10 +181,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "销售管理", "客户信息删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
                 BindGrid();
@@ -211,7 +201,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -219,11 +208,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
-
-
-
-        #endregion
+        #endregion Events
     }
 }

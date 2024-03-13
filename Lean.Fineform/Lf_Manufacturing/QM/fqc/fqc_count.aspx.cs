@@ -1,11 +1,12 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.fqc
+
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_count : PageBase
     {
@@ -22,11 +23,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string tracestr;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -45,7 +47,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -57,22 +58,17 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
             DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
-
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
             BindDDLLline();
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -81,15 +77,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
 
-
-
-
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
-
-
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -112,14 +102,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             var qs = from p in q
                      group p by new
                      {
                          p.qmProlot,
 
                          qmCheckdate = p.qmCheckdate.Substring(0, 6),
-
                      }
 
                     into g
@@ -132,8 +121,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          Rqty = g.Sum(p => p.qmRejectqty),
                          Passrate = g.Sum(p => p.qmAcceptqty) / g.Sum(p => p.qmProqty),
                          Failurerate = g.Sum(p => p.qmRejectqty) / g.Sum(p => p.qmProqty),
-
-
                      };
 
             // 在查询添加之后，排序和分页之前获取总记录数
@@ -152,11 +139,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -174,8 +159,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -193,7 +176,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -210,20 +192,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         //    DB.proOutputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.proOutputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
 
-
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
-
-
             if (e.CommandName == "PrintCheck")
             {
                 //ID,Prodate,Prolot
@@ -231,12 +206,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                 if (DDLlot.SelectedIndex != -1 && DDLlot.SelectedIndex != 0)
                 {
-
                     tracestr = DDLlot.SelectedItem.Text;
 
                     //labResult.Text = keys[0].ToString();
                     PageContext.RegisterStartupScript(Window1.GetShowReference("~/onePrint/defect_report.aspx?Prolot=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
-
                 }
                 else
                 {
@@ -256,7 +229,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -264,49 +236,39 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
-
-
-        #endregion
+        #endregion Events
 
         public void BindDDLLline()
         {
+            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            //string slot = DDLlot.SelectedItem.Text;
+            //查询LINQ去重复
+            var q = from a in DB.Qm_Outgoings
+                    where a.qmCheckdate.CompareTo(sdate) >= 0
+                    where a.qmCheckdate.CompareTo(edate) <= 0
+                    //where a.qmProlot.Contains(slot)
 
+                    select new
+                    {
+                        a.qmLine
+                    };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-                //string slot = DDLlot.SelectedItem.Text;
-                //查询LINQ去重复
-                var q = from a in DB.Qm_Outgoings
-                        where a.qmCheckdate.CompareTo(sdate) >= 0
-                        where a.qmCheckdate.CompareTo(edate) <= 0
-                        //where a.qmProlot.Contains(slot)
-
-
-                        select new
-                        {
-
-                            a.qmLine
-
-                        };
-
-                var qs = q.Select(E => new { E.qmLine }).ToList().Distinct();
-                //var list = (from c in DB.ProSapPorders
-                //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
-                //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
-                //3.2.将数据绑定到下拉框
-                DDLline.DataSource = qs;
-                DDLline.DataTextField = "qmLine";
-                DDLline.DataValueField = "qmLine";
-                DDLline.DataBind();
+            var qs = q.Select(E => new { E.qmLine }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            DDLline.DataSource = qs;
+            DDLline.DataTextField = "qmLine";
+            DDLline.DataValueField = "qmLine";
+            DDLline.DataBind();
 
             this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
-  
 
         public void BindDDLLot()
         {
-
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
             string sline = DDLline.SelectedItem.Text;
@@ -318,9 +280,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                     select new
                     {
-
                         a.qmProlot
-
                     };
 
             var qs = q.Select(E => new { E.qmProlot }).ToList().Distinct();
@@ -335,6 +295,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             this.DDLlot.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
+
         public void BindDDLhbn()
         {
             if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
@@ -352,9 +313,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                         select new
                         {
-
                             a.qmMaterial
-
                         };
 
                 var qs = q.Select(E => new { E.qmMaterial }).ToList().Distinct();
@@ -370,31 +329,30 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 this.DDLhbn.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             }
         }
+
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
             {
                 BindDDLLot();
                 BindGrid();
-
             }
         }
+
         protected void DDLlot_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLlot.SelectedIndex != -1 && DDLlot.SelectedIndex != 0)
             {
-
                 BindDDLhbn();
                 BindGrid();
-
             }
         }
+
         protected void DDLhbn_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
-
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
@@ -436,7 +394,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 fratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -447,7 +404,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             summary.Add("Failurerate", fratio.ToString("p2"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -469,22 +425,9 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
-
-
-
-
-
-
-
-
-
-
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
-
-
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -507,14 +450,13 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             var qs = from p in q
                      group p by new
                      {
                          p.qmProlot,
 
                          qmCheckdate = p.qmCheckdate.Substring(0, 6),
-
                      }
 
                     into g
@@ -527,18 +469,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                          验退数 = g.Sum(p => p.qmRejectqty),
                          合格率 = g.Sum(p => p.qmAcceptqty) / g.Sum(p => p.qmProqty),
                          不合格率 = g.Sum(p => p.qmRejectqty) / g.Sum(p => p.qmProqty),
-
-
                      };
-
-
 
             ConvertHelper.LinqConvertToDataTable(qs);
             Grid1.AllowPaging = false;
             ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
             Grid1.AllowPaging = true;
         }
-
-
     }
 }

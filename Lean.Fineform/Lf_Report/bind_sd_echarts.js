@@ -11,7 +11,7 @@
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-function BindmyChart_Sd_Regin(name, value, data) {
+function BindmyChart_SD_Regin(name, value, data) {
     var myChart = echarts.init(document.getElementById('ReginBar'));
     //debugger;
     //统计总数量
@@ -142,7 +142,7 @@ function BindmyChart_Sd_Regin(name, value, data) {
             radius: [30, 110],
             center: ['75%', '50%'],
             data: data,
-            roseType:'radius',
+            roseType: 'radius',
             label: {
                 normal: {
                     formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
@@ -154,7 +154,6 @@ function BindmyChart_Sd_Regin(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -181,7 +180,7 @@ function BindmyChart_Sd_Regin(name, value, data) {
     myChart.setOption(option);
     myChart.resize();
 }
-function BindmyChart_Sd_Destination(name, value, data) {
+function BindmyChart_SD_Destination(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('DestBar'));
     //debugger;
     var total_datas = 0;
@@ -314,7 +313,7 @@ function BindmyChart_Sd_Destination(name, value, data) {
             //zlevel: 10,
             //startAngle: 100,
             data: data,
-            roseType:'radius',
+            roseType: 'radius',
             label: {
                 normal: {
                     formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
@@ -326,7 +325,6 @@ function BindmyChart_Sd_Destination(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -352,7 +350,7 @@ function BindmyChart_Sd_Destination(name, value, data) {
     DestmyChart.setOption(option);
     DestmyChart.resize();
 }
-function BindmyChart_Sd_BuCode(name, value, data) {
+function BindmyChart_SD_BuCode(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('BuBar'));
     //debugger;
     var total_datas = 0;
@@ -498,7 +496,6 @@ function BindmyChart_Sd_BuCode(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -524,7 +521,7 @@ function BindmyChart_Sd_BuCode(name, value, data) {
     DestmyChart.setOption(option);
     DestmyChart.resize();
 }
-function BindmyChart_Sd_FyJPStats(name, value1, value2) {
+function BindmyChart_SD_FyJPStats(name, value1, value2) {
     var FyStatsChart = echarts.init(document.getElementById('FyJPBar'));
     //debugger;
     //var total_datas = 0;
@@ -577,7 +574,7 @@ function BindmyChart_Sd_FyJPStats(name, value1, value2) {
         },
         title: {
             text: 'Fiscal Year Bu-Sales',
-            subtext:'按日本财年统计',// 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月' + '(Total:' + total_datas + 'PCS)',
+            subtext: '按日本财年统计',// 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月' + '(Total:' + total_datas + 'PCS)',
             x: 'center'
         },
         tooltip: {
@@ -700,7 +697,6 @@ function BindmyChart_Sd_FyJPStats(name, value1, value2) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -729,7 +725,6 @@ function BindmyChart_Sd_FyJPStats(name, value1, value2) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -747,7 +742,7 @@ function BindmyChart_Sd_FyJPStats(name, value1, value2) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_Sd_FyBuJPStats(name, value, data) {
+function BindmyChart_SD_FyBuJPStats(name, value, data) {
     var FyStatsChart = echarts.init(document.getElementById('FyBuJPBar'));
     //debugger;
     //统计总数量
@@ -891,7 +886,6 @@ function BindmyChart_Sd_FyBuJPStats(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -918,7 +912,7 @@ function BindmyChart_Sd_FyBuJPStats(name, value, data) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_Sd_FyCNStats(name, value1, value2) {
+function BindmyChart_SD_FyCNStats(name, value1, value2) {
     var FyStatsChart = echarts.init(document.getElementById('FyCNBar'));
     //debugger;
     //var total_datas = 0;
@@ -1094,7 +1088,6 @@ function BindmyChart_Sd_FyCNStats(name, value1, value2) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1123,7 +1116,6 @@ function BindmyChart_Sd_FyCNStats(name, value1, value2) {
                                 return "#ed1941";
                             } else if (params.value = 110) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1141,7 +1133,7 @@ function BindmyChart_Sd_FyCNStats(name, value1, value2) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_Sd_FyBuCNStats(name, value, data) {
+function BindmyChart_SD_FyBuCNStats(name, value, data) {
     var FyStatsChart = echarts.init(document.getElementById('FyBuCNBar'));
     //debugger;
     //统计总数量
@@ -1284,7 +1276,6 @@ function BindmyChart_Sd_FyBuCNStats(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }

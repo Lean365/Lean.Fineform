@@ -1,25 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.SD.salesmanage
+namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 {
     public partial class forecast : PageBase
     {
@@ -36,7 +22,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Init
 
@@ -45,7 +31,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //{
         //    InitGrid();
         //}
-
 
         //private void InitGrid()
         //{
@@ -61,7 +46,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //        FY = q_ym[0].Btfy.ToString();
 
         //        var q = (from a in DB.Sd_Psis
-        //                 where a.isDelete == 0
+        //                 where a.isDeleted == 0
         //                 //where a.Bc_YM.CompareTo(thisQuarter1) >= 0
         //                 where a.Bc_FY.CompareTo(FY) == 0
         //                 //orderby a.Prostime + "~" + a.Proetime
@@ -76,7 +61,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //                     DiffQty = a.Bc_PsiDiff_Qty,
         //                 }).ToList();
 
-
         //        List<string> DimensionList = new List<string>() { "FY", "Item", "Mrp" };
 
         //        string DynamicColumn = "YM";
@@ -86,10 +70,8 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
         //        DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
 
-
         //        GridHelper.AddDefColumInGrid(result.Columns, Grid1);
         //    }
-
 
         //    //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
 
@@ -100,14 +82,14 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //    string thisQuarter4 = DateTime.Parse(thisYear).AddMonths(12).ToString("yyyyMMdd").Substring(0, 6);
         //    //SQL语句
 
-
-
         //}
 
-        #endregion
+        #endregion Page_Init
 
         #region Page_Load
+
         public static string FY;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -126,7 +108,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -138,10 +119,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
-
             DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
-
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
@@ -149,19 +127,13 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
             BindGrid();
             BindDDLItem();
-
         }
-
-
 
         private void BindGrid()
         {
-
-
             string thisYM = DateTime.Now.ToString("yyyyMM");
 
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
             var q_ym = (from a in DB.Fico_Periods
                         where a.Btfm.CompareTo(thisYM) == 0
@@ -172,7 +144,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
                 var q = from a in DB.Sd_Psis
-                        where a.isDelete == 0
+                        where a.isDeleted == 0
                         //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                         where a.Bc_FY.CompareTo(FY) == 0
                         //orderby a.Prostime + "~" + a.Proetime
@@ -184,8 +156,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                             Mrp = a.Bc_PsiMrp,
                             Qtya = a.Bc_PsiVera_Qty,
                         };
-
-
 
                 if (DDLItem.SelectedIndex != 0 && DDLItem.SelectedIndex != -1)
                 {
@@ -204,24 +174,18 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
                     DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
 
-
-
                     Grid1.RecordCount = result.Rows.Count;
                     if (Grid1.RecordCount != 0)
                     {
                         //var q_Grid = from a in result.AsEnumerable().AsQueryable()
                         //         select a;
 
-
-
                         DataTable table = GridHelper.GetPagedDataTabled(Grid1, result);
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
                     }
                 }
             }
-
 
             string thisYear = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).ToShortDateString();
             string thisQuarter1 = DateTime.Parse(thisYear).AddMonths(3).ToString("yyyyMMdd").Substring(0, 6);
@@ -229,11 +193,9 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             string thisQuarter3 = DateTime.Parse(thisYear).AddMonths(9).ToString("yyyyMMdd").Substring(0, 6);
             string thisQuarter4 = DateTime.Parse(thisYear).AddMonths(12).ToString("yyyyMMdd").Substring(0, 6);
 
-
             //SQL语句
-
-
         }
+
         private void BindDDLItem()
         {
             var q_ver = from a in DB.Sd_Psis
@@ -241,7 +203,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                         select new
                         {
                             a.Bc_PsiItem,
-
                         };
 
             //查询LINQ去重复
@@ -256,12 +217,11 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             DDLItem.DataValueField = "Bc_PsiItem";
             DDLItem.DataBind();
             this.DDLItem.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-            
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
-
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
@@ -276,7 +236,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -288,10 +247,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void DDLItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLItem.SelectedIndex != 0 || DDLItem.SelectedIndex != -1)
@@ -299,11 +258,15 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 BindGrid();
             }
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
         }
-        #endregion
+
+        #endregion Events
+
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -325,7 +288,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
 
-
             var q_ym = (from a in DB.Fico_Periods
                         where a.Btfm.CompareTo(thisYM) == 0
                         select a).ToList();
@@ -335,7 +297,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
                 var q = from a in DB.Sd_Psis
-                        where a.isDelete == 0
+                        where a.isDeleted == 0
                         //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                         where a.Bc_FY.CompareTo(FY) == 0
                         //orderby a.Prostime + "~" + a.Proetime
@@ -347,8 +309,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                             Mrp = a.Bc_PsiMrp,
                             Qtya = a.Bc_PsiVera_Qty,
                         };
-
-
 
                 if (DDLItem.SelectedIndex != 0 && DDLItem.SelectedIndex != -1)
                 {
@@ -367,12 +327,9 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
                     DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
 
-
-                        Grid1.AllowPaging = false;
-                        ExportHelper.EpplustoXLSXfile(result, Xlsbomitem, ExportFileName);
-                        Grid1.AllowPaging = true;
-
-
+                    Grid1.AllowPaging = false;
+                    ExportHelper.EpplustoXLSXfile(result, Xlsbomitem, ExportFileName);
+                    Grid1.AllowPaging = true;
                 }
                 else
 
@@ -380,14 +337,8 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                 }
             }
-
-
-
-
         }
-        #endregion
 
-
+        #endregion Export
     }
-
 }

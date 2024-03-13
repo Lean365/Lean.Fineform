@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_balance_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_balance_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_balance_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_balance_edit" %>
 
 <!DOCTYPE html>
 

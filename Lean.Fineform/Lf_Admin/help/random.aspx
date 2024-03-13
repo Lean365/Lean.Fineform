@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="random.aspx.cs" Inherits="Fine.Lf_Admin.help.random" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="random.aspx.cs" Inherits="LeanFine.Lf_Admin.help.random" %>
 
 <!DOCTYPE html>
 

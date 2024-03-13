@@ -11,7 +11,6 @@
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-
 function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
@@ -76,7 +75,7 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
                 saveAsImage: {
                     show: true,
                     title: 'IMG',
-                    name: 'DTA:'  + '_班组生产统计',    
+                    name: 'DTA:' + '_班组生产统计',
                 },// 保存为图片
             }
         },
@@ -225,7 +224,6 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -254,7 +252,6 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -357,7 +354,7 @@ function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_班组生产统计',    
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_班组生产统计',
                 }// 保存为图片
             }
         },
@@ -447,7 +444,6 @@ function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -475,7 +471,6 @@ function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -549,7 +544,7 @@ function BindmyChart_Pp_Defect(name, value1, value2, value4, data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产不良集计',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产不良集计',
                 }
             }
         },
@@ -594,49 +589,48 @@ function BindmyChart_Pp_Defect(name, value1, value2, value4, data) {
                 interval: 0,
                 rotate: -20
             }
-
         },
         yAxis: {},
         series: [
-        //    {
-        //    name: '无不良',
-        //    type: 'bar',
-        //    //barGap: 0,
-        //    stack: 'LOTSUM',//表示在哪一列
-        //    data: value1,
-        //    itemStyle: {
-        //        normal: {
-        //            label: {
-        //                show: true,//是否展示
-        //                position: 'inside',
-        //            },
-        //            color: function (params) {
-        //                // build a color map as your need.
-        //                var colorList = PrimarycolorList;
-        //                return colorList[params.dataIndex]
-        //            }
-        //        },//表示堆叠柱状图填充的颜色
-        //    }
-        //},
-        {
-            name: '不良台数',
-            type: 'bar',
-            stack: 'LOTSUM',//表示在哪一列
-            data: value2,
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                        //position: 'Top',
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = SecondarycolorList;
-                        return colorList[params.dataIndex]
-                    }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
+            //    {
+            //    name: '无不良',
+            //    type: 'bar',
+            //    //barGap: 0,
+            //    stack: 'LOTSUM',//表示在哪一列
+            //    data: value1,
+            //    itemStyle: {
+            //        normal: {
+            //            label: {
+            //                show: true,//是否展示
+            //                position: 'inside',
+            //            },
+            //            color: function (params) {
+            //                // build a color map as your need.
+            //                var colorList = PrimarycolorList;
+            //                return colorList[params.dataIndex]
+            //            }
+            //        },//表示堆叠柱状图填充的颜色
+            //    }
+            //},
+            {
+                name: '不良台数',
+                type: 'bar',
+                stack: 'LOTSUM',//表示在哪一列
+                data: value2,
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,//是否展示
+                            //position: 'Top',
+                        },
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = SecondarycolorList;
+                            return colorList[params.dataIndex]
+                        }
+                    },//表示堆叠柱状图填充的颜色
+                }
+            },
             //{
             //    name: '不良率',
             //    type: 'line',
@@ -704,7 +698,7 @@ function BindmyChart_Pp_Defect(name, value1, value2, value4, data) {
     DefectmyChart.setOption(option);
     DefectmyChart.resize();
 }
-function  BindmyChart_Pp_Reason(data) {
+function BindmyChart_Pp_Reason(data) {
     var myChart = echarts.init(document.getElementById('ReasonSunburst'));
     //debugger;
     //拼接JSON数据为TREE结构
@@ -778,7 +772,7 @@ function  BindmyChart_Pp_Reason(data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_原因分析',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_原因分析',
                 } // 导出图片
             }
         },
@@ -828,7 +822,6 @@ function  BindmyChart_Pp_Reason(data) {
                     }
                 },]
         }
-
     };
     //选中数据
     //function genData(data) {
@@ -850,7 +843,7 @@ function  BindmyChart_Pp_Reason(data) {
     myChart.setOption(option);
     myChart.resize();
 }
-function  BindmyChart_Pp_Direct(name, value3, value4) {
+function BindmyChart_Pp_Rty(name, value3, value4) {
     var AchievemyChart = echarts.init(document.getElementById('DirectLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -896,7 +889,7 @@ function  BindmyChart_Pp_Direct(name, value3, value4) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Lot直行率统计',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Lot直行率统计',
                 }
             }
         },
@@ -971,7 +964,6 @@ function  BindmyChart_Pp_Direct(name, value3, value4) {
                     margin: 20,
                     textStyle: {
                         color: '#003366',
-
                     },
                 },
                 axisTick: {
@@ -1010,7 +1002,6 @@ function  BindmyChart_Pp_Direct(name, value3, value4) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 itemStyle: {
                     color: "#6c50f3",
@@ -1107,7 +1098,7 @@ function  BindmyChart_Pp_Direct(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-function  BindmyChart_Pp_Achieve(name, value3, value4) {
+function BindmyChart_Pp_Achieving_Rate(name, value3, value4) {
     var AchievemyChart = echarts.init(document.getElementById('AchieveLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -1153,7 +1144,7 @@ function  BindmyChart_Pp_Achieve(name, value3, value4) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_月达成率统计',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_月达成率统计',
                 }
             }
         },
@@ -1228,7 +1219,6 @@ function  BindmyChart_Pp_Achieve(name, value3, value4) {
                     margin: 20,
                     textStyle: {
                         color: '#003366',
-
                     },
                 },
                 axisTick: {
@@ -1285,7 +1275,6 @@ function  BindmyChart_Pp_Achieve(name, value3, value4) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1309,7 +1298,6 @@ function  BindmyChart_Pp_Achieve(name, value3, value4) {
                         yAxis: 112,
                         itemStyle: {
                             normal: {
-                                
                                 color: '#ff6d9d'
                             }
                         }
@@ -1323,9 +1311,7 @@ function  BindmyChart_Pp_Achieve(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-
-
-function  BindmyChart_Pp_Progress(name, value3, value4, data) {
+function BindmyChart_Pp_Progress(name, value3, value4, data) {
     //获取隐藏控件中的值
     //图表展示
     var ProgressmyChart = echarts.init(document.getElementById('ProgressBar'));
@@ -1350,7 +1336,6 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
     //debugger;
     // 指定图表的配置项和数据
     var option = {
-
         //工具箱配置
         toolbox: {
             show: true,
@@ -1396,7 +1381,7 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产进度',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产进度',
                 }// 保存为图片
             }
         },
@@ -1422,7 +1407,6 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
                 for (x in params) {
                     return params[x].name + "<br/>生产数量:" + params[x].data.value1 + "<br/>占比:" + params[x].data.value + "%";
                 }
-
             }
             //formatter: '{b}<br />达成率:{c2}%<br />{a2}: {c0}<br />{a1}: {c1}',　　　　//这是关键，在需要的地方加上就行了
 
@@ -1450,13 +1434,11 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
                 }
             },
             data: name
-
         },
         {
             show: true,
             data: value3,
             axisLabel: {
-
                 textStyle: {
                     fontSize: 8,
                     color: "#000"
@@ -1476,7 +1458,6 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
 
         //y轴的数据
         yAxis: {
-
             show: false,
             splitLine: {
                 show: false
@@ -1556,7 +1537,7 @@ function  BindmyChart_Pp_Progress(name, value3, value4, data) {
 // 把数组整理成树形结构
 
 // 获取所有层级中节点数最大的层级的节点数(tempNodeNum)，总层数(tempclassesNum)
-function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, data) {
+function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var LossmyChart = echarts.init(document.getElementById('LossTimeBar'));
@@ -1574,7 +1555,6 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
         total_WorkTime += parseFloat(data[i].value1)
     }
     var total_LossRate = (parseFloat(total_LossTime) / parseFloat(total_spendtime)) * 100;
-
 
     //debugger;
     // 指定图表的配置项和数据
@@ -1621,7 +1601,7 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_损失工数统计',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_损失工数统计',
                 }
             }
         },
@@ -1804,7 +1784,6 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1832,7 +1811,6 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
                                 return "#FF0000";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1847,7 +1825,7 @@ function  BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, 
     LossmyChart.setOption(option);
     LossmyChart.resize();
 }
-function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data) {
+function BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var LossmyChart = echarts.init(document.getElementById('LossBar'));
@@ -1865,7 +1843,6 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
     //    total_WorkTime += parseFloat(data[i].value1)
     //}
     //var total_LossRate = (parseFloat(total_LossTime) / parseFloat(total_spendtime)) * 100;
-
 
     //debugger;
     // 指定图表的配置项和数据
@@ -1912,7 +1889,7 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_年度损失工数分析',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_年度损失工数分析',
                 }
             }
         },
@@ -2034,7 +2011,7 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
                 name: '实际工数',
                 type: 'bar',
                 data: value1,
-               stack: 'LOSS',//表示在哪一列
+                stack: 'LOSS',//表示在哪一列
                 itemStyle: {
                     normal: {
                         label: {
@@ -2104,7 +2081,6 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -2132,7 +2108,6 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
                                 return "#FF0000";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -2147,7 +2122,7 @@ function  BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data
     LossmyChart.setOption(option);
     LossmyChart.resize();
 }
-function  BindmyChart_Pp_Linestop(name, value, data) {
+function BindmyChart_Pp_Linestop(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('LineStopBar'));
     //debugger;
     var total_datas = 0;
@@ -2198,7 +2173,7 @@ function  BindmyChart_Pp_Linestop(name, value, data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产线停线统计',  
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_生产线停线统计',
                 }
             }
         },
@@ -2266,7 +2241,6 @@ function  BindmyChart_Pp_Linestop(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -2278,7 +2252,6 @@ function  BindmyChart_Pp_Linestop(name, value, data) {
                 color: '#e5323e'
             },
             itemStyle: {
-
                 emphasis: {
                     shadowBlur: 10,
                     shadowOffsetX: 0,
@@ -2339,7 +2312,7 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
                     show: true,
                     title: 'save as image',
                     name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_机种达成率统计',
-}
+                }
             }
         },
         title: {
@@ -2364,11 +2337,10 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
         legend: {
             show: true,
             x: 'left',
-            let:'50%'
+            let: '50%'
         },
         xAxis: [
             {
-
                 //left:'5%',
                 type: 'category',
                 axisLine: {
@@ -2387,7 +2359,6 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
                     color: '#003366',
                     interval: 0,
                     rotate: 30,
-
                 },
                 splitLine: {
                     show: true
@@ -2417,7 +2388,6 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
                     margin: 20,
                     textStyle: {
                         color: '#003366',
-
                     },
                 },
                 axisTick: {
@@ -2476,7 +2446,6 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -2513,7 +2482,7 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-function BindmyChart_Pp_YearAchieve(name, value1, value2, value3,data) {
+function BindmyChart_Pp_YearAchieve(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualmyChart = echarts.init(document.getElementById('YearBar'));
@@ -2577,7 +2546,8 @@ function BindmyChart_Pp_YearAchieve(name, value1, value2, value3,data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_年度生产统计',                }// 保存为图片
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_年度生产统计',
+                }// 保存为图片
             }
         },
         //图表标题
@@ -2725,7 +2695,6 @@ function BindmyChart_Pp_YearAchieve(name, value1, value2, value3,data) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -2754,7 +2723,6 @@ function BindmyChart_Pp_YearAchieve(name, value1, value2, value3,data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -2856,7 +2824,7 @@ function BindmyChart_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Process分析',   
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Process分析',
                 }// 保存为图片
             }
         },
@@ -3182,7 +3150,7 @@ function BindmyChart_Pp_Ttacking_OPH(name, value3, value4, value5, data) {
                 saveAsImage: {
                     show: true,
                     title: 'save as image',
-                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Process分析',   
+                    name: 'DTA:' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月_Process分析',
                 }// 保存为图片
             }
         },

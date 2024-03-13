@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.complaint
-{
 
+namespace LeanFine.Lf_Manufacturing.QM.complaint
+{
     public partial class complaint_qa_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,15 +23,16 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string txtRefdoc;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,8 +49,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -93,8 +92,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
 
-
-
             //Editor1.setContent("")
             // 初始化用户所属角色
             //InitUserRole(current);
@@ -112,15 +109,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "客诉信息", "客诉信息修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         private void Refdoc()
         {
             if (Cc_Reference.HasFile)
@@ -132,7 +124,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -157,6 +148,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 SimpleForm1.Reset();
             }
         }
+
         private void CheckData()
         {
             //判断修改内容
@@ -175,10 +167,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //        //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
             //        //alert.MessageBoxIcon = (MessageBoxIcon)Enum.Parse(typeof(MessageBoxIcon), "Information", true);
 
-            //        //"Information" Text = "消息"   
-            //        //"Warning" Text = "警告"       
-            //        //"Question" Text = "问题"          
-            //        // "Error" Text = "错误"            
+            //        //"Information" Text = "消息"
+            //        //"Warning" Text = "警告"
+            //        //"Question" Text = "问题"
+            //        // "Error" Text = "错误"
             //        //"Success" Text = "成功"
             //        //alert.IconFont = IconFont.Warning;
             //        //alert.Icon = Icon.Error;
@@ -190,10 +182,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //    }
             //}
 
-
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
-
 
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
@@ -203,6 +193,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -210,8 +201,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Qm_Complaint item = DB.Qm_Complaints
 
                 .Where(u => u.GUID == id).FirstOrDefault();
-
-
 
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Cc_ReceivingDate = Cc_ReceivingDate.Text;
@@ -221,14 +210,11 @@ namespace Fine.Lf_Manufacturing.QM.complaint
 
             if (!String.IsNullOrEmpty(txtRefdoc))
             {
-
                 //技联Ec_letterdoc  Ec_letterno
                 item.Cc_Reference = txtRefdoc;
             }
             else
             {
-
-
                 //item.Ec_letterdoc = "";
 
                 if (oldCc_Reference.Text == "-")
@@ -239,35 +225,27 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 //{
                 //    item.Ec_letterdoc = "../../Lc_Docs/upload/ecndoc/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + oldEc_letterdoc.Text;
                 //}
-
-
             }
-
 
             item.Cc_ReceivingDate = Cc_ReceivingDate.Text;
 
-
             item.Cc_ReceivedDate = Cc_ReceivedDate.Text;
-            
 
             //item.Lineguid = this.Lineguid.Text;
 
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = Cc_IssuesNo.Text+","+ Cc_Issues.Text + "," + txtRefdoc + "," + Cc_ReceivedDate.Text;
+            string ModifiedText = Cc_IssuesNo.Text + "," + Cc_Issues.Text + "," + txtRefdoc + "," + Cc_ReceivedDate.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "客诉信息", "客诉信息修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -319,15 +297,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

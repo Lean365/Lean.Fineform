@@ -1,10 +1,9 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using FineUIPro;
 using System.Linq;
 
-namespace Fine
+namespace LeanFine
 {
     public class ConfigHelper
     {
@@ -48,11 +47,10 @@ namespace Fine
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion fields & constructor
 
         #region methods
 
@@ -63,9 +61,7 @@ namespace Fine
         /// <returns></returns>
         public static string GetValue(string key)
         {
-
-                return Configs.Where(c => c.ConfigKey == key).Select(c => c.ConfigValue).FirstOrDefault();
-
+            return Configs.Where(c => c.ConfigKey == key).Select(c => c.ConfigValue).FirstOrDefault();
         }
 
         /// <summary>
@@ -102,7 +98,7 @@ namespace Fine
             Reload();
         }
 
-        #endregion
+        #endregion methods
 
         #region properties
 
@@ -111,7 +107,6 @@ namespace Fine
         /// </summary>
         public static string Title
         {
-
             get
             {
                 return GetValue("Title");
@@ -152,7 +147,6 @@ namespace Fine
             }
         }
 
-
         /// <summary>
         /// 菜单样式
         /// </summary>
@@ -167,7 +161,6 @@ namespace Fine
                 SetValue("MenuType", value);
             }
         }
-
 
         /// <summary>
         /// 网站主题
@@ -184,7 +177,6 @@ namespace Fine
             }
         }
 
-
-        #endregion
+        #endregion properties
     }
 }

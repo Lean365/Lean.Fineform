@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
+﻿using FineUIPro;
+using System;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user_select_role : PageBase
     {
@@ -24,7 +18,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -41,7 +35,7 @@ namespace Fine.Lf_Admin
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
             string ids = GetQueryValue("ids");
-            
+
             // 绑定角色复选框列表
             BindDDLRole();
 
@@ -57,7 +51,7 @@ namespace Fine.Lf_Admin
             cblRole.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -72,7 +66,6 @@ namespace Fine.Lf_Admin
         //    PageContext.RegisterStartupScript(String.Format("selectRole({0},{1});", JsHelper.Enquote(roleTexts), JsHelper.Enquote(roleValues)));
         //}
 
-        #endregion
-
+        #endregion Events
     }
 }

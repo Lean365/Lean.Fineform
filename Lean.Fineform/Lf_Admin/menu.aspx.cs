@@ -1,15 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
+
 //using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class menu : PageBase
     {
@@ -26,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,9 +39,7 @@ namespace Fine.Lf_Admin
             // 权限检查
             CheckPowerWithButton("CoreMenuNew", btnNew);
 
-
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Admin/menu_new.aspx", "新增菜单");
-
 
             BindGrid();
         }
@@ -57,7 +51,6 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-
         protected string GetModuleName(object moduleNameObj)
         {
             string moduleName = moduleNameObj.ToString();
@@ -68,7 +61,7 @@ namespace Fine.Lf_Admin
             return moduleName;
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -78,7 +71,6 @@ namespace Fine.Lf_Admin
             CheckPowerWithWindowField("CoreMenuEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreMenuDelete", Grid1, "deleteField");
         }
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -113,7 +105,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

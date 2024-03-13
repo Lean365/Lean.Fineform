@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
+﻿using FineUIPro;
+using System;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class title_edit : PageBase
     {
@@ -25,7 +18,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -52,11 +45,9 @@ namespace Fine.Lf_Admin
 
             tbxName.Text = current.Name;
             tbxRemark.Text = current.Remark;
-
         }
 
-     
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -72,7 +63,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

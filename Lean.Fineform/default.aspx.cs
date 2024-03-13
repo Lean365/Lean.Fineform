@@ -1,22 +1,17 @@
-﻿using System;
-using System.Web;
-using System.Web.Security;
-using System.Threading;
-using System.Globalization;
-using FineUIPro;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Collections;
+using System.Linq;
+using System.Web.Security;
 
-namespace Fine
+namespace LeanFine
 {
     public partial class _default : PageBase
     {
         #region Page_Load
+
         private string CultureLang = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,14 +26,17 @@ namespace Fine
                         this.DDLCulture.Items.FindByText("简体中文").Selected = true;
                         Session["PreferredCulture"] = "zh-cn";
                         break;
+
                     case "en-us":
                         this.DDLCulture.Items.FindByText("English").Selected = true;
                         Session["PreferredCulture"] = "en-us";
                         break;
+
                     case "ja-jp":
                         this.DDLCulture.Items.FindByText("日本語").Selected = true;
                         Session["PreferredCulture"] = "ja-jp";
                         break;
+
                     default:
                         this.DDLCulture.Items.FindByText("简体中文").Selected = true;
                         Session["PreferredCulture"] = "zh-cn";
@@ -50,23 +48,24 @@ namespace Fine
 
         private void LoadData()
         {
-             tbxUserName.Text="admin";
-            tbxPassword.Text= "admin";
+            tbxUserName.Text = "admin";
+            tbxPassword.Text = "admin";
             // 如果用户已经登录，则重定向到管理首页
             if (User.Identity.IsAuthenticated)
             {
                 Response.Redirect(FormsAuthentication.DefaultUrl);
             }
             string productName = String.Format(GetAssemblyInfo.AssemblyProduct);
-            string versionName= String.Format(" v{0}", GetProductVersion());
-            Window1.Title = String.Format(global::Resources.GlobalResource.sys_SignIn);
+            string versionName = String.Format(" v{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Window1.Title = String.Format(global::Resources.GlobalResource.sys_Poster_Info);
+            tbText.Text = versionName;
             //tbText.Text = String.Format(productName + versionName);
             //Window1.Title = String.Format("LeanManufacturing v{0}", GetProductVersion());
             //tbxUserName.Text = "admin";
             //tbxPassword.Text = "admin";
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -82,6 +81,7 @@ namespace Fine
             //重定向页面
             Response.Redirect(Request.Url.PathAndQuery);
         }
+
         /// <summary>
         /// 登录确认
         /// </summary>
@@ -120,14 +120,13 @@ namespace Fine
                         SetOnlineInfo(userName);
                         // 登录成功
 
-
                         //OperateNotes.Info(String.Format("登录成功：用户“{0}”", user.Name));
                         //登录日志写入
-                        string strLevel = "Info";                        
+                        string strLevel = "Info";
                         string strUserID = userName;
-                        string strUserName= user.ChineseName;
+                        string strUserName = user.ChineseName;
                         string strLogger = typeof(_default).ToString();
-                        string strInfo=(String.Format("用户 - {0} - 登录成功", tbxUserName.Text));
+                        string strInfo = (String.Format("用户 - {0} - 登录成功", tbxUserName.Text));
                         SaveItem(strLevel, strLogger, strUserID, strUserName, strInfo);
                         LoginSuccess(user);
 
@@ -144,12 +143,10 @@ namespace Fine
                     string strInfo = (String.Format("用户 - {0} - 用户名或密码错误", tbxUserName.Text));
                     SaveItem(strLevel, strLogger, strUserID, strUserName, strInfo);
 
-
                     //OperateNotes.Warn(String.Format("登录失败：用户“{0}”密码错误", userName));
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Login_Error);
                     return;
                 }
-
             }
             else
             {
@@ -165,12 +162,10 @@ namespace Fine
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Login_Error);
                 return;
             }
-
         }
 
-        private void SaveItem(string Level,string Logger, string uid,string uname,string message)//登录成功日志
+        private void SaveItem(string Level, string Logger, string uid, string uname, string message)//登录成功日志
         {
-
             Adm_Log item = new Adm_Log();
             item.Date = DateTime.Now;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -179,17 +174,15 @@ namespace Fine
             item.Logger = Logger;
             item.UserID = uid;
 
-            item.UserName= uname;
+            item.UserName = uname;
             // 添加所有用户
-
 
             item.Message = message;
             item.Exception = "";
             DB.Adm_Logs.Add(item);
             DB.SaveChanges();
-
-
         }
+
         /// <summary>
         /// //获取当前项目存储的登录用户sessionid与用户id
         /// </summary>
@@ -206,9 +199,9 @@ namespace Fine
                 {
                     if (idE.Value != null && idE.Value.ToString().Equals(username))//如果当前用户已经登录，
                     {
-                        //already login            
+                        //already login
                         strKey = idE.Key.ToString();
-                        hOnline[strKey] = "LeanBenchXX";//将当前用户已经在全局变量中的值设置为XX
+                        hOnline[strKey] = "Lean365XX";//将当前用户已经在全局变量中的值设置为XX
                         break;
                     }
                 }
@@ -247,9 +240,6 @@ namespace Fine
             Response.Redirect(FormsAuthentication.DefaultUrl);
         }
 
-
-        #endregion
-
-
+        #endregion Events
     }
 }

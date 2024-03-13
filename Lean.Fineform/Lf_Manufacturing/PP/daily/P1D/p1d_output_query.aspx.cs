@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
-namespace Fine.Lf_Manufacturing.PP.daily
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_output_query : PageBase
     {
@@ -35,10 +22,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -69,7 +56,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
@@ -81,10 +67,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             BindGrid();
             BindDDLLine();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -92,10 +75,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             {
                 var q =
                     from p in DB.Pp_P1d_OutputSubs
-                    //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                    where p.isDelete == 0
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                    where p.isDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                    group p by new {  p.Proorder, p.Proorderqty, p.Prolinename, p.Prodate,p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
+                    group p by new { p.Proorder, p.Proorderqty, p.Prolinename, p.Prodate, p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
                     select new
                     {
                         Prodate = g.Key.Prodate,
@@ -111,7 +94,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         Prostdcapacity = g.Sum(p => p.Prostdcapacity),
                         Prorealqty = g.Sum(p => p.Prorealqty),
                         Proratio = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Prostdcapacity) : 0),
-
                     };
 
                 //var qss =
@@ -142,12 +124,11 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    q = q.Where(u => u.Proorder.ToString().Contains(searchText) || u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                    q = q.Where(u => u.Proorder.ToString().Contains(searchText) || u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                 }
 
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -173,7 +154,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 //{
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
-
 
                 // 在查询添加之后，排序和分页之前获取总记录数
                 Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -213,11 +193,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -253,8 +232,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -272,7 +249,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -289,15 +265,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -344,9 +315,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -361,7 +329,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -369,10 +336,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             BindGrid();
         }
 
-
-
-
-        #endregion
+        #endregion Events
 
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -380,6 +344,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             BindGrid();
         }
+
         public void BindDDLLine()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -392,7 +357,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     {
                         //a.lineclass,
                         a.Prolinename
-
                     };
 
             var qs = q.Select(E => new { E.Prolinename }).ToList().Distinct();
@@ -426,6 +390,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 BindGrid();
             }
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -441,7 +406,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 ratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
             summary.Add("Prospendtime", Ytoal.ToString("F0"));
@@ -450,7 +414,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             summary.Add("Proratio", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -473,14 +436,14 @@ namespace Fine.Lf_Manufacturing.PP.daily
             ExportFileName = Xlsbomitem + ".xlsx";
 
             //ExportHelper.GetGridDataTable(Exgrid);
-            if(Grid1.RecordCount!=0)
-            { 
-            //DataTable source = GetDataTable.Getdt(mysql);
-            //导出2007格式
-            //ExportHelper.EpplustoXLSXfile(Exdt, Xlsbomitem, ExportFileName);
-            Grid1.AllowPaging = false;
-            ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
-            Grid1.AllowPaging = true;
+            if (Grid1.RecordCount != 0)
+            {
+                //DataTable source = GetDataTable.Getdt(mysql);
+                //导出2007格式
+                //ExportHelper.EpplustoXLSXfile(Exdt, Xlsbomitem, ExportFileName);
+                Grid1.AllowPaging = false;
+                ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                Grid1.AllowPaging = true;
             }
             else
 

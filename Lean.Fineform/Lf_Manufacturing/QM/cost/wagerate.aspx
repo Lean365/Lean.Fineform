@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wagerate.aspx.cs" Inherits="Fine.Lf_Manufacturing.QM.cost.wagerate" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wagerate.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.QM.cost.wagerate" %>
 
 <!DOCTYPE html>
 

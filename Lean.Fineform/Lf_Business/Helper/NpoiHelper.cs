@@ -1,59 +1,49 @@
 ﻿/*******************************************************************
- * 版权所有： 
+ * 版权所有：
  * 类 名 称：ExcelHelper
  * 作    者：zk
  * 电子邮箱：77148918@QQ.com
- * 创建日期：2012/2/25 10:17:21 
+ * 创建日期：2012/2/25 10:17:21
  * 修改描述：从excel导入datatable时，可以导入日期类型。
- *           但对excel中的日期类型有一定要求，要求至少是yyyy/mm/dd类型日期； *           
+ *           但对excel中的日期类型有一定要求，要求至少是yyyy/mm/dd类型日期； *
  * 修改描述：将datatable导入excel中，对类型为字符串的数字进行处理，
  *           导出数字为double类型；
  * 修改描述：针对NPOI 2.0 alpha版本更新，修改了导入excel的方法，划分为2003版本和2007版本；
  *           将导入方法里的HSSFWorkbook改为接口；
  *           将 NPOI.HSSF.UserModel.HSSFRow改为了NPOI.XSSF.UserModel.XSSFRow(只存在导入excel2007的方法中）
- *           将 导入方法的参数HSSFSheet sheet改为了接口类型ISheet（2003的导入方法和2007均有修改） 
+ *           将 导入方法的参数HSSFSheet sheet改为了接口类型ISheet（2003的导入方法和2007均有修改）
  *           将 导入方法区分为导入Excel2003以及导入Excel2007；
  * 修改日期：2012年5月4日22:06:29 for Jnz Update to NPOI 1.25 正式版
  * 修改日期：2012年8月30日17:13:49 for Jnz Update to NPOI 2.0 alpha版
- * 
+ *
  * *******************************************************************/
+
+using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Eval;//同上
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;//2007
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Data;
 using System.IO;
 using System.Text;
-using System.Web;
-using NPOI;
-using NPOI.HPSF;
-using NPOI.HSSF;
-using NPOI.HSSF.Record;//NPOI.HSSF.Record.Formula.Eval改为了NPOI.SS.Formula.Eval;
-using NPOI.SS.Formula.Eval;//同上
-using NPOI.HSSF.UserModel;
-using NPOI.HSSF.Util;
-using NPOI.POIFS;
-using NPOI.SS.UserModel;
-using NPOI.Util;
-using NPOI.SS;
-using NPOI.DDF;
-using NPOI.SS.Util;
-using NPOI.XSSF.UserModel;//2007
-using System.Collections;
 using System.Text.RegularExpressions;
 
-namespace Fine
+namespace LeanFine
 {
     public class NpoiHelper
     {
         //private static WriteLog wl = new WriteLog();
 
-
         #region 从datatable中将数据导出到excel
+
         /// <summary>
         /// DataTable导出到Excel的MemoryStream
         /// </summary>
         /// <param name="dtSource">源DataTable</param>
         /// <param name="strHeaderText">表头文本</param>
-        static MemoryStream ExportDT(DataTable dtSource, string strHeaderText)
+        private static MemoryStream ExportDT(DataTable dtSource, string strHeaderText)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.CreateSheet() as HSSFSheet;
@@ -76,7 +66,7 @@ namespace Fine
             //    workbook.SummaryInformation = si;
             //}
 
-            #endregion
+            #endregion 右击文件 属性信息
 
             HSSFCellStyle dateStyle = workbook.CreateCellStyle() as HSSFCellStyle;
             HSSFDataFormat format = workbook.CreateDataFormat() as HSSFDataFormat;
@@ -134,14 +124,12 @@ namespace Fine
                         //headerRow.Dispose();
                     }
 
-                    #endregion
-
+                    #endregion 表头及样式
 
                     #region 列头及样式
 
                     {
                         HSSFRow headerRow = sheet.CreateRow(1) as HSSFRow;
-
 
                         HSSFCellStyle headStyle = workbook.CreateCellStyle() as HSSFCellStyle;
                         headStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
@@ -150,7 +138,6 @@ namespace Fine
                         font.Boldweight = 700;
                         headStyle.SetFont(font);
 
-
                         foreach (DataColumn column in dtSource.Columns)
                         {
                             headerRow.CreateCell(column.Ordinal).SetCellValue(column.ColumnName);
@@ -158,17 +145,16 @@ namespace Fine
 
                             //设置列宽
                             sheet.SetColumnWidth(column.Ordinal, (arrColWidth[column.Ordinal] + 1) * 256);
-
                         }
                         //headerRow.Dispose();
                     }
 
-                    #endregion
+                    #endregion 列头及样式
 
                     rowIndex = 2;
                 }
 
-                #endregion
+                #endregion 新建表，填充表头，填充列头，样式
 
                 #region 填充内容
 
@@ -185,7 +171,6 @@ namespace Fine
                             double result;
                             if (isNumeric(drValue, out result))
                             {
-
                                 double.TryParse(drValue, out result);
                                 newCell.SetCellValue(result);
                                 break;
@@ -203,11 +188,13 @@ namespace Fine
 
                             newCell.CellStyle = dateStyle; //格式化显示
                             break;
+
                         case "System.Boolean": //布尔型
                             bool boolV = false;
                             bool.TryParse(drValue, out boolV);
                             newCell.SetCellValue(boolV);
                             break;
+
                         case "System.Int16": //整型
                         case "System.Int32":
                         case "System.Int64":
@@ -216,23 +203,25 @@ namespace Fine
                             int.TryParse(drValue, out intV);
                             newCell.SetCellValue(intV);
                             break;
+
                         case "System.Decimal": //浮点型
                         case "System.Double":
                             double doubV = 0;
                             double.TryParse(drValue, out doubV);
                             newCell.SetCellValue(doubV);
                             break;
+
                         case "System.DBNull": //空值处理
                             newCell.SetCellValue("");
                             break;
+
                         default:
                             newCell.SetCellValue("");
                             break;
                     }
-
                 }
 
-                #endregion
+                #endregion 填充内容
 
                 rowIndex++;
             }
@@ -267,9 +256,11 @@ namespace Fine
                 }
             }
         }
-        #endregion
+
+        #endregion 从datatable中将数据导出到excel
 
         #region 从excel2003中将数据导出到datatable
+
         /// <summary>读取excel
         /// 默认第一行为标头
         /// </summary>
@@ -374,6 +365,7 @@ namespace Fine
             sheet = null;
             return table;
         }
+
         /// <summary>
         /// 读取excel
         /// </summary>
@@ -443,7 +435,7 @@ namespace Fine
             return table;
         }
 
-        static DataTable ImportExcel2003InDt(ISheet sheet, int HeaderRowIndex, bool needHeader)
+        private static DataTable ImportExcel2003InDt(ISheet sheet, int HeaderRowIndex, bool needHeader)
         {
             DataTable table = new DataTable();
             HSSFRow headerRow;
@@ -480,7 +472,6 @@ namespace Fine
                                 DataColumn column = new DataColumn(Convert.ToString(i));
                                 table.Columns.Add(column);
                             }
-
                         }
                         else if (table.Columns.IndexOf(headerRow.GetCell(i).ToString()) > 0)
                         {
@@ -530,6 +521,7 @@ namespace Fine
                                                 dataRow[j] = null;
                                             }
                                             break;
+
                                         case CellType.Numeric:
                                             if (DateUtil.IsCellDateFormatted(row.GetCell(j)))
                                             {
@@ -540,12 +532,15 @@ namespace Fine
                                                 dataRow[j] = Convert.ToDouble(row.GetCell(j).NumericCellValue);
                                             }
                                             break;
+
                                         case CellType.Boolean:
                                             dataRow[j] = Convert.ToString(row.GetCell(j).BooleanCellValue);
                                             break;
+
                                         case CellType.Error:
                                             dataRow[j] = ErrorEval.GetText(row.GetCell(j).ErrorCellValue);
                                             break;
+
                                         case CellType.Formula:
                                             switch (row.GetCell(j).CachedFormulaResultType)
                                             {
@@ -560,27 +555,32 @@ namespace Fine
                                                         dataRow[j] = null;
                                                     }
                                                     break;
+
                                                 case CellType.Numeric:
                                                     dataRow[j] = Convert.ToString(row.GetCell(j).NumericCellValue);
                                                     break;
+
                                                 case CellType.Boolean:
                                                     dataRow[j] = Convert.ToString(row.GetCell(j).BooleanCellValue);
                                                     break;
+
                                                 case CellType.Error:
                                                     dataRow[j] = ErrorEval.GetText(row.GetCell(j).ErrorCellValue);
                                                     break;
+
                                                 default:
                                                     dataRow[j] = "";
                                                     break;
                                             }
                                             break;
+
                                         default:
                                             dataRow[j] = "";
                                             break;
                                     }
                                 }
                             }
-                            catch (Exception )
+                            catch (Exception)
                             {
                                 //wl.WriteLogs(exception.ToString());
                             }
@@ -608,7 +608,7 @@ namespace Fine
         /// <param name="sheet">需要导出的sheet</param>
         /// <param name="HeaderRowIndex">列头所在行号，-1表示没有列头</param>
         /// <returns></returns>
-        static DataTable ImportExcel2007InDt(ISheet sheet, int HeaderRowIndex, bool needHeader)
+        private static DataTable ImportExcel2007InDt(ISheet sheet, int HeaderRowIndex, bool needHeader)
         {
             DataTable table = new DataTable();
             NPOI.XSSF.UserModel.XSSFRow headerRow;
@@ -645,7 +645,6 @@ namespace Fine
                                 DataColumn column = new DataColumn(Convert.ToString(i));
                                 table.Columns.Add(column);
                             }
-
                         }
                         else if (table.Columns.IndexOf(headerRow.GetCell(i).ToString()) > 0)
                         {
@@ -695,6 +694,7 @@ namespace Fine
                                                 dataRow[j] = null;
                                             }
                                             break;
+
                                         case CellType.Numeric:
                                             if (DateUtil.IsCellDateFormatted(row.GetCell(j)))
                                             {
@@ -705,12 +705,15 @@ namespace Fine
                                                 dataRow[j] = Convert.ToDouble(row.GetCell(j).NumericCellValue);
                                             }
                                             break;
+
                                         case CellType.Boolean:
                                             dataRow[j] = Convert.ToString(row.GetCell(j).BooleanCellValue);
                                             break;
+
                                         case CellType.Error:
                                             dataRow[j] = ErrorEval.GetText(row.GetCell(j).ErrorCellValue);
                                             break;
+
                                         case CellType.Formula:
                                             switch (row.GetCell(j).CachedFormulaResultType)
                                             {
@@ -725,20 +728,25 @@ namespace Fine
                                                         dataRow[j] = null;
                                                     }
                                                     break;
+
                                                 case CellType.Numeric:
                                                     dataRow[j] = Convert.ToString(row.GetCell(j).NumericCellValue);
                                                     break;
+
                                                 case CellType.Boolean:
                                                     dataRow[j] = Convert.ToString(row.GetCell(j).BooleanCellValue);
                                                     break;
+
                                                 case CellType.Error:
                                                     dataRow[j] = ErrorEval.GetText(row.GetCell(j).ErrorCellValue);
                                                     break;
+
                                                 default:
                                                     dataRow[j] = "";
                                                     break;
                                             }
                                             break;
+
                                         default:
                                             dataRow[j] = "";
                                             break;
@@ -767,9 +775,11 @@ namespace Fine
             }
             return table;
         }
-        #endregion 
+
+        #endregion 从excel2003中将数据导出到datatable
 
         #region 更新excel中的数据
+
         /// <summary>
         /// 更新Excel表格
         /// </summary>
@@ -818,7 +828,6 @@ namespace Fine
                 Console.WriteLine("TempIsZeroException: {0}", exception.Message);
                 //wl.WriteLogs(exception.ToString());
             }
-
         }
 
         /// <summary>
@@ -852,7 +861,7 @@ namespace Fine
                         }
                         sheet1.GetRow(i + rowid).GetCell(coluids[j]).SetCellValue(updateData[j][i]);
                     }
-                    catch (Exception )
+                    catch (Exception)
                     {
                         // wl.WriteLogs(ex.ToString());
                     }
@@ -918,7 +927,6 @@ namespace Fine
                 Console.WriteLine("TempIsZeroException: {0}", exception.Message);
                 //wl.WriteLogs(exception.ToString());
             }
-
         }
 
         /// <summary>
@@ -972,7 +980,7 @@ namespace Fine
             }
         }
 
-        #endregion
+        #endregion 更新excel中的数据
 
         public static int GetSheetNumber(string outputFile)
         {
@@ -983,7 +991,6 @@ namespace Fine
 
                 HSSFWorkbook hssfworkbook = new HSSFWorkbook(readfile);
                 number = hssfworkbook.NumberOfSheets;
-
             }
             catch (Exception exception)
             {
@@ -1025,7 +1032,6 @@ namespace Fine
             }
             else
                 return false;
-
         }
     }
 }

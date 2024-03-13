@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-namespace Fine.Lf_Manufacturing.EC.dept
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Manufacturing.EC.dept
 {
     public partial class view_desc : PageBase
     {
@@ -29,15 +20,17 @@ namespace Fine.Lf_Manufacturing.EC.dept
                 return "CoreEcView";
             }
         }
-        #endregion
+
+        #endregion ViewPower
+
         #region Page_Load
 
         public static string strEcnNO;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -49,22 +42,16 @@ namespace Fine.Lf_Manufacturing.EC.dept
             //转字符串组
             string[] strgroup = strtransmit.Split(',');
             //ID,Ec_no,Ec_model,Ec_bomitem,Ec_olditem,Ec_newitem
-            strEcnNO = ( strgroup[0].ToString().Trim());
+            strEcnNO = (strgroup[0].ToString().Trim());
 
             BindDDLItemlist();
             BindData();
             BindGrid();
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
-
 
         private void BindData()
         {
@@ -80,8 +67,7 @@ namespace Fine.Lf_Manufacturing.EC.dept
                         where a.D_SAP_ZPABD_Z001 == strEcnNO
                         select new
                         {
-                            Ec_leader=a.D_SAP_ZPABD_Z027,
-
+                            Ec_leader = a.D_SAP_ZPABD_Z027,
                         };
                 var qs = q.Select(a => new
                 {
@@ -90,7 +76,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
                 if (qs.Any())
                 {
                     EcnDesc.Text = qs[0].Ec_leader;//发行日期
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -104,7 +89,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
@@ -120,6 +104,7 @@ namespace Fine.Lf_Manufacturing.EC.dept
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -137,26 +122,22 @@ namespace Fine.Lf_Manufacturing.EC.dept
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         private void BindDDLItemlist()//物料信息
         {
             #region 停产机种不导入
+
             var q_All = from a in DB.Pp_SapEcnSubs
-                               where a.D_SAP_ZPABD_S001.Contains(strEcnNO)
-                    select new
-                    {
-                        a.D_SAP_ZPABD_S002
-
-
-                    };
-            
-
+                        where a.D_SAP_ZPABD_S001.Contains(strEcnNO)
+                        select new
+                        {
+                            a.D_SAP_ZPABD_S002
+                        };
 
             var q_item = from a in q_All
                          select new
@@ -168,12 +149,9 @@ namespace Fine.Lf_Manufacturing.EC.dept
                 new
                 {
                     E.D_SAP_ZPABD_S002,
-
-
                 }).Distinct();
 
-
-            #endregion
+            #endregion 停产机种不导入
 
             // 绑定到下拉列表（启用模拟树功能）
 
@@ -184,12 +162,12 @@ namespace Fine.Lf_Manufacturing.EC.dept
 
             // 选中根节点
             this.DDL_Item.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
         }
+
         private void BindGrid()//管理确认
         {
             #region 停产机种不导入
+
             var q_All = from a in DB.Pp_SapEcnSubs
                         where a.D_SAP_ZPABD_S001.Contains(strEcnNO)
                         select a;
@@ -214,8 +192,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -223,22 +199,17 @@ namespace Fine.Lf_Manufacturing.EC.dept
                 Grid1.DataBind();
             }
 
-
-
-            #endregion
-
-
+            #endregion 停产机种不导入
         }
-        #endregion
+
+        #endregion Events
 
         #region NetOperateNotes
+
         private void InsNetOperateNotes()
         {
-
-
         }
-        #endregion
 
-
+        #endregion NetOperateNotes
     }
 }

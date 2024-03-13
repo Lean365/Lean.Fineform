@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material.aspx.cs" Inherits="Fine.Lc_MM.material" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="material.aspx.cs" Inherits="LeanFine.Lc_MM.material" %>
 
 <!DOCTYPE html>
 

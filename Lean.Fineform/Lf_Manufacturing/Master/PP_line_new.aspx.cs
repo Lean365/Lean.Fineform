@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_line_new : PageBase
     {
-
-        
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,9 +31,7 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -50,24 +46,15 @@ namespace Fine.Lf_Manufacturing.Master
 
             // 初始化用户所属部门
             //InitNoticeDept();
-
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Pp_Line item = new Pp_Line();
             item.lineclass = lineclass.Text;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -79,9 +66,8 @@ namespace Fine.Lf_Manufacturing.Master
             item.GUID = Guid.NewGuid();
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_Lines.Add(item);
             DB.SaveChanges();
@@ -91,9 +77,8 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组新增", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ////判断修改内容
@@ -101,7 +86,6 @@ namespace Fine.Lf_Manufacturing.Master
             //proLine current = DB.proLines.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
-
 
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -115,7 +99,6 @@ namespace Fine.Lf_Manufacturing.Master
             //判断重复
             string InputData = linename.Text.Trim();
 
-
             Pp_Line redata = DB.Pp_Lines.Where(u => u.linename == InputData).FirstOrDefault();
 
             if (redata != null)
@@ -124,11 +107,13 @@ namespace Fine.Lf_Manufacturing.Master
                 return;
             }
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
-            try { 
-            CheckData();
-            SaveItem();
+            try
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -163,15 +148,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

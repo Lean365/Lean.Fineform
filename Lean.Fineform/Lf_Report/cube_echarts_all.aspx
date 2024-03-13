@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cube_echarts_all.aspx.cs" Inherits="Fine.Lf_Report.cube_echarts_all" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cube_echarts_all.aspx.cs" Inherits="LeanFine.Lf_Report.cube_echarts_all" %>
 
 <!DOCTYPE html>
 
@@ -71,15 +71,15 @@
     </style>
     <%--<script src="/res/js/jquery.min.js" type="text/javascript"></script>--%>
     <%--jquery.js--%>
-    <script type="text/javascript" src="/Lf_Resources/echarts/package/dist/echarts.min.js"></script>
-    <script src="/Lf_Report/ajax_Fico_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_Pp_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_Sd_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_Qm_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Fico_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Pp_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Qm_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Sd_echarts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/LB_Resources/echarts/package/dist/echarts.min.js"></script>
+    <script src="/Lf_Report/ajax_fico_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/ajax_pp_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/ajax_sd_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/ajax_qm_data.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_fico_echarts.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_pp_echarts.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_qm_echarts.js" type="text/javascript"></script>
+    <script src="/Lf_Report/bind_sd_echarts.js" type="text/javascript"></script>
 
     <%-- Echarts.js --%>
 
@@ -225,9 +225,9 @@
             } else if (tabIndex === 2) {
                 AjaxData_Pp_Reason();
             } else if (tabIndex === 3) {
-                AjaxData_Pp_Direct();
+                AjaxData_Pp_Rty();
             } else if (tabIndex === 4) {
-                AjaxData_Pp_Achieve();
+                AjaxData_Pp_Achieving_Rate();
             } else if (tabIndex === 5) {
                 AjaxData_Qm_Pass();
             }

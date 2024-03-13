@@ -1,10 +1,12 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
+
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.QM.cost
+
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
     public partial class wagerate_edit : PageBase
     {
@@ -20,7 +22,8 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 return "CoreWagesEdit";
             }
         }
-        #endregion
+
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -28,7 +31,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -46,7 +48,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //mocToDropDownList();
 
             BindTxtData();
-
         }
 
         #region BindingData
@@ -55,7 +56,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse(GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Wagerate current = DB.Qm_Wagerates.Find(id);
 
             if (current == null)
@@ -64,8 +65,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
-
 
             Qcsd001.Text = current.Qcsd001;//年月
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -83,10 +82,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             Qcsd012.Text = current.Qcsd012.ToString();//间接人员加班
             Qcsd013.Text = current.Qcsd013.ToString();//间接人员工资
 
-
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -97,8 +93,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             // 初始化用户所属职称
             //InitUserTitle(current);
-            //修改前日志          
-
+            //修改前日志
 
             string BeforeModi = current.Qcsd001 + "," + current.Qcsd002 + "," + current.Qcsd003 + "," + current.Qcsd004 + "," + current.Qcsd005 + "," + current.Qcsd006 + "," + Qcsdrec.Text + "," + current.Qcsd008 + "," + current.Qcsd009 + "," + current.Qcsd010 + "," + current.Qcsd011 + "," + current.Qcsd012 + "," + current.Qcsd013;
             string OperateType = "修改";
@@ -106,16 +101,15 @@ namespace Fine.Lf_Manufacturing.QM.cost
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "财务管理", "销售数据修改", OperateNotes);
         }
 
-        #endregion
+        #endregion BindingData
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容,判断重复
         private void CheckData()
         {
-
             Guid id = Guid.Parse(GetQueryValue("GUID"));
             Qm_Wagerate current = DB.Qm_Wagerates.Find(id);
             string modi001 = current.Qcsd001;
@@ -148,12 +142,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -167,7 +159,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -177,7 +168,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //}
             //string InputData = LC001.Text.Trim();
 
-
             //proCheckInsClass Redata = DB.proCheckInsClasss.Where(u => u.LC001 == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -185,8 +175,8 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    Alert.ShowInTop("数据,检验方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
+
         private void SaveItem()//新增质量控制数据
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
@@ -207,7 +197,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             item.Qcsd012 = decimal.Parse(Qcsd012.Text);
             item.Qcsd013 = decimal.Parse(Qcsd013.Text);
             item.Qcsdrec = Qcsdrec.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -218,47 +208,46 @@ namespace Fine.Lf_Manufacturing.QM.cost
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + AfterModi + " *beEdit 的记录已经被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "财务管理", "销售数据修改", OperateNotes);
-
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             CheckData();
             SaveItem();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
+
         public void dQcsd006()
         {
             if (Qcsd005.Text != "" && Qcsd007.Text != "" && Qcsd008.Text != "" && Qcsd009.Text != "" && Qcsd005.Text != "0" && Qcsd007.Text != "0" && Qcsd008.Text != "0" && Qcsd009.Text != "0")
             {
-
                 decimal attime = decimal.Parse(this.Qcsd005.Text) * 480 * decimal.Parse(this.Qcsd007.Text);
                 decimal overtime = 0;
                 this.Qcsd006.Text = Convert.ToDecimal(decimal.Parse(this.Qcsd009.Text) / (attime + overtime) * 2).ToString("0.00");
             }
         }
+
         public void dQcsd010()
         {
             if (Qcsd005.Text != "" && Qcsd011.Text != "" && Qcsd012.Text != "" && Qcsd013.Text != "" && Qcsd005.Text != "0" && Qcsd011.Text != "0" && Qcsd012.Text != "0" && Qcsd013.Text != "0")
             {
-
                 decimal attime = decimal.Parse(this.Qcsd005.Text) * 480 * decimal.Parse(this.Qcsd011.Text);
                 decimal overtime = 0;
                 this.Qcsd010.Text = Convert.ToDecimal(decimal.Parse(this.Qcsd013.Text) / (attime + overtime) * 3).ToString("0.00");
-
             }
         }
-
 
         protected void Qcsd007_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
         }
+
         protected void Qcsd005_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
             dQcsd010();
         }
+
         protected void Qcsd008_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
@@ -272,7 +261,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         protected void Qcsd011_TextChanged(object sender, EventArgs e)
         {
             dQcsd010();
-
         }
 
         protected void Qcsd012_TextChanged(object sender, EventArgs e)
@@ -284,6 +272,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             dQcsd010();
         }
-        #endregion
+
+        #endregion Events
     }
 }

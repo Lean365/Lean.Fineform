@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Text;
-namespace Fine
+
+namespace LeanFine
 {
     public class MailHelper
     {
         #region
+
         /// <summary>
         /// 发送邮件
         /// </summary>
@@ -29,7 +27,7 @@ namespace Fine
             smtpClient.Host = smtpServer; //指定SMTP服务器
             smtpClient.Credentials = new System.Net.NetworkCredential(mailFrom, userPassword);//用户名和密码
 
-            // 发送邮件设置       
+            // 发送邮件设置
             MailMessage mailMessage = new MailMessage(mailFrom, mailTo); // 发送人和收件人
             mailMessage.Subject = mailSubject;//主题
             mailMessage.Body = mailContent;//内容

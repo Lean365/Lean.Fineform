@@ -1,11 +1,11 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
     public partial class Pp_models_region_view : PageBase
     {
@@ -22,12 +22,10 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
 
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -44,6 +42,7 @@ namespace Fine.Lf_Manufacturing.Master
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
             BindData();
         }
+
         private void BindData()
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
@@ -63,16 +62,12 @@ namespace Fine.Lf_Manufacturing.Master
             imgModelQrcode.ImageUrl = current.UDF01;
             this.imgModelQrcode.ImageWidth = Unit.Pixel(64);
             this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
-
         }
+
         protected void Window1_Close(object sender, WindowCloseEventArgs e)
         {
-
         }
 
-
-        #endregion
-
-
+        #endregion Page_Load
     }
 }

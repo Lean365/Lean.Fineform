@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="lot_process.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.tracking.lot_process" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="lot_process.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.tracking.lot_process" %>
 
 <!DOCTYPE html>
 

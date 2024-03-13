@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-namespace Fine
+﻿using System.Reflection;
+
+namespace LeanFine
 {
     public class GetAssemblyInfo
     {
@@ -153,8 +148,7 @@ namespace Fine
                 return ((AssemblyCultureAttribute)attributes[0]).Culture;
             }
         }
- 
-        #endregion
 
+        #endregion 程序集属性访问器
     }
 }

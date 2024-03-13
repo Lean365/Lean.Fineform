@@ -1,11 +1,11 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.QM.cost
-{
 
+namespace LeanFine.Lf_Manufacturing.QM.cost
+{
     public partial class operation_cost : PageBase
     {
         #region ViewPower
@@ -21,16 +21,14 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string mysql, SearchDate;
-               
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-
             if (!IsPostBack)
             {
                 LoadData();
@@ -55,7 +53,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //本月最后一天
             DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
-            btnNew1.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/rework_cost_new.aspx", "新增")+Window1.GetMaximizeReference();
+            btnNew1.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/rework_cost_new.aspx", "新增") + Window1.GetMaximizeReference();
             btnNew2.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/operation_cost_new.aspx", "新增") + Window1.GetMaximizeReference();
             btnNew3.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/waste_cost_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnPreview2.OnClientClick = Window1.GetShowReference("~/oneProduction/onePrint/Lodop_print.aspx", "物料事故报告");
@@ -70,22 +68,17 @@ namespace Fine.Lf_Manufacturing.QM.cost
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
-
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             IQueryable<Qm_Operation> q = DB.Qm_Operations; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             //string searchText = ttbSearchMessage.Text.Trim();
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -116,15 +109,11 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             Grid1.DataSource = q;
             Grid1.DataBind();
-
         }
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -133,13 +122,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             CheckPowerWithLinkButtonField("CoreOperationCostDelete", Grid1, "deleteField");
             //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -172,16 +158,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
         //    //DB.SaveChanges();
         //    DB.pqQachecks.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //    NetLogRecord();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -208,17 +188,14 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //if (e.CommandName == "Print")
             //{
-
             //    //labResult.Text = keys[0].ToString();
             //    PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/operation_cost_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
 
             //}
             if (e.CommandName == "Edit")
             {
-
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/operation_cost_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -230,29 +207,26 @@ namespace Fine.Lf_Manufacturing.QM.cost
                     return;
                 }
 
-                //删除日志
-                //int userID = GetSelectedDataKeyID(Grid1);
-                Qm_Operation current = DB.Qm_Operations.Find(del_ID);
-                string Deltext = current.Qcod001 + "," + current.Qcod002 + "," + current.Qcod003 + "," + current.Qcod004 + "," + current.Qcod005 + "," + current.Qcod006;
-                string OperateType = "删除";
-                string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
-                OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "月品质数据删除", OperateNotes);
+            //删除日志
+            //int userID = GetSelectedDataKeyID(Grid1);
+            Qm_Operation current = DB.Qm_Operations.Find(del_ID);
+            string Deltext = current.Qcod001 + "," + current.Qcod002 + "," + current.Qcod003 + "," + current.Qcod004 + "," + current.Qcod005 + "," + current.Qcod006;
+            string OperateType = "删除";
+            string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "月品质数据删除", OperateNotes);
 
-                current.isDelete = 0;
-                current.Modifier = GetIdentityName();
-                    current.ModifyTime = DateTime.Now;
-                DB.SaveChanges();
+            current.isDeleted = 0;
+            current.Modifier = GetIdentityName();
+            current.ModifyDate = DateTime.Now;
+            DB.SaveChanges();
 
-
-                BindGrid();
-
-
+            BindGrid();
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
@@ -261,10 +235,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -275,23 +249,18 @@ namespace Fine.Lf_Manufacturing.QM.cost
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void DDLdate_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
         }
-        #endregion
 
-
-
-
-
-
+        #endregion Events
     }
 }

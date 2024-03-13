@@ -1,18 +1,20 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine
+
+namespace LeanFine
 {
     public class UpdatingHelper : PageBase
     {
         public static Decimal ophQty, orderQty;
+
         /// <summary>
-        /// 更新不良表（Pp_Defect）中实际生产数量，条件按日期，订单，班组
+        /// 更新不良表（pp_defect）中实际生产数量，条件按日期，订单，班组
         /// </summary>
         /// <param name="strPorder"></param>
         /// <param name="strPdate"></param>
@@ -24,7 +26,7 @@ namespace Fine
             //更新生产实绩
             var q =
                     (from p in DB.Pp_P1d_OutputSubs
-                     where p.isDelete == 0
+                     where p.isDeleted == 0
                      where p.Proorder == strPorder
                      where p.Prodate == strPdate
                      where p.Prolinename == strPline
@@ -43,11 +45,12 @@ namespace Fine
               .Where(s => s.Prodate == strPdate)
               .Where(s => s.Prolinename == strPline)
               .ToList()
-              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
+
         /// <summary>
-        /// 更新订单不良集计表（Pp_DefectTotals），条件按订单,生产实绩（Prorealqty）
+        /// 更新订单不良集计表（Pp_Defect_Totals），条件按订单,生产实绩（Prorealqty）
         /// </summary>
         /// <param name="strPorder"></param>
         public static void DefectTotalRealqty_Update(string strPorder, string uid)
@@ -57,7 +60,7 @@ namespace Fine
             //更新生产实绩
             var q =
                     (from p in DB.Pp_P1d_OutputSubs
-                     where p.isDelete == 0
+                     where p.isDeleted == 0
                      where p.Proorder == strPorder
                      group p by p.Prolot into g
                      select new
@@ -69,13 +72,14 @@ namespace Fine
                 realQty = q[0].TotalQty;
             }
 
-            DB.Pp_DefectTotals
+            DB.Pp_Defect_Totals
               .Where(s => s.Proorder == strPorder)
 
               .ToList()
-              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
+
         /// <summary>
         /// 更新无不良台数，条件生产订单，（Pronobadqty）
         /// </summary>
@@ -86,7 +90,7 @@ namespace Fine
             int okQty = 0;
             var noqs =
                 from p in DB.Pp_P1d_Defects
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 where p.Proorder == strPorder
                 group p by new
                 {
@@ -102,7 +106,6 @@ namespace Fine
                     g.Key.Prolinename,
                     g.Key.Proorder,
                     g.Key.Pronobadqty,
-
                 };
 
             //统计无不良台数（有不良录入时）
@@ -119,12 +122,11 @@ namespace Fine
 
             if (noqty.Any())
             {
-
                 noQty = noqty[0].TotalQty;
             }
             //统计无不良台数（无不良录入时）
             var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDeleted == 0);
 
             var okqty = (from a in results
                          group a by a.Proorder
@@ -139,14 +141,15 @@ namespace Fine
                 okQty = okqty[0].TotalQty;
             }
 
-            DB.Pp_DefectTotals
+            DB.Pp_Defect_Totals
                   .Where(s => s.Proorder == strPorder)
                   //.Where(s => s.Prodate == strPdate)
 
                   .ToList()
-                  .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                  .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
+
         /// <summary>
         /// 判断订单是否已经录入不良集计，（Proorder判断）
         /// </summary>
@@ -159,7 +162,7 @@ namespace Fine
 
             var noqs =
                 (from p in DB.Pp_P1d_Defects
-                 where p.isDelete == 0
+                 where p.isDeleted == 0
                  where p.Proorder == strPorder
                  where p.Prodate == strPdate
                  where p.Prolinename == Pline
@@ -168,18 +171,14 @@ namespace Fine
                      p.Prolinename,
                      p.Prodate,
                      p.Proorder,
-
                  }
                      into g
                  select new
                  {
-
                      TotalQty = g.Sum(p => p.Pronobadqty)
-
                  }).ToList();
             if (noqs.Any())
             {
-
                 noQty = noqs[0].TotalQty;
 
                 if (noQty > 0)
@@ -188,8 +187,9 @@ namespace Fine
                 }
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="strPorder"></param>
         public static void okOrder_Update(string strPorder)
@@ -198,7 +198,7 @@ namespace Fine
             //string strPorder, string strPdate, string strPline
             // assumes that the ID property is an int - change the generic type if it's not
             var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDelete == 0);
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDeleted == 0);
 
             var q = (from a in results
                      group a by a.Proorder
@@ -234,18 +234,17 @@ namespace Fine
             {
                 BadTotalQty = q[0].TotalQty;
             }
-            DB.Pp_DefectTotals
+            DB.Pp_Defect_Totals
                   .Where(s => s.Proorder == strPorder)
                   //.Where(s => s.Prodate == strPdate)
 
                   .ToList()
-                  .ForEach(x => { x.Probadtotal = BadTotalQty; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                  .ForEach(x => { x.Probadtotal = BadTotalQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
 
-
         /// <summary>
-        /// 更新不具合合计，Pp_Defects=>Probadamount，Pp_DefectTotals=>Probadtotal
+        /// 更新不具合合计，pp_defects=>Probadamount，Pp_Defect_Totals=>Probadtotal
         /// </summary>
         /// <param name="pdate"></param>
         /// <param name="pline"></param>
@@ -255,7 +254,7 @@ namespace Fine
             //求和
             var q =
                 (from p in DB.Pp_P1d_Defects
-                 .Where(s => s.isDelete == 0)
+                 .Where(s => s.isDeleted == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Prodate == pdate)
                 .Where(s => s.Proorder == porder)
@@ -275,7 +274,6 @@ namespace Fine
                      Prolinename = g.Key.Prolinename,
 
                      Probadamount = g.Sum(p => p.Probadqty),
-
                  }).ToList();
 
             //判断查询是否为空
@@ -291,35 +289,27 @@ namespace Fine
                          .Where(s => s.Prolinename == pline && s.Proorder == porder && s.Prodate == pdate)
 
                        .ToList()
-                       .ForEach(x => { x.Probadamount = cc; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                       .ForEach(x => { x.Probadamount = cc; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                     DB.SaveChanges();
-
-
                 }
             }
             //求和
             var qs =
                 (from p in DB.Pp_P1d_Defects
-                 .Where(s => s.isDelete == 0)
+                 .Where(s => s.isDeleted == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Proorder == porder)
 
-
                  group p by new
                  {
-
                      p.Proorder,
-
                  }
                     into g
                  select new
                  {
-
                      Proorder = g.Key.Proorder,
 
-
                      Probadamount = g.Sum(p => p.Probadqty),
-
                  }).ToList();
             if (qs.Any())
             {
@@ -328,15 +318,14 @@ namespace Fine
                 DB.Pp_P1d_Defects
                      .Where(s => s.Proorder == porder)
                    .ToList()
-                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();
-                DB.Pp_DefectTotals
+                DB.Pp_Defect_Totals
                    .Where(s => s.Proorder == porder)
                    .ToList()
-                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();
             }
-
         }
 
         //判断工单是否完成
@@ -346,7 +335,6 @@ namespace Fine
         /// <param name="strGuid"></param>
         public static void OrderFinish(Guid strGuid)
         {
-
             Pp_P1d_Output current = DB.Pp_P1d_Outputs
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
@@ -418,8 +406,8 @@ namespace Fine
             {
                 orderQty = 0;
             }
-
         }
+
         //更新订单已生产数量
         /// <summary>
         /// 更新订单已生产数量
@@ -430,7 +418,7 @@ namespace Fine
             try
             {
                 var q_count = (from a in DB.Pp_P1d_OutputSubs
-                               where a.isDelete == 0
+                               where a.isDeleted == 0
                                where a.Proorder.Contains(OrderNo)
                                group a by new
                                {
@@ -449,14 +437,13 @@ namespace Fine
                         var q2 = DB.Pp_Orders.First(c => c.Porderno == OrderNo);
                         q2.Porderreal = q_count[0].RealQty;
                         q2.Modifier = uid;
-                        q2.ModifyTime = DateTime.Now;
+                        q2.ModifyDate = DateTime.Now;
                         if (String.IsNullOrEmpty(q2.Porderroute))
                         {
                             q2.Porderroute = DateTime.Now.Year.ToString("YYYYMMDD");
                         }
                         if (String.IsNullOrEmpty(q2.Porderserial))
                         {
-
                             string Y = DateTime.Now.Year.ToString(); //获取年份  // 2008
                             string M = DateTime.Now.Month.ToString(); //获取月份   // 9
                             if (M.CompareTo("10") == 0)
@@ -480,14 +467,13 @@ namespace Fine
                         var q2 = DB.Pp_Orders.First(c => c.Porderno == OrderNo);
                         q2.Porderreal = q_count[0].RealQty;
                         q2.Modifier = uid;
-                        q2.ModifyTime = DateTime.Now;
+                        q2.ModifyDate = DateTime.Now;
                         if (String.IsNullOrEmpty(q2.Porderroute))
                         {
                             q2.Porderroute = DateTime.Now.Year.ToString("YYYYMMDD");
                         }
                         if (String.IsNullOrEmpty(q2.Porderserial))
                         {
-
                             string Y = DateTime.Now.Year.ToString(); //获取年份  // 2008
                             string M = DateTime.Now.Month.ToString(); //获取月份   // 9
                             if (M.CompareTo("10") == 0)
@@ -507,7 +493,6 @@ namespace Fine
                         }
                     }
                     DB.SaveChanges();
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -549,10 +534,10 @@ namespace Fine
         {
             try
             {
-                DB.Pp_Orders                    
-                    .Where(s => s.Porderno == OrderNo)                    
+                DB.Pp_Orders
+                    .Where(s => s.Porderno == OrderNo)
                     .ToList()
-                    .ForEach(x => { x.Porderreal = 0; x.Modifier = uid; x.ModifyTime = DateTime.Now; });
+                    .ForEach(x => { x.Porderreal = 0; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();
             }
             catch (ArgumentNullException Message)
@@ -589,8 +574,4 @@ namespace Fine
             //}
         }
     }
-
-
-
-
 }

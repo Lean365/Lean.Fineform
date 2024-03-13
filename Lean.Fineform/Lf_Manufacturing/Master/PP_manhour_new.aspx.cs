@@ -1,18 +1,18 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_manhour_new : PageBase
     {
-        // 
+        //
         public string DDLValue;
-        
+
         #region ViewPower
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -34,8 +34,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
-
                 LoadData();
                 //this.Orderguid.Text = Guid.NewGuid().ToString();
             }
@@ -52,7 +50,6 @@ namespace Fine.Lf_Manufacturing.Master
             // 初始化用户所属部门
             //InitNoticeDept();
 
-
             Prodate.SelectedDate = DateTime.Now;
 
             this.Proplnt.Text = "C100";
@@ -60,15 +57,13 @@ namespace Fine.Lf_Manufacturing.Master
             this.Proset.Text = "MIN";
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             //int id = GetQueryIntValue("id");
             //proManhour current = DB.Pp_Manhours.Find(id);
             //Cmc001 = current.Prodate;
@@ -100,12 +95,10 @@ namespace Fine.Lf_Manufacturing.Master
             //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             //}
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -118,7 +111,6 @@ namespace Fine.Lf_Manufacturing.Master
             //}
 
             string InputData = Proitem.Text.Trim();
-
 
             Pp_Manhour redata = DB.Pp_Manhours.Where(u => u.Proitem == InputData).FirstOrDefault();
 
@@ -135,7 +127,6 @@ namespace Fine.Lf_Manufacturing.Master
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Pp_Manhour item = new Pp_Manhour();
             item.Prodate = this.Prodate.SelectedDate.Value.ToString("yyyyMMdd");
             item.Proplnt = this.Proplnt.Text.ToUpper(); ;
@@ -155,7 +146,7 @@ namespace Fine.Lf_Manufacturing.Master
             // 添加所有用户
 
             item.Remark = Remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_Manhours.Add(item);
             DB.SaveChanges();
@@ -165,8 +156,6 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "新增";
             string OperateNotes = "New* " + Newtext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "工产工时新增", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -181,8 +170,8 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
+            {
+                CheckData();
             }
             catch (ArgumentNullException Message)
             {
@@ -219,11 +208,11 @@ namespace Fine.Lf_Manufacturing.Master
 
         //private void SaveOther()
         //{
-        //    Pp_SapManhour item = new Pp_SapManhour();           
-        //    item.D_SAP_ZPBLD_Z001 = this.Proplnt.Text.ToUpper(); 
+        //    Pp_SapManhour item = new Pp_SapManhour();
+        //    item.D_SAP_ZPBLD_Z001 = this.Proplnt.Text.ToUpper();
         //    item.D_SAP_ZPBLD_Z002 = this.Proitem.Text.ToUpper();
         //    item.D_SAP_ZPBLD_Z003 = this.Prowcname.Text.ToUpper();
-        //    item.D_SAP_ZPBLD_Z004 = this.Prowctext.Text.ToUpper(); 
+        //    item.D_SAP_ZPBLD_Z004 = this.Prowctext.Text.ToUpper();
         //    item.D_SAP_ZPBLD_Z005 = decimal.Parse(this.Proshort.Text);
         //    item.D_SAP_ZPBLD_Z006 = this.Propset.Text.ToUpper();
         //    item.D_SAP_ZPBLD_Z007 = decimal.Parse(Prost.Text);
@@ -231,7 +220,7 @@ namespace Fine.Lf_Manufacturing.Master
         //    item.GUID = Guid.NewGuid();
         //    // 添加所有用户
         //    item.Remark = this.Prodate.SelectedDate.Value.ToString("yyyyMMdd");
-        //    item.CreateTime = DateTime.Now;
+        //    item.CreateDate = DateTime.Now;
         //    item.Creator = GetIdentityName();
         //    DB.Pp_SapManhours.Add(item);
         //    DB.SaveChanges();
@@ -261,10 +250,6 @@ namespace Fine.Lf_Manufacturing.Master
             StringHelper.strToUpper(Prowctext.Text);
         }
 
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

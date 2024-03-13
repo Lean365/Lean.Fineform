@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Fico_chart.aspx.cs" Inherits="Fine.Lf_Accounting.Fico_chart" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Fico_chart.aspx.cs" Inherits="LeanFine.Lf_Accounting.Fico_chart" %>
 
 <!DOCTYPE html>
 

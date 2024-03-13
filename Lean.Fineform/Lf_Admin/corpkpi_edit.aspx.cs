@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
-
     public partial class corpkpi_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -34,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,9 +30,7 @@ namespace Fine.Lf_Admin
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -59,10 +45,7 @@ namespace Fine.Lf_Admin
 
             // 初始化用户所属部门
             //InitNoticeDept();
-
         }
-
-
 
         private void BindData()
         {
@@ -94,11 +77,8 @@ namespace Fine.Lf_Admin
             //TXTentTarget_en.Text = current.entTarget_en;
             //TXTentTarget_ja.Text = current.entTarget_ja;
 
-
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -111,18 +91,15 @@ namespace Fine.Lf_Admin
             //InitUserTitle(current);
 
             //修改前日志
-            string BeforeModi = current.CorpAbbrName+","+current.CorpAnnual;
+            string BeforeModi = current.CorpAbbrName + "," + current.CorpAnnual;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "目标管理", "目标信息修改", OperateNotes);
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
@@ -140,26 +117,23 @@ namespace Fine.Lf_Admin
             item.CorpTarget_EN = tbxCorpTarget_EN.Text;
             item.CorpTarget_JA = tbxCorpTarget_JA.Text;
 
-
-            item.isDelete = 0;
+            item.isDeleted = 0;
 
             item.Remark = "";
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Adm_Institutions.Add(item);
             DB.SaveChanges();
 
             //新增日志
-            string Contectext = tbxCorpAbbrName.Text+","+tbxCorpAnnual.Text;
+            string Contectext = tbxCorpAbbrName.Text + "," + tbxCorpAnnual.Text;
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "机构管理", "机构信息修改", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
-
             ////判断修改内容
             Guid id = Guid.Parse(GetQueryValue("GUID"));
             Adm_Corpkpi current = DB.Adm_Corpkpis.Find(id);
@@ -168,8 +142,7 @@ namespace Fine.Lf_Admin
             string checkCorpTarget_EN = current.CorpTarget_EN;
             string checkCorpTarget_JA = current.CorpTarget_JA;
 
-
-            if (this.tbxCorpTarget_CN.Text == checkCorpTarget_CN|| this.tbxCorpTarget_EN.Text == checkCorpTarget_EN|| this.tbxCorpTarget_JA.Text == checkCorpTarget_JA)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
+            if (this.tbxCorpTarget_CN.Text == checkCorpTarget_CN || this.tbxCorpTarget_EN.Text == checkCorpTarget_EN || this.tbxCorpTarget_JA.Text == checkCorpTarget_JA)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, "说明", MessageBoxIcon.Information);
             }
@@ -185,7 +158,6 @@ namespace Fine.Lf_Admin
             //判断重复
             //string InputData = tbxCorpAbbrName.Text.Trim()+ tbxCorpAnnual.Text.Trim();
 
-
             //Adm_Corpkpi redata = DB.Adm_Corpkpis.Where(u => u.CorpAbbrName+u.CorpAnnual== InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -194,6 +166,7 @@ namespace Fine.Lf_Admin
             //    return;
             //}
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -234,15 +207,7 @@ namespace Fine.Lf_Admin
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

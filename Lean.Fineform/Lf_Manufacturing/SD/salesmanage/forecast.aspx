@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="forecast.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.salesmanage.forecast" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="forecast.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.SD.salesmanage.forecast" %>
 
 <!DOCTYPE html>
 

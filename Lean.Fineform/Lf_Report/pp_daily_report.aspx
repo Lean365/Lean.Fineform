@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_daily_report.aspx.cs" Inherits="Fine.Lf_Report.Pp_daily_report" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_daily_report.aspx.cs" Inherits="LeanFine.Lf_Report.pp_daily_report" %>
 
 <!DOCTYPE html>
 
@@ -32,10 +32,10 @@
                         </f:Button>
                         <f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
                         </f:ToolbarSeparator>
-                        <f:Button ID="btn_PrintPreview" ValidateForms="SimpleForm1" IconUrl="~/Lf_Resources/PrintView.png"
+                        <f:Button ID="btn_PrintPreview" ValidateForms="SimpleForm1" IconUrl="~/LB_Resources/PrintView.png"
                             OnClick="btn_PrintPreview_Click" runat="server" Text="<%$ Resources:GlobalResource,sys_Button_Preview%>">
                         </f:Button>
-                        <f:Button ID="btn_PrintDesign" ValidateForms="SimpleForm1" IconUrl="~/Lf_Resources/PrintDesign.png"
+                        <f:Button ID="btn_PrintDesign" ValidateForms="SimpleForm1" IconUrl="~/LB_Resources/PrintDesign.png"
                             OnClick="btn_PrintDesign_Click" runat="server" Text="<%$ Resources:GlobalResource,sys_Button_Design%>">
                         </f:Button>
                     </Items>

@@ -2,13 +2,11 @@
 // Turkish (tr) localization
 // https://github.com/bgrins/spectrum
 
-(function ( $ ) {
-
+(function ($) {
     var localization = $.spectrum.localization["tr"] = {
-		cancelText: "iptal",
-		chooseText: "tamam"
-	};
+        cancelText: "iptal",
+        chooseText: "tamam"
+    };
 
     $.extend($.fn.spectrum.defaults, localization);
-
-})( jQuery );
+})(jQuery);

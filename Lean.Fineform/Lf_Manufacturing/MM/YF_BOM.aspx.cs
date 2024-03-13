@@ -1,11 +1,11 @@
-﻿using Fine.Lf_Business.Models.MM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.MM;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
     public partial class YF_BOM : PageBase
     {
@@ -22,10 +22,9 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,12 +44,10 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-
 
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/bad_p2d_new.aspx", "P2D新增不良记录");
 
@@ -63,15 +60,11 @@ namespace Fine.Lf_Manufacturing.MM
 
         private void BindDDLHbn()
         {
-
-
-            var q = from a in DB.YF_Billofmaterials
+            var q = from a in DB.Yf_Billofmaterials
                     select new
                     {
-                        Serialno = a.Serialno.Substring(0, a.Serialno.Length-4),
+                        Serialno = a.Serialno.Substring(0, a.Serialno.Length - 4),
                     };
-
-
 
             var qs = q.Select(E => new { E.Serialno }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -87,9 +80,9 @@ namespace Fine.Lf_Manufacturing.MM
 
         private void BindGrid()
         {
-            //Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+            //Lf_Business.Models.YF.Yifei_DTA_Entities DBYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-            IQueryable<YF_Billofmaterial> q = DB.YF_Billofmaterials; //.Include(u => u.Dept);
+            IQueryable<Yf_Billofmaterial> q = DB.Yf_Billofmaterials; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = SerialNo.SelectedItem.Text.Trim().ToUpper();
@@ -114,13 +107,9 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -128,13 +117,10 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -149,6 +135,7 @@ namespace Fine.Lf_Manufacturing.MM
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -167,12 +154,10 @@ namespace Fine.Lf_Manufacturing.MM
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -201,10 +186,10 @@ namespace Fine.Lf_Manufacturing.MM
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
@@ -223,8 +208,8 @@ namespace Fine.Lf_Manufacturing.MM
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -232,8 +217,7 @@ namespace Fine.Lf_Manufacturing.MM
             BindGrid();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -246,9 +230,7 @@ namespace Fine.Lf_Manufacturing.MM
                 return;
             }
 
-
-
-            IQueryable<YF_Billofmaterial> q = DB.YF_Billofmaterials; //.Include(u => u.Dept);
+            IQueryable<Yf_Billofmaterial> q = DB.Yf_Billofmaterials; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = SerialNo.SelectedItem.Text.Trim().ToUpper();
@@ -282,8 +264,6 @@ namespace Fine.Lf_Manufacturing.MM
                              制造描述 = p.MakerMatText,
                              采购区域 = p.ProcurementRegion,
                              物料属性 = p.SubMatCategory,
-
-
                          };
                 //DataTable Exp = new DataTable();
                 //在库明细查询SQL
@@ -294,7 +274,6 @@ namespace Fine.Lf_Manufacturing.MM
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
 
-
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
                 ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
@@ -302,7 +281,7 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ExportExcel
 
         protected void SerialNo_SelectedIndexChanged(object sender, EventArgs e)
         {

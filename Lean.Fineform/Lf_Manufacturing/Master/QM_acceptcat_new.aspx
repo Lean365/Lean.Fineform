@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Qm_acceptcat_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.Master.Qm_acceptcat_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="qm_acceptcat_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.Master.qm_acceptcat_new" %>
 
 <!DOCTYPE html>
 

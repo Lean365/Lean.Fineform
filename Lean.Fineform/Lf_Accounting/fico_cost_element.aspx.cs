@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class Fico_cost_element : PageBase
     {
@@ -36,10 +22,12 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string Xlsbomitem, ExportFileName;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -70,8 +58,6 @@ namespace Fine.Lf_Accounting
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
-
             //本月最后一天
             //DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
@@ -80,10 +66,7 @@ namespace Fine.Lf_Accounting
             ddlGridPageSize.SelectedValue = "5000";
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -95,24 +78,25 @@ namespace Fine.Lf_Accounting
                     //IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
 
                     var q = from a in DB.Fico_Titles
-                            where a.Bacnname.CompareTo("未启用")!=0
+                            where a.Bacnname.CompareTo("未启用") != 0
                             where a.UDF01.Contains("2300")
                             select a;
-                    
+
                     // 在用户名称中搜索
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Bacode.ToString().Contains( searchText) || u.Bacnname.Contains(searchText));
+                        q = q.Where(u => u.Bacode.ToString().Contains(searchText) || u.Bacnname.Contains(searchText));
                     }
                     q = q.OrderBy(u => u.Bacode);
-                    var qs = q.Select(E => new {
-                        Bc_CorpCode=2300,
-                        Bc_CorpName="DTA",
-                        Bc_CostCode="",
-                        Bc_CostName="",
-                        Bc_TitleCode=E.Bacode.ToString(),
-                        Bc_TitleName=E.Bacnname
+                    var qs = q.Select(E => new
+                    {
+                        Bc_CorpCode = 2300,
+                        Bc_CorpName = "DTA",
+                        Bc_CostCode = "",
+                        Bc_CostName = "",
+                        Bc_TitleCode = E.Bacode.ToString(),
+                        Bc_TitleName = E.Bacnname
                     }).ToList().Distinct();
                     // 当前页的合计
                     //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
@@ -132,8 +116,6 @@ namespace Fine.Lf_Accounting
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -146,7 +128,7 @@ namespace Fine.Lf_Accounting
                     //IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
 
                     var q = from a in DB.Fico_ProfitCenters
-                            
+
                             select a;
 
                     // 在用户名称中搜索
@@ -155,8 +137,9 @@ namespace Fine.Lf_Accounting
                     {
                         q = q.Where(u => u.PC_Code.ToString().Contains(searchText) || u.PC_Name.Contains(searchText));
                     }
-                    q = q.OrderBy(u=>u.PC_Code);
-                    var qs = q.Select(E => new {
+                    q = q.OrderBy(u => u.PC_Code);
+                    var qs = q.Select(E => new
+                    {
                         Bc_CorpCode = 2300,
                         Bc_CorpName = "DTA",
                         Bc_CostCode = E.PC_Code,
@@ -182,8 +165,6 @@ namespace Fine.Lf_Accounting
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -195,8 +176,8 @@ namespace Fine.Lf_Accounting
                 {
                     //IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
 
-                    var q = from a in DB.Fico_Costing_ActualCosts
-                            where a.Bc_ExpCategory.Contains( "Exs.")
+                    var q = from a in DB.Fico_Costing_Actual_Costs
+                            where a.Bc_ExpCategory.Contains("Exs.")
                             select a;
 
                     // 在用户名称中搜索
@@ -205,27 +186,27 @@ namespace Fine.Lf_Accounting
                     {
                         q = q.Where(u => u.Bc_TitleCode.ToString().Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText) || u.Bc_CostCode.ToString().Contains(searchText));
                     }
-                    var qs = q.Select(E => new {
+                    var qs = q.Select(E => new
+                    {
                         Bc_CorpCode = 2300,
                         Bc_CorpName = "DTA",
-                        Bc_CostCode=E.Bc_CostCode.ToString(),
+                        Bc_CostCode = E.Bc_CostCode.ToString(),
                         E.Bc_CostName,
-                        Bc_TitleCode=E.Bc_TitleCode.ToString(),
-                         E.Bc_TitleName
+                        Bc_TitleCode = E.Bc_TitleCode.ToString(),
+                        E.Bc_TitleName
                     }).ToList().Distinct();
 
                     var qss = from a in qs
                               orderby a.Bc_CostCode
                               select new
                               {
-                                  a.Bc_CorpCode ,
-                                  a.Bc_CorpName ,
-                                  Bc_CostCode=(a.Bc_CostCode.CompareTo("1000")==0?"D1000": "D0"+a.Bc_CostCode),
+                                  a.Bc_CorpCode,
+                                  a.Bc_CorpName,
+                                  Bc_CostCode = (a.Bc_CostCode.CompareTo("1000") == 0 ? "D1000" : "D0" + a.Bc_CostCode),
                                   a.Bc_CostName,
                                   a.Bc_TitleCode,
                                   a.Bc_TitleName,
                               };
-
 
                     // 当前页的合计
                     //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
@@ -245,8 +226,6 @@ namespace Fine.Lf_Accounting
 
                         Grid1.DataSource = table;
                         Grid1.DataBind();
-
-
                     }
                     else
                     {
@@ -254,7 +233,6 @@ namespace Fine.Lf_Accounting
                         Grid1.DataBind();
                     }
                 }
-
 
                 // q = q.Where(u => u.Promodel != "0");
                 //if (GetIdentityName() != "admin")
@@ -267,8 +245,6 @@ namespace Fine.Lf_Accounting
                 //{
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
-
-
 
                 ttbSearchMessage.Text = "";
             }
@@ -283,11 +259,10 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -323,8 +298,6 @@ namespace Fine.Lf_Accounting
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -342,7 +315,6 @@ namespace Fine.Lf_Accounting
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -359,15 +331,10 @@ namespace Fine.Lf_Accounting
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -414,9 +381,6 @@ namespace Fine.Lf_Accounting
             //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -430,7 +394,6 @@ namespace Fine.Lf_Accounting
         {
             BindGrid();
         }
-
 
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -463,9 +426,7 @@ namespace Fine.Lf_Accounting
             }
         }
 
-
-        #endregion
-
+        #endregion Events
 
         //合计表格
         private void OutputSummaryData(DataTable source)
@@ -482,7 +443,6 @@ namespace Fine.Lf_Accounting
                 ratio = rTotal / Ytoal;
             }
 
-
             JObject summary = new JObject();
             summary.Add("Bc_TitleName", "(CNY)合计");
             summary.Add("BC_BudgetAmt", Ytoal.ToString("F2"));
@@ -491,7 +451,6 @@ namespace Fine.Lf_Accounting
             //summary.Add("Bediffmoney", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -505,7 +464,6 @@ namespace Fine.Lf_Accounting
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-
 
             if (rbtnFirstAuto.Checked)
             {
@@ -521,7 +479,6 @@ namespace Fine.Lf_Accounting
             }
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

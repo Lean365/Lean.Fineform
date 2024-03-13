@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Text;
+﻿using FineUIPro;
+using System;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user_view : PageBase
     {
@@ -25,7 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -68,7 +63,7 @@ namespace Fine.Lf_Admin
 
             // 用户所属角色
             labRole.Text = String.Join(",", current.Roles.Select(r => r.Name).ToArray());
-            
+
             // 用户的职称列表
             labTitle.Text = String.Join(",", current.Titles.Select(t => t.Name).ToArray());
 
@@ -77,10 +72,8 @@ namespace Fine.Lf_Admin
             {
                 labDept.Text = current.Dept.Name;
             }
-
         }
 
-        #endregion
-
+        #endregion Page_Load
     }
 }

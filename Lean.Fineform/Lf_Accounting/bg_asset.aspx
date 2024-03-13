@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_asset.aspx.cs" Inherits="Fine.Lf_Accounting.bg_asset" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="bg_asset.aspx.cs" Inherits="LeanFine.Lf_Accounting.bg_asset" %>
 
 <!DOCTYPE html>
 

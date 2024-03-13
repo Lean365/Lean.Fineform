@@ -1,13 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class title_user : PageBase
     {
@@ -24,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -41,7 +39,6 @@ namespace Fine.Lf_Admin
             // 权限检查
             CheckPowerWithButton("CoreTitleUserNew", btnNew);
             CheckPowerWithButton("CoreTitleUserDelete", btnDeleteSelected);
-
 
             ResolveDeleteButtonForGrid(btnDeleteSelected, Grid2, "确定要从当前职称移除选中的{0}项记录吗？");
 
@@ -63,7 +60,6 @@ namespace Fine.Lf_Admin
 
             // 排列
             q = Sort<Adm_Title>(q, Grid1);
-
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -105,11 +101,9 @@ namespace Fine.Lf_Admin
                 Grid2.DataSource = q;
                 Grid2.DataBind();
             }
-
         }
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -120,14 +114,13 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region Grid1 Events
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid1();
 
@@ -142,7 +135,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -167,7 +160,7 @@ namespace Fine.Lf_Admin
 
         protected void Grid2_Sort(object sender, GridSortEventArgs e)
         {
-			Grid2.SortDirection = e.SortDirection;
+            Grid2.SortDirection = e.SortDirection;
             Grid2.SortField = e.SortField;
             BindGrid2();
         }
@@ -191,7 +184,6 @@ namespace Fine.Lf_Admin
             int titleID = GetSelectedDataKeyID(Grid1);
             List<int> userIDs = GetSelectedDataKeyIDs(Grid2);
 
-
             Adm_Title title = DB.Adm_Titles.Include(r => r.Users)
                 .Where(r => r.ID == titleID)
                 .FirstOrDefault();
@@ -200,14 +192,12 @@ namespace Fine.Lf_Admin
 
             DB.SaveChanges();
 
-
             // 清空当前选中的项
             Grid2.SelectedRowIndexArray = null;
 
             // 重新绑定表格
             BindGrid2();
         }
-
 
         protected void Grid2_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -237,7 +227,6 @@ namespace Fine.Lf_Admin
                 }
 
                 BindGrid2();
-
             }
         }
 
@@ -254,7 +243,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript(Window1.GetShowReference(addUrl, "添加用户到当前职称"));
         }
 
-        #endregion
-
+        #endregion Grid2 Events
     }
 }

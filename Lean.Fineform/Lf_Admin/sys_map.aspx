@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sys_map.aspx.cs" Inherits="Fine.Lf_Admin.sys_map" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sys_map.aspx.cs" Inherits="LeanFine.Lf_Admin.sys_map" %>
 
 <!DOCTYPE html>
 
@@ -231,13 +231,13 @@
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_Pp_reason" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-restore" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_ReasonType%>" OnClick="Btn_Pp_Pp_reason_Click">
+                                <f:Button ID="Btn_Pp_Pp_Reason" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-window-restore" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Pp_ReasonType%>" OnClick="Btn_Pp_Pp_Reason_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_Qm_acceptcat" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-info" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Qm_InspectionType%>" OnClick="Btn_Pp_Qm_acceptcat_Click">
+                                <f:Button ID="Btn_Pp_qm_acceptcat" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-info" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Qm_InspectionType%>" OnClick="Btn_Pp_qm_acceptcat_Click">
                                 </f:Button>
                             </div>
                         </div>
@@ -245,8 +245,8 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_Pp_transport" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-shipping-fast" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Sd_TransportationMethods%>" OnClick="Btn_Pp_Pp_transport_Click">
+                                <f:Button ID="Btn_Pp_Pp_Transport" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-shipping-fast" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_Sd_TransportationMethods%>" OnClick="Btn_Pp_Pp_Transport_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
@@ -353,23 +353,23 @@
                         <div class="w-100" style="margin-bottom: 20px"></div>
                         <div class="row row-cols-8 align-self-center">
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_defect" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bug" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Production%>" OnClick="Btn_Pp_defect_Click">
+                                <f:Button ID="Btn_pp_defect" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-bug" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_pp_defect_Production%>" OnClick="Btn_pp_defect_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_defect_order_totalled" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_MOStatistics%>" OnClick="Btn_Pp_defect_order_totalled_Click">
+                                <f:Button ID="Btn_pp_defect_order_totalled" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-list" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_pp_defect_MOStatistics%>" OnClick="Btn_pp_defect_order_totalled_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_defect_lot_finished" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-large" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_LotStatistics%>" OnClick="Btn_Pp_defect_lot_finished_Click">
+                                <f:Button ID="Btn_pp_defect_lot_finished" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-th-large" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_pp_defect_LotStatistics%>" OnClick="Btn_pp_defect_lot_finished_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">
-                                <f:Button ID="Btn_Pp_defect_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
-                                    Text="<%$ Resources:GlobalResource,menu_Pp_Defect_Query%>" OnClick="Btn_Pp_defect_Query_Click">
+                                <f:Button ID="Btn_pp_defect_query" EnablePostBack="true" IconAlign="Top" IconFontClass="fas fa-search" runat="server"
+                                    Text="<%$ Resources:GlobalResource,menu_pp_defect_Query%>" OnClick="Btn_pp_defect_Query_Click">
                                 </f:Button>
                             </div>
                             <div class="col icon-font">

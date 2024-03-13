@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Fico_costing_materialcostratio 的摘要说明
+    /// fico_costing_materialcostratio 的摘要说明
     /// </summary>
-    public class Fico_costing_materialcostratio : IHttpHandler
+    public class fico_costing_materialcostratio : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";

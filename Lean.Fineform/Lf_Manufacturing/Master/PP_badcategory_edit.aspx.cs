@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_badcategory_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +31,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,14 +47,14 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
             Guid id = Guid.Parse(GetQueryValue("GUID"));
-            Pp_DefectCode current = DB.Pp_DefectCodes.Find(id);
+            Pp_Defect_Code current = DB.Pp_Defect_Codes.Find(id);
 
             if (current == null)
             {
@@ -65,8 +62,6 @@ namespace Fine.Lf_Manufacturing.Master
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
-
 
             ngclass.Text = current.ngclass;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -80,13 +75,10 @@ namespace Fine.Lf_Manufacturing.Master
             analysisclass.Text = current.analysisclass;
             jp_class.Text = current.jp_class;
             jp_ng.Text = current.jp_ng;
-   
 
             remark.Text = current.Remark;
 
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -105,13 +97,7 @@ namespace Fine.Lf_Manufacturing.Master
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "赁率修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -119,7 +105,7 @@ namespace Fine.Lf_Manufacturing.Master
         {
             //判断修改内容
             Guid id = Guid.Parse(GetQueryValue("GUID"));
-            Pp_DefectCode current = DB.Pp_DefectCodes.Find(id);
+            Pp_Defect_Code current = DB.Pp_Defect_Codes.Find(id);
 
             string modi001 = current.ngclass;
             string modi002 = current.cn_classmatter;
@@ -146,14 +132,14 @@ namespace Fine.Lf_Manufacturing.Master
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
-            Pp_DefectCode item = DB.Pp_DefectCodes
+            Pp_Defect_Code item = DB.Pp_Defect_Codes
 
                 .Where(u => u.GUID == id).FirstOrDefault();
-
 
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.cn_classmatter = cn_classmatter.Text;
@@ -167,34 +153,27 @@ namespace Fine.Lf_Manufacturing.Master
             item.jp_class = jp_class.Text;
             item.jp_ng = jp_ng.Text;
 
-
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
-
-
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = ngclass.Text+","+cn_classmatter.Text + "," + ngcode.Text+","+ cn_ngmatter.Text;
+            string ModifiedText = ngclass.Text + "," + cn_classmatter.Text + "," + ngcode.Text + "," + cn_ngmatter.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "赁率修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -246,15 +225,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

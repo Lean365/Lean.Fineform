@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
 using System.Web;
-using Newtonsoft.Json;
-
 
 /// <summary>
 /// Handler 的摘要说明
 /// </summary>
 public abstract class Handler
 {
-	public Handler(HttpContext context)
-	{
+    public Handler(HttpContext context)
+    {
         this.Request = context.Request;
         this.Response = context.Response;
         this.Context = context;
         this.Server = context.Server;
-	}
+    }
 
     public abstract void Process();
 
@@ -29,7 +26,7 @@ public abstract class Handler
             Response.AddHeader("Content-Type", "text/plain");
             Response.Write(json);
         }
-        else 
+        else
         {
             Response.AddHeader("Content-Type", "application/javascript");
             Response.Write(String.Format("{0}({1});", jsonpCallback, json));

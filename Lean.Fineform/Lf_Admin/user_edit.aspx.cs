@@ -1,9 +1,9 @@
-﻿using System;
-using System.Data.Entity;using System.Data.Entity.Validation;
+﻿using FineUIPro;
+using System;
+using System.Data.Entity;
 using System.Linq;
-using FineUIPro;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class user_edit : PageBase
     {
@@ -20,7 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -94,10 +94,9 @@ namespace Fine.Lf_Admin
             //string selectDeptURL = String.Format("./user_select_dept.aspx?ids=<script>{0}</script>", hfSelectedDept.GetValueReference());
             //tbSelectedDept.OnClientTriggerClick = Window1.GetSaveStateReference(hfSelectedDept.ClientID, tbSelectedDept.ClientID)
             //        + Window1.GetShowReference(selectDeptURL, "选择用户所属的部门");
-
         }
 
-        #endregion
+        #endregion InitUserRole
 
         #region InitUserRole
 
@@ -110,9 +109,9 @@ namespace Fine.Lf_Admin
             //string selectRoleURL = String.Format("./user_select_role.aspx?ids=<script>{0}</script>", hfSelectedRole.GetValueReference());
             //tbSelectedRole.OnClientTrigger2Click = Window1.GetSaveStateReference(hfSelectedRole.ClientID, tbSelectedRole.ClientID)
             //        + Window1.GetShowReference(selectRoleURL, "选择用户所属的角色");
-
         }
-        #endregion
+
+        #endregion InitUserRole
 
         #region InitUserTitle
 
@@ -125,12 +124,11 @@ namespace Fine.Lf_Admin
             //string selectTitleURL = String.Format("./user_select_title.aspx?ids=<script>{0}</script>", hfSelectedTitle.GetValueReference());
             //tbSelectedTitle.OnClientTriggerClick = Window1.GetSaveStateReference(hfSelectedTitle.ClientID, tbSelectedTitle.ClientID)
             //        + Window1.GetShowReference(selectTitleURL, "选择用户拥有的职称");
-
         }
-        #endregion
 
+        #endregion InitUserTitle
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -156,7 +154,6 @@ namespace Fine.Lf_Admin
             item.Remark = tbxRemark.Text.Trim();
             item.Enabled = cbxEnabled.Checked;
 
-
             if (String.IsNullOrEmpty(hfSelectedDept.Text))
             {
                 item.Dept = null;
@@ -167,9 +164,7 @@ namespace Fine.Lf_Admin
 
                 Adm_Dept dept = Attach<Adm_Dept>(newDeptID);
                 item.Dept = dept;
-
             }
-
 
             int[] roleIDs = StringUtil.GetIntArrayFromString(hfSelectedRole.Text);
             ReplaceEntities<Adm_Role>(item.Roles, roleIDs);
@@ -179,11 +174,9 @@ namespace Fine.Lf_Admin
 
             DB.SaveChanges();
 
-
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

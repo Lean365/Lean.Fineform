@@ -1,18 +1,16 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_model_kanban_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -26,17 +24,17 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        public static string tmpRootDir,tmpQRCodePath;
+
+        public static string tmpRootDir, tmpQRCodePath;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -53,10 +51,11 @@ namespace Fine.Lf_Manufacturing.Master
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            
+
             BindDDLproLine();
             BindData();
         }
+
         private void BindData()
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
@@ -81,7 +80,6 @@ namespace Fine.Lf_Manufacturing.Master
             this.imgModelQrcode.ImageWidth = Unit.Pixel(64);
             this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
 
-
             string qItem = current.P_Kanban_Item;
             var q = (from a in DB.Mm_Materials
                      where a.MatItem == (qItem)
@@ -95,8 +93,6 @@ namespace Fine.Lf_Manufacturing.Master
             tbxRemark.Text = current.Remark;
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -117,11 +113,10 @@ namespace Fine.Lf_Manufacturing.Master
 
         private void BindDDLproLine()
         {
-
             var q = from p in DB.Pp_Lines
                     where p.lineclass.Contains("M")
-                    //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) && 
-                    //(from d in DB.Pp_Defects
+                    //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) &&
+                    //(from d in DB.pp_defects
                     // where d.Prongbdel == false
                     // where d.Prodate== Prodate
                     // where d.Prolinename== pline
@@ -130,7 +125,6 @@ namespace Fine.Lf_Manufacturing.Master
                     select new
                     {
                         Line = p.linename,
-
                     };
 
             var qs = q.Select(E => new { E.Line }).ToList().Distinct();
@@ -143,17 +137,11 @@ namespace Fine.Lf_Manufacturing.Master
             ddlP_Kanban_Line.DataValueField = "Line";
             ddlP_Kanban_Line.DataBind();
             this.ddlP_Kanban_Line.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
@@ -171,7 +159,7 @@ namespace Fine.Lf_Manufacturing.Master
             //item.GUID = Guid.NewGuid();
             // 添加所有用户
             item.Remark = tbxRemark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             //DB.Pp_Kanbans.Add(item);
             DB.SaveChanges();
@@ -181,9 +169,8 @@ namespace Fine.Lf_Manufacturing.Master
             string OperateType = "新增";
             string OperateNotes = "New* " + Contectext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种看板新增", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ////判断修改内容
@@ -191,7 +178,6 @@ namespace Fine.Lf_Manufacturing.Master
             //proLine current = DB.proLines.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
-
 
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -206,9 +192,7 @@ namespace Fine.Lf_Manufacturing.Master
 
             if (ddlP_Kanban_Line.SelectedIndex == 0 && ddlP_Kanban_Line.SelectedIndex == -1)
             {
-
                 string InputData = dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + ddlP_Kanban_Line.SelectedItem.Text + lblP_Kanban_Item.Text + lblP_Kanban_Lot.Text + lblP_Kanban_Model.Text + lblP_Kanban_Region.Text;
-
 
                 Pp_Kanban redata = DB.Pp_Kanbans.Where(u => u.P_Kanban_Date + u.P_Kanban_Line + u.P_Kanban_Item + u.P_Kanban_Lot + u.P_Kanban_Model + u.P_Kanban_Region == (InputData)).FirstOrDefault();
 
@@ -217,13 +201,9 @@ namespace Fine.Lf_Manufacturing.Master
                     Alert.Show("基本信息,此机种看板< " + InputData + ">已经存在！修改即可");
                     return;
                 }
-
-
-
             }
-
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -265,10 +245,6 @@ namespace Fine.Lf_Manufacturing.Master
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
-
-
-
         protected void numP_Kanban_Process_TextChanged(object sender, EventArgs e)
         {
             string strKey = (dpkP_Kanban_Date.SelectedDate.Value.ToString("yyyyMMdd") + "," + ddlP_Kanban_Line.SelectedItem.Text + "," + lblP_Kanban_Item.Text + "," + lblP_Kanban_Lot.Text).Replace(" ", ""); ;//匹配字符串
@@ -285,14 +261,11 @@ namespace Fine.Lf_Manufacturing.Master
                 }
             }
 
-
-
             //item.D_SAP_DEST_Z001 = ddlD_SAP_DEST_Z001.SelectedItem.Text;
             ////item.Prolineclass = prolinename.SelectedValue.ToString();
             //item.D_SAP_DEST_Z002 = tbxD_SAP_DEST_Z002.Text;
             //item.D_SAP_DEST_Z003 = tbxD_SAP_DEST_Z003.Text;
             //item.Udf004 = Decimal.Parse(numUdf004.Text);
-
 
             //string imgPath = Request.ApplicationPath;
 
@@ -304,19 +277,12 @@ namespace Fine.Lf_Manufacturing.Master
             string logoFilePath = path + "teac.jpg";                                    //Logo路径50*50
             string filePath = path + ImgName + ".jpg";                                        //二维码文件名
             qr.CreateQRCode(qrString, "Byte", 5, 0, "H", filePath, true, logoFilePath);   //生成
-            tmpQRCodePath= "~/oneFile/qrcode/" + ImgName + ".jpg";
+            tmpQRCodePath = "~/oneFile/qrcode/" + ImgName + ".jpg";
             this.imgModelQrcode.ImageUrl = tmpQRCodePath;
             this.imgModelQrcode.ImageWidth = Unit.Pixel(64);
             this.imgModelQrcode.ImageHeight = Unit.Pixel(64);
         }
 
-
-
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

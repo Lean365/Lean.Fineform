@@ -1,38 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Reflection;
-using System.Text;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Configuration;
-using System.Collections;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-
-namespace Fine
+namespace LeanFine
 {
     public class OperateLogHelper : PageBase
     {
-        
-
         #region Insert Login log
+
         //public static void InsertLoginLog(string UserID,string UserName,string Thread,string Level,)
         //{
         //    Adm_Log item = new Adm_Log();
 
         //}
 
-        #endregion
+        #endregion Insert Login log
+
         #region NetOperateNotes
 
         /// <summary>
@@ -44,12 +30,12 @@ namespace Fine
         /// <param name="po"></param>
         /// <param name="lo"></param>
         /// <param name="lt"></param>
-        public static void InsNetOperateNotes(string OperateUserName,string OperateType, string OperateModules, string OperatePowers, string OperateNotes)
+        public static void InsNetOperateNotes(string OperateUserName, string OperateType, string OperateModules, string OperatePowers, string OperateNotes)
         {
             try
             {
                 Adm_OperateLog item = new Adm_OperateLog();
-               
+
                 item.OperateUserId = OperateUserName;
                 //查询用户所在部门
                 var q = (from a in DB.Adm_Depts
@@ -65,7 +51,6 @@ namespace Fine
                     item.OperateUserName = q[0].ChineseName;
                     item.OperateUserDept = q[0].Name;
                 }
-
                 else
                 {
                     item.OperateUserName = "-";
@@ -117,6 +102,7 @@ namespace Fine
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion NetOperateNotes
     }
 }

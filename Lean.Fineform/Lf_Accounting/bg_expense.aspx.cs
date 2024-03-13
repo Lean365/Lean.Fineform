@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading.Tasks;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class bg_expense : PageBase
     {
@@ -36,7 +22,7 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -70,7 +56,6 @@ namespace Fine.Lf_Accounting
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
@@ -84,8 +69,6 @@ namespace Fine.Lf_Accounting
             BindDDLDept();
         }
 
-
-
         private void BindGrid()
         {
             try
@@ -96,7 +79,7 @@ namespace Fine.Lf_Accounting
                     from p in DB.Fico_Expenses
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.UDF01 != "Exs."
-                    where p.isDelete == 0
+                    where p.isDeleted == 0
                     select new
                     {
                         p.GUID,
@@ -112,7 +95,6 @@ namespace Fine.Lf_Accounting
                         p.Bebtmoney,
                         p.Beatmoney,
                         p.Bediffmoney,
-
                     };
 
                     //var qss =
@@ -143,12 +125,11 @@ namespace Fine.Lf_Accounting
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
                     string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -191,7 +172,7 @@ namespace Fine.Lf_Accounting
                 {
                     var q = from p in DB.Fico_Expenses
                                 //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                            where p.isDelete == 0
+                            where p.isDeleted == 0
                             where p.UDF01 == "Exs."
                             //where p.Bsdept != "DTA"
                             select new
@@ -209,7 +190,6 @@ namespace Fine.Lf_Accounting
                                 p.Bebtmoney,
                                 p.Beatmoney,
                                 p.Bediffmoney,
-
                             };
 
                     //var qss =
@@ -240,12 +220,11 @@ namespace Fine.Lf_Accounting
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
                     string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -297,8 +276,6 @@ namespace Fine.Lf_Accounting
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
 
-
-
                 ttbSearchMessage.Text = "";
             }
             catch (ArgumentNullException Message)
@@ -312,11 +289,10 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -352,8 +328,6 @@ namespace Fine.Lf_Accounting
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -371,7 +345,6 @@ namespace Fine.Lf_Accounting
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -388,15 +361,10 @@ namespace Fine.Lf_Accounting
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -443,9 +411,6 @@ namespace Fine.Lf_Accounting
             //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -459,7 +424,6 @@ namespace Fine.Lf_Accounting
         {
             BindGrid();
         }
-
 
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -486,12 +450,9 @@ namespace Fine.Lf_Accounting
             {
                 BindGrid();
             }
-
-
         }
 
-
-        #endregion
+        #endregion Events
 
         protected void DDLDept_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -499,6 +460,7 @@ namespace Fine.Lf_Accounting
 
             BindGrid();
         }
+
         public void BindDDLDept()
         {
             //查询LINQ去重复
@@ -510,7 +472,6 @@ namespace Fine.Lf_Accounting
                     {
                         //a.lineclass,
                         a.Bedept
-
                     };
 
             var qs = q.Select(E => new { E.Bedept }).ToList().Distinct();
@@ -542,6 +503,7 @@ namespace Fine.Lf_Accounting
                 BindGrid();
             }
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -557,16 +519,14 @@ namespace Fine.Lf_Accounting
                 ratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
             summary.Add("Bebtmoney", Ytoal.ToString("F2"));
             summary.Add("Beatmoney", pTotal.ToString("F2"));
-            summary.Add("Bediffmoney", rTotal.ToString("F2")+"(差异%："+ ratio.ToString("p2")+")");
+            summary.Add("Bediffmoney", rTotal.ToString("F2") + "(差异%：" + ratio.ToString("p2") + ")");
             //summary.Add("Bediffmoney", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)

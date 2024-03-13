@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-namespace Fine.Lf_Business.Models.QM
+
+namespace LeanFine.Lf_Business.Models.QM
 {
     public class Qm_Wagerate : IKeyGUID
     {
-
         [Key]
         public Guid GUID { get; set; }
 
@@ -19,44 +16,58 @@ namespace Fine.Lf_Business.Models.QM
 
         [Required, StringLength(3)]
         public string Qcsd003 { get; set; }//币种
+
         [Required]
         public Decimal Qcsd004 { get; set; }//月销售额
+
         [Required]
         public Decimal Qcsd005 { get; set; }//上班天数
+
         [Required]
         public Decimal Qcsd006 { get; set; }//直接人员赁率
+
         [Required]
         public Decimal Qcsd007 { get; set; }//直接人员
+
         [Required]
         public Decimal Qcsd008 { get; set; }//直接人员加班
+
         [Required]
         public Decimal Qcsd009 { get; set; }//直接人员工资
 
         [Required]
         public Decimal Qcsd010 { get; set; }//间接人员赁率
+
         [Required]
         public Decimal Qcsd011 { get; set; }//间接人员
+
         [Required]
         public Decimal Qcsd012 { get; set; }//间接人员加班
+
         [Required]
         public Decimal Qcsd013 { get; set; }//间接人员工资
-
 
         [StringLength(8)]
         public string Qcsdrec { get; set; }     //	品质问题対応记录者
 
         [StringLength(255)]
         public string UDF01 { get; set; }
+
         [StringLength(255)]
         public string UDF02 { get; set; }
+
         [StringLength(255)]
         public string UDF03 { get; set; }
+
         [StringLength(500)]
         public string UDF04 { get; set; }
+
         [StringLength(500)]
         public string UDF05 { get; set; }
+
         [StringLength(500)]
         public string UDF06 { get; set; }
+
         public int UDF51 { get; set; }
 
         public int UDF52 { get; set; }
@@ -69,18 +80,19 @@ namespace Fine.Lf_Business.Models.QM
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDelete { get; set; }	//13	//	删除标记
+        public byte isDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }
-        public DateTime? CreateTime { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         public string Modifier { get; set; }
-        public DateTime? ModifyTime { get; set; }
 
+        public DateTime? ModifyDate { get; set; }
     }
 }

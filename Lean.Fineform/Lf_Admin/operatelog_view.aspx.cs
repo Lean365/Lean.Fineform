@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
+using System.Web.UI.WebControls;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class operatelog_view : PageBase
     {
@@ -26,7 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,21 +36,18 @@ namespace Fine.Lf_Admin
         {
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-
-
-
             BindData();
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         private void BindData()
         {
             try
             {
-                Guid strGuid =Guid.Parse( GetQueryValue("GUID"));
+                Guid strGuid = Guid.Parse(GetQueryValue("GUID"));
                 //string mysql = "SELECT D_SAP_ZPABD_Z001 AS ECNNO,D_SAP_ZPABD_Z005 AS ISSUEDATE,D_SAP_ZPABD_Z003 AS ECNTITLE,D_SAP_ZPABD_Z002 AS ECNMODEL ,D_SAP_ZPABD_Z027 AS ECNDETAIL,D_SAP_ZPABD_Z025 AS AMOUT,D_SAP_ZPABD_Z012 AS mReason,D_SAP_ZPABD_Z013 AS sReason,[D_SAP_ZPABD_Z004] AS Flag  FROM [dbo].[ProSapEngChanges] " +
                 //                "LEFT JOIN  [dbo].[Ec_s] ON REPLACE(Ec_no,' ','')=D_SAP_ZPABD_Z001 " +
                 //                " WHERE REPLACE(Ec_no,' ','') IS NULL  AND D_SAP_ZPABD_Z001='" + ItemMaster + "' " +
@@ -68,7 +59,6 @@ namespace Fine.Lf_Admin
                         select new
                         {
                             a.OperateNotes,
-
                         };
                 var qs = q.Select(a => new
                 {
@@ -77,7 +67,6 @@ namespace Fine.Lf_Admin
                 if (qs.Any())
                 {
                     OperateNotes.Text = qs[0].OperateNotes;//发行日期
-
                 }
             }
             catch (ArgumentNullException Message)
@@ -91,10 +80,9 @@ namespace Fine.Lf_Admin
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
-        #endregion
 
+        #endregion Events
     }
 }

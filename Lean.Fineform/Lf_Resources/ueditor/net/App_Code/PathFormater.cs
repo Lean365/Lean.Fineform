@@ -1,10 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 /// <summary>
 /// PathFormater 的摘要说明
@@ -25,7 +21,7 @@ public static class PathFormatter
         string filename = Path.GetFileNameWithoutExtension(originFileName);
 
         pathFormat = pathFormat.Replace("{filename}", filename);
-        pathFormat = new Regex(@"\{rand(\:?)(\d+)\}", RegexOptions.Compiled).Replace(pathFormat, new MatchEvaluator(delegate(Match match)
+        pathFormat = new Regex(@"\{rand(\:?)(\d+)\}", RegexOptions.Compiled).Replace(pathFormat, new MatchEvaluator(delegate (Match match)
         {
             var digit = 6;
             if (match.Groups.Count > 2)

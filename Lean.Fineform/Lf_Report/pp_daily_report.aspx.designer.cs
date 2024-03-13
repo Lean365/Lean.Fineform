@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
 
 
-    public partial class Pp_daily_report
+    public partial class pp_daily_report
     {
 
         /// <summary>

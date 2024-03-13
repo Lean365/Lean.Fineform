@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.Security;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
+using System;
 using System.Collections;
-using System.Data.Entity.Validation;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Security;
+using System.Web.UI.WebControls;
 
-
-namespace Fine
+namespace LeanFine
 {
     public partial class main : PageBase
     {
@@ -32,27 +27,25 @@ namespace Fine
                     case "日程":
                         menuItem.Text = global::Resources.GlobalResource.sys_Help_Calendar;
                         break;
+
                     case "科学计算器":
                         menuItem.Text = global::Resources.GlobalResource.sys_Help_Calculator;
                         break;
+
                     case "系统帮助":
                         menuItem.Text = global::Resources.GlobalResource.sys_Help_Manual;
                         break;
-
                 }
                 menuItem.Icon = IconHelper.String2Icon(jo.Value<string>("Icon"), true);
                 menuItem.OnClientClick = String.Format("addExampleTab('{0}','{1}','{2}')", jo.Value<string>("ID"), ResolveUrl(jo.Value<string>("URL")), jo.Value<string>("Text"));
 
                 btnHelp.Menu.Items.Add(menuItem);
-
             }
 
             // 用户可见的菜单列表
             List<Adm_Menu> menus = ResolveUserMenuList();
             if (menus == null)
             {
-
-
                 Response.Write(global::Resources.GlobalResource.sys_Msg_PowerAuth_Error);
                 Response.End();
 
@@ -66,8 +59,6 @@ namespace Fine
 
                 return;
             }
-
-
 
             //// 注册客户端脚本，服务器端控件ID和客户端ID的映射关系
             //JObject ids = GetClientIDS(regionPanel, topPanel, mainTabStrip);
@@ -119,7 +110,6 @@ namespace Fine
             accordionMenu.ShowHeader = false;
             leftPanel.Items.Add(accordionMenu);
 
-
             foreach (var menu in menus.Where(m => m.Parent == null))
             {
                 AccordionPane accordionPane = new AccordionPane();
@@ -141,13 +131,12 @@ namespace Fine
                     accordionPane.Items.Add(innerTree);
                     accordionMenu.Items.Add(accordionPane);
                 }
-
             }
 
             return accordionMenu;
         }
 
-        #endregion
+        #endregion InitAccordionMenu
 
         #region InitTreeMenu
 
@@ -207,38 +196,37 @@ namespace Fine
                         node.Text = global::Resources.GlobalResource.menu_Work_Log; break;
                     case "公司部门":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Dpets; break;
-                    case "公司信息": 
+                    case "公司信息":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Company; break;
 
                     case "公司目标":
                         node.Text = global::Resources.GlobalResource.menu_Adm_Target; break;
-                    case "部门管理": 
+                    case "部门管理":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Dept; break;
-                    case "部门用户": 
+                    case "部门用户":
                         node.Text = global::Resources.GlobalResource.menu_Sys_DeptUser; break;
-                    case "职称管理": 
+                    case "职称管理":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Title; break;
-                    case "职称用户": 
+                    case "职称用户":
                         node.Text = global::Resources.GlobalResource.menu_Sys_TitleUser; break;
-                    case "用户角色权限": 
+                    case "用户角色权限":
                         node.Text = global::Resources.GlobalResource.menu_Sys_UserRolePower; break;
-                    case "用户管理": 
+                    case "用户管理":
                         node.Text = global::Resources.GlobalResource.menu_Sys_User; break;
-                    case "密码修改": 
+                    case "密码修改":
                         node.Text = global::Resources.GlobalResource.menu_Sys_ChangePassword; break;
                     case "角色管理":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Role; break;
-                    case "角色用户": 
+                    case "角色用户":
                         node.Text = global::Resources.GlobalResource.menu_Sys_RoleUser; break;
                     case "权限管理":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Power; break;
-                    case "角色权限": 
+                    case "角色权限":
                         node.Text = global::Resources.GlobalResource.menu_Sys_PowerRole; break;
                     case "批量更新":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Update; break;
-                        
 
-                    case "流程管理": 
+                    case "流程管理":
                         node.Text = global::Resources.GlobalResource.menu_BPM_MGT; break;
                     case "待办事项":
                         node.Text = global::Resources.GlobalResource.menu_BPM_Todo; break;
@@ -301,7 +289,7 @@ namespace Fine
 
                     case "物料管理":
                         node.Text = global::Resources.GlobalResource.menu_Mm_MGT; break;
-                    case "物料": 
+                    case "物料":
                         node.Text = global::Resources.GlobalResource.menu_Mm_Master; break;
                     case "机种":
                         node.Text = global::Resources.GlobalResource.menu_Mm_ModelRegion; break;
@@ -319,7 +307,7 @@ namespace Fine
                     case "机种仕向": node.Text = global::Resources.GlobalResource.menu_Mm_ModelRegion; break;
                     case "原因类别": node.Text = global::Resources.GlobalResource.menu_Pp_ReasonType; break;
                     case "停线类别": node.Text = global::Resources.GlobalResource.menu_Pp_LineStopType; break;
-                    case "不具合类别": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_Type; break;
+                    case "不具合类别": node.Text = global::Resources.GlobalResource.menu_pp_defect_Type; break;
                     case "检验类别": node.Text = global::Resources.GlobalResource.menu_Qm_InspectionType; break;
                     case "验收类别": node.Text = global::Resources.GlobalResource.menu_Qm_AcceptanceType; break;
                     case "运输方式": node.Text = global::Resources.GlobalResource.menu_Sd_TransportationMethods; break;
@@ -342,7 +330,7 @@ namespace Fine
                     case "设变查询": node.Text = global::Resources.GlobalResource.menu_Pp_Ec_Query; break;
 
                     case "追溯": node.Text = global::Resources.GlobalResource.menu_Pp_Tracking; break;
-                    case "批次追溯": node.Text = global::Resources.GlobalResource.menu_Pp_Tracking_Lot; break;
+                    case "批次追溯": node.Text = global::Resources.GlobalResource.menu_pp_tracking_lot; break;
                     case "标准工程": node.Text = global::Resources.GlobalResource.menu_Pp_Tracking_Process; break;
 
                     case "分析图表": node.Text = global::Resources.GlobalResource.menu_Rpt_pptackingcharts; break;
@@ -359,10 +347,10 @@ namespace Fine
                     case "制一不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Defect; break;
                     case "制二不良": node.Text = global::Resources.GlobalResource.menu_Pp_P2d_Defect; break;
                     case "工程检查": node.Text = global::Resources.GlobalResource.menu_Pp_Inspection; break;
-                    case "生产不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_Production; break;
-                    case "工单统计": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_MOStatistics; break;
-                    case "LOT集计": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_LotStatistics; break;
-                    case "不具合查询": node.Text = global::Resources.GlobalResource.menu_Pp_Defect_Query; break;
+                    case "生产不良": node.Text = global::Resources.GlobalResource.menu_pp_defect_Production; break;
+                    case "工单统计": node.Text = global::Resources.GlobalResource.menu_pp_defect_MOStatistics; break;
+                    case "LOT集计": node.Text = global::Resources.GlobalResource.menu_pp_defect_LotStatistics; break;
+                    case "不具合查询": node.Text = global::Resources.GlobalResource.menu_pp_defect_Query; break;
 
                     case "工数": node.Text = global::Resources.GlobalResource.menu_Pp_Times; break;
                     case "工数查询": node.Text = global::Resources.GlobalResource.menu_Pp_Times_Query; break;
@@ -378,26 +366,25 @@ namespace Fine
                     case "合格率报表": node.Text = global::Resources.GlobalResource.menu_Qm_FQC_PassReport; break;
                     case "检验查询": node.Text = global::Resources.GlobalResource.menu_Qm_FQC_Query; break;
 
-                    case "成本": 
+                    case "成本":
                         node.Text = global::Resources.GlobalResource.menu_Qm_QC_Cost; break;
-                    case "改修对应": 
+                    case "改修对应":
                         node.Text = global::Resources.GlobalResource.menu_Qm_QC_Rework; break;
-                    case "品质业务": 
+                    case "品质业务":
                         node.Text = global::Resources.GlobalResource.menu_Qm_QC_Operation; break;
-                    case "废弃事故": 
+                    case "废弃事故":
                         node.Text = global::Resources.GlobalResource.menu_Qm_QC_Waste; break;
                     case "直接工资率":
                         node.Text = global::Resources.GlobalResource.menu_Qm_QC_Wages; break;
-                    case "客诉": 
+                    case "客诉":
                         node.Text = global::Resources.GlobalResource.menu_Qm_ComplaintMGT; break;
                     case "客诉信息":
                         node.Text = global::Resources.GlobalResource.menu_Qm_Complaint; break;
 
-
-                    case "品质图表": 
+                    case "品质图表":
                         node.Text = global::Resources.GlobalResource.menu_Rpt_qmcharts; break;
 
-                    case "销售管理": 
+                    case "销售管理":
                         node.Text = global::Resources.GlobalResource.menu_Sd_MGT; break;
                     case "销售数据":
                         node.Text = global::Resources.GlobalResource.menu_Sd_SlaesData; break;
@@ -441,11 +428,6 @@ namespace Fine
                     case "电脑课": node.Text = global::Resources.GlobalResource.co_Dept_IT; break;
                     case "OEM": node.Text = global::Resources.GlobalResource.co_Dept_OEM; break;
 
-
-
-
-
-
                     default:
                         break;
                 }
@@ -482,13 +464,12 @@ namespace Fine
                         count--;
                     }
                 }
-
             }
 
             return count;
         }
 
-        #endregion
+        #endregion InitTreeMenu
 
         #region ResolveUserMenuList
 
@@ -517,12 +498,11 @@ namespace Fine
             {
                 return null;
             }
-
         }
 
-        #endregion
+        #endregion ResolveUserMenuList
 
-        #endregion
+        #endregion Page_Init
 
         #region Page_Load
 
@@ -539,22 +519,18 @@ namespace Fine
 
         private void LoadData()
         {
-
-
             string uid = GetIdentityName();
             string uname = "";
-            var q =(from a in DB.Adm_Users
-                    where a.Name.CompareTo(uid)==0
-                    select a).ToList();
-            if(q.Any())
+            var q = (from a in DB.Adm_Users
+                     where a.Name.CompareTo(uid) == 0
+                     select a).ToList();
+            if (q.Any())
             {
                 uname = q[0].ChineseName;
             }
             string uip = NetHelper.GetIP4Address();
 
             this.txtUName.Text = "Welcome:" + uname + "[" + uip + "] Online:" + GetOnlineCount();
-
-
 
             this.txtDtime.Text = DateTime.Now.ToString();
             var qc = (from a in DB.Adm_Institutions
@@ -564,33 +540,29 @@ namespace Fine
                       {
                           a.FullName,
                           a.Slogan,
-
                       }).ToList();
             if (qc.Any())
             {
                 this.txtCrght.Text = "CopyRight© 2015-" + DateTime.Now.ToString("yyyy") + qc[0].FullName;
                 linkSlogantext.Text = qc[0].Slogan;
-
             }
-
 
             System.Web.UI.WebControls.Label link = topPanel.FindControl("linkSystemTitle") as System.Web.UI.WebControls.Label;
             if (link != null)
             {
-                link.Text = String.Format(" v{0}", GetProductVersion());// ConfigHelper.Title;
-
+                //System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()
+                link.Text = String.Format(" v{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());// ConfigHelper.Title;
             }
 
             //linkSystemTitle.Text = String.Format("OneCube v{0}", GetProductVersion());
 
-
             btnUserName.Text = uname;
         }
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         /// <summary>
         /// 退出系统
         /// </summary>
@@ -600,7 +572,6 @@ namespace Fine
         {
             try
             {
-
                 Hashtable hOnline = (Hashtable)Application["Online"];
                 if (hOnline != null)
                 {
@@ -628,15 +599,10 @@ namespace Fine
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
         }
 
-
-
-
-        #endregion
+        #endregion Events
 
         protected void Timer1_Tick(object sender, EventArgs e)
         {

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="outbound_query.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.shipment.outbound_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="outbound_query.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.SD.shipment.outbound_query" %>
 
 <!DOCTYPE html>
 

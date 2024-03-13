@@ -1,10 +1,12 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
+
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.QM.cost
+
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
     public partial class wagerate_new : PageBase
     {
@@ -20,7 +22,8 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 return "CoreWagesNew";
             }
         }
-        #endregion
+
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -28,9 +31,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -41,21 +42,19 @@ namespace Fine.Lf_Manufacturing.QM.cost
             this.Qcsd001.SelectedDate = DateTime.Now;
             this.Qcsd002.Text = "C100";
             this.Qcsd003.Text = "CNY";
-            this.Qcsdrec.Text= GetIdentityName();
+            this.Qcsdrec.Text = GetIdentityName();
             this.Qcsd005.Text = "21.75";
             // 初始化用户
             //InitNoticeUser();
 
             // 初始化用户所属部门
             //InitNoticeDept();
-
         }
 
-        #region BindData
-        #endregion
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
@@ -106,12 +105,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             //}
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -125,7 +122,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -134,7 +130,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
             //string InputData = LC001.Text.Trim();
-
 
             //proSalesdata Redata = DB.proSalesdatas.Where(u => u.Qcsd001 == InputData).FirstOrDefault();
 
@@ -145,7 +140,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //}
 
             string InputData = Qcsd001.SelectedDate.Value.ToString("yyyyMM").Trim();
-
 
             Qm_Wagerate Redata = DB.Qm_Wagerates.Where(u => u.Qcsd001 == InputData).FirstOrDefault();
 
@@ -158,13 +152,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             {
                 SaveItem();
             }
-
-
         }
+
         private void SaveItem()//新增质量控制数据
         {
-
-
             Qm_Wagerate item = new Qm_Wagerate();
             item.Qcsd001 = Qcsd001.SelectedDate.Value.ToString("yyyyMM");
             item.Qcsd002 = Qcsd002.Text;
@@ -182,13 +173,13 @@ namespace Fine.Lf_Manufacturing.QM.cost
             item.Qcsdrec = Qcsdrec.Text;
             item.GUID = Guid.NewGuid();// Qcsdguid.Text;
             item.Creator = GetIdentityName();
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             DB.Qm_Wagerates.Add(item);
             DB.SaveChanges();
 
             //新增日志
             string Newtext = Qcsd001.Text + "," + Qcsd002.Text + "," + Qcsd003.Text + "," + Qcsd004.Text + "," + Qcsd005.Text + "," + Qcsd006.Text + "," + Qcsd007.Text + "," + Qcsd008.Text + "," + Qcsd009.Text + "," + Qcsd010.Text + "," + Qcsd011.Text + "," + Qcsd012.Text + "," + Qcsd013.Text;
-            string OperateType ="新增";
+            string OperateType = "新增";
             string OperateNotes = "Add* " + Newtext + " *Add 的记录已新增";
 
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "工资率数据新增", OperateNotes);
@@ -198,10 +189,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             CheckData();
 
-
-
-
-
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
@@ -209,34 +196,33 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             if (Qcsd005.Text != "" && Qcsd007.Text != "" && Qcsd008.Text != "" && Qcsd009.Text != "" && Qcsd005.Text != "0" && Qcsd007.Text != "0" && Qcsd008.Text != "0" && Qcsd009.Text != "0")
             {
-
                 decimal attime = decimal.Parse(this.Qcsd005.Text) * 480 * decimal.Parse(this.Qcsd007.Text);
                 decimal overtime = 0;
                 this.Qcsd006.Text = Convert.ToDecimal(decimal.Parse(this.Qcsd009.Text) / (attime + overtime) * 2).ToString("0.00");
             }
         }
+
         public void dQcsd010()
         {
             if (Qcsd005.Text != "" && Qcsd011.Text != "" && Qcsd012.Text != "" && Qcsd013.Text != "" && Qcsd005.Text != "0" && Qcsd011.Text != "0" && Qcsd012.Text != "0" && Qcsd013.Text != "0")
             {
-
                 decimal attime = decimal.Parse(this.Qcsd005.Text) * 480 * decimal.Parse(this.Qcsd011.Text);
                 decimal overtime = 0;
                 this.Qcsd010.Text = Convert.ToDecimal(decimal.Parse(this.Qcsd013.Text) / (attime + overtime) * 3).ToString("0.00");
-
             }
         }
-
 
         protected void Qcsd007_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
         }
+
         protected void Qcsd005_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
             dQcsd010();
         }
+
         protected void Qcsd008_TextChanged(object sender, EventArgs e)
         {
             dQcsd006();
@@ -250,7 +236,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         protected void Qcsd011_TextChanged(object sender, EventArgs e)
         {
             dQcsd010();
-
         }
 
         protected void Qcsd012_TextChanged(object sender, EventArgs e)
@@ -263,8 +248,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             dQcsd010();
         }
 
-        #endregion
-
-
+        #endregion Events
     }
 }

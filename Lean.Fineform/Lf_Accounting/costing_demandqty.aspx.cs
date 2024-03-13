@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.SD;
+using System;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using Fine.Lf_Business.Models.PP;
-using Fine.Lf_Business.Models.OA;
-using Fine.Lf_Business.Models.MM;
-using Fine.Lf_Business.Models.FICO;
-using Fine.Lf_Business.Models.QM;
-using Fine.Lf_Business.Models.SD;
-namespace Fine.Lf_Accounting
+
+namespace LeanFine.Lf_Accounting
 {
     public partial class costing_demandqty : PageBase
     {
@@ -28,8 +20,10 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         #region Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -37,6 +31,7 @@ namespace Fine.Lf_Accounting
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 每页记录数
@@ -46,8 +41,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -55,23 +48,18 @@ namespace Fine.Lf_Accounting
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
-
         }
 
         private void BindGrid()
         {
             IQueryable<Sd_Mrp> q = DB.Sd_Mrps; //.Include(u => u.Dept);
 
-
             //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
-
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
-
 
             if (!string.IsNullOrEmpty(edate))
             {
@@ -79,7 +67,6 @@ namespace Fine.Lf_Accounting
             }
 
             //q = q.Where(u => u.Bc_MaterialType.CompareTo("FERT") == 0);
-
 
             // q = q.Where(u => u.Promodel != "0");
             //if (GetIdentityName() != "admin")
@@ -103,8 +90,11 @@ namespace Fine.Lf_Accounting
             Grid1.DataBind();
             //ttbSearchMessage.Text = "";
         }
-        #endregion
+
+        #endregion Load
+
         #region Event
+
         //protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         //{
         //    Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -123,6 +113,7 @@ namespace Fine.Lf_Accounting
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -136,15 +127,17 @@ namespace Fine.Lf_Accounting
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
 
-        #endregion
+        #endregion Event
 
         #region Export
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -176,9 +169,8 @@ namespace Fine.Lf_Accounting
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
         }
-        #endregion
-    }
 
+        #endregion Export
+    }
 }

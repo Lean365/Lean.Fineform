@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Linq;
 
-namespace Fine.Lf_Manufacturing.EC.dept
+namespace LeanFine.Lf_Manufacturing.EC.dept
 {
     public partial class sap_footer : PageBase
     {
@@ -32,9 +20,10 @@ namespace Fine.Lf_Manufacturing.EC.dept
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, myrexname, xlsname;
         public static DataTable table;
         //
@@ -61,7 +50,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
             //CheckPowerWithButton("CoreKitOutput", BtnExport);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -77,26 +65,20 @@ namespace Fine.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = ttbSearchMessage.Text.Trim();
-
-
-
 
                 var q =
                         (from a in DB.Pp_SapEcnSubs
-                             join b in DB.Pp_SapEcns on a.D_SAP_ZPABD_S001 equals b.D_SAP_ZPABD_Z001
+                         join b in DB.Pp_SapEcns on a.D_SAP_ZPABD_S001 equals b.D_SAP_ZPABD_Z001
                          //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                          //where b.Ec_distinction == 1
-                         where a.isDelete == 0
+                         where a.isDeleted == 0
 
                          select new
                          {
@@ -119,7 +101,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
                              a.D_SAP_ZPABD_S017,
                              b.D_SAP_ZPABD_Z002,
                              b.D_SAP_ZPABD_Z005,
-
                          });
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -128,7 +109,7 @@ namespace Fine.Lf_Manufacturing.EC.dept
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    q = q.Where(u => u.D_SAP_ZPABD_S001.Contains(searchText) || u.D_SAP_ZPABD_S002.Contains(searchText) || u.D_SAP_ZPABD_S003.Contains(searchText) || u.D_SAP_ZPABD_S004.Contains(searchText) || u.D_SAP_ZPABD_S008.Contains(searchText)|| u.D_SAP_ZPABD_Z002.Contains(searchText)|| u.D_SAP_ZPABD_Z005.Contains(searchText) );
+                    q = q.Where(u => u.D_SAP_ZPABD_S001.Contains(searchText) || u.D_SAP_ZPABD_S002.Contains(searchText) || u.D_SAP_ZPABD_S003.Contains(searchText) || u.D_SAP_ZPABD_S004.Contains(searchText) || u.D_SAP_ZPABD_S008.Contains(searchText) || u.D_SAP_ZPABD_Z002.Contains(searchText) || u.D_SAP_ZPABD_Z005.Contains(searchText));
                 }
                 else
                 {
@@ -140,7 +121,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
                     {
                         q = q.Where(u => u.D_SAP_ZPABD_Z005.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(a =>
@@ -165,8 +145,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
                     a.D_SAP_ZPABD_S017,
                     a.D_SAP_ZPABD_Z002,
                     a.D_SAP_ZPABD_Z005,
-
-
                 }).Distinct();
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -184,8 +162,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
 
                     Grid1.DataSource = table;
                     Grid1.DataBind();
-
-
                 }
                 else
                 {
@@ -204,9 +180,9 @@ namespace Fine.Lf_Manufacturing.EC.dept
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             ttbSearchMessage.Text = "";
@@ -219,7 +195,7 @@ namespace Fine.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -236,8 +212,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -250,70 +224,59 @@ namespace Fine.Lf_Manufacturing.EC.dept
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
             DataRowView row = e.DataItem as DataRowView;
             if (row != null)
             {
                 //if (e.Values[3].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[3] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[3]);
                 //}
                 //if (e.Values[4].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[4] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[4]);
                 //}
                 //if (e.Values[5].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[5] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[5]);
                 //}
                 //if (e.Values[6].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[6] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[6]);
                 //}
                 //if (e.Values[7].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[7] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[7]);
                 //}
                 //if (e.Values[8].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[8] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[8]);
                 //}
                 //if (e.Values[9].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[9] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[9]);
                 //}
                 //if (e.Values[10].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[10] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[10]);
                 //}
                 //if (e.Values[11].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[11] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[11]);
                 //}
                 //if (e.Values[12].ToString() == "◎未处理")
                 //{
-
                 //    e.Values[12] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[12]);
                 //}
             }
-
         }
+
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -324,7 +287,6 @@ namespace Fine.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -332,11 +294,12 @@ namespace Fine.Lf_Manufacturing.EC.dept
             BindGrid();
         }
 
-        #endregion
+        #endregion Events
+
         #region ExportExcel
+
         protected void BtnExport_Click(object sender, EventArgs e)
         {
-
             // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
             {
@@ -353,16 +316,8 @@ namespace Fine.Lf_Manufacturing.EC.dept
             Grid1.AllowPaging = false;
             ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
             Grid1.AllowPaging = true;
-
         }
 
-
-
-
-
-
-
-
-        #endregion
+        #endregion ExportExcel
     }
 }

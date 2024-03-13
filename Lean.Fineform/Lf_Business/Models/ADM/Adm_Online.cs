@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fine
+namespace LeanFine
 {
     public class Adm_Online : IKeyID
     {
@@ -21,9 +17,6 @@ namespace Fine
 
         public int LoginNum { get; set; }
 
-
         public virtual Adm_User User { get; set; }
-
-
     }
 }

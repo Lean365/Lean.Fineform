@@ -1,48 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Sd_fybujp 的摘要说明
+    /// sd_fybujp 的摘要说明
     /// </summary>
-    public class Sd_fybujp : IHttpHandler
+    public class sd_fybujp : IHttpHandler
     {
-
         //映射
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
+
         public void ProcessRequest(HttpContext context)
         {
             string atedate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
             //获取一同发送过来的参数
-            //string sdate = atedate;           
+            //string sdate = atedate;
 
             context.Response.ContentType = "text/plain";
 
             var q_fy = (from a in DBCharts.Fico_Periods
-                       where a.Btfm == atedate
-                       select a).ToList();
+                        where a.Btfm == atedate
+                        select a).ToList();
             if (q_fy.Any())
             {
-                string sdate=q_fy[0].Btfy.ToString();
+                string sdate = q_fy[0].Btfy.ToString();
 
-                var q_salesData = (from a in DBCharts.Fico_Costing_SalesInvoices
-                                       where a.Bc_FY.Contains(sdate)
+                var q_salesData = (from a in DBCharts.Fico_Costing_Sales_Billings
+                                   where a.Bc_FY.Contains(sdate)
                                    orderby a.Bc_FY descending
                                    select a).ToList(); //.Include(u => u.Dept);
 
@@ -54,14 +47,12 @@ namespace Fine.Lf_Report
                                   Bu = g.Key.Bc_ProfitCenter,
                                   //Qty = g.Sum(a => a.Bc_SalesQty),
                                   Amout = g.Sum(a => a.Bc_BusinessAmount),
-
                               };
 
                 var qss = (from a in q_Merge
 
                            select new
                            {
-                               
                                Bu = (a.Bu.Contains("2U20") ? "PA" : (a.Bu.Contains("3U10") ? "PRO" : (a.Bu.Contains("3U20") ? "MI" : (a.Bu.Contains("4U30") ? "BS" : (a.Bu.Contains("ODBU") ? "OD" : (a.Bu.Contains("2U10") ? "ESO" : (a.Bu.Contains("4U10") ? "VS" : a.Bu))))))),
                                a.Amout,
                            }).ToList();
@@ -81,10 +72,6 @@ namespace Fine.Lf_Report
             }
         }
 
-
-
-
-
         public bool IsReusable
         {
             get
@@ -92,6 +79,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
     }
 }

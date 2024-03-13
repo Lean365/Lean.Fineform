@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
 using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
-
     public partial class company_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -34,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,9 +30,7 @@ namespace Fine.Lf_Admin
         {
             if (!IsPostBack)
             {
-
                 LoadData();
-
             }
         }
 
@@ -59,10 +45,7 @@ namespace Fine.Lf_Admin
 
             // 初始化用户所属部门
             //InitNoticeDept();
-
         }
-
-
 
         private void BindData()
         {
@@ -99,14 +82,13 @@ namespace Fine.Lf_Admin
             TxtentAddress_cn.Text = current.Address;
             TxtentAddress_en.Text = current.EnAddress;
             TXTentWebUrl.Text = current.WebAddress;
-           DPKentFoundedTime.SelectedDate = current.FoundedTime;
+            DPKentFoundedTime.SelectedDate = current.FoundedTime;
             TXTentBusinessScope.Text = current.BusinessScope;
             NUMSortCode.Text = current.SortCode.ToString();
 
             TXTentSlogan_cn.Text = current.Slogan;
             TXTentSlogan_en.Text = current.EnSlogan;
             TXTentSlogan_ja.Text = current.JpSlogan;
-
 
             //DPKentFoundedTime.SelectedDate =  DateTime.ParseExact(current.entFoundedTime.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
             //TXTentabbrName.Text = current.entBusinessScope;
@@ -118,11 +100,8 @@ namespace Fine.Lf_Admin
             //TXTentTarget_en.Text = current.entTarget_en;
             //TXTentTarget_ja.Text = current.entTarget_ja;
 
-
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -141,12 +120,9 @@ namespace Fine.Lf_Admin
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "机构管理", "机构信息修改", OperateNotes);
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
@@ -184,10 +160,10 @@ namespace Fine.Lf_Admin
             item.EnSlogan = TXTentSlogan_en.Text;
             item.JpSlogan = TXTentSlogan_ja.Text;
 
-            item.isDelete = 0;
+            item.isDeleted = 0;
             item.isEnabled = 0;
             item.Remark = "";
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Adm_Institutions.Add(item);
             DB.SaveChanges();
@@ -197,9 +173,8 @@ namespace Fine.Lf_Admin
             string OperateType = "修改";
             string OperateNotes = "New* " + Contectext + " New* 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "机构管理", "机构信息修改", OperateNotes);
-
-
         }
+
         private void CheckData()
         {
             ValidatorTools.IsTelePhoneNumber(TXTentOuterPhone.Text);
@@ -213,7 +188,6 @@ namespace Fine.Lf_Admin
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.linename;
 
-
             //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
             //    Alert alert = new Alert();
@@ -226,7 +200,6 @@ namespace Fine.Lf_Admin
             //判断重复
             string InputData = TXTentabbrName.Text.Trim();
 
-
             Adm_Institution redata = DB.Adm_Institutions.Where(u => u.EnName == InputData).FirstOrDefault();
 
             if (redata != null)
@@ -235,6 +208,7 @@ namespace Fine.Lf_Admin
                 return;
             }
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -275,15 +249,7 @@ namespace Fine.Lf_Admin
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

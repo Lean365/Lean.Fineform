@@ -1,11 +1,12 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.PP.poor
+
+namespace LeanFine.Lf_Manufacturing.PP.poor
 {
     public partial class p2d_defect_query : PageBase
     {
@@ -22,9 +23,10 @@ namespace Fine.Lf_Manufacturing.PP.poor
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string tracestr;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -58,12 +60,10 @@ namespace Fine.Lf_Manufacturing.PP.poor
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
             //本月第一天
             DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
             DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
-
 
             // 每页记录数
             //Grid1.PageSize = 1000;
@@ -74,10 +74,7 @@ namespace Fine.Lf_Manufacturing.PP.poor
             ddlGridPageSize.SelectedValue = "5000";
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -128,7 +125,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
 
-
             if (!string.IsNullOrEmpty(sdate))
             {
                 q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
@@ -141,10 +137,10 @@ namespace Fine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             var qs = from a in q
                      select a;
 
@@ -169,12 +165,11 @@ namespace Fine.Lf_Manufacturing.PP.poor
             Grid1.DataSource = q;
             Grid1.DataBind();
 
-
             // 当前页的合计
             OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -207,8 +202,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -226,7 +219,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -243,20 +235,13 @@ namespace Fine.Lf_Manufacturing.PP.poor
         //    DB.proOutputsubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.proOutputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
 
-
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
-
-
             //if (e.CommandName == "PrintDefect")
             //{
             //    //ID,Prodate,Prolot
@@ -264,7 +249,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
             //    if (DDLmodel.SelectedIndex != -1 && DDLmodel.SelectedIndex != 0)
             //    {
-
             //        tracestr = DDLmodel.SelectedItem.Text;
 
             //        //labResult.Text = keys[0].ToString();
@@ -289,7 +273,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -297,17 +280,12 @@ namespace Fine.Lf_Manufacturing.PP.poor
             BindGrid();
         }
 
-
-
-
-        #endregion
-
+        #endregion Events
 
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
@@ -316,19 +294,18 @@ namespace Fine.Lf_Manufacturing.PP.poor
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void DDLDept_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
-
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
-
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
             Decimal ratio = 0.0m;
@@ -340,7 +317,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                 ratio = rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -349,7 +325,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
             summary.Add("Probadtotal", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -370,11 +345,9 @@ namespace Fine.Lf_Manufacturing.PP.poor
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
-
             //IQueryable<proDefect> q = DB.proDefects; //.Include(u => u.Dept);
 
             //// 在用户名称中搜索
-
 
             //if (DDLmodel.SelectedIndex != 0 && DDLmodel.SelectedIndex != -1)
             //{
@@ -412,6 +385,7 @@ namespace Fine.Lf_Manufacturing.PP.poor
         {
             GridtoExcel();
         }
+
         private void GridtoExcel()
         {
             // 在操作之前进行权限检查
@@ -444,7 +418,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                  p.Prolot,
                  p.Promodel,
                  Prodate = p.Prodate.Substring(0, 6),
-
              }
             into g
              select new
@@ -452,11 +425,7 @@ namespace Fine.Lf_Manufacturing.PP.poor
                  Prodate = g.Key.Prodate,
                  g.Key.Prolot,
                  g.Key.Promodel,
-
              });
-
-
-
 
             //qs.Count();
 
@@ -464,13 +433,10 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
             // 在用户名称中搜索
 
-
-
-
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
             //else
             //{
@@ -481,24 +447,16 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
             //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
 
-
-
-
-
-
             var qs = q.Select(E => new
             {
                 E.Prolot,
                 E.Promodel,
                 E.Prodate,
-
             }).Distinct().AsQueryable();
-
 
             ma = ConvertHelper.LinqConvertToDataTable(qs);
             if (q.Any())
             {
-
                 for (int i = 0; i < ma.Rows.Count; i++)
                 {
                     string strPlot = "";
@@ -509,7 +467,7 @@ namespace Fine.Lf_Manufacturing.PP.poor
                     strPdate = ma.Rows[i][2].ToString();
                     var q2 =
                             from p in DB.Pp_P1d_Defects
-                             .Where(s => s.isDelete == 0)
+                             .Where(s => s.isDeleted == 0)
                             //.Where(s => s.Prodate.Contains(dd))
                             //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDPstart) >= 0)
                             .Where(s => s.Prodate.Substring(0, 6).CompareTo(strPdate) == 0)
@@ -531,7 +489,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
                                 p.Probadqty,
                             };
 
-
                     //IEnumerable 转换IQueryable//AsEnumerable//AsQueryable
                     var qsub = from p in q2
                              .OrderBy(s => s.Prongdept)
@@ -551,9 +508,7 @@ namespace Fine.Lf_Manufacturing.PP.poor
 
                     ex.TableName = strPlot + "_" + i;
 
-
                     tables.Add(ex);
-
                 }
                 ExportHelper.TableListToExcel(tables, ma, ExportFileName, 6);
             }
@@ -562,10 +517,6 @@ namespace Fine.Lf_Manufacturing.PP.poor
             {
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
-
-
-
-
         }
     }
 }

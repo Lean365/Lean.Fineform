@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.SD
+namespace LeanFine.Lf_Manufacturing.SD
 {
 
 

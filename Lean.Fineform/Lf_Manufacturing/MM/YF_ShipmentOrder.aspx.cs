@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Linq;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
     public partial class YF_ShipmentOrder : PageBase
     {
@@ -32,9 +20,10 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         //
 
         protected void Page_Load(object sender, EventArgs e)
@@ -64,7 +53,6 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
             //CheckPowerWithButton("CoreKitOutput", BtnExport);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -81,50 +69,45 @@ namespace Fine.Lf_Manufacturing.MM
             //BindGridH();
         }
 
-
-
         private void BindGridC()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYFdta = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
                 var q = from ta in DBYFdta.EPSTA
-                             join tb in DBYFdta.EPSTB on new
-                             { TA001 = ta.TA001, TA002 = ta.TA002 }
-                             equals new
-                             { TA001 = tb.TB001, TA002 = tb.TB002 }
-                             join th in DBYFdta.COPTH on new
-                             { TB021 = tb.TB021, TB022 = tb.TB022, TB023 = tb.TB023 }
-                                equals new
-                                { TB021 = th.TH001, TB022 = th.TH002, TB023 = th.TH003 }
+                        join tb in DBYFdta.EPSTB on new
+                        { TA001 = ta.TA001, TA002 = ta.TA002 }
+                        equals new
+                        { TA001 = tb.TB001, TA002 = tb.TB002 }
+                        join th in DBYFdta.COPTH on new
+                        { TB021 = tb.TB021, TB022 = tb.TB022, TB023 = tb.TB023 }
+                           equals new
+                           { TB021 = th.TH001, TB022 = th.TH002, TB023 = th.TH003 }
 
-                             select new
-                             {
-                                 ta.TA001,//通知单别
-                                 ta.TA002,//通知单号
-                                 tb.TB003,//通知序号
-                                 ta.TA053,//出货日期
-                                 ta.TA008,//送货客户
-                                 ta.TA042,//发票号码
-                                 tb.TB004,//订单别
-                                 tb.TB005,//订单号
-                                 tb.TB006,//订单序号
-                                 tb.TB007,//物料
-                                 tb.TB009,//数量
-                                 th.TH012,//单价
-                                 th.TH013,//金额
-                                 tb.TB021,
-                                 tb.TB022,
-                                 tb.TB023,
-
-                             };
-
+                        select new
+                        {
+                            ta.TA001,//通知单别
+                            ta.TA002,//通知单号
+                            tb.TB003,//通知序号
+                            ta.TA053,//出货日期
+                            ta.TA008,//送货客户
+                            ta.TA042,//发票号码
+                            tb.TB004,//订单别
+                            tb.TB005,//订单号
+                            tb.TB006,//订单序号
+                            tb.TB007,//物料
+                            tb.TB009,//数量
+                            th.TH012,//单价
+                            th.TH013,//金额
+                            tb.TB021,
+                            tb.TB022,
+                            tb.TB023,
+                        };
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -145,7 +128,6 @@ namespace Fine.Lf_Manufacturing.MM
                     {
                         q = q.Where(u => u.TA053.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(E =>
@@ -162,7 +144,6 @@ namespace Fine.Lf_Manufacturing.MM
                     E.TB009,
                     E.TH012,
                     E.TH013,
-
                 }).Distinct();
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -180,8 +161,6 @@ namespace Fine.Lf_Manufacturing.MM
 
                     Grid2.DataSource = table;
                     Grid2.DataBind();
-
-
                 }
                 else
                 {
@@ -200,9 +179,9 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void C_DPstart_TextChanged(object sender, EventArgs e)
         {
             if (C_DPstart.SelectedDate.HasValue)
@@ -220,16 +199,16 @@ namespace Fine.Lf_Manufacturing.MM
                 BindGridC();
             }
         }
+
         private void BindGridH()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+                Lf_Business.Models.YF.Yifei_TAC_Entities DBYFtac = new Lf_Business.Models.YF.Yifei_TAC_Entities();
                 var q = from ta in DBYFtac.EPSTA
                         join tb in DBYFtac.EPSTB on new
                         { TA001 = ta.TA001, TA002 = ta.TA002 }
@@ -258,9 +237,7 @@ namespace Fine.Lf_Manufacturing.MM
                             tb.TB021,
                             tb.TB022,
                             tb.TB023,
-
                         };
-
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -281,7 +258,6 @@ namespace Fine.Lf_Manufacturing.MM
                     {
                         q = q.Where(u => u.TA053.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(E =>
@@ -298,7 +274,6 @@ namespace Fine.Lf_Manufacturing.MM
                     E.TB009,
                     E.TH012,
                     E.TH013,
-
                 }).Distinct();
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -316,8 +291,6 @@ namespace Fine.Lf_Manufacturing.MM
 
                     Grid1.DataSource = table;
                     Grid1.DataBind();
-
-
                 }
                 else
                 {
@@ -336,9 +309,9 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void H_DPstart_TextChanged(object sender, EventArgs e)
         {
             if (H_DPstart.SelectedDate.HasValue)
@@ -356,10 +329,13 @@ namespace Fine.Lf_Manufacturing.MM
                 BindGridH();
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         #region Grid1
+
         protected void H_ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             H_ttbSearchMessage.ShowTrigger1 = true;
@@ -373,8 +349,6 @@ namespace Fine.Lf_Manufacturing.MM
             BindGridH();
         }
 
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -387,29 +361,33 @@ namespace Fine.Lf_Manufacturing.MM
             Grid1.PageIndex = e.NewPageIndex;
             BindGridH();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void Grid1_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
             //labResult.Text = keys[0].ToString();
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/dept/view_desc.aspx?Ec_no=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
         }
+
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void H_ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGridH();
         }
-        #endregion
+
+        #endregion Grid1
+
         #region Grid2
+
         protected void C_ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             C_ttbSearchMessage.ShowTrigger1 = true;
@@ -423,8 +401,6 @@ namespace Fine.Lf_Manufacturing.MM
             BindGridC();
         }
 
-
-
         protected void Grid2_Sort(object sender, GridSortEventArgs e)
         {
             Grid2.SortDirection = e.SortDirection;
@@ -437,42 +413,39 @@ namespace Fine.Lf_Manufacturing.MM
             Grid2.PageIndex = e.NewPageIndex;
             BindGridC();
         }
+
         protected void Grid2_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void Grid2_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid2.DataKeys[e.RowIndex];
             //labResult.Text = keys[0].ToString();
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/dept/view_desc.aspx?Ec_no=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
         }
+
         protected void Grid2_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void C_ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid2.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGridC();
         }
-        #endregion
+
+        #endregion Grid2
 
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGridC();
             BindGridH();
-
         }
 
+        #endregion Events
 
-
-
-
-
-        #endregion
         protected void Btn_dta_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -486,88 +459,83 @@ namespace Fine.Lf_Manufacturing.MM
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "C100"  + "_DO_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            Xlsbomitem = "C100" + "_DO_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
             //查询LINQ去重复
 
-                try
+            try
+            {
+                string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
+
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYFdta = new Lf_Business.Models.YF.Yifei_DTA_Entities();
+
+                var q = from ta in DBYFdta.EPSTA
+                        join tb in DBYFdta.EPSTB on new
+                        { TA001 = ta.TA001, TA002 = ta.TA002 }
+                        equals new
+                        { TA001 = tb.TB001, TA002 = tb.TB002 }
+                        join th in DBYFdta.COPTH on new
+                        { TB021 = tb.TB021, TB022 = tb.TB022, TB023 = tb.TB023 }
+                           equals new
+                           { TB021 = th.TH001, TB022 = th.TH002, TB023 = th.TH003 }
+
+                        select new
+                        {
+                            ta.TA001,//通知单别
+                            ta.TA002,//通知单号
+                            tb.TB003,//通知序号
+                            ta.TA053,//出货日期
+                            ta.TA008,//送货客户
+                            ta.TA042,//发票号码
+                            tb.TB004,//订单别
+                            tb.TB005,//订单号
+                            tb.TB006,//订单序号
+                            tb.TB007,//物料
+                            tb.TB009,//数量
+                            th.TH012,//单价
+                            th.TH013,//金额
+                            tb.TB021,
+                            tb.TB022,
+                            tb.TB023,
+                        };
+
+                //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
+                //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
+                string sdate = C_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+
+                if (!String.IsNullOrEmpty(searchText))
                 {
-
-                    string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
-
-                   Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYFdta = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
-
-                    var q = from ta in DBYFdta.EPSTA
-                            join tb in DBYFdta.EPSTB on new
-                            { TA001 = ta.TA001, TA002 = ta.TA002 }
-                            equals new
-                            { TA001 = tb.TB001, TA002 = tb.TB002 }
-                            join th in DBYFdta.COPTH on new
-                            { TB021 = tb.TB021, TB022 = tb.TB022, TB023 = tb.TB023 }
-                               equals new
-                               { TB021 = th.TH001, TB022 = th.TH002, TB023 = th.TH003 }
-
-                            select new
-                            {
-                                ta.TA001,//通知单别
-                                ta.TA002,//通知单号
-                                tb.TB003,//通知序号
-                                ta.TA053,//出货日期
-                                ta.TA008,//送货客户
-                                ta.TA042,//发票号码
-                                tb.TB004,//订单别
-                                tb.TB005,//订单号
-                                tb.TB006,//订单序号
-                                tb.TB007,//物料
-                                tb.TB009,//数量
-                                th.TH012,//单价
-                                th.TH013,//金额
-                                tb.TB021,
-                                tb.TB022,
-                                tb.TB023,
-
-                            };
-
-
-                    //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                    //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                    string sdate = C_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
-                    if (!String.IsNullOrEmpty(searchText))
+                    q = q.Where(u => u.TB007.Contains(searchText));
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(sdate))
                     {
-                        q = q.Where(u => u.TB007.Contains(searchText));
+                        q = q.Where(u => u.TA053.CompareTo(sdate) >= 0);
                     }
-                    else
+                    if (!string.IsNullOrEmpty(edate))
                     {
-                        if (!string.IsNullOrEmpty(sdate))
-                        {
-                            q = q.Where(u => u.TA053.CompareTo(sdate) >= 0);
-                        }
-                        if (!string.IsNullOrEmpty(edate))
-                        {
-                            q = q.Where(u => u.TA053.CompareTo(edate) <= 0);
-                        }
-
+                        q = q.Where(u => u.TA053.CompareTo(edate) <= 0);
                     }
+                }
 
                 var qs = q.Select(E =>
                 new
                 {
                     工厂 = "C100",
                     出货单 = E.TA001.Replace(" ", "") + "-" + E.TA002.Replace(" ", "") + "-" + E.TB003.Replace(" ", ""),//单号
-                        日期 = E.TA053,
+                    日期 = E.TA053,
                     客户 = E.TA008,
                     发票 = E.TA042,
                     订单 = E.TB004.Replace(" ", "") + "-" + E.TB005.Replace(" ", "") + "-" + E.TB006.Replace(" ", ""),//单号
-                        销货 = E.TB021.Replace(" ", "") + "-" + E.TB022.Replace(" ", "") + "-" + E.TB023.Replace(" ", ""),//单号
-                        物料 = E.TB007,
+                    销货 = E.TB021.Replace(" ", "") + "-" + E.TB022.Replace(" ", "") + "-" + E.TB023.Replace(" ", ""),//单号
+                    物料 = E.TB007,
                     数量 = E.TB009,
                     单价 = E.TH012,
                     金额 = E.TH013,
-
                 }).Distinct();
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -584,23 +552,21 @@ namespace Fine.Lf_Manufacturing.MM
                 {
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
                 }
-                }
-                catch (ArgumentNullException Message)
-                {
-                    Alert.ShowInTop("异常1:" + Message);
-                }
-                catch (InvalidCastException Message)
-                {
-                    Alert.ShowInTop("异常2:" + Message);
-                }
-                catch (Exception Message)
-                {
-                    Alert.ShowInTop("异常3:" + Message);
-
-                }
-
-
+            }
+            catch (ArgumentNullException Message)
+            {
+                Alert.ShowInTop("异常1:" + Message);
+            }
+            catch (InvalidCastException Message)
+            {
+                Alert.ShowInTop("异常2:" + Message);
+            }
+            catch (Exception Message)
+            {
+                Alert.ShowInTop("异常3:" + Message);
+            }
         }
+
         protected void Btn_tac_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
             if (!CheckPower("CoreKitOutput"))
@@ -621,10 +587,9 @@ namespace Fine.Lf_Manufacturing.MM
 
             try
             {
-
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYFtac = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+                Lf_Business.Models.YF.Yifei_TAC_Entities DBYFtac = new Lf_Business.Models.YF.Yifei_TAC_Entities();
 
                 var q = from ta in DBYFtac.EPSTA
                         join tb in DBYFtac.EPSTB on new
@@ -654,9 +619,7 @@ namespace Fine.Lf_Manufacturing.MM
                             tb.TB021,
                             tb.TB022,
                             tb.TB023,
-
                         };
-
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -677,7 +640,6 @@ namespace Fine.Lf_Manufacturing.MM
                     {
                         q = q.Where(u => u.TA053.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(E =>
@@ -694,7 +656,6 @@ namespace Fine.Lf_Manufacturing.MM
                     数量 = E.TB009,
                     单价 = E.TH012,
                     金额 = E.TH013,
-
                 }).Distinct();
 
                 // 在查询添加之后，排序和分页之前获取总记录数
@@ -723,10 +684,7 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
-
         }
     }
 }

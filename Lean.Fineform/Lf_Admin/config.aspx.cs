@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
 using Newtonsoft.Json.Linq;
-using FineUIPro;
+using System;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class config : PageBase
     {
@@ -24,7 +19,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -41,17 +36,15 @@ namespace Fine.Lf_Admin
             // 权限检查
             CheckPowerWithButton("CoreConfigEdit", btnSave);
 
-
             //tbxTitle.Text = ConfigHelper.Title;
             ddlPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
             tbxHelpList.Text = StringUtil.GetJSBeautifyString(ConfigHelper.HelpList);
             ddlMenuType.SelectedValue = ConfigHelper.MenuType;
             //ddlTheme.SelectedValue = ConfigHelper.Theme;
             tbTheme.Text = ConfigHelper.Theme;
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -76,7 +69,6 @@ namespace Fine.Lf_Admin
                 return;
             }
 
-
             //ConfigHelper.Title = tbxTitle.Text.Trim();
             ConfigHelper.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue.Trim());
             ConfigHelper.HelpList = helpListStr;
@@ -90,6 +82,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript("top.window.location.reload(false);");
         }
 
-        #endregion
+        #endregion Events
     }
 }

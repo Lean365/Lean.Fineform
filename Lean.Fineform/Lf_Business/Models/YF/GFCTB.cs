@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Business.Models.YF
+namespace LeanFine.Lf_Business.Models.YF
 {
     using System;
     using System.Collections.Generic;

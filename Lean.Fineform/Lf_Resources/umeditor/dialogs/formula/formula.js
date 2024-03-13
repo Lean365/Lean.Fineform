@@ -1,9 +1,7 @@
 (function () {
-
     var editor = null;
 
     UM.registerWidget('formula', {
-
         tpl: "<link type=\"text/css\" rel=\"stylesheet\" href=\"<%=formula_url%>formula.css\">" +
             "<div class=\"edui-formula-wrapper\">" +
             "<ul class=\"edui-tab-nav\"></ul>" +
@@ -31,7 +29,6 @@
             }
         },
         initContent: function (_editor, $widget) {
-
             var me = this,
                 formula = me.sourceData.formula,
                 lang = _editor.getLang('formula').static,
@@ -49,7 +46,7 @@
             me.$widget = $widget;
 
             $root.html($.parseTmpl(me.tpl, options));
-            me.tabs = $.eduitab({selector: "#edui-formula-tab-Jpanel"});
+            me.tabs = $.eduitab({ selector: "#edui-formula-tab-Jpanel" });
 
             /* 初始化popup的内容 */
             var headHtml = [], xMax = 0, yMax = 0,
@@ -58,7 +55,7 @@
                 var contentHtml = [];
                 $.each(v, function (i, f) {
                     contentHtml.push('<li class="edui-formula-latex-item" data-latex="' + f + '" style="background-position:-' + (xMax * 30) + 'px -' + (yMax * 30) + 'px"></li>');
-                    if (++xMax >=8) {
+                    if (++xMax >= 8) {
                         ++yMax; xMax = 0;
                     }
                 });
@@ -99,10 +96,10 @@
                 return false;
             });
         },
-        switchTab:function(index){
+        switchTab: function (index) {
             var me = this,
                 $root = me.root(),
-                index = $.isNumeric(index) ? index:$.inArray(index, $root.find('.edui-tab-nav .edui-tab-item'));
+                index = $.isNumeric(index) ? index : $.inArray(index, $root.find('.edui-tab-nav .edui-tab-item'));
 
             $root.find('.edui-tab-nav .edui-tab-item').removeClass('edui-active').eq(index).addClass('edui-active');
             $root.find('.edui-tab-content .edui-tab-pane').removeClass('edui-active').eq(index).addClass('edui-active');
@@ -114,11 +111,9 @@
             this.$widget.height(this.root() + 2);
         },
         insertLatex: function (latex) {
-            editor.execCommand('formula', latex );
+            editor.execCommand('formula', latex);
         },
         width: 350,
         height: 400
     });
-
 })();
-

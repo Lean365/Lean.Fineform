@@ -1,28 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
-using System.Text;
+using System.Linq;
+using System.Web;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lc_MM
+namespace LeanFine.Lc_MM
 {
     /// <summary>
     /// AutoComplete_item 的摘要说明
     /// </summary>
     public class AutoComplete_item : IHttpHandler
     {
-        FineContext DBCharts = new FineContext();
+        private LeanFineContext DBCharts = new LeanFineContext();
+
         public void ProcessRequest(HttpContext context)
         {
             //System.Threading.Thread.Sleep(2000);
@@ -31,14 +23,11 @@ namespace Fine.Lc_MM
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
             List<string> list = (from a in DBCharts.Mm_Materials
-                                     
-                                      select new
-                                      {
-                                          a.MatItem
-                                      }).Take(5).ToList().Select(u => u.MatItem).ToList<string>();
 
-
-
+                                 select new
+                                 {
+                                     a.MatItem
+                                 }).Take(5).ToList().Select(u => u.MatItem).ToList<string>();
 
             string[] sArray = list.ToArray();
 
@@ -56,11 +45,9 @@ namespace Fine.Lc_MM
                     }
                 }
 
-
                 context.Response.ContentType = "text/plain";
                 context.Response.Write(ja.ToString());
             }
-
         }
 
         public bool IsReusable

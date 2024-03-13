@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.MM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.MM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lc_MM
-{
 
+namespace LeanFine.Lc_MM
+{
     public partial class material_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lc_MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +31,6 @@ namespace Fine.Lc_MM
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,8 +47,8 @@ namespace Fine.Lc_MM
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -66,11 +63,8 @@ namespace Fine.Lc_MM
                 return;
             }
 
+            isDate.SelectedDate = DateTime.ParseExact(current.isDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
 
-
-
-           isDate.SelectedDate = DateTime.ParseExact(current.isDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
-            
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             Plnt.Text = current.Plnt.ToString();
             MatItem.Text = current.MatItem.ToString();
@@ -80,13 +74,9 @@ namespace Fine.Lc_MM
             PriceUnit.Text = current.PriceUnit.ToString();
             MovingAvg.Text = current.MovingAvg.ToString();
 
-
-
             remark.Text = current.Remark;
 
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -99,19 +89,13 @@ namespace Fine.Lc_MM
             //InitUserTitle(current);
 
             //修改前日志
-            string BeforeModi = current.isDate + "," + current.MatItem + ","+ current.MovingAvg.ToString();
+            string BeforeModi = current.isDate + "," + current.MatItem + "," + current.MovingAvg.ToString();
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "移动价格修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -122,7 +106,6 @@ namespace Fine.Lc_MM
             Mm_Material current = DB.Mm_Materials.Find(id);
             //decimal cQcpd005 = current.Qcpd005;
             string checkdata1 = current.MovingAvg.ToString();
-
 
             if (this.MovingAvg.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             {
@@ -137,7 +120,6 @@ namespace Fine.Lc_MM
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
 
-
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //    if (redata != null)
@@ -146,6 +128,7 @@ namespace Fine.Lc_MM
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -156,26 +139,21 @@ namespace Fine.Lc_MM
 
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.isDate = isDate.SelectedDate.Value.ToString("yyyyMMdd");
-            item.MovingAvg =decimal.Parse( MovingAvg.Text);
-
-
+            item.MovingAvg = decimal.Parse(MovingAvg.Text);
 
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = isDate.SelectedDate.Value.ToString("yyyyMMdd") + ","+MatItem.Text+"," + MovingAvg.Text;
+            string ModifiedText = isDate.SelectedDate.Value.ToString("yyyyMMdd") + "," + MatItem.Text + "," + MovingAvg.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "移动价格修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -227,15 +205,7 @@ namespace Fine.Lc_MM
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

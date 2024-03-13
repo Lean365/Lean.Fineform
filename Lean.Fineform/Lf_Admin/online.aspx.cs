@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
+using System.Data.Entity;
 using System.Linq;
-using FineUIPro;
-using System.Data.Entity;using System.Data.Entity.Validation;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class online : PageBase
     {
@@ -25,9 +20,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-
-
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -72,9 +65,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -106,7 +97,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -114,7 +104,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

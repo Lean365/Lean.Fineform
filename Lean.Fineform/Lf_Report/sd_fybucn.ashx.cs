@@ -1,39 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Sd_fybucn 的摘要说明
+    /// sd_fybucn 的摘要说明
     /// </summary>
-    public class Sd_fybucn : IHttpHandler
+    public class sd_fybucn : IHttpHandler
     {
-
         //映射
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
+
         public void ProcessRequest(HttpContext context)
         {
             string atedate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
-            string sdate=atedate.Substring(0,4);
-            context.Response.ContentType = "text/plain";
-            var q_salesData = (from a in DBCharts.Fico_Costing_SalesInvoices
+            string sdate = atedate.Substring(0, 4);
+            context.Response.ContentType = "text/plain";
+            var q_salesData = (from a in DBCharts.Fico_Costing_Sales_Billings
                                where a.Bc_YM.Contains(sdate)
                                orderby a.Bc_FY descending
                                select a).ToList(); //.Include(u => u.Dept);
@@ -46,14 +39,12 @@ namespace Fine.Lf_Report
                               Bu = g.Key.Bc_ProfitCenter,
                               //Qty = g.Sum(a => a.Bc_SalesQty),
                               Amout = g.Sum(a => a.Bc_BusinessAmount),
-
                           };
 
             var qss = (from a in q_Merge
 
                        select new
                        {
-                           
                            Bu = (a.Bu.Contains("2U20") ? "PA" : (a.Bu.Contains("3U10") ? "PRO" : (a.Bu.Contains("3U20") ? "MI" : (a.Bu.Contains("4U30") ? "BS" : (a.Bu.Contains("ODBU") ? "OD" : (a.Bu.Contains("2U10") ? "ESO" : (a.Bu.Contains("4U10") ? "VS" : a.Bu))))))),
                            a.Amout,
                        }).ToList();
@@ -72,10 +63,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
-
-
-
         public bool IsReusable
         {
             get
@@ -83,6 +70,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
     }
 }

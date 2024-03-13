@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
+using System.Linq;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
     public partial class YF_PurchasingPriceVal : PageBase
     {
@@ -32,9 +20,10 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         //
 
         protected void Page_Load(object sender, EventArgs e)
@@ -64,7 +53,6 @@ namespace Fine.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
             //CheckPowerWithButton("CoreKitOutput", BtnExport);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -81,20 +69,17 @@ namespace Fine.Lf_Manufacturing.MM
             //BindGridH();
         }
 
-
-
         private void BindGridC()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = C_ttbSearchMessage.Text.Trim().ToUpper();
 
-               Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
+                Lf_Business.Models.YF.Yifei_DTA_Entities DBYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-                //IQueryable<Fine.Lf_Business.Models.YF.PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
+                //IQueryable<PURTA> q = DBYF.PURTA; //.Include(u => u.Dept);
 
                 var q = from tl in DBYF.PURTL
                         join tm in DBYF.PURTM
@@ -120,15 +105,11 @@ namespace Fine.Lf_Manufacturing.MM
                             tm.TM007,//供应商品号
                             tm.TM008,//分量计价
                             TM010 = (tm.TM010 == null ? 0 : tm.TM010),//单价
-                            tn.TN007 ,//数量以上
+                            tn.TN007,//数量以上
                             TN008 = (tn.TN008 == null ? 0 : tn.TN008),//单价
                             tm.TM014,//生效日
                             tm.TM015,//失效日
-
-
-
                         };
-
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -149,7 +130,6 @@ namespace Fine.Lf_Manufacturing.MM
                     {
                         q = q.Where(u => u.TL003.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(ta =>
@@ -186,8 +166,6 @@ namespace Fine.Lf_Manufacturing.MM
 
                     Grid2.DataSource = table;
                     Grid2.DataBind();
-
-
                 }
                 else
                 {
@@ -206,9 +184,9 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void C_DPstart_TextChanged(object sender, EventArgs e)
         {
             if (C_DPstart.SelectedDate.HasValue)
@@ -226,16 +204,16 @@ namespace Fine.Lf_Manufacturing.MM
                 BindGridC();
             }
         }
+
         private void BindGridH()
         {
             //查询LINQ去重复
 
             try
             {
-
                 string searchText = H_ttbSearchMessage.Text.Trim().ToUpper();
 
-               Fine.Lf_Business.Models.YF.Yifei_TACEntities DBYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
+                Lf_Business.Models.YF.Yifei_TAC_Entities DBYF = new Lf_Business.Models.YF.Yifei_TAC_Entities();
 
                 var q = from tl in DBYF.PURTL
                         join tm in DBYF.PURTM
@@ -265,11 +243,7 @@ namespace Fine.Lf_Manufacturing.MM
                             TN008 = (tn.TN008 == null ? 0 : tn.TN008),//单价
                             tm.TM014,//生效日
                             tm.TM015,//失效日
-
-
-
                         };
-
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
@@ -290,7 +264,6 @@ namespace Fine.Lf_Manufacturing.MM
                     {
                         q = q.Where(u => u.TL003.CompareTo(edate) <= 0);
                     }
-
                 }
 
                 var qs = q.Select(ta =>
@@ -327,8 +300,6 @@ namespace Fine.Lf_Manufacturing.MM
 
                     Grid1.DataSource = table;
                     Grid1.DataBind();
-
-
                 }
                 else
                 {
@@ -347,9 +318,9 @@ namespace Fine.Lf_Manufacturing.MM
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void H_DPstart_TextChanged(object sender, EventArgs e)
         {
             if (H_DPstart.SelectedDate.HasValue)
@@ -367,10 +338,13 @@ namespace Fine.Lf_Manufacturing.MM
                 BindGridH();
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         #region Grid1
+
         protected void H_ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             H_ttbSearchMessage.ShowTrigger1 = true;
@@ -384,8 +358,6 @@ namespace Fine.Lf_Manufacturing.MM
             BindGridH();
         }
 
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -398,29 +370,33 @@ namespace Fine.Lf_Manufacturing.MM
             Grid1.PageIndex = e.NewPageIndex;
             BindGridH();
         }
+
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void Grid1_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid1.DataKeys[e.RowIndex];
             //labResult.Text = keys[0].ToString();
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/dept/view_desc.aspx?Ec_no=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
         }
+
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void H_ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGridH();
         }
-        #endregion
+
+        #endregion Grid1
+
         #region Grid2
+
         protected void C_ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             C_ttbSearchMessage.ShowTrigger1 = true;
@@ -434,8 +410,6 @@ namespace Fine.Lf_Manufacturing.MM
             BindGridC();
         }
 
-
-
         protected void Grid2_Sort(object sender, GridSortEventArgs e)
         {
             Grid2.SortDirection = e.SortDirection;
@@ -448,46 +422,41 @@ namespace Fine.Lf_Manufacturing.MM
             Grid2.PageIndex = e.NewPageIndex;
             BindGridC();
         }
+
         protected void Grid2_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void Grid2_RowDoubleClick(object sender, GridRowClickEventArgs e)
         {
             object[] keys = Grid2.DataKeys[e.RowIndex];
             //labResult.Text = keys[0].ToString();
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/dept/view_desc.aspx?Ec_no=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
         }
+
         protected void Grid2_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
+
         protected void C_ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid2.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGridC();
         }
-        #endregion
+
+        #endregion Grid2
 
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGridC();
             BindGridH();
-
         }
+
         protected void BtnVal_Click(object sender, EventArgs e)
         {
-
         }
 
-
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

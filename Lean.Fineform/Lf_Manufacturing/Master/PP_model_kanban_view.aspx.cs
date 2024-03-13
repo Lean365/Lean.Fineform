@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
     public partial class Pp_model_kanban_view : PageBase
     {
@@ -21,12 +21,10 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
 
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -43,6 +41,7 @@ namespace Fine.Lf_Manufacturing.Master
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
             BindData();
         }
+
         private void BindData()
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
@@ -58,21 +57,17 @@ namespace Fine.Lf_Manufacturing.Master
 
             lblP_Kanban_Line.Text = current.P_Kanban_Line;
             lblP_Kanban_Order.Text = current.P_Kanban_Order;
-            lblP_Kanban_Item.Text= current.P_Kanban_Item;
-            lblP_Kanban_Lot.Text=current.P_Kanban_Lot;
+            lblP_Kanban_Item.Text = current.P_Kanban_Item;
+            lblP_Kanban_Lot.Text = current.P_Kanban_Lot;
             lblP_Kanban_Model.Text = current.P_Kanban_Model;
             lblP_Kanban_Region.Text = current.P_Kanban_Region;
-            lblP_Kanban_Process.Text= current.P_Kanban_Process.ToString();
-
+            lblP_Kanban_Process.Text = current.P_Kanban_Process.ToString();
         }
+
         protected void Window1_Close(object sender, WindowCloseEventArgs e)
         {
-
         }
 
-
-        #endregion
-
-
+        #endregion Page_Load
     }
 }

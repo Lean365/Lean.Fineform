@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_models_region_new.aspx.cs" Inherits="Fine.Lf_Manufacturing.Master.Pp_models_region_new" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_models_region_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.Master.Pp_models_region_new" %>
 
 <!DOCTYPE html>
 

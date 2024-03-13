@@ -132,7 +132,6 @@ function BindmyChart_Expense_Contrast(name, value1, value2) {
         //    }
         //}],
         xAxis: {
-
             type: 'value',
             axisLabel: {
                 formatter: function (value) {
@@ -147,7 +146,6 @@ function BindmyChart_Expense_Contrast(name, value1, value2) {
                     }
                 }
             }
-
         },
         yAxis: {
             data: name,
@@ -256,7 +254,6 @@ function BindmyChart_Expense_Contrast(name, value1, value2) {
             //    },
             //    itemStyle: {
             //        normal: {
-
             //            color: 'rgb(219,50,51)',
             //            borderColor: 'rgba(219,50,51,0.2)',
             //            borderWidth: 12
@@ -424,7 +421,6 @@ function BindmyChart_Expense_DeptRequests(name, value2, data) {
             //    },
             //    itemStyle: {
             //        normal: {
-
             //            color: 'rgb(219,50,51)',
             //            borderColor: 'rgba(219,50,51,0.2)',
             //            borderWidth: 12
@@ -553,7 +549,6 @@ function BindmyChart_Expense_Actual(name, value, data) {
                         },
                         b: {
                             color: '#4cabce',
-
                         },
                     },
                 }
@@ -580,7 +575,6 @@ function BindmyChart_Expense_Actual(name, value, data) {
     myChart.resize();
 }
 function BindmyChart_Expense_Tree(data) {
-
     var TreemyChart = echarts.init(document.getElementById('TreeBar'));
     TreemyChart.showLoading();
     let BindTree = [];
@@ -918,7 +912,6 @@ function BindmyChart_CostingMaterialcost(name, value1, value2, value3, data) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -946,7 +939,6 @@ function BindmyChart_CostingMaterialcost(name, value1, value2, value3, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1115,7 +1107,6 @@ function BindmyChart_CostingNeedQty(name, value1, value2, value3, data) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1143,7 +1134,6 @@ function BindmyChart_CostingNeedQty(name, value1, value2, value3, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1312,7 +1302,6 @@ function BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, d
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1340,7 +1329,6 @@ function BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, d
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1509,7 +1497,6 @@ function BindmyChart_CostingComparedForecast(name, value1, value2, value3, data)
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1537,7 +1524,6 @@ function BindmyChart_CostingComparedForecast(name, value1, value2, value3, data)
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1707,7 +1693,6 @@ function BindmyChart_CostingProductCost(name, value1, value2, value3, data) {
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1735,7 +1720,6 @@ function BindmyChart_CostingProductCost(name, value1, value2, value3, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -1942,7 +1926,6 @@ function BindmyChart_CostingInvAMT(name, value1, value2, data) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -1971,7 +1954,6 @@ function BindmyChart_CostingInvAMT(name, value1, value2, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -2178,7 +2160,6 @@ function BindmyChart_CostingInvAMTbu(name, value1, value2, data) {
                         //百分比格式
                         //formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
-
                 },
                 lineStyle: {
                     normal: {
@@ -2207,7 +2188,6 @@ function BindmyChart_CostingInvAMTbu(name, value1, value2, data) {
                                 return "#ed1941";
                             } else if (params.value >= 112) {
                                 return "#1d953f";
-
                             }
                             return "#225a1f";
                         },
@@ -2400,4 +2380,3 @@ function BindmyChart_CostingMonthlyInvAMT(name, value1, value2, data) {
     myChart.setOption(option);
     myChart.resize();
 }
-

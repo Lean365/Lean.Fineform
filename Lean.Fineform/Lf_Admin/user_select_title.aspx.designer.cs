@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Admin {
+namespace LeanFine.Lf_Admin {
     
     
     public partial class user_select_title {

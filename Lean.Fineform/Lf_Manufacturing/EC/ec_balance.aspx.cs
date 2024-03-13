@@ -1,11 +1,12 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-namespace Fine.Lf_Manufacturing.EC
+
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec_balance : PageBase
     {
@@ -22,13 +23,14 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, myrexname, tracestr;
         public static DataTable table;
         //
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -62,8 +64,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             //var q = from a in DB.Ec_balances
@@ -90,7 +90,7 @@ namespace Fine.Lf_Manufacturing.EC
             //            a.Ec_status,
             //        };
 
-            IQueryable<Pp_EcBalance> q = DB.Pp_EcBalances; //.Include(u => u.Dept);
+            IQueryable<Pp_Ec_Balance> q = DB.Pp_EcBalances; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
@@ -98,18 +98,19 @@ namespace Fine.Lf_Manufacturing.EC
             {
                 q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_olditem.ToString().Contains(searchText) || u.Ec_newitem.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText));
             }
-            q = q.Where(u => u.isDelete != 1);
+            q = q.Where(u => u.isDeleted != 1);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Pp_EcBalance>(q, Grid1);
+            q = SortAndPage<Pp_Ec_Balance>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -139,8 +140,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -151,7 +150,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -159,30 +157,24 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
+        #endregion Events
 
+        #region ExportExcel
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {
-
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
-
 
             Xlsbomitem = "Ec__DetailsData_" + myrexname;
 
             ExportFileName = Xlsbomitem + ".xlsx";
 
-
-
             //DataTable source = GetDataTable.Getdt(mysql);
             //导出2007格式
             ExportHelper.EpplustoXLSXfile(table, Xlsbomitem, ExportFileName);
         }
-
-
 
         private string GetGridTableHtml(Grid grid)
         {
@@ -191,9 +183,7 @@ namespace Fine.Lf_Manufacturing.EC
             MultiHeaderTable mht = new MultiHeaderTable();
             mht.ResolveMultiHeaderTable(Grid1.Columns);
 
-
             sb.Append("<meta http-equiv=\"content-type\" content=\"application/excel; charset=UTF-8\"/>");
-
 
             sb.Append("<table cellspacing=\"0\" rules=\"all\" border=\"1\" style=\"border-collapse:collapse;\">");
 
@@ -215,7 +205,6 @@ namespace Fine.Lf_Manufacturing.EC
                 sb.Append("</tr>");
             }
 
-
             foreach (GridRow row in grid.Rows)
             {
                 sb.Append("<tr>");
@@ -233,7 +222,6 @@ namespace Fine.Lf_Manufacturing.EC
                         html = (row.FindControl("Ec_qadate") as FineUIPro.Label).Text;
                     }
 
-
                     sb.AppendFormat("<td>{0}</td>", html);
                 }
 
@@ -247,12 +235,10 @@ namespace Fine.Lf_Manufacturing.EC
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
@@ -271,7 +257,6 @@ namespace Fine.Lf_Manufacturing.EC
             //参数传递
             //ID,Ec_no,Ec_model,Ec_bomitem,Ec_olditem,Ec_newitem
             object[] keys = Grid1.DataKeys[e.RowIndex];
-
 
             if (keys[0] == null)
             {
@@ -299,15 +284,10 @@ namespace Fine.Lf_Manufacturing.EC
                 tracestr = tracestr + keys[2].ToString() + ",";
             }
 
-
-
-
             PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/ec_balance_edit.aspx?Ec_no=" + tracestr + "&type=1") + Window1.GetMaximizeReference());
-
 
             BindGrid();
         }
-
 
         #region 多表头处理
 
@@ -318,9 +298,9 @@ namespace Fine.Lf_Manufacturing.EC
         {
             // 包含 rowspan，colspan 的多表头，方便生成 HTML 的 table 标签
             public List<List<object[]>> MultiTable = new List<List<object[]>>();
+
             // 最终渲染的列数组
             public List<GridColumn> Columns = new List<GridColumn>();
-
 
             public void ResolveMultiHeaderTable(GridColumnCollection columns)
             {
@@ -367,7 +347,6 @@ namespace Fine.Lf_Manufacturing.EC
                         Columns.Add(cell[2] as GridColumn);
                     }
                 }
-
             }
 
             private void ResolveMultiTable(List<object[]> row, int level)
@@ -448,9 +427,10 @@ namespace Fine.Lf_Manufacturing.EC
                     }
                 }
             }
-
         }
-        #endregion
-        #endregion
+
+        #endregion 多表头处理
+
+        #endregion ExportExcel
     }
 }

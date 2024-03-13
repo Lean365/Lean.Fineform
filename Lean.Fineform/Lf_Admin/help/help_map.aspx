@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="help_map.aspx.cs" Inherits="Fine.Lf_Admin.help.help_map" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="help_map.aspx.cs" Inherits="LeanFine.Lf_Admin.help.help_map" %>
 
 <!DOCTYPE html>
 

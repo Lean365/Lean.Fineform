@@ -1,30 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Data;
 using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
-using System.Text;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Fico_subjects_tree 的摘要说明
+    /// fico_subjects_tree 的摘要说明
     /// </summary>
-    public class Fico_subjects_tree : IHttpHandler
+    public class fico_subjects_tree : IHttpHandler
     {
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
-
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -34,11 +23,11 @@ namespace Fine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd",;
             context.Response.ContentType = "text/plain";
-            var q_pid = from p in DBCharts.Fico_Costing_ActualCosts
+            var q_pid = from p in DBCharts.Fico_Costing_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
-                        //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDelete == 0
-                        where p.Bc_ExpCategory.Contains("DTA")                        
+                            //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
+                        where p.isDeleted == 0
+                        where p.Bc_ExpCategory.Contains("DTA")
                         select new
                         {
                             p.Bc_CorpCode,
@@ -47,9 +36,7 @@ namespace Fine.Lf_Report
                             //Budgetamount = p.Bebtmoney,
                             //Actualamount = p.Beatmoney * -1,
                             //Bsdept = (p.Bsdept.Contains("SMT") ? "制二课" : (p.Bsdept.Contains("自插") ? "制二课" : (p.Bsdept.Contains("手插") ? "制二课" : (p.Bsdept.Contains("物料") ? "制二课" : (p.Bsdept.Contains("修正") ? "制二课" : (p.Bsdept.Contains("制二课-间接") ? "制二课" : (p.Bsdept.Contains("总经") ? "总经室" : (p.Bsdept.Contains("制造技术") ? "制技课" : (p.Bsdept.Contains("OEM") ? "OEM" : p.Bsdept))))))))),
-
                         };
-
 
             q_pid = q_pid.Distinct();
             DataSet q_pidds = new DataSet();
@@ -63,10 +50,10 @@ namespace Fine.Lf_Report
                 lists.Add(obj);
             }
 
-            var q_id = from p in DBCharts.Fico_Costing_ActualCosts
+            var q_id = from p in DBCharts.Fico_Costing_Actual_Costs
                            //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
-                       //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                       where p.isDelete == 0
+                           //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
+                       where p.isDeleted == 0
                        where p.Bc_ExpCategory.Contains("DTA")
                        select new
                        {
@@ -78,9 +65,7 @@ namespace Fine.Lf_Report
                            //Budgetamount = p.Bebtmoney,
                            //Actualamount = p.Beatmoney * -1,
                            //Bsdept = (p.Bsdept.Contains("SMT") ? "制二课" : (p.Bsdept.Contains("自插") ? "制二课" : (p.Bsdept.Contains("手插") ? "制二课" : (p.Bsdept.Contains("物料") ? "制二课" : (p.Bsdept.Contains("修正") ? "制二课" : (p.Bsdept.Contains("制二课-间接") ? "制二课" : (p.Bsdept.Contains("总经") ? "总经室" : (p.Bsdept.Contains("制造技术") ? "制技课" : (p.Bsdept.Contains("OEM") ? "OEM" : p.Bsdept))))))))),
-
                        };
-
 
             q_id = q_id.Distinct();
             DataSet q_idds = new DataSet();
@@ -93,24 +78,23 @@ namespace Fine.Lf_Report
                 var obj = new { id = dr["Bc_CostCode"], name = dr["Bc_CostName"], pid = dr["Bc_CorpCode"], pname = dr["Bc_CorpName"], };  //key，value
                 lists.Add(obj);
             }
-            var q_all = from p in DBCharts.Fico_Costing_ActualCosts
+            var q_all = from p in DBCharts.Fico_Costing_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
-                        //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDelete == 0
+                            //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
+                        where p.isDeleted == 0
                         where p.Bc_ExpCategory.Contains("DTA")
                         select new
                         {
                             p.Bc_CostCode,
                             p.Bc_CostName,
                             p.Bc_TitleCode,
-                            
-                            Bc_TitleName = p.Bc_TitleName.Substring(p.Bc_TitleName.IndexOf("-")+1, p.Bc_TitleName.Length - p.Bc_TitleName.IndexOf("-"))
+
+                            Bc_TitleName = p.Bc_TitleName.Substring(p.Bc_TitleName.IndexOf("-") + 1, p.Bc_TitleName.Length - p.Bc_TitleName.IndexOf("-"))
                             //p.BC_BudgetAmt,
                             //Befm = p.Befm.Substring(0, 6),
                             //Budgetamount = p.Bebtmoney,
                             //Actualamount = p.Beatmoney * -1,
                             //Bsdept = (p.Bsdept.Contains("SMT") ? "制二课" : (p.Bsdept.Contains("自插") ? "制二课" : (p.Bsdept.Contains("手插") ? "制二课" : (p.Bsdept.Contains("物料") ? "制二课" : (p.Bsdept.Contains("修正") ? "制二课" : (p.Bsdept.Contains("制二课-间接") ? "制二课" : (p.Bsdept.Contains("总经") ? "总经室" : (p.Bsdept.Contains("制造技术") ? "制技课" : (p.Bsdept.Contains("OEM") ? "OEM" : p.Bsdept))))))))),
-
                         };
 
             q_all = q_all.Distinct();
@@ -129,7 +113,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -137,7 +120,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

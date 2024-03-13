@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +8,8 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.TL
+
+namespace LeanFine.Lf_Manufacturing.TL
 {
     public partial class liaison_new : PageBase
     {
@@ -25,24 +26,24 @@ namespace Fine.Lf_Manufacturing.TL
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         public static string strMana, isCheck, strMailto, strWhouse, strPur, strEol, strEcnno, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, fileName, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc;
         public static long iFileSizeLimit = Convert.ToInt32(ConfigurationManager.AppSettings["FileSizeLimit"]);
+
         #region Page_Load
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
 
         private void LoadData()
         {
-           // MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.管理区分：全仕向,部管课,内部管理,技术课</div><div>2.附件大小规定：单一文件不能超5Mb,如果同时上付多个附件,附件总大小不能超过20Mb,否则请逐个上传</div><div>3.请添加中文翻译内容</div><div>4.担当者不能为空</div><div>4.修改管理区分时,设变单身数据将重新导入,之前各部门填写的资料全部作废</div><div style=\"margin-bottom:10px;color:red;\">5.关于制二课管理与否：物料状态分为4种：0--不管理，1--共通(部管制二都需填写)，2--部管，3--制二</div>");
+            // MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.管理区分：全仕向,部管课,内部管理,技术课</div><div>2.附件大小规定：单一文件不能超5Mb,如果同时上付多个附件,附件总大小不能超过20Mb,否则请逐个上传</div><div>3.请添加中文翻译内容</div><div>4.担当者不能为空</div><div>4.修改管理区分时,设变单身数据将重新导入,之前各部门填写的资料全部作废</div><div style=\"margin-bottom:10px;color:red;\">5.关于制二课管理与否：物料状态分为4种：0--不管理，1--共通(部管制二都需填写)，2--部管，3--制二</div>");
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
@@ -53,13 +54,10 @@ namespace Fine.Lf_Manufacturing.TL
             BindDDLModelist();
             BindDDLRegion();
             BindDDLUserlist();
-
         }
-
 
         private void BindDDLtype()
         {
-
             var q = from a in DB.Qm_DocNumbers
                     orderby a.Docnumber
                     where a.Doctype == "A"
@@ -67,7 +65,6 @@ namespace Fine.Lf_Manufacturing.TL
                     {
                         a.Docname,
                         a.Docnumber
-
                     };
             var qs = q.Select(E => new { E.Docname, E.Docnumber }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -79,21 +76,12 @@ namespace Fine.Lf_Manufacturing.TL
             ddlPbook.DataValueField = "Docnumber";
             ddlPbook.DataBind();
 
-            this.ddlPbook.SelectedValue="DTS";
-
-
+            this.ddlPbook.SelectedValue = "DTS";
         }
 
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
-
-
 
         private void BindDDLUserlist()//ERP设变技术担当
         {
@@ -114,30 +102,29 @@ namespace Fine.Lf_Manufacturing.TL
 
             // 选中根节点
             this.Ec_leader.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
         }
+
         private void BindDDLModel()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
-                         orderby a.Promodel
-                         select new
-                         {
-                             a.Promodel
-                         };
-            var q_all=from b in  DB.Pp_Manhours
-                                orderby b.Promodel
-                                where b.Prodesc.CompareTo("ALL") ==0
-                                select new
-                                {
-                                    Promodel=b.Prodesc
-                                };
+                          orderby a.Promodel
+                          select new
+                          {
+                              a.Promodel
+                          };
+            var q_all = from b in DB.Pp_Manhours
+                        orderby b.Promodel
+                        where b.Prodesc.CompareTo("ALL") == 0
+                        select new
+                        {
+                            Promodel = b.Prodesc
+                        };
 
             // 绑定到下拉列表（启用模拟树功能）
             var qm = q_model.Select(E => new { E.Promodel }).ToList().Distinct();
             var qa = q_all.Select(E => new { E.Promodel }).ToList().Distinct();
 
-            var qs= qa.Union(qm);
+            var qs = qa.Union(qm);
 
             Ec_model.DataTextField = "Promodel";
             Ec_model.DataValueField = "Promodel";
@@ -147,9 +134,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             //this.Ec_model.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         private void BindDDLModelist()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
@@ -180,18 +166,16 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             //this.Ec_modellist.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         private void BindDDLRegion()//ERP设变技术担当
         {
             var q_region = from a in DB.Pp_Manhours
-                          orderby a.Prodesc
-                          select new
-                          {
-                              a.Prodesc
-                          };
-
+                           orderby a.Prodesc
+                           select new
+                           {
+                               a.Prodesc
+                           };
 
             // 绑定到下拉列表（启用模拟树功能）
             var qs = q_region.Select(E => new { E.Prodesc }).ToList().Distinct();
@@ -204,18 +188,12 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             //this.Ec_region.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         protected void ddlPbook_SelectedIndexChanged(object sender, EventArgs e)
         {
             Ec_letterno.Text = "";
         }
-
-
-
-
-
 
         //字段赋值,保存
         private void SaveItem()//新增设变单头
@@ -225,13 +203,10 @@ namespace Fine.Lf_Manufacturing.TL
 
             if (!string.IsNullOrEmpty(inputNo))
             {
-
-
-                Pp_Liaison tl = DB.Pp_Liaisons.Where(u => u.Ec_letterno == inputNo && u.isDelete == 0).FirstOrDefault();
+                Pp_Liaison tl = DB.Pp_Liaisons.Where(u => u.Ec_letterno == inputNo && u.isDeleted == 0).FirstOrDefault();
 
                 if (tl == null)
                 {
-
                     //查询设变从表并循环添加
 
                     Pp_Liaison item = new Pp_Liaison();
@@ -335,16 +310,13 @@ namespace Fine.Lf_Manufacturing.TL
                         item.Ec_teppletterno = "";
                     }
 
-
-                    item.isDelete = 0;
-
+                    item.isDeleted = 0;
 
                     item.GUID = Guid.NewGuid();
-                    item.CreateTime = DateTime.Now;
+                    item.CreateDate = DateTime.Now;
                     item.Creator = GetIdentityName();
                     DB.Pp_Liaisons.Add(item);
                     DB.SaveChanges();
-
                 }
                 else
                 {
@@ -358,6 +330,7 @@ namespace Fine.Lf_Manufacturing.TL
                 return;
             }
         }
+
         private void Pbookdoc()
         {
             if (Ec_letterdoc.HasFile)
@@ -369,7 +342,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -394,6 +366,7 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
+
         private void Ppbookdoc()
         {
             if (Ec_eppletterdoc.HasFile)
@@ -405,7 +378,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -429,6 +401,7 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
+
         private void Pjpbookdoc()
         {
             if (Ec_teppletterdoc.HasFile)
@@ -440,7 +413,6 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop("无效的文件类型！");
                     return;
                 }
-
 
                 fileName = fileName.Replace(":", "_").Replace(" ", "_").Replace("\\", "_").Replace("/", "_");
                 //判断最后一个.的位置
@@ -464,11 +436,6 @@ namespace Fine.Lf_Manufacturing.TL
                 SimpleForm1.Reset();
             }
         }
-
-
-
-
-
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
@@ -524,7 +491,7 @@ namespace Fine.Lf_Manufacturing.TL
                     Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Reselect, MessageBoxIcon.Information);
                     return;
                 }
-                if (!string.IsNullOrEmpty( Ec_letterno.Text.ToUpper()))
+                if (!string.IsNullOrEmpty(Ec_letterno.Text.ToUpper()))
                 {
                     if (this.ddlPbook.SelectedItem.Text == "DTS-")
                     {
@@ -616,7 +583,6 @@ namespace Fine.Lf_Manufacturing.TL
 
                 //UpdateEcSubs();
 
-
                 PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
             catch (ArgumentNullException Message)
@@ -652,10 +618,10 @@ namespace Fine.Lf_Manufacturing.TL
             }
             //sw.Stop();
             //Alert.ShowInTop(sw.Elapsed.ToString(), "执行信息", MessageBoxIcon.Information);
-           
         }
 
-        #endregion
+        #endregion Events
+
         private void Mailto()
         {
             //var q_user = from a in DB.Adm_Users
@@ -696,33 +662,22 @@ namespace Fine.Lf_Manufacturing.TL
             //string mailBody = "Dear All,\r\n" + "\r\n" + "此设变技术部门已处理。\r\n" + "请贵部门担当者及时处理为盼。\r\n" + "\r\n" + "よろしくお願いいたします。\r\n" + "\r\n" + "\r\n" + "「" + GetIdentityName() + "\r\n" + DateTime.Now.ToString() + "」\r\n" + "このメッセージはWebSiteから自動で送信されている。\r\n\n";  //发送邮件的正文
             //MailHelper.SendEmail(strMailto, mailTitle, mailBody);
             strMailto = "";
-
         }
+
         #region NetOperateNotes
+
         private void InsNetOperateNotes()
         {
             //发送邮件通知
             //Mailto();
 
-
             //新增日志
-            string Newtext = Ec_issuedate.Text + "," + Ec_letterdoc.Text + "," + Ec_leader.SelectedItem.Text + "," + txtPbookdoc + "," + txtPpbookdoc + "," + "," + txtPjpbookdoc ;
+            string Newtext = Ec_issuedate.Text + "," + Ec_letterdoc.Text + "," + Ec_leader.SelectedItem.Text + "," + txtPbookdoc + "," + txtPpbookdoc + "," + "," + txtPjpbookdoc;
             string OperateType = "新增";//操作标记
             string OperateNotes = "New技术* " + Newtext + " New*技术 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "设变新增", OperateNotes);
         }
 
-
-        #endregion
-
-
-
-
-
-
-
-
-
-
+        #endregion NetOperateNotes
     }
 }

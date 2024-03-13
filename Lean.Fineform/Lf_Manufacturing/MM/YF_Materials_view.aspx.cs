@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using System.Data.Entity.Validation;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.YF;
+using System;
 
-namespace Fine.Lf_Manufacturing.MM
+namespace LeanFine.Lf_Manufacturing.MM
 {
-
     public partial class YF_Materials_view : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -34,7 +19,7 @@ namespace Fine.Lf_Manufacturing.MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,7 +27,6 @@ namespace Fine.Lf_Manufacturing.MM
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -59,18 +43,17 @@ namespace Fine.Lf_Manufacturing.MM
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            string  id = GetQueryValue("MB001");
+            string id = GetQueryValue("MB001");
 
+            Lf_Business.Models.YF.Yifei_DTA_Entities DBCYF = new Lf_Business.Models.YF.Yifei_DTA_Entities();
 
-           Fine.Lf_Business.Models.YF.Yifei_DTAEntities DBCYF = new Fine.Lf_Business.Models.YF.Yifei_DTAEntities();
-
-           Fine.Lf_Business.Models.YF.INVMB Ccurrent = DBCYF.INVMB.Find(id); //.Include(u => u.Dept);
+            INVMB Ccurrent = DBCYF.INVMB.Find(id); //.Include(u => u.Dept);
 
             if (Ccurrent == null)
             {
@@ -78,7 +61,6 @@ namespace Fine.Lf_Manufacturing.MM
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
 
             CMB001.Text = Ccurrent.MB001;
             CMB002.Text = Ccurrent.MB002;
@@ -104,13 +86,12 @@ namespace Fine.Lf_Manufacturing.MM
             CMB049.Text = Ccurrent.MB049.ToString();
             CMB050.Text = Ccurrent.MB050.ToString();
 
-           Fine.Lf_Business.Models.YF.CMSMV CName = DBCYF.CMSMV.Find(Ccurrent.MB067);
+            CMSMV CName = DBCYF.CMSMV.Find(Ccurrent.MB067);
             if (CName != null)
             {
                 CMB067.Text = CName.MV002;
             }
             CMB068.Text = Ccurrent.MB068;
-
 
             CMB080.Text = Ccurrent.MB080;
 
@@ -122,10 +103,9 @@ namespace Fine.Lf_Manufacturing.MM
 
             CUDF51.Text = Ccurrent.UDF51.ToString();
 
+            Lf_Business.Models.YF.Yifei_TAC_Entities DBHYF = new Lf_Business.Models.YF.Yifei_TAC_Entities();
 
-           Fine.Lf_Business.Models.YF.Yifei_TACEntities DBHYF = new Fine.Lf_Business.Models.YF.Yifei_TACEntities();
-
-           Fine.Lf_Business.Models.YF.INVMB Hcurrent = DBHYF.INVMB.Find(id); //.Include(u => u.Dept);
+            INVMB Hcurrent = DBHYF.INVMB.Find(id); //.Include(u => u.Dept);
 
             if (Hcurrent == null)
             {
@@ -158,13 +138,12 @@ namespace Fine.Lf_Manufacturing.MM
             HMB049.Text = Hcurrent.MB049.ToString();
             HMB050.Text = Hcurrent.MB050.ToString();
 
-           Fine.Lf_Business.Models.YF.CMSMV HName = DBHYF.CMSMV.Find(Ccurrent.MB067);
+            CMSMV HName = DBHYF.CMSMV.Find(Ccurrent.MB067);
             if (HName != null)
             {
                 HMB067.Text = HName.MV002;
             }
             //HMB067.Text = Hcurrent.MB067;
-
 
             HMB068.Text = Hcurrent.MB068;
             HMB080.Text = Hcurrent.MB080;
@@ -176,29 +155,8 @@ namespace Fine.Lf_Manufacturing.MM
             HUDF05.Text = Hcurrent.UDF05;
 
             HUDF51.Text = Hcurrent.UDF51.ToString();
-
-
-
         }
 
-
-
-
-
-
-
-        #endregion
-
-        #region Events
-        #endregion
-
-
-
-
-
-
-
-
-
+        #endregion Page_Load
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_lot.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_lot" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ec_lot.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_lot" %>
 
 <!DOCTYPE html>
 

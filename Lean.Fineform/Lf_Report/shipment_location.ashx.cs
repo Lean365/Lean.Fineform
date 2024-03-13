@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
     /// shipment_location 的摘要说明
     /// </summary>
     public class shipment_location : IHttpHandler
     {
-
-        Fine.Lf_Business.Models.YF.LeanSerialEntities DB_Serial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFine.Lf_Business.Models.YF.LeanSerial_Entities DB_Serial = new LeanFine.Lf_Business.Models.YF.LeanSerial_Entities();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -41,7 +31,6 @@ namespace Fine.Lf_Report
                          Date = g.Key.OUTS001.Substring(0, 6),
                          Destination = (g.Key.OUTS008.IndexOf("_") + 1 == 0 ? g.Key.OUTS008 : (g.Key.OUTS008.Substring(0, g.Key.OUTS008.IndexOf("_")))),
                          Qty = g.Sum(a => a.OUTS008),
-
                      };
 
             var qss = from a in qs
@@ -50,19 +39,17 @@ namespace Fine.Lf_Report
                           a.Date,
                           Destination = (a.Destination.Contains("ACE") ? "CHINA" : (a.Destination.Contains("BEIJING") ? "CHINA" : (a.Destination.Contains("DCHAV") ? "CHINA" : (a.Destination.Contains("DTA") ? "CHINA" : (a.Destination.Contains("GUANGZHOU") ? "CHINA" : (a.Destination.Contains("GW") ? "CHINA" : (a.Destination.Contains("MUJI") ? "CHINA" : (a.Destination.Contains("MUSICGW") ? "CHINA" : (a.Destination.Contains("NAISHA") ? "CHINA" : (a.Destination.Contains("SHANGHAI") ? "CHINA" : (a.Destination.Contains("SHENGZHEN") ? "CHINA" : (a.Destination.Contains("WUXI") ? "CHINA" : (a.Destination.Contains("TOA") ? "VIETNAM" : (a.Destination.Contains("INCHEON") ? "KOREA" : (a.Destination.Contains("TCA") ? "USA" : (a.Destination.Contains("HOLLAND") ? "NETHERLANDS" : (a.Destination.Contains("ROTTERDAM") ? "NETHERLANDS" : a.Destination))))))))))))))))),
                           a.Qty,
-
                       };
 
-            var q   =from a in qss
-                     group a by new { a.Date,a.Destination} into g
-                     select new
+            var q = from a in qss
+                    group a by new { a.Date, a.Destination } into g
+                    select new
 
-                     {
-                         g.Key.Date,
-                         g.Key.Destination,
-                         Qty=g.Sum(a=>a.Qty)
-                     };
-
+                    {
+                        g.Key.Date,
+                        g.Key.Destination,
+                        Qty = g.Sum(a => a.Qty)
+                    };
 
             DataSet ds = new DataSet();
             DataTable dt = ConvertHelper.LinqConvertToDataTable(q);
@@ -78,7 +65,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -86,7 +72,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

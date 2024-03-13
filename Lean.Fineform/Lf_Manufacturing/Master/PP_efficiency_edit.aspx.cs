@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_efficiency_edit : PageBase
     {
-
-        
         #region ViewPower
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +31,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,13 +47,13 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Pp_Efficiency current = DB.Pp_Efficiencys.Find(id);
 
             if (current == null)
@@ -66,8 +63,6 @@ namespace Fine.Lf_Manufacturing.Master
                 return;
             }
 
-
-
             Proratedate.Text = current.Proratedate;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             Prorate.Text = current.Prorate.ToString();
@@ -75,8 +70,6 @@ namespace Fine.Lf_Manufacturing.Master
             remark.Text = current.Remark;
 
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -89,19 +82,13 @@ namespace Fine.Lf_Manufacturing.Master
             //InitUserTitle(current);
 
             //修改前日志
-            string BeforeModi = current.Proratedate+","+current.Prorate.ToString();
+            string BeforeModi = current.Proratedate + "," + current.Prorate.ToString();
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "赁率修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -112,7 +99,6 @@ namespace Fine.Lf_Manufacturing.Master
             Pp_Efficiency current = DB.Pp_Efficiencys.Find(id);
             //decimal cQcpd005 = current.Qcpd005;
             string checkdata1 = current.Prorate.ToString();
-
 
             if (this.Prorate.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             {
@@ -127,7 +113,6 @@ namespace Fine.Lf_Manufacturing.Master
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
 
-
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //    if (redata != null)
@@ -136,6 +121,7 @@ namespace Fine.Lf_Manufacturing.Master
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -147,24 +133,19 @@ namespace Fine.Lf_Manufacturing.Master
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Prorate = int.Parse(Prorate.Text);
 
-
-
             // 添加所有用户
 
-
             item.Remark = remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = Proratedate.Text+","+ Prorate.Text;
+            string ModifiedText = Proratedate.Text + "," + Prorate.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "赁率修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -179,9 +160,9 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
-            SaveItem();
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -216,15 +197,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

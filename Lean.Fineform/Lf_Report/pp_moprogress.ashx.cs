@@ -1,41 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_moprogress 的摘要说明
+    /// pp_moprogress 的摘要说明
     /// </summary>
-    public class Pp_moprogress : IHttpHandler
+    public class pp_moprogress : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
             string atedate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
             DateTime dts = DateTime.ParseExact(atedate + "01", "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
 
-
             //string edate = DateTime.Now.ToString("yyyyMMdd").Substring(0, 6);
 
             string sdate = dts.AddYears(-1).AddMonths(+1).ToString("yyyyMMdd").Substring(0, 6);
-
 
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
@@ -43,7 +32,7 @@ namespace Fine.Lf_Report
             var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                             // where p.Prodate.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Prodate.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDelete == 0
+                        where p.isDeleted == 0
                         //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         select new
@@ -54,8 +43,6 @@ namespace Fine.Lf_Report
                             p.Proorderqty,
 
                             p.Prorealqty,
-
-
                         };
 
             var q_realQty =
@@ -67,7 +54,6 @@ namespace Fine.Lf_Report
                     g.Key.Proorderqty,
                     //EntiretyRate = (g.Sum(p => p.Proorderqty) != 0 ? g.Sum(p => p.Proorderqty) / g.Sum(p => p.Proorderqty) : 0) * 100,
                     Prorealqty = g.Sum(p => p.Prorealqty) //(g.Sum(p => p.Proorderqty) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Proorderqty) : 0)*100,
-
                 };
             var q_allQty = from p in q_realQty
                            group p by new { p.Prolot } into g
@@ -77,7 +63,6 @@ namespace Fine.Lf_Report
                                //g.Key.Proorderqty,
                                Proorderqty = g.Sum(p => p.Proorderqty), //(g.Sum(p => p.Proorderqty) != 0 ? g.Sum(p => p.Proorderqty) / g.Sum(p => p.Proorderqty) : 0) * 100,
                                Prorealqty = g.Sum(p => p.Prorealqty)    //(g.Sum(p => p.Proorderqty) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Proorderqty) : 0)*100,
-
                            };
 
             var q = from p in q_allQty
@@ -88,7 +73,6 @@ namespace Fine.Lf_Report
                         p.Proorderqty,
                         p.Prorealqty,
                         ProgressRate = ((p.Proorderqty) != 0 ? (p.Prorealqty) / (p.Proorderqty) : 0) * 100,
-
                     };
 
             q = q.OrderBy(u => u.Proorderqty);
@@ -107,7 +91,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
         public bool IsReusable
         {
             get
@@ -115,7 +98,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

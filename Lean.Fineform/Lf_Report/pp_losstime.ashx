@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Pp_losstime.ashx.cs" Class="Fine.Lf_Report.Pp_losstime" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="pp_losstime.ashx.cs" Class="LeanFine.Lf_Report.pp_losstime" %>

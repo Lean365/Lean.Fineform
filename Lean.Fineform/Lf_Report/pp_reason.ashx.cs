@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_reason 的摘要说明
+    /// pp_reason 的摘要说明
     /// </summary>
-    public class Pp_reason : IHttpHandler
+    public class pp_reason : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -42,23 +33,20 @@ namespace Fine.Lf_Report
                  where !string.IsNullOrEmpty(p.Probadmemo)
                  where !string.IsNullOrEmpty(p.Probadcou)
                  where !string.IsNullOrEmpty(p.Probadmemo)
-                 where p.isDelete == 0
+                 where p.isDeleted == 0
                  group p by new { Probadcou = p.Probadcou.Substring(0, 6), Probadmemo = p.Probadmemo.Substring(0, 6) }
                             into g
                  select new
                  {
-
                      g.Key.Probadcou,
                      g.Key.Probadmemo,
                      value = g.Count(),
-
                  }).ToList();
 
             int i = 0;
             var q_Rows = from a in q_all.AsEnumerable()
                          select new
                          {
-
                              id = i++,
                              a.Probadcou,
                              pid = (from o in DBCharts.Pp_P1d_OutputSubs
@@ -90,7 +78,6 @@ namespace Fine.Lf_Report
             var q_memo = (from p in q_Rows
                           select p).ToList();
 
-
             if (q_memo.Any())
             {
                 DataSet q_memods = new DataSet();
@@ -109,7 +96,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));
         }
 
-
         public bool IsReusable
         {
             get
@@ -117,7 +103,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="htmlcolorcodes.aspx.cs" Inherits="Fine.Lf_Admin.help.htmlcolorcodes" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="htmlcolorcodes.aspx.cs" Inherits="LeanFine.Lf_Admin.help.htmlcolorcodes" %>
 
 <!DOCTYPE html>
 

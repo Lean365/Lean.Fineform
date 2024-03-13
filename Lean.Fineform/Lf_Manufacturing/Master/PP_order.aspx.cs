@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
     public partial class Pp_order : PageBase
     {
@@ -21,12 +21,12 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
+
         //
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -61,10 +61,7 @@ namespace Fine.Lf_Manufacturing.Master
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -74,18 +71,17 @@ namespace Fine.Lf_Manufacturing.Master
 
             //当前日期
 
-
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Porderhbn.Contains(searchText) || u.Porderlot.Contains(searchText) || u.Porderno.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.Porderhbn.Contains(searchText) || u.Porderlot.Contains(searchText) || u.Porderno.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
             //}
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             // 过滤启用状态
             //if (rblEnableStatus.SelectedValue != "all")
             //{
@@ -102,7 +98,7 @@ namespace Fine.Lf_Manufacturing.Master
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -119,9 +115,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -135,15 +128,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
-
-
-
-
-
-
-
-
         protected void Window1_Close(object sender, EventArgs e)
         {
             //Alert.ShowInTop("窗体被关闭了。参数：");
@@ -155,7 +139,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -163,8 +146,7 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
 
         protected void DDLdate_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -179,7 +161,6 @@ namespace Fine.Lf_Manufacturing.Master
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
@@ -189,7 +170,6 @@ namespace Fine.Lf_Manufacturing.Master
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_order_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -207,11 +187,10 @@ namespace Fine.Lf_Manufacturing.Master
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "生产订单删除", OperateNotes);
 
-
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
                 BindGrid();
             }

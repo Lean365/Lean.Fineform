@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
 
 
@@ -186,13 +186,13 @@ namespace Fine.Lf_Accounting
         protected global::FineUIPro.BoundField OPTIONREMARK;
 
         /// <summary>
-        /// CREATETIME 控件。
+        /// CreateDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.BoundField CREATETIME;
+        protected global::FineUIPro.BoundField CreateDate;
 
         /// <summary>
         /// GroupPanel4 控件。

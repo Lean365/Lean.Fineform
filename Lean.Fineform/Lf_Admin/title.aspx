@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="title.aspx.cs" Inherits="Fine.Lf_Admin.title" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="title.aspx.cs" Inherits="LeanFine.Lf_Admin.title" %>
 
 <!DOCTYPE html>
 <html>

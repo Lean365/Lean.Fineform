@@ -1,17 +1,18 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
+
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.PP.daily
+
+namespace LeanFine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_daily_sub_edit : PageBase
     {
-
         #region ViewPower
 
         /// <summary>
@@ -25,9 +26,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, RealQty, StopCheck, StopMinute, StopText, ResonText, WorkText, strProline, strProdate, strProlot, strPromodel, strProst, strProstdcapacity, strProorder;
         public static int prorate;
         public static int ParentID, rowID;
@@ -36,26 +38,23 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-
             if (!IsPostBack)
             {
                 LoadData();
             }
         }
+
         private void Rate()//产线代码
         {
             Pp_Efficiency current = DB.Pp_Efficiencys
 
                 .OrderByDescending(u => u.Proratedate).FirstOrDefault();
 
-
             prorate = current.Prorate;
         }
+
         private void LoadData()
         {
-
             userid = GetIdentityName();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
@@ -84,8 +83,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.生产工数为1时，参与OPH计划台数统计。</div><div>2.同一时段生产多个工单时，计划台数系统自动处理，作业工数计算方法：<strong>多个工单具体的实绩工数+停线时间</strong></div><div>3.实绩工数的计算公式：<strong>作业工数-停线时间</strong></div><div>4.实绩工数不能为负数</div><div>4.生产实绩不能超过工单数量</div>");
             //MemoText.Text = "填写说明" + Environment.NewLine + "1.作业工数为1时，参与OPH计划台数统计。" + Environment.NewLine +"2.同一时段多个工单生产时，";
         }
-
-
 
         private void BindGrid()
         {
@@ -116,22 +113,19 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             Grid1.DataSource = q;
             Grid1.DataBind();
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
 
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
         }
+
         private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
-
-
             Pp_P1d_OutputSub item = DB.Pp_P1d_OutputSubs
 
                 .Where(u => u.ID == rowID).FirstOrDefault();
@@ -142,14 +136,12 @@ namespace Fine.Lf_Manufacturing.PP.daily
 
             beforeInsNetOperateNotes();
 
-
             // 生产实绩
             if (rowDict.ContainsKey("Prorealqty"))
             {
                 rowData["Prorealqty"] = rowDict["Prorealqty"];
                 item.Prorealqty = int.Parse(rowData["Prorealqty"].ToString());
                 RealQty = rowData["Prorealqty"].ToString();
-
             }
             // 停线
             //if (rowDict.ContainsKey("Prolinestop"))
@@ -201,7 +193,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 WorkText = rowData["Prolinemin"].ToString();
             }
 
-
             //直接人数
             int di = main_item.Prodirect;
 
@@ -216,11 +207,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             else
             {
                 item.Prorealtime = item.Prolinemin - item.Prolinestopmin;
-
             }
-
-
-
 
             if (item.Prolinemin == 1)
             {
@@ -253,7 +240,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 item.Prostdiff = 0;
                 item.Proratio = 0;
             }
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = userid;
 
             DB.SaveChanges();
@@ -270,7 +257,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             {
                 if (pcount.Count() > 1)
                 {
-
                     Decimal stdqty = prorate * item.Prorealtime / item.Prost / 100;
                     DB.Pp_P1d_OutputSubs
                        .Where(s => s.Prostime == item.Prostime)
@@ -278,7 +264,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
                        .Where(s => s.Prolinename == item.Prolinename)
                       .Where(s => s.Prorealqty != 0)
                        .ToList()
-                       .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Modifier = userid; x.ModifyTime = DateTime.Now; });
+                       .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Modifier = userid; x.ModifyDate = DateTime.Now; });
                     DB.SaveChanges();
                     //item.Prostdcapacity = prorate * item.Prorealtime / item.Prost / 100;
                 }
@@ -289,19 +275,18 @@ namespace Fine.Lf_Manufacturing.PP.daily
             DB.Pp_P1d_OutputSubs
                    .Where(s => s.Parent == ParentID && s.Prorealqty > 0 && s.Proorder.Substring(0, 1) == "5")
                    .ToList()
-                   .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = Convert.ToInt32((Convert.ToDecimal(x.Prorealqty) / x.Prostdcapacity) * 100); x.Modifier = userid; x.ModifyTime = DateTime.Now; });
+                   .ForEach(x => { x.Prostdcapacity = (x.Prorealtime == 0 ? x.Prostdcapacity : x.Prorealqty); x.Prostdiff = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = Convert.ToInt32((Convert.ToDecimal(x.Prorealqty) / x.Prostdcapacity) * 100); x.Modifier = userid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
 
             //还原标准产能及ST
             DB.Pp_P1d_OutputSubs
                    .Where(s => s.Parent == ParentID && s.Prorealqty == 0 && s.Proorder.Substring(0, 1) == "5")
                    .ToList()
-                   .ForEach(x => { x.Prostdcapacity = Convert.ToDecimal(strProstdcapacity); x.Prostdiff = 0;x.Prolinemin = 0;x.Prorealtime = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = 0; x.Modifier = userid; x.ModifyTime = DateTime.Now; });
+                   .ForEach(x => { x.Prostdcapacity = Convert.ToDecimal(strProstdcapacity); x.Prostdiff = 0; x.Prolinemin = 0; x.Prorealtime = 0; x.Prost = Convert.ToDecimal(strProst); x.Proqtydiff = 0; x.Prostdiff = 0; x.Proratio = 0; x.Modifier = userid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
 
-
             //更新不良数据中的实绩生产数量，按日期，工单，班组
-            UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename,userid);
+            UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
             UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
@@ -313,7 +298,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
             //更新订单已生产数量
             UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
-
         }
 
         //// 根据行ID来获取行数据
@@ -356,12 +340,12 @@ namespace Fine.Lf_Manufacturing.PP.daily
                         a.UDF55,
                         a.UDF56,
 
-                        a.isDelete,
+                        a.isDeleted,
                         a.Remark,
                         a.Creator,
-                        a.CreateTime,
+                        a.CreateDate,
                         a.Modifier,
-                        a.ModifyTime,
+                        a.ModifyDate,
                         Parent_ID = a.Parent,
                     };
 
@@ -382,7 +366,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
             //获取ID号
             int del_ID = Convert.ToInt32(Grid1.DataKeys[e.RowIndex][0]);
 
-
             if (e.CommandName == "Delete")
             {
                 // 在操作之前进行权限检查
@@ -402,7 +385,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 DB.Pp_P1d_OutputSubs.Where(l => l.ID == del_ID).DeleteFromQuery();
                 //重新绑定
                 BindGrid();
-
             }
         }
 
@@ -411,19 +393,14 @@ namespace Fine.Lf_Manufacturing.PP.daily
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreOutputDelete", Grid1, "deleteField");
             // 设置LinkButtonField的点击客户端事件
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
-
-
             // 修改的现有数据
             Dictionary<int, Dictionary<string, object>> modifiedDict = Grid1.GetModifiedDict();
 
-
             var ss = modifiedDict.Values.ToArray();
-
 
             foreach (int rowIndex in modifiedDict.Keys)
             {
@@ -453,18 +430,15 @@ namespace Fine.Lf_Manufacturing.PP.daily
                 {
                     DataRow row = FindRowByID(rowID);
 
-
                     UpdateDataRow(modifiedDict[rowIndex], row);
 
                     //报表重建
                     //Common.UpdateLineData();
                     // Common.UpdateModelData();
 
-
                     //更新不具合实绩
 
                     // Common.UpdateDefectQty(Ophguid);
-
                 }
                 catch (ArgumentNullException Message)
                 {
@@ -498,21 +472,13 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
                 }
 
-
                 //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）");
 
-
-
                 afterInsNetOperateNotes();
-
-
-
             }
 
             BindGrid();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-
-
         }
 
         private void beforeInsNetOperateNotes()
@@ -524,9 +490,9 @@ namespace Fine.Lf_Manufacturing.PP.daily
             string OperateType = "修改";//操作标记
             string OperateNotes = "beEdit生产OPH_SUB*" + Newtext + " *beEdit生产OPH_SUB 的记录将被修改";
 
-
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩修改", OperateNotes);
         }
+
         private void afterInsNetOperateNotes()
         {
             //修改后日志
@@ -540,11 +506,7 @@ namespace Fine.Lf_Manufacturing.PP.daily
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩修改", OperateNotes);
         }
 
-
-        #endregion
-
-
-
+        #endregion Events
 
         #region DDLBindData
 
@@ -560,7 +522,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     {
                         a.Reasoncntext,
                         //a.Prostoptext
-
                     };
             //去重复
             var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
@@ -573,13 +534,10 @@ namespace Fine.Lf_Manufacturing.PP.daily
             ddlProstopcou.DataValueField = "Reasoncntext";
             ddlProstopcou.DataBind();
             //将0行赋值DDL
-
-
-
         }
+
         private void BindDDLReason()
         {
-
             //查询原因类别
             var q = from a in DB.Pp_Reasons
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
@@ -590,7 +548,6 @@ namespace Fine.Lf_Manufacturing.PP.daily
                     {
                         a.Reasoncntext,
                         //a.Prostoptext
-
                     };
             //去重复
             var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
@@ -603,16 +560,8 @@ namespace Fine.Lf_Manufacturing.PP.daily
             ddlProbadcou.DataValueField = "Reasoncntext";
             ddlProbadcou.DataBind();
             //将0行赋值DDL
-
-
-
         }
 
-
-        #endregion
-
-
-
+        #endregion DDLBindData
     }
-
 }

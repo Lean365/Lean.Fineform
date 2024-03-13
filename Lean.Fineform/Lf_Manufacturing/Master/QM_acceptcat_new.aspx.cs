@@ -1,16 +1,16 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
-    public partial class Qm_acceptcat_new: PageBase
+namespace LeanFine.Lf_Manufacturing.Master
+{
+    public partial class qm_acceptcat_new : PageBase
     {
-        // 
+        //
 
         #region ViewPower
 
@@ -25,7 +25,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +33,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -43,25 +42,15 @@ namespace Fine.Lf_Manufacturing.Master
             labResult.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.检验类别：A,验收类别：B,不良级别：C</div><div>2.只能输入A，B，C。</div>");
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
-
-
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             //int id = GetQueryIntValue("id");
             //proSalesdata current = DB.proSalesdatas.Find(id);
             //string modi001 = current.Qcsd001;
@@ -93,12 +82,10 @@ namespace Fine.Lf_Manufacturing.Master
             //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             //}
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -112,7 +99,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -122,7 +108,6 @@ namespace Fine.Lf_Manufacturing.Master
             //}
             string InputData = Checkcntext.Text.Trim();
 
-
             Qm_CheckType Redata = DB.Qm_CheckTypes.Where(u => u.Checkcntext == InputData).FirstOrDefault();
 
             if (Redata != null)
@@ -131,12 +116,11 @@ namespace Fine.Lf_Manufacturing.Master
 
                 return;
             }
-
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-
             Qm_CheckType item = new Qm_CheckType();
             item.GUID = Guid.NewGuid();
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -145,24 +129,20 @@ namespace Fine.Lf_Manufacturing.Master
             item.Checkentext = Checkentext.Text;
             item.Checkjptext = Checkjptext.Text;
 
-
-
             // 添加所有用户
 
-            item.isDelete = 0;
+            item.isDeleted = 0;
             item.Remark = Remark.Text;
-            item.CreateTime = DateTime.Now;
+            item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Qm_CheckTypes.Add(item);
             DB.SaveChanges();
 
             //新增日志
-            string Newtext = Checktype.Text+","+ Checkcntext.Text;
+            string Newtext = Checktype.Text + "," + Checkcntext.Text;
             string OperateType = "新增";
             string OperateNotes = "New* " + Newtext + " New* 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "品管类别新增", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -180,7 +160,6 @@ namespace Fine.Lf_Manufacturing.Master
             {
                 CheckData();
                 SaveItem();
-
             }
             catch (ArgumentNullException Message)
             {
@@ -216,15 +195,7 @@ namespace Fine.Lf_Manufacturing.Master
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

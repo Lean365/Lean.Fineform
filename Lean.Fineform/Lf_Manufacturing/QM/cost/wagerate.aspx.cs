@@ -1,10 +1,12 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
+
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.QM.cost
+
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
     public partial class wagerate : PageBase
     {
@@ -20,14 +22,13 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 return "CoreWagesView";
             }
         }
-        #endregion
+
+        #endregion ViewPower
 
         #region Page_Load
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-
             if (!IsPostBack)
             {
                 LoadData();
@@ -71,7 +72,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             {
                 q = q.Where(u => u.Qcsd001.ToString().Contains(searchText));
             }
-            q = q.Where(u=>u.isDelete==0);
+            q = q.Where(u => u.isDeleted == 0);
             //else
             //{
             //    //当前日期
@@ -103,7 +104,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             {
                 //Btn2007.Visible = true;
                 //Btn2003.Visible = true;
-
             }
             else
             {
@@ -112,8 +112,9 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion
-#endregion
+        #endregion BindData
+
+        #endregion Page_Load
 
         #region Events
 
@@ -136,13 +137,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             CheckPowerWithLinkButtonField("CoreWagesEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreWagesDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -175,16 +173,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
         //    //DB.SaveChanges();
         //    DB.pqQachecks.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //    NetLogRecord();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -193,7 +185,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/wagerate_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -208,24 +199,20 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
                 //删除日志
 
-
-
                 Qm_Wagerate current = DB.Qm_Wagerates.Find(del_ID);
                 string Deltext = current.Qcsd001 + "," + current.Qcsd002 + "," + current.Qcsd003 + "," + current.Qcsd004 + "," + current.Qcsd005 + "," + current.Qcsd006;
                 string OperateType = "删除";
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
 
-
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "品质业务", "工资率数据删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
                 BindGrid();
-
             }
         }
 
@@ -239,7 +226,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -247,11 +233,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             BindGrid();
         }
 
-        #endregion
-
-        #region Export Data
-
-
-        #endregion
+        #endregion Events
     }
 }

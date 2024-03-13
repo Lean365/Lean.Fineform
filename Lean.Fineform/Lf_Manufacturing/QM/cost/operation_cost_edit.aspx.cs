@@ -1,18 +1,17 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 
-
-namespace Fine.Lf_Manufacturing.QM.cost
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
-
     public partial class operation_cost_edit : PageBase
     {
         //日志配置文件调用
-        
+
         #region ViewPower
+
         /// <summary>
         /// 本页面的浏览权限，空字符串表示本页面不受权限控制
         /// </summary>
@@ -24,15 +23,16 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public Guid strGuid;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -42,15 +42,13 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-
             //获取通过窗体传递的值
             string strtransmit = GetQueryValue("GUID");
             //转字符串组
             string[] strgroup = strtransmit.Split(',');
-            strGuid =Guid.Parse( strgroup[0].ToString().Trim());
+            strGuid = Guid.Parse(strgroup[0].ToString().Trim());
 
             BindData();
-
         }
 
         #region BindingData
@@ -58,7 +56,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
 
             Qm_Operation current = DB.Qm_Operations.Find(strGuid);
 
@@ -68,8 +65,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
-
 
             Qcod001.Text = current.Qcod001.ToString();
             Qcod002.Text = current.Qcod002.ToString();
@@ -110,12 +105,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             Qcod036.Text = current.Qcod036.ToString();
             Qcodqar.Text = current.Qcodqar.ToString();
 
-
-
-
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -133,17 +123,16 @@ namespace Fine.Lf_Manufacturing.QM.cost
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "月品质数据修改", OperateNotes);
         }
 
-        #endregion
+        #endregion BindingData
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
-           Qm_Operation current = DB.Qm_Operations.Find(strGuid);
+            Qm_Operation current = DB.Qm_Operations.Find(strGuid);
             string modi001 = current.Qcod003.ToString();
             string modi002 = current.Qcod008.ToString();
             string modi003 = current.Qcod012.ToString();
@@ -173,12 +162,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -192,7 +179,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -201,7 +187,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
             //string InputData = Qcrd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcrd002.Text.Trim() + Qcrd003.Text.Trim();
-
 
             //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworks.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
 
@@ -235,9 +220,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    qaQTY = 0;
             //}
 
-
-
-
             //if (qaQTY > mcQTY)
             //{
             //    //入库超出日志
@@ -250,10 +232,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
         }
+
         //字段赋值，保存
         private void SaveItem()//新增质量控制数据
         {
-
             Qm_Operation item = DB.Qm_Operations
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
@@ -296,7 +278,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             item.Qcod036 = Qcod036.Text;
             item.Qcodqar = Qcodqar.Text;
 
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -306,16 +288,14 @@ namespace Fine.Lf_Manufacturing.QM.cost
             string OperateType = "修改";
             string OperateNotes = "Edit* " + ModifiedText + "*Edit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "月品质数据修改", OperateNotes);
-
-
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             CheckData();
             SaveItem();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
 
         //计算受入检查业务费用
 
@@ -326,7 +306,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcod003.Text = (decimal.Parse(Qcod004.Text) * decimal.Parse(Qcod002.Text) + decimal.Parse(Qcod005.Text) + decimal.Parse(Qcod006.Text)).ToString();
             }
         }
-
 
         protected void Qcod004_TextChanged(object sender, EventArgs e)
         {
@@ -343,9 +322,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             qcod004();
         }
 
-
-
-
         //初期检定.定期检定业务费用
         public void qcod009()
         {
@@ -360,11 +336,11 @@ namespace Fine.Lf_Manufacturing.QM.cost
             qcod009();
         }
 
-
         protected void Qcod010_TextChanged(object sender, EventArgs e)
         {
             qcod009();
         }
+
         //测定器校正业务费用
         public void qcod013()
         {
@@ -388,6 +364,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             qcod013();
         }
+
         //其他通常业务费用
         public void qcod017()
         {
@@ -406,6 +383,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             qcod017();
         }
+
         //出荷检查业务费用
         public void qcod021()
         {
@@ -424,6 +402,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             qcod021();
         }
+
         //信赖性评价・ORT业务费用
         public void qcod025()
         {
@@ -432,6 +411,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcod025.Text = (decimal.Parse(Qcod026.Text) * decimal.Parse(Qcod002.Text) + decimal.Parse(Qcod027.Text)).ToString();
             }
         }
+
         protected void Qcod026_TextChanged(object sender, EventArgs e)
         {
             qcod025();
@@ -441,6 +421,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             qcod025();
         }
+
         //顾客品质要求对应业务费用
         public void qcod029()
         {
@@ -449,6 +430,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcod029.Text = (decimal.Parse(Qcod030.Text) * decimal.Parse(Qcod002.Text) + decimal.Parse(Qcod031.Text)).ToString();
             }
         }
+
         protected void Qcod030_TextChanged(object sender, EventArgs e)
         {
             qcod029();
@@ -459,7 +441,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             qcod029();
         }
 
-
         //其他通常业务费用
         public void qcod033()
         {
@@ -468,20 +449,17 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcod033.Text = (decimal.Parse(Qcod034.Text) * decimal.Parse(Qcod002.Text) + decimal.Parse(Qcod035.Text)).ToString();
             }
         }
+
         protected void Qcod034_TextChanged(object sender, EventArgs e)
         {
             qcod033();
         }
+
         protected void Qcod035_TextChanged(object sender, EventArgs e)
         {
             qcod033();
         }
 
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

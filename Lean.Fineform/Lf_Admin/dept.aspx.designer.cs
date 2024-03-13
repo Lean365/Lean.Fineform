@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Admin {
+namespace LeanFine.Lf_Admin {
     
     
     public partial class dept {

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.SOP
+namespace LeanFine.Lf_Manufacturing.SOP
 {
     public partial class pe_pcba : PageBase
     {
@@ -29,14 +21,15 @@ namespace Fine.Lf_Manufacturing.SOP
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static String mysql, ecnno, strecnno, tracestr;
         public int selID;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             //numBEbudgetmoney.Attributes.Add("Value", "0名");
             //numBEbudgetmoney.Attributes.Add("OnFocus", "if(this.value=='0') {this.value=''}");
             //numBEbudgetmoney.Attributes.Add("OnBlur", "if(this.value==''){this.value='0'}");
@@ -45,11 +38,8 @@ namespace Fine.Lf_Manufacturing.SOP
                 LoadData();
 
                 //btnDel.OnClientClick = Grid2.GetNoSelectionAlertReference(" 请至少选择一项！") + GetDeleteScript(Grid2); // 删除选中行客户端脚本定义 .就这一句就可以了。（和官网的一至）
-
             }
         }
-
-
 
         private void LoadData()
         {
@@ -66,10 +56,7 @@ namespace Fine.Lf_Manufacturing.SOP
             Grid2.PageSize = ConfigHelper.PageSize;
 
             BindGrid2();
-
         }
-
-
 
         private void BindGrid1()
         {
@@ -78,10 +65,10 @@ namespace Fine.Lf_Manufacturing.SOP
                 if (rbtnFirstAuto.Checked)
                 {
                     var q = from a in DB.Pp_EcSops
-                            //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
-                            where a.isDelete == 0
+                                //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
+                            where a.isDeleted == 0
 
-                            where a.Ec_pengpdate == "" 
+                            where a.Ec_pengpdate == ""
                             orderby a.Ec_entrydate descending
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -94,10 +81,10 @@ namespace Fine.Lf_Manufacturing.SOP
                     string searchText = ttbSearchEcnsub.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText)  || u.Ec_issuedate.ToString().Contains(searchText));
+                        q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText) || u.Ec_issuedate.ToString().Contains(searchText));
                     }
 
-                    var qs = q.Select(E => new { E.Ec_no,  }).ToList().Distinct();
+                    var qs = q.Select(E => new { E.Ec_no, }).ToList().Distinct();
 
                     //// 在查询添加之后，排序和分页之前获取总记录数
                     //Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -108,10 +95,8 @@ namespace Fine.Lf_Manufacturing.SOP
                     //    GridHelper.GetPagedDataTable(Grid1, q);
                     //}
 
-
                     Grid1.DataSource = qs;
                     Grid1.DataBind();
-
 
                     Grid1.SelectedRowIndex = 0;
                 }
@@ -119,8 +104,8 @@ namespace Fine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_EcSops
                                 //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
-                            where a.isDelete == 0
-                            where a.Ec_pengpdate != "" 
+                            where a.isDeleted == 0
+                            where a.Ec_pengpdate != ""
 
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -134,10 +119,10 @@ namespace Fine.Lf_Manufacturing.SOP
                     string searchText = ttbSearchEcnsub.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText)  || u.Ec_issuedate.ToString().Contains(searchText));
+                        q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText) || u.Ec_issuedate.ToString().Contains(searchText));
                     }
 
-                    var qs = q.Select(E => new { E.Ec_no,  }).ToList().Distinct();
+                    var qs = q.Select(E => new { E.Ec_no, }).ToList().Distinct();
 
                     //// 在查询添加之后，排序和分页之前获取总记录数
                     //Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -148,10 +133,8 @@ namespace Fine.Lf_Manufacturing.SOP
                     //    GridHelper.GetPagedDataTable(Grid1, q);
                     //}
 
-
                     Grid1.DataSource = qs;
                     Grid1.DataBind();
-
 
                     Grid1.SelectedRowIndex = 0;
                 }
@@ -159,7 +142,7 @@ namespace Fine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_EcSops
                                 //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
-                            where a.isDelete == 0
+                            where a.isDeleted == 0
                             //where a.Ec_qadate == ""
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -176,7 +159,7 @@ namespace Fine.Lf_Manufacturing.SOP
                         q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText) || u.Ec_issuedate.ToString().Contains(searchText));
                     }
 
-                    var qs = q.Select(E => new { E.Ec_no,  }).ToList().Distinct();
+                    var qs = q.Select(E => new { E.Ec_no, }).ToList().Distinct();
                     //// 在查询添加之后，排序和分页之前获取总记录数
                     //Grid1.RecordCount = GridHelper.GetTotalCount(q);
 
@@ -186,10 +169,8 @@ namespace Fine.Lf_Manufacturing.SOP
                     //    GridHelper.GetPagedDataTable(Grid1, q);
                     //}
 
-
                     Grid1.DataSource = qs;
                     Grid1.DataBind();
-
 
                     Grid1.SelectedRowIndex = 0;
                 }
@@ -205,9 +186,9 @@ namespace Fine.Lf_Manufacturing.SOP
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         private void BindGrid2()
         {
             if (Grid1.SelectedRowIndex < 0)
@@ -221,9 +202,6 @@ namespace Fine.Lf_Manufacturing.SOP
 
             //int roleID = GetSelectedDataKeyID(Grid1);
 
-
-
-
             if (!String.IsNullOrEmpty(ecnno))
             {
                 if (rbtnFirstAuto.Checked)
@@ -231,35 +209,27 @@ namespace Fine.Lf_Manufacturing.SOP
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_EcSops
                                   //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                              where a.Ec_pengpdate == "" 
+                              where a.Ec_pengpdate == ""
                               orderby a.Ec_entrydate
                               select new
                               {
-
                                   Ec_pengadate = a.Ec_pengadate == null ? "" : a.Ec_pengadate,
                                   Ec_pengpdate = a.Ec_pengpdate == null ? "" : a.Ec_pengpdate,
                                   a.Ec_model,
                                   a.Ec_no,
-
-
                               };
-
-
-
 
                     //查询LINQ去重复
                     var q = doc.Select(E =>
-                    new {
+                    new
+                    {
                         E.Ec_pengadate,
                         E.Ec_pengpdate,
                         E.Ec_model,
                         E.Ec_no,
-
-
                     }).Distinct();
 
-
-                    q = q.Where(u => u.Ec_no.Contains(ecnno) );
+                    q = q.Where(u => u.Ec_no.Contains(ecnno));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid2.RecordCount = GridHelper.GetTotalCount(q);
@@ -276,24 +246,19 @@ namespace Fine.Lf_Manufacturing.SOP
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
-
-
                 }
                 else if (rbtnSecondAuto.Checked)
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_EcSops
                                   //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                              where a.Ec_pengpdate != "" 
+                              where a.Ec_pengpdate != ""
                               orderby a.Ec_entrydate
                               select new
                               {
@@ -301,22 +266,16 @@ namespace Fine.Lf_Manufacturing.SOP
                                   Ec_pengpdate = a.Ec_pengpdate == null ? "" : a.Ec_pengpdate,
                                   a.Ec_model,
                                   a.Ec_no,
-
-
                               };
-
-
-
 
                     //查询LINQ去重复
                     var q = doc.Select(E =>
-                    new {
+                    new
+                    {
                         E.Ec_pengadate,
                         E.Ec_pengpdate,
                         E.Ec_model,
                         E.Ec_no,
-
-
                     }).Distinct();
                     q = q.Where(u => u.Ec_no.Contains(ecnno));
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -334,47 +293,36 @@ namespace Fine.Lf_Manufacturing.SOP
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
-
-
                 }
                 else if (rbtnThirdAuto.Checked)
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_EcSops
                               orderby a.Ec_entrydate
-                                  //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
-                             
+                              //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+
                               select new
                               {
                                   Ec_pengadate = a.Ec_pengadate == null ? "" : a.Ec_pengadate,
                                   Ec_pengpdate = a.Ec_pengpdate == null ? "" : a.Ec_pengpdate,
                                   a.Ec_model,
                                   a.Ec_no,
-
-
                               };
-
-
-
 
                     //查询LINQ去重复
                     var q = doc.Select(E =>
-                    new {
+                    new
+                    {
                         E.Ec_pengadate,
                         E.Ec_pengpdate,
                         E.Ec_model,
                         E.Ec_no,
-
-
                     }).Distinct();
 
                     q = q.Where(u => u.Ec_no.Contains(ecnno));
@@ -393,19 +341,13 @@ namespace Fine.Lf_Manufacturing.SOP
 
                         Grid2.DataSource = table;
                         Grid2.DataBind();
-
-
                     }
                     else
                     {
                         Grid2.DataSource = "";
                         Grid2.DataBind();
                     }
-
-
-
                 }
-
             }
             else
             {
@@ -416,11 +358,10 @@ namespace Fine.Lf_Manufacturing.SOP
             //ecnno = "";
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         protected void ttbSearchEcnsub_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchEcnsub.ShowTrigger1 = true;
@@ -460,8 +401,7 @@ namespace Fine.Lf_Manufacturing.SOP
             BindGrid2();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region Grid1 Events
 
@@ -479,14 +419,13 @@ namespace Fine.Lf_Manufacturing.SOP
 
         protected void Grid1_RowClick(object sender, GridRowClickEventArgs e)
         {
-
             object[] keys = Grid1.DataKeys[e.RowIndex];
             ecnno = keys[1].ToString();
             strecnno = keys[1].ToString();
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -513,6 +452,7 @@ namespace Fine.Lf_Manufacturing.SOP
             Grid2.PageIndex = e.NewPageIndex;
             BindGrid2();
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -539,6 +479,7 @@ namespace Fine.Lf_Manufacturing.SOP
                 BindGrid2();
             }
         }
+
         protected void Grid2_RowCommand(object sender, GridCommandEventArgs e)
         {
             //参数传递
@@ -546,16 +487,12 @@ namespace Fine.Lf_Manufacturing.SOP
                     where a.Ec_no.Contains(strecnno)
                     select new
                     {
-
                         a.Ec_distinction,
-
-
                     };
 
             var qs = q.ToList();
             //ID,Ec_no,Ec_model,Ec_bomitem,Ec_olditem,Ec_newitem
             object[] keys = Grid2.DataKeys[e.RowIndex];
-
 
             if (keys[0] == null)
             {
@@ -572,42 +509,26 @@ namespace Fine.Lf_Manufacturing.SOP
             }
             else
             {
-                tracestr = tracestr + keys[1].ToString() ;
+                tracestr = tracestr + keys[1].ToString();
             }
-
 
             PageContext.RegisterStartupScript(Window3.GetShowReference("~/Lf_Manufacturing/SOP/pe_pcba_edit.aspx?Ec_no=" + tracestr + "&type=1"));
             //选中ID
-           // int DelID = Convert.ToInt32(Grid2.DataKeys[e.RowIndex][0]);//GetSelectedDataKeyID(Grid2);
+            // int DelID = Convert.ToInt32(Grid2.DataKeys[e.RowIndex][0]);//GetSelectedDataKeyID(Grid2);
 
             BindGrid2();
-
         }
 
         protected void Grid2_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
 
-        #endregion
-
-        #region Other Events
-
-
-
-        #endregion
-
-        #region NetOperateNotes
-
-        #endregion
+        #endregion Grid2 Events
 
         protected void Window3_Close(object sender, EventArgs e)
         {
             BindGrid1();
             BindGrid2();
         }
-
-
     }
 }
-

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="qa.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.dept.qa" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="qa.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.dept.qa" %>
 
 <!DOCTYPE html>
 
@@ -70,7 +70,7 @@
                         <f:BoundField DataField="Ec_qanote" ColumnID="Ec_qanote" SortField="Ec_qanote"  EnableLock="true" Width="100px" HeaderText="说明"/> 
 
                         <f:BoundField DataField="qaModifier" ColumnID="qaModifier" SortField="qaModifier"  EnableLock="true" Width="100px" HeaderText="登录人员"/>
-                        <f:BoundField DataField="qaModifyTime" ColumnID="qaModifyTime" SortField="qaModifyTime"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
+                        <f:BoundField DataField="qaModifyDate" ColumnID="qaModifyDate" SortField="qaModifyDate"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
 
                     </Columns>
                 </f:Grid>

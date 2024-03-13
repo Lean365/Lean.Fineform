@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Qm_pass.ashx.cs" Class="Fine.Lf_Report.Qm_pass" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="qm_pass.ashx.cs" Class="LeanFine.Lf_Report.qm_pass" %>

@@ -1,16 +1,13 @@
-﻿
-/* !
+﻿/* !
  * Echarts图表封装模板
  * 版 本 20200416.008(https://github.com/davischeng)
- * Copyright 2020 LeanCloud.Inc 
+ * Copyright 2020 LeanCloud.Inc
  * 创建人：Davis.Cheng
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
  * https://github.com/davischeng/oneCube/blob/master/licenses.txt
  * Date: 2020-04-16T16:01Z
  */
-
-
 
 var PrimarycolorList = [
     '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
@@ -45,7 +42,6 @@ var AuxiliarycolorList = [
     '#d0b0ff', "#2F9323", "#D9B63A", "#2E2AA4", "#9F2E61",
     "#4D670C", "#BF675F", "#1F814A", "#357F88", "#673509",
     "#310937", "#1B9637", "#F7393C"];
-
 
 var TreecolorList = [
     '#272727', '#2F0000', '#600030', '#460046', '#28004D',
@@ -165,7 +161,6 @@ function LineChart(name, value) {
     };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
-
 }
 function RadarChart(name, value, data) {
     var myChart = echarts.init(document.getElementById('Radar'));
@@ -228,10 +223,3 @@ function RadarChart(name, value, data) {
     };
     myChart.setOption(option);
 }
-
-
-
-
-
-
-

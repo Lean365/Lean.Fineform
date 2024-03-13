@@ -1,33 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
 using System.Collections;
-using System.Configuration;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.IO;
-using Newtonsoft.Json.Linq;
+using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Text;
-using System.Data.Entity.Validation;
-using System.Dynamic;
-using System.ComponentModel;
-namespace Fine
+using System.Web.UI.WebControls;
+
+namespace LeanFine
 
 {
     /// <summary>
     /// 处理数据类型转换，数制转换、编码转换相关的类
-    /// </summary>    
+    /// </summary>
     public sealed class ConvertHelper
     {
         #region 补足位数
+
         /// <summary>
         /// 指定字符串的固定长度，如果字符串小于固定长度，
         /// 则在字符串的前面补足零，可设置的固定长度最大为9位
@@ -51,9 +41,11 @@ namespace Fine
             //返回补足0的字符串
             return temp;
         }
-        #endregion
+
+        #endregion 补足位数
 
         #region 各进制数间转换
+
         /// <summary>
         /// 实现各进制数间的转换。ConvertBase("15",10,16)表示将十进制数15转换为16进制的数。
         /// </summary>
@@ -74,15 +66,19 @@ namespace Fine
                         case 7:
                             result = "0" + result;
                             break;
+
                         case 6:
                             result = "00" + result;
                             break;
+
                         case 5:
                             result = "000" + result;
                             break;
+
                         case 4:
                             result = "0000" + result;
                             break;
+
                         case 3:
                             result = "00000" + result;
                             break;
@@ -92,14 +88,15 @@ namespace Fine
             }
             catch
             {
-
                 //LogHelper.WriteTraceLog(TraceLogLevel.Error, ex.Message);
                 return "0";
             }
         }
-        #endregion
+
+        #endregion 各进制数间转换
 
         #region 使用指定字符集将string转换成byte[]
+
         /// <summary>
         /// 使用指定字符集将string转换成byte[]
         /// </summary>
@@ -109,9 +106,11 @@ namespace Fine
         {
             return encoding.GetBytes(text);
         }
-        #endregion
+
+        #endregion 使用指定字符集将string转换成byte[]
 
         #region 使用指定字符集将byte[]转换成string
+
         /// <summary>
         /// 使用指定字符集将byte[]转换成string
         /// </summary>
@@ -121,9 +120,11 @@ namespace Fine
         {
             return encoding.GetString(bytes);
         }
-        #endregion
+
+        #endregion 使用指定字符集将byte[]转换成string
 
         #region 将byte[]转换成int
+
         /// <summary>
         /// 将byte[]转换成int
         /// </summary>
@@ -155,17 +156,18 @@ namespace Fine
             //返回整数
             return num;
         }
-        #endregion
+
+        #endregion 将byte[]转换成int
 
         #region 返回数据表
+
         /// <summary>
-        /// LINQ转换为DataTable类型 
+        /// LINQ转换为DataTable类型
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         public static DataTable LinqConvertToDataTable(IQueryable query)
         {
-            
             DataTable dtList = new DataTable();
             bool isAdd = false;
             PropertyInfo[] objProterties = null;
@@ -177,7 +179,7 @@ namespace Fine
                     foreach (var itemProterty in objProterties)
                     {
                         Type type = null;
-                        if (itemProterty.PropertyType != typeof(string) && itemProterty.PropertyType != typeof(int) && itemProterty.PropertyType != typeof(DateTime)&&itemProterty.PropertyType!=typeof(Decimal))
+                        if (itemProterty.PropertyType != typeof(string) && itemProterty.PropertyType != typeof(int) && itemProterty.PropertyType != typeof(DateTime) && itemProterty.PropertyType != typeof(Decimal))
                         {
                             type = typeof(string);
                         }
@@ -198,9 +200,10 @@ namespace Fine
             }
 
             return dtList;
-        }       
+        }
+
         /// <summary>
-        /// 将IEnumerable<T>类型的集合转换为DataTable类型 
+        /// 将IEnumerable<T>类型的集合转换为DataTable类型
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="varlist"></param>
@@ -245,8 +248,9 @@ namespace Fine
             }
             return dtReturn;//返回DataTable对象
         }
+
         /// <summary>
-        /// SQL转换为DataTable类型 
+        /// SQL转换为DataTable类型
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
@@ -257,19 +261,19 @@ namespace Fine
             SqlDataReader mydr = SqlHelper.ExecuteReader(SqlHelper.GetConnSting(),
                                  CommandType.Text, sql, null);
 
-
             DataTable mydt = new DataTable();
             mydt.Load(mydr);
 
             return mydt;//返回dt
         }
+
         #endregion 返回数据表
 
-        /// <summary>    
-        /// 将集合类转换成DataTable    
-        /// </summary>    
-        /// <param name="list">集合</param>    
-        /// <returns></returns>    
+        /// <summary>
+        /// 将集合类转换成DataTable
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <returns></returns>
         public static DataTable ListConvertToDataTable(IList list)
         {
             DataTable result = new DataTable();
@@ -325,6 +329,7 @@ namespace Fine
 
             return tb;
         }
+
         /// <summary>
         /// Determine of specified type is nullable
         /// </summary>
@@ -354,6 +359,7 @@ namespace Fine
                 return t;
             }
         }
+
         public static DataTable ToDataTable<T>(IEnumerable<T> collection)
         {
             var props = typeof(T).GetProperties();
@@ -375,6 +381,7 @@ namespace Fine
             }
             return dt;
         }
+
         /// <summary>
         /// List转DT
         /// </summary>
@@ -394,7 +401,7 @@ namespace Fine
                 {
                     colType = colType.GetGenericArguments()[0];
                 }
-                //添加列明及对应类型 
+                //添加列明及对应类型
                 dt.Columns.Add(item.Name, colType);
             }
             foreach (var item in list)
@@ -417,13 +424,14 @@ namespace Fine
             }
             return dt;
         }
+
         /// <summary>
-                 /// 动态Linq方式实现行转列
-                 /// </summary>
-                 /// <param name="list">数据</param>
-                 /// <param name="DimensionList">维度列</param>
-                 /// <param name="DynamicColumn">动态列</param>
-                 /// <returns>行转列后数据</returns>
+        /// 动态Linq方式实现行转列
+        /// </summary>
+        /// <param name="list">数据</param>
+        /// <param name="DimensionList">维度列</param>
+        /// <param name="DynamicColumn">动态列</param>
+        /// <returns>行转列后数据</returns>
         public static DataTable DataTableRowToCol(DataTable dt, List<string> DimensionList, string DynamicColumn, out List<string> AllDynamicColumn)
         {
             //获取所有动态列
@@ -457,7 +465,7 @@ namespace Fine
             {
                 foreach (var item in AllNumberColumn.Keys)
                 {
-                    dtResult.Columns.Add(item +"'"+ dynamicValue, AllNumberColumn[item]);
+                    dtResult.Columns.Add(item + "'" + dynamicValue, AllNumberColumn[item]);
                 }
             }
 
@@ -517,9 +525,5 @@ namespace Fine
             }
             return dtResult;
         }
-
-
-
-
     }
 }

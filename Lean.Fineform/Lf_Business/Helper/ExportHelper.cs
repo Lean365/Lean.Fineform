@@ -1,41 +1,39 @@
-﻿using System.Data;
-using System.Web;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+﻿using FineUIPro;
 using NPOI;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using FineUIPro;
+using NPOI.XSSF.UserModel;
 using OfficeOpenXml;
-using System.Web.UI.WebControls;
-using System.Text;
-using System.Drawing;
-
-using System.ComponentModel;
 using OfficeOpenXml.Style;
-using static System.Data.Entity.Infrastructure.Design.Executor;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI.WebControls;
 
-namespace Fine
+namespace LeanFine
 {
     public class ExportHelper
     {
         #region ================适用于单表头================
+
         public static DataTable GetGridDataTable(Grid grid)
         {
             DataTable dt = new DataTable();
-            DataColumn dc;//创建列 
-            DataRow dr;       //创建行 
-                              //构造列 
+            DataColumn dc;//创建列
+            DataRow dr;       //创建行
+                              //构造列
             for (int i = 0; i < grid.Columns.Count; i++)
             {
                 dc = new DataColumn();
                 dc.ColumnName = grid.Columns[i].HeaderText;
                 dt.Columns.Add(dc);
             }
-            //构造行 
+            //构造行
             for (int i = 0; i < grid.Rows.Count; i++)
             {
                 dr = dt.NewRow();
@@ -48,7 +46,8 @@ namespace Fine
 
             return dt;
         }
-        #endregion
+
+        #endregion ================适用于单表头================
 
         /// <summary>
         /// 由DataSet导出Excel
@@ -107,6 +106,7 @@ namespace Fine
             ms.Close();
             ms = null;
         }
+
         /// <summary>
         /// 由DataTable导出Excel
         /// </summary>
@@ -147,6 +147,7 @@ namespace Fine
 
             return ms;
         }
+
         /// <summary>
         /// 由DataTable导出Excel
         /// </summary>
@@ -199,10 +200,9 @@ namespace Fine
                 ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -238,8 +238,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -249,6 +249,7 @@ namespace Fine
                 HttpContext.Current.Response.End();
             }
         }
+
         public static void EpplustoXLSXfiles(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
@@ -278,7 +279,7 @@ namespace Fine
 
                 //赋值单元格
 
-                ws.Cells[1, 1].Value ="DTA OPH "+ mybname.Substring(fistr + 1, mybname.Length - fistr - 1)+ " Report";
+                ws.Cells[1, 1].Value = "DTA OPH " + mybname.Substring(fistr + 1, mybname.Length - fistr - 1) + " Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -296,7 +297,7 @@ namespace Fine
                 ws.Cells[2, 14].Style.Font.Size = 10;
                 ws.Cells[2, 15].Value = "85.00%";
                 ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色              
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
                 ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
@@ -314,15 +315,12 @@ namespace Fine
                 ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[5, 15].Style.Font.Size = 6;
 
-
-
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
 
                 ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -358,8 +356,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -426,7 +424,7 @@ namespace Fine
                 ws.Cells[2, 14].Style.Font.Size = 10;
                 ws.Cells[2, 15].Value = "85.00%";
                 ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色              
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
                 ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
@@ -446,10 +444,9 @@ namespace Fine
                 ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
 
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -485,8 +482,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -553,7 +550,7 @@ namespace Fine
                 ws.Cells[2, 14].Style.Font.Size = 10;
                 ws.Cells[2, 15].Value = "85.00%";
                 ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色              
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
                 ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
@@ -574,10 +571,9 @@ namespace Fine
                 ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
 
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -613,8 +609,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -624,6 +620,7 @@ namespace Fine
                 HttpContext.Current.Response.End();
             }
         }
+
         public static void ModelQtytoXLSXfile(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
@@ -650,9 +647,6 @@ namespace Fine
                 wb.Properties.Title = "LeanClouds Download";
                 wb.Properties.LastModifiedBy = "Davis.Cheng";
 
-
-
-
                 //赋值单元格
                 ws.Cells[1, 2].Value = "DTA Model Output Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
@@ -677,7 +671,7 @@ namespace Fine
                 ws.Cells[2, 10].Style.Font.Size = 10;
                 ws.Cells[2, 11].Value = "85.00%";
                 ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色              
+                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 11].Style.Font.Size = 10;
                 //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
@@ -711,10 +705,9 @@ namespace Fine
                 ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
 
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -750,8 +743,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -761,6 +754,7 @@ namespace Fine
                 HttpContext.Current.Response.End();
             }
         }
+
         public static void ReModeloXLSXfile(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
@@ -787,9 +781,6 @@ namespace Fine
                 wb.Properties.Title = "LeanClouds Download";
                 wb.Properties.LastModifiedBy = "Davis.Cheng";
 
-
-
-
                 //赋值单元格
                 ws.Cells[1, 2].Value = "DTA Model Output Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
@@ -814,7 +805,7 @@ namespace Fine
                 ws.Cells[2, 10].Style.Font.Size = 10;
                 ws.Cells[2, 11].Value = "85.00%";
                 ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色              
+                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 11].Style.Font.Size = 10;
                 //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
@@ -847,10 +838,9 @@ namespace Fine
                 ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
 
-                //Example how to Format Column 1 as numeric 
+                //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
-
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
@@ -886,8 +876,8 @@ namespace Fine
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名    
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
                 string fileName = HttpUtility.UrlEncode(myfname);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -897,6 +887,7 @@ namespace Fine
                 HttpContext.Current.Response.End();
             }
         }
+
         /// <summary>
         /// 根据数据类型设置不同类型的cell
         /// </summary>
@@ -910,16 +901,19 @@ namespace Fine
                 case "System.String"://字符串类型
                     value = cellValue;
                     break;
+
                 case "System.DateTime"://日期类型
                     System.DateTime dateV;
                     System.DateTime.TryParse(cellValue, out dateV);
                     value = dateV;
                     break;
+
                 case "System.Boolean"://布尔型
                     bool boolV = false;
                     bool.TryParse(cellValue, out boolV);
                     value = boolV;
                     break;
+
                 case "System.Int16"://整型
                 case "System.Int32":
                 case "System.Int64":
@@ -928,15 +922,18 @@ namespace Fine
                     int.TryParse(cellValue, out intV);
                     value = intV;
                     break;
+
                 case "System.Decimal"://浮点型
                 case "System.Double":
                     double doubV = 0;
                     double.TryParse(cellValue, out doubV);
                     value = doubV;
                     break;
+
                 case "System.DBNull"://空值处理
                     value = string.Empty;
                     break;
+
                 default:
                     value = string.Empty;
                     break;
@@ -954,25 +951,22 @@ namespace Fine
         {
             bool fs = false;
 
-
             XSSFWorkbook workbook = new XSSFWorkbook();
             //Create Excel的属性中的来源以及说明等
             POIXMLProperties props = workbook.GetProperties();
             props.CoreProperties.Creator = "Davis.Cheng";
             props.CoreProperties.Created = DateTime.Now;
             props.CoreProperties.Category = "生产管理";
-            if (!props.CustomProperties.Contains("LeanBench"))
-                props.CustomProperties.AddProperty("LeanBench", "LeanBench");
-
+            if (!props.CustomProperties.Contains("Lean365"))
+                props.CustomProperties.AddProperty("Lean365", "Lean365");
 
             props.CoreProperties.Modified = DateTime.Now;
 
-            props.CoreProperties.Keywords = "LeanBench";
+            props.CoreProperties.Keywords = "Lean365";
 
             props.CoreProperties.Subject = "生产不良集计";
             props.CoreProperties.Title = "DTA精益生产系统";
             props.CoreProperties.LastModifiedByUser = "Davis.Cheng";
-
 
             DataSet set = new DataSet();
             foreach (DataTable dt in dts)
@@ -984,7 +978,6 @@ namespace Fine
                 //sheet.DefaultRowHeight = 30 * 20;
 
                 sheet.PrintSetup.PaperSize = 9;
-
 
                 //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
                 //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
@@ -1052,7 +1045,6 @@ namespace Fine
                 font20.FontHeightInPoints = 18;
                 Centerstyle.SetFont(font20);
 
-
                 //标题文字，字体，大小12，居中
                 ICellStyle Rightstyles = workbook.CreateCellStyle();
                 Rightstyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
@@ -1081,10 +1073,8 @@ namespace Fine
                      //where g.Field<string>("Proorder") == sorder
                      select g).ToList();
 
-
                 if (q.Any())
                 {
-
                     int rowCout = dt.Rows.Count;
                     int PageCount = (int)Math.Ceiling(rowCout / 47.00);
 
@@ -1100,7 +1090,6 @@ namespace Fine
                                 cell.CellStyle = DefStyles;
                             }
                             sheet.GetRow(i).Height = 16 * 20;
-
                         }
 
                         //处理表头
@@ -1137,7 +1126,6 @@ namespace Fine
                                 //Reset the image to the original size.
                                 picture.Resize();   //Note: Resize will reset client anchor you set.
                                 picture.LineStyle = LineStyle.DashDotGel;
-
 
                                 //将图片文件读入一个字符串
                                 //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
@@ -1184,13 +1172,6 @@ namespace Fine
                                 row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
                                 row2cell5.CellStyle = Rightstyles;
 
-
-
-
-
-
-
-
                                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
                                 //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
                                 XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
@@ -1227,7 +1208,6 @@ namespace Fine
                                 //row50cell8.SetCellValue("页码");
                                 //row50cell8.CellStyle = DefStyles;
                             }
-
                         }
                         for (int f = 5; f < 48; f++)
                         {
@@ -1235,18 +1215,14 @@ namespace Fine
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
                             //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-
                         }
                         sheet.GetRow(2).GetCell(0).SetCellValue("机种");
                         //合并2,3
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
                         sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
 
-
-
                         //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
                         //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
 
                         sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
@@ -1308,21 +1284,25 @@ namespace Fine
                                     cellA.SetCellValue(item.ColumnName);
                                     cellA.CellStyle = DefStyles;
                                     break;
+
                                 case 1:
                                     XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
                                     cellB.SetCellValue(item.ColumnName);
                                     cellB.CellStyle = DefStyles;
                                     break;
+
                                 case 2:
                                     XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellC.SetCellValue(item.ColumnName);
                                     cellC.CellStyle = DefStyles;
                                     break;
+
                                 case 3:
                                     XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellD.SetCellValue(item.ColumnName);
                                     cellD.CellStyle = DefStyles;
                                     break;
+
                                 case 4:
                                     XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
                                     cellE.SetCellValue(item.ColumnName);
@@ -1346,7 +1326,6 @@ namespace Fine
                             {
                                 if (iRowIndex < 49)
                                 {
-
                                     XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
                                     foreach (DataColumn Colitem in dt.Columns)
                                     {
@@ -1361,6 +1340,7 @@ namespace Fine
 
                                                 cellA.CellStyle = ContStyles;
                                                 break;
+
                                             case 1:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1369,6 +1349,7 @@ namespace Fine
                                                 cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
                                                 cellB.CellStyle = ContStyles;
                                                 break;
+
                                             case 2:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1377,6 +1358,7 @@ namespace Fine
                                                 cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
                                                 cellC.CellStyle = ContStyles;
                                                 break;
+
                                             case 3:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1385,6 +1367,7 @@ namespace Fine
                                                 cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
                                                 cellD.CellStyle = ContStyles;
                                                 break;
+
                                             case 4:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1401,10 +1384,7 @@ namespace Fine
                                                 //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
                                                 //    cellF.CellStyle = ContStyles;
                                                 //    break;
-
-
                                         }
-
 
                                         iCellIndex++;
                                     }
@@ -1437,7 +1417,6 @@ namespace Fine
                                 cell.CellStyle = DefStyles;
                             }
                             sheet.GetRow(i).Height = 16 * 20;
-
                         }
 
                         //处理表头
@@ -1474,7 +1453,6 @@ namespace Fine
                                 //Reset the image to the original size.
                                 picture.Resize();   //Note: Resize will reset client anchor you set.
                                 picture.LineStyle = LineStyle.DashDotGel;
-
 
                                 //将图片文件读入一个字符串
                                 //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
@@ -1521,13 +1499,6 @@ namespace Fine
                                 row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
                                 row2cell5.CellStyle = Rightstyles;
 
-
-
-
-
-
-
-
                                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
                                 //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
                                 XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
@@ -1564,7 +1535,6 @@ namespace Fine
                                 //row50cell8.SetCellValue("页码");
                                 //row50cell8.CellStyle = DefStyles;
                             }
-
                         }
                         for (int f = 5; f < 48; f++)
                         {
@@ -1572,18 +1542,14 @@ namespace Fine
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
                             //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-
                         }
                         sheet.GetRow(2).GetCell(0).SetCellValue("机种");
                         //合并2,3
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
                         sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
 
-
-
                         //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
                         //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
 
                         sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
@@ -1639,21 +1605,25 @@ namespace Fine
                                     cellA.SetCellValue(item.ColumnName);
                                     cellA.CellStyle = DefStyles;
                                     break;
+
                                 case 1:
                                     XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
                                     cellB.SetCellValue(item.ColumnName);
                                     cellB.CellStyle = DefStyles;
                                     break;
+
                                 case 2:
                                     XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellC.SetCellValue(item.ColumnName);
                                     cellC.CellStyle = DefStyles;
                                     break;
+
                                 case 3:
                                     XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellD.SetCellValue(item.ColumnName);
                                     cellD.CellStyle = DefStyles;
                                     break;
+
                                 case 4:
                                     XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
                                     cellE.SetCellValue(item.ColumnName);
@@ -1677,7 +1647,6 @@ namespace Fine
                             {
                                 if (iRowIndex < 49)
                                 {
-
                                     XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
                                     foreach (DataColumn Colitem in dt.Columns)
                                     {
@@ -1692,6 +1661,7 @@ namespace Fine
 
                                                 cellA.CellStyle = ContStyles;
                                                 break;
+
                                             case 1:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1700,6 +1670,7 @@ namespace Fine
                                                 cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
                                                 cellB.CellStyle = ContStyles;
                                                 break;
+
                                             case 2:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1708,6 +1679,7 @@ namespace Fine
                                                 cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
                                                 cellC.CellStyle = ContStyles;
                                                 break;
+
                                             case 3:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1716,6 +1688,7 @@ namespace Fine
                                                 cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
                                                 cellD.CellStyle = ContStyles;
                                                 break;
+
                                             case 4:
                                                 //从第二列开始
                                                 //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -1732,10 +1705,7 @@ namespace Fine
                                                 //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
                                                 //    cellF.CellStyle = ContStyles;
                                                 //    break;
-
-
                                         }
-
 
                                         iCellIndex++;
                                     }
@@ -1768,7 +1738,6 @@ namespace Fine
                                 cell.CellStyle = DefStyles;
                             }
                             sheet.GetRow(i).Height = 16 * 20;
-
                         }
 
                         //处理表头
@@ -1808,7 +1777,6 @@ namespace Fine
                                 picture.Resize();   //Note: Resize will reset client anchor you set.
                                 picture.LineStyle = LineStyle.DashDotGel;
 
-
                                 //将图片文件读入一个字符串
                                 //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
                                 //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
@@ -1854,13 +1822,6 @@ namespace Fine
                                 row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
                                 row2cell5.CellStyle = Rightstyles;
 
-
-
-
-
-
-
-
                                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 5, rowCout + 15 - 1, 0, 6));
                                 //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
                                 XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(0);
@@ -1897,7 +1858,6 @@ namespace Fine
                                 //row50cell8.SetCellValue("页码");
                                 //row50cell8.CellStyle = DefStyles;
                             }
-
                         }
                         for (int f = 5; f < rowCout + 10; f++)
                         {
@@ -1905,18 +1865,14 @@ namespace Fine
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
                             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
                             //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-
                         }
                         sheet.GetRow(2).GetCell(0).SetCellValue("机种");
                         //合并2,3
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
                         sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
 
-
-
                         //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
                         //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
 
                         sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
                         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
@@ -1953,7 +1909,6 @@ namespace Fine
                         sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
                         //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
 
-
                         //sheet.Header.Left = "TEAC";
                         //sheet.Header.Right = "DTA-04-Z038-B";
                         ////sheet.Header.Center = "不良集计";
@@ -1975,21 +1930,25 @@ namespace Fine
                                     cellA.SetCellValue(item.ColumnName);
                                     cellA.CellStyle = DefStyles;
                                     break;
+
                                 case 1:
                                     XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
                                     cellB.SetCellValue(item.ColumnName);
                                     cellB.CellStyle = DefStyles;
                                     break;
+
                                 case 2:
                                     XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellC.SetCellValue(item.ColumnName);
                                     cellC.CellStyle = DefStyles;
                                     break;
+
                                 case 3:
                                     XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
                                     cellD.SetCellValue(item.ColumnName);
                                     cellD.CellStyle = DefStyles;
                                     break;
+
                                 case 4:
                                     XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
                                     cellE.SetCellValue(item.ColumnName);
@@ -2011,8 +1970,6 @@ namespace Fine
                             int iCellIndex = 0;
                             foreach (DataRow Rowitem in dt.Rows)
                             {
-
-
                                 XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
                                 foreach (DataColumn Colitem in dt.Columns)
                                 {
@@ -2027,6 +1984,7 @@ namespace Fine
 
                                             cellA.CellStyle = ContStyles;
                                             break;
+
                                         case 1:
                                             //从第二列开始
                                             //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -2035,6 +1993,7 @@ namespace Fine
                                             cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
                                             cellB.CellStyle = ContStyles;
                                             break;
+
                                         case 2:
                                             //从第二列开始
                                             //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -2043,6 +2002,7 @@ namespace Fine
                                             cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
                                             cellC.CellStyle = ContStyles;
                                             break;
+
                                         case 3:
                                             //从第二列开始
                                             //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -2051,6 +2011,7 @@ namespace Fine
                                             cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
                                             cellD.CellStyle = ContStyles;
                                             break;
+
                                         case 4:
                                             //从第二列开始
                                             //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
@@ -2067,16 +2028,12 @@ namespace Fine
                                             //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
                                             //    cellF.CellStyle = ContStyles;
                                             //    break;
-
-
                                     }
-
 
                                     iCellIndex++;
                                 }
                                 iCellIndex = 0;
                                 iRowIndex++;
-
                             }
                         }
 
@@ -2121,15 +2078,11 @@ namespace Fine
             ms.Dispose();
 
             return fs;
-
-
         }
 
         public static bool TableListToExcel(List<DataTable> dts, DataTable main, string strExcelFileName, int indexType)
         {
-
             bool fs = false;
-
 
             XSSFWorkbook workbook = new XSSFWorkbook();
             DataSet set = new DataSet();
@@ -2140,7 +2093,6 @@ namespace Fine
                 //sheet.DefaultRowHeight = 30 * 20;
 
                 sheet.PrintSetup.PaperSize = 9;
-
 
                 //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
                 //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
@@ -2165,10 +2117,6 @@ namespace Fine
 
                          select g).ToList();
 
-
-
-
-
                 XSSFCellStyle DefStyles = (XSSFCellStyle)workbook.CreateCellStyle();
                 DefStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
                 DefStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
@@ -2181,21 +2129,17 @@ namespace Fine
                 //headerfont.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
                 //DefStyles.SetFont(headerfont);
 
-
                 //用column name 作为列名
                 int icolIndex = 0;
                 XSSFRow headerRow = (XSSFRow)sheet.CreateRow(0);
 
                 foreach (DataColumn item in dt.Columns)
                 {
-
-
                     XSSFCell cell = (XSSFCell)headerRow.CreateCell(icolIndex); ;
                     cell.SetCellValue(item.ColumnName);
                     cell.CellStyle = DefStyles;
                     icolIndex++;
                 }
-
 
                 XSSFCellStyle cellStyle = (XSSFCellStyle)workbook.CreateCellStyle();
                 //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text来看
@@ -2253,14 +2197,9 @@ namespace Fine
                         }
                         sheet.SetColumnWidth(columnNum, columnWidth * 200);
                     }
-
                 }
 
                 AddRengionBorder(sheet, workbook, 0, 0, 0, 1);
-
-
-
-
             }
             //发送到客户端
             MemoryStream ms = new MemoryStream();
@@ -2282,9 +2221,9 @@ namespace Fine
             ms.Close();
             ms.Dispose();
 
-
             return fs;
         }
+
         /// <summary>
         /// NPOI自适应列宽
         /// </summary>
@@ -2298,7 +2237,6 @@ namespace Fine
             //    int columnWidth = Sheet.GetColumnWidth(col) / 256;//获取当前列宽度
             //    for (int rowIndex = 1; rowIndex <= Sheet.LastRowNum; rowIndex++)
             //    {
-
             //        XSSFRow row = (XSSFRow)Sheet.GetRow(rowIndex)  ;
             //        XSSFCell cell = (XSSFCell)row.GetCell(col);
             //        int contextLength = Encoding.UTF8.GetBytes(cell.ToString()).Length;//获取当前单元格的内容宽度
@@ -2328,8 +2266,8 @@ namespace Fine
                 }
                 Sheet.SetColumnWidth(columnNum, columnWidth * 256);
             }
-
         }
+
         /// <summary>
                 /// 加范围边框
                 /// </summary>
@@ -2390,10 +2328,9 @@ namespace Fine
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-
         }
+
         public static int LoadImage(string path, IWorkbook wb)
         {
             FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -2401,6 +2338,5 @@ namespace Fine
             file.Read(buffer, 0, (int)file.Length);
             return wb.AddPicture(buffer, PictureType.JPEG);
         }
-
     }
 }

@@ -1,14 +1,14 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.TL
+namespace LeanFine.Lf_Manufacturing.TL
 {
-    public partial class liaison :  PageBase
+    public partial class liaison : PageBase
     {
         #region ViewPower
 
@@ -23,10 +23,10 @@ namespace Fine.Lf_Manufacturing.TL
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -45,13 +45,12 @@ namespace Fine.Lf_Manufacturing.TL
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/TL/liaison_new.aspx" , "新增")+ Window1.GetMaximizeReference();
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/TL/liaison_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/bad_p2d_new.aspx", "P2D新增不良记录");
 
             // 每页记录数
@@ -61,16 +60,12 @@ namespace Fine.Lf_Manufacturing.TL
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
-            try {
-
+            try
+            {
                 var q = from a in DB.Pp_Liaisons
                         select a;
-
 
                 // 在用户名称中搜索
                 string searchText = ttbSearchMessage.Text.Trim();
@@ -78,12 +73,11 @@ namespace Fine.Lf_Manufacturing.TL
                 {
                     q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_enterdate.Contains(searchText) || u.Ec_model.Contains(searchText) || u.Ec_modellist.Contains(searchText) || u.Ec_modellist.Contains(searchText) || u.Ec_letterno.Contains(searchText) || u.Ec_teppletterno.Contains(searchText) || u.Ec_eppletterno.Contains(searchText));
                 }
-                if(this.DDLModel.SelectedIndex!=0 && this.DDLModel.SelectedIndex!=-1)
+                if (this.DDLModel.SelectedIndex != 0 && this.DDLModel.SelectedIndex != -1)
                 {
                     q = q.Where(u => u.Ec_model.Contains(DDLModel.SelectedItem.Text));
-
                 }
-               
+
                 // 在查询添加之后，排序和分页之前获取总记录数
                 Grid1.RecordCount = GridHelper.GetTotalCount(q);
 
@@ -178,17 +172,19 @@ namespace Fine.Lf_Manufacturing.TL
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         private void BindDDLModel()//ERP设变技术担当
         {
             var q = from a in DB.Pp_Liaisons
                     orderby a.Ec_model
-                         select new
-                         {
-                             a.Ec_model
-                         };
+                    select new
+                    {
+                        a.Ec_model
+                    };
 
             // 绑定到下拉列表（启用模拟树功能）
             var qs = q.Select(E => new { E.Ec_model }).ToList().Distinct();
@@ -200,9 +196,8 @@ namespace Fine.Lf_Manufacturing.TL
             // 选中根节点
             this.DDLModel.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
-
-
         }
+
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -221,13 +216,10 @@ namespace Fine.Lf_Manufacturing.TL
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreTlEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreTlDelete", Grid1, "deleteField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -254,6 +246,7 @@ namespace Fine.Lf_Manufacturing.TL
         {
             BindGrid();
         }
+
         protected void DDLModel_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindGrid();
@@ -265,6 +258,7 @@ namespace Fine.Lf_Manufacturing.TL
 
             BindGrid();
         }
+
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             if (e.CommandName == "Edit")
@@ -272,7 +266,6 @@ namespace Fine.Lf_Manufacturing.TL
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/TL/liaison_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -292,26 +285,21 @@ namespace Fine.Lf_Manufacturing.TL
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "技联信息删除", OperateNotes);
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
                 BindGrid();
             }
         }
 
-
         protected void btnClose_Click(object sender, EventArgs e)
         {
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

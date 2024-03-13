@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
-    /// Pp_reason_stopline 的摘要说明
+    /// pp_reason_stopline 的摘要说明
     /// </summary>
-    public class Pp_reason_stopline : IHttpHandler
+    public class pp_reason_stopline : IHttpHandler
     {
-
-        FineContext DBCharts = new FineContext();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
+        private LeanFineContext DBCharts = new LeanFineContext();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -42,7 +32,7 @@ namespace Fine.Lf_Report
                 //where p.Probadmemo != "NULL"
                 //where !string.IsNullOrEmpty(p.Prostopcou)
                 //where !string.IsNullOrEmpty(p.Probadmemo)
-                where p.isDelete == 0
+                where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
 
                 //group p by new { Prodate = p.Prodate.Substring(0, 6), p.Probadcou }
@@ -51,7 +41,7 @@ namespace Fine.Lf_Report
                 {
                     Prodate = p.Prodate.Substring(0, 6),
                     Prostopcou = (p.Prostopcou == null ? "其他" : (p.Prostopcou == "其它" ? "其他" : p.Prostopcou)),
-                    //numProbadcou = (from a in DBCharts.Pp_P1d_OutputSubs select a.Probadcou).Distinct().Count(),
+                    //numProbadcou = (from a in DBCharts.PP_OutputSubs select a.Probadcou).Distinct().Count(),
 
                     p.Prolinestopmin,
                 };
@@ -65,7 +55,6 @@ namespace Fine.Lf_Report
                         g.Key.Prostopcou,
                         Prolinestopmin = g.Sum(p => p.Prolinestopmin),
                     };
-
 
             q = q.OrderByDescending(u => u.Prolinestopmin).Take(5);
             //q.Take(5);
@@ -87,7 +76,6 @@ namespace Fine.Lf_Report
             }
         }
 
-
         public bool IsReusable
         {
             get
@@ -95,7 +83,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
-
     }
 }

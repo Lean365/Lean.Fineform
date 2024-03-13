@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
 
 
-    public partial class Qm_acceptcat_edit
+    public partial class qm_acceptcat_edit
     {
 
         /// <summary>

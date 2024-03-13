@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.ec_eng_edit" %>
+﻿<%@ Page Language="C#" ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_eng_edit" %>
 
 <!DOCTYPE html>
 

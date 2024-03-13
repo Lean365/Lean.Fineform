@@ -1,14 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
 
-
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class role_user : PageBase
     {
@@ -25,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,9 +39,7 @@ namespace Fine.Lf_Admin
             CheckPowerWithButton("CoreRoleUserNew", btnNew);
             CheckPowerWithButton("CoreRoleUserDelete", btnDeleteSelected);
 
-
             ResolveDeleteButtonForGrid(btnDeleteSelected, Grid2, "确定要从当前角色移除选中的{0}项记录吗？");
-
 
             BindGrid1();
 
@@ -106,10 +100,9 @@ namespace Fine.Lf_Admin
                 Grid2.DataSource = q;
                 Grid2.DataBind();
             }
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -120,8 +113,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region Grid1 Events
 
@@ -142,7 +134,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -191,7 +183,6 @@ namespace Fine.Lf_Admin
             int roleID = GetSelectedDataKeyID(Grid1);
             List<int> userIDs = GetSelectedDataKeyIDs(Grid2);
 
-
             Adm_Role role = DB.Adm_Roles.Where(r => r.ID == roleID)
                 .FirstOrDefault();
 
@@ -225,7 +216,6 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-
         protected void Grid2_RowCommand(object sender, GridCommandEventArgs e)
         {
             object[] values = Grid2.DataKeys[e.RowIndex];
@@ -254,7 +244,6 @@ namespace Fine.Lf_Admin
                 }
 
                 BindGrid2();
-
             }
         }
 
@@ -271,7 +260,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript(Window1.GetShowReference(addUrl, "添加用户到当前角色"));
         }
 
-        #endregion
-
+        #endregion Grid2 Events
     }
 }

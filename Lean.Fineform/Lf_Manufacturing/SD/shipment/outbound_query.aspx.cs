@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.YF;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Fine.Lf_Manufacturing.SD.shipment
+namespace LeanFine.Lf_Manufacturing.SD.shipment
 {
     public partial class outbound_query : PageBase
     {
@@ -28,11 +21,9 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,7 +43,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             CheckPowerWithButton("CoreKitOutput", BtnDestination);
             CheckPowerWithButton("CoreKitOutput", BtnProfit);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -69,12 +59,10 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-            var q = from a in  DBSerial.DTASSET_SCANNER_OUT_SUB
+            Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
+            var q = from a in DBSerial.DTASSET_SCANNER_OUT_SUB
 
                     select a; //.Include(u => u.Dept);
 
@@ -108,8 +96,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
 
                 Grid1.DataSource = table;
                 Grid1.DataBind();
-
-
             }
             else
             {
@@ -118,13 +104,9 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             }
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -132,13 +114,10 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -153,6 +132,7 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -171,12 +151,10 @@ namespace Fine.Lf_Manufacturing.SD.shipment
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -205,23 +183,24 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
             //}
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -234,8 +213,8 @@ namespace Fine.Lf_Manufacturing.SD.shipment
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -243,8 +222,7 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             BindGrid();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -257,21 +235,19 @@ namespace Fine.Lf_Manufacturing.SD.shipment
                 return;
             }
 
+            Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-
-           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-
-            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
+            IQueryable<DTASSET_SCANNER_OUT_SUB> q = DBSerial.DTASSET_SCANNER_OUT_SUB; //.Include(u => u.Dept);
 
             var qs = q.Select(a =>
                         new
                         {
-                            出货日期=a.OUTS001,
-                            出货发票=a.OUTS002,
-                            仕向别=a.OUTS003,
-                            物料=a.OUTS004,
+                            出货日期 = a.OUTS001,
+                            出货发票 = a.OUTS002,
+                            仕向别 = a.OUTS003,
+                            物料 = a.OUTS004,
                             序列号 = a.OUTS005,
-                            数量 =  (a.OUTS008.IndexOf("_") == 0 ? a.OUTS008 : (a.OUTS008.Substring(0, a.OUTS008.IndexOf("_")))),
+                            数量 = (a.OUTS008.IndexOf("_") == 0 ? a.OUTS008 : (a.OUTS008.Substring(0, a.OUTS008.IndexOf("_")))),
                             目的地 = a.OUTS006,
                         });
             // 在用户名称中搜索
@@ -289,7 +265,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
 
-
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
                 ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
@@ -302,9 +277,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             }
         }
 
-
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

@@ -2,8 +2,7 @@
 // Greek (gr) localization
 // https://github.com/bgrins/spectrum
 
-(function ( $ ) {
-
+(function ($) {
     var localization = $.spectrum.localization["gr"] = {
         cancelText: "Ακύρωση",
         chooseText: "Επιλογή",
@@ -14,5 +13,4 @@
     };
 
     $.extend($.gr.spectrum.defaults, localization);
-
-})( jQuery );
+})(jQuery);

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="user_changepassword.aspx.cs"
-    Inherits="Fine.Lf_Admin.user_changepassword" %>
+    Inherits="LeanFine.Lf_Admin.user_changepassword" %>
 
 <!DOCTYPE html>
 <html>

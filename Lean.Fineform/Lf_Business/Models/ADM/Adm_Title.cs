@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fine
+namespace LeanFine
 {
     public class Adm_Title : IKeyID
     {
@@ -19,6 +15,5 @@ namespace Fine
         public string Remark { get; set; }
 
         public virtual ICollection<Adm_User> Users { get; set; }
-
     }
 }

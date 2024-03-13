@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.FICO;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class acctitle : PageBase
     {
@@ -21,11 +21,9 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,7 +43,6 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,17 +58,13 @@ namespace Fine.Lf_Accounting
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
             try
             {
-
                 if (rbtnFirstAuto.Checked)
                 {
-                    
                     q = q.Where(u => u.UDF02.CompareTo("1000") == 0);
                 }
                 if (rbtnSecondAuto.Checked)
@@ -94,11 +87,8 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
-            //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-
-
+            //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
             // 在用户名称中搜索
 
@@ -114,13 +104,9 @@ namespace Fine.Lf_Accounting
             Grid1.DataBind();
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -128,13 +114,10 @@ namespace Fine.Lf_Accounting
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -149,6 +132,7 @@ namespace Fine.Lf_Accounting
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -167,12 +151,10 @@ namespace Fine.Lf_Accounting
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -201,10 +183,10 @@ namespace Fine.Lf_Accounting
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
@@ -216,18 +198,17 @@ namespace Fine.Lf_Accounting
             BindGrid();
         }
 
-
-
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
         }
+
         protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
         {
             // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
@@ -252,7 +233,7 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -265,8 +246,6 @@ namespace Fine.Lf_Accounting
                 return;
             }
 
-
-
             IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
@@ -274,12 +253,10 @@ namespace Fine.Lf_Accounting
             var qs = from p in q
                      select new
                      {
-
                          科目 = p.Bacode,
                          名称C = p.Bacnname,
                          名称J = p.Bajpname,
                          名称E = p.Baenname,
-
                      };
             if (qs.Any())
             {
@@ -291,7 +268,6 @@ namespace Fine.Lf_Accounting
                 Xlsbomitem = "AccountingTitle";
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
-
 
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
@@ -305,8 +281,6 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

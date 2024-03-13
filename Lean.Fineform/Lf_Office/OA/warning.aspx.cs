@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-namespace Fine.Lf_Office.OA
+﻿using FineUIPro;
+using System;
+
+namespace LeanFine.Lf_Office.OA
 {
     public partial class warning : PageBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 //TextArea TextArea1 = Window1.FindControl("TextArea1") as TextArea;
@@ -24,17 +20,12 @@ namespace Fine.Lf_Office.OA
 
                 //                    ;
             }
-
-            
-
         }
 
         protected void Btn_Agree_Click(object sender, EventArgs e)
         {
-            string strAgree= global::Resources.GlobalResource.sys_Iagree;
-            PageContext.RegisterStartupScript("alertAndRedirect('"+ strAgree + "', './contact_query.aspx');");
+            string strAgree = global::Resources.GlobalResource.sys_Iagree;
+            PageContext.RegisterStartupScript("alertAndRedirect('" + strAgree + "', './contact_query.aspx');");
         }
-
-
     }
 }

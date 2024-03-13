@@ -1,16 +1,14 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
 using System.Data;
-using Newtonsoft.Json.Linq;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.UI.WebControls;
+
 using AspNet = System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class role_power : PageBase
     {
@@ -27,7 +25,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,8 +41,6 @@ namespace Fine.Lf_Admin
         {
             // 权限检查
             CheckPowerWithButton("CoreRolePowerEdit", btnGroupUpdate);
-
-
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
@@ -94,7 +90,6 @@ namespace Fine.Lf_Admin
                     }
                 }
 
-
                 var q = DB.Adm_Powers.GroupBy(p => p.GroupName);
 
                 if (Grid2.SortField == "GroupName")
@@ -115,14 +110,12 @@ namespace Fine.Lf_Admin
                     Powers = g
                 });
 
-
                 Grid2.DataSource = powers;
                 Grid2.DataBind();
             }
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Grid1 Events
 
@@ -143,7 +136,7 @@ namespace Fine.Lf_Admin
             BindGrid2();
         }
 
-        #endregion
+        #endregion Grid1 Events
 
         #region Grid2 Events
 
@@ -172,8 +165,6 @@ namespace Fine.Lf_Admin
                 ddlPowers.Items.Add(item);
             }
         }
-
-
 
         protected void Grid2_Sort(object sender, GridSortEventArgs e)
         {
@@ -211,19 +202,15 @@ namespace Fine.Lf_Admin
                 }
             }
 
-
             Adm_Role role = DB.Adm_Roles.Include(r => r.Powers).Where(r => r.ID == roleId).FirstOrDefault();
 
             ReplaceEntities<Adm_Power>(role.Powers, newPowerIDs.ToArray());
 
             DB.SaveChanges();
 
-
             Alert.ShowInTop("当前角色的权限更新成功！");
         }
 
-
-        #endregion
-
+        #endregion Grid2 Events
     }
 }

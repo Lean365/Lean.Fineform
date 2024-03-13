@@ -1,37 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
     /// shipment_regin 的摘要说明
     /// </summary>
     public class shipment_regin : IHttpHandler
     {
+        private LeanFine.Lf_Business.Models.YF.LeanSerial_Entities DB_Serial = new LeanFine.Lf_Business.Models.YF.LeanSerial_Entities();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
-        Fine.Lf_Business.Models.YF.LeanSerialEntities DB_Serial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
         public void ProcessRequest(HttpContext context)
         {
             string atedate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-
 
             var q = from a in DB_Serial.DTASSET_SCANNER_UP
                     select a; //.Include(u => u.Dept);
@@ -44,7 +34,6 @@ namespace Fine.Lf_Report
                          Date = g.Key.OUTS001.Substring(0, 6),
                          Regin = g.Key.OUTS003,
                          Qty = g.Sum(a => a.OUTS008),
-
                      };
             DataSet ds = new DataSet();
             DataTable dt = ConvertHelper.LinqConvertToDataTable(qs);
@@ -60,10 +49,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
-
-
-
         public bool IsReusable
         {
             get
@@ -71,6 +56,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
     }
 }

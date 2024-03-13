@@ -9,14 +9,13 @@
  * Date: 2020-04-16T16:01Z
  */
 
-
 //费用对比
 function AjaxData_Expense_Contrast() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
         //相对路径【网站根目录可以用"/"开始】
-        url: "/Lf_Report/Fico_expense_contrast.ashx",
+        url: "/Lf_Report/fico_expense_contrast.ashx",
         data: {
             TransDate: TransDates
         },
@@ -50,7 +49,7 @@ function AjaxData_Expense_DeptRequests() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Fico_Expense_deptrequests.ashx",
+        url: "/Lf_Report/FICO_Expense_deptrequests.ashx",
         data: {
             TransDate: TransDates
         },
@@ -84,9 +83,9 @@ function AjaxData_Expense_Actual() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        //url: "/Lf_Report/Fico_Expense_actual.ashx",
+        //url: "/Lf_Report/FICO_Expense_actual.ashx",
 
-        url: "/Lf_Report/Fico_expense_actual.ashx",
+        url: "/Lf_Report/fico_expense_actual.ashx",
         data: {
             TransDate: TransDates
         },
@@ -118,7 +117,7 @@ function AjaxData_Expense_Tree() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     //准备数据
     $.ajax({
-        url: "/Lf_Report/Fico_subjects_tree.ashx",
+        url: "/Lf_Report/fico_subjects_tree.ashx",
         //data: {
         //    TransDate: TransDates
         //},
@@ -134,7 +133,6 @@ function AjaxData_Expense_Tree() {
                 for (var i = 0; i < list.length; i++) {
                     name.push(list[i].name);
                     value.push(list[i].value);
-
                 }
                 BindmyChart_Expense_Tree(data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
@@ -347,7 +345,7 @@ function AjaxData_CostingProductCost() {
 function AjaxData_CostingInvAMT() {
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Fico_costing_invamt.ashx",
+        url: "/Lf_Report/fico_costing_invamt.ashx",
         data: {
             TransDate: TransDates
         },
@@ -365,9 +363,8 @@ function AjaxData_CostingInvAMT() {
                     name.push(list[i].name);
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
-
                 }
-                BindmyChart_CostingInvAMT(name, value1,value2,data);          //调用封装好的ActualmyChart
+                BindmyChart_CostingInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
@@ -381,7 +378,7 @@ function AjaxData_CostingInvAMTbu() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Fico_costing_invamt_bu.ashx",
+        url: "/Lf_Report/fico_costing_invamt_bu.ashx",
         data: {
             TransDate: TransDates
         },
@@ -399,7 +396,6 @@ function AjaxData_CostingInvAMTbu() {
                     name.push(list[i].name);
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
-
                 }
                 BindmyChart_CostingInvAMTbu(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
@@ -412,11 +408,10 @@ function AjaxData_CostingInvAMTbu() {
 }
 //月在库统计
 function AjaxData_CostingMonthlyInvAMT() {
-
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Fico_costing_monthlyinvamt.ashx",
+        url: "/Lf_Report/fico_costing_monthlyinvamt.ashx",
         data: {
             TransDate: TransDates
         },
@@ -434,7 +429,6 @@ function AjaxData_CostingMonthlyInvAMT() {
                     name.push(list[i].name);
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
-
                 }
                 BindmyChart_CostingMonthlyInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
@@ -445,5 +439,3 @@ function AjaxData_CostingMonthlyInvAMT() {
     });
     //---------------------------------------------------------------------------
 }
-
-

@@ -22,7 +22,6 @@
         var level = "0"
         var layer = 0
 
-
         //Êý×Ö¼ü
 
         function inputkey(key) {
@@ -68,7 +67,6 @@
             else
                 inputfunction(trig, arctrig)
         }
-
 
         //ÔËËã·û
 
@@ -139,7 +137,6 @@
             level = "0"
         }
 
-
         //ÐÞ¸Ä¼ü
 
         function backspace() {
@@ -160,7 +157,6 @@
             document.calc.operator.value = ""
             document.calc.bracket.value = ""
         }
-
 
         //×ª»»¼ü
 
@@ -191,8 +187,6 @@
             document.calc.kd.disabled = (carry <= 10)
             document.calc.ke.disabled = (carry <= 10)
             document.calc.kf.disabled = (carry <= 10)
-
-
 
         }
 
@@ -378,7 +372,6 @@
                 if (fun == "deci")
                     return (num - floor(num))
 
-
                 if (fun == "ln" && num > 0)
                     return (log(num))
                 if (fun == "exp")
@@ -387,7 +380,6 @@
                     return (log(num) * LOG10E)
                 if (fun == "expdec")
                     return (pow(10, num))
-
 
                 if (fun == "cube")
                     return (num * num * num)

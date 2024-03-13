@@ -1,15 +1,13 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
-namespace Fine.Lf_Manufacturing.Master
+
+namespace LeanFine.Lf_Manufacturing.Master
 {
-
-    public partial class Pp_transport_edit : PageBase
+    public partial class pp_transport_edit : PageBase
     {
-
-        
         #region ViewPower
 
         /// <summary>
@@ -23,7 +21,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -31,7 +29,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -48,13 +45,13 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            Guid id =Guid.Parse( GetQueryValue("GUID"));
+            Guid id = Guid.Parse(GetQueryValue("GUID"));
             Pp_Transport current = DB.Pp_Transports.Find(id);
 
             if (current == null)
@@ -64,8 +61,6 @@ namespace Fine.Lf_Manufacturing.Master
                 return;
             }
 
-
-
             Transportype.Text = current.Transportype.ToString();
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             Transportcntext.Text = current.Transportcntext;
@@ -73,8 +68,6 @@ namespace Fine.Lf_Manufacturing.Master
             Transportjptext.Text = current.Transportjptext;
             remark.Text = current.Remark;
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -93,22 +86,13 @@ namespace Fine.Lf_Manufacturing.Master
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "运输方式修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
-
+        #endregion Page_Load
 
         #region Events
 
         //判断修改内容||判断重复
         private void CheckData()
         {
-
-
             Guid id = Guid.Parse(GetQueryValue("GUID"));
             Pp_Transport current = DB.Pp_Transports.Find(id);
             string modi001 = current.Transportype;
@@ -136,12 +120,10 @@ namespace Fine.Lf_Manufacturing.Master
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -155,7 +137,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -165,7 +146,6 @@ namespace Fine.Lf_Manufacturing.Master
             //}
             //string InputData = Proreasontext.Text.Trim();
 
-
             //proScannerDest Redata = DB.proScannerDest.Where(u => u.Proreasontext == InputData).FirstOrDefault();
 
             //if (Redata != null)
@@ -173,7 +153,6 @@ namespace Fine.Lf_Manufacturing.Master
             //    Alert.ShowInTop("数据,检验方式< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
         }
 
         //字段赋值，保存
@@ -191,7 +170,7 @@ namespace Fine.Lf_Manufacturing.Master
             // 添加所有用户
             item.Remark = remark.Text;
             // 添加所有用户
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
 
             //DB.Prolines.Add(item);
@@ -220,15 +199,7 @@ namespace Fine.Lf_Manufacturing.Master
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_data_kanban.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p1d_data_kanban" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_data_kanban.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.daily.p1d_data_kanban" %>
 
 <!DOCTYPE html>
 

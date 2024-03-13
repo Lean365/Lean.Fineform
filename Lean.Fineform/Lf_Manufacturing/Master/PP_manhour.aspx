@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_manhour.aspx.cs" Inherits="Fine.Lf_Manufacturing.Master.Pp_manhour" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pp_manhour.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.Master.Pp_manhour" %>
 
 <!DOCTYPE html>
 

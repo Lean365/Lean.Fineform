@@ -1,16 +1,12 @@
-﻿using System;
-using FineUIPro;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Text;
-using ThoughtWorks;
-using ThoughtWorks.QRCode;
-using ThoughtWorks.QRCode.Codec;
-using ThoughtWorks.QRCode.Codec.Data;
+﻿using FineUIPro;
+using System;
 using System.Drawing;
 using System.IO;
-namespace Fine
+using System.Linq;
+using System.Text;
+using ThoughtWorks.QRCode.Codec;
+
+namespace LeanFine
 {
     public class QrcodeHelper
     {
@@ -42,12 +38,15 @@ namespace Fine
                     case "Byte":
                         qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
                         break;
+
                     case "AlphaNumeric":
                         qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.ALPHA_NUMERIC;
                         break;
+
                     case "Numeric":
                         qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.NUMERIC;
                         break;
+
                     default:
                         qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
                         break;
@@ -61,15 +60,19 @@ namespace Fine
                     case "L":
                         qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
                         break;
+
                     case "M":
                         qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
                         break;
+
                     case "Q":
                         qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.Q;
                         break;
+
                     case "H":
                         qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.H;
                         break;
+
                     default:
                         qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.H;
                         break;
@@ -77,7 +80,7 @@ namespace Fine
 
                 try
                 {
-                   System.Drawing.Image image = qrCodeEncoder.Encode(QRString, System.Text.Encoding.UTF8);
+                    System.Drawing.Image image = qrCodeEncoder.Encode(QRString, System.Text.Encoding.UTF8);
                     System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
                     image.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
                     fs.Close();
@@ -95,7 +98,6 @@ namespace Fine
                         copyImage.Dispose();
                     }
                     image.Dispose();
-
                 }
                 catch (Exception Message)
                 {
@@ -104,13 +106,13 @@ namespace Fine
                 }
                 return result;
             }
-
         }
+
         /// <summary>
         /// 生成并保存二维码图片的方法
         /// </summary>
         /// <param name="str">输入的内容</param>
-        public static void CreateQRImg(string QRString,string QRpath,FineUIPro .Image QRimage)
+        public static void CreateQRImg(string QRString, string QRpath, FineUIPro.Image QRimage)
         {
             Bitmap bt;
             string enCodeString = QRString;
@@ -123,7 +125,7 @@ namespace Fine
             //设置错误校验级别，默认中等
             qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
             //生成二维码图片
-            bt = qrCodeEncoder.Encode(enCodeString,  Encoding.UTF8);
+            bt = qrCodeEncoder.Encode(enCodeString, Encoding.UTF8);
             //二维码图片的名称
             string filename = DateTime.Now.ToString("yyyyMMddHHmmss");
             //保存二维码图片在photos路径下
@@ -131,6 +133,7 @@ namespace Fine
             //图片控件要显示的二维码图片路径
             QRimage.ImageUrl = "~/photos/" + filename + ".jpg";
         }
+
         /// <summary>
         /// 删除文件夹以及文件
         /// </summary>
@@ -138,7 +141,6 @@ namespace Fine
         /// <param name="fileName"> 文件名称 </param>
         public static void DeleteDirectory(string directoryPath, string fileName)
         {
-
             //删除文件
             for (int i = 0; i < Directory.GetFiles(directoryPath).ToList().Count; i++)
             {
@@ -157,7 +159,5 @@ namespace Fine
                 }
             }
         }
-
-
     }
 }

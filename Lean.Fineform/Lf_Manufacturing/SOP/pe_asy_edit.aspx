@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pe_asy_edit.aspx.cs" Inherits="Fine.Lf_Manufacturing.SOP.pe_asy_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pe_asy_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.SOP.pe_asy_edit" %>
 
 <!DOCTYPE html>
 

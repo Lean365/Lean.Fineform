@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_data_time.aspx.cs" Inherits="Fine.Lf_Manufacturing.PP.daily.p1d_data_time" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_data_time.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.daily.p1d_data_time" %>
 
 <!DOCTYPE html>
 

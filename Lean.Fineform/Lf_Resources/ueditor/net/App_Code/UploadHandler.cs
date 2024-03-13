@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 
 /// <summary>
@@ -10,7 +8,6 @@ using System.Web;
 /// </summary>
 public class UploadHandler : Handler
 {
-
     public UploadConfig UploadConfig { get; private set; }
     public UploadResult Result { get; private set; }
 
@@ -104,14 +101,18 @@ public class UploadHandler : Handler
         {
             case UploadState.Success:
                 return "SUCCESS";
+
             case UploadState.FileAccessError:
                 return "文件访问出错，请检查写入权限";
+
             case UploadState.SizeLimitExceed:
                 return "文件大小超出服务器限制";
+
             case UploadState.TypeNotAllow:
                 return "不允许的文件格式";
+
             case UploadState.NetworkError:
-                return "网络错误"; 
+                return "网络错误";
         }
         return "未知错误";
     }
@@ -179,4 +180,3 @@ public enum UploadState
     NetworkError = -4,
     Unknown = 1,
 }
-

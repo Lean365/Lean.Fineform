@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.FICO;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.SD.salesmanage
+namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 {
     public partial class sales : PageBase
     {
@@ -21,11 +21,9 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,7 +43,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,35 +58,27 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
-
-            IQueryable<Fico_Costing_SalesInvoice> q =DB.Fico_Costing_SalesInvoices; //.Include(u => u.Dept);
+            IQueryable<Fico_Costing_Sales_Billing> q = DB.Fico_Costing_Sales_Billings; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-            q = q.Where(u => u.Bc_YM.Substring(0,6).CompareTo(edate) == 0);
+            q = q.Where(u => u.Bc_YM.Substring(0, 6).CompareTo(edate) == 0);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Fico_Costing_SalesInvoice>(q, Grid1);
+            q = SortAndPage<Fico_Costing_Sales_Billing>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -97,13 +86,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -118,6 +104,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -136,12 +123,10 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -170,23 +155,24 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
             //}
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -199,8 +185,8 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -208,8 +194,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             BindGrid();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -222,9 +207,7 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 return;
             }
 
-
-
-            IQueryable<Fico_Costing_SalesInvoice> q = DB.Fico_Costing_SalesInvoices; //.Include(u => u.Dept);
+            IQueryable<Fico_Costing_Sales_Billing> q = DB.Fico_Costing_Sales_Billings; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
@@ -236,8 +219,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                          物料 = p.Bc_SalesItem,
                          中心 = p.Bc_ProfitCenter,
                          数量 = p.Bc_SalesQty,
-
-
                      };
             if (qs.Any())
             {
@@ -249,7 +230,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
                 Xlsbomitem = edate + "_Sales_Data";
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
-
 
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
@@ -263,8 +243,6 @@ namespace Fine.Lf_Manufacturing.SD.salesmanage
             }
         }
 
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

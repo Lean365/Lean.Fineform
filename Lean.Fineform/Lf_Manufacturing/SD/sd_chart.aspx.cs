@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
 
-namespace Fine.Lf_Manufacturing.SD
+namespace LeanFine.Lf_Manufacturing.SD
 {
     public partial class Sd_chart : PageBase
     {
@@ -23,7 +17,8 @@ namespace Fine.Lf_Manufacturing.SD
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,6 +26,7 @@ namespace Fine.Lf_Manufacturing.SD
                 LoadData();
             }
         }
+
         private void LoadData()
         {
             // 权限检查
@@ -48,8 +44,8 @@ namespace Fine.Lf_Manufacturing.SD
             {
                 DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
-
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
@@ -62,12 +58,11 @@ namespace Fine.Lf_Manufacturing.SD
                 // PageContext.RegisterStartupScript("<script language='javascript'>updateChartInTabStrip();</script>");
             }
         }
+
         private string getdate()
         {
             string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
-
     }
-
 }

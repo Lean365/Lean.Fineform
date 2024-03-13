@@ -165,7 +165,7 @@
   <data name="menu_Qm_FQC" xml:space="preserve">
     <value>製品検査</value>
   </data>
-  <data name="menu_Pp_Defect_MOStatistics" xml:space="preserve">
+  <data name="menu_pp_defect_MOStatistics" xml:space="preserve">
     <value>指図纏め</value>
   </data>
   <data name="menu_Pp_MO" xml:space="preserve">
@@ -387,7 +387,7 @@
   <data name="menu_Pp_Times" xml:space="preserve">
     <value>生産工数</value>
   </data>
-  <data name="menu_Pp_Defect_Production" xml:space="preserve">
+  <data name="menu_pp_defect_Production" xml:space="preserve">
     <value>生産不具合</value>
   </data>
   <data name="menu_Rpt_ppcharts" xml:space="preserve">
@@ -756,7 +756,7 @@
   <data name="rpt_Charts_Defect" xml:space="preserve">
     <value>不具合数量</value>
   </data>
-  <data name="menu_Pp_Defect_Query" xml:space="preserve">
+  <data name="menu_pp_defect_Query" xml:space="preserve">
     <value>不具合検索</value>
   </data>
   <data name="menu_Pp_P2d_Defect" xml:space="preserve">
@@ -765,7 +765,7 @@
   <data name="sys_Export_SheetDefect" xml:space="preserve">
     <value>不具合纏め</value>
   </data>
-  <data name="menu_Pp_Defect_Type" xml:space="preserve">
+  <data name="menu_pp_defect_Type" xml:space="preserve">
     <value>不具合カテゴリ</value>
   </data>
   <data name="menu_Qm_FQC_UnqualifiedNotice" xml:space="preserve">
@@ -1077,10 +1077,10 @@
   <data name="rpt_Charts_Progress" xml:space="preserve">
     <value>LOT進捗</value>
   </data>
-  <data name="menu_Pp_Defect_LotStatistics" xml:space="preserve">
+  <data name="menu_pp_defect_LotStatistics" xml:space="preserve">
     <value>LOT纏め</value>
   </data>
-  <data name="menu_Pp_Tracking_Lot" xml:space="preserve">
+  <data name="menu_pp_tracking_lot" xml:space="preserve">
     <value>LOTトレーサビリティー</value>
   </data>
   <data name="rpt_Charts_Direct" xml:space="preserve">
@@ -1089,7 +1089,7 @@
   <data name="rpt_Charts_LotPass" xml:space="preserve">
     <value>LOT．合格率</value>
   </data>
-  <data name="Query_Pp_Defect_EmptyText" xml:space="preserve">
+  <data name="Query_pp_defect_EmptyText" xml:space="preserve">
     <value>Lot、機種などを検索する。</value>
   </data>
   <data name="Query_Pp_Lot" xml:space="preserve">
@@ -1123,7 +1123,7 @@
     <value>DTA連絡先</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>DTA リーン生産管理</value>
+    <value>リーン生産管理-DTA</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>DBユーザー</value>

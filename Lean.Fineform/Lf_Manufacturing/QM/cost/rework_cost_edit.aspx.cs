@@ -1,19 +1,17 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 
-
-namespace Fine.Lf_Manufacturing.QM.cost
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
-
     public partial class rework_cost_edit : PageBase
     {
         //日志配置文件调用
-        
-        
+
         #region ViewPower
+
         /// <summary>
         /// 本页面的浏览权限，空字符串表示本页面不受权限控制
         /// </summary>
@@ -25,15 +23,16 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public Guid strGuid;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,7 +49,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             strGuid = Guid.Parse(strgroup[0].ToString().Trim());
 
             BindData();
-
         }
 
         #region BindingData
@@ -58,7 +56,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
 
             Qm_Rework current = DB.Qm_Reworks.Find(strGuid);
 
@@ -69,9 +66,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 return;
             }
 
-
-
-                Qcrd001.Text = current.Qcrd001.ToString();
+            Qcrd001.Text = current.Qcrd001.ToString();
 
             Qcrd002.Text = current.Qcrd002.ToString();
             Qcrd003.Text = current.Qcrd003.ToString();
@@ -135,8 +130,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcrd033.SelectedDate = DateTime.Now;
             }
 
-
-
             Qcrd034.Text = current.Qcrd034.ToString();
             Qcrd035.Text = current.Qcrd035.ToString();
             Qcrd036.Text = current.Qcrd036.ToString();
@@ -151,7 +144,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             Qcrd045.Text = current.Qcrd045.ToString();
             Qcrd046.Text = current.Qcrd046.ToString();
             Qcrd047.Text = current.Qcrd047.ToString();
-            if (!String.IsNullOrEmpty( current.Qcrd048.ToString()))
+            if (!String.IsNullOrEmpty(current.Qcrd048.ToString()))
             {
                 Qcrd048.SelectedDate = DateTime.ParseExact(current.Qcrd048.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
             }
@@ -159,7 +152,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             {
                 Qcrd048.SelectedDate = DateTime.Now;
             }
-
 
             Qcrd049.Text = current.Qcrd049.ToString();
             Qcrd050.Text = current.Qcrd050.ToString();
@@ -181,8 +173,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             Qcrdpcbrec.Text = current.Qcrdpcbrec;
             // 添加所有用户
 
-
-
             //Editor1.setContent("")
             // 初始化用户所属角色
             //InitUserRole(current);
@@ -199,17 +189,15 @@ namespace Fine.Lf_Manufacturing.QM.cost
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "改修数据修改", OperateNotes);
         }
 
-        #endregion
+        #endregion BindingData
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
-
             Qm_Rework current = DB.Qm_Reworks.Find(strGuid);
 
             string modi002 = (current.Qcrd009 + current.Qcrd010).ToString();
@@ -217,34 +205,30 @@ namespace Fine.Lf_Manufacturing.QM.cost
             string modi004 = current.Qcrd020.ToString();
             string modi005 = current.Qcrd027.ToString();
 
-
-                if (int.Parse(this.Qcrd009.Text) + int.Parse(this.Qcrd010.Text) == decimal.Parse(modi002))
+            if (int.Parse(this.Qcrd009.Text) + int.Parse(this.Qcrd010.Text) == decimal.Parse(modi002))
+            {
+                if (decimal.Parse(this.Qcrd013.Text) == decimal.Parse(modi003))
                 {
-                    if (decimal.Parse(this.Qcrd013.Text) == decimal.Parse(modi003))
+                    if (decimal.Parse(this.Qcrd020.Text) == decimal.Parse(modi004))
                     {
-                        if (decimal.Parse(this.Qcrd020.Text) == decimal.Parse(modi004))
+                        if (decimal.Parse(this.Qcrd027.Text) == decimal.Parse(modi005))
                         {
-                            if (decimal.Parse(this.Qcrd027.Text) == decimal.Parse(modi005))
-                            {
-                                //Alert alert = new Alert();
-                                //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
-                                //alert.IconUrl = "~/Lf_Resources/images/success.png";
-                                //alert.Target = Target.Top;
-                                Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, MessageBoxIcon.Warning);
-                            }
+                            //Alert alert = new Alert();
+                            //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
+                            //alert.IconUrl = "~/Lf_Resources/images/success.png";
+                            //alert.Target = Target.Top;
+                            Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Noedit, MessageBoxIcon.Warning);
                         }
                     }
                 }
+            }
 
-                //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
- 
-
+            //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
 
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -258,7 +242,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -267,7 +250,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
             //string InputData = Qcrd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcrd002.Text.Trim() + Qcrd003.Text.Trim();
-
 
             //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworks.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
 
@@ -301,9 +283,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    qaQTY = 0;
             //}
 
-
-
-
             //if (qaQTY > mcQTY)
             //{
             //    //入库超出日志
@@ -316,10 +295,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
         }
+
         //字段赋值，保存
         private void SaveItem()//新增质量控制数据
         {
-
             Qm_Rework item = DB.Qm_Reworks
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
@@ -405,7 +384,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             item.Qcrd061 = decimal.Parse(Qcrd061.Text);
             item.Qcrd062 = (Qcrd062.Text);
             item.Qcrdpcbrec = Qcrdpcbrec.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -415,10 +394,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             string OperateType = "修改";
             string OperateNotes = "Edit* " + ModifiedText + "*Edit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "改修数据修改", OperateNotes);
-
-
         }
-
 
         public void qQcrd007()//检讨・调查・试验费用
         {
@@ -428,42 +404,42 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 {
                     //直接
                     //(decimal.Parse(this.Qcrd008.Text) * decimal.Parse(this.Qcrd009.Text)* decimal.Parse(this.Qcrd004.Text)
-                    //decimal.Parse(this.Qcrd011.Text) * decimal.Parse(this.Qcrd009.Text) * decimal.Parse(this.Qcrd004.Text) 
+                    //decimal.Parse(this.Qcrd011.Text) * decimal.Parse(this.Qcrd009.Text) * decimal.Parse(this.Qcrd004.Text)
                     //间接
                     //(decimal.Parse(this.Qcrd008.Text) * decimal.Parse(this.Qcrd010.Text) * decimal.Parse(this.Qcrd005.Text)
                     //decimal.Parse(this.Qcrd011.Text) * decimal.Parse(this.Qcrd010.Text) * decimal.Parse(this.Qcrd005.Text)
 
                     Qcrd007.Text = (decimal.Parse(this.Qcrd008.Text) * decimal.Parse(this.Qcrd009.Text) * decimal.Parse(this.Qcrd004.Text) + decimal.Parse(this.Qcrd010.Text) * decimal.Parse(this.Qcrd008.Text) * decimal.Parse(this.Qcrd005.Text) + decimal.Parse(this.Qcrd011.Text) * decimal.Parse(this.Qcrd009.Text) * decimal.Parse(this.Qcrd004.Text) + decimal.Parse(this.Qcrd010.Text) * decimal.Parse(this.Qcrd011.Text) * decimal.Parse(this.Qcrd005.Text) + decimal.Parse(this.Qcrd012.Text)).ToString();
                 }
-
             }
             //Qcrd008,Qcrd011,Qcrd012,Qcrd013,
         }
+
         protected void Qcrd008_TextChanged(object sender, EventArgs e)
         {
             qQcrd007();
-
         }
+
         protected void Qcrd009_TextChanged(object sender, EventArgs e)
         {
             qQcrd007();
-
         }
+
         protected void Qcrd010_TextChanged(object sender, EventArgs e)
         {
             qQcrd007();
-
         }
+
         protected void Qcrd011_TextChanged(object sender, EventArgs e)
         {
             qQcrd007();
-
         }
+
         protected void Qcrd012_TextChanged(object sender, EventArgs e)
         {
             qQcrd007();
-
         }
+
         public void qQcrd013()//其他费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -475,15 +451,15 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd14,Qcrd015
         }
+
         protected void Qcrd014_TextChanged(object sender, EventArgs e)
         {
             qQcrd013();
-
         }
+
         protected void Qcrd015_TextChanged(object sender, EventArgs e)
         {
             qQcrd013();
-
         }
 
         public void qQcrd020()//选别・改修费用
@@ -497,31 +473,32 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd021,Qcrd022,Qcrd023,Qcrd024,Qcrd025
         }
+
         protected void Qcrd021_TextChanged(object sender, EventArgs e)
         {
             qQcrd020();
-
         }
+
         protected void Qcrd022_TextChanged(object sender, EventArgs e)
         {
             qQcrd020();
-
         }
+
         protected void Qcrd023_TextChanged(object sender, EventArgs e)
         {
             qQcrd020();
-
         }
+
         protected void Qcrd024_TextChanged(object sender, EventArgs e)
         {
             qQcrd020();
-
         }
+
         protected void Qcrd025_TextChanged(object sender, EventArgs e)
         {
             qQcrd020();
-
         }
+
         public void qQcrd027()//请求费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -533,16 +510,17 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd030,Qcrd031
         }
+
         protected void Qcrd030_TextChanged(object sender, EventArgs e)
         {
             qQcrd027();
-
         }
+
         protected void Qcrd031_TextChanged(object sender, EventArgs e)
         {
             qQcrd027();
-
         }
+
         public void qQcrd035()//选别・改修费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -554,31 +532,32 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd036,Qcrd037,Qcrd038,Qcrd039,Qcrd040
         }
+
         protected void Qcrd036_TextChanged(object sender, EventArgs e)
         {
             qQcrd035();
-
         }
+
         protected void Qcrd037_TextChanged(object sender, EventArgs e)
         {
             qQcrd035();
-
         }
+
         protected void Qcrd038_TextChanged(object sender, EventArgs e)
         {
             qQcrd035();
-
         }
+
         protected void Qcrd039_TextChanged(object sender, EventArgs e)
         {
             qQcrd035();
-
         }
+
         protected void Qcrd040_TextChanged(object sender, EventArgs e)
         {
             qQcrd035();
-
         }
+
         public void qQcrd042()//请求费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -590,16 +569,17 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd045,Qcrd046
         }
+
         protected void Qcrd045_TextChanged(object sender, EventArgs e)
         {
             qQcrd042();
-
         }
+
         protected void Qcrd046_TextChanged(object sender, EventArgs e)
         {
             qQcrd042();
-
         }
+
         public void qQcrd050()//选别・改修费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -611,31 +591,32 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd051,Qcrd052,Qcrd053,Qcrd054,Qcrd055
         }
+
         protected void Qcrd051_TextChanged(object sender, EventArgs e)
         {
             qQcrd050();
-
         }
+
         protected void Qcrd052_TextChanged(object sender, EventArgs e)
         {
             qQcrd050();
-
         }
+
         protected void Qcrd053_TextChanged(object sender, EventArgs e)
         {
             qQcrd050();
-
         }
+
         protected void Qcrd054_TextChanged(object sender, EventArgs e)
         {
             qQcrd050();
-
         }
+
         protected void Qcrd055_TextChanged(object sender, EventArgs e)
         {
             qQcrd050();
-
         }
+
         public void qQcrd057()//请求费用
         {
             if (Qcrd004.Text != "" && Qcrd005.Text != "")
@@ -647,20 +628,18 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
             //Qcrd060,Qcrd061
         }
+
         protected void Qcrd060_TextChanged(object sender, EventArgs e)
         {
             qQcrd057();
-
         }
+
         protected void Qcrd061_TextChanged(object sender, EventArgs e)
         {
             qQcrd057();
-
         }
 
-
-
-        #endregion
+        #endregion Events
 
         protected void Qcrd016_CheckedChanged(object sender, CheckedEventArgs e)
         {
@@ -677,12 +656,12 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 this.Tab4.Enabled = false;
             }
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             CheckData();
             SaveItem();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
     }
 }

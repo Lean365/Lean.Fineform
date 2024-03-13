@@ -1,4 +1,4 @@
-(function(){
+(function () {
     var utils = UM.utils;
     function hrefStartWith(href, arr) {
         href = href.replace(/^\s+|\s+$/g, '');
@@ -30,9 +30,9 @@
             "<input id=\"edui-link-Jtarget\" type=\"checkbox\"/>" +
             "</td>" +
             "</tr>" +
-//            "<tr>" +
-//            "<td colspan=\"2\" id=\"edui-link-Jmsg\"></td>" +
-//            "</tr>" +
+            //            "<tr>" +
+            //            "<td colspan=\"2\" id=\"edui-link-Jmsg\"></td>" +
+            //            "</tr>" +
             "</table>",
         initContent: function (editor) {
             var lang = editor.getLang('link');
@@ -43,12 +43,12 @@
         },
         initEvent: function (editor, $w) {
             var link = editor.queryCommandValue('link');
-            if(link){
-                $('#edui-link-Jhref',$w).val(utils.html($(link).attr('href')));
-                $('#edui-link-Jtitle',$w).val($(link).attr('title'));
-                $(link).attr('target') == '_blank' && $('#edui-link-Jtarget').attr('checked',true)
+            if (link) {
+                $('#edui-link-Jhref', $w).val(utils.html($(link).attr('href')));
+                $('#edui-link-Jtitle', $w).val($(link).attr('title'));
+                $(link).attr('target') == '_blank' && $('#edui-link-Jtarget').attr('checked', true)
             }
-            $('#edui-link-Jhref',$w).focus();
+            $('#edui-link-Jhref', $w).focus();
         },
         buttons: {
             'ok': {
@@ -65,9 +65,8 @@
                     }
                 }
             },
-            'cancel':{}
+            'cancel': {}
         },
         width: 400
     })
 })();
-

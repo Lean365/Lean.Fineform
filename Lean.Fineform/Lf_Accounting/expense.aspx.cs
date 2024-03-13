@@ -1,11 +1,11 @@
-﻿using Fine.Lf_Business.Models.FICO;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Accounting
+namespace LeanFine.Lf_Accounting
 {
     public partial class expense : PageBase
     {
@@ -22,10 +22,12 @@ namespace Fine.Lf_Accounting
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string Xlsbomitem, ExportFileName;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -56,8 +58,6 @@ namespace Fine.Lf_Accounting
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-
-
             //本月最后一天
             DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
@@ -66,10 +66,7 @@ namespace Fine.Lf_Accounting
             ddlGridPageSize.SelectedValue = "5000";
 
             BindGrid();
-
         }
-
-
 
         private void BindGrid()
         {
@@ -78,7 +75,7 @@ namespace Fine.Lf_Accounting
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (rbtnFirstAuto.Checked)
                 {
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -97,14 +94,14 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
                     Grid1.DataBind();
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -122,16 +119,16 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
                     Grid1.DataBind();
                 }
                 if (rbtnThirdAuto.Checked)
                 {
-                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -149,16 +146,16 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
                     Grid1.DataBind();
                 }
                 if (rbtnFourthAuto.Checked)
                 {
-                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -175,16 +172,16 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
-                    Grid1.DataBind(); 
+                    Grid1.DataBind();
                 }
                 if (rbtnFifthAuto.Checked)
                 {
-                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -202,21 +199,21 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
                     Grid1.DataBind();
                 }
                 if (rbtnSixthAuto.Checked)
                 {
-                    //Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
+                    //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-                    IQueryable<Fico_Costing_ActualCost> q = DB.Fico_Costing_ActualCosts; //.Include(u => u.Dept);
+                    IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
                     string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
-                    q = q.Where(u => u.Bc_ExpCategory.CompareTo("DTA")!=0);
+                    q = q.Where(u => u.Bc_ExpCategory.CompareTo("DTA") != 0);
                     if (!String.IsNullOrEmpty(searchText))
                     {
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
@@ -227,7 +224,7 @@ namespace Fine.Lf_Accounting
                     Grid1.RecordCount = q.Count();
 
                     // 排列和数据库分页
-                    q = SortAndPage<Fico_Costing_ActualCost>(q, Grid1);
+                    q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
 
                     Grid1.DataSource = q;
                     Grid1.DataBind();
@@ -245,8 +242,6 @@ namespace Fine.Lf_Accounting
                 //    q = q.Where(u => u.Enabled == (rblEnableStatus.SelectedValue == "enabled" ? true : false));
                 //}
 
-
-
                 ttbSearchMessage.Text = "";
             }
             catch (ArgumentNullException Message)
@@ -260,11 +255,10 @@ namespace Fine.Lf_Accounting
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -300,8 +294,6 @@ namespace Fine.Lf_Accounting
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -319,7 +311,6 @@ namespace Fine.Lf_Accounting
 
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
-
         //    // 在操作之前进行权限检查
         //    if (!CheckPower("CoreOphDelete"))
         //    {
@@ -336,15 +327,10 @@ namespace Fine.Lf_Accounting
         //    DB.Pp_P1d_OutputSubs.Where(u => ids.Contains(u.Parent.ID)).Delete();
         //    DB.Pp_P1d_Outputs.Where(u => ids.Contains(u.ID)).Delete();
 
-
-
-
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -391,9 +377,6 @@ namespace Fine.Lf_Accounting
             //    DB.Pp_P1d_OutputSubs.Where(l => l.Parent.ID == del_ID).Delete();
             //    DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).Delete();
 
-
-
-
             //}
             //BindGrid();
         }
@@ -407,7 +390,6 @@ namespace Fine.Lf_Accounting
         {
             BindGrid();
         }
-
 
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -452,10 +434,7 @@ namespace Fine.Lf_Accounting
             }
         }
 
-
-        #endregion
-
-
+        #endregion Events
 
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
@@ -465,6 +444,7 @@ namespace Fine.Lf_Accounting
                 BindGrid();
             }
         }
+
         //合计表格
         private void OutputSummaryData(DataTable source)
         {
@@ -487,7 +467,6 @@ namespace Fine.Lf_Accounting
                 }
             }
 
-
             JObject summary = new JObject();
             summary.Add("Bc_TitleName", "(CNY)合计");
             summary.Add("BC_BudgetAmt", Ytoal.ToString("F2"));
@@ -496,7 +475,6 @@ namespace Fine.Lf_Accounting
             //summary.Add("Bediffmoney", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
 
         protected void BtnExport_Click(object sender, EventArgs e)
@@ -510,34 +488,32 @@ namespace Fine.Lf_Accounting
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            
 
             if (rbtnFirstAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-             if (rbtnSecondAuto.Checked)
+            if (rbtnSecondAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_General + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-             if (rbtnThirdAuto.Checked)
+            if (rbtnThirdAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Manufacturing + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-             if (rbtnFourthAuto.Checked)
+            if (rbtnFourthAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Operation + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-             if (rbtnFifthAuto.Checked)
+            if (rbtnFifthAuto.Checked)
             {
                 Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_ProdCost + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
-             if (rbtnSixthAuto.Checked)
+            if (rbtnSixthAuto.Checked)
             {
-                Xlsbomitem =  "费用明细对比_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = "费用明细对比_" + DPend.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

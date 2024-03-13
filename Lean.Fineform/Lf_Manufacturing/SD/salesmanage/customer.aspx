@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="customer.aspx.cs" Inherits="Fine.Lf_Manufacturing.SD.salesmanage.customer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="customer.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.SD.salesmanage.customer" %>
 
 <!DOCTYPE html>
 

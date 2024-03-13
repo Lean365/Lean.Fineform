@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.YF;
+using System;
 using System.Data;
-using System.Xml;
+using System.Linq;
 
-namespace Fine.Lf_Manufacturing.SD.shipment
+namespace LeanFine.Lf_Manufacturing.SD.shipment
 {
     public partial class inbound_query : PageBase
     {
@@ -28,11 +21,9 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,7 +43,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -68,36 +58,29 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
+            Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-            
-            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
+            IQueryable<DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-            q = q.Where(u => u.INS001.CompareTo(edate) ==0);
+            q = q.Where(u => u.INS001.CompareTo(edate) == 0);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB>(q, Grid1);
+            q = SortAndPage<DTASSET_SCANNER_IN_SUB>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
         }
 
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
-
-
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
@@ -105,13 +88,10 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             //CheckPowerWithLinkButtonField("CoreLineEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -126,6 +106,7 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             Grid1.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
         //可选中多项删除
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
@@ -144,12 +125,10 @@ namespace Fine.Lf_Manufacturing.SD.shipment
         //    //DB.SaveChanges();
         //    DB.proLines.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
 
         //}
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -178,23 +157,24 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "班组删除", OperateNotes);
 
-            //    current.isDelete = 1;
+            //    current.isDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
-            //    current.ModifyTime = DateTime.Now;
+            //    current.ModifyDate = DateTime.Now;
             //    DB.SaveChanges();
 
             BindGrid();
             //}
         }
+
         protected void DPend_TextChanged(object sender, EventArgs e)
         {
             if (DPend.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
+
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -207,8 +187,8 @@ namespace Fine.Lf_Manufacturing.SD.shipment
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-
         }
+
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -216,8 +196,7 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             BindGrid();
         }
 
-
-        #endregion
+        #endregion Events
 
         #region ExportExcel
 
@@ -230,26 +209,22 @@ namespace Fine.Lf_Manufacturing.SD.shipment
                 return;
             }
 
+            Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-
-           Fine.Lf_Business.Models.YF.LeanSerialEntities DBSerial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-
-            IQueryable<Fine.Lf_Business.Models.YF.DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
+            IQueryable<DTASSET_SCANNER_IN_SUB> q = DBSerial.DTASSET_SCANNER_IN_SUB; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
 
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-            q = q.Where(u => u.INS001.CompareTo(edate)==0);
-                var qs = from p in q
-                         select new
-                         {
-                             入库日期 = p.INS001,
-                             物料 = p.INS002,
-                             序列号 = p.INS003,
-                             数量 = p.INS004,
-
-
-                         };
+            q = q.Where(u => u.INS001.CompareTo(edate) == 0);
+            var qs = from p in q
+                     select new
+                     {
+                         入库日期 = p.INS001,
+                         物料 = p.INS002,
+                         序列号 = p.INS003,
+                         数量 = p.INS004,
+                     };
             if (qs.Any())
             {
                 //DataTable Exp = new DataTable();
@@ -260,7 +235,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
                 Xlsbomitem = edate + "_Serial_Data";
                 //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
                 ExportFileName = Xlsbomitem + ".xlsx";
-
 
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
@@ -274,8 +248,6 @@ namespace Fine.Lf_Manufacturing.SD.shipment
             }
         }
 
-        #endregion
-
-
+        #endregion ExportExcel
     }
 }

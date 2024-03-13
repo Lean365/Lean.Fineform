@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-
-using System.Data.SqlClient;
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Xml;
-using System.Text;
-using System.Text.RegularExpressions;
-namespace Fine.Lf_Manufacturing.EC
+using System.Linq;
+using System.Web;
+
+namespace LeanFine.Lf_Manufacturing.EC
 {
     public partial class ec_report : PageBase
     {
@@ -29,13 +21,14 @@ namespace Fine.Lf_Manufacturing.EC
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static string mysql, myrexname;
         public static DataTable table;
         //
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -72,8 +65,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             try
@@ -82,12 +73,12 @@ namespace Fine.Lf_Manufacturing.EC
                         (from a in DB.Pp_Ecs
                          join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
                          where b.Ec_qadate == "" && b.Ec_qadate == null
-                     // where a.Ec_qadate==null
-                     //where b.Ec_distinction == 1
-                     where b.isDelete == 0
+                         // where a.Ec_qadate==null
+                         //where b.Ec_distinction == 1
+                         where b.isDeleted == 0
                          orderby a.Ec_issuedate, b.Ec_no, b.Ec_model, b.Ec_bomitem
-                     //where a.Ec_model.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_no.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_issuedate.Contains(searchText)
-                     select new
+                         //where a.Ec_model.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_no.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_issuedate.Contains(searchText)
+                         select new
                          {
                              Ec_issuedate = a.Ec_issuedate,
                              Ec_no = b.Ec_no,
@@ -121,9 +112,9 @@ namespace Fine.Lf_Manufacturing.EC
                              Ec_process = b.Ec_process,
                              Ec_bomdate = b.Ec_bomdate,
                              Ec_pmcdate = b.Ec_pmcdate,
-                             
+
                              Ec_pmclot = b.Ec_pmclot,
-                            
+
                              Ec_pmcsn = b.Ec_pmcmemo,
                              Ec_pmcnote = b.Ec_pmcnote,
                              Ec_bstock = b.Ec_bstock,
@@ -131,50 +122,48 @@ namespace Fine.Lf_Manufacturing.EC
                              Ec_mmlot = b.Ec_mmlot,
                              Ec_mmlotno = b.Ec_mmlotno,
                              Ec_mmnote = b.Ec_mmnote,
-                         Ec_purdate = b.Ec_purdate,
-                         Ec_purorder = b.Ec_purorder,
-                         Ec_pursupplier = b.Ec_pursupplier,
+                             Ec_purdate = b.Ec_purdate,
+                             Ec_purorder = b.Ec_purorder,
+                             Ec_pursupplier = b.Ec_pursupplier,
                              Ec_purnote = b.Ec_purnote,
                              Ec_iqcdate = b.Ec_iqcdate,
-                             
+
                              Ec_iqcorder = b.Ec_iqcorder,
                              Ec_iqcnote = b.Ec_iqcnote,
                              Ec_p1ddate = b.Ec_p1ddate,
                              Ec_p1dline = b.Ec_p1dline,
                              Ec_p1dlot = b.Ec_p1dlot,
-                             
+
                              Ec_p2ddate = b.Ec_p2ddate,
-                            
+
                              Ec_p2dlot = b.Ec_p2dlot,
-                             
+
                              Ec_p2dnote = b.Ec_p2dnote,
                              Ec_qadate = b.Ec_qadate,
                              Ec_qalot = b.Ec_qalot,
-                             
+
                              Ec_qanote = b.Ec_qanote,
-                             Ec_subdel = b.isDelete,
+                             Ec_subdel = b.isDeleted,
 
+                             //Processstatus = (a.Ec_issuedate == "" || a.Ec_issuedate == null ? "◎采购未处理" :
+                             //(a.Ec_pmcdate == "" || a.Ec_pmcdate == null ? "◎生管未处理" :
+                             //(a.Ec_iqcdate == "" || a.Ec_iqcdate == null ? "◎受检未处理" :
+                             //(a.Ec_mmdate == "" || a.Ec_mmdate == null ? "◎部管未处理" :
+                             //(a.Ec_p2ddate == "" || a.Ec_p2ddate == null ? "◎制二未处理" :
+                             //(a.Ec_p1ddate == "" || a.Ec_p1ddate == null ? "◎制一未处理" :
+                             //(a.Ec_qadate == "" || a.Ec_qadate == null ? "◎品管未处理" :
+                             //""))))))),
 
-                         //Processstatus = (a.Ec_issuedate == "" || a.Ec_issuedate == null ? "◎采购未处理" :
-                         //(a.Ec_pmcdate == "" || a.Ec_pmcdate == null ? "◎生管未处理" :
-                         //(a.Ec_iqcdate == "" || a.Ec_iqcdate == null ? "◎受检未处理" :
-                         //(a.Ec_mmdate == "" || a.Ec_mmdate == null ? "◎部管未处理" :
-                         //(a.Ec_p2ddate == "" || a.Ec_p2ddate == null ? "◎制二未处理" :
-                         //(a.Ec_p1ddate == "" || a.Ec_p1ddate == null ? "◎制一未处理" :
-                         //(a.Ec_qadate == "" || a.Ec_qadate == null ? "◎品管未处理" :
-                         //""))))))),
-
-                         Prostatus =
-                                    (a.Ec_distinction == 1 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
-                                    (a.Ec_distinction == 2 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
-                                    (a.Ec_distinction == 3 ? (b.Ec_mmdate == "" || b.Ec_mmdate == null ? "◎" : "●") :
-                                    (a.Ec_distinction == 4 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
-                                    (a.Ec_distinction == 5 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
-                                    ""))))),
+                             Prostatus =
+                                        (a.Ec_distinction == 1 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
+                                        (a.Ec_distinction == 2 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
+                                        (a.Ec_distinction == 3 ? (b.Ec_mmdate == "" || b.Ec_mmdate == null ? "◎" : "●") :
+                                        (a.Ec_distinction == 4 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
+                                        (a.Ec_distinction == 5 ? (b.Ec_qadate == "" || b.Ec_qadate == null ? "◎" : "●") :
+                                        ""))))),
                          });
                 string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
                 string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -228,9 +217,9 @@ namespace Fine.Lf_Manufacturing.EC
                     E.Ec_process,
                     E.Ec_bomdate,
                     E.Ec_pmcdate,
-                    
+
                     E.Ec_pmclot,
-                    
+
                     E.Ec_pmcsn,
                     E.Ec_pmcnote,
                     E.Ec_bstock,
@@ -243,26 +232,23 @@ namespace Fine.Lf_Manufacturing.EC
                     E.Ec_pursupplier,
                     E.Ec_purnote,
                     E.Ec_iqcdate,
-                    
+
                     E.Ec_iqcorder,
                     E.Ec_iqcnote,
                     E.Ec_p1ddate,
                     E.Ec_p1dline,
                     E.Ec_p1dlot,
-                    
-                    
+
                     E.Ec_p2ddate,
-                    
+
                     E.Ec_p2dlot,
-                    
+
                     E.Ec_p2dnote,
                     E.Ec_qadate,
                     E.Ec_qalot,
-                    
+
                     E.Ec_qanote,
                     E.Ec_subdel,
-
-
                 }).Distinct();
                 // 在查询添加之后，排序和分页之前获取总记录数
                 Grid1.RecordCount = GridHelper.GetTotalCount(qss);
@@ -286,14 +272,13 @@ namespace Fine.Lf_Manufacturing.EC
             catch (Exception Message)
             {
                 Alert.ShowInTop("异常3:" + Message);
-
             }
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
             {
-
                 BindGrid();
             }
         }
@@ -305,7 +290,8 @@ namespace Fine.Lf_Manufacturing.EC
                 BindGrid();
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -322,10 +308,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
-
-
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
             Grid1.SortDirection = e.SortDirection;
@@ -339,8 +321,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
-
         protected void Window1_Close(object sender, EventArgs e)
         {
             BindGrid();
@@ -351,7 +331,6 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -359,23 +338,19 @@ namespace Fine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
+        #endregion Events
 
+        #region ExportExcel
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {
-
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-
             Xlsbomitem = "Ec__DetailsData_" + myrexname;
 
             ExportFileName = Xlsbomitem + ".xlsx";
-
-
 
             //DataTable source = GetDataTable.Getdt(mysql);
             //导出2007格式
@@ -386,8 +361,8 @@ namespace Fine.Lf_Manufacturing.EC
         {
             //写到客户端（下载）
             HttpContext.Current.Response.Clear();
-            //asp.net输出的Excel文件名    
-            //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。    
+            //asp.net输出的Excel文件名
+            //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
             string fileName = HttpUtility.UrlEncode("Ec__DetailsData_" + myrexname + ".xls");
             HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
             HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -397,6 +372,6 @@ namespace Fine.Lf_Manufacturing.EC
             HttpContext.Current.Response.End();
         }
 
-        #endregion
+        #endregion ExportExcel
     }
 }

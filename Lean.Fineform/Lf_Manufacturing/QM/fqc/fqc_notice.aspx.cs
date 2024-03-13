@@ -1,10 +1,11 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.fqc
+
+namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
     public partial class fqc_notice : PageBase
     {
@@ -21,17 +22,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
-        
 
-        
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-
             if (!IsPostBack)
             {
                 LoadData();
@@ -66,8 +62,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -90,7 +84,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             }
             if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
             {
-
                 q = q.Where(u => u.qmLine.Contains(this.DDLline.SelectedText));
             }
 
@@ -116,8 +109,8 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
             Grid1.DataSource = q;
             Grid1.DataBind();
-
         }
+
         public void BindDDLLine()
         {
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
@@ -129,11 +122,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                     select new
                     {
                         a.qmLine
-
                     };
-
-
-
 
             var qs = q.Select(E => new { E.qmLine, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -146,17 +135,19 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             DDLline.DataBind();
             this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
+
         protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
             {
-
                 BindGrid();
             }
         }
+
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -169,6 +160,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
         }
+
         protected void DPstart_TextChanged(object sender, EventArgs e)
         {
             if (DPstart.SelectedDate.HasValue)
@@ -186,6 +178,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 BindGrid();
             }
         }
+
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
             // 数据绑定之前，进行权限检查
@@ -196,8 +189,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -230,16 +221,10 @@ namespace Fine.Lf_Manufacturing.QM.fqc
         //    //DB.SaveChanges();
         //    DB.pqQachecks.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //    NetLogRecord();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -255,7 +240,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/fqc/fqc_notice_edit.aspx?GUID=" + strGUID + "&type=1") + Window1.GetMaximizeReference());
-
             }
             if (e.CommandName == "Print")
             {
@@ -268,9 +252,7 @@ namespace Fine.Lf_Manufacturing.QM.fqc
 
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/QM/fqc/fqc_notice_edit.aspx?GUID=" + strGUID + "&type=1") + Window1.GetMaximizeReference());
-
             }
-
 
             if (e.CommandName == "Delete")
             {
@@ -289,14 +271,12 @@ namespace Fine.Lf_Manufacturing.QM.fqc
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不良联络删除", OperateNotes);
 
-                current.isDelete = 0;
+                current.isDeleted = 0;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
-
                 BindGrid();
-
             }
         }
 
@@ -310,7 +290,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -318,13 +297,6 @@ namespace Fine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        #endregion
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

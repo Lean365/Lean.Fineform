@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-
+﻿using FineUIPro;
+using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
-using System.Media;
-namespace Fine.Lf_Admin
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace LeanFine.Lf_Admin
 {
     public partial class operatelog : PageBase
     {
@@ -35,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,7 +29,6 @@ namespace Fine.Lf_Admin
         {
             if (!IsPostBack)
             {
-
                 BindDDLUser();
                 LoadData();
             }
@@ -96,13 +81,6 @@ namespace Fine.Lf_Admin
                 }
             }
 
-
-
-
-
-
-
-
             // 过滤搜索范围
             if (ddlSearchRange.SelectedValue != "ALL")
             {
@@ -117,15 +95,19 @@ namespace Fine.Lf_Admin
                     case "TODAY":
                         q = q.Where(l => l.OperateTime >= today);
                         break;
+
                     case "LAST3DAYS":
                         q = q.Where(l => l.OperateTime >= Pastday3);
                         break;
+
                     case "LAST7DAYS":
                         q = q.Where(l => l.OperateTime >= Pastday7);
                         break;
+
                     case "LASTMONTH":
                         q = q.Where(l => l.OperateTime >= Pastmonth);
                         break;
+
                     case "LASTYEAR":
                         q = q.Where(l => l.OperateTime >= Pastyear);
                         break;
@@ -133,11 +115,10 @@ namespace Fine.Lf_Admin
             }
             //string s = GetIdentityName();
             //q = q.Where(l => l.OperateUserId == s);
-            q = q.OrderBy(u=>u.OperateUserName);
+            q = q.OrderBy(u => u.OperateUserName);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
-
 
             // 排列和分页
             q = SortAndPage<Adm_OperateLog>(q, Grid1);
@@ -146,7 +127,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -163,10 +144,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
-
-
-
         protected void ddlSearchOperateUser_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlSearchOperateUser.SelectedIndex != 0 && ddlSearchOperateUser.SelectedIndex != -1)
@@ -179,10 +156,6 @@ namespace Fine.Lf_Admin
         {
             BindGrid();
         }
-
-
-
-
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
@@ -204,8 +177,6 @@ namespace Fine.Lf_Admin
             CheckPowerWithLinkButtonField("CoreLogView", Grid1, "viewField");
         }
 
-
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -224,10 +195,7 @@ namespace Fine.Lf_Admin
                          {
                              b.ChineseName,
                              a.OperateUserId,
-                         }).OrderBy(u=>u.ChineseName).Distinct().ToList();
-
-
-
+                         }).OrderBy(u => u.ChineseName).Distinct().ToList();
 
                 // 绑定到下拉列表（启用模拟树功能）
 
@@ -238,24 +206,18 @@ namespace Fine.Lf_Admin
 
                 // 选中根节点
                 //ddlSearchOperateUser.SelectedValue = "0";
-
-
-
             }
             else
             {
                 string uid = GetIdentityName();
                 var q = (from a in DB.Adm_OperateLogs
-                             where a.OperateUserId.Contains(uid)
+                         where a.OperateUserId.Contains(uid)
                          join b in DB.Adm_Users on a.OperateUserId equals b.Name
                          select new
                          {
                              b.ChineseName,
                              a.OperateUserId,
                          }).OrderBy(u => u.ChineseName).Distinct().ToList();
-
-
-
 
                 // 绑定到下拉列表（启用模拟树功能）
 
@@ -265,17 +227,13 @@ namespace Fine.Lf_Admin
                 ddlSearchOperateUser.DataBind();
             }
 
-
             this.ddlSearchOperateUser.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
-
         }
+
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
             if (e.CommandName == "View")
@@ -283,13 +241,9 @@ namespace Fine.Lf_Admin
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Admin/operatelog_view.aspx?GUID=" + keys[0].ToString() + "&type=1"));// + Window1.GetMaximizeReference());
-
             }
         }
     }
 
-    #endregion
-
-
-
+    #endregion Events
 }

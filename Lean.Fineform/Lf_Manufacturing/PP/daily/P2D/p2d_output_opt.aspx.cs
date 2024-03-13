@@ -1,21 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using FineUIPro;
-using System.Linq;
-using System.Data.Entity;
 
-using System.Data.SqlClient;
-using System.Data;
-using System.Xml;
-using System.Collections;
-using System.Configuration;
-using System.IO;
-using Newtonsoft.Json.Linq;
-
-namespace Fine.Lf_Manufacturing.PP.daily
+namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 {
     public partial class p2d_output_opt : PageBase
     {
@@ -28,14 +13,14 @@ namespace Fine.Lf_Manufacturing.PP.daily
         {
             get
             {
-                return "CoreP2DOutputView";
+                return "CoreP1DOutputView";
             }
         }
 
-        #endregion
+        #endregion ViewPower
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
+
 //using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class role : PageBase
     {
@@ -26,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -48,11 +43,9 @@ namespace Fine.Lf_Admin
 
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Admin/role_new.aspx", "新增角色");
 
-            
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
 
-            
             BindGrid();
         }
 
@@ -77,7 +70,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -103,7 +96,7 @@ namespace Fine.Lf_Admin
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
         }
@@ -128,7 +121,7 @@ namespace Fine.Lf_Admin
                 }
 
                 int userCountUnderThisRole = DB.Adm_Users.Where(u => u.Roles.Any(r => r.ID == roleID)).Count();
-                
+
                 if (userCountUnderThisRole > 0)
                 {
                     Alert.ShowInTop("删除失败！需要先清空属于此角色的用户！");
@@ -137,7 +130,7 @@ namespace Fine.Lf_Admin
 
                 // 执行数据库操作
                 DB.Adm_Roles.Where(r => r.ID == roleID).DeleteFromQuery();
-                
+
                 BindGrid();
             }
         }
@@ -147,7 +140,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

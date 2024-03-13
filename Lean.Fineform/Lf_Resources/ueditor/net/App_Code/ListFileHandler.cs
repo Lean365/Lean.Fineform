@@ -9,7 +9,7 @@ using System.Web;
 /// </summary>
 public class ListFileManager : Handler
 {
-    enum ResultState
+    private enum ResultState
     {
         Success,
         InvalidParam,
@@ -92,12 +92,16 @@ public class ListFileManager : Handler
         {
             case ResultState.Success:
                 return "SUCCESS";
+
             case ResultState.InvalidParam:
                 return "参数不正确";
+
             case ResultState.PathNotFound:
                 return "路径不存在";
+
             case ResultState.AuthorizError:
                 return "文件系统权限不足";
+
             case ResultState.IOError:
                 return "文件系统读取错误";
         }

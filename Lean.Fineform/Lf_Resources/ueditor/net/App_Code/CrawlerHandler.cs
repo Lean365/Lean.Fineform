@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,7 +11,10 @@ public class CrawlerHandler : Handler
 {
     private string[] Sources;
     private Crawler[] Crawlers;
-    public CrawlerHandler(HttpContext context) : base(context) { }
+
+    public CrawlerHandler(HttpContext context) : base(context)
+    {
+    }
 
     public override void Process()
     {
@@ -46,7 +48,6 @@ public class Crawler
     public string State { get; set; }
 
     private HttpServerUtility Server { get; set; }
-
 
     public Crawler(string sourceUrl, HttpServerUtility server)
     {
@@ -138,7 +139,7 @@ public class Crawler
         if (myIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
         {
             byte[] ipBytes = myIPAddress.GetAddressBytes();
-            // 10.0.0.0/24 
+            // 10.0.0.0/24
             if (ipBytes[0] == 10)
             {
                 return true;

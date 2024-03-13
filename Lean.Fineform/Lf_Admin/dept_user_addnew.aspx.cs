@@ -1,15 +1,11 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class dept_user_addnew : PageBase
     {
@@ -26,7 +22,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -55,10 +51,8 @@ namespace Fine.Lf_Admin
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
-
             BindGrid();
         }
-
 
         private void BindGrid()
         {
@@ -68,7 +62,7 @@ namespace Fine.Lf_Admin
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText)||u.Address.Contains(searchText));
+                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText) || u.Address.Contains(searchText));
             }
 
             q = q.Where(u => u.Name != "admin");
@@ -82,13 +76,11 @@ namespace Fine.Lf_Admin
             // 排列和分页
             q = SortAndPage<Adm_User>(q, Grid1);
 
-
             Grid1.DataSource = q;
             Grid1.DataBind();
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -99,7 +91,6 @@ namespace Fine.Lf_Admin
             // 跨页保持选中行
             IEnumerable<int> ids = Grid1.SelectedRowIDArray.Select(u => Convert.ToInt32(u));
 
-
             Adm_Dept dept = Attach<Adm_Dept>(deptID);
 
             DB.Adm_Users.Where(u => ids.Contains(u.ID))
@@ -107,12 +98,9 @@ namespace Fine.Lf_Admin
                 .ForEach(u => u.Dept = dept);
 
             DB.SaveChanges();
-             
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
-        
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
@@ -129,7 +117,7 @@ namespace Fine.Lf_Admin
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
         }
@@ -140,7 +128,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -148,8 +135,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
-
+        #endregion Events
     }
 }

@@ -13,7 +13,7 @@ function AjaxData_Qm_Pass() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Qm_pass.ashx",
+        url: "/Lf_Report/qm_pass.ashx",
         data: {
             TransDate: TransDates
         },
@@ -33,7 +33,7 @@ function AjaxData_Qm_Pass() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Qm_Pass(name, value1, value2, value3);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindmyChart_QM_Pass(name, value1, value2, value3);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
@@ -47,7 +47,7 @@ function AjaxData_LotPass() {
     //debugger;
     //-----------上下都是设置样式的可以无视掉，这里才是核心--------------------
     $.ajax({
-        url: "/Lf_Report/Qm_pass_lot.ashx",
+        url: "/Lf_Report/qm_pass_lot.ashx",
         data: {
             TransDate: TransDates
         },
@@ -67,7 +67,7 @@ function AjaxData_LotPass() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Qm_LotPass(name, value1, value2, value3);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindmyChart_QM_LotPass(name, value1, value2, value3);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {

@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Sd_fybujp.ashx.cs" Class="Fine.Lf_Report.Sd_fybujp" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="sd_fybujp.ashx.cs" Class="LeanFine.Lf_Report.sd_fybujp" %>

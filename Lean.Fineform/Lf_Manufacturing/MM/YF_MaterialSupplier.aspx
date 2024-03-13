@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YF_MaterialSupplier.aspx.cs" Inherits="Fine.Lf_Manufacturing.MM.YF_MaterialSupplier" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YF_MaterialSupplier.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.MM.YF_MaterialSupplier" %>
 
 <!DOCTYPE html>
 

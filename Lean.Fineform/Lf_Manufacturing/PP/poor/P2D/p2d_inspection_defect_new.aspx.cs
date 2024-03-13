@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,11 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.PP.poor.P2D
-{
 
+namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
+{
     public partial class p2d_inspection_defect_new : PageBase
     {
-
         #region ViewPower
 
         /// <summary>
@@ -27,12 +26,15 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public static DataTable DefDatatable;
+
         //是否添加到末尾 false=末尾,true=开头
         private bool AppendToEnd = false;
+
         public static string userid;
         public static int rowID, delrowID, editrowID, totalSum;
         public static string Proinspdate, Promodel, Propcbtype, Provisualtype, Provctype, Prosideadate, Prosidebdate, Prodshiftname, Procensor, Proorder, Prolot, Proorderqty, Prorealqty, Proispqty, Propcbchecktype, Prolinename, Proinsqtime, Proaoitime, Probadqty, Prohandle, Probadserial, Probadcontent, Probadtype;
@@ -41,7 +43,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
         {
             if (!IsPostBack)
             {
-
                 LoadData();
                 //this.Defectguid.Text = Guid.NewGuid().ToString();
             }
@@ -49,12 +50,10 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
         private void LoadData()
         {
-
             userid = GetIdentityName();
 
-
             //linq查询空表没法显示字段名,只能查询非空表
-            //IQueryable<Pp_Defect_P2d> q = DB.Pp_P2d_Inspection_Defects;
+            //IQueryable<pp_defect_P2d> q = DB.Pp_P2d_Inspection_Defects;
             //DefDatatable = CopyToDataTable(q);
 
             //获取SQL数据表
@@ -103,18 +102,13 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.无不良台数不超过当天生产的实绩。</div><div>2.同LOT不同订单的集计系统自动处理。</div><div>3.不良集计是按选择的日期，批次对应工单的完成情况计算出来的。</div><div>4.OPH中没有不良的批次自动追加到不良集计中。</div>");
         }
 
-
-
-
-
         private void BindGrid()
         {
             IQueryable<Pp_P2d_Inspection_Defect> q = DB.Pp_P2d_Inspection_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string ddate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
-            //q = q.Where(u => u.isDelete == 0 && u.Prolinename.Contains(prolinename.SelectedItem.Text) && u.Proorder.Contains(proorder.SelectedItem.Text) && u.Prodate.Contains(ddate));
-
+            //q = q.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(prolinename.SelectedItem.Text) && u.Proorder.Contains(proorder.SelectedItem.Text) && u.Prodate.Contains(ddate));
 
             //if (GetIdentityName() != "admin")
             //{)
@@ -139,18 +133,15 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
             OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-
-
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region DDLBindData
+
         //查询LOT
         private void BindDDLOrder()
         {
-
             var a = from p in DB.Pp_P2d_Outputs
                         //where string.IsNullOrEmpty( p.Porderlot)
                     select p.Proorder;
@@ -172,14 +163,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             proorder.DataValueField = "Porderno";
             proorder.DataBind();
             this.proorder.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
-
         }
 
         //目视
         private void BindDDLVisualtype()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "G"
@@ -190,7 +178,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -202,13 +189,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlProvisualtype.DataTextField = "Reasoncntext";
             ddlProvisualtype.DataValueField = "Reasoncntext";
             ddlProvisualtype.DataBind();
-
-
         }
+
         //VC
         private void BindDDLVctype()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "G"
@@ -219,7 +204,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -231,14 +215,12 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlProvctype.DataTextField = "Reasoncntext";
             ddlProvctype.DataValueField = "Reasoncntext";
             ddlProvctype.DataBind();
-
-
         }
+
         //查询线别
         private void BindDDLline()
 
         {
-
             if (DefDate.SelectedDate.HasValue)
             {
                 Proinspdate = DefDate.SelectedDate.Value.ToString("yyyyMMdd");
@@ -249,16 +231,14 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                         //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                         //where b.Proecnno == strecn
                         //where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P2d_Inspection_Defects
-                        //                                       where d.isDelete == 0
+                        //                                       where d.isDeleted == 0
                         //                                       where d.Prodate == Prodate
                         //                                       where d.Prolinename == a.Prolinename
                         //                                       select d.Prolot)
                         //            .Contains(a.Prolot)//投入日期
                         select new
                         {
-
                             a.Prolinename
-
                         };
                 //var q = from a in DB.Pp_Lines
                 //        where a.lineclass.CompareTo("P") == 0
@@ -266,7 +246,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //        {
                 //            Prolinename=a.linename
                 //        };
-
 
                 var qs = q.Select(E => new { E.Prolinename }).ToList().Distinct();
                 //var list = (from c in DB.ProSapPorders
@@ -278,15 +257,12 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 ddlProlinename.DataValueField = "Prolinename";
                 ddlProlinename.DataBind();
                 this.ddlProlinename.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
-
             }
-
         }
 
         //  查询班别
         private void BindDDLShiftname()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "A"
@@ -297,7 +273,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -309,15 +284,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlProdshiftname.DataTextField = "Reasoncntext";
             ddlProdshiftname.DataValueField = "Reasoncntext";
             ddlProdshiftname.DataBind();
-
-
-
         }
 
         //查询检查员
         private void BindDDLCensor()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "M"
@@ -328,7 +299,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -340,14 +310,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlProcensor.DataTextField = "Reasoncntext";
             ddlProcensor.DataValueField = "Reasoncntext";
             ddlProcensor.DataBind();
-
-
-
         }
+
         //板别
         private void BindDDLPcbType()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "F"
@@ -358,7 +325,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -370,14 +336,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlPropcbtype.DataTextField = "Reasoncntext";
             ddlPropcbtype.DataValueField = "Reasoncntext";
             ddlPropcbtype.DataBind();
-
-
-
         }
+
         //检查状况
         private void BindDDLChecktype()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "K"
@@ -388,7 +351,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -400,14 +362,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlPropcbchecktype.DataTextField = "Reasoncntext";
             ddlPropcbchecktype.DataValueField = "Reasoncntext";
             ddlPropcbchecktype.DataBind();
-
-
-
         }
+
         //手贴
         //private void BindDDLHandle()
         //{
-
         //    //查询LINQ去重复
         //    var q = from a in DB.Pp_Reasons
         //            where a.Reasontype == "E"
@@ -431,13 +390,10 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
         //    ddlProhandle.DataValueField = "Reasoncntext";
         //    ddlProhandle.DataBind();
 
-
-
         //}
         //个所
         private void BindDDLBadtype()
         {
-
             //查询LINQ去重复
             var q = from a in DB.Pp_Reasons
                     where a.Reasontype == "H"
@@ -448,7 +404,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     {
                         a.GUID,
                         a.Reasoncntext
-
                     };
 
             var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
@@ -460,17 +415,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             ddlProbadtype.DataTextField = "Reasoncntext";
             ddlProbadtype.DataValueField = "Reasoncntext";
             ddlProbadtype.DataBind();
-
-
-
         }
 
-        #endregion
-
-
+        #endregion DDLBindData
 
         #region Events
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -491,20 +440,18 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //int userID = GetSelectedDataKeyID(Grid1);
                 Pp_P2d_Inspection_Defect current = DB.Pp_P2d_Inspection_Defects.Find(del_ID);
                 //删除日志
-                string Contectext = current.ID + "," +current.Proinspdate + "," +current.Promodel + "," +current.Propcbtype + "," +current.Provisualtype + "," +current.Provctype + "," +current.Prosideadate + "," +current.Prosidebdate + "," +current.Prodshiftname + "," +current.Procensor + "," +current.Proorder + "," +current.Prolot + "," +current.Proorderqty + "," +current.Prorealqty + "," +current.Proispqty + "," +current.Propcbchecktype + "," +current.Prolinename + "," +current.Proinsqtime + "," +current.Proaoitime + "," +current.Probadqty + "," +current.Prohandle + "," +current.Probadserial + "," +current.Probadcontent + "," +current.Probadtype;
+                string Contectext = current.ID + "," + current.Proinspdate + "," + current.Promodel + "," + current.Propcbtype + "," + current.Provisualtype + "," + current.Provctype + "," + current.Prosideadate + "," + current.Prosidebdate + "," + current.Prodshiftname + "," + current.Procensor + "," + current.Proorder + "," + current.Prolot + "," + current.Proorderqty + "," + current.Prorealqty + "," + current.Proispqty + "," + current.Propcbchecktype + "," + current.Prolinename + "," + current.Proinsqtime + "," + current.Proaoitime + "," + current.Probadqty + "," + current.Prohandle + "," + current.Probadserial + "," + current.Probadcontent + "," + current.Probadtype;
                 string OperateType = "删除";
                 string OperateNotes = "Del生产不良* " + Contectext + " *Del生产不良 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-
                 //删除记录
                 //DB.Pp_P2d_Inspection_Defects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 DB.SaveChanges();
                 //重新绑定
                 BindGrid();
-
             }
         }
 
@@ -513,9 +460,8 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreDefectDelete", Grid1, "deleteField");
             // 设置LinkButtonField的点击客户端事件
-
-
         }
+
         public static string lclass, nclass, ncode, ConnStr;
 
         protected void DefDate_TextChanged(object sender, EventArgs e)
@@ -523,20 +469,12 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             BindDDLline();
         }
 
-
-
-
-        #endregion
-
-
-
-
+        #endregion Events
 
         protected void ddlProlinename_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddlProlinename.SelectedIndex != 0 && ddlProlinename.SelectedIndex != -1)
             {
-
                 var q = from a in DB.Pp_P2d_OutputSubs
                         where a.Proorder.CompareTo(proorder.SelectedItem.Text) == 0
                         where a.Prolinename.CompareTo(ddlProlinename.SelectedItem.Text) == 0
@@ -556,8 +494,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
         {
             if (proorder.SelectedIndex != -1 && proorder.SelectedIndex != 0)
             {
-
-
                 this.prolot.Text = proorder.SelectedItem.Text;
                 string sorder = proorder.SelectedItem.Text;
 
@@ -579,14 +515,11 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                     if (q_mname.Any())
                     {
                         this.promodel.Text = q_mname[0].Promodel.ToString();
-
                     }
                 }
 
                 BindDDLline();
                 BindDDLPcbType();
-
-
             }
         }
 
@@ -607,8 +540,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 string OperateNotes = "Del* " + Contectext + " *Del 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-
-                item.isDelete = 1;
+                item.isDeleted = 1;
                 DB.SaveChanges();
 
                 //重新绑定
@@ -626,7 +558,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
                 UpdateDefectDataRow(modifiedDict[rowIndex], row);
             }
-
 
             // 新增数据
             List<Dictionary<string, object>> newAddedList = Grid1.GetNewAddedList();
@@ -649,7 +580,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                         //Get the DataTable of a DataRow
                         DataTable tb = rowData.Table.NewRow().Table;
 
-
                         foreach (DataColumn col in tb.Columns)
                         {
                             //最后一条记录
@@ -679,166 +609,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                             Probadserial = tb.Rows[tb.Rows.Count - 1]["Probadserial"].ToString(); //流水
                             Probadcontent = tb.Rows[tb.Rows.Count - 1]["Probadcontent"].ToString();    //内容
                             Probadtype = tb.Rows[tb.Rows.Count - 1]["Probadtype"].ToString();//个所
-
-
-
-                        }
-                        Pp_P2d_Inspection_Defect item = new Pp_P2d_Inspection_Defect();
-
-                        item.Proinspdate = Proinspdate;
-                        item.Promodel = Promodel;
-                        item.Propcbtype = Propcbtype;
-                        item.Provisualtype = Provisualtype;
-                        item.Provctype = Provctype;
-                        item.Prosideadate = DateTime.Parse(Prosideadate);
-                        item.Prosidebdate = DateTime.Parse(Prosidebdate);
-                        item.Prodshiftname = Prodshiftname;
-                        item.Procensor = Procensor;
-                        item.Proorder = Proorder;
-                        item.Prolot = Prolot;
-                        item.Proorderqty =int.Parse( Proorderqty);
-                        item.Prorealqty = int.Parse(Prorealqty);
-                        item.Proispqty = int.Parse(Proispqty);
-                        item.Propcbchecktype = Propcbchecktype;
-                        item.Prolinename = Prolinename;
-                        item.Proinsqtime = int.Parse(Proinsqtime);
-                        item.Proaoitime = int.Parse(Proaoitime);
-                        item.Probadqty = int.Parse(Probadqty);
-                        item.Prohandle = Prohandle;
-                        item.Probadserial = Probadserial;
-                        item.Probadcontent = Probadcontent;
-                        item.Probadtype = Probadtype;
-
-                        item.isDelete = 0;
-                        item.Remark = "";
-                        item.GUID = Guid.NewGuid();
-
-                        item.CreateTime = DateTime.Now;
-                        item.Creator = GetIdentityName();
-
-                        DB.Pp_P2d_Inspection_Defects.Add(item);
-                        DB.SaveChanges();
-
-
-
-                        //新建日志
-                        string Contectext = item.GUID + ","+ Proinspdate + "," + Promodel + "," + Propcbtype + "," + Provisualtype + "," + Provctype + "," + Prosideadate + "," + Prosidebdate + "," + Prodshiftname + "," + Procensor + "," + Proorder + "," + Prolot + "," + Proorderqty + "," + Prorealqty + "," + Proispqty + "," + Propcbchecktype + "," + Prolinename + "," + Proinsqtime + "," + Proaoitime + "," + Probadqty + "," + Prohandle + "," + Probadserial + "," + Probadcontent + "," + Probadtype; 
-                        string OperateType = "新增";
-                        string OperateNotes = "New生产不良* " + Contectext + "*New生产不良 的记录已经将新增";
-                        OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
-                    }
-                }
-                //else
-                //{
-                //    Pp_Defect_P2d item = new Pp_Defect_P2d();
-
-                //    item.Prolot = this.prolot.Text;
-                //    //班组
-
-                //    proLine cline = DB.proLines
-                //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
-
-                //    item.Prongdept = Prongdept;
-                //    item.Prolineclass = cline.lineclass;
-                //    item.Prolinename = this.prolinename.SelectedItem.Text;
-
-                //    item.Prodate = prodate.Text;
-                //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
-                //    item.Prongdept = "OK";
-                //    //种类
-                //    Pp_Defect_P2dcode cclass = DB.Pp_Defect_P2dcodes
-                //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
-
-                //    item.Prongclass = cclass.ngclass;
-
-                //    item.Proclassmatter = "OK";
-
-                //    //代码
-                //    Pp_Defect_P2dcode ccode = DB.Pp_Defect_P2dcodes
-                //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
-
-
-                //    item.Prongcode = ccode.ngcode;
-
-                //    item.Prongmatter = "OK";
-                //    item.Probadqty = 0;
-
-                //    item.Probadtotal = 0;
-                //    item.Probadnote = "OK";
-                //    item.Probadreason = "OK";
-                //    item.Prongbdel = false;
-                //    item.Remark = "";
-                //    item.Defectguid = Guid.NewGuid().ToString();
-
-                //    item.CreateTime = DateTime.Now;
-                //    item.Creator = GetIdentityName();
-                //    DB.Pp_P2d_Inspection_Defects.Add(item);
-                //    DB.SaveChanges();
-
-
-
-
-                //    //新建日志
-                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
-                //    string NewOperateType = item.Defectguid;
-                //    string OperateNotes = "New* " + NewText + " New* 的记录已经将新增";
-                //    NetCountHelper.InsNetOperateNotes(userid, NewOperateType, "不具合管理", "不具合新增", OperateNotes);
-                //}
-            }
-            else
-            {
-                if (newAddedList.Count != 0)
-                {
-                    for (int i = newAddedList.Count - 1; i >= 0; i--)
-                    {
-
-                        //遍历枚举类型Sample的各个枚举名称 
-
-
-                        DataRow rowData = CreateNewData(DefDatatable, newAddedList[i]);
-
-                        DefDatatable.Rows.InsertAt(rowData, 0);
-                        //DefDatatable.Rows.InsertAt(rowData, 0);
-
-                        //table.Rows.Add(rowData);
-                        //DataRow rowData = CreateNewData(table, newAddedList[i]);
-
-                        //Get the DataTable of a DataRow
-                        DataTable tb = rowData.Table.NewRow().Table;
-
-
-                        foreach (DataColumn col in tb.Columns)
-                        {
-                            //最后一条记录
-                            tb.Rows[tb.Rows.Count - 1]["ID"].ToString();
-                            //第一条记录
-                            tb.Rows[0]["ID"].ToString();
-                            Proinspdate = tb.Rows[tb.Rows.Count - 1]["Proinspdate"].ToString();  //检查日期
-                            Promodel = tb.Rows[tb.Rows.Count - 1]["Promodel"].ToString(); //机种
-                            Propcbtype = tb.Rows[tb.Rows.Count - 1]["Propcbtype"].ToString();   //板别
-                            Provisualtype = tb.Rows[tb.Rows.Count - 1]["Provisualtype"].ToString();    //目视
-                            Provctype = tb.Rows[tb.Rows.Count - 1]["Provctype"].ToString();    //VC
-                            Prosideadate = tb.Rows[tb.Rows.Count - 1]["Prosideadate"].ToString(); //A面
-                            Prosidebdate = tb.Rows[tb.Rows.Count - 1]["Prosidebdate"].ToString(); //B面
-                            Prodshiftname = tb.Rows[tb.Rows.Count - 1]["Prodshiftname"].ToString();    //班别
-                            Procensor = tb.Rows[tb.Rows.Count - 1]["Procensor"].ToString();    //检查员
-                            Proorder = tb.Rows[tb.Rows.Count - 1]["Proorder"].ToString(); //订单
-                            Prolot = tb.Rows[tb.Rows.Count - 1]["Prolot"].ToString();   //批次
-                            Proorderqty = tb.Rows[tb.Rows.Count - 1]["Proorderqty"].ToString();  //数量
-                            Prorealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();   //生产
-                            Proispqty = tb.Rows[tb.Rows.Count - 1]["Proispqty"].ToString();    //检查
-                            Propcbchecktype = tb.Rows[tb.Rows.Count - 1]["Propcbchecktype"].ToString();  //检查状态
-                            Prolinename = tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();  //线别
-                            Proinsqtime = tb.Rows[tb.Rows.Count - 1]["Proinsqtime"].ToString();  //检查工数
-                            Proaoitime = tb.Rows[tb.Rows.Count - 1]["Proaoitime"].ToString();   //AOI工数
-                            Probadqty = tb.Rows[tb.Rows.Count - 1]["Probadqty"].ToString();    //不良数量
-                            Prohandle = tb.Rows[tb.Rows.Count - 1]["Prohandle"].ToString();    //手贴
-                            Probadserial = tb.Rows[tb.Rows.Count - 1]["Probadserial"].ToString(); //流水
-                            Probadcontent = tb.Rows[tb.Rows.Count - 1]["Probadcontent"].ToString();    //内容
-                            Probadtype = tb.Rows[tb.Rows.Count - 1]["Probadtype"].ToString();//个所
-
-
-
                         }
                         Pp_P2d_Inspection_Defect item = new Pp_P2d_Inspection_Defect();
 
@@ -866,16 +636,160 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                         item.Probadcontent = Probadcontent;
                         item.Probadtype = Probadtype;
 
-                        item.isDelete = 0;
+                        item.isDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
-                        item.CreateTime = DateTime.Now;
+                        item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
 
                         DB.Pp_P2d_Inspection_Defects.Add(item);
                         DB.SaveChanges();
 
+                        //新建日志
+                        string Contectext = item.GUID + "," + Proinspdate + "," + Promodel + "," + Propcbtype + "," + Provisualtype + "," + Provctype + "," + Prosideadate + "," + Prosidebdate + "," + Prodshiftname + "," + Procensor + "," + Proorder + "," + Prolot + "," + Proorderqty + "," + Prorealqty + "," + Proispqty + "," + Propcbchecktype + "," + Prolinename + "," + Proinsqtime + "," + Proaoitime + "," + Probadqty + "," + Prohandle + "," + Probadserial + "," + Probadcontent + "," + Probadtype;
+                        string OperateType = "新增";
+                        string OperateNotes = "New生产不良* " + Contectext + "*New生产不良 的记录已经将新增";
+                        OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
+                    }
+                }
+                //else
+                //{
+                //    pp_defect_P2d item = new pp_defect_P2d();
+
+                //    item.Prolot = this.prolot.Text;
+                //    //班组
+
+                //    proLine cline = DB.proLines
+                //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
+
+                //    item.Prongdept = Prongdept;
+                //    item.Prolineclass = cline.lineclass;
+                //    item.Prolinename = this.prolinename.SelectedItem.Text;
+
+                //    item.Prodate = prodate.Text;
+                //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
+                //    item.Prongdept = "OK";
+                //    //种类
+                //    pp_defect_P2dcode cclass = DB.pp_defect_P2dcodes
+                //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
+
+                //    item.Prongclass = cclass.ngclass;
+
+                //    item.Proclassmatter = "OK";
+
+                //    //代码
+                //    pp_defect_P2dcode ccode = DB.pp_defect_P2dcodes
+                //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
+
+                //    item.Prongcode = ccode.ngcode;
+
+                //    item.Prongmatter = "OK";
+                //    item.Probadqty = 0;
+
+                //    item.Probadtotal = 0;
+                //    item.Probadnote = "OK";
+                //    item.Probadreason = "OK";
+                //    item.Prongbdel = false;
+                //    item.Remark = "";
+                //    item.Defectguid = Guid.NewGuid().ToString();
+
+                //    item.CreateDate = DateTime.Now;
+                //    item.Creator = GetIdentityName();
+                //    DB.Pp_P2d_Inspection_Defects.Add(item);
+                //    DB.SaveChanges();
+
+                //    //新建日志
+                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                //    string NewOperateType = item.Defectguid;
+                //    string OperateNotes = "New* " + NewText + " New* 的记录已经将新增";
+                //    NetCountHelper.InsNetOperateNotes(userid, NewOperateType, "不具合管理", "不具合新增", OperateNotes);
+                //}
+            }
+            else
+            {
+                if (newAddedList.Count != 0)
+                {
+                    for (int i = newAddedList.Count - 1; i >= 0; i--)
+                    {
+                        //遍历枚举类型Sample的各个枚举名称
+
+                        DataRow rowData = CreateNewData(DefDatatable, newAddedList[i]);
+
+                        DefDatatable.Rows.InsertAt(rowData, 0);
+                        //DefDatatable.Rows.InsertAt(rowData, 0);
+
+                        //table.Rows.Add(rowData);
+                        //DataRow rowData = CreateNewData(table, newAddedList[i]);
+
+                        //Get the DataTable of a DataRow
+                        DataTable tb = rowData.Table.NewRow().Table;
+
+                        foreach (DataColumn col in tb.Columns)
+                        {
+                            //最后一条记录
+                            tb.Rows[tb.Rows.Count - 1]["ID"].ToString();
+                            //第一条记录
+                            tb.Rows[0]["ID"].ToString();
+                            Proinspdate = tb.Rows[tb.Rows.Count - 1]["Proinspdate"].ToString();  //检查日期
+                            Promodel = tb.Rows[tb.Rows.Count - 1]["Promodel"].ToString(); //机种
+                            Propcbtype = tb.Rows[tb.Rows.Count - 1]["Propcbtype"].ToString();   //板别
+                            Provisualtype = tb.Rows[tb.Rows.Count - 1]["Provisualtype"].ToString();    //目视
+                            Provctype = tb.Rows[tb.Rows.Count - 1]["Provctype"].ToString();    //VC
+                            Prosideadate = tb.Rows[tb.Rows.Count - 1]["Prosideadate"].ToString(); //A面
+                            Prosidebdate = tb.Rows[tb.Rows.Count - 1]["Prosidebdate"].ToString(); //B面
+                            Prodshiftname = tb.Rows[tb.Rows.Count - 1]["Prodshiftname"].ToString();    //班别
+                            Procensor = tb.Rows[tb.Rows.Count - 1]["Procensor"].ToString();    //检查员
+                            Proorder = tb.Rows[tb.Rows.Count - 1]["Proorder"].ToString(); //订单
+                            Prolot = tb.Rows[tb.Rows.Count - 1]["Prolot"].ToString();   //批次
+                            Proorderqty = tb.Rows[tb.Rows.Count - 1]["Proorderqty"].ToString();  //数量
+                            Prorealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();   //生产
+                            Proispqty = tb.Rows[tb.Rows.Count - 1]["Proispqty"].ToString();    //检查
+                            Propcbchecktype = tb.Rows[tb.Rows.Count - 1]["Propcbchecktype"].ToString();  //检查状态
+                            Prolinename = tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();  //线别
+                            Proinsqtime = tb.Rows[tb.Rows.Count - 1]["Proinsqtime"].ToString();  //检查工数
+                            Proaoitime = tb.Rows[tb.Rows.Count - 1]["Proaoitime"].ToString();   //AOI工数
+                            Probadqty = tb.Rows[tb.Rows.Count - 1]["Probadqty"].ToString();    //不良数量
+                            Prohandle = tb.Rows[tb.Rows.Count - 1]["Prohandle"].ToString();    //手贴
+                            Probadserial = tb.Rows[tb.Rows.Count - 1]["Probadserial"].ToString(); //流水
+                            Probadcontent = tb.Rows[tb.Rows.Count - 1]["Probadcontent"].ToString();    //内容
+                            Probadtype = tb.Rows[tb.Rows.Count - 1]["Probadtype"].ToString();//个所
+                        }
+                        Pp_P2d_Inspection_Defect item = new Pp_P2d_Inspection_Defect();
+
+                        item.Proinspdate = Proinspdate;
+                        item.Promodel = Promodel;
+                        item.Propcbtype = Propcbtype;
+                        item.Provisualtype = Provisualtype;
+                        item.Provctype = Provctype;
+                        item.Prosideadate = DateTime.Parse(Prosideadate);
+                        item.Prosidebdate = DateTime.Parse(Prosidebdate);
+                        item.Prodshiftname = Prodshiftname;
+                        item.Procensor = Procensor;
+                        item.Proorder = Proorder;
+                        item.Prolot = Prolot;
+                        item.Proorderqty = int.Parse(Proorderqty);
+                        item.Prorealqty = int.Parse(Prorealqty);
+                        item.Proispqty = int.Parse(Proispqty);
+                        item.Propcbchecktype = Propcbchecktype;
+                        item.Prolinename = Prolinename;
+                        item.Proinsqtime = int.Parse(Proinsqtime);
+                        item.Proaoitime = int.Parse(Proaoitime);
+                        item.Probadqty = int.Parse(Probadqty);
+                        item.Prohandle = Prohandle;
+                        item.Probadserial = Probadserial;
+                        item.Probadcontent = Probadcontent;
+                        item.Probadtype = Probadtype;
+
+                        item.isDeleted = 0;
+                        item.Remark = "";
+                        item.GUID = Guid.NewGuid();
+
+                        item.CreateDate = DateTime.Now;
+                        item.Creator = GetIdentityName();
+
+                        DB.Pp_P2d_Inspection_Defects.Add(item);
+                        DB.SaveChanges();
 
                         //新建日志
                         string Contectext = item.GUID + "," + Proinspdate + "," + Promodel + "," + Propcbtype + "," + Provisualtype + "," + Provctype + "," + Prosideadate + "," + Prosidebdate + "," + Prodshiftname + "," + Procensor + "," + Proorder + "," + Prolot + "," + Proorderqty + "," + Prorealqty + "," + Proispqty + "," + Propcbchecktype + "," + Prolinename + "," + Proinsqtime + "," + Proaoitime + "," + Probadqty + "," + Prohandle + "," + Probadserial + "," + Probadcontent + "," + Probadtype;
@@ -887,7 +801,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
                 //else
                 //{
-                //    Pp_Defect_P2d item = new Pp_Defect_P2d();
+                //    pp_defect_P2d item = new pp_defect_P2d();
 
                 //    item.Prolot = this.prolot.Text;
                 //    //班组
@@ -902,7 +816,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
                 //    item.Prongdept = "OK";
                 //    //种类
-                //    Pp_Defect_P2dcode cclass = DB.Pp_Defect_P2dcodes
+                //    pp_defect_P2dcode cclass = DB.pp_defect_P2dcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
 
                 //    item.Prongclass = cclass.ngclass;
@@ -910,9 +824,8 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //    item.Proclassmatter = "OK";
 
                 //    //代码
-                //    Pp_Defect_P2dcode ccode = DB.Pp_Defect_P2dcodes
+                //    pp_defect_P2dcode ccode = DB.pp_defect_P2dcodes
                 //        .Where(u => u.cn_ngmatter == "OK").FirstOrDefault();
-
 
                 //    item.Prongcode = ccode.ngcode;
 
@@ -926,13 +839,10 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
 
-                //    item.CreateTime = DateTime.Now;
+                //    item.CreateDate = DateTime.Now;
                 //    item.Creator = GetIdentityName();
                 //    DB.Pp_P2d_Inspection_Defects.Add(item);
                 //    DB.SaveChanges();
-
-
-
 
                 //    //新建日志
                 //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
@@ -941,7 +851,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 //    NetCountHelper.InsNetOperateNotes(userid, NewOperateType, "不具合管理", "不具合新增", OperateNotes);
 
                 //}
-
             }
 
             //labResult.Text = String.Format("用户修改的数据：<pre>{0}</pre>", Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
@@ -950,6 +859,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
             //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）"+ Grid1.GetModifiedData().ToString(Newtonsoft.Json.Formatting.Indented));
         }
+
         //新增行内容补充
         private DataRow CreateNewData(DataTable table, Dictionary<string, object> newAddedData)
         {
@@ -1022,16 +932,14 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //不良台数
             rowData["Probadqty"] = 0;
 
-
             //手贴
             //    if (ddlProhandle.SelectedIndex!=0&& ddlProhandle.SelectedIndex !=-1)
-            //    { 
+            //    {
             //        rowData["Prohandle"] = ddlProhandle.SelectedItem.Text;
             //}
             rowData["Prohandle"] = txtProhandle.Text;
             //流水
             rowData["Probadserial"] = txtProbadserial.Text;
-
 
             //内容
             rowData["Probadcontent"] = txtProbadcontent.Text;
@@ -1039,9 +947,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //不良个所
             rowData["Probadtype"] = ddlProbadtype.SelectedItem.Text;
 
-
-
-            rowData["isDelete"] = 0;
+            rowData["isDeleted"] = 0;
 
             rowData["GUID"] = Guid.NewGuid();
             rowData["UDF01"] = "";
@@ -1057,31 +963,28 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             rowData["Udf55"] = 0;
             rowData["Udf56"] = 0;
 
-
-            rowData["CreateTime"] = DateTime.Now;
-            rowData["Creator"] = GetIdentityName();
-            //item.CreateTime = DateTime.Now;
+            rowData["CreateDate"] = DateTime.Now;
+            rowData["CREATOR"] = GetIdentityName();
+            //item.CreateDate = DateTime.Now;
             //item.Creator = GetIdentityName();
             //table.Rows.Add(rowData);
             InsertDefectDataRow(newAddedData, rowData);
 
             return rowData;
         }
+
         //修改内容提交
         private static void UpdateDefectDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
-
-
             Pp_P2d_Inspection_Defect item = DB.Pp_P2d_Inspection_Defects
 
                 .Where(u => u.ID == editrowID).FirstOrDefault();
 
             //修改前日志
-            string BeforeContectext = item.ID + "," + item.Proinspdate + "," + item.Promodel + "," + item.Propcbtype + "," + item.Provisualtype + "," + item.Provctype + "," + item.Prosideadate + "," + item.Prosidebdate + "," + item.Prodshiftname + "," + item.Procensor + "," + item.Proorder + "," + item.Prolot + "," + item.Proorderqty + "," + item.Prorealqty + "," + item.Proispqty + "," + item.Propcbchecktype + "," + item.Prolinename + "," + item.Proinsqtime + "," + item.Proaoitime + "," + item.Probadqty + "," + item.Prohandle + "," + item.Probadserial + "," + item.Probadcontent + "," + item.Probadtype; 
+            string BeforeContectext = item.ID + "," + item.Proinspdate + "," + item.Promodel + "," + item.Propcbtype + "," + item.Provisualtype + "," + item.Provctype + "," + item.Prosideadate + "," + item.Prosidebdate + "," + item.Prodshiftname + "," + item.Procensor + "," + item.Proorder + "," + item.Prolot + "," + item.Proorderqty + "," + item.Prorealqty + "," + item.Proispqty + "," + item.Propcbchecktype + "," + item.Prolinename + "," + item.Proinsqtime + "," + item.Proaoitime + "," + item.Probadqty + "," + item.Prohandle + "," + item.Probadserial + "," + item.Probadcontent + "," + item.Probadtype;
             string BeforeOperateType = "修改";
             string BeforeOperateNotes = "beEdit生产不良* " + BeforeContectext + " *beEdit生产不良 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(userid, BeforeOperateType, "不具合管理", "不具合修改", BeforeOperateNotes);
-
 
             //板别
             if (rowDict.ContainsKey("Propcbtype"))
@@ -1137,7 +1040,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //A
             if (rowDict.ContainsKey("Prosideadate"))
             {
-
                 rowData["Prosideadate"] = rowDict["Prosideadate"];
                 if (string.IsNullOrEmpty(rowData["Prosideadate"].ToString()))
                 {
@@ -1155,8 +1057,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //B
             if (rowDict.ContainsKey("Prosidebdate"))
             {
-
-
                 rowData["Prosidebdate"] = rowDict["Prosidebdate"];
                 if (string.IsNullOrEmpty(rowData["Prosidebdate"].ToString()))
                 {
@@ -1173,7 +1073,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //班别
             if (rowDict.ContainsKey("Prodshiftname"))
             {
-
                 rowData["Prodshiftname"] = rowDict["Prodshiftname"];
                 if (string.IsNullOrEmpty(rowData["Prodshiftname"].ToString()))
                 {
@@ -1189,7 +1088,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //检查人员
             if (rowDict.ContainsKey("Procensor"))
             {
-
                 rowData["Procensor"] = rowDict["Procensor"];
                 if (string.IsNullOrEmpty(rowData["Procensor"].ToString()))
                 {
@@ -1206,7 +1104,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //实绩
             if (rowDict.ContainsKey("Prorealqty"))
             {
-
                 rowData["Prorealqty"] = rowDict["Prorealqty"];
                 if (string.IsNullOrEmpty(rowData["Prorealqty"].ToString()))
                 {
@@ -1215,14 +1112,13 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 }
                 else
                 {
-                    item.Prorealqty =int.Parse( rowData["Prorealqty"].ToString());
+                    item.Prorealqty = int.Parse(rowData["Prorealqty"].ToString());
                 }
                 //ResonText = rowData["Probadnote"].ToString();
             }
             //检查数
             if (rowDict.ContainsKey("Proispqty"))
             {
-
                 rowData["Proispqty"] = rowDict["Proispqty"];
                 if (string.IsNullOrEmpty(rowData["Proispqty"].ToString()))
                 {
@@ -1238,7 +1134,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //检查状况
             if (rowDict.ContainsKey("Propcbchecktype"))
             {
-
                 rowData["Propcbchecktype"] = rowDict["Propcbchecktype"];
                 if (string.IsNullOrEmpty(rowData["Propcbchecktype"].ToString()))
                 {
@@ -1254,7 +1149,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //检查工数
             if (rowDict.ContainsKey("Proinsqtime"))
             {
-
                 rowData["Proinsqtime"] = rowDict["Proinsqtime"];
                 if (string.IsNullOrEmpty(rowData["Proinsqtime"].ToString()))
                 {
@@ -1264,14 +1158,13 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 }
                 else
                 {
-                    item.Proinsqtime =int.Parse( rowData["Proinsqtime"].ToString());
+                    item.Proinsqtime = int.Parse(rowData["Proinsqtime"].ToString());
                 }
                 //ResonText = rowData["Probadnote"].ToString();
             }
             //AOI工数
             if (rowDict.ContainsKey("Proaoitime"))
             {
-
                 rowData["Proaoitime"] = rowDict["Proaoitime"];
                 if (string.IsNullOrEmpty(rowData["Proaoitime"].ToString()))
                 {
@@ -1281,14 +1174,13 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 }
                 else
                 {
-                    item.Proaoitime = int.Parse( rowData["Proaoitime"].ToString());
+                    item.Proaoitime = int.Parse(rowData["Proaoitime"].ToString());
                 }
                 //ResonText = rowData["Probadnote"].ToString();
             }
             //不良数量
             if (rowDict.ContainsKey("Probadqty"))
             {
-
                 rowData["Probadqty"] = rowDict["Probadqty"];
                 if (string.IsNullOrEmpty(rowData["Probadqty"].ToString()))
                 {
@@ -1304,7 +1196,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //手贴
             if (rowDict.ContainsKey("Prohandle"))
             {
-
                 rowData["Prohandle"] = rowDict["Prohandle"];
                 if (string.IsNullOrEmpty(rowData["Prohandle"].ToString()))
                 {
@@ -1321,7 +1212,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //流水
             if (rowDict.ContainsKey("Probadserial"))
             {
-
                 rowData["Probadserial"] = rowDict["Probadserial"];
                 if (string.IsNullOrEmpty(rowData["Probadserial"].ToString()))
                 {
@@ -1338,7 +1228,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //内容
             if (rowDict.ContainsKey("Probadcontent"))
             {
-
                 rowData["Probadcontent"] = rowDict["Probadcontent"];
                 if (string.IsNullOrEmpty(rowData["Probadcontent"].ToString()))
                 {
@@ -1355,7 +1244,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //个所
             if (rowDict.ContainsKey("Probadtype"))
             {
-
                 rowData["Probadtype"] = rowDict["Probadtype"];
                 if (string.IsNullOrEmpty(rowData["Probadtype"].ToString()))
                 {
@@ -1369,7 +1257,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 }
                 //ResonText = rowData["Probadnote"].ToString();
             }
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = userid;
 
             DB.SaveChanges();
@@ -1384,9 +1272,8 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             string AfterOperateType = "修改";
             string AfterOperateNotes = "afEdit生产不良* " + AfterContectext + " *afEdit生产不良 的记录已经将被修改";
             OperateLogHelper.InsNetOperateNotes(userid, AfterOperateType, "不具合管理", "不具合修改", AfterOperateNotes);
-
-
         }
+
         //获取新增行内容
         private void InsertDefectDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
@@ -1411,8 +1298,8 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             UpdateDeftctDataRow("UDF01", rowDict, rowData);
             // 对策
             UpdateDeftctDataRow("Probadreason", rowDict, rowData);
-
         }
+
         //根据字段获取信息
         private void UpdateDeftctDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
         {
@@ -1421,10 +1308,10 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 rowData[columnName] = rowDict[columnName];
             }
         }
+
         // 根据行ID来获取行数据
         private DataRow FindRowByID(int rowID)
         {
-
             //mysql = "select* from[dbo].[Pp_P2d_Inspection_Defects];";
             //DataTable table = GetDataTable.Getdt(mysql);
             foreach (DataRow row in DefDatatable.Rows)
@@ -1466,6 +1353,7 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             }
             return maxID + 1;
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
@@ -1477,12 +1365,9 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
                 //}
 
-
                 //保存不具合数据
                 EditDefectDataRow();
                 //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）");
-
-
             }
             catch (ArgumentNullException Message)
             {
@@ -1516,7 +1401,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
 
-
             ////更新无不良台数
             //int nobadqty = 0;
             //string strPorder = "";
@@ -1537,14 +1421,13 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //         group p by p.Prolot into g
             //         select new
             //         {
-
             //             TotalQty = g.Sum(p => p.Prorealqty)
             //         }).ToList();
             //if (q.Any())
             //{
             //    rQty = q[0].TotalQty;
             //}
-            //DB.Pp_Defect_P2dcounts
+            //DB.pp_defect_P2dcounts
             //    //.Where(s => s.Prodate.Substring(0, 6) == pdate)
             //       .Where(s=>s.Proorder== strPorder)
             //       .ToList()
@@ -1555,7 +1438,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             //  .Where(s => s.Proorder == strPorder)
             //  .Where(s => s.Prodate.Substring(0, 6) == pdate)
 
-
             //  .ToList()
             //  .ForEach(x => { x.Prorealqty = rQty; x.ModiUser = GetIdentityName(); x.ModiTime = DateTime.Now; });
             //DB.SaveChanges();
@@ -1563,11 +1445,8 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
 
             //string lot = proorder.SelectedItem.Text.Substring(0, proorder.SelectedItem.Text.IndexOf(","));
 
-
             //更新无不良台数
             UpdatingHelper.noDefectQty_Update(order, GetIdentityName());
-
-
 
             //更新不具合件数
             //UpdatingHelper.UpdatebadTotal(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1));
@@ -1600,7 +1479,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
                 ratio = 0;// rTotal / pTotal;
             }
 
-
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
@@ -1609,7 +1487,6 @@ namespace Fine.Lf_Manufacturing.PP.poor.P2D
             summary.Add("Probadtotal", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
-
         }
     }
 }

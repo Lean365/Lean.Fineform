@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
-using FineUIPro;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Data.OleDb;
-using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Report
+namespace LeanFine.Lf_Report
 {
     /// <summary>
     /// shipment_bucode 的摘要说明
     /// </summary>
     public class shipment_bucode : IHttpHandler
     {
-        FineContext DBCharts = new FineContext();
+        private LeanFineContext DBCharts = new LeanFineContext();
 
+        private LeanFine.Lf_Business.Models.YF.LeanSerial_Entities DB_Serial = new LeanFine.Lf_Business.Models.YF.LeanSerial_Entities();
+        private JavaScriptSerializer jsS = new JavaScriptSerializer();
+        private List<object> lists = new List<object>();
 
-        Fine.Lf_Business.Models.YF.LeanSerialEntities DB_Serial = new Fine.Lf_Business.Models.YF.LeanSerialEntities();
-        JavaScriptSerializer jsS = new JavaScriptSerializer();
-        List<object> lists = new List<object>();
         public void ProcessRequest(HttpContext context)
         {
             string atedate = System.Web.HttpUtility.UrlDecode(context.Request["TransDate"], Encoding.UTF8);//结束时间
@@ -50,7 +42,6 @@ namespace Fine.Lf_Report
                               Date = g.Key.Date.Substring(0, 6),
                               g.Key.ProfitCenter,
                               Qty = g.Sum(a => a.OUTS008),
-
                           };
 
             var qss = from a in q_Merge
@@ -75,10 +66,6 @@ namespace Fine.Lf_Report
             context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
-
-
-
-
         public bool IsReusable
         {
             get
@@ -86,6 +73,5 @@ namespace Fine.Lf_Report
                 return false;
             }
         }
-
     }
 }

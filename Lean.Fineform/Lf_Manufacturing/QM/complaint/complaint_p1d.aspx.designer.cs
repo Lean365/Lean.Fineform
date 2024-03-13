@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Fine.Lf_Manufacturing.QM.complaint
+namespace LeanFine.Lf_Manufacturing.QM.complaint
 {
 
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pm.aspx.cs" Inherits="Fine.Lf_Manufacturing.EC.dept.pm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pm.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.dept.pm" %>
 
 <!DOCTYPE html>
 
@@ -70,7 +70,7 @@
                         <f:BoundField DataField="Ec_pmcmemo" ColumnID="Ec_pmcmemo" SortField="Ec_pmcmemo"  EnableLock="true" Width="100px" HeaderText="说明"/> 
                         <f:BoundField DataField="Ec_pmcnote" ColumnID="Ec_pmcnote" SortField="Ec_pmcnote"  EnableLock="true" Width="100px" HeaderText="事项"/>  
                         <f:BoundField DataField="pmcModifier" ColumnID="pmcModifier" SortField="pmcModifier"  EnableLock="true" Width="100px" HeaderText="登录人员"/>
-                        <f:BoundField DataField="pmcModifyTime" ColumnID="pmcModifyTime" SortField="pmcModifyTime"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
+                        <f:BoundField DataField="pmcModifyDate" ColumnID="pmcModifyDate" SortField="pmcModifyDate"  EnableLock="true" Width="100px" HeaderText="登录日期"/> 
 
                     </Columns>
                 </f:Grid>

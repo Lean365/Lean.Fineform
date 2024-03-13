@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
+
 //using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class power : PageBase
     {
@@ -26,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -48,12 +43,10 @@ namespace Fine.Lf_Admin
 
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Admin/power_new.aspx", "新增权限");
 
-            
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
-            
             BindGrid();
         }
 
@@ -78,7 +71,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -104,7 +97,7 @@ namespace Fine.Lf_Admin
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
         }
@@ -142,7 +135,6 @@ namespace Fine.Lf_Admin
             }
         }
 
-
         //protected void btnDeleteSelected_Click(object sender, EventArgs e)
         //{
         //    // 在操作之前进行权限检查
@@ -155,7 +147,6 @@ namespace Fine.Lf_Admin
         //    // 从每个选中的行中获取ID（在Grid1中定义的DataKeyNames）
         //    List<int> ids = GetSelectedDataKeyIDs(Grid1);
 
-
         //    int roleCount = DB.Roles.Where(r => r.Powers.Any(p => ids.Contains(p.ID))).Count();
         //    if (roleCount > 0)
         //    {
@@ -166,11 +157,9 @@ namespace Fine.Lf_Admin
         //    // 执行数据库操作
         //    DB.Powers.Delete(p => ids.Contains(p.ID));
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //}
-
 
         protected void Window1_Close(object sender, EventArgs e)
         {
@@ -184,7 +173,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

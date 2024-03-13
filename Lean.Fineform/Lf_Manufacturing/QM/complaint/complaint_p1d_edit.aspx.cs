@@ -1,17 +1,15 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.QM.complaint
-{
 
+namespace LeanFine.Lf_Manufacturing.QM.complaint
+{
     public partial class complaint_p1d_edit : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -25,15 +23,16 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public string txtRefdoc;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -54,8 +53,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_Lot.Text = "--";
             BindDDLLine();
             BindData();
-
         }
+
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
@@ -84,7 +83,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_ProcessDate.Text = current.Cc_ProcessDate;
             if (current.Cc_Ddescription == "")
             {
-
                 Cc_Ddescription.Text = "--";
             }
             else
@@ -101,17 +99,14 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 Cc_Reasons.Text = current.Cc_Reasons;
             }
 
-             Cc_Operator.Text = current.Cc_Operator;
+            Cc_Operator.Text = current.Cc_Operator;
             Cc_Station.Text = current.Cc_Station;
-             Cc_Lot.Text = current.Cc_Lot;
+            Cc_Lot.Text = current.Cc_Lot;
             Cc_CorrectActions.Text = current.Cc_CorrectActions;
-
 
             remark.Text = current.Remark;
             //this.Lineguid.Text = current.GUID.ToString();
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -130,19 +125,14 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "客诉信息", "客诉信息修改", OperateNotes);
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         public void BindDDLLine()
         {
             var q_Model = from a in DB.Pp_Lines
-                          where a.lineclass=="M"
+                          where a.lineclass == "M"
                           select new
                           {
                               a.linename
@@ -158,6 +148,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             Cc_Line.DataBind();
             this.Cc_Line.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
+
         private void CheckData()
         {
             //判断修改内容
@@ -176,10 +167,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                     //alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
                     //alert.MessageBoxIcon = (MessageBoxIcon)Enum.Parse(typeof(MessageBoxIcon), "Information", true);
 
-                    //"Information" Text = "消息"   
-                    //"Warning" Text = "警告"       
-                    //"Question" Text = "问题"          
-                    // "Error" Text = "错误"            
+                    //"Information" Text = "消息"
+                    //"Warning" Text = "警告"
+                    //"Question" Text = "问题"
+                    // "Error" Text = "错误"
                     //"Success" Text = "成功"
                     //alert.IconFont = IconFont.Warning;
                     //alert.Icon = Icon.Error;
@@ -191,10 +182,8 @@ namespace Fine.Lf_Manufacturing.QM.complaint
                 }
             }
 
-
             //    //判断重复
             //    string InputData = Qcpd003.SelectedItem.Text.Trim();
-
 
             //    proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
@@ -204,6 +193,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             //        return;
             //    }
         }
+
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
@@ -220,11 +210,10 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             item.Cc_Lot = Cc_Lot.Text;
             item.Cc_CorrectActions = Cc_CorrectActions.Text;
 
-
             item.Remark = remark.Text;
-            item.p1dModifier= GetIdentityName();
-            item.p1dModifyTime= DateTime.Now;
-           
+            item.p1dModifier = GetIdentityName();
+            item.p1dModifyDate = DateTime.Now;
+
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
@@ -233,8 +222,6 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "客诉信息", "客诉信息修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -286,15 +273,7 @@ namespace Fine.Lf_Manufacturing.QM.complaint
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
-
-
-
-
-
+        #endregion Events
     }
 }

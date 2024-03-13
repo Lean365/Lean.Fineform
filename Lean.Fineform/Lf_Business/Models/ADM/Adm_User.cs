@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fine
+namespace LeanFine
 {
     public class Adm_User : IKeyID
     {
@@ -60,22 +57,17 @@ namespace Fine
         [StringLength(500)]
         public string Remark { get; set; }
 
-        
         [StringLength(50)]
         public string IdentityCard { get; set; }
-
 
         public DateTime? Birthday { get; set; }
         public DateTime? TakeOfficeTime { get; set; }
         public DateTime? LastLoginTime { get; set; }
-        public DateTime? CreateTime { get; set; }
-
-
+        public DateTime? CreateDate { get; set; }
 
         public virtual ICollection<Adm_Role> Roles { get; set; }
         public virtual ICollection<Adm_Title> Titles { get; set; }
 
         public virtual Adm_Dept Dept { get; set; }
-        
     }
 }

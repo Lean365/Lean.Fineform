@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Fine._default" Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="LeanFine._default" Culture="auto" meta:resourcekey="PageResource1" UICulture="auto" %>
 
 <!DOCTYPE html>
 
@@ -37,8 +37,8 @@
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server"></f:PageManager>
-        <f:Window ID="Window1" runat="server" EnableClose="False" WindowPosition="GoldenSection" IconFont="key"
-            Layout="HBox" Width="500px" BoxConfigAlign="Center" BoxConfigPosition="Center">
+        <f:Window ID="Window1" runat="server" EnableClose="False" WindowPosition="GoldenSection"
+            Layout="HBox" Width="500px" BoxConfigAlign="Center" BoxConfigPosition="Center" Icon="key">
 
             <Items>
                 <f:Image ID="imageLogin" ImageUrl="~/Lf_Resources/images/login/Lean_Logo.png" runat="server"
@@ -70,7 +70,7 @@
                 <f:Toolbar runat="server" Position="Bottom">
                     <Items>
 
-                        <f:ToolbarText ID="tbText" CssStyle="Color:#2F4F4F;font-family:Arial, Helvetica, sans-serif;font-weight:bold" Text="<%$ Resources:GlobalResource,sys_Poster_Info%>" runat="server"></f:ToolbarText>
+                        <f:ToolbarText ID="tbText" CssStyle="Color:#2F4F4F;font-family:Arial, Helvetica, sans-serif;font-weight:bold" Text="TxtVersion" runat="server"></f:ToolbarText>
                         <f:ToolbarFill runat="server"></f:ToolbarFill>
                         <f:Button ID="btnSubmit" Icon="LockOpen" Type="Submit" runat="server" ValidateForms="SimpleForm1"
                             OnClick="btnSubmit_Click" Text="<%$ Resources:GlobalResource,sys_Login%>">

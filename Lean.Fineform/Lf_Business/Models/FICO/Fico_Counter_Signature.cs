@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fine.Lf_Business.Models.FICO
+namespace LeanFine.Lf_Business.Models.FICO
 {
     //签拟单
     public class Fico_Counter_Signature : IKeyGUID
     {
-
         [Key]
         public Guid GUID { get; set; }
+
         [Required]
         public int Beno { get; set; }//签拟单号码
 
@@ -27,15 +24,11 @@ namespace Fine.Lf_Business.Models.FICO
         [Required, StringLength(8)]
         public string Bedate { get; set; }//申请日期
 
-
-
         [Required, StringLength(20)]
         public string Bename { get; set; }//申请人员
 
         [Required]
         public int Becode { get; set; }//申请人员工号
-
-
 
         [Required]
         public bool Beenabled { get; set; }//是否有预算
@@ -55,8 +48,6 @@ namespace Fine.Lf_Business.Models.FICO
         [Required, StringLength(255)]
         public string Beclassmemo { get; set; }//说明
 
-
-
         public Decimal Bebtmoney { get; set; }//预算金额
 
         public Decimal Beatmoney { get; set; }//申请金额
@@ -74,18 +65,25 @@ namespace Fine.Lf_Business.Models.FICO
 
         [StringLength(8)]
         public string Becheckdate { get; set; }//预算审核
+
         [StringLength(255)]
         public string UDF01 { get; set; }
+
         [StringLength(255)]
         public string UDF02 { get; set; }
+
         [StringLength(255)]
         public string UDF03 { get; set; }
+
         [StringLength(500)]
         public string UDF04 { get; set; }
+
         [StringLength(500)]
         public string UDF05 { get; set; }
+
         [StringLength(500)]
         public string UDF06 { get; set; }
+
         public int UDF51 { get; set; }
 
         public int UDF52 { get; set; }
@@ -98,17 +96,19 @@ namespace Fine.Lf_Business.Models.FICO
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDelete { get; set; }	//13	//	删除标记
+        public byte isDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注
 
         [StringLength(50)]
         public string Creator { get; set; }
-        public DateTime? CreateTime { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         public string Modifier { get; set; }
-        public DateTime? ModifyTime { get; set; }
+
+        public DateTime? ModifyDate { get; set; }
     }
 }

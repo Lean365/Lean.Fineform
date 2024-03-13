@@ -1,5 +1,5 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 
-namespace Fine.Lf_Manufacturing.PP.tracking
+namespace LeanFine.Lf_Manufacturing.PP.tracking
 {
     public partial class lot_process_new : PageBase
     {
@@ -24,7 +24,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -46,7 +46,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             //CheckPowerWithButton("CoreNoticeDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreNoticeNew", btnNew);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,37 +60,32 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-
             try
             {
                 var q_all = from a in DB.Pp_P1d_Outputs
-                            where !(from d in DB.Pp_Tracking_times
-                                                      where d.isDelete == 0
-                                                      select d.Pro_Item)
+                            where !(from d in DB.Pp_Tracking_Times
+                                    where d.isDeleted == 0
+                                    select d.Pro_Item)
                                                              .Contains(a.Prohbn)
                             select new
                             {
                                 a.Prohbn,
                             };
 
-
                 if (q_all.Any())
                 {
-
                     var q_dist = from a in q_all
-                            join b in DB.Pp_Manhours on a.Prohbn equals b.Proitem
-                                 where b.Prost>0
+                                 join b in DB.Pp_Manhours on a.Prohbn equals b.Proitem
+                                 where b.Prost > 0
                                  select new
-                            {
-                                Pro_Item = a.Prohbn,
-                                Pro_Model = b.Promodel,
-                                Pro_Region = b.Prodesc,
-                                Pro_Manhour = b.Prost,
-                            };
+                                 {
+                                     Pro_Item = a.Prohbn,
+                                     Pro_Model = b.Promodel,
+                                     Pro_Region = b.Prodesc,
+                                     Pro_Manhour = b.Prost,
+                                 };
 
                     var q = q_dist.Distinct();
 
@@ -99,10 +93,8 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                     string searchText = ttbSearchMessage.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Pro_Item.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                        q = q.Where(u => u.Pro_Item.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-
-
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q);
@@ -204,7 +196,8 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
-        #endregion
+
+        #endregion Page_Load
 
         #region Events
 
@@ -227,13 +220,11 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             //CheckPowerWithWindowField("CoreNoticeEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreNoticeDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
             CheckPowerWithLinkButtonField("CoreTrackingNew", Grid1, "EcnAdd");
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -260,7 +251,6 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -268,7 +258,7 @@ namespace Fine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-        #endregion
+        #endregion Events
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -278,20 +268,17 @@ namespace Fine.Lf_Manufacturing.PP.tracking
 
                 string hbn = keys[0].ToString();
 
-
-
                 var q = (from a in DB.Pp_Manhours
                          where a.Proitem.CompareTo(hbn) == 0
-                         where a.Prost>0
+                         where a.Prost > 0
                          select a).ToList();
                 if (q.Any())
                 {
                     for (int i = 1; i < 33; i++)
                     {
-
-                        List<Pp_Tracking_time> Insert_Tracking_Time = (from a in q
+                        List<Pp_Tracking_Time> Insert_Tracking_Time = (from a in q
                                                                        where a.GUID.CompareTo(q[0].GUID) == 0
-                                                                       select new Pp_Tracking_time
+                                                                       select new Pp_Tracking_Time
                                                                        {
                                                                            GUID = Guid.NewGuid(),
                                                                            Pro_Plnt = q[0].Proplnt,
@@ -313,30 +300,26 @@ namespace Fine.Lf_Manufacturing.PP.tracking
                                                                            UDF54 = 0,
                                                                            UDF55 = 0,
                                                                            UDF56 = 0,
-                                                                           isDelete = 0,
+                                                                           isDeleted = 0,
                                                                            Remark = "",
                                                                            Creator = GetIdentityName(),
-                                                                           CreateTime = DateTime.Now,
+                                                                           CreateDate = DateTime.Now,
                                                                            //Modifier ="",
-                                                                           //ModifyTime = q[0].ModifyTime,
+                                                                           //ModifyDate = q[0].ModifyDate,
                                                                        }).Distinct().ToList();
                         DB.BulkInsert(Insert_Tracking_Time);
                         DB.BulkSaveChanges();
-
-
                     }
                 }
                 BindGrid();
                 //labResult.Text = keys[0].ToString();
                 //PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/EC/ec_eng_new.aspx?ECNNO=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
         }
+
         protected void btnClose_Click(object sender, EventArgs e)
         {
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-
-
     }
 }

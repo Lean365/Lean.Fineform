@@ -1,23 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Web;
-using System.IO;
 using System.Collections;
-
+using System.IO;
+using System.Web;
 
 /// <summary>
 /// UEditor编辑器通用上传类
 /// </summary>
 public class Uploader
 {
-    string state = "SUCCESS";
+    private string state = "SUCCESS";
 
-    string URL = null;
-    string currentType = null;
-    string uploadpath = null;
-    string filename = null;
-    string originalName = null;
-    HttpPostedFile uploadFile = null;
+    private string URL = null;
+    private string currentType = null;
+    private string uploadpath = null;
+    private string filename = null;
+    private string originalName = null;
+    private HttpPostedFile uploadFile = null;
 
     /**
   * 上传文件的主处理方法
@@ -27,6 +25,7 @@ public class Uploader
   *@param int
   * @return Hashtable
   */
+
     public Hashtable upFile(HttpContext cxt, string pathbase, string[] filetype, int size)
     {
         pathbase = pathbase + DateTime.Now.ToString("yyyy-MM-dd") + "/";
@@ -60,7 +59,7 @@ public class Uploader
         }
         catch (Exception e)
         {
-            state = "未知错误"+e.Message;
+            state = "未知错误" + e.Message;
             URL = "";
         }
         return getUploadInfo();
@@ -74,6 +73,7 @@ public class Uploader
   *@param string
   * @return Hashtable
  */
+
     public Hashtable upScrawl(HttpContext cxt, string pathbase, string tmppath, string base64Data)
     {
         pathbase = pathbase + DateTime.Now.ToString("yyyy-MM-dd") + "/";
@@ -93,7 +93,7 @@ public class Uploader
         }
         catch (Exception e)
         {
-            state = "未知错误"+e.Message;
+            state = "未知错误" + e.Message;
             URL = "";
         }
         finally
@@ -110,6 +110,7 @@ public class Uploader
 * @param string
 * @return string
 */
+
     public string getOtherInfo(HttpContext cxt, string field)
     {
         string info = null;
@@ -124,6 +125,7 @@ public class Uploader
      * 获取上传信息
      * @return Hashtable
      */
+
     private Hashtable getUploadInfo()
     {
         Hashtable infoList = new Hashtable();
@@ -142,6 +144,7 @@ public class Uploader
      * 重命名文件
      * @return string
      */
+
     private string reName()
     {
         return System.Guid.NewGuid() + getFileExt();
@@ -151,6 +154,7 @@ public class Uploader
      * 文件类型检测
      * @return bool
      */
+
     private bool checkType(string[] filetype)
     {
         currentType = getFileExt();
@@ -162,6 +166,7 @@ public class Uploader
      * @param int
      * @return bool
      */
+
     private bool checkSize(int size)
     {
         return uploadFile.ContentLength >= (size * 1024 * 1024);
@@ -171,6 +176,7 @@ public class Uploader
      * 获取文件扩展名
      * @return string
      */
+
     private string getFileExt()
     {
         string[] temp = uploadFile.FileName.Split('.');
@@ -180,6 +186,7 @@ public class Uploader
     /**
      * 按照日期自动创建存储文件夹
      */
+
     private void createFolder()
     {
         if (!Directory.Exists(uploadpath))
@@ -192,6 +199,7 @@ public class Uploader
      * 删除存储文件夹
      * @param string
      */
+
     public void deleteFolder(string path)
     {
         //if (Directory.Exists(path))

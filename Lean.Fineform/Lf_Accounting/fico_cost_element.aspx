@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Fico_cost_element.aspx.cs" Inherits="Fine.Lf_Accounting.Fico_cost_element" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Fico_cost_element.aspx.cs" Inherits="LeanFine.Lf_Accounting.Fico_cost_element" %>
 
 <!DOCTYPE html>
 

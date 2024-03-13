@@ -1,10 +1,10 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Linq;
 
-namespace Fine.Lf_Manufacturing.Master
+namespace LeanFine.Lf_Manufacturing.Master
 {
     public partial class Pp_badcategory : PageBase
     {
@@ -21,7 +21,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,7 +43,6 @@ namespace Fine.Lf_Manufacturing.Master
             //CheckPowerWithButton("CoreKitOutput", Btn2003);
             //CheckPowerWithButton("CoreProlineNew", btnP2d);
 
-
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -59,19 +58,17 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
-
         private void BindGrid()
         {
-            IQueryable<Pp_DefectCode> q = DB.Pp_DefectCodes; //.Include(u => u.Dept);
+            IQueryable<Pp_Defect_Code> q = DB.Pp_Defect_Codes; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.ngclass.Contains(searchText) || u.ngcode.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
+                q = q.Where(u => u.ngclass.Contains(searchText) || u.ngcode.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDelete == 0);
+            q = q.Where(u => u.isDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -87,13 +84,13 @@ namespace Fine.Lf_Manufacturing.Master
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Pp_DefectCode>(q, Grid1);
+            q = SortAndPage<Pp_Defect_Code>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -116,13 +113,10 @@ namespace Fine.Lf_Manufacturing.Master
             CheckPowerWithLinkButtonField("CoreBadReasonEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreBadReasonDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
         {
-
-
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -160,15 +154,9 @@ namespace Fine.Lf_Manufacturing.Master
         //    //DB.SaveChanges();
         //    DB.proDefectcodes.Where(u => ids.Contains(u.ID)).Delete();
 
-
         //    // 重新绑定表格
         //    BindGrid();
         //}
-
-
-
-
-
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
         {
@@ -177,9 +165,8 @@ namespace Fine.Lf_Manufacturing.Master
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
                 PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_badcategory_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
-
             }
-            Guid del_ID =Guid.Parse( GetSelectedDataKeyGUID(Grid1));
+            Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
             if (e.CommandName == "Delete")
             {
@@ -191,17 +178,17 @@ namespace Fine.Lf_Manufacturing.Master
                 }
                 //删除日志
                 //int userID = GetSelectedDataKeyID(Grid1);
-                Pp_DefectCode current = DB.Pp_DefectCodes.Find(del_ID);
+                Pp_Defect_Code current = DB.Pp_Defect_Codes.Find(del_ID);
                 string Deltext = current.cn_classmatter + "," + current.cn_ngmatter + "," + current.analysisclass; ;
                 string OperateType = "删除";
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "不良原因删除", OperateNotes);
-                //DB.Pp_DefectCodes.Where(l => l.GUID == del_ID).Delete();
+                //DB.Pp_Defect_Codes.Where(l => l.GUID == del_ID).Delete();
 
-                current.isDelete = 1;
+                current.isDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
-                current.ModifyTime = DateTime.Now;
+                current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
 
                 BindGrid();
@@ -218,7 +205,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -226,10 +212,6 @@ namespace Fine.Lf_Manufacturing.Master
             BindGrid();
         }
 
-        #endregion
-        #region ExportExcel
-
-
-        #endregion
+        #endregion Events
     }
 }

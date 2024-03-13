@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="user_select_dept.aspx.cs"
-    Inherits="Fine.Lf_Admin.user_select_dept" %>
+    Inherits="LeanFine.Lf_Admin.user_select_dept" %>
 
 <!DOCTYPE html>
 <html>

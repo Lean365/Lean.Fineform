@@ -2,8 +2,7 @@
 // Hebrew (he) localization
 // https://github.com/bgrins/spectrum
 
-(function ( $ ) {
-
+(function ($) {
     var localization = $.spectrum.localization["he"] = {
         cancelText: "בטל בחירה",
         chooseText: "בחר צבע",
@@ -14,5 +13,4 @@
     };
 
     $.extend($.fn.spectrum.defaults, localization);
-
-})( jQuery );
+})(jQuery);

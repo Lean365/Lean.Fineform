@@ -1,17 +1,17 @@
-﻿using Fine.Lf_Business.Models.PP;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-namespace Fine.Lf_Manufacturing.Master
-{
 
+namespace LeanFine.Lf_Manufacturing.Master
+{
     public partial class Pp_order_edit : PageBase
     {
         public string Cmc001, Cmc002, Cmc004, Cmc005, Cmc008;
-        
+
         #region ViewPower
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -33,7 +33,6 @@ namespace Fine.Lf_Manufacturing.Master
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,7 +49,6 @@ namespace Fine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
-
         }
 
         private void BindData()
@@ -61,16 +59,12 @@ namespace Fine.Lf_Manufacturing.Master
             Pp_Order current = DB.Pp_Orders
                 .Where(u => u.GUID == guid).FirstOrDefault();
 
-
-
-
             if (current == null)
             {
                 // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
 
             this.Porderdate.Text = current.Porderdate;
             this.Porderhbn.Text = current.Porderhbn;
@@ -82,17 +76,17 @@ namespace Fine.Lf_Manufacturing.Master
             this.Porderserial.Text = current.Porderserial;
             this.Remark.Text = current.Remark;
 
-
-
             //修改前日志
-            string BeforeModi = current.Porderdate+","+ current.Porderno + "," + current.Porderhbn + "," + current.Porderlot + "," + current.Porderqty;
+            string BeforeModi = current.Porderdate + "," + current.Porderno + "," + current.Porderhbn + "," + current.Porderlot + "," + current.Porderqty;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "订单修改", OperateNotes);
-
         }
-        #endregion
+
+        #endregion Page_Load
+
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
@@ -156,12 +150,10 @@ namespace Fine.Lf_Manufacturing.Master
             //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             //}
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -175,7 +167,6 @@ namespace Fine.Lf_Manufacturing.Master
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -183,10 +174,7 @@ namespace Fine.Lf_Manufacturing.Master
             //    Alert.ShowInTop("基本信息,物料< " + InputData + ">已经存在！修改即可");
             //    return;
             //}
-
-
         }
-
 
         //字段赋值，保存
         private void SaveItem()//新增生产日报
@@ -197,28 +185,25 @@ namespace Fine.Lf_Manufacturing.Master
 
                 .Where(u => u.GUID == ids).FirstOrDefault();
 
-
             item.Porderdate = this.Porderdate.SelectedDate.Value.ToString("yyyyMMdd");
-            
+
             item.Porderlot = this.Porderlot.Text.ToUpper();
             item.Porderqty = decimal.Parse(this.Porderqty.Text);
             item.Porderreal = decimal.Parse(this.Porderreal.Text);
-            item.Porderserial = this.Porderserial.Text.ToUpper(); 
-            
+            item.Porderserial = this.Porderserial.Text.ToUpper();
+
             item.Remark = Remark.Text;
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = this.Porderdate.SelectedDate.Value.ToString("yyyyMMdd")+","+Porderno.Text+"," + Porderhbn.Text + "," + Porderlot.Text + "," + this.Porderqty.Text;
+            string ModifiedText = this.Porderdate.SelectedDate.Value.ToString("yyyyMMdd") + "," + Porderno.Text + "," + Porderhbn.Text + "," + Porderlot.Text + "," + this.Porderqty.Text;
 
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "订单修改", OperateNotes);
-
-
         }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -233,10 +218,9 @@ namespace Fine.Lf_Manufacturing.Master
             //    return;
             //}
             try
-            { 
-            CheckData();
-            SaveItem();
-
+            {
+                CheckData();
+                SaveItem();
             }
             catch (ArgumentNullException Message)
             {
@@ -271,8 +255,7 @@ namespace Fine.Lf_Manufacturing.Master
             }
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
+        #endregion Events
     }
 }

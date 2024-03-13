@@ -1,19 +1,18 @@
-﻿using Fine.Lf_Business.Models.QM;
-using FineUIPro;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 using System;
 using System.Data;
 using System.Linq;
 
-
-namespace Fine.Lf_Manufacturing.QM.cost
+namespace LeanFine.Lf_Manufacturing.QM.cost
 {
-
     public partial class waste_cost_edit : PageBase
     {
         //日志配置文件调用
-       // private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+        // private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region ViewPower
+
         /// <summary>
         /// 本页面的浏览权限，空字符串表示本页面不受权限控制
         /// </summary>
@@ -25,15 +24,16 @@ namespace Fine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
+
         public Guid strGuid;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 LoadData();
             }
         }
@@ -50,7 +50,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             strGuid = Guid.Parse(strgroup[0].ToString().Trim());
 
             BindData();
-
         }
 
         #region BindingData
@@ -58,7 +57,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
         private void BindData()
         {
             //btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
 
             Qm_Waste current = DB.Qm_Wastes.Find(strGuid);
 
@@ -68,8 +66,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Parameter_Error, String.Empty, ActiveWindow.GetHideReference());
                 return;
             }
-
-
 
             Qcwd001.Text = current.Qcwd001;
             //item.Prolineclass = prolinename.SelectedValue.ToString();
@@ -90,10 +86,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             Qcwdrec.Text = current.Qcwdrec.ToString();
 
-
             // 添加所有用户
-
-
 
             //Editor1.setContent("")
             // 初始化用户所属角色
@@ -111,16 +104,15 @@ namespace Fine.Lf_Manufacturing.QM.cost
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "废弃事故修改", OperateNotes);
         }
 
-        #endregion
+        #endregion BindingData
 
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
+
         //判断修改内容||判断重复
         private void CheckData()
         {
-
             Qm_Waste current = DB.Qm_Wastes.Find(strGuid);
             string modi001 = current.Qcwd001;
             string modi002 = current.Qcwd002;
@@ -151,12 +143,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
             }
 
-
             //int id = GetQueryIntValue("id");
             //proLinestop current = DB.proLinestops.Find(id);
             ////decimal cQcpd005 = current.Qcpd005;
             //string checkdata1 = current.Prostoptext;
-
 
             //if (this.Prostoptext.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
             //{
@@ -170,7 +160,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             //string InputData = Qcpd003.Text.Trim();
 
-
             //proMovingpricedata redata = DB.proMovingpricedatas.Where(u => u.Qcpd003 == InputData).FirstOrDefault();
 
             //if (redata != null)
@@ -179,7 +168,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
             //string InputData = Qcrd001.SelectedDate.Value.ToString("yyyyMMdd") + Qcrd002.Text.Trim() + Qcrd003.Text.Trim();
-
 
             //sys_Button_New_Qm_Reworkdata Redata = DB.Qm_Reworks.Where(u => u.Qcrd001 + u.Qcrd002 + u.Qcrd003 == InputData).FirstOrDefault();
 
@@ -213,9 +201,6 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    qaQTY = 0;
             //}
 
-
-
-
             //if (qaQTY > mcQTY)
             //{
             //    //入库超出日志
@@ -228,10 +213,10 @@ namespace Fine.Lf_Manufacturing.QM.cost
             //    return;
             //}
         }
+
         //字段赋值，保存
         private void SaveItem()//新增质量控制数据
         {
-
             Qm_Waste item = DB.Qm_Wastes
 
                 .Where(u => u.GUID == strGuid).FirstOrDefault();
@@ -253,7 +238,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
 
             item.Qcwdrec = Qcwdrec.Text;
 
-            item.ModifyTime = DateTime.Now;
+            item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
             //DB.Prolines.Add(item);
             DB.SaveChanges();
@@ -263,13 +248,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
             string OperateType = "修改";
             string OperateNotes = "afEdit* " + ModifiedText + "*afEdit 的记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "废弃事故修改", OperateNotes);
-
-
         }
-
-
-
-
 
         public void dQcwd007()
         {
@@ -278,11 +257,11 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcwd007.Text = (decimal.Parse(Qcwd008.Text) * decimal.Parse(Qcwd009.Text) + decimal.Parse(Qcwd010.Text) + decimal.Parse(Qcwd011.Text)).ToString();
             }
         }
+
         protected void Qcwd008_TextChanged(object sender, EventArgs e)
         {
             dQcwd007();
         }
-
 
         protected void Qcwd010_TextChanged(object sender, EventArgs e)
         {
@@ -293,6 +272,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             dQcwd007();
         }
+
         public void dQcwd012()
         {
             if (Qcwd003.Text != "" && Qcwd013.Text != "")
@@ -300,6 +280,7 @@ namespace Fine.Lf_Manufacturing.QM.cost
                 Qcwd012.Text = (decimal.Parse(Qcwd003.Text) * decimal.Parse(Qcwd013.Text) + decimal.Parse(Qcwd014.Text) + decimal.Parse(Qcwd015.Text)).ToString();
             }
         }
+
         protected void Qcwd013_TextChanged(object sender, EventArgs e)
         {
             dQcwd012();
@@ -314,16 +295,14 @@ namespace Fine.Lf_Manufacturing.QM.cost
         {
             dQcwd012();
         }
+
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             CheckData();
             SaveItem();
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
-        #endregion
 
-
-
-
+        #endregion Events
     }
 }

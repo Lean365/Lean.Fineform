@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using FineUIPro;
+using System;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using FineUIPro;
+
 ////using EntityFramework.Extensions;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class dept : PageBase
     {
@@ -26,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -43,7 +38,6 @@ namespace Fine.Lf_Admin
             // 权限检查
             CheckPowerWithButton("CoreDeptNew", btnNew);
 
-
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Admin/dept_new.aspx", "新增部门");
 
             BindGrid();
@@ -55,7 +49,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -106,7 +100,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

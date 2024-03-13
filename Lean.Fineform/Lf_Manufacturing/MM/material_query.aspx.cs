@@ -1,26 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Data.Entity;
-using FineUIPro;
-using System.Collections;
-using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.IO;
-using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.UI.WebControls;
 
-namespace Fine.Lc_MM
+namespace LeanFine.Lc_MM
 {
-
     public partial class material_query : PageBase
     {
-
-
         #region ViewPower
 
         /// <summary>
@@ -34,7 +20,7 @@ namespace Fine.Lc_MM
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -42,8 +28,6 @@ namespace Fine.Lc_MM
         {
             if (!IsPostBack)
             {
-
-               
             }
         }
 
@@ -59,8 +43,8 @@ namespace Fine.Lc_MM
             //InitNoticeDept();
 
             BindData();
-
         }
+
         private void BindData()
         {
             string searchText = ttbSearchMessage.Text.Trim();
@@ -73,8 +57,7 @@ namespace Fine.Lc_MM
 
                 // 在用户名称中搜索
 
-                q = q.Where(u => u.MatItem.Contains(searchText)); //|| u.CreateTime.Contains(searchText));
-
+                q = q.Where(u => u.MatItem.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
 
                 var qs = q.ToList();
                 if (qs.Any())
@@ -117,13 +100,7 @@ namespace Fine.Lc_MM
             }
         }
 
-
-
-
-
-
-
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -140,18 +117,6 @@ namespace Fine.Lc_MM
             BindData();
         }
 
-
-
-
-
-
-
-
-
-
-
-        #endregion
-
-
+        #endregion Events
     }
 }

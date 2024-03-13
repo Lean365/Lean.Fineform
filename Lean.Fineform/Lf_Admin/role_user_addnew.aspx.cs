@@ -1,15 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data.Entity;
 using System.Linq;
-using System.Data.Entity;using System.Data.Entity.Validation;
-using FineUIPro;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class role_user_addnew : PageBase
     {
@@ -26,7 +21,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -55,10 +50,8 @@ namespace Fine.Lf_Admin
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
-
             BindGrid();
         }
-
 
         private void BindGrid()
         {
@@ -68,7 +61,7 @@ namespace Fine.Lf_Admin
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText)||u.Remark.Contains(searchText)|| u.Address.Contains(searchText));
+                q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText) || u.Remark.Contains(searchText) || u.Address.Contains(searchText));
             }
 
             q = q.Where(u => u.Name != "admin");
@@ -76,7 +69,7 @@ namespace Fine.Lf_Admin
             // 排除已经属于本角色的用户
             int roleID = GetQueryIntValue("id");
             q = q.Where(u => u.Roles.All(r => r.ID != roleID));
-            
+
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
@@ -87,7 +80,7 @@ namespace Fine.Lf_Admin
             Grid1.DataBind();
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -112,7 +105,6 @@ namespace Fine.Lf_Admin
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }
 
-       
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
             ttbSearchMessage.ShowTrigger1 = true;
@@ -128,7 +120,7 @@ namespace Fine.Lf_Admin
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
         {
-			Grid1.SortDirection = e.SortDirection;
+            Grid1.SortDirection = e.SortDirection;
             Grid1.SortField = e.SortField;
             BindGrid();
         }
@@ -139,7 +131,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-
         protected void ddlGridPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
@@ -147,8 +138,6 @@ namespace Fine.Lf_Admin
             BindGrid();
         }
 
-        #endregion
-
-
+        #endregion Events
     }
 }

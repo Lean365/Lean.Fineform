@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-using FineUIPro;
+﻿using FineUIPro;
+using System;
 using System.Linq;
 
-namespace Fine.Lf_Admin
+namespace LeanFine.Lf_Admin
 {
     public partial class changepassword : PageBase
     {
@@ -24,7 +19,7 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
+        #endregion ViewPower
 
         #region Page_Load
 
@@ -38,10 +33,9 @@ namespace Fine.Lf_Admin
 
         private void LoadData()
         {
-
         }
 
-        #endregion
+        #endregion Page_Load
 
         #region Events
 
@@ -75,7 +69,6 @@ namespace Fine.Lf_Admin
             }
         }
 
-        #endregion
-
+        #endregion Events
     }
 }

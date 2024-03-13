@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
+using System.Linq;
 
-namespace Fine
+namespace LeanFine
 {
     public class PivotHelper
     {
         private DataTable _SourceTable = new DataTable();
+
         public PivotHelper(DataTable SourceTable)
         {
             _SourceTable = SourceTable;
@@ -59,6 +58,7 @@ namespace Fine
             }
             return dt;
         }
+
         /// <summary>
         /// Retrives the data for matching RowField value and ColumnFields values with Aggregate function applied on them.
         /// </summary>
@@ -77,27 +77,35 @@ namespace Fine
                 {
                     case AggregateFunction.Average:
                         return GetAverage(objList);
+
                     case AggregateFunction.Count:
                         return objList.Count();
+
                     case AggregateFunction.Exists:
                         return (objList.Count() == 0) ? "False" : "True";
+
                     case AggregateFunction.First:
                         return GetFirst(objList);
+
                     case AggregateFunction.Last:
                         return GetLast(objList);
+
                     case AggregateFunction.Max:
                         return GetMax(objList);
+
                     case AggregateFunction.Min:
                         return GetMin(objList);
+
                     case AggregateFunction.Sum:
                         return GetSum(objList);
+
                     default:
                         return null;
                 }
             }
             catch (Exception ex)
             {
-                return ex+"#Error";
+                return ex + "#Error";
             }
             //return null;
         }
@@ -106,27 +114,33 @@ namespace Fine
         {
             return objList.Count() == 0 ? null : (object)(Convert.ToDecimal(GetSum(objList)) / objList.Count());
         }
+
         private object GetSum(object[] objList)
         {
             return objList.Count() == 0 ? null : (object)(objList.Aggregate(new decimal(), (x, y) => x += Convert.ToDecimal(y)));
         }
+
         private object GetFirst(object[] objList)
         {
             return (objList.Count() == 0) ? null : objList.First();
         }
+
         private object GetLast(object[] objList)
         {
             return (objList.Count() == 0) ? null : objList.Last();
         }
+
         private object GetMax(object[] objList)
         {
             return (objList.Count() == 0) ? null : objList.Max();
         }
+
         private object GetMin(object[] objList)
         {
             return (objList.Count() == 0) ? null : objList.Min();
         }
     }
+
     public enum AggregateFunction
     {
         Count = 1,
