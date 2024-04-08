@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -80,7 +80,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -197,7 +197,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -313,7 +313,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -622,7 +622,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -754,7 +754,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -886,7 +886,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -1067,7 +1067,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where string.IsNullOrEmpty(b.Ec_qadate)
                              //where b.Ec_distinction == 1
                              where b.isDeleted == 0
@@ -1196,7 +1196,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where !string.IsNullOrEmpty(b.Ec_qadate)
                              //where b.Ec_distinction == 1
                              where b.isDeleted == 0
@@ -1326,7 +1326,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              where b.isDeleted == 0
                              where b.Ec_newitem != "0"
                              where !b.Ec_pmcmemo.Contains("EOL")
@@ -1501,7 +1501,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 var q =
                         (from a in DB.Pp_Ecs
-                         join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                          where b.isDeleted == 0
                          where b.Ec_newitem != "0"
                          where !b.Ec_pmcmemo.Contains("EOL")
@@ -1571,7 +1571,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 //查询完全实施点数
 
                 var q_All = from a in Q_Distinct
-                            where !(from d in DB.Pp_EcSubs
+                            where !(from d in DB.Pp_Ec_Subs
                                     where !string.IsNullOrEmpty(d.Ec_qadate)
                                     select d.Ec_no)
                                  .Contains(a.Ec_no)
@@ -1665,7 +1665,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 var q =
                         (from a in DB.Pp_Ecs
-                         join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                          where b.isDeleted == 0
                          where b.Ec_newitem != "0"
                          where !b.Ec_pmcmemo.Contains("EOL")
@@ -1735,7 +1735,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 //查询完全实施点数
 
                 var q_All = from a in Q_Distinct
-                            where (from d in DB.Pp_EcSubs
+                            where (from d in DB.Pp_Ec_Subs
                                    where !string.IsNullOrEmpty(d.Ec_qadate)
                                    select d.Ec_no)
                                  .Contains(a.Ec_no)

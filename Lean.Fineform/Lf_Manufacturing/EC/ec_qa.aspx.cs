@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -65,7 +65,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where string.IsNullOrEmpty(b.Ec_qadate)// == "" || b.Ec_qadate == null
 
@@ -106,7 +106,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnSecondAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_qadate)// != "" || b.Ec_qadate != null
                             //where a.Remark.Contains("OK") == false
@@ -146,7 +146,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnThirdAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             orderby b.Ec_entrydate descending
                             where b.isDeleted == 0
                             select new
@@ -214,7 +214,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
@@ -282,7 +282,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnSecondAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
@@ -350,7 +350,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnThirdAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
@@ -642,7 +642,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             string strEc_olditem = strgroup[4].ToString().Trim();
             string strEc_newitem = strgroup[5].ToString().Trim();
             //参数传递
-            var q_edit = (from a in DB.Pp_EcSubs
+            var q_edit = (from a in DB.Pp_Ec_Subs
                           where a.Ec_no.Contains(strecnno)
                           where a.Ec_model.Contains(strEc_model)
                           where a.Ec_bomitem.Contains(strEc_bomitem)

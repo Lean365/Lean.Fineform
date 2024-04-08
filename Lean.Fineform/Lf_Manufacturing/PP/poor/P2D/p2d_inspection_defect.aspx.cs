@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 {
@@ -64,11 +64,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
         private void BindGrid()
         {
-            var LineType = (from a in DB.Pp_Lines
-                            where a.lineclass.Contains("P")
+            var LineType = (from a in DB.Adm_Dicts
+                                //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                                //where b.Proecnno == strecn
+                                //where b.Proecnbomitem == stritem
+                            where a.DictType.Contains("line_type_p")
                             select new
                             {
-                                a.linename
+                                a.DictLabel,
+                                a.DictValue
                             }).ToList();
             IQueryable<Pp_P2d_Inspection_Defect> q = DB.Pp_P2d_Inspection_Defects; //.Include(u => u.Dept);
 
@@ -96,7 +100,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             q = q.Where(u => u.isDeleted == 0);
 
             //查询包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.linename)).AsQueryable();
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictValue)).AsQueryable();
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q_include.Count();
@@ -114,11 +118,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
         public void BindDDLLine()
         {
-            var LineType = (from a in DB.Pp_Lines
-                            where a.lineclass.Contains("P")
+            var LineType = (from a in DB.Adm_Dicts
+                                //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                                //where b.Proecnno == strecn
+                                //where b.Proecnbomitem == stritem
+                            where a.DictType.Contains("reason_type_p")
                             select new
                             {
-                                a.linename
+                                a.DictLabel,
+                                a.DictValue
                             }).ToList();
             string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
@@ -132,7 +140,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                     };
 
             //包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.linename));
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictValue));
 
             var qs = q_include.Select(E => new { E.Prolinename, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders

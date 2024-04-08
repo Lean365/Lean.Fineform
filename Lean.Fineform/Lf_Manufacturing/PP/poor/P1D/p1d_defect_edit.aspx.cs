@@ -1,12 +1,12 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -203,25 +203,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void BindDDLDept()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "D"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_d")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProngdept.DataSource = qs;
-            ddlProngdept.DataTextField = "Reasoncntext";
-            ddlProngdept.DataValueField = "Reasoncntext";
+            ddlProngdept.DataTextField = "DictLabel";
+            ddlProngdept.DataValueField = "DictValue";
             ddlProngdept.DataBind();
         }
 
@@ -699,12 +699,18 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             rowData["isDeleted"] = 0;
 
             rowData["GUID"] = Guid.NewGuid();
-            rowData["Udf001"] = "";
-            rowData["Udf002"] = "";
-            rowData["Udf003"] = "";
-            rowData["Udf004"] = 0;
-            rowData["Udf005"] = 0;
-            rowData["Udf006"] = 0;
+            rowData["UDF01"] = "";
+            rowData["UDF02"] = "";
+            rowData["UDF03"] = "";
+            rowData["UDF04"] = "";
+            rowData["UDF05"] = "";
+            rowData["UDF06"] = "";
+            rowData["Udf51"] = 0;
+            rowData["Udf52"] = 0;
+            rowData["Udf53"] = 0;
+            rowData["Udf54"] = 0;
+            rowData["Udf55"] = 0;
+            rowData["Udf56"] = 0;
             rowData["CreateDate"] = DateTime.Now;
             rowData["CREATOR"] = GetIdentityName();
             //item.CreateDate = DateTime.Now;

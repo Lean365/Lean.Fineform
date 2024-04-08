@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 {
@@ -623,7 +623,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ModelQtytoXLSXfile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUALQTY" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUALQTY" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 
@@ -762,7 +762,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ReModeloXLSXfile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DPend.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ReworkModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DPend.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 

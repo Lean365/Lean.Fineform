@@ -1,11 +1,11 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.QM;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.QM.fqc
 {
@@ -938,19 +938,19 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         private void BindDDLuser()
         {
-            var q_user = from a in DB.Adm_Users
-                         join b in DB.Adm_Depts on a.Dept.ID equals b.ID
-                         where b.Name.CompareTo("品管课") == 0
+            var q_user = from a in DB.Adm_Dicts
+                         where a.DictType.Contains("reason_type_q")
                          select new
                          {
-                             a.ChineseName
+                             a.DictLabel,
+                             a.DictValue
                          };
 
             // 绑定到下拉列表（启用模拟树功能）
             // 绑定到下拉列表（启用模拟树功能）
-            var qs = q_user.Select(E => new { E.ChineseName }).ToList().Distinct();
-            qmInspector.DataTextField = "ChineseName";
-            qmInspector.DataValueField = "ChineseName";
+            var qs = q_user.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
+            qmInspector.DataTextField = "DictLabel";
+            qmInspector.DataValueField = "DictValue";
             qmInspector.DataSource = qs;
             qmInspector.DataBind();
         }

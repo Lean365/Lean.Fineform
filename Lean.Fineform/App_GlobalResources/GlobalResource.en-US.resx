@@ -1123,7 +1123,7 @@
     <value>Mail List</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>Lean Manufacturing DTA</value>
+    <value>Lean Manufacturing--DTA</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>SYS ID</value>
@@ -1222,6 +1222,21 @@
     <value>ReasonClassify</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
-    <value>PCBA INSP</value>
+    <value>INSP Record</value>
+  </data>
+  <data name="sys_Slogan" xml:space="preserve">
+    <value>Our pride is being a global manufacture with the continuous QCDS challenge.</value>
+  </data>
+  <data name="menu_Sys_Dict" xml:space="preserve">
+    <value>Data Dict</value>
+  </data>
+  <data name="menu_Pp_Defect" xml:space="preserve">
+    <value>Poor Prod</value>
+  </data>
+  <data name="menu_Pp_Repair" xml:space="preserve">
+    <value>Repair Record</value>
+  </data>
+  <data name="sys_Button_Batch" xml:space="preserve">
+    <value>Batch</value>
   </data>
 </root>

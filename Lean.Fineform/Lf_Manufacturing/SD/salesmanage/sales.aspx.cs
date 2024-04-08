@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.FICO;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 
 namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 {
@@ -60,7 +60,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 
         private void BindGrid()
         {
-            IQueryable<Fico_Costing_Sales_Billing> q = DB.Fico_Costing_Sales_Billings; //.Include(u => u.Dept);
+            IQueryable<Fico_Monthly_Sale> q = DB.Fico_Monthly_Sales; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -70,7 +70,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Fico_Costing_Sales_Billing>(q, Grid1);
+            q = SortAndPage<Fico_Monthly_Sale>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -207,7 +207,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                 return;
             }
 
-            IQueryable<Fico_Costing_Sales_Billing> q = DB.Fico_Costing_Sales_Billings; //.Include(u => u.Dept);
+            IQueryable<Fico_Monthly_Sale> q = DB.Fico_Monthly_Sales; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");

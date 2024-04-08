@@ -45,7 +45,8 @@
                                 <f:Button ID="Button9" Text="SHA256" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button9_Click"></f:Button>
                                 <f:Button ID="Button10" Text="SHA512" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button10_Click"></f:Button>
                                 <f:Button ID="Button11" Text="GUID" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button11_Click"></f:Button>
-
+                                <f:Button ID="Button12" Text="CreatePWD" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button12_Click"></f:Button>
+                                <f:Button ID="Button13" Text="PCreatePWD" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button12_Click"></f:Button>
                                 <f:Button ID="Button18" Text="base64加密" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button18_Click"></f:Button>
                                 <f:Button ID="Button19" Text="base64解密" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true" OnClick="Button19_Click"></f:Button>
                                 <f:Button ID="Button22" Text="Rabbit加密" Width="150px" RegionSplit="true" RegionSplitWidth="100%" runat="server" EnablePostBack="true"></f:Button>

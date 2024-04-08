@@ -1,10 +1,10 @@
-﻿using LeanFine.Lf_Business.Models.PP;
-using LeanFine.Lf_Business.Models.QM;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security;
+using LeanFine.Lf_Business.Models.PP;
+using LeanFine.Lf_Business.Models.QM;
 
 namespace LeanFine
 {
@@ -26,23 +26,21 @@ namespace LeanFine
             GetAdm_Configs().ForEach(c => context.Adm_Configs.Add(c));
             GetAdm_Institutions().ForEach(c => context.Adm_Institutions.Add(c));
             GetAdm_Depts().ForEach(d => context.Adm_Depts.Add(d));
+            GetAdm_Dicts().ForEach(d => context.Adm_Dicts.Add(d));
             GetAdm_Roles().ForEach(r => context.Adm_Roles.Add(r));
             GetAdm_Powers().ForEach(p => context.Adm_Powers.Add(p));
             GetAdm_Titles().ForEach(t => context.Adm_Titles.Add(t));
             GetAdm_Users().ForEach(u => context.Adm_Users.Add(u));
-
-            GetPp_Lines().ForEach(t => context.Pp_Lines.Add(t));
             GetPp_Defect_Codes().ForEach(t => context.Pp_Defect_Codes.Add(t));
-            GetPp_Worktimes().ForEach(t => context.Pp_Durations.Add(t));
-            GetPp_Reasons().ForEach(t => context.Pp_Reasons.Add(t));
-            GetPp_EcCategorys().ForEach(t => context.Pp_EcCategorys.Add(t));
             GetQm_CheckTypes().ForEach(t => context.Qm_CheckTypes.Add(t));
             GetQm_DocNumbers().ForEach(t => context.Qm_DocNumbers.Add(t));
-
+            GetPp_Transports().ForEach(t => context.Pp_Transports.Add(t));
             context.SaveChanges();
 
             // 添加菜单时需要指定ViewAdm_Power，所以上面需要先保存到数据库
             GetAdm_Menus(context).ForEach(m => context.Adm_Menus.Add(m));
+
+            //更新角色权限
 
             //插入年月日数据表
 
@@ -74,8 +72,8 @@ namespace LeanFine
                     SortIndex = 1,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/system.png",
-                    ButtonName="Btn_LB_Adm_sys_map",
+                    ImageUrl = "~/Lf_Resources/menu/system.png",
+                    ButtonName="Btn_Lf_Adm_sys_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSysView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -83,8 +81,8 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/menu.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/manu.png",
-                            ButtonName="Btn_LB_Adm_menu",
+                            ImageUrl = "~/Lf_Resources/menu/menu.png",
+                            ButtonName="Btn_Lf_Adm_menu",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMenuView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -92,8 +90,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/online.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/online.png",
-                            ButtonName="Btn_LB_Adm_online",
+                            ImageUrl = "~/Lf_Resources/menu/online.png",
+                            ButtonName="Btn_Lf_Adm_online",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOnlineView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -101,8 +99,8 @@ namespace LeanFine
                             SortIndex=30,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/config.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/config.png",
-                            ButtonName="Btn_LB_Adm_config",
+                            ImageUrl = "~/Lf_Resources/menu/config.png",
+                            ButtonName="Btn_Lf_Adm_config",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreConfigView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -110,8 +108,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/log.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/loginlog.png",
-                            ButtonName="Btn_LB_Adm_log",
+                            ImageUrl = "~/Lf_Resources/menu/loginlog.png",
+                            ButtonName="Btn_Lf_Adm_log",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreLogView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -119,9 +117,18 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/operatelog.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/worklog.png",
-                            ButtonName="Btn_LB_Adm_operatelog",
+                            ImageUrl = "~/Lf_Resources/menu/worklog.png",
+                            ButtonName="Btn_Lf_Adm_operatelog",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreLogView").FirstOrDefault<Adm_Power>()
+                        },
+                        new Adm_Menu {
+                            Name="数据字典",
+                            SortIndex=60,
+                            Remark = "二级菜单",
+                            NavigateUrl = "~/Lf_Admin/dict.aspx",
+                            ImageUrl = "~/Lf_Resources/menu/dict.png",
+                            ButtonName="Btn_Lf_Adm_dict",
+                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreDictView").FirstOrDefault<Adm_Power>()
                         },
                     }
                 },
@@ -131,17 +138,17 @@ namespace LeanFine
                     SortIndex = 2,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/Dept.png",
-                    ButtonName="Btn_LB_Adm_dept_map",
-                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreComDeptView").FirstOrDefault<Adm_Power>(),
+                    ImageUrl = "~/Lf_Resources/menu/Dept.png",
+                    ButtonName="Btn_Lf_Adm_dept_map",
+                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreCompanyView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
                             Name="公司信息",
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/company.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/company.png",
-                            ButtonName="Btn_LB_Adm_Institution",
+                            ImageUrl = "~/Lf_Resources/menu/company.png",
+                            ButtonName="Btn_Lf_Adm_Institution",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreCompanyView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -149,8 +156,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/dept.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/deptm.png",
-                            ButtonName="Btn_LB_Adm_dept",
+                            ImageUrl = "~/Lf_Resources/menu/deptm.png",
+                            ButtonName="Btn_Lf_Adm_dept",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreDeptView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -158,8 +165,8 @@ namespace LeanFine
                             SortIndex=30,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/dept_user.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/deptuser.png",
-                            ButtonName="Btn_LB_Adm_dept_user",
+                            ImageUrl = "~/Lf_Resources/menu/deptuser.png",
+                            ButtonName="Btn_Lf_Adm_dept_user",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreDeptuserView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -167,8 +174,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/title.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/title.png",
-                            ButtonName="Btn_LB_Adm_title",
+                            ImageUrl = "~/Lf_Resources/menu/title.png",
+                            ButtonName="Btn_Lf_Adm_title",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTitleView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -176,8 +183,8 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/title_user.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/titleuser.png",
-                            ButtonName="Btn_LB_Adm_title_user",
+                            ImageUrl = "~/Lf_Resources/menu/titleuser.png",
+                            ButtonName="Btn_Lf_Adm_title_user",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTitleUserView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -185,8 +192,8 @@ namespace LeanFine
                             SortIndex=60,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/corpkpi.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/kpi.png",
-                            ButtonName="Btn_LB_Adm_corpkpi",
+                            ImageUrl = "~/Lf_Resources/menu/kpi.png",
+                            ButtonName="Btn_Lf_Adm_corpkpi",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreCorpkpiView").FirstOrDefault<Adm_Power>()
                         },
                     }
@@ -197,17 +204,17 @@ namespace LeanFine
                     SortIndex = 3,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/User.png",
-                    ButtonName="Btn_LB_Adm_"+"user_map",
-                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreUserRolePowerView").FirstOrDefault<Adm_Power>(),
+                    ImageUrl = "~/Lf_Resources/menu/User.png",
+                    ButtonName="Btn_Lf_Adm_"+"user_map",
+                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreRoleUserView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
                             Name="用户管理",
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/user.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/user.png",
-                            ButtonName="Btn_LB_Adm_"+"user",
+                            ImageUrl = "~/Lf_Resources/menu/user.png",
+                            ButtonName="Btn_Lf_Adm_"+"user",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreUserView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -215,8 +222,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/changepassword.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/userset.png",
-                            ButtonName="Btn_LB_Adm_"+"changepassword",
+                            ImageUrl = "~/Lf_Resources/menu/userset.png",
+                            ButtonName="Btn_Lf_Adm_"+"changepassword",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreUserChangePassword").FirstOrDefault<Adm_Power>()
                         },
 
@@ -225,8 +232,8 @@ namespace LeanFine
                             SortIndex=30,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/role.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/rolem.png",
-                            ButtonName="Btn_LB_Adm_"+"role",
+                            ImageUrl = "~/Lf_Resources/menu/rolem.png",
+                            ButtonName="Btn_Lf_Adm_"+"role",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreRoleView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -234,8 +241,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/role_user.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/roleuser.png",
-                            ButtonName="Btn_LB_Adm_"+"role_user",
+                            ImageUrl = "~/Lf_Resources/menu/roleuser.png",
+                            ButtonName="Btn_Lf_Adm_"+"role_user",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreRoleUserView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -243,8 +250,8 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/power.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/power.png",
-                            ButtonName="Btn_LB_Adm_"+"power",
+                            ImageUrl = "~/Lf_Resources/menu/power.png",
+                            ButtonName="Btn_Lf_Adm_"+"power",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePowerView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -252,17 +259,8 @@ namespace LeanFine
                             SortIndex=60,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Admin/role_power.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/rolepower.png",
-                            ButtonName="Btn_LB_Adm_"+"role_power",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreRolePowerView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="批量更新",
-                            SortIndex=70,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Admin/role_power_batch.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/confirm.png",
-                            ButtonName="Btn_LB_Adm_"+"role_power_batch",
+                            ImageUrl = "~/Lf_Resources/menu/rolepower.png",
+                            ButtonName="Btn_Lf_Adm_"+"role_power",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreRolePowerView").FirstOrDefault<Adm_Power>()
                         },
                     }
@@ -274,8 +272,8 @@ namespace LeanFine
                     SortIndex = 7,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/finance.png",
-                    ButtonName="Btn_LB_Fico_"+"Fico_map",
+                    ImageUrl = "~/Lf_Resources/menu/finance.png",
+                    ButtonName="Btn_Lf_Fico_"+"Fico_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFICOView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                                 new Adm_Menu {
@@ -283,8 +281,8 @@ namespace LeanFine
                                     SortIndex=10,
                                     Remark = "二级菜单",
                                     NavigateUrl = "~/Lf_Accounting/fyperiod.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/period.png",
-                                    ButtonName="Btn_LB_Fico_"+"period",
+                                    ImageUrl = "~/Lf_Resources/menu/period.png",
+                                    ButtonName="Btn_Lf_Fico_"+"period",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePeriodView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu {
@@ -292,8 +290,8 @@ namespace LeanFine
                                     SortIndex=20,
                                     Remark = "二级菜单",
                                     NavigateUrl = "~/Lf_Accounting/acctitle.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/subject.png",
-                                    ButtonName="Btn_LB_Fico_"+"subject",
+                                    ImageUrl = "~/Lf_Resources/menu/subject.png",
+                                    ButtonName="Btn_Lf_Fico_"+"subject",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSubjectView").FirstOrDefault<Adm_Power>()
                                 },
                                                                 new Adm_Menu {
@@ -301,8 +299,8 @@ namespace LeanFine
                                     SortIndex=30,
                                     Remark = "二级菜单",
                                     NavigateUrl = "~/Lf_Accounting/Countersignature.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/Countersignature.png",
-                                    ButtonName="Btn_LB_Fico_"+"Countersignature",
+                                    ImageUrl = "~/Lf_Resources/menu/Countersignature.png",
+                                    ButtonName="Btn_Lf_Fico_"+"Countersignature",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreCountersignatureView").FirstOrDefault<Adm_Power>()
                                 },
                         new Adm_Menu {
@@ -310,8 +308,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Accounting/expense.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/expenses.png",
-                            ButtonName="Btn_LB_Fico_"+"expense",
+                            ImageUrl = "~/Lf_Resources/menu/expenses.png",
+                            ButtonName="Btn_Lf_Fico_"+"expense",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreExpensesView").FirstOrDefault<Adm_Power>(),
                         },
                         new Adm_Menu {
@@ -319,8 +317,8 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/budget.png",
-                            ButtonName="Btn_LB_Fico_"+"budget",
+                            ImageUrl = "~/Lf_Resources/menu/budget.png",
+                            ButtonName="Btn_Lf_Fico_"+"budget",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreBudgetView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu> {
                                 new Adm_Menu {
@@ -328,8 +326,8 @@ namespace LeanFine
                                     SortIndex=100,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/bg_expense.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/expenses.png",
-                                    ButtonName="Btn_LB_Fico_"+"expense",
+                                    ImageUrl = "~/Lf_Resources/menu/expenses.png",
+                                    ButtonName="Btn_Lf_Fico_"+"expense",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreExpensesView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu {
@@ -337,8 +335,8 @@ namespace LeanFine
                                     SortIndex=110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/bg_labor.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/labor.png",
-                                    ButtonName="Btn_LB_Fico_"+"labor",
+                                    ImageUrl = "~/Lf_Resources/menu/labor.png",
+                                    ButtonName="Btn_Lf_Fico_"+"labor",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreBudgetView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu {
@@ -346,8 +344,8 @@ namespace LeanFine
                                     SortIndex=120,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/bg_workovertime.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/workovertime.png",
-                                    ButtonName="Btn_LB_Fico_"+"workovertime",
+                                    ImageUrl = "~/Lf_Resources/menu/workovertime.png",
+                                    ButtonName="Btn_Lf_Fico_"+"workovertime",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreBudgetView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu {
@@ -355,8 +353,8 @@ namespace LeanFine
                                     SortIndex=130,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/bg_asset.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/asset.png",
-                                    ButtonName="Btn_LB_Fico_"+"asset",
+                                    ImageUrl = "~/Lf_Resources/menu/asset.png",
+                                    ButtonName="Btn_Lf_Fico_"+"asset",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreBudgetView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -365,8 +363,8 @@ namespace LeanFine
                                     SortIndex=140,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/audit.aspx",
-                                    ImageUrl = "~/Lf_Resources/Menu/Audit.png",
-                                    ButtonName="Btn_LB_Fico_"+"audit",
+                                    ImageUrl = "~/Lf_Resources/menu/Audit.png",
+                                    ButtonName="Btn_Lf_Fico_"+"audit",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreAuditView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -376,8 +374,8 @@ namespace LeanFine
                             SortIndex=60,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/kanban.png",
-                            ButtonName="Btn_LB_Fico_"+"Sd_map",
+                            ImageUrl = "~/Lf_Resources/menu/kanban.png",
+                            ButtonName="Btn_Lf_Fico_"+"Sd_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFICOView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -389,7 +387,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/Fico_chart.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/chart.png",
-                                    ButtonName="Btn_LB_Fico_"+"Fico_charts",
+                                    ButtonName="Btn_Lf_Fico_"+"Fico_charts",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFICOChart").FirstOrDefault<Adm_Power>()
                                 },
                                  new Adm_Menu
@@ -400,7 +398,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/costing.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/costing.png",
-                                    ButtonName="Btn_LB_Fico_"+"costing",
+                                    ButtonName="Btn_Lf_Fico_"+"costing",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFICOChart").FirstOrDefault<Adm_Power>()
                                 },
                                  new Adm_Menu
@@ -410,7 +408,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Accounting/Fico_cost_element.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/acctitle.png",
-                                    ButtonName="Btn_LB_Fico_"+"Fico_cost_element",
+                                    ButtonName="Btn_Lf_Fico_"+"Fico_cost_element",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFICOChart").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -423,8 +421,8 @@ namespace LeanFine
                     SortIndex = 8,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/material.png",
-                    ButtonName="Btn_LB_Mm_"+"Mm_map",
+                    ImageUrl = "~/Lf_Resources/menu/material.png",
+                    ButtonName="Btn_Lf_Mm_"+"Mm_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMMView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -432,8 +430,8 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Manufacturing/MM/material.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/materialadmin.png",
-                            ButtonName="Btn_LB_Mm_"+"material",
+                            ImageUrl = "~/Lf_Resources/menu/materialadmin.png",
+                            ButtonName="Btn_Lf_Mm_"+"material",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMaterialView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -441,8 +439,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Manufacturing/MM/material_query.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/query.png",
-                            ButtonName="Btn_LB_Mm_"+"material_query",
+                            ImageUrl = "~/Lf_Resources/menu/query.png",
+                            ButtonName="Btn_Lf_Mm_"+"material_query",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMaterialView").FirstOrDefault<Adm_Power>()
                         },
                         new Adm_Menu {
@@ -450,8 +448,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Manufacturing/MM/Yf_Map.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/yf.png",
-                            ButtonName="Btn_LB_Mm_"+"Yf_Map",
+                            ImageUrl = "~/Lf_Resources/menu/yf.png",
+                            ButtonName="Btn_Lf_Mm_"+"Yf_Map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMaterialView").FirstOrDefault<Adm_Power>()
                         },
                     }
@@ -462,8 +460,8 @@ namespace LeanFine
                     SortIndex = 9,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/pro.png",
-                    ButtonName="Btn_LB_Pp_"+"pp_map",
+                    ImageUrl = "~/Lf_Resources/menu/pro.png",
+                    ButtonName="Btn_Lf_Pp_"+"pp_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -471,86 +469,43 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/info.png",
-                            ButtonName="Btn_LB_Pp_"+"pp_info_map",
+                            ImageUrl = "~/Lf_Resources/menu/info.png",
+                            ButtonName="Btn_Lf_Pp_"+"pp_info_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
-                                new Adm_Menu
-                                {
-                                    Name = "班组管理",
-                                    SortIndex = 100,
-                                    Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/Master/Pp_line.aspx",
-                                    ImageUrl = "~/Lf_Resources/menu/lineteam.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_line",
-                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreLineView").FirstOrDefault<Adm_Power>(),
-                                },
                                  new Adm_Menu
                                 {
                                     Name = "生产订单",
 
-                                    SortIndex = 110,
+                                    SortIndex = 100,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/Master/Pp_order.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_order.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_order",
+                                    ImageUrl = "~/Lf_Resources/menu/proorder.png",
+                                    ButtonName="Btn_Lf_Pp_"+"Pp_order",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOrderView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
                                 {
                                     Name = "标准工时",
 
-                                    SortIndex = 120,
+                                    SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/Master/Pp_manhour.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_time.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_manhour",
+                                    ImageUrl = "~/Lf_Resources/menu/protime.png",
+                                    ButtonName="Btn_Lf_Pp_"+"Pp_manhour",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreManhourView").FirstOrDefault<Adm_Power>(),
                                 },
-                                new Adm_Menu
-                                {
-                                    Name = "原因类别",
 
-                                    SortIndex = 130,
-                                    Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/Master/Pp_Reason.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_rtype.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_Reason",
-                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreNotReachedView").FirstOrDefault<Adm_Power>(),
-                                },
-                                new Adm_Menu
-                                {
-                                    Name = "检验类别",
-
-                                    SortIndex = 140,
-                                    Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/Master/qm_acceptcat.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_qtype.png",
-                                    ButtonName="Btn_LB_Pp_"+"qm_acceptcat",
-                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreInspectCatView").FirstOrDefault<Adm_Power>(),
-                                },
-
-                                new Adm_Menu
-                                {
-                                    Name = "运输方式",
-
-                                    SortIndex = 150,
-                                    Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/Master/Pp_Transport.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_ttype.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_Transport",
-                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTransportView").FirstOrDefault<Adm_Power>(),
-                                },
                                 new Adm_Menu
                                 {
                                     Name = "稼动率",
 
-                                    SortIndex = 160,
+                                    SortIndex = 120,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/Master/Pp_efficiency.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_rate.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_efficiency",
+                                    ImageUrl = "~/Lf_Resources/menu/prooper.png",
+                                    ButtonName="Btn_Lf_Pp_"+"Pp_efficiency",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreUtilizationView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -561,7 +516,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/Master/Pp_models_region.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/model.png",
-                                    ButtonName="Btn_LB_Pp_"+"Pp_models_region",
+                                    ButtonName="Btn_Lf_Pp_"+"Pp_models_region",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreModelsView").FirstOrDefault<Adm_Power>(),
                                 },
                             }
@@ -571,8 +526,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/liaisonmgt.png",
-                            ButtonName="Btn_LB_Pp_"+"liaison",
+                            ImageUrl = "~/Lf_Resources/menu/liaisonmgt.png",
+                            ButtonName="Btn_Lf_Pp_"+"liaison",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTlView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -584,7 +539,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/TL/liaison.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/liaison.png",
-                                    ButtonName="Btn_LB_Pp_"+"liaison",
+                                    ButtonName="Btn_Lf_Pp_"+"liaison",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTlView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -595,7 +550,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/TL/liaison_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"liaison",
+                                    ButtonName="Btn_Lf_Pp_"+"liaison",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTlView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -605,8 +560,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/sop.png",
-                            ButtonName="Btn_LB_Pp_"+"sopinfo",
+                            ImageUrl = "~/Lf_Resources/menu/sop.png",
+                            ButtonName="Btn_Lf_Pp_"+"sopinfo",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSopView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -618,7 +573,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SOP/sop.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/sopinfo.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_sop",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_sop",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSopView").FirstOrDefault<Adm_Power>()
                                 },
                             new Adm_Menu
@@ -629,7 +584,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SOP/pe_asy.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/sopasy.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_peng",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_peng",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSopView").FirstOrDefault<Adm_Power>()
                                 },
                             new Adm_Menu
@@ -640,7 +595,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SOP/pe_pcba.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/soppcba.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_peng",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_peng",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSopView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -651,8 +606,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/proec.png",
-                            ButtonName="Btn_LB_Pp_"+"ec_map",
+                            ImageUrl = "~/Lf_Resources/menu/proec.png",
+                            ButtonName="Btn_Lf_Pp_"+"ec_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -663,7 +618,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/ecstatus.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec",
+                                    ButtonName="Btn_Lf_Pp_"+"ec",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -674,7 +629,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_lot.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/lotstatus.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_lot",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_lot",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -686,7 +641,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_Mm_outbound.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/confirm.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_eng_outbound",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_eng_outbound",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -697,7 +652,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_eng_view.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/te.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_eng_view",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_eng_view",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcENGView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -708,7 +663,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_pd.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/pd.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_pd",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_pd",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcPDView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -719,7 +674,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_pm.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/pm.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_pm",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_pm",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcPMView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -730,7 +685,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_qc.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/iqc.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_qc",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_qc",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcIQCView").FirstOrDefault<Adm_Power>(),
                                 },
                                 new Adm_Menu
@@ -741,7 +696,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_mm.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/mm.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_mm",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_mm",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcMMView").FirstOrDefault<Adm_Power>(),
                                 },
 
@@ -753,7 +708,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_p2d.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/p2d.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_p2d",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_p2d",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcP2DView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -764,7 +719,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_p1d.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/p1d.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_p1d",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_p1d",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcP1DView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -775,7 +730,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_qa.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/qa.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_qa",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_qa",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcQAView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -787,7 +742,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_balance.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/inventory.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_balance",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_balance",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -798,7 +753,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_sap.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/sapdata.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_sap",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_sap",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -809,7 +764,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/EC/ec_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"ec_query",
+                                    ButtonName="Btn_Lf_Pp_"+"ec_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreEcView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -819,8 +774,8 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/proadmin.png",
-                            ButtonName="Btn_LB_Pp_"+"daily_map",
+                            ImageUrl = "~/Lf_Resources/menu/proadmin.png",
+                            ButtonName="Btn_Lf_Pp_"+"daily_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -831,8 +786,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_daily.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_dreport.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_daily",
+                                    ImageUrl = "~/Lf_Resources/menu/prodaily.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -844,7 +799,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_output_query",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_output_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -855,7 +810,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_order_finish.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/push.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_output_order_finish",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_output_order_finish",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -865,7 +820,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/reportl.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_output_opt",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_output_opt",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -875,7 +830,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_data_kanban.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/kanban.png",
-                                    ButtonName="Btn_LB_Pp_"+"output_data_line",
+                                    ButtonName="Btn_Lf_Pp_"+"output_data_line",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreKanbanView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -885,8 +840,8 @@ namespace LeanFine
                             SortIndex=60,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/prodef.png",
-                            ButtonName="Btn_LB_Pp_"+"def_map",
+                            ImageUrl = "~/Lf_Resources/menu/prodef.png",
+                            ButtonName="Btn_Lf_Pp_"+"def_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -897,8 +852,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_bad.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_defect",
+                                    ImageUrl = "~/Lf_Resources/menu/probad.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -908,8 +863,8 @@ namespace LeanFine
                                     SortIndex = 120,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_order_totalled.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_line.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_defect_order_totalled",
+                                    ImageUrl = "~/Lf_Resources/menu/prostats.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -920,7 +875,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_lot_finished.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/report.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_defect_lot_finished",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_defect_lot_finished",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -931,7 +886,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"p1d_defect_query",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_defect_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -941,8 +896,8 @@ namespace LeanFine
                             SortIndex=70,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/proadmin.png",
-                            ButtonName="Btn_LB_Pp_"+"daily_map",
+                            ImageUrl = "~/Lf_Resources/menu/proadmin.png",
+                            ButtonName="Btn_Lf_Pp_"+"daily_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -953,8 +908,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_daily.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_dreport.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_daily",
+                                    ImageUrl = "~/Lf_Resources/menu/prodaily.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -966,7 +921,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_output_query",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_output_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -977,7 +932,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_order_finish.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/push.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_output_order_finish",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_output_order_finish",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -987,7 +942,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/reportl.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_output_opt",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_output_opt",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
 
@@ -998,7 +953,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_data_kanban.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/kanban.png",
-                                    ButtonName="Btn_LB_Pp_"+"output_data_line",
+                                    ButtonName="Btn_Lf_Pp_"+"output_data_line",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreKanbanView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1008,8 +963,8 @@ namespace LeanFine
                             SortIndex=80,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/prodef.png",
-                            ButtonName="Btn_LB_Pp_"+"def_map",
+                            ImageUrl = "~/Lf_Resources/menu/prodef.png",
+                            ButtonName="Btn_Lf_Pp_"+"def_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1020,8 +975,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_inspection_defect.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_insp.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_inspection_defect",
+                                    ImageUrl = "~/Lf_Resources/menu/proinsp.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_inspection_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DInspDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1031,8 +986,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_manufacturing_defect.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_bad.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_manufacturing_defect",
+                                    ImageUrl = "~/Lf_Resources/menu/prorep.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_manufacturing_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DManuDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1042,8 +997,8 @@ namespace LeanFine
                                     SortIndex = 120,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_order_totalled.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_line.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_defect_order_totalled",
+                                    ImageUrl = "~/Lf_Resources/menu/prostats.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1054,7 +1009,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_lot_finished.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/report.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_defect_lot_finished",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_defect_lot_finished",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1065,7 +1020,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"p2d_defect_query",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_defect_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1075,8 +1030,8 @@ namespace LeanFine
                             SortIndex=90,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/protime.png",
-                            ButtonName="Btn_LB_Pp_"+"time_map",
+                            ImageUrl = "~/Lf_Resources/menu/protime.png",
+                            ButtonName="Btn_Lf_Pp_"+"time_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1087,7 +1042,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/timesheet/times_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Pp_"+"times_query",
+                                    ButtonName="Btn_Lf_Pp_"+"times_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTimeView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1097,8 +1052,8 @@ namespace LeanFine
                             SortIndex=90,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/tracking.png",
-                            ButtonName="Btn_LB_Pp_"+"lot_tracking",
+                            ImageUrl = "~/Lf_Resources/menu/tracking.png",
+                            ButtonName="Btn_Lf_Pp_"+"lot_tracking",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1109,7 +1064,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/tracking/lot_tracking.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/tracking.png",
-                                    ButtonName="Btn_LB_Pp_"+"lot_tracking",
+                                    ButtonName="Btn_Lf_Pp_"+"lot_tracking",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTrackingView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1119,7 +1074,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/tracking/lot_process.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/process.png",
-                                    ButtonName="Btn_LB_Pp_"+"lot_process",
+                                    ButtonName="Btn_Lf_Pp_"+"lot_process",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTrackingView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1129,7 +1084,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/pp_tracking_chart.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/chart.png",
-                                    ButtonName="Btn_LB_Pp_"+"pp_tracking_chart",
+                                    ButtonName="Btn_Lf_Pp_"+"pp_tracking_chart",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPChart").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1139,8 +1094,8 @@ namespace LeanFine
                             SortIndex=100,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Report/rpt_map.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/kanban.png",
-                            ButtonName="Btn_LB_RPT_"+"sys_map",
+                            ImageUrl = "~/Lf_Resources/menu/kanban.png",
+                            ButtonName="Btn_Lf_RPT_"+"sys_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1151,7 +1106,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/pp_chart.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/chart.png",
-                                    ButtonName="Btn_LB_Pp_"+"pp_chart",
+                                    ButtonName="Btn_Lf_Pp_"+"pp_chart",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CorePPChart").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1164,8 +1119,8 @@ namespace LeanFine
                     SortIndex = 10,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/quality.png",
-                    ButtonName="Btn_LB_Qm_"+"qm_map",
+                    ImageUrl = "~/Lf_Resources/menu/quality.png",
+                    ButtonName="Btn_Lf_Qm_"+"qm_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -1173,8 +1128,8 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/qualityadmin.png",
-                            ButtonName="Btn_LB_Qm_"+"fqc_map",
+                            ImageUrl = "~/Lf_Resources/menu/qualityadmin.png",
+                            ButtonName="Btn_Lf_Qm_"+"fqc_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1185,8 +1140,8 @@ namespace LeanFine
                                     SortIndex = 100,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/fqc/fqc.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_qa.png",
-                                    ButtonName="Btn_LB_Qm_"+"fqc",
+                                    ImageUrl = "~/Lf_Resources/menu/qainsp.png",
+                                    ButtonName="Btn_Lf_Qm_"+"fqc",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFqcView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1196,8 +1151,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/fqc/fqc_notice.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_nopass.png",
-                                    ButtonName="Btn_LB_Qm_"+"fqc_notice",
+                                    ImageUrl = "~/Lf_Resources/menu/qanote.png",
+                                    ButtonName="Btn_Lf_Qm_"+"fqc_notice",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFqcNoticeView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1207,8 +1162,8 @@ namespace LeanFine
                                     SortIndex = 110,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/fqc/fqc_action.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_analysis.png",
-                                    ButtonName="Btn_LB_Qm_"+"fqc_action",
+                                    ImageUrl = "~/Lf_Resources/menu/qacou.png",
+                                    ButtonName="Btn_Lf_Qm_"+"fqc_action",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFqcActionView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1218,8 +1173,8 @@ namespace LeanFine
                                     SortIndex = 120,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/fqc/fqc_count.aspx",
-                                    ImageUrl = "~/Lf_Resources/icon/tag_linepass.png",
-                                    ButtonName="Btn_LB_Qm_"+"fqc_count",
+                                    ImageUrl = "~/Lf_Resources/menu/qapass.png",
+                                    ButtonName="Btn_Lf_Qm_"+"fqc_count",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFqcView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1230,7 +1185,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/fqc/fqc_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
-                                    ButtonName="Btn_LB_Qm_"+"fqc_query",
+                                    ButtonName="Btn_Lf_Qm_"+"fqc_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreFqcView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1240,8 +1195,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/qccost.png",
-                            ButtonName="Btn_LB_Qm_"+"cost_map",
+                            ImageUrl = "~/Lf_Resources/menu/qccost.png",
+                            ButtonName="Btn_Lf_Qm_"+"cost_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1253,7 +1208,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/cost/rework_cost.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/qcrework.png",
-                                    ButtonName="Btn_LB_Qm_"+"rework_cost",
+                                    ButtonName="Btn_Lf_Qm_"+"rework_cost",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreReworkCostView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1264,7 +1219,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/cost/operation_cost.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/qcbus.png",
-                                    ButtonName="Btn_LB_Qm_"+"operation_cost",
+                                    ButtonName="Btn_Lf_Qm_"+"operation_cost",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOperationCostView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1275,7 +1230,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/cost/waste_cost.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/qcscrap.png",
-                                    ButtonName="Btn_LB_Qm_"+"waste_cost",
+                                    ButtonName="Btn_Lf_Qm_"+"waste_cost",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreWasteCostView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1286,7 +1241,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/cost/wagerate.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/wages.png",
-                                    ButtonName="Btn_LB_Qm_"+"wagerate",
+                                    ButtonName="Btn_Lf_Qm_"+"wagerate",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreWagesView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1296,8 +1251,8 @@ namespace LeanFine
                             SortIndex=30,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/complaint.png",
-                            ButtonName="Btn_LB_Qm_"+"qm_complaint",
+                            ImageUrl = "~/Lf_Resources/menu/complaint.png",
+                            ButtonName="Btn_Lf_Qm_"+"qm_complaint",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1309,7 +1264,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/complaint/complaint.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/complaintinfo.png",
-                                    ButtonName="Btn_LB_Qm_"+"qm_complaint",
+                                    ButtonName="Btn_Lf_Qm_"+"qm_complaint",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreComplaintView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1320,7 +1275,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/complaint/complaint_qa.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/qa.png",
-                                    ButtonName="Btn_LB_Qm_"+"qm_complaint",
+                                    ButtonName="Btn_Lf_Qm_"+"qm_complaint",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreComplaintQAView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1331,7 +1286,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/complaint/complaint_p1d.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/dept/p1d.png",
-                                    ButtonName="Btn_LB_Qm_"+"qm_complaint",
+                                    ButtonName="Btn_Lf_Qm_"+"qm_complaint",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreComplaintP1DView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1341,8 +1296,8 @@ namespace LeanFine
                             SortIndex=40,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/kanban.png",
-                            ButtonName="Btn_LB_Qm_"+"qm_map",
+                            ImageUrl = "~/Lf_Resources/menu/kanban.png",
+                            ButtonName="Btn_Lf_Qm_"+"qm_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1354,7 +1309,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/QM/qm_chart.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/chart.png",
-                                    ButtonName="Btn_LB_Qm_"+"qm_charts",
+                                    ButtonName="Btn_Lf_Qm_"+"qm_charts",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreQMView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1367,8 +1322,8 @@ namespace LeanFine
                     SortIndex = 11,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/salesadmin.png",
-                    ButtonName="Btn_LB_Sd_"+"Sd_map",
+                    ImageUrl = "~/Lf_Resources/menu/salesadmin.png",
+                    ButtonName="Btn_Lf_Sd_"+"Sd_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -1376,8 +1331,8 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Manufacturing/SD/salesmanage/sales.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/sales.png",
-                            ButtonName="Btn_LB_Sd_"+"salesdata",
+                            ImageUrl = "~/Lf_Resources/menu/sales.png",
+                            ButtonName="Btn_Lf_Sd_"+"salesdata",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDView").FirstOrDefault<Adm_Power>(),
                         },
                         new Adm_Menu {
@@ -1385,8 +1340,8 @@ namespace LeanFine
                             SortIndex=20,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Manufacturing/SD/salesmanage/customer.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/cus.png",
-                            ButtonName="Btn_LB_Sd_"+"customer",
+                            ImageUrl = "~/Lf_Resources/menu/cus.png",
+                            ButtonName="Btn_Lf_Sd_"+"customer",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreCustomerView").FirstOrDefault<Adm_Power>(),
                         },
 
@@ -1395,8 +1350,8 @@ namespace LeanFine
                             SortIndex=30,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/so.png",
-                            ButtonName="Btn_LB_Sd_"+"somanage",
+                            ImageUrl = "~/Lf_Resources/menu/so.png",
+                            ButtonName="Btn_Lf_Sd_"+"somanage",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1418,8 +1373,8 @@ namespace LeanFine
                             SortIndex = 40,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/outgoing.png",
-                            ButtonName="Btn_LB_Pp_"+"sm_map",
+                            ImageUrl = "~/Lf_Resources/menu/outgoing.png",
+                            ButtonName="Btn_Lf_Pp_"+"sm_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1431,7 +1386,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SD/shipment/inbound_scan.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/inbound.png",
-                                    ButtonName="Btn_LB_Pp_"+"inbound_scan",
+                                    ButtonName="Btn_Lf_Pp_"+"inbound_scan",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreInboundScanView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1442,7 +1397,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SD/shipment/outbound_scan.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/outbound.png",
-                                    ButtonName="Btn_LB_Pp_"+"outbound_scan",
+                                    ButtonName="Btn_Lf_Pp_"+"outbound_scan",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOutboundScanView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1453,7 +1408,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SD/shipment/inbound_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/inserialy.png",
-                                    ButtonName="Btn_LB_Pp_"+"inbound_query",
+                                    ButtonName="Btn_Lf_Pp_"+"inbound_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreInboundScanView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1464,7 +1419,7 @@ namespace LeanFine
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/SD/shipment/outbound_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/outserialy.png",
-                                    ButtonName="Btn_LB_Pp_"+"outbound_query",
+                                    ButtonName="Btn_Lf_Pp_"+"outbound_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOutboundScanView").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1475,8 +1430,8 @@ namespace LeanFine
                             SortIndex=50,
                             Remark = "二级菜单",
                             NavigateUrl = "",
-                            ImageUrl = "~/Lf_Resources/Menu/kanban.png",
-                            ButtonName="Btn_LB_Sd_"+"Sd_map",
+                            ImageUrl = "~/Lf_Resources/menu/kanban.png",
+                            ButtonName="Btn_Lf_Sd_"+"Sd_map",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDView").FirstOrDefault<Adm_Power>(),
                             Children = new List<Adm_Menu>
                             {
@@ -1486,9 +1441,9 @@ namespace LeanFine
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/SD/Sd_chart.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/SD/sd_chart.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/chart.png",
-                                    ButtonName="Btn_LB_Sd_"+"Sd_charts",
+                                    ButtonName="Btn_Lf_Sd_"+"sd_charts",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreSDChart").FirstOrDefault<Adm_Power>()
                                 },
                             }
@@ -1502,8 +1457,8 @@ namespace LeanFine
                     SortIndex = 12,
                     Remark = "顶级菜单",
                     NavigateUrl = "",
-                    ImageUrl = "~/Lf_Resources/Menu/OA.png",
-                    ButtonName="Btn_LB_Oa_"+"oa_map",
+                    ImageUrl = "~/Lf_Resources/menu/OA.png",
+                    ButtonName="Btn_Lf_Oa_"+"oa_map",
                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreOAView").FirstOrDefault<Adm_Power>(),
                     Children = new List<Adm_Menu> {
                         new Adm_Menu {
@@ -1511,54 +1466,9 @@ namespace LeanFine
                             SortIndex=10,
                             Remark = "二级菜单",
                             NavigateUrl = "~/Lf_Office/OA/warning.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/addr.png",
-                            ButtonName="Btn_LB_Oa_"+"address",
+                            ImageUrl = "~/Lf_Resources/menu/addr.png",
+                            ButtonName="Btn_Lf_Oa_"+"address",
                             ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreAddressView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="公告通知",
-                            SortIndex=20,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Office/OA/notice.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/notice.png",
-                            ButtonName="Btn_LB_Oa_"+"forecast",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreNoticeView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="会议预定",
-                            SortIndex=30,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Office/OA/meeting.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/meeting.png",
-                            ButtonName="Btn_LB_Oa_"+"meeting",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreMeetingView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="车辆预定",
-                            SortIndex=40,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Office/OA/vehicles.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/vehicle.png",
-                            ButtonName="Btn_LB_Oa_"+"vehicles",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreVehiclesView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="周报管理",
-                            SortIndex=50,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Office/OA/weekly.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/weekly.png",
-                            ButtonName="Btn_LB_Oa_"+"weekly",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreWeeklyView").FirstOrDefault<Adm_Power>()
-                        },
-                        new Adm_Menu {
-                            Name="帮助台",
-                            SortIndex=60,
-                            Remark = "二级菜单",
-                            NavigateUrl = "~/Lf_Office/OA/helpdesk.aspx",
-                            ImageUrl = "~/Lf_Resources/Menu/helpdesk.png",
-                            ButtonName="Btn_LB_Oa_"+"helpdesk",
-                            ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreHelpdeskView").FirstOrDefault<Adm_Power>()
                         },
                     }
                 },
@@ -1577,11 +1487,15 @@ namespace LeanFine
                 },
                 new Adm_Title()
                 {
-                    Name = "部门经理"
+                    Name = "(本/副)部长"
                 },
                 new Adm_Title()
                 {
-                    Name = "课长"
+                    Name = "(副)经理"
+                },
+                new Adm_Title()
+                {
+                    Name = "(副)课长"
                 },
                 new Adm_Title()
                 {
@@ -1589,7 +1503,7 @@ namespace LeanFine
                 },
                 new Adm_Title()
                 {
-                    Name = "班长"
+                    Name = "(副)班长"
                 },
                 new Adm_Title()
                 {
@@ -1597,8 +1511,16 @@ namespace LeanFine
                 },
                 new Adm_Title()
                 {
+                    Name = "专员"
+                },
+                new Adm_Title()
+                {
                     Name = "事务员"
-                }
+                } ,
+                new Adm_Title()
+                {
+                    Name = "从业员"
+                },
             };
 
             return Adm_Titles;
@@ -1606,3356 +1528,412 @@ namespace LeanFine
 
         private static List<Adm_Power> GetAdm_Powers()
         {
-            var Adm_Powers = new List<Adm_Power>
+            string[] Add_Items = {
+                        "CoreSysView","系统地图","浏览系统地图","~/Lf_Admin/sys_map.aspx",
+                        "CoreSysChart","系统地图","浏览系统图表","~/Lf_Admin/sys_chart.aspx",
+                        "CoreOAView","系统地图","浏览日常办公","~/Lf_Office/OA/oa_map.aspx",
+                        "CoreOAChart","系统地图","浏览办公图表","~/Lf_Office/OA/oa_chart.aspx",
+                        "CorePPView","系统地图","浏览生产管理","~/Lf_Manufacturing/PP/pp_map.aspx",
+                        "CorePPChart","系统地图","浏览生产图表","~/Lf_Manufacturing/PP/pp_chart.aspx",
+                        "CoreSDView","系统地图","浏览销售管理","~/Lf_Manufacturing/SD/Sd_map.aspx",
+                        "CoreSDChart","系统地图","浏览销售图表","~/Lf_Manufacturing/SD/Sd_chart.aspx",
+                        "CoreFICOView","系统地图","浏览财务管理","~/Lf_Accounting/Fico_map.aspx",
+                        "CoreFICOChart","系统地图","浏览财务图表","~/Lf_Accounting/Fico_chart.aspx",
+                        "CoreQMView","系统地图","浏览品质管理","~/Lf_Manufacturing/QM/qm_map.aspx",
+                        "CoreQMChart","系统地图","浏览品质图表","~/Lf_Manufacturing/QM/qm_chart.aspx",
+                        "CoreMMView","系统地图","浏览物料管理","~/Lf_Manufacturing/MM/Mm_map.aspx",
+                        "CoreUserView","用户管理","浏览用户列表","~/Lf_Admin/user.aspx",
+                        "CoreUserNew","用户管理","新增用户","~/Lf_Admin/user_new.aspx",
+                        "CoreUserEdit","用户管理","编辑用户","~/Lf_Admin/user_edit.aspx",
+                        "CoreUserDelete","用户管理","删除用户","~/Lf_Admin/user.aspx",
+                        "CoreUserChangePassword","用户管理","修改密码","~/Lf_Admin/changepassword.aspx",
+                        "CoreRoleView","角色管理","浏览角色列表","~/Lf_Admin/role.aspx",
+                        "CoreRoleNew","角色管理","新增角色","~/Lf_Admin/role_new.aspx",
+                        "CoreRoleEdit","角色管理","编辑角色","~/Lf_Admin/role_edit.aspx",
+                        "CoreRoleDelete","角色管理","删除角色","~/Lf_Admin/role.aspx",
+                        "CoreRoleUserView","角色用户","浏览角色用户列表","~/Lf_Admin/role_user.aspx",
+                        "CoreRoleUserNew","角色用户","向角色添加用户","~/Lf_Admin/role_user_addnew.aspx",
+                        "CoreRoleUserDelete","角色用户","从角色中删除用户","~/Lf_Admin/role_user.aspx",
+                        "CoreOnlineView","在线用户","浏览在线用户列表","~/Lf_Admin/online.aspx",
+                        "CoreConfigView","系统参数","浏览全局配置参数","~/Lf_Admin/config.aspx",
+                        "CoreConfigEdit","系统参数","修改全局配置参数","~/Lf_Admin/config.aspx",
+                        "CoreMenuView","菜单管理","浏览菜单列表","~/Lf_Admin/menu.aspx",
+                        "CoreMenuNew","菜单管理","新增菜单","~/Lf_Admin/menu_new.aspx",
+                        "CoreMenuEdit","菜单管理","编辑菜单","~/Lf_Admin/menu_edit.aspx",
+                        "CoreMenuDelete","菜单管理","删除菜单","~/Lf_Admin/menu.aspx",
+                        "CoreLogView","日志管理","浏览日志列表","~/Lf_Admin/log.aspx",
+                        "CoreLogDelete","日志管理","删除日志","~/Lf_Admin/log.aspx",
+                        "CoreTitleView","职务管理","浏览职务列表","~/Lf_Admin/title.aspx",
+                        "CoreTitleNew","职务管理","新增职务","~/Lf_Admin/title_new.aspx",
+                        "CoreTitleEdit","职务管理","编辑职务","~/Lf_Admin/title_edit.aspx",
+                        "CoreTitleDelete","职务管理","删除职务","~/Lf_Admin/title_edit.aspx",
+                        "CoreTitleUserView","职务用户","浏览职务用户列表","~/Lf_Admin/title_user.aspx",
+                        "CoreTitleUserNew","职务用户","向职务添加用户","~/Lf_Admin/title_user_addnew.aspx",
+                        "CoreTitleUserDelete","职务用户","从职务中删除用户","~/Lf_Admin/title_user.aspx",
+                        "CoreCompanyView","公司部门","浏览公司列表","~/Lf_Admin/company.aspx",
+                        "CoreCompanyNew","公司部门","新增公司信息","~/Lf_Admin/company_new.aspx",
+                        "CoreCompanyEdit","公司部门","编辑公司信息","~/Lf_Admin/company_edit.aspx",
+                        "CoreCompanyDelete","公司部门","删除公司信息","~/Lf_Admin/company.aspx",
+                        "CoreCorpkpiView","公司目标","浏览公司目标列表","~/Lf_Admin/corpkpi.aspx",
+                        "CoreCorpkpiNew","公司目标","新增公司目标","~/Lf_Admin/corpkpi_new.aspx",
+                        "CoreCorpkpiEdit","公司目标","编辑公司目标","~/Lf_Admin/corpkpi_edit.aspx",
+                        "CoreCorpkpiDelete","公司目标","删除公司目标","~/Lf_Admin/corpkpi.aspx",
+                        "CoreDeptView","公司部门","浏览部门列表","~/Lf_Admin/dept.aspx",
+                        "CoreDeptNew","公司部门","新增部门","~/Lf_Admin/dept_new.aspx",
+                        "CoreDeptEdit","公司部门","编辑部门","~/Lf_Admin/dept_edit.aspx",
+                        "CoreDeptDelete","公司部门","删除部门","~/Lf_Admin/dept.aspx",
+                        "CoreDeptUserView","部门用户","浏览部门用户列表","~/Lf_Admin/dept_user.aspx",
+                        "CoreDeptUserNew","部门用户","向部门添加用户","~/Lf_Admin/dept_user_addnew.aspx",
+                        "CoreDeptUserDelete","部门用户","从部门中删除用户","~/Lf_Admin/dept_user.aspx",
+                        "CorePowerView","权限管理","浏览权限列表","~/Lf_Admin/power.aspx",
+                        "CorePowerNew","权限管理","新增权限","~/Lf_Admin/power_new.aspx",
+                        "CorePowerEdit","权限管理","编辑权限","~/Lf_Admin/power_edit.aspx",
+                        "CorePowerDelete","权限管理","删除权限","~/Lf_Admin/power.aspx",
+                        "CoreDictView","字典管理","浏览字典列表","~/Lf_Admin/dict.aspx",
+                        "CoreDictNew","字典管理","新增字典","~/Lf_Admin/dict_new.aspx",
+                        "CoreDictEdit","字典管理","编辑字典","~/Lf_Admin/dict_edit.aspx",
+                        "CoreDictDelete","字典管理","删除字典","~/Lf_Admin/dict.aspx",
+                        "CoreRolePowerView","角色权限","浏览角色权限列表","~/Lf_Admin/role_user.aspx",
+                        "CoreRolePowerEdit","角色权限","编辑角色权限","~/Lf_Admin/role_power.aspx",
+                        "CoreCustomerView","销售管理","浏览客户信息列表","~/Lf_Manufacturing/SD/salesmanage/customer.aspx",
+                        "CoreCustomerNew","销售管理","新增客户信息","~/Lf_Manufacturing/SD/salesmanage/customer_new.aspx",
+                        "CoreCustomerEdit","销售管理","编辑客户信息","~/Lf_Manufacturing/SD/salesmanage/customer_edit.aspx",
+                        "CoreCustomerDelete","销售管理","删除客户信息","~/Lf_Manufacturing/SD/salesmanage/customer.aspx",
+                        "CoreForecastView","销售管理","浏览计划订单列表","~/Lf_Manufacturing/SD/forecast.aspx",
+                        "CoreForecastNew","销售管理","新增计划订单","~/Lf_Manufacturing/SD/forecast_new.aspx",
+                        "CoreForecastEdit","销售管理","编辑计划订单","~/Lf_Manufacturing/SD/forecast_edit.aspx",
+                        "CoreForecastDelete","销售管理","删除计划订单","~/Lf_Manufacturing/SD/forecast.aspx",
+                        "CoreForecastInport","导入管理","导入计划订单","~/Lf_Manufacturing/SD/forecast_inport.aspx",
+                        "CoreInboundScanView","销售管理","浏览入库扫描列表","~/Lf_Manufacturing/SD/shipment/inbound_scan.aspx",
+                        "CoreInboundScanNew","销售管理","新增入库扫描","~/Lf_Manufacturing/SD/shipment/inbound_scan_new.aspx",
+                        "CoreInboundScanEdit","销售管理","编辑入库扫描","~/Lf_Manufacturing/SD/shipment/inbound_scan_edit.aspx",
+                        "CoreInboundScanDelete","销售管理","删除入库扫描","~/Lf_Manufacturing/SD/shipment/inbound_scan.aspx",
+                        "CoreOutboundScanView","销售管理","浏览出库扫描列表","~/Lf_Manufacturing/SD/shipment/outbound_scan.aspx",
+                        "CoreOutboundScanNew","销售管理","新增出库扫描","~/Lf_Manufacturing/SD/shipment/outbound_scan_new.aspx",
+                        "CoreOutboundScanEdit","销售管理","编辑出库扫描","~/Lf_Manufacturing/SD/shipment/outbound_scan_edit.aspx",
+                        "CoreOutboundScanDelete","销售管理","删除出库扫描","~/Lf_Manufacturing/SD/shipment/outbound_scan.aspx",
+                        "CoreAddressView","通讯录","浏览通讯录列表","~/Lf_Office/OA/address.aspx",
+                        "CoreAddressNew","通讯录","新增通讯录","~/Lf_Office/OA/address_new.aspx",
+                        "CoreAddressEdit","通讯录","编辑通讯录","~/Lf_Office/OA/address_edit.aspx",
+                        "CoreAddressDelete","通讯录","删除通讯录","~/Lf_Office/OA/address.aspx",
+                        "CoreExpensesView","财务管理","浏览费用信息列表","~/Lf_Accounting/expense.aspx",
+                        "CoreExpensesNew","财务管理","新增费用信息","~/Lf_Accounting/expense.aspx",
+                        "CoreExpensesEdit","财务管理","编辑费用信息","~/Lf_Accounting/expense.aspx",
+                        "CoreExpensesDelete","财务管理","删除费用信息","~/Lf_Accounting/expense.aspx",
+                        "CoreCostingView","财务管理","浏览成本信息列表","~/Lf_Accounting/costing.aspx",
+                        "CoreBudgetView","预算管理","浏览预算信息列表","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetNew","预算管理","新增预算信息","~/Lf_Accounting/budget_new.aspx",
+                        "CoreBudgetEdit","预算管理","编辑预算信息","~/Lf_Accounting/budget_edit.aspx",
+                        "CoreBudgetInport","导入管理","导入预算信息","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetDelete","预算管理","删除预算信息","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetGDView","部门预算","浏览预算信息GD","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetGDNew","部门预算","新增预算信息GD","~/Lf_Accounting/budget_new.aspx",
+                        "CoreBudgetGDEdit","部门预算","编辑预算信息GD","~/Lf_Accounting/budget_edit.aspx",
+                        "CoreBudgetGDDelete","部门预算","删除预算信息GD","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetGDInport","导入管理","导入预算信息GD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetLDView","部门预算","浏览预算信息LD","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetLDNew","部门预算","新增预算信息LD","~/Lf_Accounting/budget_new.aspx",
+                        "CoreBudgetLDEdit","部门预算","编辑预算信息LD","~/Lf_Accounting/budget_edit.aspx",
+                        "CoreBudgetLDDelete","部门预算","删除预算信息LD","~/Lf_Accounting/budget.aspx",
+                        "CoreBudgetLDInport","导入管理","导入预算信息LD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetITView","部门预算","浏览预算信息IT","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetITNew","部门预算","新增预算信息IT","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetITEdit","部门预算","编辑预算信息IT","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetITDelete","部门预算","删除预算信息IT","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetITInport","导入管理","导入预算信息IT","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetMMView","部门预算","浏览预算信息MM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetMMNew","部门预算","新增预算信息MM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetMMEdit","部门预算","编辑预算信息MM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetMMDelete","部门预算","删除预算信息MM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetMMInport","导入管理","导入预算信息MM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPMView","部门预算","浏览预算信息PM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPMNew","部门预算","新增预算信息PM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPMEdit","部门预算","编辑预算信息PM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPMDelete","部门预算","删除预算信息PM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPMInport","导入管理","导入预算信息PM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPDView","部门预算","浏览预算信息PD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPDNew","部门预算","新增预算信息PD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPDEdit","部门预算","编辑预算信息PD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPDDelete","部门预算","删除预算信息PD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPDInport","导入管理","导入预算信息PD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetENGView","部门预算","浏览预算信息ENG","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetENGNew","部门预算","新增预算信息ENG","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetENGEdit","部门预算","编辑预算信息ENG","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetENGDelete","部门预算","删除预算信息ENG","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetENGInport","导入管理","导入预算信息ENG","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetIQCView","部门预算","浏览预算信息IQC","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetIQCNew","部门预算","新增预算信息IQC","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetIQCEdit","部门预算","编辑预算信息IQC","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetIQCDelete","部门预算","删除预算信息IQC","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetIQCInport","导入管理","导入预算信息IQC","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetQAView","部门预算","浏览预算信息QA","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetQANew","部门预算","新增预算信息QA","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetQAEdit","部门预算","编辑预算信息QA","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetQADelete","部门预算","删除预算信息QA","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetQAInport","导入管理","导入预算信息QA","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPEView","部门预算","浏览预算信息PE","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPENew","部门预算","新增预算信息PE","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPEEdit","部门预算","编辑预算信息PE","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPEDelete","部门预算","删除预算信息PE","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetPEInport","导入管理","导入预算信息PE","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP1DView","部门预算","浏览预算信息P1D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP1DNew","部门预算","新增预算信息P1D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP1DEdit","部门预算","编辑预算信息P1D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP1DDelete","部门预算","删除预算信息P1D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP1DInport","导入管理","导入预算信息P1D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP2DView","部门预算","浏览预算信息P2D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP2DNew","部门预算","新增预算信息P2D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP2DEdit","部门预算","编辑预算信息P2D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP2DDelete","部门预算","删除预算信息P2D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetP2DInport","导入管理","导入预算信息P2D","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetCDView","部门预算","浏览预算信息CD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetCDNew","部门预算","新增预算信息CD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetCDEdit","部门预算","编辑预算信息CD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetCDDelete","部门预算","删除预算信息CD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetCDInport","导入管理","导入预算信息CD","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetOEMView","部门预算","浏览预算信息OEM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetOEMNew","部门预算","新增预算信息OEM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetOEMEdit","部门预算","编辑预算信息OEM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetOEMDelete","部门预算","删除预算信息OEM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreBudgetOEMInport","导入管理","导入预算信息OEM","~/Lf_Accounting/budget_input.aspx",
+                        "CoreAuditView","预算审核","浏览审核信息列表","~/Lf_Accounting/audit.aspx",
+                        "CoreAuditNew","预算审核","新增审核信息","~/Lf_Accounting/audit.aspx",
+                        "CoreAuditEdit","预算审核","编辑审核信息","~/Lf_Accounting/audit.aspx",
+                        "CoreAuditCancel","预算审核","取消审核信息","~/Lf_Accounting/audit.aspx",
+                        "CoreAuditDelete","预算审核","删除审核信息","~/Lf_Accounting/audit.aspx",
+                        "CoreCountersignatureView","会签管理","浏览会签信息列表","~/Lf_Accounting/countersignature.aspx",
+                        "CoreCountersignatureNew","会签管理","新增会签信息","~/Lf_Accounting/countersignature.aspx",
+                        "CoreCountersignatureEdit","会签管理","编辑会签信息","~/Lf_Accounting/countersignature.aspx",
+                        "CoreCountersignatureDelete","会签管理","删除会签信息","~/Lf_Accounting/countersignature.aspx",
+                        "CorePeriodView","预算期间","浏览预算期间列表","~/Lf_Accounting/period.aspx",
+                        "CorePeriodNew","预算期间","新增预算期间","~/Lf_Accounting/period.aspx",
+                        "CorePeriodEdit","预算期间","编辑预算期间","~/Lf_Accounting/period.aspx",
+                        "CorePeriodDelete","预算期间","删除预算期间","~/Lf_Accounting/period.aspx",
+                        "CoreSubjectView","预算科目","浏览预算科目列表","~/Lf_Accounting/subject.aspx",
+                        "CoreSubjectNew","预算科目","新增预算科目","~/Lf_Accounting/subject.aspx",
+                        "CoreSubjectEdit","预算科目","编辑预算科目","~/Lf_Accounting/subject.aspx",
+                        "CoreSubjectDelete","预算科目","删除预算科目","~/Lf_Accounting/subject.aspx",
+                        "CoreEcView","设变管理","浏览设变列表","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcNew","设变管理","新增设变权限","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcEdit","设变管理","编辑设变权限","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcDelete","设变管理","删除设变权限","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcInport","导入管理","导入设变权限","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreTlView","设变管理","浏览技联列表","~/Lf_Manufacturing/TL/liaison.aspx",
+                        "CoreTlNew","设变管理","新增技联权限","~/Lf_Manufacturing/EC/liaison.aspx",
+                        "CoreTlEdit","设变管理","编辑技联权限","~/Lf_Manufacturing/EC/liaison.aspx",
+                        "CoreTlDelete","设变管理","删除技联权限","~/Lf_Manufacturing/EC/liaison.aspx",
+                        "CoreEcGDView","部门设变","浏览设变信息GD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcGDNew","部门设变","新增设变信息GD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcGDEdit","部门设变","编辑设变信息GD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcGDDelete","部门设变","删除设变信息GD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcGDInport","导入管理","导入设变信息GD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcLDView","部门设变","浏览设变信息LD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcLDNew","部门设变","新增设变信息LD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcLDEdit","部门设变","编辑设变信息LD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcLDDelete","部门设变","删除设变信息LD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcLDInport","导入管理","导入设变信息LD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcITView","部门设变","浏览设变信息IT","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcITNew","部门设变","新增设变信息IT","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcITEdit","部门设变","编辑设变信息IT","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcITDelete","部门设变","删除设变信息IT","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcITInport","导入管理","导入设变信息IT","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcMMView","部门设变","浏览设变信息MM","~/Lf_Manufacturing/EC/ec_mm.aspx",
+                        "CoreEcMMNew","部门设变","新增设变信息MM","~/Lf_Manufacturing/EC/ec_mm.aspx",
+                        "CoreEcMMEdit","部门设变","编辑设变信息MM","~/Lf_Manufacturing/EC/ec_Mm_edit.aspx",
+                        "CoreEcMMDelete","部门设变","删除设变信息MM","~/Lf_Manufacturing/EC/ec_mm.aspx",
+                        "CoreEcMMInport","导入管理","导入设变信息MM","~/Lf_Manufacturing/EC/ec_mm.aspx",
+                        "CoreEcPMView","部门设变","浏览设变信息PM","~/Lf_Manufacturing/EC/ec_pm.aspx",
+                        "CoreEcPMNew","部门设变","新增设变信息PM","~/Lf_Manufacturing/EC/ec_pm.aspx",
+                        "CoreEcPMEdit","部门设变","编辑设变信息PM","~/Lf_Manufacturing/EC/ec_pm_edit.aspx",
+                        "CoreEcPMDelete","部门设变","删除设变信息PM","~/Lf_Manufacturing/EC/ec_pm.aspx",
+                        "CoreEcPMInport","导入管理","导入设变信息PM","~/Lf_Manufacturing/EC/ec_pm.aspx",
+                        "CoreEcPDView","部门设变","浏览设变信息PD","~/Lf_Manufacturing/EC/ec_pd.aspx",
+                        "CoreEcPDNew","部门设变","新增设变信息PD","~/Lf_Manufacturing/EC/ec_pd.aspx",
+                        "CoreEcPDEdit","部门设变","编辑设变信息PD","~/Lf_Manufacturing/EC/ec_pd_edit.aspx",
+                        "CoreEcPDDelete","部门设变","删除设变信息PD","~/Lf_Manufacturing/EC/ec_pd.aspx",
+                        "CoreEcPDInport","导入管理","导入设变信息PD","~/Lf_Manufacturing/EC/ec_pd.aspx",
+                        "CoreEcENGView","部门设变","浏览设变信息ENG","~/Lf_Manufacturing/EC/ec_view.aspx",
+                        "CoreEcENGNew","部门设变","新增设变信息ENG","~/Lf_Manufacturing/EC/ec_eng_new.aspx",
+                        "CoreEcENGEdit","部门设变","编辑设变信息ENG","~/Lf_Manufacturing/EC/ec_eng_edit.aspx",
+                        "CoreEcENGDelete","部门设变","删除设变信息ENG","~/Lf_Manufacturing/EC/ec_view.aspx",
+                        "CoreEcENGInport","导入管理","导入设变信息ENG","~/Lf_Manufacturing/EC/ec_eng.aspx",
+                        "CoreEcQAInport","导入管理","导入设变信息QA","~/Lf_Manufacturing/EC/ec_qa.aspx",
+                        "CoreEcMatView","部门设变","浏览物料确认","~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
+                        "CoreEcMatNew","部门设变","新增物料确认","~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
+                        "CoreEcMatEdit","部门设变","编辑物料确认","~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
+                        "CoreEcMatDelete","部门设变","删除物料确认","~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
+                        "CoreEcMatInport","导入管理","导入物料确认","~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
+                        "CoreEcIQCView","部门设变","浏览设变信息IQC","~/Lf_Manufacturing/EC/ec_qc.aspx",
+                        "CoreEcIQCNew","部门设变","新增设变信息IQC","~/Lf_Manufacturing/EC/ec_qc.aspx",
+                        "CoreEcIQCEdit","部门设变","编辑设变信息IQC","~/Lf_Manufacturing/EC/ec_qc_edit.aspx",
+                        "CoreEcIQCDelete","部门设变","删除设变信息IQC","~/Lf_Manufacturing/EC/ec_qc.aspx",
+                        "CoreEcIQCInport","导入管理","导入设变信息IQC","~/Lf_Manufacturing/EC/ec_qc.aspx",
+                        "CoreEcQAView","部门设变","浏览设变信息QA","~/Lf_Manufacturing/EC/ec_qa.aspx",
+                        "CoreEcQANew","部门设变","新增设变信息QA","~/Lf_Manufacturing/EC/ec_qa.aspx",
+                        "CoreEcQAEdit","部门设变","编辑设变信息QA","~/Lf_Manufacturing/EC/ec_qa_edit.aspx",
+                        "CoreEcQADelete","部门设变","删除设变信息QA","~/Lf_Manufacturing/EC/ec_qa.aspx",
+                        "CoreEcQAInport","导入管理","导入设变信息QA","~/Lf_Manufacturing/EC/ec_qa.aspx",
+                        "CoreEcPEView","部门设变","浏览设变信息PE","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcPENew","部门设变","新增设变信息PE","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcPEEdit","部门设变","编辑设变信息PE","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcPEDelete","部门设变","删除设变信息PE","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcPEInport","导入管理","导入设变信息PE","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcP1DView","部门设变","浏览设变信息P1D","~/Lf_Manufacturing/EC/ec_p1d.aspx",
+                        "CoreEcP1DNew","部门设变","新增设变信息P1D","~/Lf_Manufacturing/EC/ec_p1d.aspx",
+                        "CoreEcP1DEdit","部门设变","编辑设变信息P1D","~/Lf_Manufacturing/EC/ec_p1d_edit.aspx",
+                        "CoreEcP1DDelete","部门设变","删除设变信息P1D","~/Lf_Manufacturing/EC/ec_p1d.aspx",
+                        "CoreEcP1DInport","导入管理","导入设变信息P1D","~/Lf_Manufacturing/EC/ec_p1d.aspx",
+                        "CoreEcP2DView","部门设变","浏览设变信息P2D","~/Lf_Manufacturing/EC/ec_p2d.aspx",
+                        "CoreEcP2DNew","部门设变","新增设变信息P2D","~/Lf_Manufacturing/EC/ec_p2d.aspx",
+                        "CoreEcP2DEdit","部门设变","编辑设变信息P2D","~/Lf_Manufacturing/EC/ec_p2d_edit.aspx",
+                        "CoreEcP2DDelete","部门设变","删除设变信息P2D","~/Lf_Manufacturing/EC/ec_p2d.aspx",
+                        "CoreEcP2DInport","导入管理","导入设变信息P2D","~/Lf_Manufacturing/EC/ec_p2d.aspx",
+                        "CoreEcCDView","部门设变","浏览设变信息CD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcCDNew","部门设变","新增设变信息CD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcCDEdit","部门设变","编辑设变信息CD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcCDDelete","部门设变","删除设变信息CD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcCDInport","导入管理","导入设变信息CD","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcOEMView","部门设变","浏览设变信息OEM","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcOEMNew","部门设变","新增设变信息OEM","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcOEMEdit","部门设变","编辑设变信息OEM","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcOEMDelete","部门设变","删除设变信息OEM","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreEcOEMInport","导入管理","导入设变信息OEM","~/Lf_Manufacturing/EC/ec.aspx",
+                        "CoreMaterialView","物料信息","浏览物料权限","~/Lf_Manufacturing/MM/material.aspx",
+                        "CoreMaterialNew","物料信息","新增物料权限","~/Lf_Manufacturing/MM/material_new.aspx",
+                        "CoreMaterialEdit","物料信息","编辑物料权限","~/Lf_Manufacturing/MM/material_edit.aspx",
+                        "CoreMaterialDelete","物料信息","删除物料权限","~/Lf_Manufacturing/MM/material.aspx",
+                        "CoreMaterialInport","导入管理","导入物料权限","~/Lf_Manufacturing/MM/material.aspx",
+                        "CoreModelsView","基本信息","浏览机种列表","~/Lf_Manufacturing/MM/matmodel.aspx",
+                        "CoreModelsNew","基本信息","新增机种","~/Lf_Manufacturing/MM/matmodel_new.aspx",
+                        "CoreModelsEdit","基本信息","编辑机种","~/Lf_Manufacturing/MM/matmodel_edit.aspx",
+                        "CoreModelsDelete","基本信息","删除机种","~/Lf_Manufacturing/MM/matmodel.aspx",
+                        "CoreModelsInport","导入管理","导入机种","~/Lf_Manufacturing/MM/matmodel.aspx",
+                        "CoreOrderView","基本信息","浏览订单列表","~/Lf_Manufacturing/Master/Pp_order.aspx",
+                        "CoreOrderNew","基本信息","新增订单","~/Lf_Manufacturing/Master/Pp_order_new.aspx",
+                        "CoreOrderEdit","基本信息","编辑订单","~/Lf_Manufacturing/Master/Pp_order_edit.aspx",
+                        "CoreOrderDelete","基本信息","删除订单","~/Lf_Manufacturing/Master/Pp_order.aspx",
+                        "CoreManhourView","基本信息","浏览工时列表","~/Lf_Manufacturing/Master/Pp_manhour.aspx",
+                        "CoreManhourNew","基本信息","新增工时","~/Lf_Manufacturing/Master/Pp_manhour_new.aspx",
+                        "CoreManhourEdit","基本信息","编辑工时","~/Lf_Manufacturing/Master/Pp_manhour_edit.aspx",
+                        "CoreManhourDelete","基本信息","删除工时","~/Lf_Manufacturing/Master/Pp_manhour.aspx",
+                        "CoreTimeView","生产管理","浏览工数列表","~/Lf_Manufacturing/timesheet/times_query.aspx",
+                        "CoreTimeNew","生产管理","新增工数","~/Lf_Manufacturing/timesheet/times_query.aspx",
+                        "CoreTimeEdit","生产管理","编辑工数","~/Lf_Manufacturing/timesheet/times_query.aspx",
+                        "CoreTimeDelete","生产管理","删除工数","~/Lf_Manufacturing/timesheet/times_query.aspx",
+                        "CoreUtilizationView","基本信息","浏览稼动率列表","~/Lf_Manufacturing/Master/Pp_efficiency.aspx",
+                        "CoreUtilizationNew","基本信息","新增稼动率","~/Lf_Manufacturing/Master/Pp_efficiency_new.aspx",
+                        "CoreUtilizationEdit","基本信息","编辑稼动率","~/Lf_Manufacturing/Master/Pp_efficiency_edit.aspx",
+                        "CoreUtilizationDelete","基本信息","删除稼动率","~/Lf_Manufacturing/Master/Pp_efficiency.aspx",
+                        "CoreSopView","SOP管理","浏览SOP信息","~/Lf_Manufacturing/SOP/sop.aspx",
+                        "CoreSopNew","SOP管理","新增SOP信息","~/Lf_Manufacturing/SOP/sop.aspx",
+                        "CoreSopEdit","SOP管理","编辑SOP信息","~/Lf_Manufacturing/SOP/sop.aspx",
+                        "CoreSopDelete","SOP管理","删除SOP信息","~/Lf_Manufacturing/SOP/sop.aspx",
+                        "CoreP1DOutputView","制一生产","浏览生产日报列表","~/Lf_Manufacturing/PP/daily/P1D_daily.aspx",
+                        "CoreP1DOutputNew","制一生产","新增生产日报","~/Lf_Manufacturing/PP/daily/P1D_daily_new.aspx",
+                        "CoreP1DOutputEdit","制一生产","编辑生产日报","~/Lf_Manufacturing/PP/daily/P1D_daily_edit.aspx",
+                        "CoreP1DOutputDelete","制一生产","删除生产日报","~/Lf_Manufacturing/PP/daily/P1D_daily.aspx",
+                        "CoreP1DOutputSubEdit","制一生产","编辑生产日报SUB","~/Lf_Manufacturing/PP/daily/P1D_daily_sub_edit.aspx",
+                        "CoreP1DDefectView","制一生产","浏览生产不良列表","~/Lf_Manufacturing/PP/poor/P1D_defect.aspx",
+                        "CoreP1DDefectNew","制一生产","新增生产不良","~/Lf_Manufacturing/PP/poor/P1D_defect_new.aspx",
+                        "CoreP1DDefectEdit","制一生产","编辑生产不良","~/Lf_Manufacturing/PP/poor/P1D_defect_edit.aspx",
+                        "CoreP1DDefectDelete","制一生产","删除生产不良","~/Lf_Manufacturing/PP/poor/P1D_defect.aspx",
+                        "CoreP2DOutputView","制二生产","浏览生产日报列表","~/Lf_Manufacturing/PP/daily/P2D_daily.aspx",
+                        "CoreP2DOutputNew","制二生产","新增生产日报","~/Lf_Manufacturing/PP/daily/P2D_daily_new.aspx",
+                        "CoreP2DOutputEdit","制二生产","编辑生产日报","~/Lf_Manufacturing/PP/daily/P2D_daily_edit.aspx",
+                        "CoreP2DOutputDelete","制二生产","删除生产日报","~/Lf_Manufacturing/PP/daily/P2D_daily.aspx",
+                        "CoreP2DOutputSubEdit","制二生产","编辑生产日报SUB","~/Lf_Manufacturing/PP/daily/P2D_daily_sub_edit.aspx",
+                        "CoreP2DDefectView","制二生产","浏览生产不良列表","~/Lf_Manufacturing/PP/poor/p2d_defect.aspx",
+                        "CoreP2DDefectNew","制二生产","新增生产不良","~/Lf_Manufacturing/PP/poor/p2d_defect_new.aspx",
+                        "CoreP2DDefectEdit","制二生产","编辑生产不良","~/Lf_Manufacturing/PP/poor/p2d_defect_edit.aspx",
+                        "CoreP2DDefectDelete","制二生产","删除生产不良","~/Lf_Manufacturing/PP/poor/p2d_defect.aspx",
+                        "CoreP2DInspDefectView","制二生产","浏览检查不良列表","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect.aspx",
+                        "CoreP2DInspDefectNew","制二生产","新增检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_new.aspx",
+                        "CoreP2DInspDefectEdit","制二生产","编辑检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_edit.aspx",
+                        "CoreP2DInspDefectDelete","制二生产","删除检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect.aspx",
+                        "CoreP2DManuDefectView","制二生产","浏览生产不良列表","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
+                        "CoreP2DManuDefectNew","制二生产","新增生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_new.aspx",
+                        "CoreP2DManuDefectEdit","制二生产","编辑生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_edit.aspx",
+                        "CoreP2DManuDefectDelete","制二生产","删除生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
+                        "CoreKanbanView","生产管理","浏览生产看板列表","~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
+                        "CoreKanbanNew","生产管理","新增生产看板","~/Lf_Manufacturing/Master/Pp_model_kanban_new.aspx",
+                        "CoreKanbanEdit","生产管理","编辑产看板","~/Lf_Manufacturing/Master/Pp_model_kanban_edit.aspx",
+                        "CoreKanbanDelete","生产管理","删除生产看板","~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
+                        "CoreTrackingView","生产管理","浏览批次可追溯列表","~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
+                        "CoreTrackingNew","生产管理","新增批次可追溯","~/Lf_Manufacturing/Master/Pp_model_kanban_new.aspx",
+                        "CoreTrackingEdit","生产管理","编辑批次可追溯","~/Lf_Manufacturing/Master/Pp_model_kanban_edit.aspx",
+                        "CoreTrackingDelete","生产管理","删除批次可追溯","~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
+                        "CoreFqcActionView","品质管理","浏览品质对策列表","~/Lf_Manufacturing/QM/fqc/fqc_action.aspx",
+                        "CoreFqcActionNew","品质管理","新增品质对策","~/Lf_Manufacturing/QM/fqc/fqc_action_new.aspx",
+                        "CoreFqcActionEdit","品质管理","编辑品质对策","~/Lf_Manufacturing/QM/fqc/fqc_action_edit.aspx",
+                        "CoreFqcActionDelete","品质管理","删除品质对策","~/Lf_Manufacturing/QM/fqc/fqc_action.aspx",
+                        "CoreFqcNoticeView","品质管理","浏览品质报告列表","~/Lf_Manufacturing/QM/fqc/fqc_notice.aspx",
+                        "CoreFqcNoticeNew","品质管理","新增品质报告","~/Lf_Manufacturing/QM/fqc/fqc_notice_new.aspx",
+                        "CoreFqcNoticeEdit","品质管理","编辑品质报告","~/Lf_Manufacturing/QM/fqc/fqc_notice_edit.aspx",
+                        "CoreFqcNoticeDelete","品质管理","删除品质报告","~/Lf_Manufacturing/QM/fqc/fqc_notice.aspx",
+                        "CoreFqcView","品质管理","浏览入库检验列表","~/Lf_Manufacturing/QM/fqc/fqc.aspx",
+                        "CoreFqcNew","品质管理","新增入库检验","~/Lf_Manufacturing/QM/fqc/fqc_new.aspx",
+                        "CoreFqcEdit","品质管理","编辑入库检验","~/Lf_Manufacturing/QM/fqc/fqc_edit.aspx",
+                        "CoreFqcDelete","品质管理","删除入库检验","~/Lf_Manufacturing/QM/fqc/fqc.aspx",
+                        "CoreComplaintView","品质管理","浏览客诉信息列表","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreComplaintNew","品质管理","新增客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
+                        "CoreComplaintEdit","品质管理","编辑客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
+                        "CoreComplaintDelete","品质管理","删除客诉信息","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreComplaintQAView","品质管理","浏览客诉信息列表","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreComplaintQANew","品质管理","新增客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
+                        "CoreComplaintQAEdit","品质管理","编辑客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
+                        "CoreComplaintQADelete","品质管理","删除客诉信息","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreComplaintP1DView","品质管理","浏览客诉信息列表","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreComplaintP1DNew","品质管理","新增客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
+                        "CoreComplaintP1DEdit","品质管理","编辑客诉信息","~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
+                        "CoreComplaintP1DDelete","品质管理","删除客诉信息","~/Lf_Manufacturing/QM/complaint/complaint.aspx",
+                        "CoreWagesView","品质业务","浏览平均工资率列表","~/Lf_Accounting/wagerate.aspx",
+                        "CoreWagesNew","品质业务","新增平均工资率","~/Lf_Accounting/wagerate_new.aspx",
+                        "CoreWagesEdit","品质业务","编辑平均工资率","~/Lf_Accounting/wagerate_edit.aspx",
+                        "CoreWagesDelete","品质业务","删除平均工资率","~/Lf_Accounting/wagerate.aspx",
+                        "CoreOperationCostView","品质业务","浏览品质业务列表","~/Lf_Manufacturing/QM/cost/operation_cost.aspx",
+                        "CoreOperationCostNew","品质业务","新增品质业务","~/Lf_Manufacturing/QM/cost/operation_cost_new.aspx",
+                        "CoreOperationCostEdit","品质业务","编辑品质业务","~/Lf_Manufacturing/QM/cost/operation_cost_edit.aspx",
+                        "CoreOperationCostDelete","品质业务","删除品质业务","~/Lf_Manufacturing/QM/cost/operation_cost.aspx",
+                        "CoreReworkCostView","品质业务","浏览返修业务列表","~/Lf_Manufacturing/QM/cost/rework_cost.aspx",
+                        "CoreReworkCostNew","品质业务","新增返修业务","~/Lf_Manufacturing/QM/cost/rework_cost_new.aspx",
+                        "CoreReworkCostEdit","品质业务","编辑返修业务","~/Lf_Manufacturing/QM/cost/rework_cost_edit.aspx",
+                        "CoreReworkCostDelete","品质业务","删除返修业务","~/Lf_Manufacturing/QM/cost/rework_cost.aspx",
+                        "CoreWasteCostView","品质业务","浏览废弃业务列表","~/Lf_Manufacturing/QM/cost/waste_cost.aspx",
+                        "CoreWasteCostNew","品质业务","新增废弃业务","~/Lf_Manufacturing/QM/cost/waste_cost_new.aspx",
+                        "CoreWasteCostEdit","品质业务","编辑废弃业务","~/Lf_Manufacturing/QM/cost/waste_cost_edit.aspx",
+                        "CoreWasteCostDelete","品质业务","删除废弃业务","~/Lf_Manufacturing/QM/cost/waste_cost.aspx",
+                        "CoreWasteCostInport","导入管理","导入废弃业务","~/Lf_Manufacturing/QM/cost/waste_input.aspx",
+                        "CoreKitInput","通用权限","导入权限","",
+                        "CoreKitOutput","通用权限","输出权限","",
+                        "CoreKitPrint","通用权限","打印权限","",
+                        "CoreKitDesgin","通用权限","打印设计","",
+                        "CoreKitSetup","通用权限","打印维护","",
+                        };
+
+            var BatchAdd_Powers = new List<Adm_Power>();
+            // 添加权限
+            for (int i = 0, count = Add_Items.Length; i < count; i += 4)
             {
-                new Adm_Power
-                {
-                    Name = "CoreSysView",
-                    Title = "浏览系统地图",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Admin/sys_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSysChart",
-                    Title = "浏览系统图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Admin/sys_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOAView",
-                    Title = "浏览日常办公",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/OA/oa_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOAChart",
-                    Title = "浏览办公图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/OA/oa_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePPView",
-                    Title = "浏览生产管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/PP/pp_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePPChart",
-                    Title = "浏览生产图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/PP/pp_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSDView",
-                    Title = "浏览销售管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/SD/Sd_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSDChart",
-                    Title = "浏览销售图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/SD/Sd_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFICOView",
-                    Title = "浏览财务管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Accounting/Fico_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFICOChart",
-                    Title = "浏览财务图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Accounting/Fico_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEMView",
-                    Title = "浏览日程事件",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/EM/Em_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEMChart",
-                    Title = "浏览日程图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/EM/Em_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFMView",
-                    Title = "浏览表单管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/FM/Fm_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFMChart",
-                    Title = "浏览表单图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/FM/Fm_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBPMView",
-                    Title = "浏览流程管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/BPM/bpm_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBPMView",
-                    Title = "浏览流程图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Office/BPM/bpm_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreQMView",
-                    Title = "浏览品质管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/QM/qm_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreQMChart",
-                    Title = "浏览品质图表",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/QM/qm_chart.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMMView",
-                    Title = "浏览物料管理",
-                    GroupName = "系统地图",
-                    NavigateUrl="~/Lf_Manufacturing/MM/Mm_map.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUserView",
-                    Title = "浏览用户列表",
-                    GroupName = "用户管理",
-                    NavigateUrl="~/Lf_Admin/user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUserNew",
-                    Title = "新增用户",
-                    GroupName = "用户管理",
-                    NavigateUrl="~/Lf_Admin/user_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUserEdit",
-                    Title = "编辑用户",
-                    GroupName = "用户管理",
-                    NavigateUrl="~/Lf_Admin/user_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUserDelete",
-                    Title = "删除用户",
-                    GroupName = "用户管理",
-                    NavigateUrl="~/Lf_Admin/user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUserChangePassword",
-                    Title = "修改密码",
-                    GroupName = "用户管理",
-                    NavigateUrl="~/Lf_Admin/changepassword.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleView",
-                    Title = "浏览角色列表",
-                    GroupName = "角色管理",
-                    NavigateUrl="~/Lf_Admin/role.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleNew",
-                    Title = "新增角色",
-                    GroupName = "角色管理",
-                    NavigateUrl="~/Lf_Admin/role_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleEdit",
-                    Title = "编辑角色",
-                    GroupName = "角色管理",
-                    NavigateUrl="~/Lf_Admin/role_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleDelete",
-                    Title = "删除角色",
-                    GroupName = "角色管理",
-                    NavigateUrl="~/Lf_Admin/role.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleUserView",
-                    Title = "浏览角色用户列表",
-                    GroupName = "角色用户",
-                    NavigateUrl="~/Lf_Admin/role_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleUserNew",
-                    Title = "向角色添加用户",
-                    GroupName = "角色用户",
-                    NavigateUrl="~/Lf_Admin/role_user_addnew.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRoleUserDelete",
-                    Title = "从角色中删除用户",
-                    GroupName = "角色用户",
-                    NavigateUrl="~/Lf_Admin/role_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOnlineView",
-                    Title = "浏览在线用户列表",
-                    GroupName = "在线用户",
-                    NavigateUrl="~/Lf_Admin/online.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreConfigView",
-                    Title = "浏览全局配置参数",
-                    GroupName = "系统参数",
-                    NavigateUrl="~/Lf_Admin/config.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreConfigEdit",
-                    Title = "修改全局配置参数",
-                    GroupName = "系统参数",
-                    NavigateUrl="~/Lf_Admin/config.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMenuView",
-                    Title = "浏览菜单列表",
-                    GroupName = "菜单管理",
-                    NavigateUrl="~/Lf_Admin/menu.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMenuNew",
-                    Title = "新增菜单",
-                    GroupName = "菜单管理",
-                    NavigateUrl="~/Lf_Admin/menu_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMenuEdit",
-                    Title = "编辑菜单",
-                    GroupName = "菜单管理",
-                    NavigateUrl="~/Lf_Admin/menu_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMenuDelete",
-                    Title = "删除菜单",
-                    GroupName = "菜单管理",
-                    NavigateUrl="~/Lf_Admin/menu.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLogView",
-                    Title = "浏览日志列表",
-                    GroupName = "日志管理",
-                    NavigateUrl="~/Lf_Admin/log.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLogDelete",
-                    Title = "删除日志",
-                    GroupName = "日志管理",
-                    NavigateUrl="~/Lf_Admin/log.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleView",
-                    Title = "浏览职务列表",
-                    GroupName = "职务管理",
-                    NavigateUrl="~/Lf_Admin/title.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleNew",
-                    Title = "新增职务",
-                    GroupName = "职务管理",
-                    NavigateUrl="~/Lf_Admin/title_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleEdit",
-                    Title = "编辑职务",
-                    GroupName = "职务管理",
-                    NavigateUrl="~/Lf_Admin/title_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleDelete",
-                    Title = "删除职务",
-                    GroupName = "职务管理",
-                    NavigateUrl="~/Lf_Admin/title_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleUserView",
-                    Title = "浏览职务用户列表",
-                    GroupName = "职务用户",
-                    NavigateUrl="~/Lf_Admin/title_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleUserNew",
-                    Title = "向职务添加用户",
-                    GroupName = "职务用户",
-                    NavigateUrl="~/Lf_Admin/title_user_addnew.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTitleUserDelete",
-                    Title = "从职务中删除用户",
-                    GroupName = "职务用户",
-                    NavigateUrl="~/Lf_Admin/title_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCompanyView",
-                    Title = "浏览公司列表",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/company.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCompanyNew",
-                    Title = "新增公司信息",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/company_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCompanyEdit",
-                    Title = "编辑公司信息",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/company_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCompanyDelete",
-                    Title = "删除公司信息",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/company.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCorpkpiView",
-                    Title = "浏览公司目标列表",
-                    GroupName = "公司目标",
-                    NavigateUrl="~/Lf_Admin/corpkpi.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCorpkpiNew",
-                    Title = "新增公司目标",
-                    GroupName = "公司目标",
-                    NavigateUrl="~/Lf_Admin/corpkpi_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCorpkpiEdit",
-                    Title = "编辑公司目标",
-                    GroupName = "公司目标",
-                    NavigateUrl="~/Lf_Admin/corpkpi_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCorpkpiDelete",
-                    Title = "删除公司目标",
-                    GroupName = "公司目标",
-                    NavigateUrl="~/Lf_Admin/corpkpi.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptView",
-                    Title = "浏览部门列表",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/dept.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptNew",
-                    Title = "新增部门",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/dept_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptEdit",
-                    Title = "编辑部门",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/dept_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptDelete",
-                    Title = "删除部门",
-                    GroupName = "公司部门",
-                    NavigateUrl="~/Lf_Admin/dept.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptUserView",
-                    Title = "浏览部门用户列表",
-                    GroupName = "部门用户",
-                    NavigateUrl="~/Lf_Admin/dept_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptUserNew",
-                    Title = "向部门添加用户",
-                    GroupName = "部门用户",
-                    NavigateUrl="~/Lf_Admin/dept_user_addnew.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreDeptUserDelete",
-                    Title = "从部门中删除用户",
-                    GroupName = "部门用户",
-                    NavigateUrl="~/Lf_Admin/dept_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePowerView",
-                    Title = "浏览权限列表",
-                    GroupName = "权限管理",
-                    NavigateUrl="~/Lf_Admin/power.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePowerNew",
-                    Title = "新增权限",
-                    GroupName = "权限管理",
-                    NavigateUrl="~/Lf_Admin/power_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePowerEdit",
-                    Title = "编辑权限",
-                    GroupName = "权限管理",
-                    NavigateUrl="~/Lf_Admin/power_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePowerDelete",
-                    Title = "删除权限",
-                    GroupName = "权限管理",
-                    NavigateUrl="~/Lf_Admin/power.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRolePowerView",
-                    Title = "浏览角色权限列表",
-                    GroupName = "角色权限",
-                    NavigateUrl="~/Lf_Admin/role_user.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreRolePowerEdit",
-                    Title = "编辑角色权限",
-                    GroupName = "角色权限",
-                    NavigateUrl="~/Lf_Admin/role_power.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTodoView",
-                    Title = "浏览待办列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/todo.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTodoNew",
-                    Title = "新增待办流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/todo_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTodoEdit",
-                    Title = "编辑待办流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/todo_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTodoDelete",
-                    Title = "删除待办流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/todo.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmApplyView",
-                    Title = "浏览审批列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/apply.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmApplyNew",
-                    Title = "新增审批流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/apply_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmApplyEdit",
-                    Title = "编辑审批流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/apply_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmApplyDelete",
-                    Title = "删除审批流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/apply.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmDesginView",
-                    Title = "浏览流程设计列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/desgin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmDesginNew",
-                    Title = "新增流程设计",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/desgin_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmDesginEdit",
-                    Title = "编辑流程设计",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/desgin_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmDesginDelete",
-                    Title = "删除流程设计",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/desgin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmSignatureView",
-                    Title = "浏览签章列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/signature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmSignatureNew",
-                    Title = "新增签章信息",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/signature_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmSignatureEdit",
-                    Title = "编辑签章信息",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/signature_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmSignatureDelete",
-                    Title = "删除签章信息",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/signature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTemplateView",
-                    Title = "浏览流程模板列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/template.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTemplateNew",
-                    Title = "新增流程模板",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/template_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTemplateEdit",
-                    Title = "编辑流程模板",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/template_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBpmTemplateDelete",
-                    Title = "删除流程模板",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/template.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFlowView",
-                    Title = "浏览流程列表",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/flow.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFlowNew",
-                    Title = "新增流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/flow_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFlowEdit",
-                    Title = "编辑流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/flow_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFlowDelete",
-                    Title = "删除流程",
-                    GroupName = "流程管理",
-                    NavigateUrl="~/Lf_Office/BPM/flow.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFlowInport",
-                    Title = "导入流程信息",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Office/BPM/flow_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEventView",
-                    Title = "浏览日程列表",
-                    GroupName = "日程管理",
-                    NavigateUrl="~/Lf_Office/EM/schedule_full.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEventNew",
-                    Title = "新增日程信息",
-                    GroupName = "日程管理",
-                    NavigateUrl="~/Lf_Office/EM/schedule_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEventEdit",
-                    Title = "编辑日程信息",
-                    GroupName = "日程管理",
-                    NavigateUrl="~/Lf_Office/EM/schedule_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEventDelete",
-                    Title = "删除日程信息",
-                    GroupName = "日程管理",
-                    NavigateUrl="~/Lf_Office/EM/schedule.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEventInport",
-                    Title = "导入日程信息",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Office/EM/schedule_full.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoremyFormView",
-                    Title = "浏览我的表单列表",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/myform.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoremyFormNew",
-                    Title = "新增我的表单",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/myform_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoremyFormEdit",
-                    Title = "编辑我的表单",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/myform_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoremyFormDelete",
-                    Title = "删除我的表单",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/myform.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormDesginView",
-                    Title = "浏览表单设计列表",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formdesgin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormDesginNew",
-                    Title = "新增表单设计",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formdesgin_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormDesginEdit",
-                    Title = "编辑表单设计",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formdesgin_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormDesginDelete",
-                    Title = "删除表单设计",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formdesgin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormCategoryView",
-                    Title = "浏览表单类别列表",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formcategory.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormCategoryNew",
-                    Title = "新增表单类别",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formcategory_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormCategoryEdit",
-                    Title = "编辑表单类别",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formcategory_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormCategoryDelete",
-                    Title = "删除表单类别",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/formcategory.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormView",
-                    Title = "浏览表单列表",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/form.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormNew",
-                    Title = "新增表单信息",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/form_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormEdit",
-                    Title = "编辑表单信息",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/form_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormDelete",
-                    Title = "删除表单信息",
-                    GroupName = "表单管理",
-                    NavigateUrl="~/Lf_Office/FM/form.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFormInport",
-                    Title = "导入表单信息",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Office/FM/form_input.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreCustomerView",
-                    Title = "浏览客户信息列表",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/salesmanage/customer.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCustomerNew",
-                    Title = "新增客户信息",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/salesmanage/customer_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCustomerEdit",
-                    Title = "编辑客户信息",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/salesmanage/customer_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCustomerDelete",
-                    Title = "删除客户信息",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/salesmanage/customer.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreForecastView",
-                    Title = "浏览计划订单列表",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/forecast.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreForecastNew",
-                    Title = "新增计划订单",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/forecast_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreForecastEdit",
-                    Title = "编辑计划订单",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/forecast_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreForecastDelete",
-                    Title = "删除计划订单",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/forecast.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreForecastInport",
-                    Title = "导入计划订单",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/forecast_inport.aspx",
-                },
+                //Name	GroupName	Title	NavigateUrl	Remark
 
-                new Adm_Power
-                {
-                    Name = "CoreInboundScanView",
-                    Title = "浏览入库扫描列表",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/inbound_scan.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInboundScanNew",
-                    Title = "新增入库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/inbound_scan_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInboundScanEdit",
-                    Title = "编辑入库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/inbound_scan_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInboundScanDelete",
-                    Title = "删除入库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/inbound_scan.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOutboundScanView",
-                    Title = "浏览出库扫描列表",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/outbound_scan.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOutboundScanNew",
-                    Title = "新增出库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/outbound_scan_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOutboundScanEdit",
-                    Title = "编辑出库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/outbound_scan_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOutboundScanDelete",
-                    Title = "删除出库扫描",
-                    GroupName = "销售管理",
-                    NavigateUrl="~/Lf_Manufacturing/SD/shipment/outbound_scan.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNoticeView",
-                    Title = "浏览公告列表",
-                    GroupName = "公告通知",
-                    NavigateUrl="~/Lf_Office/OA/notice.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNoticeNew",
-                    Title = "新增公告信息",
-                    GroupName = "公告通知",
-                    NavigateUrl="~/Lf_Office/OA/notice_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNoticeEdit",
-                    Title = "编辑公告信息",
-                    GroupName = "公告通知",
-                    NavigateUrl="~/Lf_Office/OA/notice_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNoticeDelete",
-                    Title = "删除公告信息",
-                    GroupName = "公告通知",
-                    NavigateUrl="~/Lf_Office/OA/notice.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMeetingView",
-                    Title = "浏览会议信息列表",
-                    GroupName = "会议管理",
-                    NavigateUrl="~/Lf_Office/OA/meeting.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMeetingNew",
-                    Title = "新增会议信息",
-                    GroupName = "会议管理",
-                    NavigateUrl="~/Lf_Office/OA/meeting_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMeetingEdit",
-                    Title = "编辑会议信息",
-                    GroupName = "会议管理",
-                    NavigateUrl="~/Lf_Office/OA/meeting_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMeetingDelete",
-                    Title = "删除会议信息",
-                    GroupName = "会议管理",
-                    NavigateUrl="~/Lf_Office/OA/meeting.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreVehiclesView",
-                    Title = "浏览车辆信息列表",
-                    GroupName = "车辆管理",
-                    NavigateUrl="~/Lf_Office/OA/vehicles.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreVehiclesNew",
-                    Title = "新增车辆信息",
-                    GroupName = "车辆管理",
-                    NavigateUrl="~/Lf_Office/OA/vehicles_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreVehiclesEdit",
-                    Title = "编辑车辆信息",
-                    GroupName = "车辆管理",
-                    NavigateUrl="~/Lf_Office/OA/vehicles_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreVehiclesDelete",
-                    Title = "删除车辆信息",
-                    GroupName = "车辆管理",
-                    NavigateUrl="~/Lf_Office/OA/vehicles.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWeeklyView",
-                    Title = "浏览周报信息列表",
-                    GroupName = "周报管理",
-                    NavigateUrl="~/Lf_Office/OA/weekly.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWeeklyNew",
-                    Title = "新增周报信息",
-                    GroupName = "周报管理",
-                    NavigateUrl="~/Lf_Office/OA/weekly_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWeeklyEdit",
-                    Title = "编辑周报信息",
-                    GroupName = "周报管理",
-                    NavigateUrl="~/Lf_Office/OA/weekly_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWeeklyDelete",
-                    Title = "删除周报信息",
-                    GroupName = "周报管理",
-                    NavigateUrl="~/Lf_Office/OA/weekly.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreHelpdeskView",
-                    Title = "浏览帮助工单列表",
-                    GroupName = "帮助工单",
-                    NavigateUrl="~/Lf_Office/OA/helpdesk.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreHelpdeskNew",
-                    Title = "新增帮助工单",
-                    GroupName = "帮助工单",
-                    NavigateUrl="~/Lf_Office/OA/helpdesk_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreHelpdeskEdit",
-                    Title = "编辑帮助工单",
-                    GroupName = "帮助工单",
-                    NavigateUrl="~/Lf_Office/OA/helpdesk_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreHelpdeskDelete",
-                    Title = "删除帮助工单",
-                    GroupName = "帮助工单",
-                    NavigateUrl="~/Lf_Office/OA/helpdesk.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAddressView",
-                    Title = "浏览通讯录列表",
-                    GroupName = "通讯录",
-                    NavigateUrl="~/Lf_Office/OA/address.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAddressNew",
-                    Title = "新增通讯录",
-                    GroupName = "通讯录",
-                    NavigateUrl="~/Lf_Office/OA/address_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAddressEdit",
-                    Title = "编辑通讯录",
-                    GroupName = "通讯录",
-                    NavigateUrl="~/Lf_Office/OA/address_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAddressDelete",
-                    Title = "删除通讯录",
-                    GroupName = "通讯录",
-                    NavigateUrl="~/Lf_Office/OA/address.aspx",
-                },
+                string strName = Add_Items[i];
+                string strGroupName = Add_Items[i + 1];
+                string strTitle = Add_Items[i + 2];
+                string strNavigateUrl = Add_Items[i + 3];
+                string strRemark = "";
 
-                new Adm_Power
-                {
-                    Name = "CoreExpensesView",
-                    Title = "浏览费用信息列表",
-                    GroupName = "财务管理",
-                    NavigateUrl="~/Lf_Accounting/expense.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreExpensesNew",
-                    Title = "新增费用信息",
-                    GroupName = "财务管理",
-                    NavigateUrl="~/Lf_Accounting/expense.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreExpensesEdit",
-                    Title = "编辑费用信息",
-                    GroupName = "财务管理",
-                    NavigateUrl="~/Lf_Accounting/expense.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreExpensesDelete",
-                    Title = "删除费用信息",
-                    GroupName = "财务管理",
-                    NavigateUrl="~/Lf_Accounting/expense.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCostingView",
-                    Title = "浏览成本信息列表",
-                    GroupName = "财务管理",
-                    NavigateUrl="~/Lf_Accounting/costing.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetView",
-                    Title = "浏览预算信息列表",
-                    GroupName = "预算管理",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetNew",
-                    Title = "新增预算信息",
-                    GroupName = "预算管理",
-                    NavigateUrl="~/Lf_Accounting/budget_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetEdit",
-                    Title = "编辑预算信息",
-                    GroupName = "预算管理",
-                    NavigateUrl="~/Lf_Accounting/budget_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetInport",
-                    Title = "导入预算信息",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetDelete",
-                    Title = "删除预算信息",
-                    GroupName = "预算管理",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetGDView",
-                    Title = "浏览预算信息GD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetGDNew",
-                    Title = "新增预算信息GD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetGDEdit",
-                    Title = "编辑预算信息GD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetGDDelete",
-                    Title = "删除预算信息GD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetGDInport",
-                    Title = "导入预算信息GD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetLDView",
-                    Title = "浏览预算信息LD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetLDNew",
-                    Title = "新增预算信息LD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetLDEdit",
-                    Title = "编辑预算信息LD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetLDDelete",
-                    Title = "删除预算信息LD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetLDInport",
-                    Title = "导入预算信息LD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetITView",
-                    Title = "浏览预算信息IT",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetITNew",
-                    Title = "新增预算信息IT",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetITEdit",
-                    Title = "编辑预算信息IT",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetITDelete",
-                    Title = "删除预算信息IT",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetITInport",
-                    Title = "导入预算信息IT",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetMMView",
-                    Title = "浏览预算信息MM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetMMNew",
-                    Title = "新增预算信息MM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetMMEdit",
-                    Title = "编辑预算信息MM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetMMDelete",
-                    Title = "删除预算信息MM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetMMInport",
-                    Title = "导入预算信息MM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPMView",
-                    Title = "浏览预算信息PM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPMNew",
-                    Title = "新增预算信息PM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPMEdit",
-                    Title = "编辑预算信息PM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPMDelete",
-                    Title = "删除预算信息PM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPMInport",
-                    Title = "导入预算信息PM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPDView",
-                    Title = "浏览预算信息PD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPDNew",
-                    Title = "新增预算信息PD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPDEdit",
-                    Title = "编辑预算信息PD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPDDelete",
-                    Title = "删除预算信息PD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPDInport",
-                    Title = "导入预算信息PD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetENGView",
-                    Title = "浏览预算信息ENG",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetENGNew",
-                    Title = "新增预算信息ENG",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetENGEdit",
-                    Title = "编辑预算信息ENG",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetENGDelete",
-                    Title = "删除预算信息ENG",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetENGInport",
-                    Title = "导入预算信息ENG",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetIQCView",
-                    Title = "浏览预算信息IQC",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetIQCNew",
-                    Title = "新增预算信息IQC",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetIQCEdit",
-                    Title = "编辑预算信息IQC",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetIQCDelete",
-                    Title = "删除预算信息IQC",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetIQCInport",
-                    Title = "导入预算信息IQC",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetQAView",
-                    Title = "浏览预算信息QA",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetQANew",
-                    Title = "新增预算信息QA",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetQAEdit",
-                    Title = "编辑预算信息QA",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetQADelete",
-                    Title = "删除预算信息QA",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetQAInport",
-                    Title = "导入预算信息QA",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPEView",
-                    Title = "浏览预算信息PE",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPENew",
-                    Title = "新增预算信息PE",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPEEdit",
-                    Title = "编辑预算信息PE",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPEDelete",
-                    Title = "删除预算信息PE",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetPEInport",
-                    Title = "导入预算信息PE",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP1DView",
-                    Title = "浏览预算信息P1D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP1DNew",
-                    Title = "新增预算信息P1D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP1DEdit",
-                    Title = "编辑预算信息P1D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP1DDelete",
-                    Title = "删除预算信息P1D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP1DInport",
-                    Title = "导入预算信息P1D",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP2DView",
-                    Title = "浏览预算信息P2D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP2DNew",
-                    Title = "新增预算信息P2D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP2DEdit",
-                    Title = "编辑预算信息P2D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP2DDelete",
-                    Title = "删除预算信息P2D",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetP2DInport",
-                    Title = "导入预算信息P2D",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetCDView",
-                    Title = "浏览预算信息CD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetCDNew",
-                    Title = "新增预算信息CD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetCDEdit",
-                    Title = "编辑预算信息CD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetCDDelete",
-                    Title = "删除预算信息CD",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetCDInport",
-                    Title = "导入预算信息CD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetOEMView",
-                    Title = "浏览预算信息OEM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetOEMNew",
-                    Title = "新增预算信息OEM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetOEMEdit",
-                    Title = "编辑预算信息OEM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetOEMDelete",
-                    Title = "删除预算信息OEM",
-                    GroupName = "部门预算",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBudgetOEMInport",
-                    Title = "导入预算信息OEM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Accounting/budget_input.aspx",
-                },
+                BatchAdd_Powers.Add(new Adm_Power
+                {
+                    //ID = Guid.NewGuid(),
+                    Name = strName,
+                    GroupName = strGroupName,
+                    Title = strTitle,
+                    NavigateUrl = strNavigateUrl,
+                    Remark = strRemark,
+                });
+            }
 
-                new Adm_Power
-                {
-                    Name = "CoreAuditView",
-                    Title = "浏览审核信息列表",
-                    GroupName = "预算审核",
-                    NavigateUrl="~/Lf_Accounting/audit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAuditNew",
-                    Title = "新增审核信息",
-                    GroupName = "预算审核",
-                    NavigateUrl="~/Lf_Accounting/audit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAuditEdit",
-                    Title = "编辑审核信息",
-                    GroupName = "预算审核",
-                    NavigateUrl="~/Lf_Accounting/audit.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreAuditCancel",
-                    Title = "取消审核信息",
-                    GroupName = "预算审核",
-                    NavigateUrl="~/Lf_Accounting/audit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreAuditDelete",
-                    Title = "删除审核信息",
-                    GroupName = "预算审核",
-                    NavigateUrl="~/Lf_Accounting/audit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCountersignatureView",
-                    Title = "浏览会签信息列表",
-                    GroupName = "会签管理",
-                    NavigateUrl="~/Lf_Accounting/countersignature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCountersignatureNew",
-                    Title = "新增会签信息",
-                    GroupName = "会签管理",
-                    NavigateUrl="~/Lf_Accounting/countersignature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCountersignatureEdit",
-                    Title = "编辑会签信息",
-                    GroupName = "会签管理",
-                    NavigateUrl="~/Lf_Accounting/countersignature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreCountersignatureDelete",
-                    Title = "删除会签信息",
-                    GroupName = "会签管理",
-                    NavigateUrl="~/Lf_Accounting/countersignature.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePeriodView",
-                    Title = "浏览预算期间列表",
-                    GroupName = "预算期间",
-                    NavigateUrl="~/Lf_Accounting/period.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePeriodNew",
-                    Title = "新增预算期间",
-                    GroupName = "预算期间",
-                    NavigateUrl="~/Lf_Accounting/period.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePeriodEdit",
-                    Title = "编辑预算期间",
-                    GroupName = "预算期间",
-                    NavigateUrl="~/Lf_Accounting/period.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CorePeriodDelete",
-                    Title = "删除预算期间",
-                    GroupName = "预算期间",
-                    NavigateUrl="~/Lf_Accounting/period.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSubjectView",
-                    Title = "浏览预算科目列表",
-                    GroupName = "预算科目",
-                    NavigateUrl="~/Lf_Accounting/subject.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSubjectNew",
-                    Title = "新增预算科目",
-                    GroupName = "预算科目",
-                    NavigateUrl="~/Lf_Accounting/subject.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSubjectEdit",
-                    Title = "编辑预算科目",
-                    GroupName = "预算科目",
-                    NavigateUrl="~/Lf_Accounting/subject.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSubjectDelete",
-                    Title = "删除预算科目",
-                    GroupName = "预算科目",
-                    NavigateUrl="~/Lf_Accounting/subject.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcView",
-                    Title = "浏览设变列表",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcNew",
-                    Title = "新增设变权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcEdit",
-                    Title = "编辑设变权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcDelete",
-                    Title = "删除设变权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcInport",
-                    Title = "导入设变权限",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTlView",
-                    Title = "浏览技联列表",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/TL/liaison.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTlNew",
-                    Title = "新增技联权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/liaison.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTlEdit",
-                    Title = "编辑技联权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/liaison.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTlDelete",
-                    Title = "删除技联权限",
-                    GroupName = "设变管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/liaison.aspx",
-                },
-               new Adm_Power
-                {
-                    Name = "CoreEcGDView",
-                    Title = "浏览设变信息GD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcGDNew",
-                    Title = "新增设变信息GD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcGDEdit",
-                    Title = "编辑设变信息GD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcGDDelete",
-                    Title = "删除设变信息GD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcGDInport",
-                    Title = "导入设变信息GD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcLDView",
-                    Title = "浏览设变信息LD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcLDNew",
-                    Title = "新增设变信息LD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcLDEdit",
-                    Title = "编辑设变信息LD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcLDDelete",
-                    Title = "删除设变信息LD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcLDInport",
-                    Title = "导入设变信息LD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcITView",
-                    Title = "浏览设变信息IT",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcITNew",
-                    Title = "新增设变信息IT",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcITEdit",
-                    Title = "编辑设变信息IT",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcITDelete",
-                    Title = "删除设变信息IT",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcITInport",
-                    Title = "导入设变信息IT",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMMView",
-                    Title = "浏览设变信息MM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_mm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMMNew",
-                    Title = "新增设变信息MM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_mm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMMEdit",
-                    Title = "编辑设变信息MM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_Mm_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMMDelete",
-                    Title = "删除设变信息MM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_mm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMMInport",
-                    Title = "导入设变信息MM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_mm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPMView",
-                    Title = "浏览设变信息PM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPMNew",
-                    Title = "新增设变信息PM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPMEdit",
-                    Title = "编辑设变信息PM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pm_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPMDelete",
-                    Title = "删除设变信息PM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPMInport",
-                    Title = "导入设变信息PM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pm.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPDView",
-                    Title = "浏览设变信息PD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pd.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPDNew",
-                    Title = "新增设变信息PD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pd.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPDEdit",
-                    Title = "编辑设变信息PD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pd_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPDDelete",
-                    Title = "删除设变信息PD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pd.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPDInport",
-                    Title = "导入设变信息PD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_pd.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcENGView",
-                    Title = "浏览设变信息ENG",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_view.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcENGNew",
-                    Title = "新增设变信息ENG",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcENGEdit",
-                    Title = "编辑设变信息ENG",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcENGDelete",
-                    Title = "删除设变信息ENG",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_view.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcENGInport",
-                    Title = "导入设变信息ENG",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQAInport",
-                    Title = "导入设变信息QA",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMatView",
-                    Title = "浏览物料确认",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMatNew",
-                    Title = "新增物料确认",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMatEdit",
-                    Title = "编辑物料确认",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMatDelete",
-                    Title = "删除物料确认",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcMatInport",
-                    Title = "导入物料确认",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_eng_outbound.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcIQCView",
-                    Title = "浏览设变信息IQC",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qc.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcIQCNew",
-                    Title = "新增设变信息IQC",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qc.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcIQCEdit",
-                    Title = "编辑设变信息IQC",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qc_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcIQCDelete",
-                    Title = "删除设变信息IQC",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qc.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcIQCInport",
-                    Title = "导入设变信息IQC",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qc.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQAView",
-                    Title = "浏览设变信息QA",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQANew",
-                    Title = "新增设变信息QA",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQAEdit",
-                    Title = "编辑设变信息QA",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQADelete",
-                    Title = "删除设变信息QA",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcQAInport",
-                    Title = "导入设变信息QA",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_qa.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPEView",
-                    Title = "浏览设变信息PE",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPENew",
-                    Title = "新增设变信息PE",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPEEdit",
-                    Title = "编辑设变信息PE",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPEDelete",
-                    Title = "删除设变信息PE",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcPEInport",
-                    Title = "导入设变信息PE",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP1DView",
-                    Title = "浏览设变信息P1D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p1d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP1DNew",
-                    Title = "新增设变信息P1D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p1d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP1DEdit",
-                    Title = "编辑设变信息P1D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p1d_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP1DDelete",
-                    Title = "删除设变信息P1D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p1d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP1DInport",
-                    Title = "导入设变信息P1D",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p1d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP2DView",
-                    Title = "浏览设变信息P2D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p2d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP2DNew",
-                    Title = "新增设变信息P2D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p2d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP2DEdit",
-                    Title = "编辑设变信息P2D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p2d_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP2DDelete",
-                    Title = "删除设变信息P2D",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p2d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcP2DInport",
-                    Title = "导入设变信息P2D",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec_p2d.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcCDView",
-                    Title = "浏览设变信息CD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcCDNew",
-                    Title = "新增设变信息CD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcCDEdit",
-                    Title = "编辑设变信息CD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcCDDelete",
-                    Title = "删除设变信息CD",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcCDInport",
-                    Title = "导入设变信息CD",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcOEMView",
-                    Title = "浏览设变信息OEM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcOEMNew",
-                    Title = "新增设变信息OEM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcOEMEdit",
-                    Title = "编辑设变信息OEM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcOEMDelete",
-                    Title = "删除设变信息OEM",
-                    GroupName = "部门设变",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcOEMInport",
-                    Title = "导入设变信息OEM",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/EC/ec.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineView",
-                    Title = "浏览班组列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_line.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineNew",
-                    Title = "新增班组信息",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_line_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineEdit",
-                    Title = "编辑班组信息",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_line_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineDelete",
-                    Title = "删除班组信息",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_line.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcmanaView",
-                    Title = "浏览管理区分列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Ec_admin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcmanaNew",
-                    Title = "新增管理区分",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Ec_admin_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcmanaEdit",
-                    Title = "编辑管理区分",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Ec_admin_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreEcmanaDelete",
-                    Title = "删除管理区分",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Ec_admin.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMaterialView",
-                    Title = "浏览物料权限",
-                    GroupName = "物料信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/material.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMaterialNew",
-                    Title = "新增物料权限",
-                    GroupName = "物料信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/material_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMaterialEdit",
-                    Title = "编辑物料权限",
-                    GroupName = "物料信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/material_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMaterialDelete",
-                    Title = "删除物料权限",
-                    GroupName = "物料信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/material.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreMaterialInport",
-                    Title = "导入物料权限",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/MM/material.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreModelsView",
-                    Title = "浏览机种列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/matmodel.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreModelsNew",
-                    Title = "新增机种",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/matmodel_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreModelsEdit",
-                    Title = "编辑机种",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/matmodel_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreModelsDelete",
-                    Title = "删除机种",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/MM/matmodel.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreModelsInport",
-                    Title = "导入机种",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/MM/matmodel.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOrderView",
-                    Title = "浏览订单列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_order.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOrderNew",
-                    Title = "新增订单",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_order_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOrderEdit",
-                    Title = "编辑订单",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_order_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOrderDelete",
-                    Title = "删除订单",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_order.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreManhourView",
-                    Title = "浏览工时列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_manhour.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreManhourNew",
-                    Title = "新增工时",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_manhour_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreManhourEdit",
-                    Title = "编辑工时",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_manhour_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreManhourDelete",
-                    Title = "删除工时",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_manhour.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreTimeView",
-                    Title = "浏览工数列表",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/timesheet/times_query.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTimeNew",
-                    Title = "新增工数",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/timesheet/times_query.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTimeEdit",
-                    Title = "编辑工数",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/timesheet/times_query.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTimeDelete",
-                    Title = "删除工数",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/timesheet/times_query.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreNotReachedView",
-                    Title = "浏览未达成原因列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNotReachedNew",
-                    Title = "新增未达成原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNotReachedEdit",
-                    Title = "编辑未达成原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreNotReachedDelete",
-                    Title = "删除未达成原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreLineStopView",
-                    Title = "浏览停线原因列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineStopdNew",
-                    Title = "新增停线原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineStopEdit",
-                    Title = "编辑停线原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreLineStopDelete",
-                    Title = "删除停线原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Reason.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreBadReasonView",
-                    Title = "浏览不良原因列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_badcategory.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBadReasonNew",
-                    Title = "新增不良原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_badcategory_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBadReasonEdit",
-                    Title = "编辑不良原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_badcategory_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreBadReasonDelete",
-                    Title = "删除不良原因",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_badcategory.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreUtilizationView",
-                    Title = "浏览稼动率列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_efficiency.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUtilizationNew",
-                    Title = "新增稼动率",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_efficiency_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUtilizationEdit",
-                    Title = "编辑稼动率",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_efficiency_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreUtilizationDelete",
-                    Title = "删除稼动率",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_efficiency.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreInspectCatView",
-                    Title = "浏览检验类别列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/qm_acceptcat.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInspectCatNew",
-                    Title = "新增检验类别",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/qm_acceptcat_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInspectCatEdit",
-                    Title = "编辑检验类别",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/qm_acceptcat_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreInspectCatDelete",
-                    Title = "删除检验类别",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/qm_acceptcat.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreTransportView",
-                    Title = "浏览运输方式列表",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Transport.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTransportNew",
-                    Title = "新增运输方式",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Transport_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTransportEdit",
-                    Title = "编辑运输方式",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Transport_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreTransportDelete",
-                    Title = "删除运输方式",
-                    GroupName = "基本信息",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_Transport.aspx",
-                },
-                                new Adm_Power
-                {
-                    Name = "CoreSopView",
-                    Title = "浏览SOP信息",
-                    GroupName = "SOP管理",
-                    NavigateUrl="~/Lf_Manufacturing/SOP/sop.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSopNew",
-                    Title = "新增SOP信息",
-                    GroupName = "SOP管理",
-                    NavigateUrl="~/Lf_Manufacturing/SOP/sop.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSopEdit",
-                    Title = "编辑SOP信息",
-                    GroupName = "SOP管理",
-                    NavigateUrl="~/Lf_Manufacturing/SOP/sop.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreSopDelete",
-                    Title = "删除SOP信息",
-                    GroupName = "SOP管理",
-                    NavigateUrl="~/Lf_Manufacturing/SOP/sop.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreP1DOutputView",
-                    Title = "浏览生产日报列表",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P1D_daily.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DOutputNew",
-                    Title = "新增生产日报",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P1D_daily_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DOutputEdit",
-                    Title = "编辑生产日报",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P1D_daily_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DOutputDelete",
-                    Title = "删除生产日报",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P1D_daily.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DOutputSubEdit",
-                    Title = "编辑生产日报SUB",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P1D_daily_sub_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DDefectView",
-                    Title = "浏览生产不良列表",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/P1D_defect.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DDefectNew",
-                    Title = "新增生产不良",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/P1D_defect_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP1DDefectEdit",
-                    Title = "编辑生产不良",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/P1D_defect_edit.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreP1DDefectDelete",
-                    Title = "删除生产不良",
-                    GroupName = "制一生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/P1D_defect.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DOutputView",
-                    Title = "浏览生产日报列表",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P2D_daily.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DOutputNew",
-                    Title = "新增生产日报",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P2D_daily_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DOutputEdit",
-                    Title = "编辑生产日报",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P2D_daily_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DOutputDelete",
-                    Title = "删除生产日报",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P2D_daily.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DOutputSubEdit",
-                    Title = "编辑生产日报SUB",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/daily/P2D_daily_sub_edit.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreP2DDefectView",
-                    Title = "浏览生产不良列表",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DDefectNew",
-                    Title = "新增生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DDefectEdit",
-                    Title = "编辑生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_edit.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreP2DDefectDelete",
-                    Title = "删除生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreP2DInspDefectView",
-                    Title = "浏览检查不良列表",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_inspection_defect.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DInspDefectNew",
-                    Title = "新增检查不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DInspDefectEdit",
-                    Title = "编辑检查不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_edit.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreP2DInspDefectDelete",
-                    Title = "删除检查不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_inspection_defect.aspx",
-                },
-
-                 new Adm_Power
-                {
-                    Name = "CoreP2DManuDefectView",
-                    Title = "浏览生产不良列表",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DManuDefectNew",
-                    Title = "新增生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreP2DManuDefectEdit",
-                    Title = "编辑生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_edit.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreP2DManuDefectDelete",
-                    Title = "删除生产不良",
-                    GroupName = "制二生产",
-                    NavigateUrl="~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreKanbanView",
-                    Title = "浏览生产看板列表",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreKanbanNew",
-                    Title = "新增生产看板",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban_new.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreKanbanEdit",
-                    Title = "编辑产看板",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban_edit.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreKanbanDelete",
-                    Title = "删除生产看板",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreTrackingView",
-                    Title = "浏览批次可追溯列表",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreTrackingNew",
-                    Title = "新增批次可追溯",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban_new.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreTrackingEdit",
-                    Title = "编辑批次可追溯",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban_edit.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreTrackingDelete",
-                    Title = "删除批次可追溯",
-                    GroupName = "生产管理",
-                    NavigateUrl="~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreFqcActionView",
-                    Title = "浏览品质对策列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_action.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcActionNew",
-                    Title = "新增品质对策",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_action_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcActionEdit",
-                    Title = "编辑品质对策",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_action_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcActionDelete",
-                    Title = "删除品质对策",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_action.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcNoticeView",
-                    Title = "浏览品质报告列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_notice.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcNoticeNew",
-                    Title = "新增品质报告",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_notice_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcNoticeEdit",
-                    Title = "编辑品质报告",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_notice_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcNoticeDelete",
-                    Title = "删除品质报告",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_notice.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcView",
-                    Title = "浏览入库检验列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcNew",
-                    Title = "新增入库检验",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcEdit",
-                    Title = "编辑入库检验",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreFqcDelete",
-                    Title = "删除入库检验",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/fqc/fqc.aspx",
-                },
-                 new Adm_Power
-                {
-                    Name = "CoreComplaintView",
-                    Title = "浏览客诉信息列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintNew",
-                    Title = "新增客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintEdit",
-                    Title = "编辑客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintDelete",
-                    Title = "删除客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintQAView",
-                    Title = "浏览客诉信息列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintQANew",
-                    Title = "新增客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintQAEdit",
-                    Title = "编辑客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintQADelete",
-                    Title = "删除客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintP1DView",
-                    Title = "浏览客诉信息列表",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintP1DNew",
-                    Title = "新增客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintP1DEdit",
-                    Title = "编辑客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreComplaintP1DDelete",
-                    Title = "删除客诉信息",
-                    GroupName = "品质管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/complaint/complaint.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWagesView",
-                    Title = "浏览平均工资率列表",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Accounting/wagerate.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWagesNew",
-                    Title = "新增平均工资率",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Accounting/wagerate_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWagesEdit",
-                    Title = "编辑平均工资率",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Accounting/wagerate_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWagesDelete",
-                    Title = "删除平均工资率",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Accounting/wagerate.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOperationCostView",
-                    Title = "浏览品质业务列表",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/operation_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOperationCostNew",
-                    Title = "新增品质业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/operation_cost_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOperationCostEdit",
-                    Title = "编辑品质业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/operation_cost_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreOperationCostDelete",
-                    Title = "删除品质业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/operation_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreReworkCostView",
-                    Title = "浏览返修业务列表",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/rework_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreReworkCostNew",
-                    Title = "新增返修业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/rework_cost_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreReworkCostEdit",
-                    Title = "编辑返修业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/rework_cost_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreReworkCostDelete",
-                    Title = "删除返修业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/rework_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWasteCostView",
-                    Title = "浏览废弃业务列表",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWasteCostNew",
-                    Title = "新增废弃业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_cost_new.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWasteCostEdit",
-                    Title = "编辑废弃业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_cost_edit.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWasteCostDelete",
-                    Title = "删除废弃业务",
-                    GroupName = "品质业务",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_cost.aspx",
-                },
-                new Adm_Power
-                {
-                    Name = "CoreWasteCostInport",
-                    Title = "导入废弃业务",
-                    GroupName = "导入管理",
-                    NavigateUrl="~/Lf_Manufacturing/QM/cost/waste_input.aspx",
-                },
-
-                new Adm_Power
-                {
-                    Name = "CoreKitInput",
-                    Title = "导入权限",
-                    GroupName = "通用权限"
-                },
-                new Adm_Power
-                {
-                    Name = "CoreKitOutput",
-                    Title = "输出权限",
-                    GroupName = "通用权限"
-                },
-                new Adm_Power
-                {
-                    Name = "CoreKitPrint",
-                    Title = "打印权限",
-                    GroupName = "通用权限"
-                },
-                new Adm_Power
-                {
-                    Name = "CoreKitDesgin",
-                    Title = "打印设计",
-                    GroupName = "通用权限"
-                },
-                new Adm_Power
-                {
-                    Name = "CoreKitSetup",
-                    Title = "打印维护",
-                    GroupName = "通用权限"
-                },
-            };
-
-            return Adm_Powers;
+            return BatchAdd_Powers;
         }
 
         private static List<Adm_Role> GetAdm_Roles()
@@ -5081,22 +2059,134 @@ namespace LeanFine
 
         private static List<Adm_User> GetAdm_Users()
         {
-            var Adm_Users = new List<Adm_User>
-            {
+            string[] USER_NAMES = {
+                "101818","isamu.hara@teac.com.cn","男","原　功","ISAMU,HARA","总经室","董事长总经理","2","Qsd68FHh",
+                "100008","ye@teac.com.cn","男","黄烨","HUANG ZUO","制造技术课","课长","18","aAp8Ly26",
+                "100015","dudp@teac.com.cn","男","杜东平","DU DONG PING","制造技术课","工程师","18","ohFjmaL9",
+                "100026","lihua@teac.com.cn","男","李华","LI HUA","制造技术课","工程师","18","whIozKvz",
+                "100081","xf@teac.com.cn","男","肖飞","XIAO FEI","制造技术课","股长","18","z36FxAkl",
+                "100487","whf@teac.com.cn","男","吴海峰","WU HAI FENG","制造技术课","股长","18","GONQwcbO",
+                "100505","pzy@teac.com.cn","男","庞祖艺","PANG ZU YI","制造技术课","工程师","18","I96HekJf",
+                "101126","peng08@teac.com.cn","男","欧阳必贵","OU YANG BI GUI","制造技术课","工程师","18","vpyN4QMu",
+                "208580","peng01@teac.com.cn","女","梁嘉敏","LIANG JIA MIN","制造技术课","专员","18","2uebrwJT",
+                "100765","wyc@teac.com.cn","男","韦永初","WEI YONG CHU","制一课","股长","16","5UPoYmf9",
+                "200008","lilin@teac.com.cn","女","李林","LI LIN","制一课","课长","16","oyhhCofX",
+                "200108","seizou05@teac.com.cn","女","黄金蓉","HUANG JIN RONG","制一课","班长","16","EO3PBL7t",
+                "201699","seizou01@teac.com.cn","女","罗小云","LUO XIAO YUN","制一课","专员","16","HeTCnmSh",
+                "203551","seizou04@teac.com.cn","女","范丽赞","FAN LI ZAN","制一课","班长","16","r3zP4BpI",
+                "203676","seizou08@teac.com.cn","女","黄叶建","HUANG YE JIAN","制一课","班长","16","jtItsNNP",
+                "204370","seizou08@teac.com.cn","女","李双莲","LI SHUANG LIAN","制一课","副班长","16","GlKU01vB",
+                "204569","seizou11@teac.com.cn","女","郑卫","ZHENG WEI","制一课","班长","16","6vQLa5g7",
+                "208036","seizou08@teac.com.cn","女","李美军","LI MEI JUN","制一课","副班长","16","53VJll8W",
+                "208821","seizou07@teac.com.cn","女","廖新月","LIAO XINYUE","制一课","事务员","16","7dH67EKq",
+                "100046","mkl@teac.com.cn","男","孟克亮","MENG KE LIANG","制二课","经理","17","liTkHIGs",
+                "100086","txy@teac.com.cn","男","童小禹","TONG XIAO YU","制二课","课长","17","Ty6VfC8D",
+                "100119","smtdjj@teac.com.cn","男","董家驹","DONG JIA JU","制二课","股长","17","mUkJAwcR",
+                "100240","ai@teac.com.cn","男","陈冠宇","CHEN GUAN YU","制二课","工程师","17","c6GSdLx1",
+                "200030","lxy@teac.com.cn","女","梁小燕","LIANG XIAO YAN","制二课","班长","17","jQhF4oIO",
+                "200031","zxh@teac.com.cn","女","赵小洪","ZHAO XIAO HONG","制二课","股长","17","UBF2bT1f",
+                "200144","lqt@teac.com.cn","女","李群田","LI QUN TIAN","制二课","股长","17","E37ERMpB",
+                "200173","smt@teac.com.cn","女","黄首英","HUANG SHOU YING","制二课","班长","17","Iwt1hJTY",
+                "208898","seizou13@teac.com.cn","女","何莹","HE YING","制二课","事务员","17","CddkJwTM",
+                "206474","seizou12@teac.com.cn","女","周凤妹","ZHOU FENG MEI","制二课","副班长","17","mPErgMET",
+                "207930","smt2@teac.com.cn","女","陈娟","CHEN JUAN","制二课","工程师","17","2GHCRJVj",
+                "100335","iqc4@teac.com.cn","男","张路堂","ZHANG LU TANG","受检课","股长","22","GFndc4YS",
+                "201477","hxy@teac.com.cn","女","侯小英","HOU XIAO YING","受检课","工程师","22","LfKDqUyz",
+                "208870","dtaiqc@teac.com.cn","女","钟芳芳","ZHONG FANGFANG","受检课","事务员","22","0hTslbmI",
+                "100035","he@teac.com.cn","男","何冰荷","HE BING HE","生管课","经理","10","PeF9KGqx",
+                "200213","linbi.hu@teac.com.cn","女","胡林碧","HU LIN BI","生管课","课长","10","TtTxQOIF",
+                "200756","selina@teac.com.cn","女","覃艳周","ZUO YAN ZHOU","生管课","课长","10","jR6kHTPi",
+                "207703","seikan7@teac.com.cn","女","覃华程","QIN HUACHENG","生管课","专员","10","3sLx82fv",
+                "200756","seikan9@teac.com.cn","女","王花香","WANG HUAXIANG","生管课","专员","10","HXXncQY4",
+                "101165","s.matsu@teac.com.cn","男","松山　智","SATOSHI,MATSUYAMA","生产革新本部","本部长","2","hRgUhS4H",
+                "103843","kohei.tomikawa@teac.com.cn","男","富川　皓平","KOHEI,TOMIKAWA","生产革新本部","经理","14","eQK6t9Uo",
+                "100009","xie@teac.com.cn","男","谢益浪","XIE YI LANG","品管课","课长","23","y5hgApNE",
+                "100030","jinhuiw@teac.com.cn","男","王津辉","WANG JIN HUI","品管课","经理","23","e3EiaX6L",
+                "100386","zyt@teac.com.cn","男","钟英堂","ZHONG YING TANG","品管课","股长","23","PABSVVAH",
+                "208138","dtaqa@teac.com.cn","女","谭汉仙","TAN HAN XIAN","品管课","专员","23","rnFFy8pG",
+                "208430","dtaqa@teac.com.cn","女","黄建玲","HUANG JIAN LING","品管课","检查员","23","VfDQOS8n",
+                "100014","pengshengfu@teac.com.cn","男","彭胜甫","PENG SHENG FU","技术课","工程师","20","4qcqPp3p",
+                "100091","souryoufuku@teac.com.cn","男","宋良福","SONG LIANG FU","技术课","经理","20","FTLlVl4n",
+                "100474","luke@teac.com.cn","男","胡木儿","HU MU ER","技术课","课长","20","WlYl3771",
+                "100784","hwei@teac.com.cn","男","黄伟","HUANG WEI","技术课","股长","20","hVjBLNsd",
+                "100877","liyj@teac.com.cn","男","李永金","LI YONG JIN","技术课","股长","20","mYs0Ho9w",
+                "103383","jian.he@teac.com.cn","男","何健","HE JIAN","技术课","工程师","20","lxibt4IQ",
+                "100238","florencelei@teac.com.cn","男","雷朝富","LEI CHAO FU","电脑课","工程师","6","iWwmLtmw",
+                "100313","davische@teac.com.cn","男","程建红","CHENG JIAN HONG","电脑课","课长","6","nOfFbS2X",
+                "208508","pur09@teac.com.cn","女","阮小琼","RUAN XIAOQIONG","采购课","事务员","13","qb9oenIz",
+                "100057","yxf@teac.com.cn","男","杨详锋","YANG XIANG FENG","采购课","专员","13","UmpbnKax",
+                "200116","sym@teac.com.cn","女","苏燕梅","SU YAN MEI","采购课","专员","13","pQkeOsCL",
+                "200309","panhui@teac.com.cn","女","潘慧","PAN HUI","采购课","课长","13","4IwlV9xo",
+                "201168","zsy@teac.com.cn","女","钟时云","ZHONG SHI YUN","采购课","股长","13","BwrKvMe4",
+                "201692","joyce@teac.com.cn","女","李晚霞","LI WAN XIA","采购课","副理","13","pCaEbXvB",
+                "100112","bukan04@teac.com.cn","男","王上初","WANG SHANG CHU","部管课","专员","11","VlGy53Da",
+                "100121","bukan03@teac.com.cn","男","韦文斌","WEI WEN BIN","部管课","专员","11","rMM0U5rV",
+                "100722","bukan05@teac.com.cn","男","胡选杰","HU XUAN JIE","部管课","专员","11","1oxg9VWx",
+                "203937","bukan01@teac.com.cn","女","王晓玲","WANG XIAO LING","部管课","股长","11","cE2F2GGc",
+                "S0140","takeharu.koga@sol.teaconkyo.jp","男","古閑　丈晴","TAKEHARU,KOGA","TSS アプリケーションシステム 2部","マネジャー","25","cQk9UTUJ",
+                "S3199","toshimasa.hirano@sol.teaconkyo.jp","男","平野　利昌","TOSHIMASA,HIRANO","TSS アプリケーションシステム 2部","TSS","25","hF2dHkSL",
+                "S3276","shinya.takahashi@sol.teaconkyo.jp","男","高橋　慎也","SHINYA,TAKAHASHI","TSS アプリケーションシステム 2部","TSS","25","bXdaH1cR",
+                "S3597","masayuki.yamanaka@sol.teaconkyo.jp","男","山中　正行","MASAYUKI,YAMANAKA","TSS アプリケーションシステム 2部","部长","25","utWzUGQT",
+                "E3181","fujio.okabe@teac.jp","男","岡部　不二雄","FUJIO,OKABE","TCS サービス部 情報サービス課","TCJ","24","FRWOwPRU",
+                "E3750","mitsuru.matsumoto@teac.jp","男","松本　充","MITSURU,MATSUMOTO","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","F0fuWcWL",
+                "E3784","norio.matsuura@teac.jp","男","松浦　教夫","NORIO,MATSUURA","開発統括部","部长","24","c8eRtQHm",
+                "E3850","satoshi.1.nakamura@teac.jp","男","中村　聡之","SATOSHI,NAKAMURA","TCJ 開発本部 開発管理部 生産技術課","主任","24","4YEtMU7W",
+                "E3951","takeshi.miyagi@teac.jp","男","宮城　剛","TAKESHI,MIYAGI","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","0yNm81Ln",
+                "E3989","yuhi.tokita@teac.jp","男","鴇田　雄飛","YUHI,TOKITA","TCJ 開発本部 開発管理部 生産技術課","课长","24","rJTdIKq3",
+                "E4291","yoshiki.fujino@teac.jp","男","藤野　凱城","YOSHIKI,FUJINO","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","vJksyfAG",
+                "E7923","michiko.sato@teac.jp","女","佐藤　美智子","MICHIKO,SATO","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","B7QMC4nV",
+                "E9470","mikiko.narita@teac.jp","女","成田　幹子","MIKIKO,NARITA","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","UYC6DQYd",
+                "E3708","atsushi.yamanaka@teac.jp","男","山中　敦司","ATSUSHI,YAMANAKA","TCJ 開発本部 開発管理部 生産技術課","主任","24","PHEoN5vL",
+                "E4253","hiroya.sano@teac.jp","男","佐野　博也","HIROYA,SANO","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","6LzEwHsc",
+                "E4329","yuya.horichi@teac.jp","男","堀地　悠矢","HORICHI,YUYA","TCJ 開発本部 開発管理部 生産技術課","TCJ","24","6aXJCALO",
+ };
+            //string[] EMAIL_NAMES = { "qq.com", "gmail.com", "163.com", "126.com", "outlook.com", "foxmail.com" };
+
+            var users = new List<Adm_User>();
+            var rdm = new Random();
             // 添加超级管理员
-            new Adm_User
+            users.Add(new Adm_User
             {
                 Name = "admin",
                 Gender = "男",
                 Password = PasswordUtil.CreateDbPassword("admin"),
                 ChineseName = "超级管理员",
+                EnglishName = "Supervisor",
                 Email = "itsup@teac.com.cn",
                 Enabled = true,
-
+                Address = "电脑课",
+                Remark = "管理员",
                 CreateDate = DateTime.Now
-            },
-        };
-            return Adm_Users;
+            });
+            //添加其它用户
+            for (int i = 0, count = USER_NAMES.Length; i < count; i += 9)
+            {
+                string strName = USER_NAMES[i];
+                string strMail = USER_NAMES[i + 1];
+                string strPwd = USER_NAMES[i + 8];
+                string strGender = USER_NAMES[i + 2];
+                string strChineseName = USER_NAMES[i + 3];
+                string strEnglishName = USER_NAMES[i + 4];
+                string strAddress = USER_NAMES[i + 5];
+                string strRemark = USER_NAMES[i + 6];
+                string strDeptID = USER_NAMES[i + 7];
+
+                users.Add(new Adm_User
+                {
+                    Name = strName,
+                    Gender = strGender,
+                    Password = PasswordUtil.CreateDbPassword(strPwd),
+                    ChineseName = strChineseName,
+                    EnglishName = strEnglishName,
+                    Email = strMail,
+                    Address = strAddress,
+                    Remark = strRemark,
+                    Enabled = true,
+                    CreateDate = DateTime.Now
+                });
+            }
+
+            return users;
         }
 
         private static List<Adm_Dept> GetAdm_Depts()
@@ -5196,7 +2286,7 @@ namespace LeanFine
                              },
                             new Adm_Dept
                             {
-                                Name = "生产改善推进本部",
+                                Name = "生产革新本部",
                                 SortIndex = 6,
                                 Remark = "二级部门",
                                 Children = new List<Adm_Dept>
@@ -5275,7 +2365,7 @@ namespace LeanFine
                             },
                             new Adm_Dept
                             {
-                                Name = "TOS",
+                                Name = "TSS",
                                 SortIndex = 8,
                                 Remark = "二级部门"
                             }
@@ -5292,7 +2382,7 @@ namespace LeanFine
                 new Adm_Config
                 {
                     ConfigKey= "Adm_Title",
-                    ConfigValue= "Lean365（LeanFine）",
+                    ConfigValue= "Lean365(LeanFine)",
                     Remark = "网站的标题"
                 },
                 new Adm_Config
@@ -5310,13 +2400,13 @@ namespace LeanFine
                 new Adm_Config
                 {
                     ConfigKey= "Theme",
-                    ConfigValue= "Cupertino",
+                    ConfigValue= "pure_blue",
                     Remark = "网站主题"
                 },
                 new Adm_Config
                 {
                     ConfigKey= "HelpList",
-                    ConfigValue= "[{\"Text\":\"日程\",\"Icon\":\"Calendar\",\"ID\":\"schedule\",\"URL\":\"~/Lf_Office/EM/schedule.aspx \"},{\"Text\":\"科学计算器\",\"Icon\":\"Calculator\",\"ID\":\"jisuanqi\",\"URL\":\"~/Lf_Admin/help/jisuanqi.htm\"},{\"Text\":\"系统帮助\",\"Icon\":\"Help\",\"ID\":\"help\",\"URL\":\"~/Lf_Admin/help/help_map.aspx\"}]",
+                    ConfigValue= "[{\"Text\":\"科学计算器\",\"Icon\":\"Calculator\",\"ID\":\"jisuanqi\",\"URL\":\"~/Lf_Admin/help/jisuanqi.htm\"},{\"Text\":\"系统帮助\",\"Icon\":\"Help\",\"ID\":\"help\",\"URL\":\"~/Lf_Admin/help/help_map.aspx\"}]",
                     Remark = "帮助下拉列表的JSON字符串"
                 }
             };
@@ -5342,7 +2432,7 @@ namespace LeanFine
                     Fax="+86 769 8554 4276",
                     Postalcode="823867",
                     Email="dta@abc.com.cn",
-                    OrgCode="478512245555555555",
+                    OrgCode="914419006174784779",
                     Corporate="yame rino",
                     ProvinceId="44",
                     CityId="441900000000",
@@ -5357,8 +2447,8 @@ namespace LeanFine
                     SortCode=1,
                     isDeleted=0,
                     isEnabled=0,
-                    Slogan="グロバール企業としてのプライドを持ちQCDSへの限りない挑戦。",
-                    EnSlogan="グロバール企業としてのプライドを持ちQCDSへの限りない挑戦。",
+                    Slogan="无限挑战QCDS成为全球企业的骄傲。",
+                    EnSlogan="Our pride is being a global manufacture with the continuous QCDS challenge.",
                     JpSlogan="グロバール企業としてのプライドを持ちQCDSへの限りない挑戦。",
                     Remark="后台添加",
                     CreateDate  =DateTime.Now,
@@ -6061,1363 +3151,2030 @@ namespace LeanFine
             return Pp_Defect_Codes;
         }
 
-        private static List<Pp_Line> GetPp_Lines()
+        private static List<Adm_Dict> GetAdm_Dicts()
         {
-            var Pp_Lines = new List<Pp_Line>()
+            string[] Add_Items = {"app_article_status","发布","1","1","文章状态列表(apparticle_status):发布",
+"app_article_status","草稿","2","1","文章状态列表(apparticle_status):草稿",
+"app_cause_type","组立","A","1","原因类别清单列表(appcause_type):组立",
+"app_cause_type","PCBA","P","1","原因类别清单列表(appcause_type):PCBA",
+"app_cause_type","QA","Q","1","原因类别清单列表(appcause_type):QA",
+"app_cause_type","停线","S","1","原因类别清单列表(appcause_type):停线",
+"app_cond_shipment","托盘","1","1","装运条件列表(la_cond_shipment):托盘",
+"app_cond_shipment","液体形式","2","1","装运条件列表(la_cond_shipment):液体形式",
+"app_cost_type","管理","A","1","成本类别列表(la_cost_type):管理",
+"app_cost_type","制造","M","1","成本类别列表(la_cost_type):制造",
+"app_cost_type","综合","C","1","成本类别列表(la_cost_type):综合",
+"app_ec_mgtype","全仕向","1","1","管理区分列表(appec_mgtype):全仕向",
+"app_ec_mgtype","部管","2","1","管理区分列表(appec_mgtype):部管",
+"app_ec_mgtype","内部","3","1","管理区分列表(appec_mgtype):内部",
+"app_ec_mgtype","技术","4","1","管理区分列表(appec_mgtype):技术",
+"app_ec_status","活动","Active","1","设变状态列表(appec_status):活动",
+"app_ec_status","不活动","InActive","1","设变状态列表(appec_status):不活动",
+"app_ec_status","发行","Issued","1","设变状态列表(appec_status):发行",
+"app_ec_status","生产中","InProduction","1","设变状态列表(appec_status):生产中",
+"app_ec_status","固定","Fixed","1","设变状态列表(appec_status):固定",
+"app_ec_status","等待","Pending","1","设变状态列表(appec_status):等待",
+"app_ec_status","拒绝","Rejected","1","设变状态列表(appec_status):拒绝",
+"app_eol_type","MQ","MQ","1","停止标记列表(appeol_type):MQ",
+"app_et_type","电脑网络","AA","1","专业辞典类别列表(appet_type):电脑网络",
+"app_et_type","机械电子","AB","1","专业辞典类别列表(appet_type):机械电子",
+"app_et_type","电信通讯","AC","1","专业辞典类别列表(appet_type):电信通讯",
+"app_et_type","化工","AD","1","专业辞典类别列表(appet_type):化工",
+"app_et_type","医药卫生","AE","1","专业辞典类别列表(appet_type):医药卫生",
+"app_et_type","法律","AF","1","专业辞典类别列表(appet_type):法律",
+"app_et_type","经济","AG","1","专业辞典类别列表(appet_type):经济",
+"app_et_type","商业贸易","AH","1","专业辞典类别列表(appet_type):商业贸易",
+"app_et_type","金融保险","AI","1","专业辞典类别列表(appet_type):金融保险",
+"app_et_type","股票证券","AJ","1","专业辞典类别列表(appet_type):股票证券",
+"app_et_type","交通运输","AK","1","专业辞典类别列表(appet_type):交通运输",
+"app_et_type","工程建筑","AL","1","专业辞典类别列表(appet_type):工程建筑",
+"app_et_type","地质","AM","1","专业辞典类别列表(appet_type):地质",
+"app_et_type","航海","AN","1","专业辞典类别列表(appet_type):航海",
+"app_et_type","治金","AO","1","专业辞典类别列表(appet_type):治金",
+"app_et_type","能源","AP","1","专业辞典类别列表(appet_type):能源",
+"app_et_type","生物","AQ","1","专业辞典类别列表(appet_type):生物",
+"app_et_type","纺织服装","AR","1","专业辞典类别列表(appet_type):纺织服装",
+"app_et_type","农牧林","AS","1","专业辞典类别列表(appet_type):农牧林",
+"app_et_type","水利","AT","1","专业辞典类别列表(appet_type):水利",
+"app_et_type","摄影","AU","1","专业辞典类别列表(appet_type):摄影",
+"app_et_type","外语考试","AV","1","专业辞典类别列表(appet_type):外语考试",
+"app_et_type","化学","AW","1","专业辞典类别列表(appet_type):化学",
+"app_et_type","外贸进出口","AX","1","专业辞典类别列表(appet_type):外贸进出口",
+"app_et_type","餐饮食品","AY","1","专业辞典类别列表(appet_type):餐饮食品",
+"app_et_type","地理","AZ","1","专业辞典类别列表(appet_type):地理",
+"app_et_type","旅游","BA","1","专业辞典类别列表(appet_type):旅游",
+"app_et_type","文学","BB","1","专业辞典类别列表(appet_type):文学",
+"app_et_type","历史","BC","1","专业辞典类别列表(appet_type):历史",
+"app_et_type","航空航天","BD","1","专业辞典类别列表(appet_type):航空航天",
+"app_et_type","环境气候","BE","1","专业辞典类别列表(appet_type):环境气候",
+"app_et_type","数学","BF","1","专业辞典类别列表(appet_type):数学",
+"app_et_type","物理","BG","1","专业辞典类别列表(appet_type):物理",
+"app_et_type","汽车","BH","1","专业辞典类别列表(appet_type):汽车",
+"app_et_type","印刷出版","BI","1","专业辞典类别列表(appet_type):印刷出版",
+"app_et_type","影音电器","BJ","1","专业辞典类别列表(appet_type):影音电器",
+"app_et_type","运动","BK","1","专业辞典类别列表(appet_type):运动",
+"app_line_type","P","P","1","班组类别列表(appline_type):P",
+"app_line_type","M","M","1","班组类别列表(appline_type):M",
+"app_line_type","Q","Q","1","班组类别列表(appline_type):Q",
+"app_line_type","O","O","1","班组类别列表(appline_type):O",
+"app_mats_group","其他","ZZY","1","物料组列表(appmats_group):其他",
+"app_mats_group","LCD","FEL","1","物料组列表(appmats_group):LCD",
+"app_mats_group","成品","ZZZ","1","物料组列表(appmats_group):成品",
+"app_mats_group","电子材料类","ELM","1","物料组列表(appmats_group):成品",
+"app_mats_group","光学材料","OPM","1","物料组列表(appmats_group):电子材料类",
+"app_mats_group","塑胶材料","PLM","1","物料组列表(appmats_group):成品光学材料",
+"app_mats_group","金属材料","MEM","1","物料组列表(appmats_group):成品塑胶材料",
+"app_mats_group","包装材料","PKG","1","物料组列表(appmats_group):成品金属材料",
+"app_mats_group","辅助材料","AUM","1","物料组列表(appmats_group):成品包装材料",
+"app_mats_group","半成品","WIP","1","物料组列表(appmats_group):成品辅助材料",
+"app_mats_group","其它材料","OTM","1","物料组列表(appmats_group):成品半成品",
+"app_mats_group","润滑油","AVF","1","物料组列表(appmats_group):成品其它材料",
+"app_mats_group","油","AVO","1","物料组列表(appmats_group):成品润滑油",
+"app_mats_group","螺丝","BAA","1","物料组列表(appmats_group):成品油",
+"app_mats_group","图纸","DDD","1","物料组列表(appmats_group):成品螺丝",
+"app_mats_group","传感器","EBB","1","物料组列表(appmats_group):成品图纸",
+"app_mats_group","连接器","ECB","1","物料组列表(appmats_group):成品传感器",
+"app_mats_type","原材料","ROH","1","物料类别列表(appmats_type):原材料",
+"app_mats_type","成品","FERT","1","物料类别列表(appmats_type):成品",
+"app_mats_type","半成品","HALB","1","物料类别列表(appmats_type):半成品",
+"app_mats_type","外部采购物料 ","FREM","1","物料类别列表(appmats_type):外部采购物料 ",
+"app_mats_type","加工物料","PROC","1","物料类别列表(appmats_type):加工物料",
+"app_mats_type","贸易货物","TRGO","1","物料类别列表(appmats_type):贸易货物",
+"app_mats_type","经营供应","SUPP","1","物料类别列表(appmats_type):经营供应",
+"app_mats_type","辅助材料","AUMA","1","物料类别列表(appmats_type):辅助材料",
+"app_mo_state","已完工","0","1","工单状态(appmo_state):已完工",
+"app_mo_state","未完工","1","1","工单状态(appmo_state):未完工",
+"app_mo_type","组立工单","ZDTA","1","生产订单类型列表(appmo_type):组立工单",
+"app_mo_type","组立改修","ZDTB","1","生产订单类型列表(appmo_type):组立改修",
+"app_mo_type","组立试产","ZDTC","1","生产订单类型列表(appmo_type):组立试产",
+"app_mo_type","PCBA工单","ZDTD","1","生产订单类型列表(appmo_type):PCBA工单",
+"app_mo_type","PCBA改修","ZDTE","1","生产订单类型列表(appmo_type):PCBA改修",
+"app_mo_type","PCBA试产","ZDTF","1","生产订单类型列表(appmo_type):PCBA试产",
+"app_mo_type","组立服务","ZDTG","1","生产订单类型列表(appmo_type):组立服务",
+"app_mo_type","PCBA服务","ZDTH","1","生产订单类型列表(appmo_type):PCBA服务",
+"app_move_type","GR 收货","101","1","移动类型列表(la_move_type):GR 收货",
+"app_move_type","为采购订单的收货冲销","102","1","移动类型列表(la_move_type):为采购订单的收货冲销",
+"app_move_type","进入冻结库存的收货","103","1","移动类型列表(la_move_type):进入冻结库存的收货",
+"app_move_type","到冻结冲销的收货","104","1","移动类型列表(la_move_type):到冻结冲销的收货",
+"app_move_type","来自冻结库存的收货","105","1","移动类型列表(la_move_type):来自冻结库存的收货",
+"app_move_type","来自冻结的收货冲销","106","1","移动类型列表(la_move_type):来自冻结的收货冲销",
+"app_move_type","评估冻结库存的收货","107","1","移动类型列表(la_move_type):评估冻结库存的收货",
+"app_move_type","冻结评估冲销的收货","108","1","移动类型列表(la_move_type):冻结评估冲销的收货",
+"app_move_type","冻结库存评估的收货","109","1","移动类型列表(la_move_type):冻结库存评估的收货",
+"app_move_type","冻结冲销评估的收货","110","1","移动类型列表(la_move_type):冻结冲销评估的收货",
+"app_move_type","收货后续调整","121","1","移动类型列表(la_move_type):收货后续调整",
+"app_move_type","RE 向供应商退货","122","1","移动类型列表(la_move_type):RE 向供应商退货",
+"app_move_type","RE退货供应商冲销","123","1","移动类型列表(la_move_type):RE退货供应商冲销",
+"app_move_type","收货退给冻结库存","124","1","移动类型列表(la_move_type):收货退给冻结库存",
+"app_move_type","收货退给冻结库存冲销","125","1","移动类型列表(la_move_type):收货退给冻结库存冲销",
+"app_move_type","收货","131","1","移动类型列表(la_move_type):收货",
+"app_move_type","收货","132","1","移动类型列表(la_move_type):收货",
+"app_move_type","收货后续调整","141","1","移动类型列表(la_move_type):收货后续调整",
+"app_move_type","收货后续调整","142","1","移动类型列表(la_move_type):收货后续调整",
+"app_move_type","收货退货","161","1","移动类型列表(la_move_type):收货退货",
+"app_move_type","收货退给冲销","162","1","移动类型列表(la_move_type):收货退给冲销",
+"app_move_type","有关成本中心的发货","201","1","移动类型列表(la_move_type):有关成本中心的发货",
+"app_move_type","有关成本中心的收货","202","1","移动类型列表(la_move_type):有关成本中心的收货",
+"app_move_type","有关项目的发货","221","1","移动类型列表(la_move_type):有关项目的发货",
+"app_move_type","有关项目的收货","222","1","移动类型列表(la_move_type):有关项目的收货",
+"app_move_type","销售订单的发货","231","1","移动类型列表(la_move_type):销售订单的发货",
+"app_move_type","销售订单的取消","232","1","移动类型列表(la_move_type):销售订单的取消",
+"app_move_type","有关资产的发货","241","1","移动类型列表(la_move_type):有关资产的发货",
+"app_move_type","有关资产的收货","242","1","移动类型列表(la_move_type):有关资产的收货",
+"app_move_type","有关销售的发货","251","1","移动类型列表(la_move_type):有关销售的发货",
+"app_move_type","有关销售的收货","252","1","移动类型列表(la_move_type):有关销售的收货",
+"app_move_type","有关订单的发货","261","1","移动类型列表(la_move_type):有关订单的发货",
+"app_move_type","有关订单的收货","262","1","移动类型列表(la_move_type):有关订单的收货",
+"app_move_type","有关网络的发货","281","1","移动类型列表(la_move_type):有关网络的发货",
+"app_move_type","有关网络的收货","282","1","移动类型列表(la_move_type):有关网络的收货",
+"app_move_type","发货的全部帐户分配","291","1","移动类型列表(la_move_type):发货的全部帐户分配",
+"app_move_type","收货的全部帐户分配","292","1","移动类型列表(la_move_type):收货的全部帐户分配",
+"app_move_type","TF工厂间的转移","301","1","移动类型列表(la_move_type):TF工厂间的转移",
+"app_move_type","TR 工厂间的转储","302","1","移动类型列表(la_move_type):TR 工厂间的转储",
+"app_move_type","TF 部件从库存到工厂","303","1","移动类型列表(la_move_type):TF 部件从库存到工厂",
+"app_move_type","TR 部件从库存到工厂","304","1","移动类型列表(la_move_type):TR 部件从库存到工厂",
+"app_move_type","TF厂内库存转储计划","305","1","移动类型列表(la_move_type):TF厂内库存转储计划",
+"app_move_type","TR厂内库存交易计划","306","1","移动类型列表(la_move_type):TR厂内库存交易计划",
+"app_move_type","TF转储采购物料到物料","309","1","移动类型列表(la_move_type):TF转储采购物料到物料",
+"app_move_type","TR转储采购物料到物料","310","1","移动类型列表(la_move_type):TR转储采购物料到物料",
+"app_move_type","TF 厂内移储","311","1","移动类型列表(la_move_type):TF 厂内移储",
+"app_move_type","TR 厂内转储","312","1","移动类型列表(la_move_type):TR 厂内转储",
+"app_move_type","TF部件从库到库存地","313","1","移动类型列表(la_move_type):TF部件从库到库存地",
+"app_move_type","TR 部件从库到库存地","314","1","移动类型列表(la_move_type):TR 部件从库到库存地",
+"app_move_type","TF库存地库存转储计划","315","1","移动类型列表(la_move_type):TF库存地库存转储计划",
+"app_move_type","TR库存地库存转储计划","316","1","移动类型列表(la_move_type):TR库存地库存转储计划",
+"app_move_type","创建结构化物料","317","1","移动类型列表(la_move_type):创建结构化物料",
+"app_move_type","RE创建结构物料","318","1","移动类型列表(la_move_type):RE创建结构物料",
+"app_move_type","拆分结构化物料","319","1","移动类型列表(la_move_type):拆分结构化物料",
+"app_move_type","RE拆分结构物料","320","1","移动类型列表(la_move_type):RE拆分结构物料",
+"app_move_type","TF质量到非限制","321","1","移动类型列表(la_move_type):TF质量到非限制",
+"app_move_type","TR 质量到非限制","322","1","移动类型列表(la_move_type):TR 质量到非限制",
+"app_move_type","TF 厂内质量","323","1","移动类型列表(la_move_type):TF 厂内质量",
+"app_move_type","工厂内传输请求质量","324","1","移动类型列表(la_move_type):工厂内传输请求质量",
+"app_move_type","TF厂内冻结","325","1","移动类型列表(la_move_type):TF厂内冻结",
+"app_move_type","TR厂内冻结","326","1","移动类型列表(la_move_type):TR厂内冻结",
+"app_move_type","GI 到样品质检","331","1","移动类型列表(la_move_type):GI 到样品质检",
+"app_move_type","RE 到样品质检","332","1","移动类型列表(la_move_type):RE 到样品质检",
+"app_move_type","GI 到采样非限制","333","1","移动类型列表(la_move_type):GI 到采样非限制",
+"app_move_type","RE 到采样非限制","334","1","移动类型列表(la_move_type):RE 到采样非限制",
+"app_move_type","发货到冻结的样品","335","1","移动类型列表(la_move_type):发货到冻结的样品",
+"app_move_type","RE 到采样冻结","336","1","移动类型列表(la_move_type):RE 到采样冻结",
+"app_move_type","批次重估","340","1","移动类型列表(la_move_type):批次重估",
+"app_move_type","TF 非限制到限制","341","1","移动类型列表(la_move_type):TF 非限制到限制",
+"app_move_type","TF 限制到非限制","342","1","移动类型列表(la_move_type):TF 限制到非限制",
+"app_move_type","TF冻结到非限制","343","1","移动类型列表(la_move_type):TF冻结到非限制",
+"app_move_type","TR 冻结到非限制","344","1","移动类型列表(la_move_type):TR 冻结到非限制",
+"app_move_type","TF 冻结到质检","349","1","移动类型列表(la_move_type):TF 冻结到质检",
+"app_move_type","TR 冻结到质检","350","1","移动类型列表(la_move_type):TR 冻结到质检",
+"app_move_type","TF 到在途库存","351","1","移动类型列表(la_move_type):TF 到在途库存",
+"app_move_type","TR 在途库存","352","1","移动类型列表(la_move_type):TR 在途库存",
+"app_move_type","TF库存地到库存地","411","1","移动类型列表(la_move_type):TF库存地到库存地",
+"app_move_type","TR库存地到库存地","412","1","移动类型列表(la_move_type):TR库存地到库存地",
+"app_move_type","TF库存地到销售订单","413","1","移动类型列表(la_move_type):TF库存地到销售订单",
+"app_move_type","TR库存地到销售订单","414","1","移动类型列表(la_move_type):TR库存地到销售订单",
+"app_move_type","TF 库存地到项目","415","1","移动类型列表(la_move_type):TF 库存地到项目",
+"app_move_type","TR 库存地到项目","416","1","移动类型列表(la_move_type):TR 库存地到项目",
+"app_move_type","TP 不受限制到受约束","441","1","移动类型列表(la_move_type):TP 不受限制到受约束",
+"app_move_type","TP 受约束到不受限制","442","1","移动类型列表(la_move_type):TP 受约束到不受限制",
+"app_move_type","发货退货","451","1","移动类型列表(la_move_type):发货退货",
+"app_move_type","收货退货(冲销)","452","1","移动类型列表(la_move_type):收货退货(冲销)",
+"app_move_type","总储备退回发出处","453","1","移动类型列表(la_move_type):总储备退回发出处",
+"app_move_type","总储备到退货","454","1","移动类型列表(la_move_type):总储备到退货",
+"app_move_type","TF库存转储退货","455","1","移动类型列表(la_move_type):TF库存转储退货",
+"app_move_type","TR库存转储退货","456","1","移动类型列表(la_move_type):TR库存转储退货",
+"app_move_type","TP 退货到自己质检","457","1","移动类型列表(la_move_type):TP 退货到自己质检",
+"app_move_type","TP 自己质检到退货","458","1","移动类型列表(la_move_type):TP 自己质检到退货",
+"app_move_type","TP 退货到自己冻结","459","1","移动类型列表(la_move_type):TP 退货到自己冻结",
+"app_move_type","TP 自己冻结到退货","460","1","移动类型列表(la_move_type):TP 自己冻结到退货",
+"app_move_type","无采购订单的收货","501","1","移动类型列表(la_move_type):无采购订单的收货",
+"app_move_type","无采购订单的RE收货","502","1","移动类型列表(la_move_type):无采购订单的RE收货",
+"app_move_type","收货到质检","503","1","移动类型列表(la_move_type):收货到质检",
+"app_move_type","RE收货到质检","504","1","移动类型列表(la_move_type):RE收货到质检",
+"app_move_type","收货到冻结","505","1","移动类型列表(la_move_type):收货到冻结",
+"app_move_type","RE收货到冻结","506","1","移动类型列表(la_move_type):RE收货到冻结",
+"app_move_type","免费交货","511","1","移动类型列表(la_move_type):免费交货",
+"app_move_type","无费用的RE交货","512","1","移动类型列表(la_move_type):无费用的RE交货",
+"app_move_type","无订单的收货","521","1","移动类型列表(la_move_type):无订单的收货",
+"app_move_type","RE无生产订单的收货","522","1","移动类型列表(la_move_type):RE无生产订单的收货",
+"app_move_type","无生产订单的QI收货","523","1","移动类型列表(la_move_type):无生产订单的QI收货",
+"app_move_type","RE无生产订单的质量","524","1","移动类型列表(la_move_type):RE无生产订单的质量",
+"app_move_type","无生产订单的冻结收货","525","1","移动类型列表(la_move_type):无生产订单的冻结收货",
+"app_move_type","RE无生产订单冻结","526","1","移动类型列表(la_move_type):RE无生产订单冻结",
+"app_move_type","副产品收货","531","1","移动类型列表(la_move_type):副产品收货",
+"app_move_type","RE副产品","532","1","移动类型列表(la_move_type):RE副产品",
+"app_move_type","发货仓库到转包库存","541","1","移动类型列表(la_move_type):发货仓库到转包库存",
+"app_move_type","RE 转包库存到仓库","542","1","移动类型列表(la_move_type):RE 转包库存到仓库",
+"app_move_type","GI 发货销售订单存货","543","1","移动类型列表(la_move_type):GI 发货销售订单存货",
+"app_move_type","GI 收货销售订单存货","544","1","移动类型列表(la_move_type):GI 收货销售订单存货",
+"app_move_type","副产品SC收货","545","1","移动类型列表(la_move_type):副产品SC收货",
+"app_move_type","GI 发货 SC 副产品","546","1","移动类型列表(la_move_type):GI 发货 SC 副产品",
+"app_move_type","发货报废","551","1","移动类型列表(la_move_type):发货报废",
+"app_move_type","RE报废","552","1","移动类型列表(la_move_type):RE报废",
+"app_move_type","发货报废质检","553","1","移动类型列表(la_move_type):发货报废质检",
+"app_move_type","收货报废质检","554","1","移动类型列表(la_move_type):收货报废质检",
+"app_move_type","GI报废冻结","555","1","移动类型列表(la_move_type):GI报废冻结",
+"app_move_type","RE报废冻结","556","1","移动类型列表(la_move_type):RE报废冻结",
+"app_move_type","GI调整转运","557","1","移动类型列表(la_move_type):GI调整转运",
+"app_move_type","GI调整转运","558","1","移动类型列表(la_move_type):GI调整转运",
+"app_move_type","库存余额的初始条目","561","1","移动类型列表(la_move_type):库存余额的初始条目",
+"app_move_type","RE初始条目库存余额","562","1","移动类型列表(la_move_type):RE初始条目库存余额",
+"app_move_type","初始条目库存余额:QI","563","1","移动类型列表(la_move_type):初始条目库存余额:QI",
+"app_move_type","RE库存余额输入:QI","564","1","移动类型列表(la_move_type):RE库存余额输入:QI",
+"app_move_type","库存余额输入:冻结","565","1","移动类型列表(la_move_type):库存余额输入:冻结",
+"app_move_type","RE库存余额条目：冻结","566","1","移动类型列表(la_move_type):RE库存余额条目：冻结",
+"app_move_type","收货装配","571","1","移动类型列表(la_move_type):收货装配",
+"app_move_type","RE 收货装配","572","1","移动类型列表(la_move_type):RE 收货装配",
+"app_move_type","收货 QI 装配","573","1","移动类型列表(la_move_type):收货 QI 装配",
+"app_move_type","RE 收货 QI 装配","574","1","移动类型列表(la_move_type):RE 收货 QI 装配",
+"app_move_type","收货冻结装配","575","1","移动类型列表(la_move_type):收货冻结装配",
+"app_move_type","RE 收货冻结装配","576","1","移动类型列表(la_move_type):RE 收货冻结装配",
+"app_move_type","收货副产品网络","581","1","移动类型列表(la_move_type):收货副产品网络",
+"app_move_type","RE 副产品    网络","582","1","移动类型列表(la_move_type):RE 副产品    网络",
+"app_move_type","GD发货: 交货","601","1","移动类型列表(la_move_type):GD发货: 交货",
+"app_move_type","RE交货冲销","602","1","移动类型列表(la_move_type):RE交货冲销",
+"app_move_type","TF 部件从库存到工厂","603","1","移动类型列表(la_move_type):TF 部件从库存到工厂",
+"app_move_type","TR 部件从库存到工厂","604","1","移动类型列表(la_move_type):TR 部件从库存到工厂",
+"app_move_type","TF厂内库存转储计划","605","1","移动类型列表(la_move_type):TF厂内库存转储计划",
+"app_move_type","TR厂内库存交易计划","606","1","移动类型列表(la_move_type):TR厂内库存交易计划",
+"app_move_type","创建字符串物料条件","617","1","移动类型列表(la_move_type):创建字符串物料条件",
+"app_move_type","FE 创建字符串物料条","618","1","移动类型列表(la_move_type):FE 创建字符串物料条",
+"app_move_type","组合字符串物料条件","619","1","移动类型列表(la_move_type):组合字符串物料条件",
+"app_move_type","FE 组合字符串物料条","620","1","移动类型列表(la_move_type):FE 组合字符串物料条",
+"app_move_type","GI返回式包装:借贷","621","1","移动类型列表(la_move_type):GI返回式包装:借贷",
+"app_move_type","GI返回式包装:退货","622","1","移动类型列表(la_move_type):GI返回式包装:退货",
+"app_move_type","GI发货:客户退货包装","623","1","移动类型列表(la_move_type):GI发货:客户退货包装",
+"app_move_type","GI收货:客户退货包装","624","1","移动类型列表(la_move_type):GI收货:客户退货包装",
+"app_move_type","GI寄售: 借贷","631","1","移动类型列表(la_move_type):GI寄售: 借贷",
+"app_move_type","GI寄售: 退货","632","1","移动类型列表(la_move_type):GI寄售: 退货",
+"app_move_type","GI发货: 客户寄售","633","1","移动类型列表(la_move_type):GI发货: 客户寄售",
+"app_move_type","GI收货: 客户寄售","634","1","移动类型列表(la_move_type):GI收货: 客户寄售",
+"app_move_type","TF托售出租","635","1","移动类型列表(la_move_type):TF托售出租",
+"app_move_type","TR寄售退货交货","636","1","移动类型列表(la_move_type):TR寄售退货交货",
+"app_move_type","TF 到在途库存","641","1","移动类型列表(la_move_type):TF 到在途库存",
+"app_move_type","TR 在途库存","642","1","移动类型列表(la_move_type):TR 在途库存",
+"app_move_type","TF 至跨公司间","643","1","移动类型列表(la_move_type):TF 至跨公司间",
+"app_move_type","TR 至跨公司间","644","1","移动类型列表(la_move_type):TR 至跨公司间",
+"app_move_type","TF 跨公司","645","1","移动类型列表(la_move_type):TF 跨公司",
+"app_move_type","TR 跨公司","646","1","移动类型列表(la_move_type):TR 跨公司",
+"app_move_type","TF 到在途库存","647","1","移动类型列表(la_move_type):TF 到在途库存",
+"app_move_type","TR 在途库存","648","1","移动类型列表(la_move_type):TR 在途库存",
+"app_move_type","GD退货  退回","651","1","移动类型列表(la_move_type):GD退货  退回",
+"app_move_type","GD退货  退货冲销","652","1","移动类型列表(la_move_type):GD退货  退货冲销",
+"app_move_type","GD 退货    非限制","653","1","移动类型列表(la_move_type):GD 退货    非限制",
+"app_move_type","GD 退货 非限制 冲销","654","1","移动类型列表(la_move_type):GD 退货 非限制 冲销",
+"app_move_type","GD 退货质检","655","1","移动类型列表(la_move_type):GD 退货质检",
+"app_move_type","GD 退货 QI 冲销","656","1","移动类型列表(la_move_type):GD 退货 QI 冲销",
+"app_move_type","GD 退货冻结","657","1","移动类型列表(la_move_type):GD 退货冻结",
+"app_move_type","GD 退货冻结冲销","658","1","移动类型列表(la_move_type):GD 退货冻结冲销",
+"app_move_type","GI向供应商退货","661","1","移动类型列表(la_move_type):GI向供应商退货",
+"app_move_type","RE退货到供应商冲销","662","1","移动类型列表(la_move_type):RE退货到供应商冲销",
+"app_move_type","TR 在途库存","671","1","移动类型列表(la_move_type):TR 在途库存",
+"app_move_type","TF 到在途库存","672","1","移动类型列表(la_move_type):TF 到在途库存",
+"app_move_type","TF 至跨公司间","673","1","移动类型列表(la_move_type):TF 至跨公司间",
+"app_move_type","TR 至跨公司间","674","1","移动类型列表(la_move_type):TR 至跨公司间",
+"app_move_type","TR 跨公司","675","1","移动类型列表(la_move_type):TR 跨公司",
+"app_move_type","TF 跨公司","676","1","移动类型列表(la_move_type):TF 跨公司",
+"app_move_type","TR 在途库存","677","1","移动类型列表(la_move_type):TR 在途库存",
+"app_move_type","TF 到在途库存","678","1","移动类型列表(la_move_type):TF 到在途库存",
+"app_move_type","TF GI1","6A1","1","移动类型列表(la_move_type):TF GI1",
+"app_move_type","TR GI1","6A2","1","移动类型列表(la_move_type):TR GI1",
+"app_move_type","TF CC GI1","6A3","1","移动类型列表(la_move_type):TF CC GI1",
+"app_move_type","TR CC GI1","6A4","1","移动类型列表(la_move_type):TR CC GI1",
+"app_move_type","TF CC GI1","6A5","1","移动类型列表(la_move_type):TF CC GI1",
+"app_move_type","TR CC GI1","6A6","1","移动类型列表(la_move_type):TR CC GI1",
+"app_move_type","TF GI1","6A7","1","移动类型列表(la_move_type):TF GI1",
+"app_move_type","TR GI1","6A8","1","移动类型列表(la_move_type):TR GI1",
+"app_move_type","TF GI2","6B1","1","移动类型列表(la_move_type):TF GI2",
+"app_move_type","TR GI2","6B2","1","移动类型列表(la_move_type):TR GI2",
+"app_move_type","TF CC GI2","6B3","1","移动类型列表(la_move_type):TF CC GI2",
+"app_move_type","TR CC GI2","6B4","1","移动类型列表(la_move_type):TR CC GI2",
+"app_move_type","TF CC GI2","6B5","1","移动类型列表(la_move_type):TF CC GI2",
+"app_move_type","TR CC GI2","6B6","1","移动类型列表(la_move_type):TR CC GI2",
+"app_move_type","TF GI2","6B7","1","移动类型列表(la_move_type):TF GI2",
+"app_move_type","TR GI2","6B8","1","移动类型列表(la_move_type):TR GI2",
+"app_move_type","TF GI2 托售","6K5","1","移动类型列表(la_move_type):TF GI2 托售",
+"app_move_type","TR GI2 托售","6K6","1","移动类型列表(la_move_type):TR GI2 托售",
+"app_move_type","TF GI1 托售","6W5","1","移动类型列表(la_move_type):TF GI1 托售",
+"app_move_type","TR GI1 托售","6W6","1","移动类型列表(la_move_type):TR GI1 托售",
+"app_move_type","GR实际盘点: 仓库","701","1","移动类型列表(la_move_type):GR实际盘点: 仓库",
+"app_move_type","GI实际盘点: 仓库","702","1","移动类型列表(la_move_type):GI实际盘点: 仓库",
+"app_move_type","GR 盘点: 质检","703","1","移动类型列表(la_move_type):GR 盘点: 质检",
+"app_move_type","GI 盘点: 质检","704","1","移动类型列表(la_move_type):GI 盘点: 质检",
+"app_move_type","收货实地盘存：已冻结","707","1","移动类型列表(la_move_type):收货实地盘存：已冻结",
+"app_move_type","发货盘存盘点：已冻结","708","1","移动类型列表(la_move_type):发货盘存盘点：已冻结",
+"app_move_type","GI存货差异: 仓库","711","1","移动类型列表(la_move_type):GI存货差异: 仓库",
+"app_move_type","GR存货差异: 仓库","712","1","移动类型列表(la_move_type):GR存货差异: 仓库",
+"app_move_type","GI存货差异:QI","713","1","移动类型列表(la_move_type):GI存货差异:QI",
+"app_move_type","GR存货差异: 质检","714","1","移动类型列表(la_move_type):GR存货差异: 质检",
+"app_move_type","GI存货差异: 退货","715","1","移动类型列表(la_move_type):GI存货差异: 退货",
+"app_move_type","GR存货差异: 退货","716","1","移动类型列表(la_move_type):GR存货差异: 退货",
+"app_move_type","GI存货差异: 冻结","717","1","移动类型列表(la_move_type):GI存货差异: 冻结",
+"app_move_type","GR存货差异: 冻结","718","1","移动类型列表(la_move_type):GR存货差异: 冻结",
+"app_move_type","销售评估含未影响盈余","721","1","移动类型列表(la_move_type):销售评估含未影响盈余",
+"app_move_type","销售评估不含影响盈余","722","1","移动类型列表(la_move_type):销售评估不含影响盈余",
+"app_move_type","销售评估含影响盈余","731","1","移动类型列表(la_move_type):销售评估含影响盈余",
+"app_move_type","销售评估不含影响盈余","732","1","移动类型列表(la_move_type):销售评估不含影响盈余",
+"app_move_type","GD发货: 交货","Y01","1","移动类型列表(la_move_type):GD发货: 交货",
+"app_move_type","RE交货冲销","Y02","1","移动类型列表(la_move_type):RE交货冲销",
+"app_move_type","TF 至跨公司间","Y43","1","移动类型列表(la_move_type):TF 至跨公司间",
+"app_move_type","TR 至跨公司间","Y44","1","移动类型列表(la_move_type):TR 至跨公司间",
+"app_move_type","GD 退货    非限制","Y53","1","移动类型列表(la_move_type):GD 退货    非限制",
+"app_move_type","GD 退货 非限制 冲销","Y54","1","移动类型列表(la_move_type):GD 退货 非限制 冲销",
+"app_move_type","TF 至跨公司间","Y73","1","移动类型列表(la_move_type):TF 至跨公司间",
+"app_move_type","TR 至跨公司间","Y74","1","移动类型列表(la_move_type):TR 至跨公司间",
+"app_move_type","合成分解：收货","Z01","1","移动类型列表(la_move_type):合成分解：收货",
+"app_move_type","合成分解：收货取消","Z02","1","移动类型列表(la_move_type):合成分解：收货取消",
+"app_move_type","资产清单","Z03","1","移动类型列表(la_move_type):资产清单",
+"app_move_type","资产库存取消","Z04","1","移动类型列表(la_move_type):资产库存取消",
+"app_move_type","废弃","Z05","1","移动类型列表(la_move_type):废弃",
+"app_move_type","废弃","Z06","1","移动类型列表(la_move_type):废弃",
+"app_move_type","样品收据","Z27","1","移动类型列表(la_move_type):样品收据",
+"app_move_type","取消样品收据","Z28","1","移动类型列表(la_move_type):取消样品收据",
+"app_move_type","耗材收据","Z29","1","移动类型列表(la_move_type):耗材收据",
+"app_move_type","取消耗材收据","Z30","1","移动类型列表(la_move_type):取消耗材收据",
+"app_move_type","废弃","Z31","1","移动类型列表(la_move_type):废弃",
+"app_move_type","废弃","Z32","1","移动类型列表(la_move_type):废弃",
+"app_move_type","废弃","Z33","1","移动类型列表(la_move_type):废弃",
+"app_move_type","废弃","Z34","1","移动类型列表(la_move_type):废弃",
+"app_move_type","事故逆转处理","Z35","1","移动类型列表(la_move_type):事故逆转处理",
+"app_move_type","取消事故恢复处理","Z36","1","移动类型列表(la_move_type):取消事故恢复处理",
+"app_move_type","促销（评估）","Z51","1","移动类型列表(la_move_type):促销（评估）",
+"app_move_type","取消促销（评估）","Z52","1","移动类型列表(la_move_type):取消促销（评估）",
+"app_move_type","促销（店面）","Z53","1","移动类型列表(la_move_type):促销（店面）",
+"app_move_type","取消促销（店内）","Z54","1","移动类型列表(la_move_type):取消促销（店内）",
+"app_move_type","促销（活动）","Z55","1","移动类型列表(la_move_type):促销（活动）",
+"app_move_type","取消促销（活动）","Z56","1","移动类型列表(la_move_type):取消促销（活动）",
+"app_move_type","广告费用","Z61","1","移动类型列表(la_move_type):广告费用",
+"app_move_type","取消广告费用","Z62","1","移动类型列表(la_move_type):取消广告费用",
+"app_move_type","招待费","Z63","1","移动类型列表(la_move_type):招待费",
+"app_move_type","取消招待费","Z64","1","移动类型列表(la_move_type):取消招待费",
+"app_move_type","服务费","Z65","1","移动类型列表(la_move_type):服务费",
+"app_move_type","取消服务费","Z66","1","移动类型列表(la_move_type):取消服务费",
+"app_move_type","处置损失","Z67","1","移动类型列表(la_move_type):处置损失",
+"app_move_type","处置损失取消","Z68","1","移动类型列表(la_move_type):处置损失取消",
+"app_move_type","服务费代理","Z69","1","移动类型列表(la_move_type):服务费代理",
+"app_move_type","取消服务费","Z70","1","移动类型列表(la_move_type):取消服务费",
+"app_move_type","已付运费","Z71","1","移动类型列表(la_move_type):已付运费",
+"app_move_type","付费取消","Z72","1","移动类型列表(la_move_type):付费取消",
+"app_move_type","费用差额货件","Z73","1","移动类型列表(la_move_type):费用差额货件",
+"app_move_type","取消差价","Z74","1","移动类型列表(la_move_type):取消差价",
+"app_move_type","库存减少（押金）","Z75","1","移动类型列表(la_move_type):库存减少（押金）",
+"app_move_type","库存减少（押金）取消","Z76","1","移动类型列表(la_move_type):库存减少（押金）取消",
+"app_move_type","库存增加（存款）","Z77","1","移动类型列表(la_move_type):库存增加（存款）",
+"app_move_type","取消库存增加（押金）","Z78","1","移动类型列表(la_move_type):取消库存增加（押金）",
+"app_move_type","临时库存增加","Z81","1","移动类型列表(la_move_type):临时库存增加",
+"app_move_type","临时库存增加取消","Z82","1","移动类型列表(la_move_type):临时库存增加取消",
+"app_move_type","临时减少库存","Z83","1","移动类型列表(la_move_type):临时减少库存",
+"app_move_type","临时库存减付取消","Z84","1","移动类型列表(la_move_type):临时库存减付取消",
+"app_move_type","累计库存的处置","Z85","1","移动类型列表(la_move_type):累计库存的处置",
+"app_move_type","取消累积库存处置","Z86","1","移动类型列表(la_move_type):取消累积库存处置",
+"app_move_type","减少库存","Z87","1","移动类型列表(la_move_type):减少库存",
+"app_move_type","库存减少取消","Z88","1","移动类型列表(la_move_type):库存减少取消",
+"app_move_type","库存增加","Z89","1","移动类型列表(la_move_type):库存增加",
+"app_move_type","库存增加取消","Z90","1","移动类型列表(la_move_type):库存增加取消",
+"app_move_type","包装和运输成本","Z91","1","移动类型列表(la_move_type):包装和运输成本",
+"app_move_type","取消包装和运输费用","Z92","1","移动类型列表(la_move_type):取消包装和运输费用",
+"app_move_type","合成分解：出站","Z93","1","移动类型列表(la_move_type):合成分解：出站",
+"app_move_type","合成分解：反向问题","Z94","1","移动类型列表(la_move_type):合成分解：反向问题",
+"app_move_type","服务费问题","Z95","1","移动类型列表(la_move_type):服务费问题",
+"app_move_type","取消服务费问题","Z96","1","移动类型列表(la_move_type):取消服务费问题",
+"app_move_type","服务费报销","Z97","1","移动类型列表(la_move_type):服务费报销",
+"app_move_type","取消服务费问题退款","Z98","1","移动类型列表(la_move_type):取消服务费问题退款",
+"app_move_type","迁移修复增加了","ZZ1","1","移动类型列表(la_move_type):迁移修复增加了",
+"app_move_type","减少迁移校正","ZZ3","1","移动类型列表(la_move_type):减少迁移校正",
+"app_move_type","对于库存增加 BI","ZZ5","1","移动类型列表(la_move_type):对于库存增加 BI",
+"app_move_type","用于减少库存 BI","ZZ7","1","移动类型列表(la_move_type):用于减少库存 BI",
+"app_notice_status","正常","0","1","通知状态列表(appnotice_status):正常",
+"app_notice_status","关闭","1","1","通知状态列表(appnotice_status):关闭",
+"app_notice_type","通知","1","1","通知类型列表(appnotice_type):通知",
+"app_notice_type","公告","2","1","通知类型列表(appnotice_type):公告",
+"app_phase_time","08:00~09:00","08:00~09:00","1","生产时段列表(appphase_time):08:00~09:00",
+"app_phase_time","09:00~10:00","09:00~10:00","1","生产时段列表(appphase_time):09:00~10:00",
+"app_phase_time","10:10~11:10","10:10~11:10","1","生产时段列表(appphase_time):10:10~11:10",
+"app_phase_time","11:10~12:10","11:10~12:10","1","生产时段列表(appphase_time):11:10~12:10",
+"app_phase_time","13:30~14:30","13:30~14:30","1","生产时段列表(appphase_time):13:30~14:30",
+"app_phase_time","14:30~15:30","14:30~15:30","1","生产时段列表(appphase_time):14:30~15:30",
+"app_phase_time","15:40~16:40","15:40~16:40","1","生产时段列表(appphase_time):15:40~16:40",
+"app_phase_time","16:40~17:40","16:40~17:40","1","生产时段列表(appphase_time):16:40~17:40",
+"app_phase_time","18:30~19:30","18:30~19:30","1","生产时段列表(appphase_time):18:30~19:30",
+"app_phase_time","19:30~20:30","19:30~20:30","1","生产时段列表(appphase_time):19:30~20:30",
+"app_phase_time","20:40~21:40","20:40~21:40","1","生产时段列表(appphase_time):20:40~21:40",
+"app_phase_time","21:40~22:40","21:40~22:40","1","生产时段列表(appphase_time):21:40~22:40",
+"app_phase_time","22:40~23:40","22:40~23:40","1","生产时段列表(appphase_time):22:40~23:40",
+"app_plant_list","DTA","C100","1","工厂列表列表(appplant_list):DTA",
+"app_plant_list","TAC","H100","1","工厂列表列表(appplant_list):TAC",
+"app_pur_group","C01","C01","1","采购组列表(apppur_group):C01",
+"app_pur_group","C02","C02","1","采购组列表(apppur_group):C02",
+"app_pur_group","C03","C03","1","采购组列表(apppur_group):C03",
+"app_pur_group","C04","C04","1","采购组列表(apppur_group):C04",
+"app_pur_group","C05","C05","1","采购组列表(apppur_group):C05",
+"app_pur_group","C06","C06","1","采购组列表(apppur_group):C06",
+"app_pur_group","C07","C07","1","采购组列表(apppur_group):C07",
+"app_pur_group","C08","C08","1","采购组列表(apppur_group):C08",
+"app_pur_group","C09","C09","1","采购组列表(apppur_group):C09",
+"app_pur_group","C10","C10","1","采购组列表(apppur_group):C10",
+"app_pur_group","C11","C11","1","采购组列表(apppur_group):C11",
+"app_pur_spec","虚设","50","1","特殊采购列表(apppur_spec):虚设",
+"app_pur_type","外部购买","F","1","采购类型列表(apppur_type):外部购买",
+"app_pur_type","自制生产","M","1","采购类型列表(apppur_type):自制生产",
+"app_pur_type","其他","P","1","采购类型列表(apppur_type):其他",
+"app_sloc_list","C001","C001","1","仓库清单列表(appsloc_list):C001",
+"app_sloc_list","C002","C002","1","仓库清单列表(appsloc_list):C002",
+"app_sloc_list","C003","C003","1","仓库清单列表(appsloc_list):C003",
+"app_sloc_list","C004","C004","1","仓库清单列表(appsloc_list):C004",
+"app_sloc_list","C005","C005","1","仓库清单列表(appsloc_list):C005",
+"app_sloc_list","C006","C006","1","仓库清单列表(appsloc_list):C006",
+"app_sloc_list","C007","C007","1","仓库清单列表(appsloc_list):C007",
+"app_sloc_list","C008","C008","1","仓库清单列表(appsloc_list):C008",
+"app_sloc_list","C009","C009","1","仓库清单列表(appsloc_list):C009",
+"app_sloc_list","C010","C010","1","仓库清单列表(appsloc_list):C010",
+"app_sloc_list","C011","C011","1","仓库清单列表(appsloc_list):C011",
+"app_sloc_list","C012","C012","1","仓库清单列表(appsloc_list):C012",
+"app_sloc_list","C013","C013","1","仓库清单列表(appsloc_list):C013",
+"app_sloc_list","C014","C014","1","仓库清单列表(appsloc_list):C014",
+"app_sloc_list","C015","C015","1","仓库清单列表(appsloc_list):C015",
+"app_sloc_list","C016","C016","1","仓库清单列表(appsloc_list):C016",
+"app_sloc_list","C017","C017","1","仓库清单列表(appsloc_list):C017",
+"app_sop_yn","是","1","1","SOP更新否列表(appsop_yn):是",
+"app_sop_yn","否","0","1","SOP更新否列表(appsop_yn):否",
+"app_terms_trade","工厂交货","EXW","1","贸易条件列表(la_terms_trade):工厂交货",
+"app_terms_trade","货交承运人","FCA","1","贸易条件列表(la_terms_trade):货交承运人",
+"app_terms_trade","船边交货","FAS","1","贸易条件列表(la_terms_trade):船边交货",
+"app_terms_trade","成本加运费","CFR","1","贸易条件列表(la_terms_trade):成本加运费",
+"app_terms_trade","成本、保险费加运费","CIF","1","贸易条件列表(la_terms_trade):成本、保险费加运费",
+"app_terms_trade","运费付至","CPT","1","贸易条件列表(la_terms_trade):运费付至",
+"app_terms_trade","运费和保险费","CIP","1","贸易条件列表(la_terms_trade):运费和保险费",
+"app_terms_trade","边境交货","DAF","1","贸易条件列表(la_terms_trade):边境交货",
+"app_terms_trade","目的港船上交货","DES","1","贸易条件列表(la_terms_trade):目的港船上交货",
+"app_terms_trade","目的港码头交货","DEQ","1","贸易条件列表(la_terms_trade):目的港码头交货",
+"app_terms_trade","未交税交货","DDU","1","贸易条件列表(la_terms_trade):未交税交货",
+"app_terms_trade","完税后交货","DDP","1","贸易条件列表(la_terms_trade):完税后交货",
+"app_val_type","原材料","Z300","1","评估类列表(la_val_type):原材料",
+"app_val_type","半成品","Z790","1","评估类列表(la_val_type):半成品",
+"app_val_type","成品","Z792","1","评估类列表(la_val_type):成品",
+"app_val_type","委外","Z793","1","评估类列表(la_val_type):委外",
+"app_val_type","外购","Z794","1","评估类列表(la_val_type):外购",
+"app_warehouse_location","5楼3024F","5楼3024F","1","仓库位置(appwarehouse_location):5楼3024F",
+"sys_ccy_type","港元","HKD","1","币种清单列表(sys_ccy_type):港元",
+"sys_ccy_type","澳门元","MOP","1","币种清单列表(sys_ccy_type):澳门元",
+"sys_ccy_type","人民币元","CNY","1","币种清单列表(sys_ccy_type):人民币元",
+"sys_ccy_type","朝鲜圆","KPW","1","币种清单列表(sys_ccy_type):朝鲜圆",
+"sys_ccy_type","越南盾","VND","1","币种清单列表(sys_ccy_type):越南盾",
+"sys_ccy_type","日圆","JPY","1","币种清单列表(sys_ccy_type):日圆",
+"sys_ccy_type","基普","LAK","1","币种清单列表(sys_ccy_type):基普",
+"sys_ccy_type","瑞尔","KHR","1","币种清单列表(sys_ccy_type):瑞尔",
+"sys_ccy_type","菲律宾比索","PHP","1","币种清单列表(sys_ccy_type):菲律宾比索",
+"sys_ccy_type","马元","MYR","1","币种清单列表(sys_ccy_type):马元",
+"sys_ccy_type","新加坡元","SGD","1","币种清单列表(sys_ccy_type):新加坡元",
+"sys_ccy_type","泰铢","THP","1","币种清单列表(sys_ccy_type):泰铢",
+"sys_ccy_type","缅元","BUK","1","币种清单列表(sys_ccy_type):缅元",
+"sys_ccy_type","斯里兰卡卢比","LKR","1","币种清单列表(sys_ccy_type):斯里兰卡卢比",
+"sys_ccy_type","马尔代夫卢比","MVR","1","币种清单列表(sys_ccy_type):马尔代夫卢比",
+"sys_ccy_type","印尼盾","IDR","1","币种清单列表(sys_ccy_type):印尼盾",
+"sys_ccy_type","巴基斯坦卢比","PRK","1","币种清单列表(sys_ccy_type):巴基斯坦卢比",
+"sys_ccy_type","卢比","INR","1","币种清单列表(sys_ccy_type):卢比",
+"sys_ccy_type","尼泊尔卢比","NPR","1","币种清单列表(sys_ccy_type):尼泊尔卢比",
+"sys_ccy_type","阿富汗尼","AFA","1","币种清单列表(sys_ccy_type):阿富汗尼",
+"sys_ccy_type","伊朗里亚尔","IRR","1","币种清单列表(sys_ccy_type):伊朗里亚尔",
+"sys_ccy_type","伊拉克第纳尔","IQD","1","币种清单列表(sys_ccy_type):伊拉克第纳尔",
+"sys_ccy_type","叙利亚镑","SYP","1","币种清单列表(sys_ccy_type):叙利亚镑",
+"sys_ccy_type","黎巴嫩镑","LBP","1","币种清单列表(sys_ccy_type):黎巴嫩镑",
+"sys_ccy_type","约旦第纳尔","JOD","1","币种清单列表(sys_ccy_type):约旦第纳尔",
+"sys_ccy_type","亚尔","SAR","1","币种清单列表(sys_ccy_type):亚尔",
+"sys_ccy_type","科威特第纳尔","KWD","1","币种清单列表(sys_ccy_type):科威特第纳尔",
+"sys_ccy_type","巴林第纳尔","BHD","1","币种清单列表(sys_ccy_type):巴林第纳尔",
+"sys_ccy_type","卡塔尔里亚尔","QAR","1","币种清单列表(sys_ccy_type):卡塔尔里亚尔",
+"sys_ccy_type","阿曼里亚尔","OMR","1","币种清单列表(sys_ccy_type):阿曼里亚尔",
+"sys_ccy_type","也门里亚尔","YER","1","币种清单列表(sys_ccy_type):也门里亚尔",
+"sys_ccy_type","也门第纳尔","YDD","1","币种清单列表(sys_ccy_type):也门第纳尔",
+"sys_ccy_type","土耳其镑","TRL","1","币种清单列表(sys_ccy_type):土耳其镑",
+"sys_ccy_type","塞浦路斯镑","CYP","1","币种清单列表(sys_ccy_type):塞浦路斯镑",
+"sys_ccy_type","澳大利亚元","AUD","1","币种清单列表(sys_ccy_type):澳大利亚元",
+"sys_ccy_type","新西兰元","NZD","1","币种清单列表(sys_ccy_type):新西兰元",
+"sys_ccy_type","斐济元","FJD","1","币种清单列表(sys_ccy_type):斐济元",
+"sys_ccy_type","所罗门元","SBD","1","币种清单列表(sys_ccy_type):所罗门元",
+"sys_ccy_type","欧元","EUR","1","币种清单列表(sys_ccy_type):欧元",
+"sys_ccy_type","冰岛克朗","ISK","1","币种清单列表(sys_ccy_type):冰岛克朗",
+"sys_ccy_type","丹麦克朗","DKK","1","币种清单列表(sys_ccy_type):丹麦克朗",
+"sys_ccy_type","挪威克朗","NOK","1","币种清单列表(sys_ccy_type):挪威克朗",
+"sys_ccy_type","瑞典克朗","SEK","1","币种清单列表(sys_ccy_type):瑞典克朗",
+"sys_ccy_type","芬兰马克","FIM","1","币种清单列表(sys_ccy_type):芬兰马克",
+"sys_ccy_type","卢布","SUR","1","币种清单列表(sys_ccy_type):卢布",
+"sys_ccy_type","兹罗提","PLZ","1","币种清单列表(sys_ccy_type):兹罗提",
+"sys_ccy_type","捷克克朗","CSK","1","币种清单列表(sys_ccy_type):捷克克朗",
+"sys_ccy_type","福林","HUF","1","币种清单列表(sys_ccy_type):福林",
+"sys_ccy_type","马克","DEM","1","币种清单列表(sys_ccy_type):马克",
+"sys_ccy_type","奥地利先令","ATS","1","币种清单列表(sys_ccy_type):奥地利先令",
+"sys_ccy_type","瑞士法郎","CHF","1","币种清单列表(sys_ccy_type):瑞士法郎",
+"sys_ccy_type","荷兰盾","NLG","1","币种清单列表(sys_ccy_type):荷兰盾",
+"sys_ccy_type","比利时法郎","BEF","1","币种清单列表(sys_ccy_type):比利时法郎",
+"sys_ccy_type","卢森堡法郎","LUF","1","币种清单列表(sys_ccy_type):卢森堡法郎",
+"sys_ccy_type","英镑","GBP","1","币种清单列表(sys_ccy_type):英镑",
+"sys_ccy_type","爱尔兰镑","IEP","1","币种清单列表(sys_ccy_type):爱尔兰镑",
+"sys_ccy_type","法郎","FRF","1","币种清单列表(sys_ccy_type):法郎",
+"sys_ccy_type","比塞塔","ESP","1","币种清单列表(sys_ccy_type):比塞塔",
+"sys_ccy_type","埃斯库多","PTE","1","币种清单列表(sys_ccy_type):埃斯库多",
+"sys_ccy_type","里拉","ITL","1","币种清单列表(sys_ccy_type):里拉",
+"sys_ccy_type","马耳他镑","MTP","1","币种清单列表(sys_ccy_type):马耳他镑",
+"sys_ccy_type","南斯拉夫新第纳尔","YUD","1","币种清单列表(sys_ccy_type):南斯拉夫新第纳尔",
+"sys_ccy_type","列伊","ROL","1","币种清单列表(sys_ccy_type):列伊",
+"sys_ccy_type","列弗","BGL","1","币种清单列表(sys_ccy_type):列弗",
+"sys_ccy_type","列克","ALL","1","币种清单列表(sys_ccy_type):列克",
+"sys_ccy_type","德拉马克","GRD","1","币种清单列表(sys_ccy_type):德拉马克",
+"sys_ccy_type","加元","CAD","1","币种清单列表(sys_ccy_type):加元",
+"sys_ccy_type","美元","USD","1","币种清单列表(sys_ccy_type):美元",
+"sys_ccy_type","墨西哥比索","MXP","1","币种清单列表(sys_ccy_type):墨西哥比索",
+"sys_ccy_type","格查尔","GTQ","1","币种清单列表(sys_ccy_type):格查尔",
+"sys_ccy_type","萨尔瓦多科朗","SVC","1","币种清单列表(sys_ccy_type):萨尔瓦多科朗",
+"sys_ccy_type","伦皮拉","HNL","1","币种清单列表(sys_ccy_type):伦皮拉",
+"sys_ccy_type","科多巴","NIC","1","币种清单列表(sys_ccy_type):科多巴",
+"sys_ccy_type","哥斯达黎加科朗","CRC","1","币种清单列表(sys_ccy_type):哥斯达黎加科朗",
+"sys_ccy_type","巴拿马巴波亚","PAB","1","币种清单列表(sys_ccy_type):巴拿马巴波亚",
+"sys_ccy_type","古巴比索","CUP","1","币种清单列表(sys_ccy_type):古巴比索",
+"sys_ccy_type","巴哈马元","BSD","1","币种清单列表(sys_ccy_type):巴哈马元",
+"sys_ccy_type","牙买加元","JMD","1","币种清单列表(sys_ccy_type):牙买加元",
+"sys_ccy_type","古德","HTG","1","币种清单列表(sys_ccy_type):古德",
+"sys_ccy_type","多米尼加比索","DOP","1","币种清单列表(sys_ccy_type):多米尼加比索",
+"sys_ccy_type","特立尼达多巴哥元","TTD","1","币种清单列表(sys_ccy_type):特立尼达多巴哥元",
+"sys_ccy_type","巴巴多斯元","BBD","1","币种清单列表(sys_ccy_type):巴巴多斯元",
+"sys_ccy_type","哥伦比亚比索","COP","1","币种清单列表(sys_ccy_type):哥伦比亚比索",
+"sys_ccy_type","博利瓦","VEB","1","币种清单列表(sys_ccy_type):博利瓦",
+"sys_ccy_type","圭亚那元","GYD","1","币种清单列表(sys_ccy_type):圭亚那元",
+"sys_ccy_type","苏里南盾","SRG","1","币种清单列表(sys_ccy_type):苏里南盾",
+"sys_ccy_type","新索尔","PES","1","币种清单列表(sys_ccy_type):新索尔",
+"sys_ccy_type","苏克雷","ECS","1","币种清单列表(sys_ccy_type):苏克雷",
+"sys_ccy_type","新克鲁赛罗","BRC","1","币种清单列表(sys_ccy_type):新克鲁赛罗",
+"sys_ccy_type","玻利维亚比索","BOP","1","币种清单列表(sys_ccy_type):玻利维亚比索",
+"sys_ccy_type","智利比索","CLP","1","币种清单列表(sys_ccy_type):智利比索",
+"sys_ccy_type","阿根廷比索","ARP","1","币种清单列表(sys_ccy_type):阿根廷比索",
+"sys_ccy_type","巴拉圭瓜拉尼","PYG","1","币种清单列表(sys_ccy_type):巴拉圭瓜拉尼",
+"sys_ccy_type","乌拉圭新比索","UYP","1","币种清单列表(sys_ccy_type):乌拉圭新比索",
+"sys_ccy_type","埃及镑","EGP","1","币种清单列表(sys_ccy_type):埃及镑",
+"sys_ccy_type","利比亚第纳尔","LYD","1","币种清单列表(sys_ccy_type):利比亚第纳尔",
+"sys_ccy_type","苏丹镑","SDP","1","币种清单列表(sys_ccy_type):苏丹镑",
+"sys_ccy_type","突尼斯第纳尔","TND","1","币种清单列表(sys_ccy_type):突尼斯第纳尔",
+"sys_ccy_type","阿尔及利亚第纳尔","DZD","1","币种清单列表(sys_ccy_type):阿尔及利亚第纳尔",
+"sys_ccy_type","摩洛哥迪拉姆","MAD","1","币种清单列表(sys_ccy_type):摩洛哥迪拉姆",
+"sys_ccy_type","乌吉亚","MRO","1","币种清单列表(sys_ccy_type):乌吉亚",
+"sys_ccy_type","非共体法郎","XOF","1","币种清单列表(sys_ccy_type):非共体法郎",
+"sys_ccy_type","法拉西","GMD","1","币种清单列表(sys_ccy_type):法拉西",
+"sys_ccy_type","几内亚比索","GWP","1","币种清单列表(sys_ccy_type):几内亚比索",
+"sys_ccy_type","几内亚西里","GNS","1","币种清单列表(sys_ccy_type):几内亚西里",
+"sys_ccy_type","利昂","SLL","1","币种清单列表(sys_ccy_type):利昂",
+"sys_ccy_type","利比里亚元","LRD","1","币种清单列表(sys_ccy_type):利比里亚元",
+"sys_ccy_type","塞地","GHC","1","币种清单列表(sys_ccy_type):塞地",
+"sys_ccy_type","奈拉","NGN","1","币种清单列表(sys_ccy_type):奈拉",
+"sys_ccy_type","中非金融合作法郎","XAF","1","币种清单列表(sys_ccy_type):中非金融合作法郎",
+"sys_ccy_type","赤道几内亚埃奎勒","GQE","1","币种清单列表(sys_ccy_type):赤道几内亚埃奎勒",
+"sys_ccy_type","兰特","ZAR","1","币种清单列表(sys_ccy_type):兰特",
+"sys_ccy_type","吉布提法郎","DJF","1","币种清单列表(sys_ccy_type):吉布提法郎",
+"sys_ccy_type","索马里先令","SOS","1","币种清单列表(sys_ccy_type):索马里先令",
+"sys_ccy_type","肯尼亚先令","KES","1","币种清单列表(sys_ccy_type):肯尼亚先令",
+"sys_ccy_type","乌干达先令","UGS","1","币种清单列表(sys_ccy_type):乌干达先令",
+"sys_ccy_type","坦桑尼亚先令","TZS","1","币种清单列表(sys_ccy_type):坦桑尼亚先令",
+"sys_ccy_type","卢旺达法郎","RWF","1","币种清单列表(sys_ccy_type):卢旺达法郎",
+"sys_ccy_type","布隆迪法郎","BIF","1","币种清单列表(sys_ccy_type):布隆迪法郎",
+"sys_ccy_type","扎伊尔","ZRZ","1","币种清单列表(sys_ccy_type):扎伊尔",
+"sys_ccy_type","赞比亚克瓦查","ZMK","1","币种清单列表(sys_ccy_type):赞比亚克瓦查",
+"sys_ccy_type","马达加斯加法郎","MCF","1","币种清单列表(sys_ccy_type):马达加斯加法郎",
+"sys_ccy_type","塞舌尔卢比","SCR","1","币种清单列表(sys_ccy_type):塞舌尔卢比",
+"sys_ccy_type","毛里求斯卢比","MUR","1","币种清单列表(sys_ccy_type):毛里求斯卢比",
+"sys_ccy_type","津巴布韦元","ZWD","1","币种清单列表(sys_ccy_type):津巴布韦元",
+"sys_ccy_type","科摩罗法郎","KMF","1","币种清单列表(sys_ccy_type):科摩罗法郎",
+"sys_common_status","成功","0","1","系统状态列表(sys_common_status):成功",
+"sys_common_status","失败","1","1","系统状态列表(sys_common_status):失败",
+"sys_contractterm_list","无固定期限","1","1","合同期限列表(sys_contractterm_list):无固定期限",
+"sys_contractterm_list","1年","2","1","合同期限列表(sys_contractterm_list):1年",
+"sys_contractterm_list","2年","3","1","合同期限列表(sys_contractterm_list):2年",
+"sys_contractterm_list","3年","4","1","合同期限列表(sys_contractterm_list):3年",
+"sys_contractterm_list","4年","5","1","合同期限列表(sys_contractterm_list):4年",
+"sys_contractterm_list","5年","6","1","合同期限列表(sys_contractterm_list):5年",
+"sys_contractterm_list","6年","7","1","合同期限列表(sys_contractterm_list):6年",
+"sys_contractterm_list","7年","8","1","合同期限列表(sys_contractterm_list):7年",
+"sys_contractterm_list","8年","9","1","合同期限列表(sys_contractterm_list):8年",
+"sys_contractterm_list","9年","10","1","合同期限列表(sys_contractterm_list):9年",
+"sys_contractterm_list","10年","11","1","合同期限列表(sys_contractterm_list):10年",
+"sys_country_list"," Aruba 阿鲁巴","AA","1","国家地区列表(sys_country_list): Aruba 阿鲁巴",
+"sys_country_list"," Andorra 安道尔","AD","1","国家地区列表(sys_country_list): Andorra 安道尔",
+"sys_country_list"," United Arab Emirates 阿联酋","AE","1","国家地区列表(sys_country_list): United Arab Emirates 阿联酋",
+"sys_country_list"," Afghanistan 阿富汗","AF","1","国家地区列表(sys_country_list): Afghanistan 阿富汗",
+"sys_country_list"," Antigua and Barbuda 安提瓜和巴布达","AG","1","国家地区列表(sys_country_list): Antigua and Barbuda 安提瓜和巴布达",
+"sys_country_list"," Albania 阿尔巴尼亚","AL","1","国家地区列表(sys_country_list): Albania 阿尔巴尼亚",
+"sys_country_list"," Armenia 亚美尼亚","AM","1","国家地区列表(sys_country_list): Armenia 亚美尼亚",
+"sys_country_list"," Netherlands Antilles 荷属安德列斯","AN","1","国家地区列表(sys_country_list): Netherlands Antilles 荷属安德列斯",
+"sys_country_list"," Angola 安哥拉","AO","1","国家地区列表(sys_country_list): Angola 安哥拉",
+"sys_country_list"," Antarctica 南极洲","AQ","1","国家地区列表(sys_country_list): Antarctica 南极洲",
+"sys_country_list"," Argentina 阿根廷","AR","1","国家地区列表(sys_country_list): Argentina 阿根廷",
+"sys_country_list"," American Samoa 东萨摩亚","AS","1","国家地区列表(sys_country_list): American Samoa 东萨摩亚",
+"sys_country_list"," Austria 奥地利","AT","1","国家地区列表(sys_country_list): Austria 奥地利",
+"sys_country_list"," Australia 澳大利亚","AU","1","国家地区列表(sys_country_list): Australia 澳大利亚",
+"sys_country_list"," Anguilla 安圭拉岛","AV","1","国家地区列表(sys_country_list): Anguilla 安圭拉岛",
+"sys_country_list"," Azerbaijan 阿塞拜疆","AZ","1","国家地区列表(sys_country_list): Azerbaijan 阿塞拜疆",
+"sys_country_list"," Bosnia and Herzegovina 波黑","BA","1","国家地区列表(sys_country_list): Bosnia and Herzegovina 波黑",
+"sys_country_list"," Barbados 巴巴多斯","BB","1","国家地区列表(sys_country_list): Barbados 巴巴多斯",
+"sys_country_list"," Bangladesh 孟加拉","BD","1","国家地区列表(sys_country_list): Bangladesh 孟加拉",
+"sys_country_list"," Belgium 比利时","BE","1","国家地区列表(sys_country_list): Belgium 比利时",
+"sys_country_list"," Bahamas 巴哈马","BF","1","国家地区列表(sys_country_list): Bahamas 巴哈马",
+"sys_country_list"," Burkina Faso 布基纳法索","BF","1","国家地区列表(sys_country_list): Burkina Faso 布基纳法索",
+"sys_country_list"," Bulgaria 保加利亚","BG","1","国家地区列表(sys_country_list): Bulgaria 保加利亚",
+"sys_country_list"," Bahrain 巴林","BH","1","国家地区列表(sys_country_list): Bahrain 巴林",
+"sys_country_list"," Burundi 布隆迪","BI","1","国家地区列表(sys_country_list): Burundi 布隆迪",
+"sys_country_list"," Benin 贝宁","BJ","1","国家地区列表(sys_country_list): Benin 贝宁",
+"sys_country_list"," Bermuda 百慕大","BM","1","国家地区列表(sys_country_list): Bermuda 百慕大",
+"sys_country_list"," Brunei Darussalam 文莱布鲁萨兰","BN","1","国家地区列表(sys_country_list): Brunei Darussalam 文莱布鲁萨兰",
+"sys_country_list"," Bolivia 玻利维亚","BO","1","国家地区列表(sys_country_list): Bolivia 玻利维亚",
+"sys_country_list"," Brazil 巴西","BR","1","国家地区列表(sys_country_list): Brazil 巴西",
+"sys_country_list"," Bahamas 巴哈马","BS","1","国家地区列表(sys_country_list): Bahamas 巴哈马",
+"sys_country_list"," Bhutan 不丹","BT","1","国家地区列表(sys_country_list): Bhutan 不丹",
+"sys_country_list"," Bouvet Island 布韦岛","BV","1","国家地区列表(sys_country_list): Bouvet Island 布韦岛",
+"sys_country_list"," Botswana 博茨瓦纳","BW","1","国家地区列表(sys_country_list): Botswana 博茨瓦纳",
+"sys_country_list"," Belarus 白俄罗斯","BY","1","国家地区列表(sys_country_list): Belarus 白俄罗斯",
+"sys_country_list"," Belize 伯里兹","BZ","1","国家地区列表(sys_country_list): Belize 伯里兹",
+"sys_country_list"," Canada 加拿大","CA","1","国家地区列表(sys_country_list): Canada 加拿大",
+"sys_country_list"," Cambodia (CIA World Fact Book) 柬埔寨","CB","1","国家地区列表(sys_country_list): Cambodia (CIA World Fact Book) 柬埔寨",
+"sys_country_list"," Cocos (Keeling) Islands 可可斯群岛","CC","1","国家地区列表(sys_country_list): Cocos (Keeling) Islands 可可斯群岛",
+"sys_country_list"," Congo- Democratic Republic 刚果（金）","CD","1","国家地区列表(sys_country_list): Congo- Democratic Republic 刚果（金）",
+"sys_country_list"," Central African Republic 中非","CF","1","国家地区列表(sys_country_list): Central African Republic 中非",
+"sys_country_list"," Congo 刚果（布）","CG","1","国家地区列表(sys_country_list): Congo 刚果（布）",
+"sys_country_list"," Switzerland 瑞士","CH","1","国家地区列表(sys_country_list): Switzerland 瑞士",
+"sys_country_list"," Cote DIvoire (Ivory Coast) 象牙海岸","CI","1","国家地区列表(sys_country_list): Cote DIvoire (Ivory Coast) 象牙海岸",
+"sys_country_list"," Cook Islands 库克群岛","CK","1","国家地区列表(sys_country_list): Cook Islands 库克群岛",
+"sys_country_list"," Chile 智利","CL","1","国家地区列表(sys_country_list): Chile 智利",
+"sys_country_list"," Cameroon 喀麦隆","CM","1","国家地区列表(sys_country_list): Cameroon 喀麦隆",
+"sys_country_list"," China 中国","CN","1","国家地区列表(sys_country_list): China 中国",
+"sys_country_list"," Colombia 哥伦比亚","CO","1","国家地区列表(sys_country_list): Colombia 哥伦比亚",
+"sys_country_list"," Costa Rica 哥斯达黎加","CR","1","国家地区列表(sys_country_list): Costa Rica 哥斯达黎加",
+"sys_country_list"," Czechoslovakia (former) 捷克斯洛伐克","CS","1","国家地区列表(sys_country_list): Czechoslovakia (former) 捷克斯洛伐克",
+"sys_country_list"," Cuba 古巴","CU","1","国家地区列表(sys_country_list): Cuba 古巴",
+"sys_country_list"," Cape Verde 佛得角","CV","1","国家地区列表(sys_country_list): Cape Verde 佛得角",
+"sys_country_list"," Christmas Island 圣诞岛","CX","1","国家地区列表(sys_country_list): Christmas Island 圣诞岛",
+"sys_country_list"," Cyprus 塞普路斯","CY","1","国家地区列表(sys_country_list): Cyprus 塞普路斯",
+"sys_country_list"," Czech Republic 捷克","CZ","1","国家地区列表(sys_country_list): Czech Republic 捷克",
+"sys_country_list"," Germany 德国","DE","1","国家地区列表(sys_country_list): Germany 德国",
+"sys_country_list"," Djibouti 吉布提","DJ","1","国家地区列表(sys_country_list): Djibouti 吉布提",
+"sys_country_list"," Denmark 丹麦","DK","1","国家地区列表(sys_country_list): Denmark 丹麦",
+"sys_country_list"," Dominica 多米尼加共和国","DM","1","国家地区列表(sys_country_list): Dominica 多米尼加共和国",
+"sys_country_list"," Dominican Republic 多米尼加联邦","DO","1","国家地区列表(sys_country_list): Dominican Republic 多米尼加联邦",
+"sys_country_list"," Algeria 阿尔及利亚","DZ","1","国家地区列表(sys_country_list): Algeria 阿尔及利亚",
+"sys_country_list"," Ecuador 厄瓜多尔","EC","1","国家地区列表(sys_country_list): Ecuador 厄瓜多尔",
+"sys_country_list"," Estonia 爱沙尼亚","EE","1","国家地区列表(sys_country_list): Estonia 爱沙尼亚",
+"sys_country_list"," Egypt 埃及","EG","1","国家地区列表(sys_country_list): Egypt 埃及",
+"sys_country_list"," Western Sahara 西撒哈拉","EH","1","国家地区列表(sys_country_list): Western Sahara 西撒哈拉",
+"sys_country_list"," Eritrea厄立特里亚","ER","1","国家地区列表(sys_country_list): Eritrea厄立特里亚",
+"sys_country_list"," Spain 西班牙","ES","1","国家地区列表(sys_country_list): Spain 西班牙",
+"sys_country_list"," Ethiopia 埃塞俄比亚","ET","1","国家地区列表(sys_country_list): Ethiopia 埃塞俄比亚",
+"sys_country_list"," Finland 芬兰","FI","1","国家地区列表(sys_country_list): Finland 芬兰",
+"sys_country_list"," Fiji 斐济","FJ","1","国家地区列表(sys_country_list): Fiji 斐济",
+"sys_country_list"," Falkland Islands (Malvinas) 福兰克群岛","FK","1","国家地区列表(sys_country_list): Falkland Islands (Malvinas) 福兰克群岛",
+"sys_country_list"," Micronesia 米克罗尼西亚","FM","1","国家地区列表(sys_country_list): Micronesia 米克罗尼西亚",
+"sys_country_list"," Faroe Islands 法罗群岛","FO","1","国家地区列表(sys_country_list): Faroe Islands 法罗群岛",
+"sys_country_list"," France 法国","FR","1","国家地区列表(sys_country_list): France 法国",
+"sys_country_list"," France- Metropolitan法属美特罗波利坦","FX","1","国家地区列表(sys_country_list): France- Metropolitan法属美特罗波利坦",
+"sys_country_list"," Gabon 加蓬","GA","1","国家地区列表(sys_country_list): Gabon 加蓬",
+"sys_country_list"," Great Britain (UK) 英国","GB","1","国家地区列表(sys_country_list): Great Britain (UK) 英国",
+"sys_country_list"," Grenada 格林纳达","GD","1","国家地区列表(sys_country_list): Grenada 格林纳达",
+"sys_country_list"," Georgia 格鲁吉亚","GE","1","国家地区列表(sys_country_list): Georgia 格鲁吉亚",
+"sys_country_list"," French Guiana 法属圭亚那","GF","1","国家地区列表(sys_country_list): French Guiana 法属圭亚那",
+"sys_country_list"," Ghana 加纳","GH","1","国家地区列表(sys_country_list): Ghana 加纳",
+"sys_country_list"," Gibraltar 直布罗陀","GI","1","国家地区列表(sys_country_list): Gibraltar 直布罗陀",
+"sys_country_list"," Greenland 格陵兰岛","GL","1","国家地区列表(sys_country_list): Greenland 格陵兰岛",
+"sys_country_list"," Gambia 冈比亚","GM","1","国家地区列表(sys_country_list): Gambia 冈比亚",
+"sys_country_list"," Guinea 几内亚","GN","1","国家地区列表(sys_country_list): Guinea 几内亚",
+"sys_country_list"," Guadeloupe 法属德洛普群岛","GP","1","国家地区列表(sys_country_list): Guadeloupe 法属德洛普群岛",
+"sys_country_list"," Equatorial Guinea 赤道几内亚","GQ","1","国家地区列表(sys_country_list): Equatorial Guinea 赤道几内亚",
+"sys_country_list"," Greece 希腊","GR","1","国家地区列表(sys_country_list): Greece 希腊",
+"sys_country_list"," S. Georgia and S. Sandwich Isls.","GS","1","国家地区列表(sys_country_list): S. Georgia and S. Sandwich Isls.",
+"sys_country_list"," Guatemala 危地马拉","GT","1","国家地区列表(sys_country_list): Guatemala 危地马拉",
+"sys_country_list"," Guam 关岛","GU","1","国家地区列表(sys_country_list): Guam 关岛",
+"sys_country_list"," Guinea-Bissau 几内亚比绍","GW","1","国家地区列表(sys_country_list): Guinea-Bissau 几内亚比绍",
+"sys_country_list"," Guyana 圭亚那","GY","1","国家地区列表(sys_country_list): Guyana 圭亚那",
+"sys_country_list"," Hong Kong 中国香港特区","HK","1","国家地区列表(sys_country_list): Hong Kong 中国香港特区",
+"sys_country_list"," Heard and McDonald Islands 赫德和麦克唐纳群岛","HM","1","国家地区列表(sys_country_list): Heard and McDonald Islands 赫德和麦克唐纳群岛",
+"sys_country_list"," Honduras 洪都拉斯","HN","1","国家地区列表(sys_country_list): Honduras 洪都拉斯",
+"sys_country_list"," Croatia (Hrvatska) 克罗地亚","HR","1","国家地区列表(sys_country_list): Croatia (Hrvatska) 克罗地亚",
+"sys_country_list"," Haiti 海地","HT","1","国家地区列表(sys_country_list): Haiti 海地",
+"sys_country_list"," Hungary 匈牙利","HU","1","国家地区列表(sys_country_list): Hungary 匈牙利",
+"sys_country_list"," Indonesia 印度尼西亚","ID","1","国家地区列表(sys_country_list): Indonesia 印度尼西亚",
+"sys_country_list"," Ireland 爱尔兰","IE","1","国家地区列表(sys_country_list): Ireland 爱尔兰",
+"sys_country_list"," Israel 以色列","IL","1","国家地区列表(sys_country_list): Israel 以色列",
+"sys_country_list"," India 印度","IN","1","国家地区列表(sys_country_list): India 印度",
+"sys_country_list"," British Indian Ocean Territory 英属印度洋领地","IO","1","国家地区列表(sys_country_list): British Indian Ocean Territory 英属印度洋领地",
+"sys_country_list"," Iraq 伊拉克","IQ","1","国家地区列表(sys_country_list): Iraq 伊拉克",
+"sys_country_list"," Iran 伊朗","IR","1","国家地区列表(sys_country_list): Iran 伊朗",
+"sys_country_list"," Iceland 冰岛","IS","1","国家地区列表(sys_country_list): Iceland 冰岛",
+"sys_country_list"," Italy 意大利","IT","1","国家地区列表(sys_country_list): Italy 意大利",
+"sys_country_list"," Jamaica 牙买加","JM","1","国家地区列表(sys_country_list): Jamaica 牙买加",
+"sys_country_list"," Jordan 约旦","JO","1","国家地区列表(sys_country_list): Jordan 约旦",
+"sys_country_list"," Japan 日本","JP","1","国家地区列表(sys_country_list): Japan 日本",
+"sys_country_list"," Kenya 肯尼亚","KE","1","国家地区列表(sys_country_list): Kenya 肯尼亚",
+"sys_country_list"," Kyrgyzstan 吉尔吉斯斯坦","KG","1","国家地区列表(sys_country_list): Kyrgyzstan 吉尔吉斯斯坦",
+"sys_country_list"," Cambodia (Internet) 柬埔寨","KH","1","国家地区列表(sys_country_list): Cambodia (Internet) 柬埔寨",
+"sys_country_list"," Kiribati 基里巴斯","KI","1","国家地区列表(sys_country_list): Kiribati 基里巴斯",
+"sys_country_list"," Comoros 科摩罗","KM","1","国家地区列表(sys_country_list): Comoros 科摩罗",
+"sys_country_list"," Saint Kitts and Nevis 圣基茨和尼维斯","KN","1","国家地区列表(sys_country_list): Saint Kitts and Nevis 圣基茨和尼维斯",
+"sys_country_list"," Korea (North) 韩国","KP","1","国家地区列表(sys_country_list): Korea (North) 韩国",
+"sys_country_list"," Korea (South) 朝鲜","KR","1","国家地区列表(sys_country_list): Korea (South) 朝鲜",
+"sys_country_list"," Kuwait 科威特","KW","1","国家地区列表(sys_country_list): Kuwait 科威特",
+"sys_country_list"," Cayman Islands 开曼群岛","KY","1","国家地区列表(sys_country_list): Cayman Islands 开曼群岛",
+"sys_country_list"," Kazakhstan 哈萨克斯坦","KZ","1","国家地区列表(sys_country_list): Kazakhstan 哈萨克斯坦",
+"sys_country_list"," Laos 老挝","LA","1","国家地区列表(sys_country_list): Laos 老挝",
+"sys_country_list"," Lebanon 黎巴嫩","LB","1","国家地区列表(sys_country_list): Lebanon 黎巴嫩",
+"sys_country_list"," Saint Lucia 圣卢西亚","LC","1","国家地区列表(sys_country_list): Saint Lucia 圣卢西亚",
+"sys_country_list"," Liechtenstein 列支顿士登","LI","1","国家地区列表(sys_country_list): Liechtenstein 列支顿士登",
+"sys_country_list"," Sri Lanka 斯里兰卡","LK","1","国家地区列表(sys_country_list): Sri Lanka 斯里兰卡",
+"sys_country_list"," Liberia 利比里亚","LR","1","国家地区列表(sys_country_list): Liberia 利比里亚",
+"sys_country_list"," Lesotho 莱索托","LS","1","国家地区列表(sys_country_list): Lesotho 莱索托",
+"sys_country_list"," Lithuania 立陶宛","LT","1","国家地区列表(sys_country_list): Lithuania 立陶宛",
+"sys_country_list"," Luxembourg 卢森堡","LU","1","国家地区列表(sys_country_list): Luxembourg 卢森堡",
+"sys_country_list"," Latvia 拉托维亚","LV","1","国家地区列表(sys_country_list): Latvia 拉托维亚",
+"sys_country_list"," Libya 利比亚","LY","1","国家地区列表(sys_country_list): Libya 利比亚",
+"sys_country_list"," Morocco 摩洛哥","MA","1","国家地区列表(sys_country_list): Morocco 摩洛哥",
+"sys_country_list"," Monaco 摩纳哥","MC","1","国家地区列表(sys_country_list): Monaco 摩纳哥",
+"sys_country_list"," Moldova 摩尔多瓦","MD","1","国家地区列表(sys_country_list): Moldova 摩尔多瓦",
+"sys_country_list"," Madagascar 马达加斯加","MG","1","国家地区列表(sys_country_list): Madagascar 马达加斯加",
+"sys_country_list"," Marshall Islands 马绍尔群岛","MH","1","国家地区列表(sys_country_list): Marshall Islands 马绍尔群岛",
+"sys_country_list"," F.Y.R.O.M. (Macedonia)北马其顿","MK","1","国家地区列表(sys_country_list): F.Y.R.O.M. (Macedonia)北马其顿",
+"sys_country_list"," Mali 马里","ML","1","国家地区列表(sys_country_list): Mali 马里",
+"sys_country_list"," Myanmar 缅甸","MM","1","国家地区列表(sys_country_list): Myanmar 缅甸",
+"sys_country_list"," Mongolia 蒙古","MN","1","国家地区列表(sys_country_list): Mongolia 蒙古",
+"sys_country_list"," Macau 中国澳门特区","MO","1","国家地区列表(sys_country_list): Macau 中国澳门特区",
+"sys_country_list"," Northern Mariana Islands 北马里亚纳群岛","MP","1","国家地区列表(sys_country_list): Northern Mariana Islands 北马里亚纳群岛",
+"sys_country_list"," Martinique 法属马提尼克群岛","MQ","1","国家地区列表(sys_country_list): Martinique 法属马提尼克群岛",
+"sys_country_list"," Mauritania 毛里塔尼亚","MR","1","国家地区列表(sys_country_list): Mauritania 毛里塔尼亚",
+"sys_country_list"," Montserrat 蒙塞拉特岛","MS","1","国家地区列表(sys_country_list): Montserrat 蒙塞拉特岛",
+"sys_country_list"," Malta 马耳他","MT","1","国家地区列表(sys_country_list): Malta 马耳他",
+"sys_country_list"," Mauritius 毛里求斯","MU","1","国家地区列表(sys_country_list): Mauritius 毛里求斯",
+"sys_country_list"," Maldives 马尔代夫","MV","1","国家地区列表(sys_country_list): Maldives 马尔代夫",
+"sys_country_list"," Malawi 马拉维","MW","1","国家地区列表(sys_country_list): Malawi 马拉维",
+"sys_country_list"," Mexico 墨西哥","MX","1","国家地区列表(sys_country_list): Mexico 墨西哥",
+"sys_country_list"," Malaysia 马来西亚","MY","1","国家地区列表(sys_country_list): Malaysia 马来西亚",
+"sys_country_list"," Mozambique 莫桑比克","MZ","1","国家地区列表(sys_country_list): Mozambique 莫桑比克",
+"sys_country_list"," Namibia 纳米比亚","NA","1","国家地区列表(sys_country_list): Namibia 纳米比亚",
+"sys_country_list"," New Caledonia 新卡里多尼亚","NC","1","国家地区列表(sys_country_list): New Caledonia 新卡里多尼亚",
+"sys_country_list"," Niger 尼日尔","NE","1","国家地区列表(sys_country_list): Niger 尼日尔",
+"sys_country_list"," Norfolk Island 诺福克岛","NF","1","国家地区列表(sys_country_list): Norfolk Island 诺福克岛",
+"sys_country_list"," Nigeria 尼日利亚","NG","1","国家地区列表(sys_country_list): Nigeria 尼日利亚",
+"sys_country_list"," Nicaragua 尼加拉瓜","NI","1","国家地区列表(sys_country_list): Nicaragua 尼加拉瓜",
+"sys_country_list"," Netherlands 荷兰","NL","1","国家地区列表(sys_country_list): Netherlands 荷兰",
+"sys_country_list"," Norway 挪威","NO","1","国家地区列表(sys_country_list): Norway 挪威",
+"sys_country_list"," Nepal 尼泊尔","NP","1","国家地区列表(sys_country_list): Nepal 尼泊尔",
+"sys_country_list"," Nauru 瑙鲁","NR","1","国家地区列表(sys_country_list): Nauru 瑙鲁",
+"sys_country_list"," Neutral Zone 中立区(沙特-伊拉克间)","NT","1","国家地区列表(sys_country_list): Neutral Zone 中立区(沙特-伊拉克间)",
+"sys_country_list"," Niue 纽爱","NU","1","国家地区列表(sys_country_list): Niue 纽爱",
+"sys_country_list"," New Zealand (Aotearoa) 新西兰","NZ","1","国家地区列表(sys_country_list): New Zealand (Aotearoa) 新西兰",
+"sys_country_list"," Oman 阿曼","OM","1","国家地区列表(sys_country_list): Oman 阿曼",
+"sys_country_list"," Panama 巴拿马","PA","1","国家地区列表(sys_country_list): Panama 巴拿马",
+"sys_country_list"," Peru 秘鲁","PE","1","国家地区列表(sys_country_list): Peru 秘鲁",
+"sys_country_list"," French Polynesia 法属玻里尼西亚","PF","1","国家地区列表(sys_country_list): French Polynesia 法属玻里尼西亚",
+"sys_country_list"," Papua New Guinea 巴布亚新几内亚","PG","1","国家地区列表(sys_country_list): Papua New Guinea 巴布亚新几内亚",
+"sys_country_list"," Philippines 菲律宾","PH","1","国家地区列表(sys_country_list): Philippines 菲律宾",
+"sys_country_list"," Pakistan 巴基斯坦","PK","1","国家地区列表(sys_country_list): Pakistan 巴基斯坦",
+"sys_country_list"," Poland 波兰","PL","1","国家地区列表(sys_country_list): Poland 波兰",
+"sys_country_list"," St. Pierre and Miquelon 圣皮艾尔和密克隆群岛","PM","1","国家地区列表(sys_country_list): St. Pierre and Miquelon 圣皮艾尔和密克隆群岛",
+"sys_country_list"," Pitcairn 皮特克恩岛","PN","1","国家地区列表(sys_country_list): Pitcairn 皮特克恩岛",
+"sys_country_list"," Puerto Rico 波多黎各","PR","1","国家地区列表(sys_country_list): Puerto Rico 波多黎各",
+"sys_country_list"," Portugal 葡萄牙","PT","1","国家地区列表(sys_country_list): Portugal 葡萄牙",
+"sys_country_list"," Palau 帕劳","PW","1","国家地区列表(sys_country_list): Palau 帕劳",
+"sys_country_list"," Paraguay 巴拉圭","PY","1","国家地区列表(sys_country_list): Paraguay 巴拉圭",
+"sys_country_list"," Qatar 卡塔尔","QA","1","国家地区列表(sys_country_list): Qatar 卡塔尔",
+"sys_country_list"," Reunion 法属尼留旺岛","RE","1","国家地区列表(sys_country_list): Reunion 法属尼留旺岛",
+"sys_country_list"," Romania 罗马尼亚","RO","1","国家地区列表(sys_country_list): Romania 罗马尼亚",
+"sys_country_list"," Russian Federation 俄罗斯","RU","1","国家地区列表(sys_country_list): Russian Federation 俄罗斯",
+"sys_country_list"," Rwanda 卢旺达","RW","1","国家地区列表(sys_country_list): Rwanda 卢旺达",
+"sys_country_list"," Saudi Arabia 沙特阿拉伯","SA","1","国家地区列表(sys_country_list): Saudi Arabia 沙特阿拉伯",
+"sys_country_list"," Solomon Islands 所罗门群岛","Sb","1","国家地区列表(sys_country_list): Solomon Islands 所罗门群岛",
+"sys_country_list"," Seychelles 塞舌尔","SC","1","国家地区列表(sys_country_list): Seychelles 塞舌尔",
+"sys_country_list"," Sudan 苏丹","SD","1","国家地区列表(sys_country_list): Sudan 苏丹",
+"sys_country_list"," Sweden 瑞典","SE","1","国家地区列表(sys_country_list): Sweden 瑞典",
+"sys_country_list"," Singapore 新加坡","SG","1","国家地区列表(sys_country_list): Singapore 新加坡",
+"sys_country_list"," St. Helena","SH","1","国家地区列表(sys_country_list): St. Helena",
+"sys_country_list"," Slovenia 斯罗文尼亚","SI","1","国家地区列表(sys_country_list): Slovenia 斯罗文尼亚",
+"sys_country_list"," Svalbard and Jan Mayen Islands 斯瓦尔巴特和扬马延岛","SJ","1","国家地区列表(sys_country_list): Svalbard and Jan Mayen Islands 斯瓦尔巴特和扬马延岛",
+"sys_country_list"," Slovak Republic 斯洛伐克","SK","1","国家地区列表(sys_country_list): Slovak Republic 斯洛伐克",
+"sys_country_list"," Sierra Leone 塞拉利昂","SL","1","国家地区列表(sys_country_list): Sierra Leone 塞拉利昂",
+"sys_country_list"," San Marino 圣马力诺","SM","1","国家地区列表(sys_country_list): San Marino 圣马力诺",
+"sys_country_list"," Senegal 塞内加尔","SN","1","国家地区列表(sys_country_list): Senegal 塞内加尔",
+"sys_country_list"," Somalia 索马里","SO","1","国家地区列表(sys_country_list): Somalia 索马里",
+"sys_country_list"," Suriname 苏里南","SR","1","国家地区列表(sys_country_list): Suriname 苏里南",
+"sys_country_list"," Sao Tome and Principe 圣多美和普林西比","ST","1","国家地区列表(sys_country_list): Sao Tome and Principe 圣多美和普林西比",
+"sys_country_list"," USSR (former) 前苏联","SU","1","国家地区列表(sys_country_list): USSR (former) 前苏联",
+"sys_country_list"," El Salvador 萨尔瓦多","SV","1","国家地区列表(sys_country_list): El Salvador 萨尔瓦多",
+"sys_country_list"," Syria 叙利亚","SY","1","国家地区列表(sys_country_list): Syria 叙利亚",
+"sys_country_list"," Swaziland 斯威士兰","SZ","1","国家地区列表(sys_country_list): Swaziland 斯威士兰",
+"sys_country_list"," Turks and Caicos Islands 特克斯和凯科斯群岛","TC","1","国家地区列表(sys_country_list): Turks and Caicos Islands 特克斯和凯科斯群岛",
+"sys_country_list"," Chad 乍得","TD","1","国家地区列表(sys_country_list): Chad 乍得",
+"sys_country_list"," French Southern Territories 法国南部领地","TF","1","国家地区列表(sys_country_list): French Southern Territories 法国南部领地",
+"sys_country_list"," Togo 多哥","TG","1","国家地区列表(sys_country_list): Togo 多哥",
+"sys_country_list"," Thailand 泰国","TH","1","国家地区列表(sys_country_list): Thailand 泰国",
+"sys_country_list"," Tajikistan 塔吉克斯坦","TJ","1","国家地区列表(sys_country_list): Tajikistan 塔吉克斯坦",
+"sys_country_list"," Tokelau 托克劳群岛","TK","1","国家地区列表(sys_country_list): Tokelau 托克劳群岛",
+"sys_country_list"," Turkmenistan 土库曼斯坦","TM","1","国家地区列表(sys_country_list): Turkmenistan 土库曼斯坦",
+"sys_country_list"," Tunisia 突尼斯","TN","1","国家地区列表(sys_country_list): Tunisia 突尼斯",
+"sys_country_list"," Tonga 汤加","TO","1","国家地区列表(sys_country_list): Tonga 汤加",
+"sys_country_list"," East Timor 东帝汶","TP","1","国家地区列表(sys_country_list): East Timor 东帝汶",
+"sys_country_list"," Turkey 土尔其","TR","1","国家地区列表(sys_country_list): Turkey 土尔其",
+"sys_country_list"," Trinidad and Tobago 特立尼达和多巴哥","TT","1","国家地区列表(sys_country_list): Trinidad and Tobago 特立尼达和多巴哥",
+"sys_country_list"," Tuvalu 图瓦卢","TV","1","国家地区列表(sys_country_list): Tuvalu 图瓦卢",
+"sys_country_list"," Taiwan 中国台湾省","TW","1","国家地区列表(sys_country_list): Taiwan 中国台湾省",
+"sys_country_list"," Tanzania 坦桑尼亚","TZ","1","国家地区列表(sys_country_list): Tanzania 坦桑尼亚",
+"sys_country_list"," Ukraine 乌克兰","UA","1","国家地区列表(sys_country_list): Ukraine 乌克兰",
+"sys_country_list"," Uganda 乌干达","UG","1","国家地区列表(sys_country_list): Uganda 乌干达",
+"sys_country_list"," United Kingdom 英国","UK","1","国家地区列表(sys_country_list): United Kingdom 英国",
+"sys_country_list"," US Minor Outlying Islands 美国海外领地","UM","1","国家地区列表(sys_country_list): US Minor Outlying Islands 美国海外领地",
+"sys_country_list"," United States 美国","US","1","国家地区列表(sys_country_list): United States 美国",
+"sys_country_list"," Uruguay 乌拉圭","UY","1","国家地区列表(sys_country_list): Uruguay 乌拉圭",
+"sys_country_list"," Uzbekistan 乌兹别克斯坦","UZ","1","国家地区列表(sys_country_list): Uzbekistan 乌兹别克斯坦",
+"sys_country_list"," Vatican City State (Holy See) 梵蒂岗","VA","1","国家地区列表(sys_country_list): Vatican City State (Holy See) 梵蒂岗",
+"sys_country_list"," Saint Vincent and the Grenadines 圣文森特和格陵纳丁斯","VC","1","国家地区列表(sys_country_list): Saint Vincent and the Grenadines 圣文森特和格陵纳丁斯",
+"sys_country_list"," Venezuela 委内瑞拉","VE","1","国家地区列表(sys_country_list): Venezuela 委内瑞拉",
+"sys_country_list"," Virgin Islands (British) 英属维京群岛","VG","1","国家地区列表(sys_country_list): Virgin Islands (British) 英属维京群岛",
+"sys_country_list"," Virgin Islands (U.S.) 美属维京群岛","VI","1","国家地区列表(sys_country_list): Virgin Islands (U.S.) 美属维京群岛",
+"sys_country_list"," Viet Nam 越南","VN","1","国家地区列表(sys_country_list): Viet Nam 越南",
+"sys_country_list"," Vanuatu 瓦努阿鲁","VU","1","国家地区列表(sys_country_list): Vanuatu 瓦努阿鲁",
+"sys_country_list"," Wallis and Futuna Islands 瓦里斯和福图纳群岛","WF","1","国家地区列表(sys_country_list): Wallis and Futuna Islands 瓦里斯和福图纳群岛",
+"sys_country_list"," Samoa 西萨摩亚","WS","1","国家地区列表(sys_country_list): Samoa 西萨摩亚",
+"sys_country_list"," Yemen 也门","YE","1","国家地区列表(sys_country_list): Yemen 也门",
+"sys_country_list"," Mayotte 马约特","YT","1","国家地区列表(sys_country_list): Mayotte 马约特",
+"sys_country_list"," Yugoslavia 南斯拉夫","YU","1","国家地区列表(sys_country_list): Yugoslavia 南斯拉夫",
+"sys_country_list"," South Africa 南非","ZA","1","国家地区列表(sys_country_list): South Africa 南非",
+"sys_country_list"," Zambia 赞比亚","ZM","1","国家地区列表(sys_country_list): Zambia 赞比亚",
+"sys_country_list","See CD Congo, Democratic Republic 民主刚果(Zaire)","ZR","1","国家地区列表(sys_country_list):See CD Congo, Democratic Republic 民主刚果(Zaire)",
+"sys_country_list"," Zimbabwe 津巴布韦","ZW","1","国家地区列表(sys_country_list): Zimbabwe 津巴布韦",
+"sys_credit_list","3A","3A","1","信用列表(sys_credit_list):3A",
+"sys_credit_list","2A","2A","1","信用列表(sys_credit_list):2A",
+"sys_credit_list","A","A","1","信用列表(sys_credit_list):A",
+"sys_credit_list","3B","3B","1","信用列表(sys_credit_list):3B",
+"sys_credit_list","2B","2B","1","信用列表(sys_credit_list):2B",
+"sys_credit_list","B","B","1","信用列表(sys_credit_list):B",
+"sys_credit_list","3C","3C","1","信用列表(sys_credit_list):3C",
+"sys_credit_list","2C","2C","1","信用列表(sys_credit_list):2C",
+"sys_credit_list","C","C","1","信用列表(sys_credit_list):C",
+"sys_credit_list","D","D","1","信用列表(sys_credit_list):D",
+"sys_crop_list","TAC","2400","1","公司列表列表(sys_crop_list):TAC",
+"sys_crop_list","DTA","2300","1","公司列表列表(sys_crop_list):DTA",
+"sys_crop_list","TCJ","1000","1","公司列表列表(sys_crop_list):TCJ",
+"sys_employ_term","全日制","1","1","聘用形式列表(sys_employ_term):全日制",
+"sys_employ_term","派遣","2","1","聘用形式列表(sys_employ_term):派遣",
+"sys_employ_term","兼职","3","1","聘用形式列表(sys_employ_term):兼职",
+"sys_flag_list","是","1","1","是否列表(sys_flag_list):是",
+"sys_flag_list","否","0","1","是否列表(sys_flag_list):否",
+"sys_freeze_flag","否","0","1","冻结标志(sys_freeze_flag):是",
+"sys_freeze_flag","是","是","1","冻结标志(sys_freeze_flag):否",
+"sys_grade_list","A","A","1","等级列表(sys_grade_list):A",
+"sys_grade_list","B","B","1","等级列表(sys_grade_list):B",
+"sys_grade_list","C","C","1","等级列表(sys_grade_list):C",
+"sys_grade_list","D","D","1","等级列表(sys_grade_list):D",
+"sys_grade_list","E","E","1","等级列表(sys_grade_list):E",
+"sys_grade_list","F","F","1","等级列表(sys_grade_list):F",
+"sys_household_type","农业","1","1","户口性质列表(sys_household_type):农业",
+"sys_household_type","非农业","2","1","户口性质列表(sys_household_type):非农业",
+"sys_ind_type","农、林、牧、渔业","A","1","行业分类列表(sys_ind_type):农、林、牧、渔业",
+"sys_ind_type","采矿业","B","1","行业分类列表(sys_ind_type):采矿业",
+"sys_ind_type","制造业","C","1","行业分类列表(sys_ind_type):制造业",
+"sys_ind_type","电力、热力、燃气及水的生产和供应业","D","1","行业分类列表(sys_ind_type):电力、热力、燃气及水的生产和供应业",
+"sys_ind_type","建筑业","E","1","行业分类列表(sys_ind_type):建筑业",
+"sys_ind_type","批发和零售业","F","1","行业分类列表(sys_ind_type):批发和零售业",
+"sys_ind_type","交通运输、仓储和邮政业","G","1","行业分类列表(sys_ind_type):交通运输、仓储和邮政业",
+"sys_ind_type","住宿和餐饮业","H","1","行业分类列表(sys_ind_type):住宿和餐饮业",
+"sys_ind_type","信息传输、软件和信息技术服务业","I","1","行业分类列表(sys_ind_type):信息传输、软件和信息技术服务业",
+"sys_ind_type","金融业","J","1","行业分类列表(sys_ind_type):金融业",
+"sys_ind_type","房地产业","K","1","行业分类列表(sys_ind_type):房地产业",
+"sys_ind_type","租赁和商务服务业","L","1","行业分类列表(sys_ind_type):租赁和商务服务业",
+"sys_ind_type","科学研究和技术服务业","M","1","行业分类列表(sys_ind_type):科学研究和技术服务业",
+"sys_ind_type","水利、环境和公共设施管理业","N","1","行业分类列表(sys_ind_type):水利、环境和公共设施管理业",
+"sys_ind_type","居民服务、修理和其他服务业","O","1","行业分类列表(sys_ind_type):居民服务、修理和其他服务业",
+"sys_ind_type","教育","P","1","行业分类列表(sys_ind_type):教育",
+"sys_ind_type","卫生和社会工作","Q","1","行业分类列表(sys_ind_type):卫生和社会工作",
+"sys_ind_type","文化、体育和娱乐业","R","1","行业分类列表(sys_ind_type):文化、体育和娱乐业",
+"sys_ind_type","公共管理、社会保障和社会组织","S","1","行业分类列表(sys_ind_type):公共管理、社会保障和社会组织",
+"sys_ind_type","国际组织","T","1","行业分类列表(sys_ind_type):国际组织",
+"sys_is_deleted","否","0","1","删除标记列表(sys_is_deleted):否",
+"sys_is_deleted","是","1","1","删除标记列表(sys_is_deleted):是",
+"sys_is_status","否","0","1","是否状态列表(sys_is_status):否",
+"sys_is_status","是","1","1","是否状态列表(sys_is_status):是",
+"sys_job_group","默认","DEFAULT","1","任务分组列表(sys_job_group):默认",
+"sys_job_group","系统","SYSTEM","1","任务分组列表(sys_job_group):系统",
+"sys_job_status","正常","0","1","任务状态列表(sys_job_status):正常",
+"sys_job_status","异常","1","1","任务状态列表(sys_job_status):异常",
+"sys_lang_type","简体","zh-cn","1","语言清单列表(sys_lang_list):简体",
+"sys_lang_type","繁体","zh-tw","1","语言清单列表(sys_lang_list):繁体",
+"sys_lang_type","英语","en","1","语言清单列表(sys_lang_list):英语",
+"sys_lang_type","日本語","ja","1","语言清单列表(sys_lang_list):日本語",
+"sys_level_education","小学","1","1","学历列表(sys_level_education):小学",
+"sys_level_education","初中","2","1","学历列表(sys_level_education):初中",
+"sys_level_education","中专","3","1","学历列表(sys_level_education):中专",
+"sys_level_education","高中","4","1","学历列表(sys_level_education):高中",
+"sys_level_education","专科","5","1","学历列表(sys_level_education):专科",
+"sys_level_education","本科","6","1","学历列表(sys_level_education):本科",
+"sys_level_education","硕士研究生","7","1","学历列表(sys_level_education):硕士研究生",
+"sys_level_education","博士研究生","8","1","学历列表(sys_level_education):博士研究生",
+"sys_module_list","财务会计","FI","1","系统模块列表(sys_module_list):财务会计",
+"sys_module_list","管理会计","CO","1","系统模块列表(sys_module_list):管理会计",
+"sys_module_list","物料管理","MM","1","系统模块列表(sys_module_list):物料管理",
+"sys_module_list","销售管理","SD","1","系统模块列表(sys_module_list):销售管理",
+"sys_module_list","人力资源","HR","1","系统模块列表(sys_module_list):人力资源",
+"sys_module_list","生产管理","PP","1","系统模块列表(sys_module_list):生产管理",
+"sys_module_list","质量管理","QM","1","系统模块列表(sys_module_list):质量管理",
+"sys_module_list","设备管理","PM","1","系统模块列表(sys_module_list):设备管理",
+"sys_module_list","项目管理","PS","1","系统模块列表(sys_module_list):项目管理",
+"sys_module_list","商务智能","BW","1","系统模块列表(sys_module_list):商务智能",
+"sys_module_list","资产管理","AM","1","系统模块列表(sys_module_list):资产管理",
+"sys_module_list","工作流管理","WF","1","系统模块列表(sys_module_list):工作流管理",
+"sys_module_list","解决方案","IS","1","系统模块列表(sys_module_list):解决方案",
+"sys_module_list","客户服务","CS","1","系统模块列表(sys_module_list):客户服务",
+"sys_nation_list","汉族","1","1","民族清单列表(sys_nation_list):汉族",
+"sys_nation_list","蒙古族","2","1","民族清单列表(sys_nation_list):蒙古族",
+"sys_nation_list","回族","3","1","民族清单列表(sys_nation_list):回族",
+"sys_nation_list","藏族","4","1","民族清单列表(sys_nation_list):藏族",
+"sys_nation_list","维吾尔族","5","1","民族清单列表(sys_nation_list):维吾尔族",
+"sys_nation_list","苗族","6","1","民族清单列表(sys_nation_list):苗族",
+"sys_nation_list","彝族","7","1","民族清单列表(sys_nation_list):彝族",
+"sys_nation_list","壮族","8","1","民族清单列表(sys_nation_list):壮族",
+"sys_nation_list","布依族","9","1","民族清单列表(sys_nation_list):布依族",
+"sys_nation_list","朝鲜族","10","1","民族清单列表(sys_nation_list):朝鲜族",
+"sys_nation_list","满族","11","1","民族清单列表(sys_nation_list):满族",
+"sys_nation_list","侗族","12","1","民族清单列表(sys_nation_list):侗族",
+"sys_nation_list","瑶族","13","1","民族清单列表(sys_nation_list):瑶族",
+"sys_nation_list","白族","14","1","民族清单列表(sys_nation_list):白族",
+"sys_nation_list","土家族","15","1","民族清单列表(sys_nation_list):土家族",
+"sys_nation_list","哈尼族","16","1","民族清单列表(sys_nation_list):哈尼族",
+"sys_nation_list","哈萨克族","17","1","民族清单列表(sys_nation_list):哈萨克族",
+"sys_nation_list","傣族","18","1","民族清单列表(sys_nation_list):傣族",
+"sys_nation_list","黎族","19","1","民族清单列表(sys_nation_list):黎族",
+"sys_nation_list","僳僳族","20","1","民族清单列表(sys_nation_list):僳僳族",
+"sys_nation_list","佤族","21","1","民族清单列表(sys_nation_list):佤族",
+"sys_nation_list","畲族","22","1","民族清单列表(sys_nation_list):畲族",
+"sys_nation_list","高山族","23","1","民族清单列表(sys_nation_list):高山族",
+"sys_nation_list","拉祜族","24","1","民族清单列表(sys_nation_list):拉祜族",
+"sys_nation_list","水族","25","1","民族清单列表(sys_nation_list):水族",
+"sys_nation_list","东乡族","26","1","民族清单列表(sys_nation_list):东乡族",
+"sys_nation_list","纳西族","27","1","民族清单列表(sys_nation_list):纳西族",
+"sys_nation_list","景颇族","28","1","民族清单列表(sys_nation_list):景颇族",
+"sys_nation_list","柯尔克孜族","29","1","民族清单列表(sys_nation_list):柯尔克孜族",
+"sys_nation_list","土族","30","1","民族清单列表(sys_nation_list):土族",
+"sys_nation_list","达斡尔族","31","1","民族清单列表(sys_nation_list):达斡尔族",
+"sys_nation_list","仫佬族","32","1","民族清单列表(sys_nation_list):仫佬族",
+"sys_nation_list","羌族","33","1","民族清单列表(sys_nation_list):羌族",
+"sys_nation_list","布朗族","34","1","民族清单列表(sys_nation_list):布朗族",
+"sys_nation_list","撒拉族","35","1","民族清单列表(sys_nation_list):撒拉族",
+"sys_nation_list","毛南族","36","1","民族清单列表(sys_nation_list):毛南族",
+"sys_nation_list","仡佬族","37","1","民族清单列表(sys_nation_list):仡佬族",
+"sys_nation_list","锡伯族","38","1","民族清单列表(sys_nation_list):锡伯族",
+"sys_nation_list","阿昌族","39","1","民族清单列表(sys_nation_list):阿昌族",
+"sys_nation_list","普米族","40","1","民族清单列表(sys_nation_list):普米族",
+"sys_nation_list","塔吉克族","41","1","民族清单列表(sys_nation_list):塔吉克族",
+"sys_nation_list","怒族","42","1","民族清单列表(sys_nation_list):怒族",
+"sys_nation_list","乌孜别克族","43","1","民族清单列表(sys_nation_list):乌孜别克族",
+"sys_nation_list","俄罗斯族","44","1","民族清单列表(sys_nation_list):俄罗斯族",
+"sys_nation_list","鄂温克族","45","1","民族清单列表(sys_nation_list):鄂温克族",
+"sys_nation_list","德昂族","46","1","民族清单列表(sys_nation_list):德昂族",
+"sys_nation_list","保安族","47","1","民族清单列表(sys_nation_list):保安族",
+"sys_nation_list","裕固族","48","1","民族清单列表(sys_nation_list):裕固族",
+"sys_nation_list","京族","49","1","民族清单列表(sys_nation_list):京族",
+"sys_nation_list","塔塔尔族","50","1","民族清单列表(sys_nation_list):塔塔尔族",
+"sys_nation_list","独龙族","51","1","民族清单列表(sys_nation_list):独龙族",
+"sys_nation_list","鄂伦春族","52","1","民族清单列表(sys_nation_list):鄂伦春族",
+"sys_nation_list","赫哲族","53","1","民族清单列表(sys_nation_list):赫哲族",
+"sys_nation_list","门巴族","54","1","民族清单列表(sys_nation_list):门巴族",
+"sys_nation_list","珞巴族","55","1","民族清单列表(sys_nation_list):珞巴族",
+"sys_nation_list","基诺族","56","1","民族清单列表(sys_nation_list):基诺族",
+"sys_nature_list","国有企业","A","1","企业性质列表(sys_nature_list):国有企业",
+"sys_nature_list","集体企业","B","1","企业性质列表(sys_nature_list):集体企业",
+"sys_nature_list","联营企业","C","1","企业性质列表(sys_nature_list):联营企业",
+"sys_nature_list","三资企业","D","1","企业性质列表(sys_nature_list):三资企业",
+"sys_nature_list","私营企业","E","1","企业性质列表(sys_nature_list):私营企业",
+"sys_normal_disable","正常","0","1","系统开关列表(sys_normal_disable):正常",
+"sys_normal_disable","停用","1","1","系统开关列表(sys_normal_disable):停用",
+"sys_numbering_method","纯流水号","1","1","编码模式列表(sys_numbering_method):纯流水号",
+"sys_numbering_method","年月日YYYYMMDD+流水号","2","1","编码模式列表(sys_numbering_method):年月日YYYYMMDD+流水号",
+"sys_numbering_method","年月日YYMMDD+流水号","3","1","编码模式列表(sys_numbering_method):年月日YYMMDD+流水号",
+"sys_numbering_method","年月YYYYMM+流水号","4","1","编码模式列表(sys_numbering_method):年月YYYYMM+流水号",
+"sys_numbering_method","年月YYMM+流水号","5","1","编码模式列表(sys_numbering_method):年月YYMM+流水号",
+"sys_numbering_method","年YYYY+流水号","6","1","编码模式列表(sys_numbering_method):年YYYY+流水号",
+"sys_numbering_method","年YY+流水号","7","1","编码模式列表(sys_numbering_method):年YY+流水号",
+"sys_oper_type","其他","0","1","操作类型列表(sys_oper_type):其他",
+"sys_oper_type","新增","1","1","操作类型列表(sys_oper_type):新增",
+"sys_oper_type","修改","2","1","操作类型列表(sys_oper_type):修改",
+"sys_oper_type","删除","3","1","操作类型列表(sys_oper_type):删除",
+"sys_oper_type","授权","4","1","操作类型列表(sys_oper_type):授权",
+"sys_oper_type","导出","5","1","操作类型列表(sys_oper_type):导出",
+"sys_oper_type","导入","6","1","操作类型列表(sys_oper_type):导入",
+"sys_oper_type","强退","7","1","操作类型列表(sys_oper_type):强退",
+"sys_oper_type","生成代码","8","1","操作类型列表(sys_oper_type):生成代码",
+"sys_oper_type","清空数据","9","1","操作类型列表(sys_oper_type):清空数据",
+"sys_payment_method","现金","1","1","付款方式列表(sys_payment_method):现金",
+"sys_payment_method","支票","2","1","付款方式列表(sys_payment_method):支票",
+"sys_payment_method","信用","3","1","付款方式列表(sys_payment_method):信用",
+"sys_payment_method","交货付款","4","1","付款方式列表(sys_payment_method):交货付款",
+"sys_payment_method","分期","5","1","付款方式列表(sys_payment_method):分期",
+"sys_payment_method","交单付款","6","1","付款方式列表(sys_payment_method):交单付款",
+"sys_payment_method","预付","7","1","付款方式列表(sys_payment_method):预付",
+"sys_payment_method","延期","8","1","付款方式列表(sys_payment_method):延期",
+"sys_payment_method","电汇","9","1","付款方式列表(sys_payment_method):电汇",
+"sys_payment_terms","现金","C0","1","付款条件列表(sys_payment_terms):现金",
+"sys_payment_terms","预付","A0","1","付款条件列表(sys_payment_terms):预付",
+"sys_payment_terms","30天","T1","1","付款条件列表(sys_payment_terms):30天",
+"sys_payment_terms","45天","T2","1","付款条件列表(sys_payment_terms):45天",
+"sys_payment_terms","60天","T3","1","付款条件列表(sys_payment_terms):60天",
+"sys_payment_terms","75天","T4","1","付款条件列表(sys_payment_terms):75天",
+"sys_payment_terms","90天","T5","1","付款条件列表(sys_payment_terms):90天",
+"sys_payment_terms","120天","T6","1","付款条件列表(sys_payment_terms):120天",
+"sys_politic_list","中共党员","1","1","政治面貌列表(sys_politic_list):中共党员",
+"sys_politic_list","中共预备党员","2","1","政治面貌列表(sys_politic_list):中共预备党员",
+"sys_politic_list","共青团员","3","1","政治面貌列表(sys_politic_list):共青团员",
+"sys_politic_list","民革党员","4","1","政治面貌列表(sys_politic_list):民革党员",
+"sys_politic_list","民盟盟员","5","1","政治面貌列表(sys_politic_list):民盟盟员",
+"sys_politic_list","民建会员","6","1","政治面貌列表(sys_politic_list):民建会员",
+"sys_politic_list","民进会员","7","1","政治面貌列表(sys_politic_list):民进会员",
+"sys_politic_list","农工党党员","8","1","政治面貌列表(sys_politic_list):农工党党员",
+"sys_politic_list","致公党党员","9","1","政治面貌列表(sys_politic_list):致公党党员",
+"sys_politic_list","九三学社社员","10","1","政治面貌列表(sys_politic_list):九三学社社员",
+"sys_politic_list","台盟盟员","11","1","政治面貌列表(sys_politic_list):台盟盟员",
+"sys_politic_list","无党派人士","12","1","政治面貌列表(sys_politic_list):无党派人士",
+"sys_politic_list","群众","13","1","政治面貌列表(sys_politic_list):群众",
+"sys_post_level","管理1级","1","1","岗位等级列表(sys_post_level):管理1级",
+"sys_post_level","管理2级","2","1","岗位等级列表(sys_post_level):管理2级",
+"sys_post_level","管理3级","3","1","岗位等级列表(sys_post_level):管理3级",
+"sys_post_level","管理4级","4","1","岗位等级列表(sys_post_level):管理4级",
+"sys_post_level","管理5级","5","1","岗位等级列表(sys_post_level):管理5级",
+"sys_post_level","管理6级","6","1","岗位等级列表(sys_post_level):管理6级",
+"sys_post_level","管理7级","7","1","岗位等级列表(sys_post_level):管理7级",
+"sys_post_level","管理8级","8","1","岗位等级列表(sys_post_level):管理8级",
+"sys_post_level","专业1级","9","1","岗位等级列表(sys_post_level):专业1级",
+"sys_post_level","专业2级","10","1","岗位等级列表(sys_post_level):专业2级",
+"sys_post_level","专业3级","11","1","岗位等级列表(sys_post_level):专业3级",
+"sys_post_level","专业4级","12","1","岗位等级列表(sys_post_level):专业4级",
+"sys_post_level","专业5级","13","1","岗位等级列表(sys_post_level):专业5级",
+"sys_post_level","专业6级","14","1","岗位等级列表(sys_post_level):专业6级",
+"sys_post_level","专业7级","15","1","岗位等级列表(sys_post_level):专业7级",
+"sys_post_level","专业8级","16","1","岗位等级列表(sys_post_level):专业8级",
+"sys_post_level","专业9级","17","1","岗位等级列表(sys_post_level):专业9级",
+"sys_post_level","专业10级","18","1","岗位等级列表(sys_post_level):专业10级",
+"sys_post_level","专业11级","19","1","岗位等级列表(sys_post_level):专业11级",
+"sys_post_level","专业12级","20","1","岗位等级列表(sys_post_level):专业12级",
+"sys_post_level","专业13级","21","1","岗位等级列表(sys_post_level):专业13级",
+"sys_post_level","技能1级","22","1","岗位等级列表(sys_post_level):技能1级",
+"sys_post_level","技能2级","23","1","岗位等级列表(sys_post_level):技能2级",
+"sys_post_level","技能3级","24","1","岗位等级列表(sys_post_level):技能3级",
+"sys_post_level","技能4级","25","1","岗位等级列表(sys_post_level):技能4级",
+"sys_post_level","技能5级","26","1","岗位等级列表(sys_post_level):技能5级",
+"sys_recruited_list","内部竞聘","1","1","招聘来源列表(sys_recruited_list):内部竞聘",
+"sys_recruited_list","内部推荐","2","1","招聘来源列表(sys_recruited_list):内部推荐",
+"sys_recruited_list","直接任命","3","1","招聘来源列表(sys_recruited_list):直接任命",
+"sys_recruited_list","内部调岗","4","1","招聘来源列表(sys_recruited_list):内部调岗",
+"sys_recruited_list","轮岗","5","1","招聘来源列表(sys_recruited_list):轮岗",
+"sys_recruited_list","退休返聘","6","1","招聘来源列表(sys_recruited_list):退休返聘",
+"sys_recruited_list","校园招聘","7","1","招聘来源列表(sys_recruited_list):校园招聘",
+"sys_recruited_list","网络招聘","8","1","招聘来源列表(sys_recruited_list):网络招聘",
+"sys_recruited_list","猎头推荐","9","1","招聘来源列表(sys_recruited_list):猎头推荐",
+"sys_recruited_list","媒体","10","1","招聘来源列表(sys_recruited_list):媒体",
+"sys_recruited_list","人才市场","11","1","招聘来源列表(sys_recruited_list):人才市场",
+"sys_ref_type","表单","Form","1","单据类别列表(sys_ref_type):表单",
+"sys_ref_type","公告","Notify","1","单据类别列表(sys_ref_type):公告",
+"sys_ref_type","通知","Notice","1","单据类别列表(sys_ref_type):通知",
+"sys_ref_type","物料","Matnr","1","单据类别列表(sys_ref_type):物料",
+"sys_ref_type","供应商","Vendor","1","单据类别列表(sys_ref_type):供应商",
+"sys_ref_type","客户","Client","1","单据类别列表(sys_ref_type):客户",
+"sys_ref_type","出库明细表/出库依赖书","出库明细表/出库依赖书","1","单据类别列表(sys_ref_type):出库明细表/出库依赖书",
+"sys_ref_type","出库票(一式三联)","出库票(一式三联)","1","单据类别列表(sys_ref_type):出库票(一式三联)",
+"sys_ref_type","第一音响库存卡管理卡","第一音响库存卡管理卡","1","单据类别列表(sys_ref_type):第一音响库存卡管理卡",
+"sys_ref_type","在库和入出库残调整记录单","在库和入出库残调整记录单","1","单据类别列表(sys_ref_type):在库和入出库残调整记录单",
+"sys_ref_type","半年/一年以上未出库统计表","半年/一年以上未出库统计表","1","单据类别列表(sys_ref_type):半年/一年以上未出库统计表",
+"sys_ref_type","MATERIAL STOCK LIST ","MATERIAL STOCK LIST ","1","单据类别列表(sys_ref_type):MATERIAL STOCK LIST ",
+"sys_ref_type","仓库材料目度盘点表","仓库材料目度盘点表","1","单据类别列表(sys_ref_type):仓库材料目度盘点表",
+"sys_ref_type","辅料进出存表","辅料进出存表","1","单据类别列表(sys_ref_type):辅料进出存表",
+"sys_ref_type","购物申请单","购物申请单","1","单据类别列表(sys_ref_type):购物申请单",
+"sys_ref_type","单品承认测试委托书","单品承认测试委托书","1","单据类别列表(sys_ref_type):单品承认测试委托书",
+"sys_ref_type","系列承认测试委托书","系列承认测试委托书","1","单据类别列表(sys_ref_type):系列承认测试委托书",
+"sys_ref_type","辅料订单","辅料订单","1","单据类别列表(sys_ref_type):辅料订单",
+"sys_ref_type","订贷单(一式三联)","订贷单(一式三联)","1","单据类别列表(sys_ref_type):订贷单(一式三联)",
+"sys_ref_type","制品、部品应急处理票","制品、部品应急处理票","1","单据类别列表(sys_ref_type):制品、部品应急处理票",
+"sys_ref_type","交贷明细单","交贷明细单","1","单据类别列表(sys_ref_type):交贷明细单",
+"sys_ref_type","传票采购登记本","传票采购登记本","1","单据类别列表(sys_ref_type):传票采购登记本",
+"sys_ref_type","不良品采购登记本","不良品采购登记本","1","单据类别列表(sys_ref_type):不良品采购登记本",
+"sys_ref_type","传票受领证","传票受领证","1","单据类别列表(sys_ref_type):传票受领证",
+"sys_ref_type","厂商登录/新部品登录","厂商登录/新部品登录","1","单据类别列表(sys_ref_type):厂商登录/新部品登录",
+"sys_ref_type","协力厂商评鉴表","协力厂商评鉴表","1","单据类别列表(sys_ref_type):协力厂商评鉴表",
+"sys_ref_type","协力厂商考核记录表","协力厂商考核记录表","1","单据类别列表(sys_ref_type):协力厂商考核记录表",
+"sys_ref_type","TEAC 辅料进贷单","TEAC 辅料进贷单","1","单据类别列表(sys_ref_type):TEAC 辅料进贷单",
+"sys_ref_type","海外部品资料表","海外部品资料表","1","单据类别列表(sys_ref_type):海外部品资料表",
+"sys_ref_type","交贷明细单（大件）","交贷明细单（大件）","1","单据类别列表(sys_ref_type):交贷明细单（大件）",
+"sys_ref_type","软/硬件需求维护申请表","软/硬件需求维护申请表","1","单据类别列表(sys_ref_type):软/硬件需求维护申请表",
+"sys_ref_type","AS-400 USER/PASSWORD申请用纸","AS-400 USER/PASSWORD申请用纸","1","单据类别列表(sys_ref_type):AS-400 USER/PASSWORD申请用纸",
+"sys_ref_type","AS-400 HARDWARE 申请用纸","AS-400 HARDWARE 申请用纸","1","单据类别列表(sys_ref_type):AS-400 HARDWARE 申请用纸",
+"sys_ref_type","BACKUP MEMO","BACKUP MEMO","1","单据类别列表(sys_ref_type):BACKUP MEMO",
+"sys_ref_type","系统维护记录表","系统维护记录表","1","单据类别列表(sys_ref_type):系统维护记录表",
+"sys_ref_type","资料备份记录一览表","资料备份记录一览表","1","单据类别列表(sys_ref_type):资料备份记录一览表",
+"sys_ref_type","会议记录","会议记录","1","单据类别列表(sys_ref_type):会议记录",
+"sys_ref_type","文件纳入管制总览表","文件纳入管制总览表","1","单据类别列表(sys_ref_type):文件纳入管制总览表",
+"sys_ref_type","品质记录管制总览表","品质记录管制总览表","1","单据类别列表(sys_ref_type):品质记录管制总览表",
+"sys_ref_type","文件变更/废止申请单","文件变更/废止申请单","1","单据类别列表(sys_ref_type):文件变更/废止申请单",
+"sys_ref_type","文件不足/补发申请单","文件不足/补发申请单","1","单据类别列表(sys_ref_type):文件不足/补发申请单",
+"sys_ref_type","文件发行签收一览表","文件发行签收一览表","1","单据类别列表(sys_ref_type):文件发行签收一览表",
+"sys_ref_type","年度内部品质稽核计划表","年度内部品质稽核计划表","1","单据类别列表(sys_ref_type):年度内部品质稽核计划表",
+"sys_ref_type","内部品质稽核小组名册","内部品质稽核小组名册","1","单据类别列表(sys_ref_type):内部品质稽核小组名册",
+"sys_ref_type","查检表","查检表","1","单据类别列表(sys_ref_type):查检表",
+"sys_ref_type","完成吕检查结果报告书","完成吕检查结果报告书","1","单据类别列表(sys_ref_type):完成吕检查结果报告书",
+"sys_ref_type","受入检查经历记录表","受入检查经历记录表","1","单据类别列表(sys_ref_type):受入检查经历记录表",
+"sys_ref_type","不合格连络书","不合格连络书","1","单据类别列表(sys_ref_type):不合格连络书",
+"sys_ref_type","IQC每日抽检报表","IQC每日抽检报表","1","单据类别列表(sys_ref_type):IQC每日抽检报表",
+"sys_ref_type","传票交接登记本","传票交接登记本","1","单据类别列表(sys_ref_type):传票交接登记本",
+"sys_ref_type","机台内部检查表","机台内部检查表","1","单据类别列表(sys_ref_type):机台内部检查表",
+"sys_ref_type","检查用具点检表","检查用具点检表","1","单据类别列表(sys_ref_type):检查用具点检表",
+"sys_ref_type","月次检查结果报告书","月次检查结果报告书","1","单据类别列表(sys_ref_type):月次检查结果报告书",
+"sys_ref_type","生产线别检查报告","生产线别检查报告","1","单据类别列表(sys_ref_type):生产线别检查报告",
+"sys_ref_type","批号不合格通知书","批号不合格通知书","1","单据类别列表(sys_ref_type):批号不合格通知书",
+"sys_ref_type","不良品退贷卡","不良品退贷卡","1","单据类别列表(sys_ref_type):不良品退贷卡",
+"sys_ref_type","品质异常改善预防调查依赖书","品质异常改善预防调查依赖书","1","单据类别列表(sys_ref_type):品质异常改善预防调查依赖书",
+"sys_ref_type","安全规格完成品确认图表","安全规格完成品确认图表","1","单据类别列表(sys_ref_type):安全规格完成品确认图表",
+"sys_ref_type","致命不良处理报告书","致命不良处理报告书","1","单据类别列表(sys_ref_type):致命不良处理报告书",
+"sys_ref_type","流水线确认途径","流水线确认途径","1","单据类别列表(sys_ref_type):流水线确认途径",
+"sys_ref_type","QA股电批扭力管理表","QA股电批扭力管理表","1","单据类别列表(sys_ref_type):QA股电批扭力管理表",
+"sys_ref_type","调查依赖书","调查依赖书","1","单据类别列表(sys_ref_type):调查依赖书",
+"sys_ref_type","制品应急处理票","制品应急处理票","1","单据类别列表(sys_ref_type):制品应急处理票",
+"sys_ref_type","客户满意度调查表","客户满意度调查表","1","单据类别列表(sys_ref_type):客户满意度调查表",
+"sys_ref_type","持续改善要求表","持续改善要求表","1","单据类别列表(sys_ref_type):持续改善要求表",
+"sys_ref_type","新进人员职前培训表","新进人员职前培训表","1","单据类别列表(sys_ref_type):新进人员职前培训表",
+"sys_ref_type","员工教育训练履历表","员工教育训练履历表","1","单据类别列表(sys_ref_type):员工教育训练履历表",
+"sys_ref_type","新进人员实习单","新进人员实习单","1","单据类别列表(sys_ref_type):新进人员实习单",
+"sys_ref_type","开会/上课签到册","开会/上课签到册","1","单据类别列表(sys_ref_type):开会/上课签到册",
+"sys_ref_type","内外训申请表","内外训申请表","1","单据类别列表(sys_ref_type):内外训申请表",
+"sys_ref_type","外出申请单","外出申请单","1","单据类别列表(sys_ref_type):外出申请单",
+"sys_ref_type","年度教育训练计划表","年度教育训练计划表","1","单据类别列表(sys_ref_type):年度教育训练计划表",
+"sys_ref_type","员工教育训练记录","员工教育训练记录","1","单据类别列表(sys_ref_type):员工教育训练记录",
+"sys_ref_type","月份生产计划一览表","月份生产计划一览表","1","单据类别列表(sys_ref_type):月份生产计划一览表",
+"sys_ref_type","生产计划日程一览","生产计划日程一览","1","单据类别列表(sys_ref_type):生产计划日程一览",
+"sys_ref_type","生产计划登录一览","生产计划登录一览","1","单据类别列表(sys_ref_type):生产计划登录一览",
+"sys_ref_type","东莞生产计划日程表","东莞生产计划日程表","1","单据类别列表(sys_ref_type):东莞生产计划日程表",
+"sys_ref_type","指示书","指示书","1","单据类别列表(sys_ref_type):指示书",
+"sys_ref_type","生产管理联络书","生产管理联络书","1","单据类别列表(sys_ref_type):生产管理联络书",
+"sys_ref_type","出贷通知书(一式四联)","出贷通知书(一式四联)","1","单据类别列表(sys_ref_type):出贷通知书(一式四联)",
+"sys_ref_type","出贷计划一览表","出贷计划一览表","1","单据类别列表(sys_ref_type):出贷计划一览表",
+"sys_ref_type","生产计划变更一览表","生产计划变更一览表","1","单据类别列表(sys_ref_type):生产计划变更一览表",
+"sys_ref_type","SMT材料出库一览表","SMT材料出库一览表","1","单据类别列表(sys_ref_type):SMT材料出库一览表",
+"sys_ref_type","外包批示书","外包批示书","1","单据类别列表(sys_ref_type):外包批示书",
+"sys_ref_type","插件部品一览表","插件部品一览表","1","单据类别列表(sys_ref_type):插件部品一览表",
+"sys_ref_type","插件部品变更履历书","插件部品变更履历书","1","单据类别列表(sys_ref_type):插件部品变更履历书",
+"sys_ref_type","不具合报告书","不具合报告书","1","单据类别列表(sys_ref_type):不具合报告书",
+"sys_ref_type","技术资料/图面纳入管制","技术资料/图面纳入管制","1","单据类别列表(sys_ref_type):技术资料/图面纳入管制",
+"sys_ref_type","技术资料/图面发行.借出签收表","技术资料/图面发行.借出签收表","1","单据类别列表(sys_ref_type):技术资料/图面发行.借出签收表",
+"sys_ref_type","工程变更情报","工程变更情报","1","单据类别列表(sys_ref_type):工程变更情报",
+"sys_ref_type","技术连络书","技术连络书","1","单据类别列表(sys_ref_type):技术连络书",
+"sys_ref_type","机器设备总览表","机器设备总览表","1","单据类别列表(sys_ref_type):机器设备总览表",
+"sys_ref_type","机器设备履历表","机器设备履历表","1","单据类别列表(sys_ref_type):机器设备履历表",
+"sys_ref_type","机器设备保养表","机器设备保养表","1","单据类别列表(sys_ref_type):机器设备保养表",
+"sys_ref_type","机器/仪器外修(报废)申请单","机器/仪器外修(报废)申请单","1","单据类别列表(sys_ref_type):机器/仪器外修(报废)申请单",
+"sys_ref_type","机器设备年度保养记录表","机器设备年度保养记录表","1","单据类别列表(sys_ref_type):机器设备年度保养记录表",
+"sys_ref_type","AV机修理记录报告","AV机修理记录报告","1","单据类别列表(sys_ref_type):AV机修理记录报告",
+"sys_ref_type","仪器管理一览表","仪器管理一览表","1","单据类别列表(sys_ref_type):仪器管理一览表",
+"sys_ref_type","仪器设备管理卡","仪器设备管理卡","1","单据类别列表(sys_ref_type):仪器设备管理卡",
+"sys_ref_type","仪校人员受训履历表","仪校人员受训履历表","1","单据类别列表(sys_ref_type):仪校人员受训履历表",
+"sys_ref_type","仪校人员能力履历表","仪校人员能力履历表","1","单据类别列表(sys_ref_type):仪校人员能力履历表",
+"sys_ref_type","仪校设备发放签收单","仪校设备发放签收单","1","单据类别列表(sys_ref_type):仪校设备发放签收单",
+"sys_ref_type","PUCTURE/INSULATION校正记录表","PUCTURE/INSULATION校正记录表","1","单据类别列表(sys_ref_type):PUCTURE/INSULATION校正记录表",
+"sys_ref_type","WOW FLUTTER METER校正记录表","WOW FLUTTER METER校正记录表","1","单据类别列表(sys_ref_type):WOW FLUTTER METER校正记录表",
+"sys_ref_type","AC MILIVOLT METER 校正记录表","AC MILIVOLT METER 校正记录表","1","单据类别列表(sys_ref_type):AC MILIVOLT METER 校正记录表",
+"sys_ref_type","MF-502 校正记录表","MF-502 校正记录表","1","单据类别列表(sys_ref_type):MF-502 校正记录表",
+"sys_ref_type","仪器设备分类代码表","仪器设备分类代码表","1","单据类别列表(sys_ref_type):仪器设备分类代码表",
+"sys_ref_type","部品购入履历栏","部品购入履历栏","1","单据类别列表(sys_ref_type):部品购入履历栏",
+"sys_ref_type","UNIVERSAL COUNTER校正记录靖","UNIVERSAL COUNTER校正记录靖","1","单据类别列表(sys_ref_type):UNIVERSAL COUNTER校正记录靖",
+"sys_ref_type","比重计点检记录表","比重计点检记录表","1","单据类别列表(sys_ref_type):比重计点检记录表",
+"sys_ref_type","调压器点检记录表","调压器点检记录表","1","单据类别列表(sys_ref_type):调压器点检记录表",
+"sys_ref_type","机械万用表点检记录表","机械万用表点检记录表","1","单据类别列表(sys_ref_type):机械万用表点检记录表",
+"sys_ref_type","软件纳入管理台帐","软件纳入管理台帐","1","单据类别列表(sys_ref_type):软件纳入管理台帐",
+"sys_ref_type","软件管理表","软件管理表","1","单据类别列表(sys_ref_type):软件管理表",
+"sys_ref_type","焊锡槽管理周报表","焊锡槽管理周报表","1","单据类别列表(sys_ref_type):焊锡槽管理周报表",
+"sys_ref_type","作业标准书&工程表(封面)","作业标准书&工程表(封面)","1","单据类别列表(sys_ref_type):作业标准书&工程表(封面)",
+"sys_ref_type","作业标准书&工程表(作业内容)","作业标准书&工程表(作业内容)","1","单据类别列表(sys_ref_type):作业标准书&工程表(作业内容)",
+"sys_ref_type","作业标准书&工程表(说明书包装作业)","作业标准书&工程表(说明书包装作业)","1","单据类别列表(sys_ref_type):作业标准书&工程表(说明书包装作业)",
+"sys_ref_type","制程变更申请单","制程变更申请单","1","单据类别列表(sys_ref_type):制程变更申请单",
+"sys_ref_type","小日程计划表","小日程计划表","1","单据类别列表(sys_ref_type):小日程计划表",
+"sys_ref_type","SMT部品表交换记录表","SMT部品表交换记录表","1","单据类别列表(sys_ref_type):SMT部品表交换记录表",
+"sys_ref_type","PCB目视检查记录表","PCB目视检查记录表","1","单据类别列表(sys_ref_type):PCB目视检查记录表",
+"sys_ref_type","不良集计报告书","不良集计报告书","1","单据类别列表(sys_ref_type):不良集计报告书",
+"sys_ref_type","作业日报表","作业日报表","1","单据类别列表(sys_ref_type):作业日报表",
+"sys_ref_type","厂内调查依赖书","厂内调查依赖书","1","单据类别列表(sys_ref_type):厂内调查依赖书",
+"sys_ref_type","检查日报表","检查日报表","1","单据类别列表(sys_ref_type):检查日报表",
+"sys_ref_type","修理日报表","修理日报表","1","单据类别列表(sys_ref_type):修理日报表",
+"sys_ref_type","焊锡槽管理周报表","焊锡槽管理周报表","1","单据类别列表(sys_ref_type):焊锡槽管理周报表",
+"sys_ref_type","自动锡炉表上设定温度表","自动锡炉表上设定温度表","1","单据类别列表(sys_ref_type):自动锡炉表上设定温度表",
+"sys_ref_type","自动锡炉加锡记录表","自动锡炉加锡记录表","1","单据类别列表(sys_ref_type):自动锡炉加锡记录表",
+"sys_ref_type","自动插件部品放置顺序表","自动插件部品放置顺序表","1","单据类别列表(sys_ref_type):自动插件部品放置顺序表",
+"sys_ref_type","自动插件作业日报表","自动插件作业日报表","1","单据类别列表(sys_ref_type):自动插件作业日报表",
+"sys_ref_type","制造课完成品送检通知单(一式五联)","制造课完成品送检通知单(一式五联)","1","单据类别列表(sys_ref_type):制造课完成品送检通知单(一式五联)",
+"sys_ref_type","作业指示完成品票(一式四联)","作业指示完成品票(一式四联)","1","单据类别列表(sys_ref_type):作业指示完成品票(一式四联)",
+"sys_ref_type","作业传票(一式二联)","作业传票(一式二联)","1","单据类别列表(sys_ref_type):作业传票(一式二联)",
+"sys_ref_type","随机卡","随机卡","1","单据类别列表(sys_ref_type):随机卡",
+"sys_ref_type","组立生产管理日报表","组立生产管理日报表","1","单据类别列表(sys_ref_type):组立生产管理日报表",
+"sys_ref_type","PCB股生产管理日报表","PCB股生产管理日报表","1","单据类别列表(sys_ref_type):PCB股生产管理日报表",
+"sys_ref_type","检查电动起子履历表","检查电动起子履历表","1","单据类别列表(sys_ref_type):检查电动起子履历表",
+"sys_ref_type","TEAC TAPE更换记录表","TEAC TAPE更换记录表","1","单据类别列表(sys_ref_type):TEAC TAPE更换记录表",
+"sys_ref_type","静电手腕带点检记录表","静电手腕带点检记录表","1","单据类别列表(sys_ref_type):静电手腕带点检记录表",
+"sys_ref_type","烙铁温度测量记录表","烙铁温度测量记录表","1","单据类别列表(sys_ref_type):烙铁温度测量记录表",
+"sys_ref_type","手插生产管理日程表","手插生产管理日程表","1","单据类别列表(sys_ref_type):手插生产管理日程表",
+"sys_ref_type","自插每日巡视记录表","自插每日巡视记录表","1","单据类别列表(sys_ref_type):自插每日巡视记录表",
+"sys_ref_type","自插首件检查作业确认表","自插首件检查作业确认表","1","单据类别列表(sys_ref_type):自插首件检查作业确认表",
+"sys_ref_type","制造课连络书","制造课连络书","1","单据类别列表(sys_ref_type):制造课连络书",
+"sys_ref_type","SMT作业日报表","SMT作业日报表","1","单据类别列表(sys_ref_type):SMT作业日报表",
+"sys_ref_type","SMT锡膏管理表","SMT锡膏管理表","1","单据类别列表(sys_ref_type):SMT锡膏管理表",
+"sys_ref_type","STM检查记录表","STM检查记录表","1","单据类别列表(sys_ref_type):STM检查记录表",
+"sys_ref_type","SMT实装不具合改善表","SMT实装不具合改善表","1","单据类别列表(sys_ref_type):SMT实装不具合改善表",
+"sys_ref_type","MASK管理表","MASK管理表","1","单据类别列表(sys_ref_type):MASK管理表",
+"sys_show_hide","显示","0","1","菜单状态列表(sys_show_hide):显示",
+"sys_show_hide","隐藏","1","1","菜单状态列表(sys_show_hide):隐藏",
+"sys_specialty_list","医学","1","1","专业列表(sys_specialty_list):医学",
+"sys_specialty_list","法学","2","1","专业列表(sys_specialty_list):法学",
+"sys_specialty_list","文学","3","1","专业列表(sys_specialty_list):文学",
+"sys_specialty_list","艺术","4","1","专业列表(sys_specialty_list):艺术",
+"sys_specialty_list","历史","5","1","专业列表(sys_specialty_list):历史",
+"sys_specialty_list","教育","6","1","专业列表(sys_specialty_list):教育",
+"sys_specialty_list","理学","7","1","专业列表(sys_specialty_list):理学",
+"sys_specialty_list","工学","8","1","专业列表(sys_specialty_list):工学",
+"sys_specialty_list","农学","9","1","专业列表(sys_specialty_list):农学",
+"sys_specialty_list","经济学","10","1","专业列表(sys_specialty_list):经济学",
+"sys_specialty_list","管理学","11","1","专业列表(sys_specialty_list):管理学",
+"sys_specialty_list","哲学","12","1","专业列表(sys_specialty_list):哲学",
+"sys_tax_list","T1","T1","1","税率类别列表(sys_tax_list):T1",
+"sys_tax_list","T2","T2","1","税率类别列表(sys_tax_list):T2",
+"sys_tax_list","T3","T3","1","税率类别列表(sys_tax_list):T3",
+"sys_tax_list","T4","T4","1","税率类别列表(sys_tax_list):T4",
+"sys_tax_list","T5","T5","1","税率类别列表(sys_tax_list):T5",
+"sys_tax_list","T","T","1","税率类别列表(sys_tax_list):T",
+"sys_titles_list","无","0","1","职称清单列表(sys_titles_list):无",
+"sys_titles_list","教师","1","1","职称清单列表(sys_titles_list):教师",
+"sys_titles_list","注册消防工程师","2","1","职称清单列表(sys_titles_list):注册消防工程师",
+"sys_titles_list","执业律师","3","1","职称清单列表(sys_titles_list):执业律师",
+"sys_titles_list","注册会计师","4","1","职称清单列表(sys_titles_list):注册会计师",
+"sys_titles_list","注册安全工程师","5","1","职称清单列表(sys_titles_list):注册安全工程师",
+"sys_titles_list","注册核安全工程师","6","1","职称清单列表(sys_titles_list):注册核安全工程师",
+"sys_titles_list","注册验船师","7","1","职称清单列表(sys_titles_list):注册验船师",
+"sys_titles_list","注册计量师","8","1","职称清单列表(sys_titles_list):注册计量师",
+"sys_titles_list","注册测绘师","9","1","职称清单列表(sys_titles_list):注册测绘师",
+"sys_titles_list","注册公用设备工程师","10","1","职称清单列表(sys_titles_list):注册公用设备工程师",
+"sys_titles_list","注册电气工程师","11","1","职称清单列表(sys_titles_list):注册电气工程师",
+"sys_titles_list","注册化工工程师","12","1","职称清单列表(sys_titles_list):注册化工工程师",
+"sys_titles_list","注册土木工程师（港航）","13","1","职称清单列表(sys_titles_list):注册土木工程师（港航）",
+"sys_titles_list","注册土木工程师(岩土)","14","1","职称清单列表(sys_titles_list):注册土木工程师(岩土)",
+"sys_titles_list","注册土木工程师(水利水电)","15","1","职称清单列表(sys_titles_list):注册土木工程师(水利水电)",
+"sys_titles_list","注册环保工程师","16","1","职称清单列表(sys_titles_list):注册环保工程师",
+"sys_titles_list","注册结构工程师","17","1","职称清单列表(sys_titles_list):注册结构工程师",
+"sys_titles_list","勘察设计注册工程师","18","1","职称清单列表(sys_titles_list):勘察设计注册工程师",
+"sys_titles_list","注册建筑师","19","1","职称清单列表(sys_titles_list):注册建筑师",
+"sys_titles_list","监理工程师","20","1","职称清单列表(sys_titles_list):监理工程师",
+"sys_titles_list","房民产估价师","21","1","职称清单列表(sys_titles_list):房民产估价师",
+"sys_titles_list","造价工程师","22","1","职称清单列表(sys_titles_list):造价工程师",
+"sys_titles_list","建造师","23","1","职称清单列表(sys_titles_list):建造师",
+"sys_titles_list","执业兽医","24","1","职称清单列表(sys_titles_list):执业兽医",
+"sys_titles_list","拍卖师","25","1","职称清单列表(sys_titles_list):拍卖师",
+"sys_titles_list","演出经纪","26","1","职称清单列表(sys_titles_list):演出经纪",
+"sys_titles_list","护士","27","1","职称清单列表(sys_titles_list):护士",
+"sys_titles_list","母婴保健","28","1","职称清单列表(sys_titles_list):母婴保健",
+"sys_titles_list","广播电视播音员，主持人","29","1","职称清单列表(sys_titles_list):广播电视播音员，主持人",
+"sys_titles_list","新闻记者","30","1","职称清单列表(sys_titles_list):新闻记者",
+"sys_titles_list","执业药师","31","1","职称清单列表(sys_titles_list):执业药师",
+"sys_titles_list","专利代理师","32","1","职称清单列表(sys_titles_list):专利代理师",
+"sys_titles_list","导游","33","1","职称清单列表(sys_titles_list):导游",
+"sys_titles_list","特种设备检验，检测人员","34","1","职称清单列表(sys_titles_list):特种设备检验，检测人员",
+"sys_titles_list","资产评估师","35","1","职称清单列表(sys_titles_list):资产评估师",
+"sys_titles_list","社会工作者","36","1","职称清单列表(sys_titles_list):社会工作者",
+"sys_titles_list","国土空间规划师","37","1","职称清单列表(sys_titles_list):国土空间规划师",
+"sys_titles_list","环境影响评价工程师","38","1","职称清单列表(sys_titles_list):环境影响评价工程师",
+"sys_titles_list","房地产经纪","39","1","职称清单列表(sys_titles_list):房地产经纪",
+"sys_titles_list","机动车检测维修检测","40","1","职称清单列表(sys_titles_list):机动车检测维修检测",
+"sys_titles_list","水利工程检测员","41","1","职称清单列表(sys_titles_list):水利工程检测员",
+"sys_titles_list","税务师","42","1","职称清单列表(sys_titles_list):税务师",
+"sys_titles_list","精算师","43","1","职称清单列表(sys_titles_list):精算师",
+"sys_titles_list","设备监理师","44","1","职称清单列表(sys_titles_list):设备监理师",
+"sys_titles_list","审计","45","1","职称清单列表(sys_titles_list):审计",
+"sys_titles_list","卫生","46","1","职称清单列表(sys_titles_list):卫生",
+"sys_titles_list","出版","47","1","职称清单列表(sys_titles_list):出版",
+"sys_titles_list","统计","48","1","职称清单列表(sys_titles_list):统计",
+"sys_titles_list","银行","49","1","职称清单列表(sys_titles_list):银行",
+"sys_titles_list","证券期货","50","1","职称清单列表(sys_titles_list):证券期货",
+"sys_titles_list","文物保护","51","1","职称清单列表(sys_titles_list):文物保护",
+"sys_titles_list","翻译","52","1","职称清单列表(sys_titles_list):翻译",
+"sys_titles_list","矿业权评估师","53","1","职称清单列表(sys_titles_list):矿业权评估师",
+"sys_trialterm_list","3天","1","1","试用期限列表(sys_trialterm_list):3天",
+"sys_trialterm_list","7天","2","1","试用期限列表(sys_trialterm_list):7天",
+"sys_trialterm_list","15天","3","1","试用期限列表(sys_trialterm_list):15天",
+"sys_trialterm_list","21天","4","1","试用期限列表(sys_trialterm_list):21天",
+"sys_trialterm_list","30天","5","1","试用期限列表(sys_trialterm_list):30天",
+"sys_trialterm_list","60天","6","1","试用期限列表(sys_trialterm_list):60天",
+"sys_trialterm_list","90天","7","1","试用期限列表(sys_trialterm_list):90天",
+"sys_trialterm_list","6个月","8","1","试用期限列表(sys_trialterm_list):6个月",
+"sys_unit_list","平方英寸","2","1","单位清单列表(sys_unit_list):平方英寸",
+"sys_unit_list","立方英寸","3","1","单位清单列表(sys_unit_list):立方英寸",
+"sys_unit_list","百分比","%","1","单位清单列表(sys_unit_list):百分比",
+"sys_unit_list","米/分","000","1","单位清单列表(sys_unit_list):米/分",
+"sys_unit_list","平方毫米/秒","22S","1","单位清单列表(sys_unit_list):平方毫米/秒",
+"sys_unit_list","安培","A","1","单位清单列表(sys_unit_list):安培",
+"sys_unit_list","英亩","ACR","1","单位清单列表(sys_unit_list):英亩",
+"sys_unit_list","作业单位","AU","1","单位清单列表(sys_unit_list):作业单位",
+"sys_unit_list","带","BAG","1","单位清单列表(sys_unit_list):带",
+"sys_unit_list","巴","BAR","1","单位清单列表(sys_unit_list):巴",
+"sys_unit_list","贝可勒尔/千克","BQK","1","单位清单列表(sys_unit_list):贝可勒尔/千克",
+"sys_unit_list","立方厘米/秒","C3S","1","单位清单列表(sys_unit_list):立方厘米/秒",
+"sys_unit_list","罐","CAN","1","单位清单列表(sys_unit_list):罐",
+"sys_unit_list","箱","CAR","1","单位清单列表(sys_unit_list):箱",
+"sys_unit_list","立方厘米","CCM","1","单位清单列表(sys_unit_list):立方厘米",
+"sys_unit_list","烛光","CD","1","单位清单列表(sys_unit_list):烛光",
+"sys_unit_list","立方分米","CD3","1","单位清单列表(sys_unit_list):立方分米",
+"sys_unit_list","厘升","CL","1","单位清单列表(sys_unit_list):厘升",
+"sys_unit_list","公分","CM","1","单位清单列表(sys_unit_list):公分",
+"sys_unit_list","平方厘米","CM2","1","单位清单列表(sys_unit_list):平方厘米",
+"sys_unit_list","厘米/小时","CMH","1","单位清单列表(sys_unit_list):厘米/小时",
+"sys_unit_list","厘米/秒","CMS","1","单位清单列表(sys_unit_list):厘米/秒",
+"sys_unit_list","板条箱","CRT","1","单位清单列表(sys_unit_list):板条箱",
+"sys_unit_list","天数","D","1","单位清单列表(sys_unit_list):天数",
+"sys_unit_list","度","DEG","1","单位清单列表(sys_unit_list):度",
+"sys_unit_list","分米","DM","1","单位清单列表(sys_unit_list):分米",
+"sys_unit_list","鼓","DR","1","单位清单列表(sys_unit_list):鼓",
+"sys_unit_list","一打","DZ","1","单位清单列表(sys_unit_list):一打",
+"sys_unit_list","每一个","EA","1","单位清单列表(sys_unit_list):每一个",
+"sys_unit_list","酶单位/毫升","EML","1","单位清单列表(sys_unit_list):酶单位/毫升",
+"sys_unit_list","酶单位","EU","1","单位清单列表(sys_unit_list):酶单位",
+"sys_unit_list","法拉","F","1","单位清单列表(sys_unit_list):法拉",
+"sys_unit_list","Fluid 美国盎司","FOZ","1","单位清单列表(sys_unit_list):Fluid 美国盎司",
+"sys_unit_list","英尺","FT","1","单位清单列表(sys_unit_list):英尺",
+"sys_unit_list","平方英尺","FT2","1","单位清单列表(sys_unit_list):平方英尺",
+"sys_unit_list","立方英尺","FT3","1","单位清单列表(sys_unit_list):立方英尺",
+"sys_unit_list","Gram","G","1","单位清单列表(sys_unit_list):Gram",
+"sys_unit_list","黄金克","GAU","1","单位清单列表(sys_unit_list):黄金克",
+"sys_unit_list","g/hg","GHG","1","单位清单列表(sys_unit_list):g/hg",
+"sys_unit_list","g/kg","GKG","1","单位清单列表(sys_unit_list):g/kg",
+"sys_unit_list","克/升","GLI","1","单位清单列表(sys_unit_list):克/升",
+"sys_unit_list","克/摩尔","GM","1","单位清单列表(sys_unit_list):克/摩尔",
+"sys_unit_list","克/平方米","GM2","1","单位清单列表(sys_unit_list):克/平方米",
+"sys_unit_list","克/立方米","GM3","1","单位清单列表(sys_unit_list):克/立方米",
+"sys_unit_list","千兆欧","GOH","1","单位清单列表(sys_unit_list):千兆欧",
+"sys_unit_list","每英里加仑数(美国)","GPM","1","单位清单列表(sys_unit_list):每英里加仑数(美国)",
+"sys_unit_list","总","GRO","1","单位清单列表(sys_unit_list):总",
+"sys_unit_list","小时","H","1","单位清单列表(sys_unit_list):小时",
+"sys_unit_list","公顷","HA","1","单位清单列表(sys_unit_list):公顷",
+"sys_unit_list","百公升","HL","1","单位清单列表(sys_unit_list):百公升",
+"sys_unit_list","百帕","HPA","1","单位清单列表(sys_unit_list):百帕",
+"sys_unit_list","赫兹 (1/秒)","HZ","1","单位清单列表(sys_unit_list):赫兹 (1/秒)",
+"sys_unit_list","焦耳","J","1","单位清单列表(sys_unit_list):焦耳",
+"sys_unit_list","焦耳/千克","JKG","1","单位清单列表(sys_unit_list):焦耳/千克",
+"sys_unit_list","焦耳/摩尔","JMO","1","单位清单列表(sys_unit_list):焦耳/摩尔",
+"sys_unit_list","绝对温度","K","1","单位清单列表(sys_unit_list):绝对温度",
+"sys_unit_list","千安培","KA","1","单位清单列表(sys_unit_list):千安培",
+"sys_unit_list","千克作用 ingrd.","KAI","1","单位清单列表(sys_unit_list):千克作用 ingrd.",
+"sys_unit_list","千贝克勒尔/千克","KBK","1","单位清单列表(sys_unit_list):千贝克勒尔/千克",
+"sys_unit_list","千克/立方分米","KD3","1","单位清单列表(sys_unit_list):千克/立方分米",
+"sys_unit_list","千克","KG","1","单位清单列表(sys_unit_list):千克",
+"sys_unit_list","千克/每平方米","KGF","1","单位清单列表(sys_unit_list):千克/每平方米",
+"sys_unit_list","千克/千克","KGK","1","单位清单列表(sys_unit_list):千克/千克",
+"sys_unit_list","千克/摩尔","KGM","1","单位清单列表(sys_unit_list):千克/摩尔",
+"sys_unit_list","千克/百万 BTU","kgm","1","单位清单列表(sys_unit_list):千克/百万 BTU",
+"sys_unit_list","公斤/秒","KGS","1","单位清单列表(sys_unit_list):公斤/秒",
+"sys_unit_list","千克/标准立方英尺","kgs","1","单位清单列表(sys_unit_list):千克/标准立方英尺",
+"sys_unit_list","公斤/立方米","KGV","1","单位清单列表(sys_unit_list):公斤/立方米",
+"sys_unit_list","千赫","KHZ","1","单位清单列表(sys_unit_list):千赫",
+"sys_unit_list","kg act.ingrd. / kg","KIK","1","单位清单列表(sys_unit_list):kg act.ingrd. / kg",
+"sys_unit_list","千焦耳","KJ","1","单位清单列表(sys_unit_list):千焦耳",
+"sys_unit_list","千焦耳/千克","KJK","1","单位清单列表(sys_unit_list):千焦耳/千克",
+"sys_unit_list","千焦耳/克分子","KJM","1","单位清单列表(sys_unit_list):千焦耳/克分子",
+"sys_unit_list","公里","KM","1","单位清单列表(sys_unit_list):公里",
+"sys_unit_list","平方千米","KM2","1","单位清单列表(sys_unit_list):平方千米",
+"sys_unit_list","公里/小时","KMH","1","单位清单列表(sys_unit_list):公里/小时",
+"sys_unit_list","立方米/立方米","KMK","1","单位清单列表(sys_unit_list):立方米/立方米",
+"sys_unit_list","绝对温标/分钟","KMN","1","单位清单列表(sys_unit_list):绝对温标/分钟",
+"sys_unit_list","绝对温标/秒","KMS","1","单位清单列表(sys_unit_list):绝对温标/秒",
+"sys_unit_list","千欧姆","KOH","1","单位清单列表(sys_unit_list):千欧姆",
+"sys_unit_list","千帕","KPA","1","单位清单列表(sys_unit_list):千帕",
+"sys_unit_list","千吨","KT","1","单位清单列表(sys_unit_list):千吨",
+"sys_unit_list","千伏","KV","1","单位清单列表(sys_unit_list):千伏",
+"sys_unit_list","千瓦特安培","KVA","1","单位清单列表(sys_unit_list):千瓦特安培",
+"sys_unit_list","千瓦特","KW","1","单位清单列表(sys_unit_list):千瓦特",
+"sys_unit_list","千瓦时","KWH","1","单位清单列表(sys_unit_list):千瓦时",
+"sys_unit_list","公升","L","1","单位清单列表(sys_unit_list):公升",
+"sys_unit_list","磅（美国）","LB","1","单位清单列表(sys_unit_list):磅（美国）",
+"sys_unit_list","每 100 公里升数","LHK","1","单位清单列表(sys_unit_list):每 100 公里升数",
+"sys_unit_list","升/分","LMI","1","单位清单列表(sys_unit_list):升/分",
+"sys_unit_list","公升/Molsecond","LMS","1","单位清单列表(sys_unit_list):公升/Molsecond",
+"sys_unit_list","每小时升","LPH","1","单位清单列表(sys_unit_list):每小时升",
+"sys_unit_list","米","M","1","单位清单列表(sys_unit_list):米",
+"sys_unit_list","质量百分比","M%","1","单位清单列表(sys_unit_list):质量百分比",
+"sys_unit_list","质量千分比","M%O","1","单位清单列表(sys_unit_list):质量千分比",
+"sys_unit_list","摩尔每立方米","M/M","1","单位清单列表(sys_unit_list):摩尔每立方米",
+"sys_unit_list","米/秒","M/S","1","单位清单列表(sys_unit_list):米/秒",
+"sys_unit_list","平方米","M2","1","单位清单列表(sys_unit_list):平方米",
+"sys_unit_list","1/平方米","M-2","1","单位清单列表(sys_unit_list):1/平方米",
+"sys_unit_list","平方米/秒","M2S","1","单位清单列表(sys_unit_list):平方米/秒",
+"sys_unit_list","立方米","M3","1","单位清单列表(sys_unit_list):立方米",
+"sys_unit_list","立方米/小时","M3H","1","单位清单列表(sys_unit_list):立方米/小时",
+"sys_unit_list","立方米／秒","M3S","1","单位清单列表(sys_unit_list):立方米／秒",
+"sys_unit_list","毫安培","MA","1","单位清单列表(sys_unit_list):毫安培",
+"sys_unit_list","毫巴","MBA","1","单位清单列表(sys_unit_list):毫巴",
+"sys_unit_list","Meterbar/秒","MBZ","1","单位清单列表(sys_unit_list):Meterbar/秒",
+"sys_unit_list","兆焦耳","MEJ","1","单位清单列表(sys_unit_list):兆焦耳",
+"sys_unit_list","毫克","MG","1","单位清单列表(sys_unit_list):毫克",
+"sys_unit_list","毫克/克","MGG","1","单位清单列表(sys_unit_list):毫克/克",
+"sys_unit_list","毫克/千克","MGK","1","单位清单列表(sys_unit_list):毫克/千克",
+"sys_unit_list","毫克/升","MGL","1","单位清单列表(sys_unit_list):毫克/升",
+"sys_unit_list","千兆欧","MGO","1","单位清单列表(sys_unit_list):千兆欧",
+"sys_unit_list","毫克/立方米","MGQ","1","单位清单列表(sys_unit_list):毫克/立方米",
+"sys_unit_list","百万瓦特","MGW","1","单位清单列表(sys_unit_list):百万瓦特",
+"sys_unit_list","千兆瓦特","MHV","1","单位清单列表(sys_unit_list):千兆瓦特",
+"sys_unit_list","兆赫","MHZ","1","单位清单列表(sys_unit_list):兆赫",
+"sys_unit_list","英里","MI","1","单位清单列表(sys_unit_list):英里",
+"sys_unit_list","平方英里","MI2","1","单位清单列表(sys_unit_list):平方英里",
+"sys_unit_list","毫焦耳","MIJ","1","单位清单列表(sys_unit_list):毫焦耳",
+"sys_unit_list","分钟","MIN","1","单位清单列表(sys_unit_list):分钟",
+"sys_unit_list","微秒","MIS","1","单位清单列表(sys_unit_list):微秒",
+"sys_unit_list","毫升","ML","1","单位清单列表(sys_unit_list):毫升",
+"sys_unit_list","毫升 act. ingr.","MLI","1","单位清单列表(sys_unit_list):毫升 act. ingr.",
+"sys_unit_list","毫升/立方米","MLK","1","单位清单列表(sys_unit_list):毫升/立方米",
+"sys_unit_list","毫米","MM","1","单位清单列表(sys_unit_list):毫米",
+"sys_unit_list","平方毫米","MM2","1","单位清单列表(sys_unit_list):平方毫米",
+"sys_unit_list","立方毫米","MM3","1","单位清单列表(sys_unit_list):立方毫米",
+"sys_unit_list","毫米/年","MMA","1","单位清单列表(sys_unit_list):毫米/年",
+"sys_unit_list","毫摩尔/克","MMG","1","单位清单列表(sys_unit_list):毫摩尔/克",
+"sys_unit_list","毫米/小时","MMH","1","单位清单列表(sys_unit_list):毫米/小时",
+"sys_unit_list","毫摩尔/千克","MMK","1","单位清单列表(sys_unit_list):毫摩尔/千克",
+"sys_unit_list","毫摩尔","MMO","1","单位清单列表(sys_unit_list):毫摩尔",
+"sys_unit_list","毫米/秒","MMS","1","单位清单列表(sys_unit_list):毫米/秒",
+"sys_unit_list","千兆牛","MN","1","单位清单列表(sys_unit_list):千兆牛",
+"sys_unit_list","微牛顿/米","MNM","1","单位清单列表(sys_unit_list):微牛顿/米",
+"sys_unit_list","摩尔/千克","MOK","1","单位清单列表(sys_unit_list):摩尔/千克",
+"sys_unit_list","摩尔","MOL","1","单位清单列表(sys_unit_list):摩尔",
+"sys_unit_list","Megapascal","MPA","1","单位清单列表(sys_unit_list):Megapascal",
+"sys_unit_list","质量百万分比","MPB","1","单位清单列表(sys_unit_list):质量百万分比",
+"sys_unit_list","每加仑英里数 (美国)","MPG","1","单位清单列表(sys_unit_list):每加仑英里数 (美国)",
+"sys_unit_list","质量兆分比","MPM","1","单位清单列表(sys_unit_list):质量兆分比",
+"sys_unit_list","毫帕斯卡","MPS","1","单位清单列表(sys_unit_list):毫帕斯卡",
+"sys_unit_list","质量百万兆分比","MPT","1","单位清单列表(sys_unit_list):质量百万兆分比",
+"sys_unit_list","Meterpascal/秒","MPZ","1","单位清单列表(sys_unit_list):Meterpascal/秒",
+"sys_unit_list","米/秒平方","MS2","1","单位清单列表(sys_unit_list):米/秒平方",
+"sys_unit_list","毫特斯拉","MTE","1","单位清单列表(sys_unit_list):毫特斯拉",
+"sys_unit_list","毫伏特","MV","1","单位清单列表(sys_unit_list):毫伏特",
+"sys_unit_list","毫瓦特","MW","1","单位清单列表(sys_unit_list):毫瓦特",
+"sys_unit_list","兆瓦特小时","MWH","1","单位清单列表(sys_unit_list):兆瓦特小时",
+"sys_unit_list","牛顿","N","1","单位清单列表(sys_unit_list):牛顿",
+"sys_unit_list","纳安培","NA","1","单位清单列表(sys_unit_list):纳安培",
+"sys_unit_list","纳米","NAM","1","单位清单列表(sys_unit_list):纳米",
+"sys_unit_list","千牛顿","NI","1","单位清单列表(sys_unit_list):千牛顿",
+"sys_unit_list","牛顿/米","NM","1","单位清单列表(sys_unit_list):牛顿/米",
+"sys_unit_list","牛顿/平方毫米","NMM","1","单位清单列表(sys_unit_list):牛顿/平方毫米",
+"sys_unit_list","纳秒","NS","1","单位清单列表(sys_unit_list):纳秒",
+"sys_unit_list","欧姆","OHM","1","单位清单列表(sys_unit_list):欧姆",
+"sys_unit_list","盎司","OZ","1","单位清单列表(sys_unit_list):盎司",
+"sys_unit_list","点","P","1","单位清单列表(sys_unit_list):点",
+"sys_unit_list","帕斯卡","PA","1","单位清单列表(sys_unit_list):帕斯卡",
+"sys_unit_list","双","PAA","1","单位清单列表(sys_unit_list):双",
+"sys_unit_list","包","PAC","1","单位清单列表(sys_unit_list):包",
+"sys_unit_list","货盘","PAL","1","单位清单列表(sys_unit_list):货盘",
+"sys_unit_list","帕秒","PAS","1","单位清单列表(sys_unit_list):帕秒",
+"sys_unit_list","每一个","PC","1","单位清单列表(sys_unit_list):每一个",
+"sys_unit_list","1/分","PMI","1","单位清单列表(sys_unit_list):1/分",
+"sys_unit_list","十亿分比","PPB","1","单位清单列表(sys_unit_list):十亿分比",
+"sys_unit_list","百万分比","PPM","1","单位清单列表(sys_unit_list):百万分比",
+"sys_unit_list","百万兆分比","PPT","1","单位清单列表(sys_unit_list):百万兆分比",
+"sys_unit_list","人员编号","PRS","1","单位清单列表(sys_unit_list):人员编号",
+"sys_unit_list","兆分之一秒","PS","1","单位清单列表(sys_unit_list):兆分之一秒",
+"sys_unit_list","品脱（美国）","PT","1","单位清单列表(sys_unit_list):品脱（美国）",
+"sys_unit_list","千摩尔","QML","1","单位清单列表(sys_unit_list):千摩尔",
+"sys_unit_list","夸脱（美国）","QT","1","单位清单列表(sys_unit_list):夸脱（美国）",
+"sys_unit_list","毫法拉","RF","1","单位清单列表(sys_unit_list):毫法拉",
+"sys_unit_list","克/立方厘米","RHO","1","单位清单列表(sys_unit_list):克/立方厘米",
+"sys_unit_list","角色","ROL","1","单位清单列表(sys_unit_list):角色",
+"sys_unit_list","纳法拉","R-U","1","单位清单列表(sys_unit_list):纳法拉",
+"sys_unit_list","秒","S","1","单位清单列表(sys_unit_list):秒",
+"sys_unit_list","每一个","ST","1","单位清单列表(sys_unit_list):每一个",
+"sys_unit_list","1/立方厘米","TC3","1","单位清单列表(sys_unit_list):1/立方厘米",
+"sys_unit_list","斯特拉","TES","1","单位清单列表(sys_unit_list):斯特拉",
+"sys_unit_list","1/立方米","TM3","1","单位清单列表(sys_unit_list):1/立方米",
+"sys_unit_list","吨/1000立方米","tm3","1","单位清单列表(sys_unit_list):吨/1000立方米",
+"sys_unit_list","公吨","TO","1","单位清单列表(sys_unit_list):公吨",
+"sys_unit_list","吨/立方米","TOM","1","单位清单列表(sys_unit_list):吨/立方米",
+"sys_unit_list","吨（美）","TON","1","单位清单列表(sys_unit_list):吨（美）",
+"sys_unit_list","数千","TS","1","单位清单列表(sys_unit_list):数千",
+"sys_unit_list","伏特","V","1","单位清单列表(sys_unit_list):伏特",
+"sys_unit_list","体积百分比","V%","1","单位清单列表(sys_unit_list):体积百分比",
+"sys_unit_list","体积千分比","V%O","1","单位清单列表(sys_unit_list):体积千分比",
+"sys_unit_list","仅有值的物料","VAL","1","单位清单列表(sys_unit_list):仅有值的物料",
+"sys_unit_list","ppb(Vol.)","VPB","1","单位清单列表(sys_unit_list):ppb(Vol.)",
+"sys_unit_list","ppm(Vol.)","VPM","1","单位清单列表(sys_unit_list):ppm(Vol.)",
+"sys_unit_list","ppt(Vol.)","VPT","1","单位清单列表(sys_unit_list):ppt(Vol.)",
+"sys_unit_list","瓦特","W","1","单位清单列表(sys_unit_list):瓦特",
+"sys_unit_list","平方码","YD2","1","单位清单列表(sys_unit_list):平方码",
+"sys_unit_list","立方码","YD3","1","单位清单列表(sys_unit_list):立方码",
+"sys_unit_list","KM3","Z01","1","单位清单列表(sys_unit_list):KM3",
+"sys_unit_list","桶","KAN","1","单位清单列表(sys_unit_list):桶",
+"sys_unit_list","对","PAA","1","单位清单列表(sys_unit_list):对",
+"sys_unit_list","瓶","BOT","1","单位清单列表(sys_unit_list):瓶",
+"sys_unit_list","套","KAR","1","单位清单列表(sys_unit_list):套",
+"sys_unit_list","包","PAK","1","单位清单列表(sys_unit_list):包",
+"sys_user_sex","男","0","1","用户性别列表(sys_user_sex):男",
+"sys_user_sex","女","1","1","用户性别列表(sys_user_sex):女",
+"sys_user_sex","未知","2","1","用户性别列表(sys_user_sex):未知",
+"sys_wedlock_state","已婚","1","1","婚姻状态列表(sys_wedlock_state):已婚",
+"sys_wedlock_state","未婚","2","1","婚姻状态列表(sys_wedlock_state):未婚",
+"sys_wedlock_state","离异","3","1","婚姻状态列表(sys_wedlock_state):离异",
+"sys_wedlock_state","丧偶","4","1","婚姻状态列表(sys_wedlock_state):丧偶",
+"sys_workstate_list","待业","1","1","在职状况列表(sys_workstate_list):待业",
+"sys_workstate_list","在岗","2","1","在职状况列表(sys_workstate_list):在岗",
+"sys_workstate_list","离职","3","1","在职状况列表(sys_workstate_list):离职",
+"sys_workstate_list","退休","4","1","在职状况列表(sys_workstate_list):退休",
+"sys_yes_no","是","Y","1","系统是否列表(sys_yes_no):是",
+"sys_yes_no","否","N","1","系统是否列表(sys_yes_no):否",
+"app_article_status","发布","1","1","文章状态列表(apparticle_status):发 布",
+"line_type_m","12班","12","1","班组列表",
+"line_type_m","加工班","16","1","班组列表",
+"line_type_m","6班","6","1","班组列表",
+"line_type_m","3班","3","1","班组列表",
+"line_type_m","2班","2","1","班组列表",
+"line_type_m","8班","8","1","班组列表",
+"line_type_m","14班","14","1","班组列表",
+"line_type_m","4班","4","1","班组列表",
+"line_type_m","9班","9","1","班组列表",
+"line_type_m","1班","1","1","班组列表",
+"line_type_m","7班","7","1","班组列表",
+"line_type_m","11班","11","1","班组列表",
+"line_type_m","15班","15","1","班组列表",
+"line_type_m","5班","5","1","班组列表",
+"line_type_m","13班","13","1","班组列表",
+"line_type_m","10班","10","1","班组列表",
+"line_type_p","修正C","RC","1","班组列表",
+"line_type_p","SMT1","SMT1","1","班组列表",
+"line_type_p","自插C","AIC","1","班组列表",
+"line_type_p","自插B","AIB","1","班组列表",
+"line_type_p","手插B","MIB","1","班组列表",
+"line_type_p","自插D","AID","1","班组列表",
+"line_type_p","SMT2","SMT2","1","班组列表",
+"line_type_p","手插A","MIA","1","班组列表",
+"line_type_p","手插C","MIC","1","班组列表",
+"line_type_p","修正A","RA","1","班组列表",
+"line_type_p","修正B","RB","1","班组列表",
+"line_type_p","自插A","AIA","1","班组列表",
+"line_type_q","QA","QA","1","班组列表",
+"line_type_q","IQC","IQC","1","班组列表",
+"reason_type_a","反向","反向","1","个所",
+"reason_type_a","PCB不良","PCB不良","1","个所",
+"reason_type_a","焊接不良","焊接不良","1","个所",
+"reason_type_a","漏件","漏件","1","个所",
+"reason_type_a","翘脚","翘脚","1","个所",
+"reason_type_a","基板不良","基板不良","1","个所",
+"reason_type_a","立碑","立碑","1","个所",
+"reason_type_a","红胶不良","红胶不良","1","个所",
+"reason_type_a","IC PIN 浮高","IC PIN 浮高","1","个所",
+"reason_type_a","翻面","翻面","1","个所",
+"reason_type_a","连锡","连锡","1","个所",
+"reason_type_a","部品不良","部品不良","1","个所",
+"reason_type_a","生锡","生锡","1","个所",
+"reason_type_a","锡少","锡少","1","个所",
+"reason_type_a","部品破損","部品破損","1","个所",
+"reason_type_a","锡量過多","锡量過多","1","个所",
+"reason_type_a","異物付着","異物付着","1","个所",
+"reason_type_a","底下有部品","底下有部品","1","个所",
+"reason_type_a","反面","反面","1","个所",
+"reason_type_a","撞件","撞件","1","个所",
+"reason_type_a","错料","错料","1","个所",
+"reason_type_a","空焊","空焊","1","个所",
+"reason_type_a","IC PIN 竖立","IC PIN 竖立","1","个所",
+"reason_type_a","極性相違","極性相違","1","个所",
+"reason_type_a","侧立","侧立","1","个所",
+"reason_type_a","多件","多件","1","个所",
+"reason_type_a","位置偏移","位置偏移","1","个所",
+"reason_type_a","发黄","发黄","1","个所",
+"reason_type_b","SMT部品","SMT部品","1","责任单位",
+"reason_type_b","手插","手插","1","责任单位",
+"reason_type_b","修正部品","修正部品","1","责任单位",
+"reason_type_b","IQC部品","IQC部品","1","责任单位",
+"reason_type_b","自插部品","自插部品","1","责任单位",
+"reason_type_b","SMT","SMT","1","责任单位",
+"reason_type_b","手插部品","手插部品","1","责任单位",
+"reason_type_c","修理不良","修理不良","1","不良性质",
+"reason_type_c","部品不良","部品不良","1","不良性质",
+"reason_type_d","手插","手插","1","组立个所",
+"reason_type_d","其他","其他","1","组立个所",
+"reason_type_d","设计","设计","1","组立个所",
+"reason_type_d","SMT","SMT","1","组立个所",
+"reason_type_d","部品","部品","1","组立个所",
+"reason_type_d","自插","自插","1","组立个所",
+"reason_type_d","组立","组立","1","组立个所",
+"reason_type_d","加工","加工","1","组立个所",
+"reason_type_d","修正","修正","1","组立个所",
+"reason_type_e","AUDIO","AUDIO","1","板别",
+"reason_type_e","FRONT","FRONT","1","板别",
+"reason_type_e","RMN-1","RMN-1","1","板别",
+"reason_type_e","REAR","REAR","1","板别",
+"reason_type_e","C","C","1","板别",
+"reason_type_e","SATA","SATA","1","板别",
+"reason_type_e","MAIN","MAIN","1","板别",
+"reason_type_e","A","A","1","板别",
+"reason_type_e","BOTTOM","BOTTOM","1","板别",
+"reason_type_e","BTICE","BTICE","1","板别",
+"reason_type_e","JACK","JACK","1","板别",
+"reason_type_e","ENC","ENC","1","板别",
+"reason_type_e","ANA","ANA","1","板别",
+"reason_type_e","ADOC","ADOC","1","板别",
+"reason_type_e","SYS","SYS","1","板别",
+"reason_type_e","TOP","TOP","1","板别",
+"reason_type_e","L","L","1","板别",
+"reason_type_e","INPUT","INPUT","1","板别",
+"reason_type_e","B","B","1","板别",
+"reason_type_e","PANEL","PANEL","1","板别",
+"reason_type_e","POWER","POWER","1","板别",
+"reason_type_e","SEQ","SEQ","1","板别",
+"reason_type_e","IO","IO","1","板别",
+"reason_type_e","LCD","LCD","1","板别",
+"reason_type_e","DSPL","DSPL","1","板别",
+"reason_type_e","USB","USB","1","板别",
+"reason_type_f","ENCODER","ENCODER","1","PCBA",
+"reason_type_f","RSB B/T","RSB B/T","1","PCBA",
+"reason_type_f","DSPL A","DSPL A","1","PCBA",
+"reason_type_f","LCD B","LCD B","1","PCBA",
+"reason_type_f","AUDIO B","AUDIO B","1","PCBA",
+"reason_type_f","SATA","SATA","1","PCBA",
+"reason_type_f","GATHER ALT B","GATHER ALT B","1","PCBA",
+"reason_type_f","ADOC B","ADOC B","1","PCBA",
+"reason_type_f","AUDIO B/T","AUDIO B/T","1","PCBA",
+"reason_type_f","IO T","IO T","1","PCBA",
+"reason_type_f","SWUSB","SWUSB","1","PCBA",
+"reason_type_f","XLRIN T","XLRIN T","1","PCBA",
+"reason_type_f","FRONT B ","FRONT B ","1","PCBA",
+"reason_type_f","FRONT","FRONT","1","PCBA",
+"reason_type_f","FRONT A","FRONT A","1","PCBA",
+"reason_type_f","LCD T","LCD T","1","PCBA",
+"reason_type_f","MAFAD A","MAFAD A","1","PCBA",
+"reason_type_f","PTST B","PTST B","1","PCBA",
+"reason_type_f","USB B","USB B","1","PCBA",
+"reason_type_f","IO B/T","IO B/T","1","PCBA",
+"reason_type_f","FAETHER T","FAETHER T","1","PCBA",
+"reason_type_f","DSP B","DSP B","1","PCBA",
+"reason_type_f","FRONT-A","FRONT-A","1","PCBA",
+"reason_type_f","IF","IF","1","PCBA",
+"reason_type_f","CONTACT","CONTACT","1","PCBA",
+"reason_type_f","XLR T","XLR T","1","PCBA",
+"reason_type_f","USB B/T","USB B/T","1","PCBA",
+"reason_type_f","SEQ","SEQ","1","PCBA",
+"reason_type_f","PHONE","PHONE","1","PCBA",
+"reason_type_f","SYS T","SYS T","1","PCBA",
+"reason_type_f","ETHER","ETHER","1","PCBA",
+"reason_type_f","DSUB B","DSUB B","1","PCBA",
+"reason_type_f","DSPL B","DSPL B","1","PCBA",
+"reason_type_f","POWER","POWER","1","PCBA",
+"reason_type_f","SWUSB AKM T","SWUSB AKM T","1","PCBA",
+"reason_type_f","AUDIO T","AUDIO T","1","PCBA",
+"reason_type_f","IF B","IF B","1","PCBA",
+"reason_type_f","ENCOGER","ENCOGER","1","PCBA",
+"reason_type_f","LCD EX T","LCD EX T","1","PCBA",
+"reason_type_f","MIC","MIC","1","PCBA",
+"reason_type_f","SWUSB B","SWUSB B","1","PCBA",
+"reason_type_f","USB T","USB T","1","PCBA",
+"reason_type_f","MAIN A","MAIN A","1","PCBA",
+"reason_type_f","PANEL T","PANEL T","1","PCBA",
+"reason_type_f","ANA","ANA","1","PCBA",
+"reason_type_f","A4IN T","A4IN T","1","PCBA",
+"reason_type_f","GATHER B/T","GATHER B/T","1","PCBA",
+"reason_type_f","AUDIO-20-B","AUDIO-20-B","1","PCBA",
+"reason_type_f","LCD T/B","LCD T/B","1","PCBA",
+"reason_type_f","JACK T","JACK T","1","PCBA",
+"reason_type_f","CDMCU T","CDMCU T","1","PCBA",
+"reason_type_f","CONN B/T","CONN B/T","1","PCBA",
+"reason_type_f","JACK-00 B","JACK-00 B","1","PCBA",
+"reason_type_f","GATHER ALT T","GATHER ALT T","1","PCBA",
+"reason_type_f","GATHER T/B","GATHER T/B","1","PCBA",
+"reason_type_f","DANY B","DANY B","1","PCBA",
+"reason_type_f","XLRIO T","XLRIO T","1","PCBA",
+"reason_type_f","JACK B/T","JACK B/T","1","PCBA",
+"reason_type_f","SLOT B/T","SLOT B/T","1","PCBA",
+"reason_type_f","PSL B/T","PSL B/T","1","PCBA",
+"reason_type_f","XLRIN B/T","XLRIN B/T","1","PCBA",
+"reason_type_f","AUDIO-20-T","AUDIO-20-T","1","PCBA",
+"reason_type_f","PRM T","PRM T","1","PCBA",
+"reason_type_f","DSPL B/T","DSPL B/T","1","PCBA",
+"reason_type_f","LCD EX B","LCD EX B","1","PCBA",
+"reason_type_f","AES4 T","AES4 T","1","PCBA",
+"reason_type_f","PANEL B","PANEL B","1","PCBA",
+"reason_type_f","DA B","DA B","1","PCBA",
+"reason_type_f","DA","DA","1","PCBA",
+"reason_type_f","GATHER B","GATHER B","1","PCBA",
+"reason_type_f","AUDIO-10-B","AUDIO-10-B","1","PCBA",
+"reason_type_f","FADER B/T","FADER B/T","1","PCBA",
+"reason_type_f","GATHER-J","GATHER-J","1","PCBA",
+"reason_type_f","XLRIN B","XLRIN B","1","PCBA",
+"reason_type_f","AD04 T","AD04 T","1","PCBA",
+"reason_type_f","PANEL","PANEL","1","PCBA",
+"reason_type_f","CONN","CONN","1","PCBA",
+"reason_type_f","LCD B/T","LCD B/T","1","PCBA",
+"reason_type_f","AUDIO-00-B","AUDIO-00-B","1","PCBA",
+"reason_type_f","RSB T","RSB T","1","PCBA",
+"reason_type_f","SBTY","SBTY","1","PCBA",
+"reason_type_f","JACK B","JACK B","1","PCBA",
+"reason_type_f","AES4 B/T","AES4 B/T","1","PCBA",
+"reason_type_f","BOTTOM B","BOTTOM B","1","PCBA",
+"reason_type_f","PRM B/T","PRM B/T","1","PCBA",
+"reason_type_f","AUDIO A","AUDIO A","1","PCBA",
+"reason_type_f","MADI T","MADI T","1","PCBA",
+"reason_type_f","MAFAD B","MAFAD B","1","PCBA",
+"reason_type_f","GATHER-C","GATHER-C","1","PCBA",
+"reason_type_f","A2IO","A2IO","1","PCBA",
+"reason_type_f","KEY B","KEY B","1","PCBA",
+"reason_type_f","KEY T","KEY T","1","PCBA",
+"reason_type_f","DYNA T/B","DYNA T/B","1","PCBA",
+"reason_type_f","SWUSB B/T","SWUSB B/T","1","PCBA",
+"reason_type_f","GATHER","GATHER","1","PCBA",
+"reason_type_f","SLOT","SLOT","1","PCBA",
+"reason_type_f","XLR B","XLR B","1","PCBA",
+"reason_type_f","RFP T","RFP T","1","PCBA",
+"reason_type_f","CD T","CD T","1","PCBA",
+"reason_type_f","XLRIO B/T","XLRIO B/T","1","PCBA",
+"reason_type_f","AUDIO-10-T","AUDIO-10-T","1","PCBA",
+"reason_type_f","CONN T/B","CONN T/B","1","PCBA",
+"reason_type_f","NAUB B","NAUB B","1","PCBA",
+"reason_type_f","LCD EX B/T","LCD EX B/T","1","PCBA",
+"reason_type_f","A4IN B","A4IN B","1","PCBA",
+"reason_type_f","AES4 B","AES4 B","1","PCBA",
+"reason_type_f","ANA A","ANA A","1","PCBA",
+"reason_type_f","JOINTC B","JOINTC B","1","PCBA",
+"reason_type_f","USB T/B","USB T/B","1","PCBA",
+"reason_type_f","MADI B/T","MADI B/T","1","PCBA",
+"reason_type_f","CDMCU","CDMCU","1","PCBA",
+"reason_type_f","FAETHER B","FAETHER B","1","PCBA",
+"reason_type_f","JACK-10 B","JACK-10 B","1","PCBA",
+"reason_type_f","XLRIO B","XLRIO B","1","PCBA",
+"reason_type_f","LCD EX","LCD EX","1","PCBA",
+"reason_type_f","DA T/B","DA T/B","1","PCBA",
+"reason_type_f","PTST T","PTST T","1","PCBA",
+"reason_type_f","AUDIO","AUDIO","1","PCBA",
+"reason_type_f","CDMCU B/T","CDMCU B/T","1","PCBA",
+"reason_type_f","XLR A","XLR A","1","PCBA",
+"reason_type_f","MATHER B/T","MATHER B/T","1","PCBA",
+"reason_type_f","CONN T","CONN T","1","PCBA",
+"reason_type_f","COMBO B","COMBO B","1","PCBA",
+"reason_type_f","GATHER A","GATHER A","1","PCBA",
+"reason_type_f","JOINTS","JOINTS","1","PCBA",
+"reason_type_f","PSL T","PSL T","1","PCBA",
+"reason_type_f","FRONT B/T","FRONT B/T","1","PCBA",
+"reason_type_f","DSP T","DSP T","1","PCBA",
+"reason_type_f","PTST B/T","PTST B/T","1","PCBA",
+"reason_type_f","FRONT T","FRONT T","1","PCBA",
+"reason_type_f","PWRSUB","PWRSUB","1","PCBA",
+"reason_type_f","JACK-00 T","JACK-00 T","1","PCBA",
+"reason_type_f","IO T/B","IO T/B","1","PCBA",
+"reason_type_f","RFP B/T","RFP B/T","1","PCBA",
+"reason_type_f","KEY","KEY","1","PCBA",
+"reason_type_f","POWER T","POWER T","1","PCBA",
+"reason_type_f","JOINTC A","JOINTC A","1","PCBA",
+"reason_type_f","SPL T","SPL T","1","PCBA",
+"reason_type_f","DA T","DA T","1","PCBA",
+"reason_type_f","AUDIO ALT T","AUDIO ALT T","1","PCBA",
+"reason_type_f","DYNA T","DYNA T","1","PCBA",
+"reason_type_f","STS B","STS B","1","PCBA",
+"reason_type_f","IO","IO","1","PCBA",
+"reason_type_f","MAIN B/T","MAIN B/T","1","PCBA",
+"reason_type_f","CCL B","CCL B","1","PCBA",
+"reason_type_f","FROTN B","FROTN B","1","PCBA",
+"reason_type_f","GATHER T","GATHER T","1","PCBA",
+"reason_type_f","CD B","CD B","1","PCBA",
+"reason_type_f","RMN T","RMN T","1","PCBA",
+"reason_type_f","MAIN","MAIN","1","PCBA",
+"reason_type_f","CONN B","CONN B","1","PCBA",
+"reason_type_f","XLROUT","XLROUT","1","PCBA",
+"reason_type_f","CDMCU B","CDMCU B","1","PCBA",
+"reason_type_f","COMB T","COMB T","1","PCBA",
+"reason_type_f","REAR T","REAR T","1","PCBA",
+"reason_type_f","PANEL R","PANEL R","1","PCBA",
+"reason_type_f","MADI B","MADI B","1","PCBA",
+"reason_type_f","FRONT B","FRONT B","1","PCBA",
+"reason_type_f","ADDA T","ADDA T","1","PCBA",
+"reason_type_f","DSPL  T","DSPL  T","1","PCBA",
+"reason_type_f","RMT","RMT","1","PCBA",
+"reason_type_f","REAR A","REAR A","1","PCBA",
+"reason_type_f","JACK-20 B","JACK-20 B","1","PCBA",
+"reason_type_f","JACK A","JACK A","1","PCBA",
+"reason_type_f","ADOC T/B","ADOC T/B","1","PCBA",
+"reason_type_f","PANEL L","PANEL L","1","PCBA",
+"reason_type_f","PTST","PTST","1","PCBA",
+"reason_type_f","A2IO B","A2IO B","1","PCBA",
+"reason_type_f","MA-FAD T","MA-FAD T","1","PCBA",
+"reason_type_f","A4OUT T","A4OUT T","1","PCBA",
+"reason_type_f","FADER B","FADER B","1","PCBA",
+"reason_type_f","COMBO T","COMBO T","1","PCBA",
+"reason_type_f","EURO","EURO","1","PCBA",
+"reason_type_f","REAR B","REAR B","1","PCBA",
+"reason_type_f","FADER T","FADER T","1","PCBA",
+"reason_type_f","SLOT B","SLOT B","1","PCBA",
+"reason_type_f","INPUT","INPUT","1","PCBA",
+"reason_type_f","POWER A","POWER A","1","PCBA",
+"reason_type_f","JOINTF T","JOINTF T","1","PCBA",
+"reason_type_f","EURO B/T","EURO B/T","1","PCBA",
+"reason_type_f","PANEL A","PANEL A","1","PCBA",
+"reason_type_f","JACK T/B","JACK T/B","1","PCBA",
+"reason_type_f","POWER B/T","POWER B/T","1","PCBA",
+"reason_type_f","PRM B","PRM B","1","PCBA",
+"reason_type_f","PSL","PSL","1","PCBA",
+"reason_type_f","SWUSB AKM B","SWUSB AKM B","1","PCBA",
+"reason_type_f","ADDA T/B","ADDA T/B","1","PCBA",
+"reason_type_f","XLR","XLR","1","PCBA",
+"reason_type_f","MAIN ALT B","MAIN ALT B","1","PCBA",
+"reason_type_f","MAFAD T","MAFAD T","1","PCBA",
+"reason_type_f","ADOC T","ADOC T","1","PCBA",
+"reason_type_f","CD-MAIN B","CD-MAIN B","1","PCBA",
+"reason_type_f","SWUSB AKM B/T","SWUSB AKM B/T","1","PCBA",
+"reason_type_f","ANA B","ANA B","1","PCBA",
+"reason_type_f","ETHER B","ETHER B","1","PCBA",
+"reason_type_f","CD-MAIN","CD-MAIN","1","PCBA",
+"reason_type_f","DSPL T","DSPL T","1","PCBA",
+"reason_type_f","JACK-20 T","JACK-20 T","1","PCBA",
+"reason_type_f","JOINTF B","JOINTF B","1","PCBA",
+"reason_type_f","TOP","TOP","1","PCBA",
+"reason_type_f","RSB B","RSB B","1","PCBA",
+"reason_type_f","ADDA B","ADDA B","1","PCBA",
+"reason_type_f","RMN B","RMN B","1","PCBA",
+"reason_type_f","LCD A","LCD A","1","PCBA",
+"reason_type_f","RELAY","RELAY","1","PCBA",
+"reason_type_f","JACK","JACK","1","PCBA",
+"reason_type_f","JOINTC T","JOINTC T","1","PCBA",
+"reason_type_f","SWUSB T","SWUSB T","1","PCBA",
+"reason_type_f","PSL B","PSL B","1","PCBA",
+"reason_type_f","RFP A","RFP A","1","PCBA",
+"reason_type_f","MAFAD T/B","MAFAD T/B","1","PCBA",
+"reason_type_f","JOINTF A","JOINTF A","1","PCBA",
+"reason_type_f","JOIN","JOIN","1","PCBA",
+"reason_type_f","CONN A","CONN A","1","PCBA",
+"reason_type_f","EURO B","EURO B","1","PCBA",
+"reason_type_f","GATHER C","GATHER C","1","PCBA",
+"reason_type_f","A4OUT B","A4OUT B","1","PCBA",
+"reason_type_f","MAFAD B/T","MAFAD B/T","1","PCBA",
+"reason_type_f","JACK-10 T","JACK-10 T","1","PCBA",
+"reason_type_f","EURO T","EURO T","1","PCBA",
+"reason_type_f","RMN B/T","RMN B/T","1","PCBA",
+"reason_type_f","ANA B/T","ANA B/T","1","PCBA",
+"reason_type_f","IF T","IF T","1","PCBA",
+"reason_type_f","ANA T","ANA T","1","PCBA",
+"reason_type_f","CCL B/T","CCL B/T","1","PCBA",
+"reason_type_f","MAIN B","MAIN B","1","PCBA",
+"reason_type_f","MA-FAD B","MA-FAD B","1","PCBA",
+"reason_type_f","ADDA B/T","ADDA B/T","1","PCBA",
+"reason_type_f","SLOT A","SLOT A","1","PCBA",
+"reason_type_f","APNEL T","APNEL T","1","PCBA",
+"reason_type_f","AUDIO ALT B","AUDIO ALT B","1","PCBA",
+"reason_type_f","METER","METER","1","PCBA",
+"reason_type_f","AUDIO-00-T","AUDIO-00-T","1","PCBA",
+"reason_type_f","ADOC T","ADOC T","1","PCBA",
+"reason_type_f","IO B","IO B","1","PCBA",
+"reason_type_f","SLOT T","SLOT T","1","PCBA",
+"reason_type_f","COMB B","COMB B","1","PCBA",
+"reason_type_f","REAR","REAR","1","PCBA",
+"reason_type_f","POWER B","POWER B","1","PCBA",
+"reason_type_f","MAIN T","MAIN T","1","PCBA",
+"reason_type_f","FRONT SYS T","FRONT SYS T","1","PCBA",
+"reason_type_f","RFP B","RFP B","1","PCBA",
+"reason_type_f","MAIN T/B","MAIN T/B","1","PCBA",
+"reason_type_f","ADOC T ","ADOC T ","1","PCBA",
+"reason_type_f","DSUB T","DSUB T","1","PCBA",
+"reason_type_f","STBY","STBY","1","PCBA",
+"reason_type_f","PANEL B/T","PANEL B/T","1","PCBA",
+"reason_type_f","JACK-30 B","JACK-30 B","1","PCBA",
+"reason_type_f","KEY B/T","KEY B/T","1","PCBA",
+"reason_type_f","ETHER T","ETHER T","1","PCBA",
+"reason_type_f","MAIN ALT T","MAIN ALT T","1","PCBA",
+"reason_type_f","CCL T","CCL T","1","PCBA",
+"reason_type_f","DYNA B","DYNA B","1","PCBA",
+"reason_type_f","SYS B","SYS B","1","PCBA",
+"reason_type_f","ADOC","ADOC","1","PCBA",
+"reason_type_f","JACK-30 T","JACK-30 T","1","PCBA",
+"reason_type_f","ADOC B/T","ADOC B/T","1","PCBA",
+"reason_type_f","A2IO T","A2IO T","1","PCBA",
+"reason_type_g","阳云燕","阳云燕","1","修理员",
+"reason_type_g","伍文华","伍文华","1","修理员",
+"reason_type_g","李重海","李重海","1","修理员",
+"reason_type_g","李金","李金","1","修理员",
+"reason_type_g","梁敏莲","梁敏莲","1","修理员",
+"reason_type_g","陈娟","陈娟","1","修理员",
+"reason_type_g","黄首英","黄首英","1","修理员",
+"reason_type_g","黄艳云","黄艳云","1","修理员",
+"reason_type_g","杨晓珂","杨晓珂","1","修理员",
+"reason_type_g","付海钦","付海钦","1","修理员",
+"reason_type_g","伍园艳","伍园艳","1","修理员",
+"reason_type_g","伍文艺","伍文艺","1","修理员",
+"reason_type_g","何星源","何星源","1","修理员",
+"reason_type_g","董家驹","董家驹","1","修理员",
+"reason_type_g","韦丽珍","韦丽珍","1","修理员",
+"reason_type_g","周显志","周显志","1","修理员",
+"reason_type_h","何小丽","何小丽","1","検査員",
+"reason_type_h","陈洁瑜","陈洁瑜","1","検査員",
+"reason_type_h","凌立娟","凌立娟","1","検査員",
+"reason_type_h","林华菊","林华菊","1","検査員",
+"reason_type_h","黄儒钦","黄儒钦","1","検査員",
+"reason_type_h","梁伟","梁伟","1","検査員",
+"reason_type_h","柳庆星","柳庆星","1","検査員",
+"reason_type_h","阳孝艳","阳孝艳","1","検査員",
+"reason_type_h","陆晓琼","陆晓琼","1","検査員",
+"reason_type_h","赖玉生","赖玉生","1","検査員",
+"reason_type_h","杨东兴","杨东兴","1","検査員",
+"reason_type_i","钟其超","钟其超","1","IQC检查员",
+"reason_type_i","许保燕","许保燕","1","IQC检查员",
+"reason_type_i","杜涛","杜涛","1","IQC检查员",
+"reason_type_i","张路堂","张路堂","1","IQC检查员",
+"reason_type_i","付诗琪","付诗琪","1","IQC检查员",
+"reason_type_i","钟芳芳","钟芳芳","1","IQC检查员",
+"reason_type_i","侯小英","侯小英","1","IQC检查员",
+"reason_type_j","2","2","1","VC线别",
+"reason_type_j","1","1","1","VC线别",
+"reason_type_j","1A","1A","1","VC线别",
+"reason_type_k","测试中","测试中","1","检查状况",
+"reason_type_k","测试完","测试完","1","检查状况",
+"reason_type_k","检查完","检查完","1","检查状况",
+"reason_type_k","检查中","检查中","1","检查状况",
+"reason_type_l","烧录","烧录","1","检出工程",
+"reason_type_l","FCT","FCT","1","检出工程",
+"reason_type_l","JTAG","JTAG","1","检出工程",
+"reason_type_m","1","1","1","目视别",
+"reason_type_m","2","2","1","目视别",
+"reason_type_n","白班","白班","1","班别",
+"reason_type_n","夜班","夜班","1","班别",
+"reason_type_o","胡木儿","胡木儿","1","技术课担当",
+"reason_type_o","何健","何健","1","技术课担当",
+"reason_type_o","彭广平","彭广平","1","技术课担当",
+"reason_type_o","李永金","李永金","1","技术课担当",
+"reason_type_o","陈颖","陈颖","1","技术课担当",
+"reason_type_o","黄伟","黄伟","1","技术课担当",
+"reason_type_o","彭胜甫","彭胜甫","1","技术课担当",
+"reason_type_o","宋良福宋良福","1","技术课担当",
+"reason_type_p","部品不良,欠料","部品不良,欠料","1","未达成",
+"reason_type_p","坏机多,不良多","坏机多,不良多","1","未达成",
+"reason_type_p","测试慢,测试修理机","测试慢,测试修理机","1","未达成",
+"reason_type_p","仪器设备,设置,调试,检查,故障,切换","仪器设备,设置,调试,检查,故障,切换","1","未达成",
+"reason_type_p","其他","其他","1","未达成",
+"reason_type_p","正常","正常","1","未达成",
+"reason_type_p","人员借调","人员借调","1","未达成",
+"reason_type_p","ST差异大","ST差异大","1","未达成",
+"reason_type_p","请假,旷工","请假,旷工","1","未达成",
+"reason_type_p","人员欠缺","人员欠缺","1","未达成",
+"reason_type_p","学习中,新人员学习,开会","学习中,新人员学习,开会","1","未达成",
+"reason_type_p","清机中,返工,改修","清机中,返工,改修","1","未达成",
+"reason_type_p","组立慢,加工多,工程多,下机慢,作业困难,升级慢","组立慢,加工多,工程多,下机慢,作业困难,升级慢","1","未达成",
+"reason_type_p","切换机种,仕向","切换机种,仕向","1","未达成",
+"reason_type_q","陈李凤","陈李凤","1","QA检查员",
+"reason_type_q","黄建玲","黄建玲","1","QA检查员",
+"reason_type_q","王津辉","王津辉","1","QA检查员",
+"reason_type_q","卢恒昌","卢恒昌","1","QA检查员",
+"reason_type_q","谢金兰","谢金兰","1","QA检查员",
+"reason_type_q","钟英堂","钟英堂","1","QA检查员",
+"reason_type_q","谢益浪","谢益浪","1","QA检查员",
+"reason_type_q","李小梅","李小梅","1","QA检查员",
+"reason_type_q","张正智","张正智","1","QA检查员",
+"reason_type_q","邱真真","邱真真","1","QA检查员",
+"reason_type_q","谭汉仙","谭汉仙","1","QA检查员",
+"reason_type_s","开班会","开班会","1","停线",
+"reason_type_s","学习","学习","1","停线",
+"reason_type_s","其他","其他","1","停线",
+"reason_type_s","清洁","清洁","1","停线",
+"reason_type_s","学习","学习","1","停线",
+"reason_type_s","切换机种","切换机种","1","停线",
+"reason_type_s","仪设","仪设","1","停线",
+"reason_type_s","开周会","开周会","1","停线",
+"reason_type_s","切换停止时间","切换停止时间","1","停线",
+"reason_type_s","组立","组立","1","停线",
+"reason_type_s","欠料","欠料","1","停线",
+"reason_type_s","停电","停电","1","停线",
+                };
+            var BatchAdd_dicts = new List<Adm_Dict>();
+            //添加原因类别
+            for (int i = 0, count = Add_Items.Length; i < count; i += 5)
             {
-               new Pp_Line()
-                {
-                   GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="AIA",
-                    linename="自插A",
-                    en_linename="Automatic Insertion A",
-                    jp_linename="自挿A",
-                    Remark="制二课",
-                   isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="AIB",
-                    linename="自插B",
-                    en_linename="Automatic Insertion B",
-                    jp_linename="自挿B",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="AIC",
-                    linename="自插C",
-                    en_linename="Automatic Insertion C",
-                    jp_linename="自挿C",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="AID",
-                    linename="自插D",
-                    en_linename="Automatic Insertion D",
-                    jp_linename="自挿D",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="MIA",
-                    linename="手插A",
-                    en_linename="Manual Insertion A",
-                    jp_linename="手插A",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="MIB",
-                    linename="手插B",
-                    en_linename="Manual Insertion B",
-                    jp_linename="手插B",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="MIC",
-                    linename="手插C",
-                    en_linename="Manual Insertion C",
-                    jp_linename="手插C",
-                    Remark="制二课",
-                    isDeleted =0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="RA",
-                    linename="修正A",
-                    en_linename="Repair Line A",
-                    jp_linename="修正A",
-                    Remark="制二课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="RB",
-                    linename="修正B",
-                    en_linename="Repair Line B",
-                    jp_linename="修正B",
-                    Remark="制二课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="RC",
-                    linename="修正C",
-                    en_linename="Repair Line C",
-                    jp_linename="修正C",
-                    Remark="制二课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="SMT1",
-                    linename="SMT1",
-                    en_linename="SMT Line 1",
-                    jp_linename="SMT1",
-                    Remark="制二课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="P",
-                    linecode="SMT2",
-                    linename="SMT2",
-                    en_linename="SMT Line 2",
-                    jp_linename="SMT2",
-                    Remark="制二课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="Q",
-                    linecode="IQC",
-                    linename="IQC",
-                    en_linename="IQC CHECK",
-                    jp_linename="受检课",
-                    Remark="品保部",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="Q",
-                    linecode="QA",
-                    linename="QA",
-                    en_linename="QA CHECK",
-                    jp_linename="品管课",
-                    Remark="品保部",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="1",
-                    linename="1班",
-                    en_linename="Assembly Line 1",
-                    jp_linename="1班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="2",
-                    linename="2班",
-                    en_linename="Assembly Line 2",
-                    jp_linename="2班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="3",
-                    linename="3班",
-                    en_linename="Assembly Line 3",
-                    jp_linename="3班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="4",
-                    linename="4班",
-                    en_linename="Assembly Line 4",
-                    jp_linename="4班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="5",
-                    linename="5班",
-                    en_linename="Assembly Line 5",
-                    jp_linename="5班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="6",
-                    linename="6班",
-                    en_linename="Assembly Line 6",
-                    jp_linename="6班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="7",
-                    linename="7班",
-                    en_linename="Assembly Line 7",
-                    jp_linename="7班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="8",
-                    linename="8班",
-                    en_linename="Assembly Line 8",
-                    jp_linename="8班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="9",
-                    linename="9班",
-                    en_linename="Assembly Line 9",
-                    jp_linename="9班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="10",
-                    linename="10班",
-                    en_linename="Assembly Line 10",
-                    jp_linename="10班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="11",
-                    linename="11班",
-                    en_linename="Assembly Line 11",
-                    jp_linename="11班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="12",
-                    linename="12班",
-                    en_linename="Assembly Line 12",
-                    jp_linename="12班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="13",
-                    linename="13班",
-                    en_linename="Assembly Line 13",
-                    jp_linename="13班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="14",
-                    linename="14班",
-                    en_linename="Assembly Line 14",
-                    jp_linename="14班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="15",
-                    linename="15班",
-                    en_linename="Assembly Line 15",
-                    jp_linename="15班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                },
-                new Pp_Line()
-                {
-                    GUID=Guid.NewGuid(),
-                    lineclass="M",
-                    linecode="16",
-                    linename="加工班",
-                    en_linename="Sub Line",
-                    jp_linename="加工班",
-                    Remark="制一课",isDeleted=0,
-                    Creator="admin",
-                    CreateDate  =DateTime.Now
-                }
-            };
-            return Pp_Lines;
-        }
+                //DictType	DictLabel	DictValue	DictSort Remark
 
-        private static List<Pp_Duration> GetPp_Worktimes()
-        {
-            string[] Stime = { "08:00", "09:00", "10:10", "11:10", "13:30", "14:30", "15:40", "16:40", "18:30", "19:30", "20:30", "21:30", "22:30", "09:00", "10:00", "11:10", "12:10", "14:30", "15:30", "16:40", "17:40", "19:30", "20:30", "21:30", "22:30", "23:30" };
-            //string[] Etime = {  };
+                string strDictType = Add_Items[i];
+                string strDictName = Add_Items[i + 4];
+                string strDictLabel = Add_Items[i + 1];
+                string strDictValue = Add_Items[i + 2];
+                string strDictSort = Add_Items[i + 3];
+                string strRemark = Add_Items[i + 4];
 
-            var worktimes = new List<Pp_Duration>();
-
-            for (int i = 0, scount = Stime.Length - 13; i < scount; i += 1)
-            {
-                string Prostime = Stime[i];
-                string Proetime = Stime[i + 13];
-                worktimes.Add(new Pp_Duration
+                BatchAdd_dicts.Add(new Adm_Dict
                 {
                     GUID = Guid.NewGuid(),
-                    Prostime = Prostime,
-                    Proetime = Proetime,
-
-                    Remark = "程序后台添加",
+                    DictType = strDictType,
+                    DictName = strDictName,
+                    DictLabel = strDictLabel,
+                    DictValue = strDictValue,
+                    DictSort = Convert.ToInt32(strDictSort),
+                    UDF01 = "",
+                    UDF02 = "",
+                    UDF03 = "",
+                    UDF04 = "",
+                    UDF05 = "",
+                    UDF06 = "",
+                    UDF51 = 0,
+                    UDF52 = 0,
+                    UDF53 = 0,
+                    UDF54 = 0,
+                    UDF55 = 0,
+                    UDF56 = 0,
+                    Remark = strRemark,
                     isDeleted = 0,
+                    CreateDate = DateTime.Now,
                     Creator = "admin",
-                    CreateDate = DateTime.Now
                 });
             }
 
-            //    var Pp_Worktimes = new List<Pp_Worktime>()
-            //{
-            //    new Pp_Worktime()
-            //    {
-            //        GUID=Guid.NewGuid(),
-            //        Prostime="8:00",
-            //        Proetime="9:00",
-            //        Remark="程序后台添加",
-            //        Creator="admin",
-            //        CreateDate  =DateTime.Now
-            //    },
-
-            //};
-            return worktimes;
-        }
-
-        private static List<Pp_Reason> GetPp_Reasons()
-        {
-            var str = new List<Pp_Reason>()
-            {
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="L",
-                        Reasoncntext="FCT",
-                        Reasonentext="FCT",
-                        Reasonjptext="FCT",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="L",
-                        Reasoncntext="烧录",
-                        Reasonentext="烧录",
-                        Reasonjptext="烧录",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="L",
-                        Reasoncntext="JTAG",
-                        Reasonentext="JTAG",
-                        Reasonjptext="JTAG",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="K",
-                        Reasoncntext="检查完",
-                        Reasonentext="检查完",
-                        Reasonjptext="检查完",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="K",
-                        Reasoncntext="检查中",
-                        Reasonentext="检查中",
-                        Reasonjptext="检查中",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="K",
-                        Reasoncntext="测试完",
-                        Reasonentext="测试完",
-                        Reasonjptext="测试完",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="K",
-                        Reasoncntext="测试中",
-                        Reasonentext="测试中",
-                        Reasonjptext="测试中",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="空焊",
-                        Reasonentext="空焊",
-                        Reasonjptext="空焊",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="连锡",
-                        Reasonentext="连锡",
-                        Reasonjptext="连锡",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="翘脚",
-                        Reasonentext="翘脚",
-                        Reasonjptext="翘脚",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="漏件",
-                        Reasonentext="漏件",
-                        Reasonjptext="漏件",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="位置偏移",
-                        Reasonentext="位置偏移",
-                        Reasonjptext="位置偏移",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="IC PIN 浮高",
-                        Reasonentext="IC PIN 浮高",
-                        Reasonjptext="IC PIN 浮高",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="IC PIN 竖立",
-                        Reasonentext="IC PIN 竖立",
-                        Reasonjptext="IC PIN 竖立",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="锡少",
-                        Reasonentext="锡少",
-                        Reasonjptext="锡少",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="翻面",
-                        Reasonentext="翻面",
-                        Reasonjptext="翻面",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="反面",
-                        Reasonentext="反面",
-                        Reasonjptext="反面",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="反向",
-                        Reasonentext="反向",
-                        Reasonjptext="反向",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="立碑",
-                        Reasonentext="立碑",
-                        Reasonjptext="立碑",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="发黄",
-                        Reasonentext="发黄",
-                        Reasonjptext="发黄",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="极性相违",
-                        Reasonentext="极性相违",
-                        Reasonjptext="极性相违",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="部品破损",
-                        Reasonentext="部品破损",
-                        Reasonjptext="部品破损",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="焊接不良",
-                        Reasonentext="焊接不良",
-                        Reasonjptext="焊接不良",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="红胶不良",
-                        Reasonentext="红胶不良",
-                        Reasonjptext="红胶不良",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="部品不良",
-                        Reasonentext="部品不良",
-                        Reasonjptext="部品不良",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="异物付着",
-                        Reasonentext="异物付着",
-                        Reasonjptext="异物付着",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="锡量过多",
-                        Reasonentext="锡量过多",
-                        Reasonjptext="锡量过多",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="错料",
-                        Reasonentext="错料",
-                        Reasonjptext="错料",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="基板不良",
-                        Reasonentext="基板不良",
-                        Reasonjptext="基板不良",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="底下有部品",
-                        Reasonentext="底下有部品",
-                        Reasonjptext="底下有部品",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="PCB不良",
-                        Reasonentext="PCB不良",
-                        Reasonjptext="PCB不良",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="多件",
-                        Reasonentext="多件",
-                        Reasonjptext="多件",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="生锡",
-                        Reasonentext="生锡",
-                        Reasonjptext="生锡",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="侧立",
-                        Reasonentext="侧立",
-                        Reasonjptext="侧立",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="H",
-                        Reasoncntext="撞件",
-                        Reasonentext="撞件",
-                        Reasonjptext="撞件",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="正常",
-                        Reasonentext="normal",
-                        Reasonjptext="正常",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="学习中,新人员学习,开会",
-                        Reasonentext="learning,meeting",
-                        Reasonjptext="「新人」勉強する,週会",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="请假,旷工",
-                        Reasonentext="ask for leave,absent without leave",
-                        Reasonjptext="休暇する,欠勤する",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="切换机种,仕向",
-                        Reasonentext="change model",
-                        Reasonjptext="切替機種,仕向",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="ST差异大",
-                        Reasonentext="labor time variance",
-                        Reasonjptext="ST差異",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="组立慢,加工多,工程多,下机慢,作业困难,升级慢",
-                        Reasonentext="assembly complicated",
-                        Reasonjptext="組立を複雑する",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="坏机多,不良多",
-                        Reasonentext="low accredited rate",
-                        Reasonjptext="不具合",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="仪器设备,设置,调试,检查,故障,切换",
-                        Reasonentext="instrument maintenance",
-                        Reasonjptext="設備メンテナンス",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="部品不良,欠料",
-                        Reasonentext="missing materials",
-                        Reasonjptext="不良品,欠料",
-                        Remark="程序后台添加",
-                        isDeleted=0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="清机中,返工,改修",
-                        Reasonentext="over again,revise",
-                        Reasonjptext="手直し,やり直す",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="人员欠缺",
-                        Reasonentext="understaffing",
-                        Reasonjptext="人員不足",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="人员借调",
-                        Reasonentext="temporarily transfer",
-                        Reasonjptext="人員出向",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="测试慢,测试修理机",
-                        Reasonentext="slow test speed",
-                        Reasonjptext="テストが遅い",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="P",
-                        Reasoncntext="其他",
-                        Reasonentext="other",
-                        Reasonjptext="その他",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="S",
-                        Reasoncntext="开周会",
-                        Reasonentext="开周会",
-                        Reasonjptext="开周会",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="S",
-                        Reasoncntext="清洁",
-                        Reasonentext="清洁",
-                        Reasonjptext="清洁",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="欠料",
-                        Reasonentext="欠料",
-                        Reasonjptext="欠料",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                        Reasontype="S",
-                        Reasoncntext="停电",
-                        Reasonentext="停电",
-                        Reasonjptext="停电",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="仪设",
-                        Reasonentext="仪设",
-                        Reasonjptext="仪设",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="切换机种",
-                        Reasonentext="切换机种",
-                        Reasonjptext="切换机种",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="切换停止时间",
-                        Reasonentext="切换停止时间",
-                        Reasonjptext="切换停止时间",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="学习",
-                        Reasonentext="Learning",
-                        Reasonjptext="トレニンーグする",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="开班会",
-                        Reasonentext="开班会",
-                        Reasonjptext="开班会",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="学习",
-                        Reasonentext="学习",
-                        Reasonjptext="学习",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="其他",
-                        Reasonentext="Other",
-                        Reasonjptext="その他",
-                        Remark="程序后台添加",
-                    isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="S",
-                        Reasoncntext="组立",
-                        Reasonentext="组立",
-                        Reasonjptext="组立",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="组立",
-                        Reasonentext="组立",
-                        Reasonjptext="组立",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="SMT",
-                        Reasonentext="SMT",
-                        Reasonjptext="SMT",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="手插",
-                        Reasonentext="手插",
-                        Reasonjptext="手插",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="修正",
-                        Reasonentext="修正",
-                        Reasonjptext="修正",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="自插",
-                        Reasonentext="自插",
-                        Reasonjptext="自插",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="部品",
-                        Reasonentext="部品",
-                        Reasonjptext="部品",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="设计",
-                        Reasonentext="设计",
-                        Reasonjptext="设计",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="加工",
-                        Reasonentext="加工",
-                        Reasonjptext="加工",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Reason()
-                    {
-                        GUID= Guid.NewGuid(),
-                         Reasontype="D",
-                        Reasoncntext="其他",
-                        Reasonentext="其他",
-                        Reasonjptext="其他",
-                        Remark="程序后台添加",
-                        isDeleted =0,
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-            };
-            return str;
-        }
-
-        private static List<Pp_Ec_Category> GetPp_EcCategorys()
-        {
-            var str = new List<Pp_Ec_Category>()
-            {
-                new Pp_Ec_Category()
-                    {
-                        GUID=Guid.NewGuid(),
-                        Difftype=1,
-                        Diffcnname="全仕向",
-                        UDF01="",
-                        UDF02 = "",
-                        UDF03 = "",
-                        UDF04 = "",
-                        UDF05 = "",
-                        UDF06 = "",
-                        UDF51 = 0,
-                        UDF52 = 0,
-                        UDF53 = 0,
-                        UDF54 = 0,
-                        UDF55 = 0,
-                        UDF56 = 0,
-
-                        Remark = "批量导入",
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Ec_Category()
-                    {
-                        GUID=Guid.NewGuid(),
-                        Difftype=2,
-                        Diffcnname="部管",
-                        UDF01="",
-                        UDF02 = "",
-                        UDF03 = "",
-                        UDF04 = "",
-                        UDF05 = "",
-                        UDF06 = "",
-                        UDF51 = 0,
-                        UDF52 = 0,
-                        UDF53 = 0,
-                        UDF54 = 0,
-                        UDF55 = 0,
-                        UDF56 = 0,
-                        Remark="批量导入",
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Ec_Category()
-                    {
-                        GUID=Guid.NewGuid(),
-                        Difftype=3,
-                        Diffcnname="内部",
-                        UDF01="",
-                        UDF02 = "",
-                        UDF03 = "",
-                        UDF04 = "",
-                        UDF05 = "",
-                        UDF06 = "",
-                        UDF51 = 0,
-                        UDF52 = 0,
-                        UDF53 = 0,
-                        UDF54 = 0,
-                        UDF55 = 0,
-                        UDF56 = 0,
-                        Remark="批量导入",
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-                new Pp_Ec_Category()
-                    {
-                        GUID=Guid.NewGuid(),
-                        Difftype=4,
-                        Diffcnname="技术",
-                        UDF01="",
-                        UDF02 = "",
-                        UDF03 = "",
-                        UDF04 = "",
-                        UDF05 = "",
-                        UDF06 = "",
-                        UDF51 = 0,
-                        UDF52 = 0,
-                        UDF53 = 0,
-                        UDF54 = 0,
-                        UDF55 = 0,
-                        UDF56 = 0,
-                        Remark="批量导入",
-                        CreateDate  =DateTime.Now,
-                        Creator="admin",
-                    },
-            };
-            return str;
+            return BatchAdd_dicts;
         }
 
         private static List<Qm_CheckType> GetQm_CheckTypes()
@@ -7649,6 +5406,120 @@ namespace LeanFine
                     },
             };
             return str;
+        }
+
+        private static List<Pp_Transport> GetPp_Transports()
+        {
+            string[] Pp_Transports = {
+                   "ACE_AIR","安恒利_空运",
+                    "ACE_BOAT","安恒利_船运",
+                    "ACE_TRUCK","安恒利_卡车",
+                    "ALPS_AIR","ALPS_空运",
+                    "ALPS_BOAT","ALPS_船运",
+                    "ALPS_TRUCK","ALPS_卡车",
+                    "ARTS_AIR","雅士_空运",
+                    "ARTS_BOAT","雅士_船运",
+                    "ARTS_TRUCK","雅士_卡车",
+                    "BEIJING_AIR","北京_空运",
+                    "BEIJING_BOAT","北京_船运",
+                    "BEIJING_TRUCK","北京_卡车",
+                    "CANADA_AIR","加拿大_空运",
+                    "CANADA_BOAT","加拿大_船运",
+                    "CANADA_TRUCK","加拿大_卡车",
+                    "DCHAV_AIR","悦昌_空运",
+                    "DCHAV_BOAT","悦昌_船运",
+                    "DCHAV_TRUCK","悦昌_卡车",
+                    "DTA_AIR","DTA_空运",
+                    "DTA_BOAT","DTA_船运",
+                    "DTA_TRUCK","DTA_卡车",
+                    "GERMANY_AIR","德国_空运",
+                    "GERMANY_BOAT","德国_船运",
+                    "GERMANY_TRUCK","德国_卡车",
+                    "GUANGZHOU_AIR","广州_空运",
+                    "GUANGZHOU_BOAT","广州_船运",
+                    "GUANGZHOU_TRUCK","广州_卡车",
+                    "GW_AIR","长城_空运",
+                    "GW_BOAT","长城_船运",
+                    "GW_TRUCK","长城_卡车",
+                    "HOLLAND_AIR","荷兰_空运",
+                    "HOLLAND_BOAT","荷兰_船运",
+                    "HOLLAND_TRUCK","荷兰_卡车",
+                    "HONGKONG_AIR","香港_空运",
+                    "HONGKONG_BOAT","香港_船运",
+                    "HONGKONG_TRUCK","香港_卡车",
+                    "ITALY_AIR","意大利_空运",
+                    "ITALY_BOAT","意大利_船运",
+                    "ITALY_TRUCK","意大利_卡车",
+                    "JAPAN_AIR","日本_空运",
+                    "JAPAN_BOAT","日本_船运",
+                    "JAPAN_TRUCK","日本_卡车",
+                    "MALAYSIA_AIR","马来西亚_空运",
+                    "MALAYSIA_BOAT","马来西亚_船运",
+                    "MALAYSIA_TRUCK","马来西亚_卡车",
+                    "MUJI_AIR","无印良品_空运",
+                    "MUJI_BOAT","无印良品_船运",
+                    "MUJI_TRUCK","无印良品_卡车",
+                    "MUSICGW_AIR","长秦城_空运",
+                    "MUSICGW_BOAT","长秦城_船运",
+                    "MUSICGW_TRUCK","长秦城_卡车",
+                    "NAISHA_AIR","南沙_空运",
+                    "NAISHA_BOAT","南沙_船运",
+                    "NAISHA_TRUCK","南沙_卡车",
+                    "OTHER_AIR","其它_空运",
+                    "OTHER_BOAT","其它_船运",
+                    "OTHER_TRUCK","其它_卡车",
+                    "ROTTERDAM_AIR","鹿特丹_空运",
+                    "ROTTERDAM_BOAT","鹿特丹_船运",
+                    "ROTTERDAM_TRUCK","鹿特丹_卡车",
+                    "SHANGHAI_AIR","上海_空运",
+                    "SHANGHAI_BOAT","上海_船运",
+                    "SHANGHAI_TRUCK","上海_卡车",
+                    "SHENGZHEN_AIR","深圳_空运",
+                    "SHENGZHEN_BOAT","深圳_船运",
+                    "SHENGZHEN_TRUCK","深圳_卡车",
+                    "TAC_AIR","TAC_空运",
+                    "TAC_BOAT","TAC_船运",
+                    "TAC_TRUCK","TAC_卡车",
+                    "TCA_AIR","TCA_空运",
+                    "TCA_BOAT","TCA_船运",
+                    "TCA_TRUCK","TCA_卡车",
+                    "TOA_AIR","TOA_空运",
+                    "TOA_BOAT","TOA_船运",
+                    "TOA_TRUCK","TOA_卡车",
+                    "USA_AIR","美国_空运",
+                    "USA_BOAT","美国_船运",
+                    "USA_TRUCK","美国_卡车",
+                    "WUXI_AIR","无锡_空运",
+                    "WUXI_BOAT","无锡_船运",
+                    "WUXI_TRUCK","无锡_卡车",
+                    "INCHEON_AIR","韩国－空运",
+                    "VIE","越南-卡车",
+                    "FRANKFURT","法兰克福",
+                    "SLOVENIA","斯洛文尼亚-船运",
+                };
+            var Transports = new List<Pp_Transport>();
+            //添加原因类别
+            for (int i = 0, count = Pp_Transports.Length; i < count; i += 2)
+            {
+                string strTransportype = Pp_Transports[i];
+                string strTransportcntext = Pp_Transports[i + 1];
+                string strRemark = "后台添加";
+
+                Transports.Add(new Pp_Transport
+                {
+                    GUID = Guid.NewGuid(),
+                    Transportype = strTransportype,
+                    Transportcntext = strTransportcntext,
+                    Transportentext = strTransportcntext,
+                    Transportjptext = strTransportcntext,
+                    Remark = strRemark,
+                    isDeleted = 0,
+                    CreateDate = DateTime.Now,
+                    Creator = "admin",
+                });
+            }
+
+            return Transports;
         }
     }
 }

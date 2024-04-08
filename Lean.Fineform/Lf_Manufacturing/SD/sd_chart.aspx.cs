@@ -2,7 +2,7 @@
 
 namespace LeanFine.Lf_Manufacturing.SD
 {
-    public partial class Sd_chart : PageBase
+    public partial class sd_chart : PageBase
     {
         #region ViewPower
 

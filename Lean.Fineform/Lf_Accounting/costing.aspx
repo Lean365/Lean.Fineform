@@ -17,7 +17,7 @@
                         <f:Panel ID="Panel2" IsFluid="true" CssClass="blockpanel" runat="server" ShowBorder="false" Margin="00px"
                             Layout="VBox" ShowHeader="false" Title="" BodyPadding="0">
                             <Items>
-                                <f:Panel ID="Panel3" BoxFlex="1" runat="server" ShowBorder="false" ShowHeader="false" Title="<%$ Resources:GlobalResource,MainTitle1%>" EnableIFrame="true" IFrameUrl="~/Lf_Accounting/costing_salesinvoice.aspx">
+                                <f:Panel ID="Panel3" BoxFlex="1" runat="server" ShowBorder="false" ShowHeader="false" Title="<%$ Resources:GlobalResource,MainTitle1%>" EnableIFrame="true" IFrameUrl="~/Lf_Accounting/costing_monthly_sales.aspx">
                                 </f:Panel>
                             </Items>
                         </f:Panel>
@@ -28,7 +28,7 @@
                         <f:Panel ID="Panel5" IsFluid="true" CssClass="blockpanel" runat="server" ShowBorder="false" Margin="00px"
                             Layout="VBox" ShowHeader="false" Title="" BodyPadding="0">
                             <Items>
-                                <f:Panel ID="Panel1" BoxFlex="1" runat="server" ShowBorder="false" ShowHeader="false" Title="<%$ Resources:GlobalResource,MainTitle1%>" EnableIFrame="true" IFrameUrl="~/Lf_Accounting/costing_demandqty.aspx">
+                                <f:Panel ID="Panel1" BoxFlex="1" runat="server" ShowBorder="false" ShowHeader="false" Title="<%$ Resources:GlobalResource,MainTitle1%>" EnableIFrame="true" IFrameUrl="~/Lf_Accounting/costing_monthly_dept_request.aspx">
                                 </f:Panel>
                             </Items>
                         </f:Panel>

@@ -28,9 +28,9 @@
         }
 
             .login-image img {
-                width: 200px;
-                height: 200px;
-                padding: 10px;
+                width: 232px;
+                height: 232px;
+                padding: 3px;
             }
     </style>
 </head>
@@ -38,10 +38,10 @@
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server"></f:PageManager>
         <f:Window ID="Window1" runat="server" EnableClose="False" WindowPosition="GoldenSection"
-            Layout="HBox" Width="500px" BoxConfigAlign="Center" BoxConfigPosition="Center" Icon="key">
+            Layout="HBox"  Height="320px" MinHeight="320px" MaxHeight="320px" Width="512px" MinWidth="512px"  MaxWidth="512px" BoxConfigAlign="Center" BoxConfigPosition="Center" Icon="key">
 
             <Items>
-                <f:Image ID="imageLogin" ImageUrl="~/Lf_Resources/images/login/Lean_Logo.png" runat="server"
+                <f:Image ID="imageLogin" ImageUrl="~/Lf_Resources/images/login/Lean_Manufacturing_Logo.png" runat="server"
                     CssClass="login-image">
                 </f:Image>
                 <%--<f:ContentPanel CssClass="login-image" BodyPadding="10px" ShowBorder="true" ShowHeader="false" runat="server">
@@ -51,12 +51,12 @@
                     BodyPadding="10px 10px" ShowBorder="false" ShowHeader="false">
                     <Items>
                         
-                        <f:DropDownList ID="DDLCulture" Label="<%$ Resources:GlobalResource,sys_Language%>" Required="true" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLCulture_SelectedIndexChanged">
+                        <f:DropDownList ID="DdlCulture" Label="<%$ Resources:GlobalResource,sys_Language%>" Required="true" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DdlCulture_SelectedIndexChanged">
                             <f:ListItem Text="简体中文" Value="zh-CN" />
                             <f:ListItem Text="English" Value="en-US" />
                             <f:ListItem Text="日本語" Value="ja-JP" />
                         </f:DropDownList>
-                        <f:TextBox ID="tbxUserName" FocusOnPageLoad="true" runat="server" Label="<%$ Resources:GlobalResource,sys_Login_Account%>" Required="true"
+                        <f:TextBox ID="tbxUserName"  FocusOnPageLoad="true" runat="server" Label="<%$ Resources:GlobalResource,sys_Login_Account%>" Required="true"
                             ShowRedStar="true" Text="">
                         </f:TextBox>
                         <f:TextBox ID="tbxPassword" TextMode="Password" runat="server" Required="true" ShowRedStar="true"
@@ -72,8 +72,8 @@
 
                         <f:ToolbarText ID="tbText" CssStyle="Color:#2F4F4F;font-family:Arial, Helvetica, sans-serif;font-weight:bold" Text="TxtVersion" runat="server"></f:ToolbarText>
                         <f:ToolbarFill runat="server"></f:ToolbarFill>
-                        <f:Button ID="btnSubmit" Icon="LockOpen" Type="Submit" runat="server" ValidateForms="SimpleForm1"
-                            OnClick="btnSubmit_Click" Text="<%$ Resources:GlobalResource,sys_Login%>">
+                        <f:Button ID="btnSubmit"  Type="Submit" runat="server" ValidateForms="SimpleForm1"
+                            OnClick="btnSubmit_Click" Text="<%$ Resources:GlobalResource,sys_Login%>" IconUrl="~/Lf_Resources/menu/login.png" CssClass="marginr" >
                         </f:Button>
                     </Items>
                 </f:Toolbar>

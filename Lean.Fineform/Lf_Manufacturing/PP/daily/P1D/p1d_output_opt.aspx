@@ -13,10 +13,10 @@
         <f:TabStrip ID="TabStrip1" IsFluid="true" CssClass="blockpanel" Height="500px" ShowBorder="true" ActiveTabIndex="0"
             runat="server">
             <Tabs>
-                <f:Tab ID="Tab1" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/p1d_output_model.aspx"
+                <f:Tab ID="Tab1" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_output_model.aspx"
                     Title="按机种" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/p1d_output_line.aspx"
+                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_output_line.aspx"
                     Title="按班组" runat="server">
                 </f:Tab>
 

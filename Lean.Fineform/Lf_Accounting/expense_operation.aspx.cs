@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.FICO;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -62,7 +62,7 @@ namespace LeanFine.Lf_Accounting
         {
             //Lf_Business.Models.YF.LeanSerial_Entities DBSerial = new Lf_Business.Models.YF.LeanSerial_Entities();
 
-            IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
+            IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Accounting
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Fico_Costing_Actual_Cost>(q, Grid1);
+            q = SortAndPage<Fico_Monthly_Actual_Cost>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();
@@ -210,7 +210,7 @@ namespace LeanFine.Lf_Accounting
                 return;
             }
 
-            IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
+            IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");

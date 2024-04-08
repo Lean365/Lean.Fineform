@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -83,7 +83,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     //            var q = DB.Pp_Ecs.Select(E => new { ProvinceCode = E.Ec_iqcdate, E.Ec_newitem, E.Ec_no, E.Ec_olditem }).Distinct();
 
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
@@ -192,7 +192,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     //            var q = DB.Pp_Ecs.Select(E => new { ProvinceCode = E.Ec_iqcdate, E.Ec_newitem, E.Ec_no, E.Ec_olditem }).Distinct();
 
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
@@ -301,7 +301,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     //            var q = DB.Pp_Ecs.Select(E => new { ProvinceCode = E.Ec_iqcdate, E.Ec_newitem, E.Ec_no, E.Ec_olditem }).Distinct();
 
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
                             where b.isDeleted == 0
                             //where a.Ec_distinction != 4
@@ -434,7 +434,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where a.Ec_no.Contains(ecnno)
                               where string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
                               where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
@@ -501,7 +501,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where a.Ec_no.Contains(ecnno)
                               where !string.IsNullOrEmpty(b.Ec_newitem)
                               where !string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
@@ -569,7 +569,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where a.Ec_no.Contains(ecnno)
                               where b.isCheck == "X"
                               where b.isDeleted == 0

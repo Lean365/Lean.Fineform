@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -65,7 +65,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
@@ -110,7 +110,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnSecondAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
@@ -156,7 +156,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnThirdAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             orderby b.Ec_entrydate descending
                             where b.isDeleted == 0
                             select new
@@ -225,7 +225,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
                               where string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
@@ -305,7 +305,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
                               where !string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
@@ -385,7 +385,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
                               //where string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
@@ -666,7 +666,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             string strEc_newitem = strgroup[5].ToString().Trim();
 
             //参数传递
-            var q = (from a in DB.Pp_EcSubs
+            var q = (from a in DB.Pp_Ec_Subs
                      where a.Ec_no.Contains(strecnno)
                      where a.Ec_model.Contains(strEc_model)
                      where a.Ec_olditem.Contains(strEc_olditem)

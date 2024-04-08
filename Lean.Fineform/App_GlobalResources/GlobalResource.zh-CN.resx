@@ -184,7 +184,7 @@
     <value>职称用户</value>
   </data>
   <data name="menu_Qm_QC_Wages" xml:space="preserve">
-    <value>直接工资率</value>
+    <value>工资率</value>
   </data>
   <data name="sys_Status_Pp_Normal" xml:space="preserve">
     <value>正常</value>
@@ -1123,7 +1123,7 @@
     <value>DTA通讯簿</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>精益生产管理-DTA</value>
+    <value>精益生产--DTA</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>DB用户</value>
@@ -1222,6 +1222,21 @@
     <value>原因类别</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
-    <value>PCBA检查</value>
+    <value>检查记录</value>
+  </data>
+  <data name="sys_Slogan" xml:space="preserve">
+    <value>无限挑战QCDS成为全球企业的骄傲。</value>
+  </data>
+  <data name="menu_Sys_Dict" xml:space="preserve">
+    <value>数据字典</value>
+  </data>
+  <data name="menu_Pp_Repair" xml:space="preserve">
+    <value>修理记录</value>
+  </data>
+  <data name="menu_Pp_Defect" xml:space="preserve">
+    <value>生产不良</value>
+  </data>
+  <data name="sys_Button_Batch" xml:space="preserve">
+    <value>批量</value>
   </data>
 </root>

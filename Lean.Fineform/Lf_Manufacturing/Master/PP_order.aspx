@@ -52,7 +52,8 @@
                         <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Edit%>" ColumnID="editField" 
                             Icon="TableEdit" Width="100px" ToolTip="<%$ Resources:GlobalResource,sys_Button_Edit%>" 
                             CommandName="Edit" Text="<%$ Resources:GlobalResource,sys_Button_Edit%>" />                 
-                        <f:BoundField DataField="Porderdate" SortField="Porderdate"  Width="100px" HeaderText="日程" />
+                        <f:BoundField DataField="Pordertype" SortField="Pordertype"  Width="100px" HeaderText="订单类别" />
+                        <f:BoundField DataField="Porderlot" SortField="Porderlot"  Width="100px" HeaderText="批号" />
                         <f:BoundField DataField="Porderlot" SortField="Porderlot"  Width="100px" HeaderText="批号" />
                         <f:BoundField DataField="Porderqty" SortField="Porderqty"  Width="100px" HeaderText="数量" />    
                         <f:BoundField DataField="Porderno" SortField="Porderno"  Width="100px" HeaderText="生产订单" />

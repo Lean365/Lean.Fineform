@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -381,14 +381,14 @@ namespace LeanFine.Lf_Manufacturing.EC
                 string OperateNotes = "Del技术* " + Contectext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "设变管理", "设变删除标记", OperateNotes);
 
-                //var Ec_n = DB.Pp_EcSubs.Where(c => c.GUID == (del_ID));
+                //var Ec_n = DB.Pp_Ec_Subs.Where(c => c.GUID == (del_ID));
 
-                //foreach (var Pp_EcSubs in Ec_n)
+                //foreach (var Pp_Ec_Subs in Ec_n)
                 //{
-                //    Pp_EcSubs.isDeleted = 1;
-                //    Pp_EcSubs.Endtag = 1;
-                //    Pp_EcSubs.Modifier = GetIdentityName();
-                //    Pp_EcSubs.ModifyDate = DateTime.Now;
+                //    Pp_Ec_Subs.isDeleted = 1;
+                //    Pp_Ec_Subs.Endtag = 1;
+                //    Pp_Ec_Subs.Modifier = GetIdentityName();
+                //    Pp_Ec_Subs.ModifyDate = DateTime.Now;
                 //}
                 //DB.SaveChanges();
 
@@ -399,8 +399,8 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 //批量更新删除标记
 
-                var Pp_EcSub = DB.Pp_Ecs.Where(c => c.Ec_no.Contains(Contectext));
-                foreach (var Pp_Ecs in Pp_EcSub)
+                var Pp_Ec_Sub = DB.Pp_Ecs.Where(c => c.Ec_no.Contains(Contectext));
+                foreach (var Pp_Ecs in Pp_Ec_Sub)
                 {
                     Pp_Ecs.isDeleted = 1;
                     Pp_Ecs.Modifier = GetIdentityName();
@@ -410,7 +410,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 //DB.Pp_Ecs
                 //        .Where(t => t.Ec_no == Contectext)
-                //        .Update(t => new Pp_EcSub { isDeleted = 1 });
+                //        .Update(t => new Pp_Ec_Sub { isDeleted = 1 });
                 //DB.SaveChanges();
 
                 BindGrid();

@@ -1,14 +1,28 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
-
+var posList = [
+    'left',
+    'right',
+    'top',
+    'bottom',
+    'inside',
+    'insideTop',
+    'insideLeft',
+    'insideRight',
+    'insideBottom',
+    'insideTopLeft',
+    'insideTopRight',
+    'insideBottomLeft',
+    'insideBottomRight'
+];
 var PrimarycolorList = [
     '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
     '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',

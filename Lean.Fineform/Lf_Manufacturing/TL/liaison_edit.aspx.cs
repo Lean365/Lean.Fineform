@@ -1,6 +1,4 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -8,6 +6,8 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.TL
 {
@@ -557,7 +557,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
             item.ModifyDate = DateTime.Now;
             item.Modifier = GetIdentityName();
-            //DB.Pp_EcSubs.Add(item);
+            //DB.Pp_Ec_Subs.Add(item);
             DB.SaveChanges();
         }
 

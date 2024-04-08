@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.Master
 {
@@ -50,6 +50,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindDDLModel();
+            BindDDLType();
             Porderdate.SelectedDate = DateTime.Now;
             Porderdate.MinDate = DateTime.Now;
         }
@@ -83,6 +84,19 @@ namespace LeanFine.Lf_Manufacturing.Master
             Porderhbn.DataTextField = "Proitem";
             Porderhbn.DataValueField = "Proitem";
             Porderhbn.DataBind();
+        }
+
+        private void BindDDLType()
+        {
+            var list = (from c in DB.Adm_Dicts
+                        where c.DictType.Contains("app_mo_type")
+                        select new { c.DictLabel, c.DictValue }).ToList();
+
+            //3.2.将数据绑定到下拉框
+            Pordertype.DataSource = list;
+            Pordertype.DataTextField = "DictLabel";
+            Pordertype.DataValueField = "DictValue";
+            Pordertype.DataBind();
         }
 
         #endregion Page_Load

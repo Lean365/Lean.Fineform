@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 {
@@ -717,7 +717,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.LineQtytoXLSXfile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);

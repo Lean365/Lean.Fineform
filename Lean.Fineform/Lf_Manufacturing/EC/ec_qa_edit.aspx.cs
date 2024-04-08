@@ -1,11 +1,11 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -130,7 +130,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             try
             {
                 var q = from a in DB.Pp_Ecs
-                        join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                        join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         join c in DB.Pp_SapMaterials on b.Ec_bomitem equals c.D_SAP_ZCA1D_Z002
                         //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
                         where a.Ec_no == strEc_no
@@ -226,7 +226,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             try
             {
                 var q = from a in DB.Pp_Ecs
-                        join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                        join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
                         where a.Ec_no == strEc_no
                         where b.Ec_model == strEc_model
@@ -379,9 +379,9 @@ namespace LeanFine.Lf_Manufacturing.EC
         //字段赋值，保存
         private void SaveItem()//新增生产日报
         {
-            var q = (from a in DB.Pp_EcSubs
+            var q = (from a in DB.Pp_Ec_Subs
                          //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                         //join b in DB.Pp_EcSubs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
+                         //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
                          //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                          //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                          //                                   select d.D_SAP_ZCA1D_Z002)
@@ -397,8 +397,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                      //where b.Ec_no == strecn
                      //where a.Prodate == sdate//投入日期
                      select a).ToList();
-            List<Pp_EcSub> UpdateList = (from item in q
-                                         select new Pp_EcSub
+            List<Pp_Ec_Sub> UpdateList = (from item in q
+                                         select new Pp_Ec_Sub
                                          {
                                              GUID = item.GUID,
                                              Ec_no = item.Ec_no,
@@ -499,7 +499,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region 1.新增SOP
 
             //1.非采购件
-            var q_NonPurchaseItem = from a in DB.Pp_EcSops
+            var q_NonPurchaseItem = from a in DB.Pp_Ec_Sops
                                     where a.Ec_no == (strEc_no)
                                     where a.Ec_model == (strEc_model)
                                     //where b.Ec_no == strecn

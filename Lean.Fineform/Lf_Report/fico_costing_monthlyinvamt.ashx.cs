@@ -30,7 +30,7 @@ namespace LeanFine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q = from a in DBCharts.Fico_Costing_HistInventorys
+            var q = from a in DBCharts.Fico_Monthly_Inventorys
                         //join b in DBCharts.MM_Materials on a.Bc_Item equals b.MatItem
                     where a.Bc_YM.CompareTo(sdate) >= 0
                     where a.Bc_YM.CompareTo(atedate) <= 0

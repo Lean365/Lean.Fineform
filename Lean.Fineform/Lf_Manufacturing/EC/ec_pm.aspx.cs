@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -65,7 +65,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked == true)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)//b.Ec_purdate != "" || b.Ec_purdate != null
 
@@ -144,7 +144,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnSecondAuto.Checked == true)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != ""|| b.Ec_purdate != null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""  || b.Ec_pmcdate != null
@@ -221,7 +221,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnThirdAuto.Checked == true)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.isDeleted == 0
                             //where b.Ec_purdate != ""|| b.Ec_purdate != null
                             //where b.Ec_pmcdate != ""|| b.Ec_pmcdate != null
@@ -325,7 +325,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
@@ -380,7 +380,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnSecondAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where b.isDeleted == 0
                               where a.Ec_no.Contains(strecnno)
@@ -435,7 +435,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnThirdAuto.Checked)
                 {
                     var sub = from a in DB.Pp_Ecs
-                              join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               where b.isDeleted == 0

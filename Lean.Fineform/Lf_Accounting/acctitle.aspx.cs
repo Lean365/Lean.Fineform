@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.FICO;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 
 namespace LeanFine.Lf_Accounting
 {

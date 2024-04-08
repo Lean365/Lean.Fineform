@@ -1,11 +1,11 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.Master
 {
@@ -113,8 +113,8 @@ namespace LeanFine.Lf_Manufacturing.Master
 
         private void BindDDLproLine()
         {
-            var q = from p in DB.Pp_Lines
-                    where p.lineclass.Contains("M")
+            var q = from p in DB.Adm_Dicts
+                    where p.DictType.Contains("line_type_m")
                     //where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline) &&
                     //(from d in DB.pp_defects
                     // where d.Prongbdel == false
@@ -124,17 +124,18 @@ namespace LeanFine.Lf_Manufacturing.Master
                     //  .Contains(p.Prolot)
                     select new
                     {
-                        Line = p.linename,
+                        p.DictLabel,
+                        p.DictValue,
                     };
 
-            var qs = q.Select(E => new { E.Line }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlP_Kanban_Line.DataSource = qs;
-            ddlP_Kanban_Line.DataTextField = "Line";
-            ddlP_Kanban_Line.DataValueField = "Line";
+            ddlP_Kanban_Line.DataTextField = "DictLabel";
+            ddlP_Kanban_Line.DataValueField = "DictValue";
             ddlP_Kanban_Line.DataBind();
             this.ddlP_Kanban_Line.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }

@@ -1,17 +1,17 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-function BindmyChart_QM_Pass(name, value1, value2, value3) {
+function BindChartData_QM_Pass(name, value1, value2, value3) {
     var PassChart = echarts.init(document.getElementById('PassLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -277,7 +277,7 @@ function BindmyChart_QM_Pass(name, value1, value2, value3) {
     PassChart.setOption(option);
     PassChart.resize();
 }
-function BindmyChart_QM_LotPass(name, value1, value2, value3) {
+function BindChartData_QM_LotPass(name, value1, value2, value3) {
     var PassChart = echarts.init(document.getElementById('LotpassLine'));
     // 指定图表的配置项和数据
     var option = {

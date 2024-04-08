@@ -26,16 +26,16 @@ namespace LeanFine.Lf_Report
             //string command = context.Request["cmd"];
             string sdate = atedate.Substring(0, 4);
             context.Response.ContentType = "text/plain";
-            var q_salesData = (from a in DBCharts.Fico_Costing_Sales_Billings
-                               where a.Bc_YM.Contains(sdate)
+            var q_salesData = (from a in DBCharts.Fico_Monthly_Sales
+                                   //where a.Bc_YM.Contains(sdate)
                                orderby a.Bc_FY descending
                                select a).ToList(); //.Include(u => u.Dept);
 
             var q_Merge = from a in q_salesData
-                          group a by new { Bc_YM = a.Bc_YM.Substring(0, 4), a.Bc_ProfitCenter } into g
+                          group a by new { a.Bc_FY, a.Bc_ProfitCenter } into g
                           select new
                           {
-                              YM = g.Key.Bc_YM,
+                              g.Key.Bc_FY,
                               Bu = g.Key.Bc_ProfitCenter,
                               //Qty = g.Sum(a => a.Bc_SalesQty),
                               Amout = g.Sum(a => a.Bc_BusinessAmount),
@@ -45,6 +45,7 @@ namespace LeanFine.Lf_Report
 
                        select new
                        {
+                           FY = a.Bc_FY,
                            Bu = (a.Bu.Contains("2U20") ? "PA" : (a.Bu.Contains("3U10") ? "PRO" : (a.Bu.Contains("3U20") ? "MI" : (a.Bu.Contains("4U30") ? "BS" : (a.Bu.Contains("ODBU") ? "OD" : (a.Bu.Contains("2U10") ? "ESO" : (a.Bu.Contains("4U10") ? "VS" : a.Bu))))))),
                            a.Amout,
                        }).ToList();
@@ -56,7 +57,7 @@ namespace LeanFine.Lf_Report
             // List<object> lists = new List<object>();                       //创建object类型的泛型
             foreach (DataRow dr in dt.Rows)
             {
-                var obj = new { name = dr["Bu"], value = dr["Amout"] };  //key，value
+                var obj = new { name = dr["FY"], value1 = dr["Bu"], value2 = dr["Amout"] };  //key，value
                 lists.Add(obj);
             }
             // var jsS = new JavaScriptSerializer();                           //创建json对象

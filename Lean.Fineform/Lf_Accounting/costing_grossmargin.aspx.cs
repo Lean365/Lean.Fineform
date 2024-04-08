@@ -1,7 +1,7 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -57,7 +57,7 @@ namespace LeanFine.Lf_Accounting
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
             string FobDate = dt.AddMonths(-1).ToString("yyyyMMdd").Substring(0, 6);
-            //var q_sales = from a in DB.Sd_Fcs
+            //var q_sales = from a in DB.Sd_Forcast
             //              join b in DB.Pp_SapModelDests on a.Bc_Item equals b.D_SAP_DEST_Z001
 
             //              where a.Bc_YM.CompareTo(FY) == 0
@@ -65,7 +65,7 @@ namespace LeanFine.Lf_Accounting
             //              select new {
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
-            var q = from a in DB.Sd_Fcs
+            var q = from a in DB.Sd_Forcasts
                     select new
                     {
                         a.Bc_YM,
@@ -93,7 +93,7 @@ namespace LeanFine.Lf_Accounting
             }
             q = q.Distinct();
             var qs = from a in q.Distinct()
-                     join b in DB.Fico_Costing_Fobs on a.Bc_ForecastItem equals b.Bc_Item
+                     join b in DB.Fico_Monthly_Fobs on a.Bc_ForecastItem equals b.Bc_Item
                      where b.Bc_YM.CompareTo(FobDate) == 0
                      select new
                      {
@@ -209,7 +209,7 @@ namespace LeanFine.Lf_Accounting
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
-            //var q_sales = from a in DB.Sd_Fcs
+            //var q_sales = from a in DB.Sd_Forcast
             //              join b in DB.Pp_SapModelDests on a.Bc_Item equals b.D_SAP_DEST_Z001
 
             //              where a.Bc_YM.CompareTo(FY) == 0
@@ -217,7 +217,7 @@ namespace LeanFine.Lf_Accounting
             //              select new {
             //              };
             //IQueryable<Sd_MrpData> q = DB.Sd_MrpDatas; //.Include(u => u.Dept);
-            var q = from a in DB.Sd_Fcs
+            var q = from a in DB.Sd_Forcasts
                     select new
                     {
                         a.Bc_YM,
@@ -245,7 +245,7 @@ namespace LeanFine.Lf_Accounting
             }
             q = q.Distinct();
             var qs = from a in q.Distinct()
-                     join b in DB.Fico_Costing_Fobs on a.Bc_ForecastItem equals b.Bc_Item
+                     join b in DB.Fico_Monthly_Fobs on a.Bc_ForecastItem equals b.Bc_Item
                      where b.Bc_YM.CompareTo(BomDate) == 0
                      select new
                      {

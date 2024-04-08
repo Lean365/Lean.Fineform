@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.Master
 {
@@ -74,8 +74,8 @@ namespace LeanFine.Lf_Manufacturing.Master
             this.Porderno.Text = current.Porderno.ToString();
             this.Porderroute.Text = current.Porderroute.ToString();
             this.Porderserial.Text = current.Porderserial;
+            this.Pordertype.Text = current.Pordertype;
             this.Remark.Text = current.Remark;
-
             //修改前日志
             string BeforeModi = current.Porderdate + "," + current.Porderno + "," + current.Porderhbn + "," + current.Porderlot + "," + current.Porderqty;
             string OperateType = "修改";

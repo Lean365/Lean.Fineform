@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FineUIPro;
 using ThoughtWorks.QRCode.Codec;
 
 namespace LeanFine

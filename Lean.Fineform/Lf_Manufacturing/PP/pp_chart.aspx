@@ -95,14 +95,9 @@
     <%--<script src="/res/js/jquery.min.js" type="text/javascript"></script>--%>
     <%--jquery.js--%>
     <script type="text/javascript" src="/Lf_Resources/echarts/package/dist/echarts.min.js"></script>
-    <script src="/Lf_Report/ajax_Fico_data.js" type="text/javascript"></script>
     <script src="/Lf_Report/ajax_Pp_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_Sd_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/ajax_Qm_data.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Fico_echarts.js" type="text/javascript"></script>
     <script src="/Lf_Report/bind_Pp_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Qm_echarts.js" type="text/javascript"></script>
-    <script src="/Lf_Report/bind_Sd_echarts.js" type="text/javascript"></script>
+
     <%-- Echarts.js --%>
 
     <%--引用的css样式--%>

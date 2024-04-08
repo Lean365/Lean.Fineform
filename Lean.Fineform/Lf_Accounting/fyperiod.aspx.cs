@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.FICO;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.FICO;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -210,7 +210,7 @@ namespace LeanFine.Lf_Accounting
                 return;
             }
 
-            IQueryable<Fico_Costing_Actual_Cost> q = DB.Fico_Costing_Actual_Costs; //.Include(u => u.Dept);
+            IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             q = q.Where(u => u.Bc_ExpCategory.CompareTo("DTA") == 0);

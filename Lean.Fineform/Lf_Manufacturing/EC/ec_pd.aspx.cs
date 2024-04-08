@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -67,7 +67,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 if (rbtnFirstAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
 
                             where b.Ec_procurement == "F"
                             where b.isDeleted == 0
@@ -108,7 +108,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnSecondAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.Ec_procurement == "F"
                             where b.isDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
@@ -147,7 +147,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 else if (rbtnThirdAuto.Checked)
                 {
                     var q = from a in DB.Pp_Ecs
-                            join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.Ec_procurement == "F"
                             where b.isDeleted == 0
                             //where b.Ec_purdate == "" || b.Ec_purdate == null
@@ -255,7 +255,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 //                   select  s).ToList().Distinct();
                 if (rbtnFirstAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSubs
+                    var q = from a in DB.Pp_Ec_Subs
                             where string.IsNullOrEmpty(a.Ec_purdate)
 
                             //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
@@ -299,7 +299,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 }
                 else if (rbtnSecondAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSubs
+                    var q = from a in DB.Pp_Ec_Subs
 
                                 //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
                                 // join c in DB.Pp_SapMaterials on a.Ec_newitem equals c.D_SAP_ZCA1D_Z002
@@ -341,7 +341,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 }
                 else if (rbtnThirdAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSubs
+                    var q = from a in DB.Pp_Ec_Subs
 
                                 //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
                                 // join c in DB.Pp_SapMaterials on a.Ec_newitem equals c.D_SAP_ZCA1D_Z002

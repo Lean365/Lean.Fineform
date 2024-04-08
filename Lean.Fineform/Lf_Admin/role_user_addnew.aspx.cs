@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using FineUIPro;
 
 namespace LeanFine.Lf_Admin
 {
@@ -49,7 +49,7 @@ namespace LeanFine.Lf_Admin
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
-
+            BindDdlDept();
             BindGrid();
         }
 
@@ -63,7 +63,10 @@ namespace LeanFine.Lf_Admin
             {
                 q = q.Where(u => u.Name.Contains(searchText) || u.ChineseName.Contains(searchText) || u.EnglishName.Contains(searchText) || u.Remark.Contains(searchText) || u.Address.Contains(searchText));
             }
-
+            if (this.ddlDept.SelectedIndex != -1 && this.ddlDept.SelectedIndex != 0)
+            {
+                q = q.Where(u => u.Address.Contains(this.ddlDept.SelectedText));
+            }
             q = q.Where(u => u.Name != "admin");
 
             // 排除已经属于本角色的用户
@@ -78,6 +81,30 @@ namespace LeanFine.Lf_Admin
 
             Grid1.DataSource = q;
             Grid1.DataBind();
+        }
+
+        public void BindDdlDept()
+        {
+            var q = (from a in DB.Adm_Users
+
+                     select new
+                     {
+                         a.Address
+                     }).ToList();
+
+            //包含子集
+
+            var qs = q.Select(E => new { E.Address, }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            ddlDept.DataSource = qs;
+            ddlDept.DataTextField = "Address";
+            ddlDept.DataValueField = "Address";
+            ddlDept.DataBind();
+
+            this.ddlDept.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
         #endregion Page_Load
@@ -136,6 +163,14 @@ namespace LeanFine.Lf_Admin
             Grid1.PageSize = Convert.ToInt32(ddlGridPageSize.SelectedValue);
 
             BindGrid();
+        }
+
+        protected void ddlDept_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlDept.SelectedIndex != -1 && ddlDept.SelectedIndex != 0)
+            {
+                BindGrid();
+            }
         }
 
         #endregion Events

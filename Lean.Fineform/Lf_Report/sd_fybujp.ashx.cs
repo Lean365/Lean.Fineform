@@ -27,49 +27,42 @@ namespace LeanFine.Lf_Report
 
             context.Response.ContentType = "text/plain";
 
-            var q_fy = (from a in DBCharts.Fico_Periods
-                        where a.Btfm == atedate
-                        select a).ToList();
-            if (q_fy.Any())
+            var q_salesData = (from a in DBCharts.Fico_Monthly_Sales
+                                   //where a.Bc_YM.Contains(atedate)
+                               orderby a.Bc_FY descending
+                               select a).ToList(); //.Include(u => u.Dept);
+
+            var q_Merge = from a in q_salesData
+                          group a by new { a.Bc_FY, a.Bc_ProfitCenter } into g
+                          select new
+                          {
+                              g.Key.Bc_FY,
+                              Bu = g.Key.Bc_ProfitCenter,
+                              //Qty = g.Sum(a => a.Bc_SalesQty),
+                              Amout = g.Sum(a => a.Bc_BusinessAmount),
+                          };
+
+            var qss = (from a in q_Merge
+
+                       select new
+                       {
+                           FY = a.Bc_FY,
+                           Bu = (a.Bu.Contains("2U20") ? "PA" : (a.Bu.Contains("3U10") ? "PRO" : (a.Bu.Contains("3U20") ? "MI" : (a.Bu.Contains("4U30") ? "BS" : (a.Bu.Contains("ODBU") ? "OD" : (a.Bu.Contains("2U10") ? "ESO" : (a.Bu.Contains("4U10") ? "VS" : a.Bu))))))),
+                           a.Amout,
+                       }).ToList();
+
+            DataSet ds = new DataSet();
+            DataTable dt = ConvertHelper.LinqConvertToDataTable(qss.AsQueryable());
+            ds.Tables.Add(ConvertHelper.LinqConvertToDataTable(qss.AsQueryable()));
+            //用来传回去的内容
+            // List<object> lists = new List<object>();                       //创建object类型的泛型
+            foreach (DataRow dr in dt.Rows)
             {
-                string sdate = q_fy[0].Btfy.ToString();
-
-                var q_salesData = (from a in DBCharts.Fico_Costing_Sales_Billings
-                                   where a.Bc_FY.Contains(sdate)
-                                   orderby a.Bc_FY descending
-                                   select a).ToList(); //.Include(u => u.Dept);
-
-                var q_Merge = from a in q_salesData
-                              group a by new { a.Bc_FY, a.Bc_ProfitCenter } into g
-                              select new
-                              {
-                                  Bc_FY = g.Key.Bc_FY,
-                                  Bu = g.Key.Bc_ProfitCenter,
-                                  //Qty = g.Sum(a => a.Bc_SalesQty),
-                                  Amout = g.Sum(a => a.Bc_BusinessAmount),
-                              };
-
-                var qss = (from a in q_Merge
-
-                           select new
-                           {
-                               Bu = (a.Bu.Contains("2U20") ? "PA" : (a.Bu.Contains("3U10") ? "PRO" : (a.Bu.Contains("3U20") ? "MI" : (a.Bu.Contains("4U30") ? "BS" : (a.Bu.Contains("ODBU") ? "OD" : (a.Bu.Contains("2U10") ? "ESO" : (a.Bu.Contains("4U10") ? "VS" : a.Bu))))))),
-                               a.Amout,
-                           }).ToList();
-
-                DataSet ds = new DataSet();
-                DataTable dt = ConvertHelper.LinqConvertToDataTable(qss.AsQueryable());
-                ds.Tables.Add(ConvertHelper.LinqConvertToDataTable(qss.AsQueryable()));
-                //用来传回去的内容
-                // List<object> lists = new List<object>();                       //创建object类型的泛型
-                foreach (DataRow dr in dt.Rows)
-                {
-                    var obj = new { name = dr["Bu"], value = dr["Amout"] };  //key，value
-                    lists.Add(obj);
-                }
-                // var jsS = new JavaScriptSerializer();                           //创建json对象
-                context.Response.Write(jsS.Serialize(lists));                   //返回数据
+                var obj = new { name = dr["FY"], value1 = dr["Bu"], value2 = dr["Amout"] };  //key，value
+                lists.Add(obj);
             }
+            // var jsS = new JavaScriptSerializer();                           //创建json对象
+            context.Response.Write(jsS.Serialize(lists));                   //返回数据
         }
 
         public bool IsReusable

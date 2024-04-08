@@ -1,6 +1,6 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Linq;
+using FineUIPro;
 
 namespace LeanFine.Lf_Admin
 {
@@ -88,7 +88,7 @@ namespace LeanFine.Lf_Admin
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
             // 数据绑定之前，进行权限检查
-            CheckPowerWithWindowField("CoreCompanyEdit", Grid1, "editField");
+            CheckPowerWithLinkButtonField("CoreCompanyEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreCompanyDelete", Grid1, "deleteField");
         }
 

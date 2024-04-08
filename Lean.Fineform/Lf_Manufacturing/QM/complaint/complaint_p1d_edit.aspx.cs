@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.QM;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.QM;
 
 namespace LeanFine.Lf_Manufacturing.QM.complaint
 {
@@ -131,17 +131,21 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
 
         public void BindDDLLine()
         {
-            var q_Model = from a in DB.Pp_Lines
-                          where a.lineclass == "M"
+            var q_Model = from a in DB.Adm_Dicts
+                              //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                              //where b.Proecnno == strecn
+                              //where b.Proecnbomitem == stritem
+                          where a.DictType.Contains("reason_type_m")
                           select new
                           {
-                              a.linename
+                              a.DictLabel,
+                              a.DictValue
                           };
-            q_Model = q_Model.OrderBy(u => u.linename);
+            q_Model = q_Model.OrderBy(u => u.DictValue);
 
             // 绑定到下拉列表（启用模拟树功能）
             // 绑定到下拉列表（启用模拟树功能）
-            var qs = q_Model.Select(E => new { E.linename }).ToList().Distinct();
+            var qs = q_Model.Select(E => new { E.DictValue }).ToList().Distinct();
             Cc_Line.DataTextField = "linename";
             Cc_Line.DataValueField = "linename";
             Cc_Line.DataSource = qs;

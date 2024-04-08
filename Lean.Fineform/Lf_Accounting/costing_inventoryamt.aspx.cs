@@ -1,7 +1,7 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -70,7 +70,7 @@ namespace LeanFine.Lf_Accounting
                 //IQueryable<Fico_Costing_HistoryMoving> q = DB.Fico_Costing_HistoryMovings; //.Include(u => u.Dept);
                 string FY = DPend.SelectedDate.Value.ToString("yyyyMM");
 
-                var q = from a in DB.Fico_Costing_HistInventorys
+                var q = from a in DB.Fico_Monthly_Inventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
                         where a.isDeleted == 0
                         select a;
@@ -132,7 +132,7 @@ namespace LeanFine.Lf_Accounting
                 //IQueryable<Fico_Costing_HistoryMoving> q = DB.Fico_Costing_HistoryMovings; //.Include(u => u.Dept);
                 string FY = DPend.SelectedDate.Value.ToString("yyyyMM");
 
-                var q = from a in DB.Fico_Costing_HistInventorys
+                var q = from a in DB.Fico_Monthly_Inventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
                         where a.isDeleted == 0
                         select a;

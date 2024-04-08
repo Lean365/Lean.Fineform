@@ -24,6 +24,8 @@
                         </f:Button>
                         <f:ToolbarFill runat="server">
                         </f:ToolbarFill>
+                        <f:DropDownList ID="ddlDept" Label="<%$ Resources:GlobalResource,menu_Sys_Dept%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="ddlDept_SelectedIndexChanged">
+                        </f:DropDownList>
                         <f:TwinTriggerBox ID="ttbSearchMessage" Width="160px" runat="server" ShowLabel="false"
                             EmptyText="<%$ Resources:GlobalResource,Query_Enter_Text%>" Trigger1Icon="Clear" Trigger2Icon="Search" ShowTrigger1="false"
                             OnTrigger2Click="ttbSearchMessage_Trigger2Click" OnTrigger1Click="ttbSearchMessage_Trigger1Click">

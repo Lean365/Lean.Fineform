@@ -11,7 +11,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="RegionPanel1" runat="server"></f:PageManager>
         <f:RegionPanel ID="RegionPanel1" ShowBorder="false" runat="server">
             <Regions>
-                <f:Region ID="Region1" ShowBorder="false" ShowHeader="false" BodyPadding="5px" Width="200px" Position="Left" Layout="Fit" runat="server">
+                <f:Region ID="Region1" ShowBorder="false" ShowHeader="false" BodyPadding="5px" Width="256px" Position="Left" Layout="Fit" runat="server">
                     <Items>
                         <f:Grid ID="Grid1" runat="server" ShowBorder="true" ShowHeader="false" EnableCheckBoxSelect="false" DataKeyNames="ID" AllowSorting="false" SortField="Name" SortDirection="DESC" AllowPaging="false" EnableMultiSelect="false" OnRowClick="Grid1_RowClick" EnableRowClickEvent="true">
                             <Columns>

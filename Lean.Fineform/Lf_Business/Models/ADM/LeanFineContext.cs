@@ -1,10 +1,10 @@
-﻿using LeanFine.Lf_Business.Models.FICO;
+﻿using System.Data.Entity;
+using LeanFine.Lf_Business.Models.FICO;
 using LeanFine.Lf_Business.Models.MM;
 using LeanFine.Lf_Business.Models.OA;
 using LeanFine.Lf_Business.Models.PP;
 using LeanFine.Lf_Business.Models.QM;
 using LeanFine.Lf_Business.Models.SD;
-using System.Data.Entity;
 
 namespace LeanFine
 {
@@ -22,8 +22,8 @@ namespace LeanFine
         public DbSet<Adm_Corpkpi> Adm_Corpkpis { get; set; }
         public DbSet<Adm_Formula> Adm_Formulas { get; set; }
         public DbSet<Adm_Dept> Adm_Depts { get; set; }
+        public DbSet<Adm_Dict> Adm_Dicts { get; set; }
         public DbSet<Adm_User> Adm_Users { get; set; }
-
         public DbSet<Adm_Role> Adm_Roles { get; set; }
         public DbSet<Adm_Title> Adm_Titles { get; set; }
         public DbSet<Adm_Online> Adm_Onlines { get; set; }
@@ -50,28 +50,25 @@ namespace LeanFine
         public DbSet<Fico_Counter_Signature> Fico_Counter_Signatures { get; set; }
 
         //成本分析（costing)
-        public DbSet<Fico_Costing_Bom_Cost> Fico_Costing_Bom_Costs { get; set; }
+        public DbSet<Fico_Monthly_Bom_Cost> Fico_Monthly_Bom_Costs { get; set; }
 
-        public DbSet<Fico_Costing_Fob> Fico_Costing_Fobs { get; set; }
-
-        public DbSet<Fico_Costing_HistInventory> Fico_Costing_HistInventorys { get; set; }
-
-        public DbSet<Fico_Costing_Sales_Billing> Fico_Costing_Sales_Billings { get; set; }
-        public DbSet<Fico_Costing_Actual_Cost> Fico_Costing_Actual_Costs { get; set; }
-        public DbSet<Fico_Costing_Deptuse_Cost> Fico_Costing_Deptuse_Costs { get; set; }
+        public DbSet<Fico_Monthly_Fob> Fico_Monthly_Fobs { get; set; }
+        public DbSet<Fico_Monthly_Inventory> Fico_Monthly_Inventorys { get; set; }
+        public DbSet<Fico_Monthly_Sale> Fico_Monthly_Sales { get; set; }
+        public DbSet<Fico_Monthly_Actual_Cost> Fico_Monthly_Actual_Costs { get; set; }
+        public DbSet<Fico_Monthly_Dept_Request> Fico_Monthly_Dept_Requests { get; set; }
 
         //MM
         public DbSet<Mm_Material> Mm_Materials { get; set; }
 
         public DbSet<Yf_Billofmaterial> Yf_Billofmaterials { get; set; }
-        public DbSet<Mm_Po_Residue> Mm_Po_Residues { get; set; }
+        public DbSet<Mm_Residual> Mm_Residuals { get; set; }
 
         //PP
 
-        public DbSet<Pp_Line> Pp_Lines { get; set; }
         public DbSet<Pp_Ec> Pp_Ecs { get; set; }
-        public DbSet<Pp_Ec_Sop> Pp_EcSops { get; set; }
-        public DbSet<Pp_EcSub> Pp_EcSubs { get; set; }
+        public DbSet<Pp_Ec_Sop> Pp_Ec_Sops { get; set; }
+        public DbSet<Pp_Ec_Sub> Pp_Ec_Subs { get; set; }
         public DbSet<Pp_Liaison> Pp_Liaisons { get; set; }
         public DbSet<Pp_Tracking> Pp_Trackings { get; set; }
         public DbSet<Pp_Tracking_Count> Pp_Tracking_Counts { get; set; }
@@ -91,16 +88,13 @@ namespace LeanFine
         public DbSet<Pp_Defect_Code> Pp_Defect_Codes { get; set; }
         public DbSet<Pp_Kanban> Pp_Kanbans { get; set; }
 
-        public DbSet<Pp_Duration> Pp_Durations { get; set; }
         public DbSet<Pp_Order> Pp_Orders { get; set; }
         public DbSet<Pp_SapEcn> Pp_SapEcns { get; set; }
         public DbSet<Pp_SapEcnSub> Pp_SapEcnSubs { get; set; }
         public DbSet<Pp_SapManhour> Pp_SapManhours { get; set; }
         public DbSet<Pp_SapMaterial> Pp_SapMaterials { get; set; }
-
         public DbSet<Pp_Ec_Balance> Pp_EcBalances { get; set; }
-        public DbSet<Pp_Ec_Category> Pp_EcCategorys { get; set; }
-        public DbSet<Pp_Reason> Pp_Reasons { get; set; }
+
         public DbSet<Pp_Manhour> Pp_Manhours { get; set; }
         public DbSet<Pp_SapModelDest> Pp_SapModelDests { get; set; }
         public DbSet<Pp_SapOrder> Pp_SapOrders { get; set; }
@@ -125,20 +119,20 @@ namespace LeanFine
         public DbSet<Sd_Mrp> Sd_Mrps { get; set; }
 
         public DbSet<Sd_Customer> Sd_Customers { get; set; }
-        public DbSet<Sd_So_Residue> Sd_So_Residues { get; set; }
+        public DbSet<Sd_Residual> Sd_Residuals { get; set; }
         public DbSet<Sd_Psi> Sd_Psis { get; set; }
-        public DbSet<Sd_Fc> Sd_Fcs { get; set; }
+        public DbSet<Sd_Forcast> Sd_Forcasts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             //指定Decimal小数位数
             modelBuilder.Entity<Pp_Manhour>().Property(p => p.Prorate).HasPrecision(18, 5);
-            modelBuilder.Entity<Mm_Po_Residue>().Property(p => p.Bc_UnitPrice).HasPrecision(18, 5);
+            modelBuilder.Entity<Mm_Residual>().Property(p => p.Bc_UnitPrice).HasPrecision(18, 5);
             modelBuilder.Entity<Fico_ExchangeRate>().Property(p => p.ER_Rate).HasPrecision(18, 5);
             //modelBuilder.Entity<Fico_Costing_Forecast>().Property(p => p.Bc_MovingAverage).HasPrecision(18, 5);
-            modelBuilder.Entity<Fico_Costing_Bom_Cost>().Property(p => p.Bc_MovingCost).HasPrecision(18, 5);
-            modelBuilder.Entity<Sd_Fc>().Property(p => p.Bc_ExchangeRate).HasPrecision(18, 5);
+            modelBuilder.Entity<Fico_Monthly_Bom_Cost>().Property(p => p.Bc_MovingCost).HasPrecision(18, 5);
+            modelBuilder.Entity<Sd_Forcast>().Property(p => p.Bc_ExchangeRate).HasPrecision(18, 5);
             modelBuilder.Entity<Pp_Tracking>().Property(p => p.Pro_OperatingTime).HasPrecision(18, 5);
             modelBuilder.Entity<Pp_Tracking>().Property(p => p.Pro_StdDeviation).HasPrecision(18, 5);
             modelBuilder.Entity<Pp_Tracking_Time>().Property(p => p.Pro_Tractime).HasPrecision(18, 5);

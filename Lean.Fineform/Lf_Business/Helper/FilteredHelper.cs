@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Data;
+﻿using System.Data;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine
 {

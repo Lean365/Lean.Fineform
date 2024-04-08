@@ -1,17 +1,17 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-function BindmyChart_Expense_Contrast(name, value1, value2) {
+function BindChartData_Expense_Contrast(name, value1, value2) {
     var PassChart = echarts.init(document.getElementById('ContrastBar'));
 
     // 指定图表的配置项和数据
@@ -265,7 +265,7 @@ function BindmyChart_Expense_Contrast(name, value1, value2) {
     PassChart.setOption(option);
     PassChart.resize();
 }
-function BindmyChart_Expense_DeptRequests(name, value2, data) {
+function BindChartData_Expense_DeptRequests(name, value2, data) {
     var PassChart = echarts.init(document.getElementById('RequisitionBar'));
     var total_Amount = 0;
     for (var i = 0; i < data.length; i++) {
@@ -432,7 +432,7 @@ function BindmyChart_Expense_DeptRequests(name, value2, data) {
     PassChart.setOption(option);
     PassChart.resize();
 }
-function BindmyChart_Expense_Actual(name, value, data) {
+function BindChartData_Expense_Actual(name, value, data) {
     var myChart = echarts.init(document.getElementById('ActualExs'));
     //debugger;
     //统计总数量
@@ -574,7 +574,7 @@ function BindmyChart_Expense_Actual(name, value, data) {
     myChart.setOption(option);
     myChart.resize();
 }
-function BindmyChart_Expense_Tree(data) {
+function BindChartData_Expense_Tree(data) {
     var TreemyChart = echarts.init(document.getElementById('TreeBar'));
     TreemyChart.showLoading();
     let BindTree = [];
@@ -762,7 +762,7 @@ function BindmyChart_Expense_Tree(data) {
 }
 
 //材料费比率
-function BindmyChart_CostingMaterialcost(name, value1, value2, value3, data) {
+function BindChartData_CostingMaterialcost(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var myChart = echarts.init(document.getElementById('MaterialcostChart'));
@@ -957,7 +957,7 @@ function BindmyChart_CostingMaterialcost(name, value1, value2, value3, data) {
     myChart.resize();
 }
 //需求量
-function BindmyChart_CostingNeedQty(name, value1, value2, value3, data) {
+function BindChartData_CostingNeedQty(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var myChart = echarts.init(document.getElementById('NeedQtyChart'));
@@ -1152,7 +1152,7 @@ function BindmyChart_CostingNeedQty(name, value1, value2, value3, data) {
     myChart.resize();
 }
 //营业毛利
-function BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, data) {
+function BindChartData_CostingGrossOperatingMargin(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var myChart = echarts.init(document.getElementById('GrossOperatingMarginChart'));
@@ -1347,7 +1347,7 @@ function BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, d
     myChart.resize();
 }
 //FC
-function BindmyChart_CostingComparedForecast(name, value1, value2, value3, data) {
+function BindChartData_CostingComparedForecast(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var myChart = echarts.init(document.getElementById('ComparedForecastChart'));
@@ -1543,7 +1543,7 @@ function BindmyChart_CostingComparedForecast(name, value1, value2, value3, data)
 }
 
 //成本
-function BindmyChart_CostingProductCost(name, value1, value2, value3, data) {
+function BindChartData_CostingProductCost(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var myChart = echarts.init(document.getElementById('ProductCostChart'));
@@ -1738,7 +1738,7 @@ function BindmyChart_CostingProductCost(name, value1, value2, value3, data) {
     myChart.resize();
 }
 //在库
-function BindmyChart_CostingInvAMT(name, value1, value2, data) {
+function BindChartData_CostingInvAMT(name, value1, value2, data) {
     var myChart = echarts.init(document.getElementById('InvAmtChart'));
     //debugger;
     //统计总数量
@@ -1972,7 +1972,7 @@ function BindmyChart_CostingInvAMT(name, value1, value2, data) {
     myChart.resize();
 }
 
-function BindmyChart_CostingInvAMTbu(name, value1, value2, data) {
+function BindChartData_CostingInvAMTbu(name, value1, value2, data) {
     var myChart = echarts.init(document.getElementById('buInvAmtChart'));
     //debugger;
     //统计总数量
@@ -2206,7 +2206,7 @@ function BindmyChart_CostingInvAMTbu(name, value1, value2, data) {
     myChart.resize();
 }
 
-function BindmyChart_CostingMonthlyInvAMT(name, value1, value2, data) {
+function BindChartData_CostingMonthlyInvAMT(name, value1, value2, data) {
     var myChart = echarts.init(document.getElementById('AnnualInvAmtChart'));
     //debugger;
     //统计总数量

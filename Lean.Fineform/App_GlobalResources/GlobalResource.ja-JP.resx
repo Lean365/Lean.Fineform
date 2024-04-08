@@ -184,7 +184,7 @@
     <value>職名ユーザ</value>
   </data>
   <data name="menu_Qm_QC_Wages" xml:space="preserve">
-    <value>直接な賃率</value>
+    <value>賃率</value>
   </data>
   <data name="sys_Status_Pp_Normal" xml:space="preserve">
     <value>正常</value>
@@ -1123,7 +1123,7 @@
     <value>DTA連絡先</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>リーン生産管理-DTA</value>
+    <value>リーン生産--DTA</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>DBユーザー</value>
@@ -1222,6 +1222,21 @@
     <value>原因明細</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
-    <value>PCBA検査</value>
+    <value>検査履歴</value>
+  </data>
+  <data name="sys_Slogan" xml:space="preserve">
+    <value>グロバール企業としてのプライドを持ちQCDSへの限りない挑戦。</value>
+  </data>
+  <data name="menu_Sys_Dict" xml:space="preserve">
+    <value>データ辞書</value>
+  </data>
+  <data name="menu_Pp_Defect" xml:space="preserve">
+    <value>生産不良</value>
+  </data>
+  <data name="menu_Pp_Repair" xml:space="preserve">
+    <value>修理履歴</value>
+  </data>
+  <data name="sys_Button_Batch" xml:space="preserve">
+    <value>一括</value>
   </data>
 </root>

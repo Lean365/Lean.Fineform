@@ -26,8 +26,7 @@
                 }
 
         /* 自动换行，放置权限列表过长 */
-        .f-grid-cell.f-grid-cell-Powers .f-grid-cell-inner
-        {
+        .f-grid-cell.f-grid-cell-Powers .f-grid-cell-inner {
             white-space: normal;
             word-break: break-all;
         }
@@ -52,16 +51,38 @@
                     <Items>
                         <f:Grid ID="Grid2" runat="server" ShowBorder="true" ShowHeader="false" EnableMultiSelect="true" EnableCheckBoxSelect="false" DataKeyNames="ModuleId,ModuleName" AllowSorting="true" OnSort="Grid2_Sort" OnRowDataBound="Grid2_RowDataBound" SortField="GroupName" SortDirection="DESC" AllowPaging="false">
                             <Toolbars>
-                                <f:Toolbar ID="Toolbar1" runat="server">
+                                <f:Toolbar ID="Toolbar1" ItemSpace="16" runat="server">
                                     <Items>
-                                        <f:Button ID="btnSelectAll" EnablePostBack="false" runat="server" Text="全选">
+                                        <f:RadioButton ID="rbtnAll" Label="" Checked="true" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource, sys_Status_All %>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:RadioButton ID="rbtnView" Label="" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource, sys_Button_View %>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:RadioButton ID="rbtnNew" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource,sys_Button_New%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:RadioButton ID="rbtnEdit" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource,sys_Button_Edit%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:RadioButton ID="rbtnDelete" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource,sys_Button_Delete%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:RadioButton ID="rbtnPrint" GroupName="MyRadioGroup2"
+                                            Text="<%$ Resources:GlobalResource,sys_Button_Print%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                                        </f:RadioButton>
+                                        <f:ToolbarSeparator ID="ToolbarSeparator3" runat="server">
+                                        </f:ToolbarSeparator>
+                                        <f:Button ID="btnSelectAll" IconUrl="~/Lf_Resources/menu/btn_all.png" EnablePostBack="false" runat="server" Text="全选">
                                         </f:Button>
-                                        <f:Button ID="btnUnSelectAll" EnablePostBack="false" runat="server" Text="反选">
+                                        <f:Button ID="btnUnSelectAll" IconUrl="~/Lf_Resources/menu/btn_unall.png" EnablePostBack="false" runat="server" Text="反选">
                                         </f:Button>
                                         <f:ToolbarSeparator ID="ToolbarSeparator1" runat="server">
                                         </f:ToolbarSeparator>
-                                        <f:Button ID="btnGroupUpdate" Icon="GroupEdit" runat="server" Text="更新当前角色的权限" OnClick="btnGroupUpdate_Click">
+                                        <f:Button ID="btnGroupUpdate" IconUrl="~/Lf_Resources/menu/btn_batch.png" runat="server" Text="更新当前角色的权限" OnClick="btnGroupUpdate_Click">
                                         </f:Button>
+                                        <f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
+                                        </f:ToolbarSeparator>
                                     </Items>
                                 </f:Toolbar>
                             </Toolbars>
@@ -86,6 +107,10 @@
             <f:MenuButton ID="menuUnselectRows" EnablePostBack="false" runat="server" Text="取消行">
             </f:MenuButton>
         </f:Menu>
+        <f:Window ID="Window1" runat="server" IsModal="true" Hidden="true" Target="Top" EnableResize="true"
+            EnableMaximize="true" EnableIFrame="true" IFrameUrl="about:blank"
+            Width="900px" Height="600px" OnClose="Window1_Close">
+        </f:Window>
     </form>
     <script>
         var grid2ID = '<%= Grid2.ClientID %>';

@@ -1,17 +1,18 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
+//班组生产统计
+function BindChartData_Pp_Actual(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualmyChart = echarts.init(document.getElementById('ActualBar'));
@@ -173,13 +174,15 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
                 itemStyle: {
                     normal: {
                         label: {
-                            show: true,//是否展示
+                            show: true,
+                            position: 'inside',//显示位置insideTop
+                            //formatter: '{c}'//是否展示
                         },
-                        color: function (params) {
-                            // build a color map as your need.
-                            var colorList = PrimarycolorList;
-                            return colorList[params.dataIndex]
-                        }
+                        //color: function (params) {
+                        //    // build a color map as your need.
+                        //    var colorList = PrimarycolorList;
+                        //    return colorList[params.dataIndex]
+                        //}
                     },//表示堆叠柱状图填充的颜色
                 }
             },
@@ -192,6 +195,7 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
                     normal: {
                         label: {
                             show: true,//是否展示
+                            position: 'inside',//显示位置
                         },
                         color: function (params) {
                             // build a color map as your need.
@@ -290,7 +294,8 @@ function BindmyChart_Pp_Actual(name, value1, value2, value3, data) {
     ActualmyChart.resize();
 }
 
-function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
+//月_班组生产统计
+function BindChartData_Pp_Last_Actual(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualLastmyChart = echarts.init(document.getElementById('Actual_Last'));
@@ -488,7 +493,8 @@ function BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data) {
     ActualLastmyChart.setOption(option);
     ActualLastmyChart.resize();
 }
-function BindmyChart_Pp_Defect(name, value1, value2, value4, data) {
+//生产不良集计
+function BindChartData_Pp_Defect(name, value1, value2, value4, data) {
     var DefectmyChart = echarts.init(document.getElementById('DefectBar'));
     //debugger;
     //统计总数量
@@ -698,7 +704,8 @@ function BindmyChart_Pp_Defect(name, value1, value2, value4, data) {
     DefectmyChart.setOption(option);
     DefectmyChart.resize();
 }
-function BindmyChart_Pp_Reason(data) {
+//未达成原因分析
+function BindChartData_Pp_Reason(data) {
     var myChart = echarts.init(document.getElementById('ReasonSunburst'));
     //debugger;
     //拼接JSON数据为TREE结构
@@ -843,7 +850,8 @@ function BindmyChart_Pp_Reason(data) {
     myChart.setOption(option);
     myChart.resize();
 }
-function BindmyChart_Pp_Rty(name, value3, value4) {
+//直行率统计
+function BindChartData_Pp_Rty(name, value3, value4) {
     var AchievemyChart = echarts.init(document.getElementById('DirectLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -1098,7 +1106,8 @@ function BindmyChart_Pp_Rty(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-function BindmyChart_Pp_Achieving_Rate(name, value3, value4) {
+//月达成率统计
+function BindChartData_Pp_Achieving_Rate(name, value3, value4) {
     var AchievemyChart = echarts.init(document.getElementById('AchieveLine'));
     // 指定图表的配置项和数据
     var option = {
@@ -1311,7 +1320,8 @@ function BindmyChart_Pp_Achieving_Rate(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-function BindmyChart_Pp_Progress(name, value3, value4, data) {
+//进度统计
+function BindChartData_Pp_Progress(name, value3, value4, data) {
     //获取隐藏控件中的值
     //图表展示
     var ProgressmyChart = echarts.init(document.getElementById('ProgressBar'));
@@ -1537,7 +1547,8 @@ function BindmyChart_Pp_Progress(name, value3, value4, data) {
 // 把数组整理成树形结构
 
 // 获取所有层级中节点数最大的层级的节点数(tempNodeNum)，总层数(tempclassesNum)
-function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, data) {
+//损失工数统计
+function BindChartData_Pp_LineLoss(name, value1, value2, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var LossmyChart = echarts.init(document.getElementById('LossTimeBar'));
@@ -1726,6 +1737,7 @@ function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, d
                 itemStyle: {
                     normal: {
                         label: {
+                            position: 'inside',
                             show: true,//是否展示
                         },
                         color: function (params) {
@@ -1748,6 +1760,7 @@ function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, d
                 itemStyle: {
                     normal: {
                         label: {
+                            position: 'top',
                             show: true,//是否展示
                         },
                         color: function (params) {
@@ -1777,7 +1790,7 @@ function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, d
                 label: {
                     normal: {
                         show: true,
-                        position: 'inside',
+
                         textStyle: {
                             color: '#fff',
                         },
@@ -1825,7 +1838,8 @@ function BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, d
     LossmyChart.setOption(option);
     LossmyChart.resize();
 }
-function BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data) {
+//损失工数
+function BindChartData_Pp_Loss(name, value1, value2, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var LossmyChart = echarts.init(document.getElementById('LossBar'));
@@ -2038,7 +2052,7 @@ function BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data)
                 itemStyle: {
                     normal: {
                         label: {
-                            position: ['+4', '-40'],
+                            position: 'top',
                             show: true,//是否展示
                             formatter: [
                                 '-',
@@ -2122,7 +2136,8 @@ function BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data)
     LossmyChart.setOption(option);
     LossmyChart.resize();
 }
-function BindmyChart_Pp_Linestop(name, value, data) {
+//停线原因
+function BindChartData_Pp_Linestop(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('LineStopBar'));
     //debugger;
     var total_datas = 0;
@@ -2186,86 +2201,92 @@ function BindmyChart_Pp_Linestop(name, value, data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: [{
-            top: 50,
-            width: '50%',
-            bottom: 15,
-            left: 10,
-            containLabel: true
-        }],
-        xAxis: {
-            data: name,
-            axisLabel: {
-                interval: 0,
-                rotate: -20
-            }
-        },
-        yAxis: {},
-        series: [{
-            name: '停线时间',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = SecondarycolorList;
-                        return colorList[params.dataIndex]
+        //grid: [{
+        //    top: 50,
+        //    width: '100%',
+        //    bottom: 15,
+        //    left: 10,
+        //    containLabel: true
+        //}],
+        //xAxis: {
+        //    //data: name,
+        //    //axisLabel: {
+        //    //    interval: 0,
+        //    //    rotate: -20
+        //    //}
+        //},
+        //yAxis: {},
+        series: [
+            //{
+            //    name: '停线时间',
+            //    type: 'bar',
+            //    radius: [20, 110],
+            //    center: ['25%', '50%'],
+            //    data: value,
+            //    itemStyle: {
+            //        normal: {
+            //            label: {
+            //                show: true,//是否展示
+            //            },
+            //            color: function (params) {
+            //                // build a color map as your need.
+            //                var colorList = SecondarycolorList;
+            //                return colorList[params.dataIndex]
+            //            }
+            //        },//表示堆叠柱状图填充的颜色
+            //    }
+            //},
+            {
+                name: '停线原因',
+                type: 'pie',
+                radius: [50, 250],
+                center: ['50%', '50%'],
+                roseType: 'area',
+                itemStyle: {
+                    borderRadius: 8
+                },
+                //radius: '80%',
+                //roseType: 'radius',
+                //zlevel: 10,
+                //startAngle: 100,
+                data: data,
+                label: {
+                    normal: {
+                        formatter: ['{c|{c}MIN({d}%)}', '{b|{b}}'].join('\n'),
+                        show: true,
+                        position: 'outside',
+                        rich: {
+                            c: {
+                                color: '#003366',
+                            },
+                            b: {
+                                color: '#4cabce',
+                            },
+                        },
                     }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: '停线原因',
-            type: 'pie',
-            radius: [0, '30%'],
-            center: ['75%', '50%'],
-            //radius: '80%',
-            //roseType: 'radius',
-            //zlevel: 10,
-            //startAngle: 100,
-            data: data,
-            label: {
-                normal: {
-                    formatter: ['{c|{c}MIN({d}%)}', '{b|{b}}'].join('\n'),
+                },
+                labelLine: {
+                    length: 30,
+                    length2: 100,
                     show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
-                        },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
-                }
-            },
-            labelLine: {
-                length: 30,
-                length2: 100,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    color: '#e5323e'
+                },
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
                 }
             }
-        }
         ]
     };
     // 使用刚指定的配置项和数据显示图表。
     DestmyChart.setOption(option);
     DestmyChart.resize();
 }
-function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
+//机种达成率统计
+function BindChartData_Pp_ModelAchieve(name, value3, value4) {
     var AchievemyChart = echarts.init(document.getElementById('ModelBar'));
     // 指定图表的配置项和数据
     var option = {
@@ -2482,7 +2503,8 @@ function BindmyChart_Pp_ModelAchieve(name, value3, value4) {
     AchievemyChart.setOption(option);
     AchievemyChart.resize();
 }
-function BindmyChart_Pp_YearAchieve(name, value1, value2, value3, data) {
+//年度生产统计
+function BindChartData_Pp_YearAchieve(name, value1, value2, value3, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualmyChart = echarts.init(document.getElementById('YearBar'));
@@ -2760,7 +2782,8 @@ function BindmyChart_Pp_YearAchieve(name, value1, value2, value3, data) {
     ActualmyChart.setOption(option);
     ActualmyChart.resize();
 }
-function BindmyChart_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value5, data) {
+//Process分析
+function BindChartData_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualmyChart = echarts.init(document.getElementById('TrackingTime'));
@@ -3085,8 +3108,8 @@ function BindmyChart_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value
     ActualmyChart.setOption(option);
     ActualmyChart.resize();
 }
-
-function BindmyChart_Pp_Ttacking_OPH(name, value3, value4, value5, data) {
+//Process分析
+function BindChartData_Pp_Ttacking_OPH(name, value3, value4, value5, data) {
     //获取隐藏控件中的值
     //图表展示
     var ActualmyChart = echarts.init(document.getElementById('TrackingOPH'));

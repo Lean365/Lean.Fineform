@@ -1,6 +1,4 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 //using EntityFramework.Extensions;
@@ -8,6 +6,8 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
@@ -513,25 +513,25 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         private void BindDDLStop()
         {
             //查询停线类别
-            var q = from a in DB.Pp_Reasons
+            var q = from a in DB.Adm_Dicts
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                         //where b.Proecnno == strecn
                         //where b.Proecnbomitem == stritem
-                    where a.Reasontype == "S"
+                    where a.DictType.Contains("reason_type_s")
                     select new
                     {
-                        a.Reasoncntext,
-                        //a.Prostoptext
+                        a.DictLabel,
+                        a.DictValue
                     };
             //去重复
-            var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProstopcou.DataSource = qs;
-            ddlProstopcou.DataTextField = "Reasoncntext";
-            ddlProstopcou.DataValueField = "Reasoncntext";
+            ddlProstopcou.DataTextField = "DictLabel";
+            ddlProstopcou.DataValueField = "DictValue";
             ddlProstopcou.DataBind();
             //将0行赋值DDL
         }
@@ -539,25 +539,25 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         private void BindDDLReason()
         {
             //查询原因类别
-            var q = from a in DB.Pp_Reasons
+            var q = from a in DB.Adm_Dicts
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                         //where b.Proecnno == strecn
                         //where b.Proecnbomitem == stritem
-                    where a.Reasontype == "P"
+                    where a.DictType.Contains("reason_type_p")
                     select new
                     {
-                        a.Reasoncntext,
-                        //a.Prostoptext
+                        a.DictLabel,
+                        a.DictValue
                     };
             //去重复
-            var qs = q.Select(E => new { E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProbadcou.DataSource = qs;
-            ddlProbadcou.DataTextField = "Reasoncntext";
-            ddlProbadcou.DataValueField = "Reasoncntext";
+            ddlProbadcou.DataTextField = "DictLabel";
+            ddlProbadcou.DataValueField = "DictValue";
             ddlProbadcou.DataBind();
             //将0行赋值DDL
         }

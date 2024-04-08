@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             {
                 var q =
                         (from a in DB.Pp_Ecs
-                         join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                          where b.Ec_qadate == "" && b.Ec_qadate == null
                          // where a.Ec_qadate==null
                          //where b.Ec_distinction == 1

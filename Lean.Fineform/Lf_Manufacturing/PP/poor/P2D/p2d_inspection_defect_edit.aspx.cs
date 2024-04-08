@@ -1,12 +1,12 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 {
@@ -65,6 +65,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             JObject defaultObj = new JObject();
             defaultObj.Add("Prongdept", "组立");
             defaultObj.Add("Probadqty", "1");
+            defaultObj.Add("Probadcontent", "-");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");
             //defaultObj.Add("EntranceYear", "2015");
@@ -87,7 +88,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
             //UpdateQty();
             //DefDate.SelectedDate = DateTime.Now.AddDays(-1);
-            MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.无不良台数不超过当天生产的实绩。</div><div>2.同LOT不同订单的集计系统自动处理。</div><div>3.不良集计是按选择的日期，批次对应工单的完成情况计算出来的。</div><div>4.OPH中没有不良的批次自动追加到不良集计中。</div>");
+            MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.选择项中没有的选项请联系电脑课添加</div>");
         }
 
         private void BindData()
@@ -205,29 +206,30 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
         #region DDLBindData
 
+        //A:PCB个所,B:责任单位,C:不良性质,E:板别,D:组立个所,F:PCBA,G:修理员,H:検査員,J:VC线别,K:检查状况,L:检出工程,M:目视别,P:未达成,S:停线
         //目视
         private void BindDDLVisualtype()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "G"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_m")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProvisualtype.DataSource = qs;
-            ddlProvisualtype.DataTextField = "Reasoncntext";
-            ddlProvisualtype.DataValueField = "Reasoncntext";
+            ddlProvisualtype.DataTextField = "DictLabel";
+            ddlProvisualtype.DataValueField = "DictValue";
             ddlProvisualtype.DataBind();
         }
 
@@ -235,25 +237,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLVctype()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "G"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_j")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProvctype.DataSource = qs;
-            ddlProvctype.DataTextField = "Reasoncntext";
-            ddlProvctype.DataValueField = "Reasoncntext";
+            ddlProvctype.DataTextField = "DictLabel";
+            ddlProvctype.DataValueField = "DictValue";
             ddlProvctype.DataBind();
         }
 
@@ -304,25 +306,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLShiftname()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "A"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_n")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProdshiftname.DataSource = qs;
-            ddlProdshiftname.DataTextField = "Reasoncntext";
-            ddlProdshiftname.DataValueField = "Reasoncntext";
+            ddlProdshiftname.DataTextField = "DictLabel";
+            ddlProdshiftname.DataValueField = "DictValue";
             ddlProdshiftname.DataBind();
         }
 
@@ -330,25 +332,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLCensor()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "M"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_g")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProcensor.DataSource = qs;
-            ddlProcensor.DataTextField = "Reasoncntext";
-            ddlProcensor.DataValueField = "Reasoncntext";
+            ddlProcensor.DataTextField = "DictLabel";
+            ddlProcensor.DataValueField = "DictValue";
             ddlProcensor.DataBind();
         }
 
@@ -356,25 +358,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLPcbType()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "F"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_f")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlPropcbtype.DataSource = qs;
-            ddlPropcbtype.DataTextField = "Reasoncntext";
-            ddlPropcbtype.DataValueField = "Reasoncntext";
+            ddlPropcbtype.DataTextField = "DictLabel";
+            ddlPropcbtype.DataValueField = "DictValue";
             ddlPropcbtype.DataBind();
         }
 
@@ -382,25 +384,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLChecktype()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "K"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_k")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlPropcbchecktype.DataSource = qs;
-            ddlPropcbchecktype.DataTextField = "Reasoncntext";
-            ddlPropcbchecktype.DataValueField = "Reasoncntext";
+            ddlPropcbchecktype.DataTextField = "DictLabel";
+            ddlPropcbchecktype.DataValueField = "DictValue";
             ddlPropcbchecktype.DataBind();
         }
 
@@ -435,25 +437,25 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         private void BindDDLBadtype()
         {
             //查询LINQ去重复
-            var q = from a in DB.Pp_Reasons
-                    where a.Reasontype == "H"
-                    //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    //where b.Proecnno == strecn
-                    //where a.Prolineclass == "M"
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                        //where b.Proecnbomitem == stritem
+                    where a.DictType.Contains("reason_type_a")
                     select new
                     {
-                        a.GUID,
-                        a.Reasoncntext
+                        a.DictLabel,
+                        a.DictValue
                     };
 
-            var qs = q.Select(E => new { E.GUID, E.Reasoncntext }).ToList().Distinct();
+            var qs = q.Select(E => new { E.DictLabel, E.DictValue }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProbadtype.DataSource = qs;
-            ddlProbadtype.DataTextField = "Reasoncntext";
-            ddlProbadtype.DataValueField = "Reasoncntext";
+            ddlProbadtype.DataTextField = "DictLabel";
+            ddlProbadtype.DataValueField = "DictValue";
             ddlProbadtype.DataBind();
         }
 

@@ -1,11 +1,11 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -89,7 +89,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              //where a.Ec_qadate== ""
                              //where b.Ec_distinction == 1
                              where b.isDeleted == 0
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                              where b.isConfirm == 1
                              where b.isDeleted == 0
@@ -231,7 +231,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                              where b.isConfirm == 2 || b.isConfirm == 1
                              where b.isDeleted == 0
@@ -302,7 +302,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                             (from a in DB.Pp_Ecs
-                             join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                              //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                              where b.isConfirm == 3 || b.isConfirm == 1
                              where b.isDeleted == 0
@@ -373,7 +373,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q =
                         (from a in DB.Pp_Ecs
-                         join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
 
                          //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                          //where a.Ec_qadate == ""
@@ -480,7 +480,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         private void BindDDLModel()
         {
             var q = from a in DB.Pp_Ecs
-                    join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                    join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                     where a.Ec_distinction != 4
                     //where a.Ec_qadate == ""
                     orderby a.Ec_entrydate descending
@@ -624,7 +624,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             //批量更新管理标记
             if (isConfirms == 0)//不管理
             {
-                var q = (from a in DB.Pp_EcSubs
+                var q = (from a in DB.Pp_Ec_Subs
                          where a.GUID.CompareTo(strGuid) == 0
                          where a.isDeleted == 0
                          select new
@@ -715,8 +715,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                              a.Modifier,
                              a.ModifyDate,
                          }).ToList();
-                List<Pp_EcSub> UpdateList0 = (from item in q
-                                              select new Pp_EcSub
+                List<Pp_Ec_Sub> UpdateList0 = (from item in q
+                                              select new Pp_Ec_Sub
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -819,7 +819,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
             if (isConfirms == 1)//共通管理
             {
-                var q = (from a in DB.Pp_EcSubs
+                var q = (from a in DB.Pp_Ec_Subs
                          where a.GUID.CompareTo(strGuid) == 0
                          where a.isDeleted == 0
                          select new
@@ -910,8 +910,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                              a.Modifier,
                              a.ModifyDate,
                          }).ToList();
-                List<Pp_EcSub> UpdateList0 = (from item in q
-                                              select new Pp_EcSub
+                List<Pp_Ec_Sub> UpdateList0 = (from item in q
+                                              select new Pp_Ec_Sub
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -1010,7 +1010,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
             if (isConfirms == 2)//部管管理
             {
-                var q = (from a in DB.Pp_EcSubs
+                var q = (from a in DB.Pp_Ec_Subs
                          where a.GUID.CompareTo(strGuid) == 0
                          where a.isDeleted == 0
                          select new
@@ -1100,8 +1100,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                              a.Modifier,
                              a.ModifyDate,
                          }).ToList();
-                List<Pp_EcSub> UpdateList2 = (from item in q
-                                              select new Pp_EcSub
+                List<Pp_Ec_Sub> UpdateList2 = (from item in q
+                                              select new Pp_Ec_Sub
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -1201,7 +1201,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
             if (isConfirms == 3)//制二管理
             {
-                var q = (from a in DB.Pp_EcSubs
+                var q = (from a in DB.Pp_Ec_Subs
                          where a.GUID.CompareTo(strGuid) == 0
                          where a.isDeleted == 0
                          select new
@@ -1292,8 +1292,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                              a.Modifier,
                              a.ModifyDate,
                          }).ToList();
-                List<Pp_EcSub> UpdateList3 = (from item in q
-                                              select new Pp_EcSub
+                List<Pp_Ec_Sub> UpdateList3 = (from item in q
+                                              select new Pp_Ec_Sub
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -1397,7 +1397,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
             if (isConfirms == 4)//制二部管不管理
             {
-                var q = (from a in DB.Pp_EcSubs
+                var q = (from a in DB.Pp_Ec_Subs
                          where a.GUID.CompareTo(strGuid) == 0
                          where a.isDeleted == 0
                          select new
@@ -1488,8 +1488,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                              a.Modifier,
                              a.ModifyDate,
                          }).ToList();
-                List<Pp_EcSub> UpdateList3 = (from item in q
-                                              select new Pp_EcSub
+                List<Pp_Ec_Sub> UpdateList3 = (from item in q
+                                              select new Pp_Ec_Sub
                                               {
                                                   GUID = item.GUID,
                                                   Ec_no = item.Ec_no,
@@ -1633,7 +1633,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             string plog;
             //发送邮件通知
             //Mailto();
-            var q = (from a in DB.Pp_EcSubs
+            var q = (from a in DB.Pp_Ec_Subs
                      where a.GUID.CompareTo(strGuid) == 0
                      where a.isDeleted == 0
                      select a).ToList();

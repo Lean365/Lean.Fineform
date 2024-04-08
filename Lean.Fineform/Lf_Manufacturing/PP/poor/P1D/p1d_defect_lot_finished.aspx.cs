@@ -1,10 +1,10 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -83,6 +83,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         //where a.Proorder.Substring(0, 2).Contains("44")
                         //where b.Prodate.Contains(Pdate)
                         //where a.Proorderqty == a.Prorealqty
+                        where !a.Prolinename.Contains("制")
                         select new
                         {
                             a.Prolot,
@@ -425,12 +426,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string FsearchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(FsearchText))
             {
-                Xlsbomitem = FsearchText + "_" + DPend.SelectedDate.Value.ToString("yyyyMM") + "DefectDetail";
+                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "DefectDetail";
             }
             else
 
             {
-                Xlsbomitem = "DefectDetails_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "_LotDefectDetails";
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 
@@ -690,7 +691,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "Defect_DATA";
+            Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "Defect_Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

@@ -25,7 +25,7 @@ namespace LeanFine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q_salesData = (from a in DBCharts.Fico_Costing_Sales_Billings
+            var q_salesData = (from a in DBCharts.Fico_Monthly_Sales
                                orderby a.Bc_YM descending
                                select a).ToList(); //.Include(u => u.Dept);
 

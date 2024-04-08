@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Report
 
             var qs = from a in q
                      where a.OUTS001.Substring(0, 6).CompareTo(atedate) == 0
-                     group a by new { OUTS001 = a.OUTS001.Substring(0, 6), OUTS003 = a.OUTS003, } into g
+                     group a by new { OUTS001 = a.OUTS001.Substring(0, 6), a.OUTS003, } into g
                      select new
                      {
                          Date = g.Key.OUTS001.Substring(0, 6),

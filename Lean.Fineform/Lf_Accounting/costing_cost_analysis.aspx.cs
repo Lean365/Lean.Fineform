@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -77,7 +77,7 @@ namespace LeanFine.Lf_Accounting
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (rbtnFirstAuto.Checked)
                 {
-                    var q_all = from a in DB.Fico_Costing_HistInventorys
+                    var q_all = from a in DB.Fico_Monthly_Inventorys
                                 where a.Bc_YM.CompareTo(BomDate) <= 0
                                 select a;
 
@@ -92,7 +92,7 @@ namespace LeanFine.Lf_Accounting
                                        b.Bc_MovingAverage
                                    };
 
-                    var q_Bom = from a in DB.Fico_Costing_Bom_Costs
+                    var q_Bom = from a in DB.Fico_Monthly_Bom_Costs
                                 where a.Bc_Balancedate.Substring(0, 6).CompareTo(BomDate) == 0
                                 select a;
 
@@ -131,7 +131,7 @@ namespace LeanFine.Lf_Accounting
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-                    var q = from a in DB.Fico_Costing_Fobs
+                    var q = from a in DB.Fico_Monthly_Fobs
                             where a.Bc_YM.CompareTo(InvDate) == 0
                             select a;
 

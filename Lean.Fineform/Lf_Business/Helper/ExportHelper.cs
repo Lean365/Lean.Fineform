@@ -1,11 +1,4 @@
-﻿using FineUIPro;
-using NPOI;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using NPOI.XSSF.UserModel;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -14,6 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using NPOI;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace LeanFine
 {
@@ -183,20 +183,20 @@ namespace LeanFine
                 wb.Properties.Title = mybname;
                 wb.Properties.Subject = "Data";
                 wb.Properties.Category = "Excel";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
                 wb.Properties.Keywords = mybname;
-                wb.Properties.Manager = "Davis.Cheng";
+                wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = mybname;
+                ws.Cells[1, 2].Value = mybname;
                 //pck.Save();
-                ws.Cells[2, 2].Value = "QueryDate";
+                ws.Cells[2, 2].Value = "Date";
                 ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd,HH:mm:ss");
+                ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
                 ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
@@ -206,7 +206,7 @@ namespace LeanFine
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
-
+                ws.View.FreezePanes(7, 19);
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
@@ -269,13 +269,13 @@ namespace LeanFine
                 wb.Properties.Title = mybname;
                 wb.Properties.Subject = "Data";
                 wb.Properties.Category = "Excel";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
                 wb.Properties.Keywords = mybname;
-                wb.Properties.Manager = "Davis.Cheng";
+                wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
 
@@ -300,7 +300,7 @@ namespace LeanFine
                 ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
                 ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
                 ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[3, 15].Style.Font.Size = 6;
@@ -324,7 +324,7 @@ namespace LeanFine
                 //    col.Style.Numberformat.Format = "#,##0.00";
                 //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 //}
-
+                ws.View.FreezePanes(7, 19);
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
@@ -368,133 +368,8 @@ namespace LeanFine
             }
         }
 
-        public static void ReLinetoXLSXfile(DataTable mydt, string mybname, string myfname, string update)
-        {
-            // If you are a commercial business and have
-            // purchased commercial licenses use the static property
-            // LicenseContext of the ExcelPackage class :
-            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
-
-            // If you use EPPlus in a noncommercial context
-            // according to the Polyform Noncommercial license:
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-            using (ExcelPackage pck = new ExcelPackage())
-            {
-                ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
-                //配置文件属性
-                wb.Properties.Category = "Excel";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
-                wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = "OPH";
-                wb.Properties.Manager = "Davis.Cheng";
-                wb.Properties.Status = "Normal";
-                wb.Properties.Subject = "Output Report";
-                wb.Properties.Title = "DTA Modify Output Report";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
-
-                //赋值单元格
-                var aTableRange = ws.Cells[1, 1, 1, 15];
-                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                var bTableRange = ws.Cells[2, 1, 2, 15];
-                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                var cTableRange = ws.Cells[3, 1, 3, 15];
-                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                var dTableRange = ws.Cells[5, 1, 5, 15];
-                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
-
-                //赋值单元格
-                ws.Cells[1, 1].Value = "DTA Modify Output Report";
-                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
-                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
-
-                ws.Cells[1, 7].Value = "1時間当たりの生産量";
-                ws.Cells[1, 7].Style.Font.Size = 8;
-                ws.Cells[2, 1].Value = "Date";
-                ws.Cells[2, 2].Value = update;
-                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
-                ws.Cells[2, 4].Value = "Company:";
-                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 14].Value = "稼働率:";
-                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 14].Style.Font.Size = 10;
-                ws.Cells[2, 15].Value = "85.00%";
-                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
-                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 15].Style.Font.Size = 6;
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 7].Style.Font.Size = 10;
-                ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
-                ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
-                ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[5, 15].Style.Font.Size = 6;
-                ws.Cells["A6"].LoadFromDataTable(mydt, true);
-                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
-                //pck.Save();
-
-                //Example how to Format Column 1 as numeric
-                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
-                //{
-                //    col.Style.Numberformat.Format = "#,##0.00";
-                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                //}
-
-                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
-                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
-                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
-                //integer without displaying the number 0 in the cell
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
-
-                ////number with 1 decimal place
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
-
-                ////number with 2 decimal places
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
-
-                ////number with 2 decimal places and thousand separator
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
-
-                ////number with 2 decimal places and thousand separator and money symbol
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
-
-                ////percentage (1 = 100%, 0.01 = 1%)
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
-                //foreach (var dc in dateColumns)
-                //{
-                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
-                //}
-                //Write it back to the client
-                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
-                //Response.BinaryWrite(pck.GetAsByteArray());
-
-                //写到客户端（下载）
-                HttpContext.Current.Response.Clear();
-                //asp.net输出的Excel文件名
-                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
-                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
-                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
-                //ep.SaveAs(Response.OutputStream);    第二种方式
-                HttpContext.Current.Response.Flush();
-                HttpContext.Current.Response.End();
-            }
-        }
-
-        public static void LineQtytoXLSXfile(DataTable mydt, string mybname, string myfname, string update)
+        //按班组导出Line Output Report
+        public static void LineOutput_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -510,16 +385,16 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "Excel";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
+                wb.Properties.Category = "Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
                 wb.Properties.Keywords = "OPH";
-                wb.Properties.Manager = "Davis.Cheng";
+                wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
-                wb.Properties.Subject = "Output Report";
-                wb.Properties.Title = "DTA Team&Line Output Report";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Lines Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 var aTableRange = ws.Cells[1, 1, 1, 15];
                 aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
@@ -532,7 +407,7 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA Team&Line Output Report";
+                ws.Cells[1, 1].Value = "DTA Lines Output Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -553,7 +428,7 @@ namespace LeanFine
                 ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
                 ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
                 ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[3, 15].Style.Font.Size = 6;
@@ -568,9 +443,9 @@ namespace LeanFine
                 ws.Cells[5, 15].Style.Font.Size = 6;
 
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
-                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
-
+                ws.View.FreezePanes(7, 16);
                 //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
@@ -621,7 +496,8 @@ namespace LeanFine
             }
         }
 
-        public static void ModelQtytoXLSXfile(DataTable mydt, string mybname, string myfname, string update)
+        //按班组导出Rework Output Report
+        public static void ReworkLine_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -636,16 +512,143 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "LeanClouds";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
+                wb.Properties.Category = "Modify Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = "LeanClouds";
-                wb.Properties.Manager = "Davis.Cheng";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
-                wb.Properties.Subject = "LeanClouds";
-                wb.Properties.Title = "LeanClouds Download";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Modify by Lines Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                var aTableRange = ws.Cells[1, 1, 1, 15];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                var bTableRange = ws.Cells[2, 1, 2, 15];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var cTableRange = ws.Cells[3, 1, 3, 15];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var dTableRange = ws.Cells[5, 1, 5, 15];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+
+                //赋值单元格
+                ws.Cells[1, 1].Value = "DTA Modify by Lines Output Report";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 14].Value = "稼働率:";
+                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 14].Style.Font.Size = 10;
+                ws.Cells[2, 15].Value = "85.00%";
+                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 15].Style.Font.Size = 6;
+                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 15].Style.Font.Size = 6;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 16);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                //integer without displaying the number 0 in the cell
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myfname);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //按班组导出Model Output Report
+        public static void ModelOutput_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                //配置文件属性
+                wb.Properties.Category = "Model Output Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Model Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
                 ws.Cells[1, 2].Value = "DTA Model Output Report";
@@ -679,7 +682,7 @@ namespace LeanFine
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
+                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
                 ws.Cells[3, 11].Style.Font.Color.SetColor(Color.DarkGray);
                 ws.Cells[3, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[3, 11].Style.Font.Size = 6;
@@ -702,9 +705,143 @@ namespace LeanFine
                 //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
-                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
 
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+                ws.View.FreezePanes(7, 12);
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                //integer without displaying the number 0 in the cell
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myfname);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //按班组导出Rework Model Report
+        public static void ReworkModel_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                //配置文件属性
+                wb.Properties.Category = "Modify Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Modify by Models Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                ws.Cells[1, 2].Value = "DTA Modify by Models Output Report";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                //ws.Cells[1, 1].Style.Border.Bottom.Color.SetColor(Color.FromArgb(0, 0, 0));
+                var aTableRange = ws.Cells[1, 1, 1, 11];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 10].Value = "稼働率:";
+                ws.Cells[2, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 10].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 10].Style.Font.Size = 10;
+                ws.Cells[2, 11].Value = "85.00%";
+                ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 11].Style.Font.Size = 10;
+                //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
+                var bTableRange = ws.Cells[2, 1, 2, 11];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 11].Style.Font.Size = 6;
+                var cTableRange = ws.Cells[3, 1, 3, 11];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 7].Style.Font.Size = 10;
+                //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 11].Style.Font.Size = 6;
+                var dTableRange = ws.Cells[5, 1, 5, 11];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 12);
                 //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
@@ -755,7 +892,153 @@ namespace LeanFine
             }
         }
 
-        public static void ReModeloXLSXfile(DataTable mydt, string mybname, string myfname, string update)
+        //检查集计表 Inspection Report
+        public static void Inspection_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                //.Properties.Category = "类别"
+                //.Properties.Author = "作者"
+                //.Properties.Comments = "备注"
+                //.Properties.Company = "公司"
+                //.Properties.Keywords = "关键字"
+                //.Properties.Manager = "管理者"
+                //.Properties.Status = "状态"
+                //.Properties.Subject = "主题"
+                //.Properties.Title = "标题"
+                //.Properties.LastModifiedBy = "最后一次修改日期"
+                //.Properties.Application = "应用"
+                //配置文件属性
+                wb.Properties.Category = "Inspection Details";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "Details;Report";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Inspection Details Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                ws.Cells[1, 2].Value = "DTA Inspection Details Report";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                //ws.Cells[1, 1].Style.Border.Bottom.Color.SetColor(Color.FromArgb(0, 0, 0));
+                var aTableRange = ws.Cells[1, 1, 1, 23];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 22].Value = "稼働率:";
+                ws.Cells[2, 22].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 22].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 22].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 22].Style.Font.Size = 10;
+                ws.Cells[2, 23].Value = "85.00%";
+                ws.Cells[2, 23].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 23].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 23].Style.Font.Size = 10;
+                //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
+                var bTableRange = ws.Cells[2, 1, 2, 23];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 23].Style.Font.Size = 6;
+                var cTableRange = ws.Cells[3, 1, 3, 23];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 7].Style.Font.Size = 10;
+                //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[5, 23].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 23].Style.Font.Size = 6;
+                var dTableRange = ws.Cells[5, 1, 5, 23];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 23].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 24);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                //integer without displaying the number 0 in the cell
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myfname);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //修理集计表 Manufacturing Report
+        public static void Manufacturing_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -770,25 +1053,25 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "LeanClouds";
-                wb.Properties.Author = "Davis.Cheng";
-                wb.Properties.Comments = "LeanClouds Download";
+                wb.Properties.Category = "Manufacturing Defect";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = "LeanClouds";
-                wb.Properties.Manager = "Davis.Cheng";
+                wb.Properties.Keywords = "Defect;Report";
+                wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
-                wb.Properties.Subject = "LeanClouds";
-                wb.Properties.Title = "LeanClouds Download";
-                wb.Properties.LastModifiedBy = "Davis.Cheng";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Manufacturing Defect Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Model Output Report";
+                ws.Cells[1, 2].Value = "DTA Manufacturing Defect Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
                 ws.Cells[1, 7].Style.Font.Size = 8;
                 //ws.Cells[1, 1].Style.Border.Bottom.Color.SetColor(Color.FromArgb(0, 0, 0));
-                var aTableRange = ws.Cells[1, 1, 1, 11];
+                var aTableRange = ws.Cells[1, 1, 1, 18];
                 aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
                 //aTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
@@ -796,48 +1079,48 @@ namespace LeanFine
                 ws.Cells[2, 1].Value = "Date";
                 ws.Cells[2, 2].Value = update;
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
-                ws.Cells[2, 4].Value = "Company:";
-                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 10].Value = "稼働率:";
-                ws.Cells[2, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 10].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 10].Style.Font.Size = 10;
-                ws.Cells[2, 11].Value = "85.00%";
-                ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 11].Style.Font.Size = 10;
+                ws.Cells[2, 9].Value = "Company:";
+                ws.Cells[2, 10].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 17].Value = "稼働率:";
+                ws.Cells[2, 17].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 17].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 17].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 17].Style.Font.Size = 10;
+                ws.Cells[2, 18].Value = "85.00%";
+                ws.Cells[2, 18].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 18].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 18].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 18].Style.Font.Size = 10;
                 //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
-                var bTableRange = ws.Cells[2, 1, 2, 11];
+                var bTableRange = ws.Cells[2, 1, 2, 18];
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Cheng " + update.Substring(0, 4);
-                ws.Cells[3, 11].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 11].Style.Font.Size = 6;
-                var cTableRange = ws.Cells[3, 1, 3, 11];
+                ws.Cells[3, 18].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 18].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 18].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 18].Style.Font.Size = 6;
+                var cTableRange = ws.Cells[3, 1, 3, 18];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[4, 9].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 9].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 9].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
-                ws.Cells[5, 11].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[5, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[5, 11].Style.Font.Size = 6;
-                var dTableRange = ws.Cells[5, 1, 5, 11];
+                ws.Cells[5, 18].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 18].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 18].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 18].Style.Font.Size = 6;
+                var dTableRange = ws.Cells[5, 1, 5, 18];
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
-                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                ws.Cells[6, 1, 6, 18].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
                 //pck.Save();
-
+                ws.View.FreezePanes(7, 19);
                 //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
                 //{
@@ -954,7 +1237,7 @@ namespace LeanFine
             XSSFWorkbook workbook = new XSSFWorkbook();
             //Create Excel的属性中的来源以及说明等
             POIXMLProperties props = workbook.GetProperties();
-            props.CoreProperties.Creator = "Davis.Cheng";
+            props.CoreProperties.Creator = "Davis.Ching";
             props.CoreProperties.Created = DateTime.Now;
             props.CoreProperties.Category = "生产管理";
             if (!props.CustomProperties.Contains("Lean365"))
@@ -966,7 +1249,7 @@ namespace LeanFine
 
             props.CoreProperties.Subject = "生产不良集计";
             props.CoreProperties.Title = "DTA精益生产系统";
-            props.CoreProperties.LastModifiedByUser = "Davis.Cheng";
+            props.CoreProperties.LastModifiedByUser = "Davis.Ching";
 
             DataSet set = new DataSet();
             foreach (DataTable dt in dts)

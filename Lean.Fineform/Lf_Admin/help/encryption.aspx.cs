@@ -133,6 +133,16 @@ namespace LeanFine.Lf_Admin.help
         {
         }
 
+        protected void Button12_Click(object sender, EventArgs e)
+        {
+            TextArea2.Text = PasswordUtil.CreateDbPassword(TextArea1.Text.Trim());
+        }
+
+        protected void Button13_Click(object sender, EventArgs e)
+        {
+            TextArea1.Text = PasswordUtil.CreateDbPassword(TextArea2.Text.Trim());
+        }
+
         protected void Button9_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(TextArea2.Text))

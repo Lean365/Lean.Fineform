@@ -19,7 +19,7 @@
                     Title="" ShowBorder="false" ShowHeader="false" BodyPadding="0px">
                     <Content>
                         <div id="header">
-                            <img src="./Lf_Resources/images/login/Lean_Icon.png" class="logo" alt="Logo"/>
+                            <img src="./Lf_Resources/images/login/Lean_Manufacturing_Banner.png" class="logo" alt="Logo"/>
                             <asp:Label ID="linkSystemTitle" CssClass="title" runat="server" NavigateUrl="~/main.aspx"></asp:Label>
                         </div>
                     </Content>
@@ -29,9 +29,9 @@
                                
                                 <f:Label ID="txtUName" runat="server" LabelAlign="Left" CssStyle="font-size:12px;color: #000033;"></f:Label>
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
-                                <f:Label ID="linkSlogantext" runat="server" Width="600px" LabelAlign="Left" CssStyle="font-size:14px;color: #000033;"></f:Label>
+                                <f:Label ID="linkSlogantext" runat="server" Width="600px" CssStyle="text-align-last: justify;font-size:15px;color: #10376b;"></f:Label>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server"></f:ToolbarFill>
-                                <f:Button runat="server" ID="btnUserName" CssClass="userpicaction" Text="" IconUrl="~/Lf_Resources/images/my_face.jpg" IconAlign="Left" 
+                                <f:Button runat="server" ID="btnUserName" CssClass="userpicaction" Text="" IconUrl="~/Lf_Resources/images/Lean_Manufacturing_UserIcon.png" IconAlign="Left" 
                                     CssStyle="font-size:12px;color: #000033;"  EnablePostBack="false" EnableDefaultState="false" EnableDefaultCorner="false">
                                     <Menu runat="server">
                                         <f:MenuButton ID="btnHelp" EnablePostBack="false" Icon="Help" Text="<%$ Resources:GlobalResource,sys_Help%>" runat="server">

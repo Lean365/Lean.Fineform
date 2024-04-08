@@ -1,7 +1,7 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.EC.dept
 {
@@ -75,7 +75,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
 
                 var q =
                         (from b in DB.Pp_Ecs
-                         join a in DB.Pp_EcSubs on b.Ec_no equals a.Ec_no
+                         join a in DB.Pp_Ec_Subs on b.Ec_no equals a.Ec_no
                          //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                          //where b.Ec_distinction == 1
                          where a.isDeleted == 0

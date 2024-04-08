@@ -87,6 +87,69 @@ namespace LeanFine.Lf_Admin
         protected global::FineUIPro.Toolbar Toolbar1;
 
         /// <summary>
+        /// rbtnAll 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnAll;
+
+        /// <summary>
+        /// rbtnView 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnView;
+
+        /// <summary>
+        /// rbtnNew 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnNew;
+
+        /// <summary>
+        /// rbtnEdit 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnEdit;
+
+        /// <summary>
+        /// rbtnDelete 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnDelete;
+
+        /// <summary>
+        /// rbtnPrint 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.RadioButton rbtnPrint;
+
+        /// <summary>
+        /// ToolbarSeparator3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarSeparator ToolbarSeparator3;
+
+        /// <summary>
         /// btnSelectAll 控件。
         /// </summary>
         /// <remarks>
@@ -123,6 +186,15 @@ namespace LeanFine.Lf_Admin
         protected global::FineUIPro.Button btnGroupUpdate;
 
         /// <summary>
+        /// ToolbarSeparator2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarSeparator ToolbarSeparator2;
+
+        /// <summary>
         /// ddlPowers 控件。
         /// </summary>
         /// <remarks>
@@ -157,5 +229,14 @@ namespace LeanFine.Lf_Admin
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.MenuButton menuUnselectRows;
+
+        /// <summary>
+        /// Window1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Window Window1;
     }
 }

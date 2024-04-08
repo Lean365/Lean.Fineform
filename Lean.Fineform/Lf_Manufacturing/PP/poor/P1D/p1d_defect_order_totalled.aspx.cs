@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
+using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -75,7 +75,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //       select d.Prolot)
                             //       .Contains(a.Prolot)//投入日期
                             //where a.Proorder.Substring(0, 2).Contains("44")
-
+                        where !a.Prolinename.Contains("制")
                         select a;
 
                 // 在用户名称中搜索

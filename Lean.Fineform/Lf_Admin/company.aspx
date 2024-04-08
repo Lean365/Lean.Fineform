@@ -39,7 +39,7 @@
                 <f:BoundField DataField="FullName" SortField="FullName" MinWidth="300px" HeaderText="全称" />
                 <f:BoundField DataField="EnFullName" SortField="EnFullName" MinWidth="400px" HeaderText="英文" />
 
-                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Edit%>" ColumnID="editField"
+                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Edit%>" ColumnID="editField" 
                     Icon="Pencil" Width="70px" ToolTip="<%$ Resources:GlobalResource,sys_Button_Edit%>"
                     CommandName="Edit" Text="<%$ Resources:GlobalResource,sys_Button_Edit%>" />
                 <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"

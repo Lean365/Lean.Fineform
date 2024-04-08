@@ -60,7 +60,7 @@
         var tbThemeClientID = '<%= tbTheme.ClientID %>';
 
         function onThemeTriggerClick(event) {
-            var url = F.baseUrl + 'Cube_ADM/themes.aspx?selected=' + encodeURIComponent(F(tbThemeClientID).getValue());
+            var url = F.baseUrl + 'Lf_Admin/themes.aspx?selected=' + encodeURIComponent(F(tbThemeClientID).getValue());
             F(windowThemeRollerClientID).show(url);
         }
 

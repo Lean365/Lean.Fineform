@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.SOP
 {
@@ -64,8 +64,8 @@ namespace LeanFine.Lf_Manufacturing.SOP
             {
                 if (rbtnFirstAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSops
-                                //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
+                    var q = from a in DB.Pp_Ec_Sops
+                                //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
                             where a.isDeleted == 0
                             where a.Ec_pengadate == ""
                             //where a.Ec_distinction != 4
@@ -101,8 +101,8 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 }
                 else if (rbtnSecondAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSops
-                                //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
+                    var q = from a in DB.Pp_Ec_Sops
+                                //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
                             where a.isDeleted == 0
                             where a.Ec_pengadate != ""
                             //where a.Ec_distinction != 4
@@ -139,8 +139,8 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 }
                 else if (rbtnThirdAuto.Checked)
                 {
-                    var q = from a in DB.Pp_EcSops
-                                //join b in DB.Pp_EcSops on a.Ec_no equals b.Ec_no
+                    var q = from a in DB.Pp_Ec_Sops
+                                //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
                             where a.isDeleted == 0
                             //where a.Ec_qadate == "" || a.Ec_qadate == null
                             //where a.Ec_distinction != 4
@@ -206,7 +206,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 if (rbtnFirstAuto.Checked)
                 {
                     //查询LINQ去重复
-                    var doc = from a in DB.Pp_EcSops
+                    var doc = from a in DB.Pp_Ec_Sops
                               where a.isDeleted == 0
                               where a.Ec_pengadate == ""
                               //where a.Ec_distinction != 4
@@ -257,7 +257,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 else if (rbtnSecondAuto.Checked)
                 {
                     //查询LINQ去重复
-                    var doc = from a in DB.Pp_EcSops
+                    var doc = from a in DB.Pp_Ec_Sops
                               where a.isDeleted == 0
                               where a.Ec_pengadate != ""
                               //where a.Ec_distinction != 4
@@ -308,8 +308,8 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 else if (rbtnThirdAuto.Checked)
                 {
                     //查询LINQ去重复
-                    var doc = from a in DB.Pp_EcSops
-                                  //join b in DB.Pp_EcSubs on a.Ec_no equals b.Ec_no
+                    var doc = from a in DB.Pp_Ec_Sops
+                                  //join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               orderby a.Ec_entrydate descending
                               select new
                               {

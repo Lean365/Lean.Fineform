@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
 
 namespace LeanFine.Lf_Manufacturing.SOP
 {
@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 if (rbtnFirstAuto.Checked)
                 {
                     var q =
-                            (from a in DB.Pp_EcSops
+                            (from a in DB.Pp_Ec_Sops
                                  //where b.Ec_distinction == 1
                              where a.isDeleted == 0
                              where string.IsNullOrEmpty(a.Ec_pengadate) || string.IsNullOrEmpty(a.Ec_pengpdate)
@@ -155,7 +155,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 if (rbtnSecondAuto.Checked)
                 {
                     var q =
-                            (from a in DB.Pp_EcSops
+                            (from a in DB.Pp_Ec_Sops
 
                                  //where b.Ec_distinction == 1
                              where a.isDeleted == 0
@@ -228,7 +228,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 if (rbtnThirdAuto.Checked)
                 {
                     var q =
-                            (from a in DB.Pp_EcSops
+                            (from a in DB.Pp_Ec_Sops
                                  //where c.Ec_qadate.ToString() == "" || c.Ec_qadate == null
                                  //where b.Ec_distinction == 1
                              where a.isDeleted == 0

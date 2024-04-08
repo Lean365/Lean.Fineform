@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
-            var q = from a in DBCharts.Fico_Costing_HistInventorys
+            var q = from a in DBCharts.Fico_Monthly_Inventorys
                     where a.Bc_YM.CompareTo(atedate) == 0
                     where a.isDeleted == 0
                     select a;

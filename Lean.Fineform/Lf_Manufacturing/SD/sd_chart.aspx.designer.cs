@@ -11,7 +11,7 @@ namespace LeanFine.Lf_Manufacturing.SD
 {
 
 
-    public partial class Sd_chart
+    public partial class sd_chart
     {
 
         /// <summary>

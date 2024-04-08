@@ -1,11 +1,11 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine
 {
@@ -34,6 +34,14 @@ namespace LeanFine
 
                     case "系统帮助":
                         menuItem.Text = global::Resources.GlobalResource.sys_Help_Manual;
+                        break;
+
+                    case "随机数":
+                        menuItem.Text = "随机数";
+                        break;
+
+                    case "加解密":
+                        menuItem.Text = "加解密";
                         break;
                 }
                 menuItem.Icon = IconHelper.String2Icon(jo.Value<string>("Icon"), true);
@@ -198,7 +206,8 @@ namespace LeanFine
                         node.Text = global::Resources.GlobalResource.menu_Sys_Dpets; break;
                     case "公司信息":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Company; break;
-
+                    case "数据字典":
+                        node.Text = global::Resources.GlobalResource.menu_Sys_Dict; break;
                     case "公司目标":
                         node.Text = global::Resources.GlobalResource.menu_Adm_Target; break;
                     case "部门管理":
@@ -225,35 +234,6 @@ namespace LeanFine
                         node.Text = global::Resources.GlobalResource.menu_Sys_PowerRole; break;
                     case "批量更新":
                         node.Text = global::Resources.GlobalResource.menu_Sys_Update; break;
-
-                    case "流程管理":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_MGT; break;
-                    case "待办事项":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_Todo; break;
-                    case "我的申请":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_Apply; break;
-                    case "流程设计":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_Desgin; break;
-                    case "流程模板":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_Template; break;
-                    case "签章管理":
-                        node.Text = global::Resources.GlobalResource.menu_BPM_Signature; break;
-
-                    case "日程事件":
-                        node.Text = global::Resources.GlobalResource.menu_EM_Schedule; break;
-                    case "我的日程":
-                        node.Text = global::Resources.GlobalResource.menu_EM_My; break;
-                    case "日程管理":
-                        node.Text = global::Resources.GlobalResource.menu_EM_MGT; break;
-
-                    case "表单管理":
-                        node.Text = global::Resources.GlobalResource.menu_FM_MGT; break;
-                    case "我的表单":
-                        node.Text = global::Resources.GlobalResource.menu_FM_My; break;
-                    case "表单设计":
-                        node.Text = global::Resources.GlobalResource.menu_FM_Desgin; break;
-                    case "表单类别":
-                        node.Text = global::Resources.GlobalResource.menu_FM_Category; break;
 
                     case "财务管理":
                         node.Text = global::Resources.GlobalResource.menu_Fico_MGT; break;
@@ -347,7 +327,8 @@ namespace LeanFine
                     case "制一不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Defect; break;
                     case "制二不良": node.Text = global::Resources.GlobalResource.menu_Pp_P2d_Defect; break;
                     case "工程检查": node.Text = global::Resources.GlobalResource.menu_Pp_Inspection; break;
-                    case "生产不良": node.Text = global::Resources.GlobalResource.menu_pp_defect_Production; break;
+                    case "生产不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect; break;
+                    case "修理记录": node.Text = global::Resources.GlobalResource.menu_Pp_Repair; break;
                     case "工单统计": node.Text = global::Resources.GlobalResource.menu_pp_defect_MOStatistics; break;
                     case "LOT集计": node.Text = global::Resources.GlobalResource.menu_pp_defect_LotStatistics; break;
                     case "不具合查询": node.Text = global::Resources.GlobalResource.menu_pp_defect_Query; break;
@@ -405,11 +386,6 @@ namespace LeanFine
 
                     case "日常办公": node.Text = global::Resources.GlobalResource.menu_Oa_MGT; break;
                     case "通讯录": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Contacts; break;
-                    case "公告通知": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Notices; break;
-                    case "会议预定": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Meeting; break;
-                    case "车辆预定": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Vehicle; break;
-                    case "周报管理": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Weekly; break;
-                    case "帮助台": node.Text = global::Resources.GlobalResource.menu_Oa_MGT_Helpdesk; break;
 
                     case "报关课": node.Text = global::Resources.GlobalResource.co_Dept_CD; break;
                     case "财务课": node.Text = global::Resources.GlobalResource.co_Dept_GA; break;
@@ -544,7 +520,8 @@ namespace LeanFine
             if (qc.Any())
             {
                 this.txtCrght.Text = "CopyRight© 2015-" + DateTime.Now.ToString("yyyy") + qc[0].FullName;
-                linkSlogantext.Text = qc[0].Slogan;
+
+                linkSlogantext.Text = global::Resources.GlobalResource.sys_Slogan;
             }
 
             System.Web.UI.WebControls.Label link = topPanel.FindControl("linkSystemTitle") as System.Web.UI.WebControls.Label;

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Lean365")]
-[assembly: AssemblyDescription("Lean Manufacturing")]
+[assembly: AssemblyTitle("Lean Manufacturing")]
+[assembly: AssemblyDescription("DTA精益生产管理系统")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Lean365.net")]
-[assembly: AssemblyProduct("Lean365.Net")]
+[assembly: AssemblyCompany("Lean365 Inc.")]
+[assembly: AssemblyProduct("Lean Manufacturing")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("Lean365")]
 [assembly: AssemblyCulture("")]
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用 "*":
-[assembly: AssemblyVersion("0.0.2024.*")]
+[assembly: AssemblyVersion("1.0.2024.*")]
 //[assembly: AssemblyFileVersion("0.0.2024.1421")]

@@ -601,6 +601,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Poor Prod 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Defect {
+            get {
+                return ResourceManager.GetString("menu_Pp_Defect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 LotStatistics 的本地化字符串。
         /// </summary>
         internal static string menu_pp_defect_LotStatistics {
@@ -727,7 +736,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 PCBA INSP 的本地化字符串。
+        ///   查找类似 INSP Record 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Inspection {
             get {
@@ -885,6 +894,15 @@ namespace Resources {
         internal static string menu_Pp_ReasonType {
             get {
                 return ResourceManager.GetString("menu_Pp_ReasonType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Repair Record 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Repair {
+            get {
+                return ResourceManager.GetString("menu_Pp_Repair", resourceCulture);
             }
         }
         
@@ -1344,6 +1362,15 @@ namespace Resources {
         internal static string menu_Sys_DeptUser {
             get {
                 return ResourceManager.GetString("menu_Sys_DeptUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Data Dict 的本地化字符串。
+        /// </summary>
+        internal static string menu_Sys_Dict {
+            get {
+                return ResourceManager.GetString("menu_Sys_Dict", resourceCulture);
             }
         }
         
@@ -2212,6 +2239,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Batch 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Batch {
+            get {
+                return ResourceManager.GetString("sys_Button_Batch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Delete 的本地化字符串。
         /// </summary>
         internal static string sys_Button_Delete {
@@ -2680,7 +2716,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Lean Manufacturing-DTA 的本地化字符串。
+        ///   查找类似 Lean Manufacturing--DTA 的本地化字符串。
         /// </summary>
         internal static string sys_LeanName {
             get {
@@ -2847,6 +2883,15 @@ namespace Resources {
         internal static string sys_SignIn {
             get {
                 return ResourceManager.GetString("sys_SignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Our pride is being a global manufacture with the continuous QCDS challenge. 的本地化字符串。
+        /// </summary>
+        internal static string sys_Slogan {
+            get {
+                return ResourceManager.GetString("sys_Slogan", resourceCulture);
             }
         }
         

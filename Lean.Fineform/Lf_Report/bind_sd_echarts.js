@@ -1,17 +1,18 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：图表类封装
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 document.write("<script language=javascript src='/Lf_Report//define_echart.js'></script >");
 //(注：有时你引用的文件还可能需要引用其他的js,我们需要将需要的那个js文件也以同样的方法引用进来)
 
-function BindmyChart_SD_Regin(name, value, data) {
+//仕向地统计
+function BindChartData_SD_Regin(name, value, data) {
     var myChart = echarts.init(document.getElementById('ReginBar'));
     //debugger;
     //统计总数量
@@ -72,107 +73,95 @@ function BindmyChart_SD_Regin(name, value, data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: [{
-            top: 50,
-            width: '50%',
-            bottom: 15,
-            left: 10,
-            containLabel: true
-        }],
-        xAxis: {
-            data: name,
-            axisLabel: {
-                interval: 0,
-                rotate: -20
-            }
-        },
+        //grid: [{
+        //    top: 50,
+        //    width: '50%',
+        //    bottom: 15,
+        //    left: 10,
+        //    containLabel: true
+        //}],
+        //xAxis: {
+        //    data: name,
+        //    axisLabel: {
+        //        interval: 0,
+        //        rotate: -20
+        //    }
+        //},
         //y轴的数据
-        yAxis: [{
-            type: "value",
-            name: "销量",
-            nameTextStyle: {
-                color: "#396A87",
-                fontSize: 14
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-                    width: 1,
-                    color: "#d0d0d0"
-                }
-            },
-            axisTick: {
-                show: true
-            },
-            axisLine: {
-                show: true
-            },
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: "#396A87",
-                    fontSize: 14
-                }
-            }
-        },
-        ],
-        series: [{
-            name: '销量',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
-
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = PrimarycolorList;
-                        return colorList[params.dataIndex]
+        //yAxis: [{
+        //    type: "value",
+        //    name: "销量",
+        //    nameTextStyle: {
+        //        color: "#396A87",
+        //        fontSize: 14
+        //    },
+        //    splitLine: {
+        //        show: true,
+        //        lineStyle: {
+        //            width: 1,
+        //            color: "#d0d0d0"
+        //        }
+        //    },
+        //    axisTick: {
+        //        show: true
+        //    },
+        //    axisLine: {
+        //        show: true
+        //    },
+        //    axisLabel: {
+        //        show: true,
+        //        textStyle: {
+        //            color: "#396A87",
+        //            fontSize: 14
+        //        }
+        //    }
+        //},
+        //],
+        series: [
+            {
+                name: '仕向地',
+                type: 'pie',
+                radius: [50, 250],
+                center: ['50%', '50%'],
+                avoidLabelOverlap: false,
+                padAngle: 5,
+                //roseType: 'radius',
+                //roseType: 'area',
+                itemStyle: {
+                    borderRadius: 10
+                },
+                data: data,
+                //roseType: 'radius',
+                label: {
+                    normal: {
+                        formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                        show: true,
+                        position: 'outside',
+                        rich: {
+                            c: {
+                                color: '#003366',
+                            },
+                            b: {
+                                color: '#4cabce',
+                            },
+                        },
                     }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: '仕向地',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['75%', '50%'],
-            data: data,
-            roseType: 'radius',
-            label: {
-                normal: {
-                    formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                },
+                labelLine: {
+                    length: 10,
+                    length2: 20,
                     show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
-                        },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
+                    color: '#e5323e'
+                },
+                itemStyle: {
+                    borderRadius: 5,
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
                 }
             },
-            labelLine: {
-                length: 10,
-                length2: 20,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                borderRadius: 5,
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        },
 
         ]
     };
@@ -180,7 +169,8 @@ function BindmyChart_SD_Regin(name, value, data) {
     myChart.setOption(option);
     myChart.resize();
 }
-function BindmyChart_SD_Destination(name, value, data) {
+//目的地统计
+function BindChartData_SD_Destination(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('DestBar'));
     //debugger;
     var total_datas = 0;
@@ -240,117 +230,126 @@ function BindmyChart_SD_Destination(name, value, data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: [{
-            top: 50,
-            width: '50%',
-            bottom: 15,
-            left: 10,
-            containLabel: true
-        }],
-        xAxis: {
-            data: name,
-            axisLabel: {
-                interval: 0,
-                rotate: -20
-            }
-        },
-        //y轴的数据
-        yAxis: [{
-            type: "value",
-            name: "销量",
-            nameTextStyle: {
-                color: "#396A87",
-                fontSize: 14
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-                    width: 1,
-                    color: "#d0d0d0"
-                }
-            },
-            axisTick: {
-                show: true
-            },
-            axisLine: {
-                show: true
-            },
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: "#396A87",
-                    fontSize: 14
-                }
-            }
-        },
-        ],
-        series: [{
-            name: '销量',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = SecondarycolorList;
-                        return colorList[params.dataIndex]
+        //grid: [{
+        //    top: 50,
+        //    width: '50%',
+        //    bottom: 15,
+        //    left: 10,
+        //    containLabel: true
+        //}],
+        //xAxis: {
+        //    data: name,
+        //    axisLabel: {
+        //        interval: 0,
+        //        rotate: -20
+        //    }
+        //},
+        ////y轴的数据
+        //yAxis: [{
+        //    type: "value",
+        //    name: "销量",
+        //    nameTextStyle: {
+        //        color: "#396A87",
+        //        fontSize: 14
+        //    },
+        //    splitLine: {
+        //        show: true,
+        //        lineStyle: {
+        //            width: 1,
+        //            color: "#d0d0d0"
+        //        }
+        //    },
+        //    axisTick: {
+        //        show: true
+        //    },
+        //    axisLine: {
+        //        show: true
+        //    },
+        //    axisLabel: {
+        //        show: true,
+        //        textStyle: {
+        //            color: "#396A87",
+        //            fontSize: 14
+        //        }
+        //    }
+        //},
+        //],
+        series: [
+            //    {
+            //    name: '销量',
+            //    type: 'bar',
+            //    radius: [20, 110],
+            //    center: ['25%', '50%'],
+            //    data: value,
+            //    itemStyle: {
+            //        normal: {
+            //            label: {
+            //                show: true,//是否展示
+            //            },
+            //            color: function (params) {
+            //                // build a color map as your need.
+            //                var colorList = SecondarycolorList;
+            //                return colorList[params.dataIndex]
+            //            }
+            //        },//表示堆叠柱状图填充的颜色
+            //    }
+            //},
+            {
+                name: '目的地',
+                type: 'pie',
+                radius: [50, 250],
+                center: ['50%', '50%'],
+                avoidLabelOverlap: false,
+                padAngle: 5,
+                //roseType: 'radius',
+                //roseType: 'area',
+                itemStyle: {
+                    borderRadius: 10
+                },
+                //radius: '80%',
+                //roseType: 'radius',
+                //zlevel: 10,
+                //startAngle: 100,
+                data: data,
+                //roseType: 'radius',
+                label: {
+                    normal: {
+                        formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                        show: true,
+                        position: 'outside',
+                        rich: {
+                            c: {
+                                color: '#003366',
+                            },
+                            b: {
+                                color: '#4cabce',
+                            },
+                        },
                     }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: '目的地',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['75%', '50%'],
-            //radius: '80%',
-            //roseType: 'radius',
-            //zlevel: 10,
-            //startAngle: 100,
-            data: data,
-            roseType: 'radius',
-            label: {
-                normal: {
-                    formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                },
+                labelLine: {
+                    length: 10,
+                    length2: 20,
                     show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
-                        },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
-                }
-            },
-            labelLine: {
-                length: 10,
-                length2: 20,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                borderRadius: 5,
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    color: '#e5323e'
+                },
+                itemStyle: {
+                    borderRadius: 5,
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
                 }
             }
-        }
         ]
     };
     // 使用刚指定的配置项和数据显示图表。
     DestmyChart.setOption(option);
     DestmyChart.resize();
 }
-function BindmyChart_SD_BuCode(name, value, data) {
+//BU别统计
+function BindChartData_SD_BuCode(name, value, data) {
     var DestmyChart = echarts.init(document.getElementById('BuBar'));
     //debugger;
     var total_datas = 0;
@@ -410,118 +409,127 @@ function BindmyChart_SD_BuCode(name, value, data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: [{
-            top: 50,
-            width: '50%',
-            bottom: 15,
-            left: 10,
-            containLabel: true
-        }],
-        xAxis: {
-            data: name,
-            axisLabel: {
-                interval: 0,
-                rotate: -20
-            }
-        },
-        //y轴的数据
-        yAxis: [{
-            type: "value",
-            name: "销量",
-            nameTextStyle: {
-                color: "#396A87",
-                fontSize: 14
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-                    width: 1,
-                    color: "#d0d0d0"
-                }
-            },
-            axisTick: {
-                show: true
-            },
-            axisLine: {
-                show: true
-            },
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: "#396A87",
-                    fontSize: 14
-                }
-            }
-        },
-        ],
-        series: [{
-            name: '销量',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = PrimarycolorList;
-                        return colorList[params.dataIndex]
-                    }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: 'BU别',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['75%', '50%'],
-            //radius: '80%',
-            //roseType: 'radius',
-            //zlevel: 10,
-            //startAngle: 100,
-            data: data,
-            roseType: 'radius',
+        //grid: [{
+        //    top: 50,
+        //    width: '50%',
+        //    bottom: 15,
+        //    left: 10,
+        //    containLabel: true
+        //}],
+        //xAxis: {
+        //    data: name,
+        //    axisLabel: {
+        //        interval: 0,
+        //        rotate: -20
+        //    }
+        //},
+        ////y轴的数据
+        //yAxis: [{
+        //    type: "value",
+        //    name: "销量",
+        //    nameTextStyle: {
+        //        color: "#396A87",
+        //        fontSize: 14
+        //    },
+        //    splitLine: {
+        //        show: true,
+        //        lineStyle: {
+        //            width: 1,
+        //            color: "#d0d0d0"
+        //        }
+        //    },
+        //    axisTick: {
+        //        show: true
+        //    },
+        //    axisLine: {
+        //        show: true
+        //    },
+        //    axisLabel: {
+        //        show: true,
+        //        textStyle: {
+        //            color: "#396A87",
+        //            fontSize: 14
+        //        }
+        //    }
+        //},
+        //],
+        series: [
+            //    {
+            //    name: '销量',
+            //    type: 'bar',
+            //    radius: [20, 110],
+            //    center: ['25%', '50%'],
+            //    data: value,
+            //    itemStyle: {
+            //        normal: {
+            //            label: {
+            //                show: true,//是否展示
+            //            },
+            //            color: function (params) {
+            //                // build a color map as your need.
+            //                var colorList = PrimarycolorList;
+            //                return colorList[params.dataIndex]
+            //            }
+            //        },//表示堆叠柱状图填充的颜色
+            //    }
+            //},
+            {
+                name: 'BU别',
+                type: 'pie',
+                radius: [50, 250],
+                center: ['50%', '50%'],
+                avoidLabelOverlap: false,
+                padAngle: 5,
+                //roseType: 'radius',
+                //roseType: 'area',
+                itemStyle: {
+                    borderRadius: 10
+                },
+                //radius: '80%',
+                //roseType: 'radius',
+                //zlevel: 10,
+                //startAngle: 100,
+                data: data,
+                //roseType: 'radius',
 
-            label: {
-                normal: {
-                    formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                label: {
+                    normal: {
+                        formatter: ['{c|{c}台({d}%)}', '{b|{b}}'].join('\n'),
+                        show: true,
+                        position: 'outside',
+                        rich: {
+                            c: {
+                                color: '#003366',
+                            },
+                            b: {
+                                color: '#4cabce',
+                            },
+                        },
+                    }
+                },
+                labelLine: {
+                    length: 10,
+                    length2: 20,
                     show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
-                        },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
-                }
-            },
-            labelLine: {
-                length: 10,
-                length2: 20,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                borderRadius: 5,
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    color: '#e5323e'
+                },
+                itemStyle: {
+                    borderRadius: 5,
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
                 }
             }
-        }
         ]
     };
     // 使用刚指定的配置项和数据显示图表。
     DestmyChart.setOption(option);
     DestmyChart.resize();
 }
-function BindmyChart_SD_FyJPStats(name, value1, value2) {
+//FY统计日本财年
+function BindChartData_SD_FyJPStats(name, value1, value2) {
     var FyStatsChart = echarts.init(document.getElementById('FyJPBar'));
     //debugger;
     //var total_datas = 0;
@@ -686,11 +694,11 @@ function BindmyChart_SD_FyJPStats(name, value1, value2) {
                 showAllSymbol: true,
                 // symbol: 'image://./static/images/guang-circle.png',
                 symbol: 'circle',
-                symbolSize: 35,
+                symbolSize: 10,
                 label: {
                     normal: {
                         show: true,
-                        position: 'inside',
+                        position: 'top',
                         textStyle: {
                             color: '#blue',
                         },
@@ -742,13 +750,14 @@ function BindmyChart_SD_FyJPStats(name, value1, value2) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_SD_FyBuJPStats(name, value, data) {
+//FY统计日本财年BU
+function BindChartData_SD_FyBuJPStats(name, value1, value2, data) {
     var FyStatsChart = echarts.init(document.getElementById('FyBuJPBar'));
     //debugger;
     //统计总数量
     var total_datas = 0;
     for (var i = 0; i < data.length; i++) {
-        total_datas += parseInt(data[i].value)
+        total_datas += parseInt(data[i].value2)
     }
     // 指定图表的配置项和数据
     var option = {
@@ -805,7 +814,7 @@ function BindmyChart_SD_FyBuJPStats(name, value, data) {
         },
         grid: [{
             top: 50,
-            width: '50%',
+            //width: '50%',
             bottom: 15,
             left: 10,
             containLabel: true
@@ -848,63 +857,65 @@ function BindmyChart_SD_FyBuJPStats(name, value, data) {
             }
         },
         ],
-        series: [{
-            name: 'Sales',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
+        series: [
 
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = PrimarycolorList;
-                        return colorList[params.dataIndex]
-                    }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: 'Fiscal Year Bu-Sales',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['75%', '50%'],
-            data: data,
-            roseType: 'radius',
-            label: {
-                normal: {
-                    formatter: ['{c|{c}CNY({d}%)}', '{b|{b}}'].join('\n'),
-                    show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
+            {
+                name: 'Sales',
+                type: 'bar',
+                radius: [20, 110],
+                center: ['50%', '50%'],
+                data: value2,
+                stack: 'Bu',//表示在哪一列
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,//是否展示
                         },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = PrimarycolorList;
+                            return colorList[params.dataIndex]
+                        }
+                    },//表示堆叠柱状图填充的颜色
                 }
             },
-            labelLine: {
-                length: 10,
-                length2: 20,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                borderRadius: 5,
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        },
+            //{
+            //    name: 'Fiscal Year Bu-Sales',
+            //    type: 'pie',
+            //    radius: [30, 110],
+            //    center: ['75%', '50%'],
+            //    data: data,
+            //    roseType: 'radius',
+            //    label: {
+            //        normal: {
+            //            formatter: ['{c|{c}CNY({d}%)}', '{b|{b}}'].join('\n'),
+            //            show: true,
+            //            position: 'outside',
+            //            rich: {
+            //                c: {
+            //                    color: '#003366',
+            //                },
+            //                b: {
+            //                    color: '#4cabce',
+            //                },
+            //            },
+            //        }
+            //    },
+            //    labelLine: {
+            //        length: 10,
+            //        length2: 20,
+            //        show: true,
+            //        color: '#e5323e'
+            //    },
+            //    itemStyle: {
+            //        borderRadius: 5,
+            //        emphasis: {
+            //            shadowBlur: 10,
+            //            shadowOffsetX: 0,
+            //            shadowColor: 'rgba(0, 0, 0, 0.5)'
+            //        }
+            //    }
+            //},
 
         ]
     };
@@ -912,7 +923,8 @@ function BindmyChart_SD_FyBuJPStats(name, value, data) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_SD_FyCNStats(name, value1, value2) {
+//FY统计正常年度
+function BindChartData_SD_FyCNStats(name, value1, value2) {
     var FyStatsChart = echarts.init(document.getElementById('FyCNBar'));
     //debugger;
     //var total_datas = 0;
@@ -1077,11 +1089,11 @@ function BindmyChart_SD_FyCNStats(name, value1, value2) {
                 showAllSymbol: true,
                 // symbol: 'image://./static/images/guang-circle.png',
                 symbol: 'circle',
-                symbolSize: 35,
+                symbolSize: 10,
                 label: {
                     normal: {
                         show: true,
-                        position: 'inside',
+                        position: 'top',
                         textStyle: {
                             color: '#blue',
                         },
@@ -1133,7 +1145,8 @@ function BindmyChart_SD_FyCNStats(name, value1, value2) {
     FyStatsChart.setOption(option);
     FyStatsChart.resize();
 }
-function BindmyChart_SD_FyBuCNStats(name, value, data) {
+//FY统计正常年度BU
+function BindChartData_SD_FyBuCNStats(name, value1, value2, data) {
     var FyStatsChart = echarts.init(document.getElementById('FyBuCNBar'));
     //debugger;
     //统计总数量
@@ -1194,13 +1207,13 @@ function BindmyChart_SD_FyBuCNStats(name, value, data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: [{
-            top: 50,
-            width: '50%',
-            bottom: 15,
-            left: 10,
+        grid: {
+            left: '5%',
+            right: '4%',
+            bottom: '5%',
+            top: '15%',
             containLabel: true
-        }],
+        },
         xAxis: {
             data: name,
             axisLabel: {
@@ -1238,63 +1251,84 @@ function BindmyChart_SD_FyBuCNStats(name, value, data) {
             }
         },
         ],
-        series: [{
-            name: 'Sales',
-            type: 'bar',
-            radius: [20, 110],
-            center: ['25%', '50%'],
-            data: value,
-
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: true,//是否展示
-                    },
-                    color: function (params) {
-                        // build a color map as your need.
-                        var colorList = PrimarycolorList;
-                        return colorList[params.dataIndex]
-                    }
-                },//表示堆叠柱状图填充的颜色
-            }
-        },
-        {
-            name: 'Natural Year Bu-Sales',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['75%', '50%'],
-            data: data,
-            roseType: 'radius',
-            label: {
-                normal: {
-                    formatter: ['{c|{c}元({d}%)}', '{b|{b}}'].join('\n'),
-                    show: true,
-                    position: 'outside',
-                    rich: {
-                        c: {
-                            color: '#003366',
+        series: [
+            {
+                name: 'Sales',
+                type: 'bar',
+                radius: [20, 110],
+                center: ['50%', '50%'],
+                data: value1,
+                stack: 'LOSS',//表示在哪一列
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,//是否展示
                         },
-                        b: {
-                            color: '#4cabce',
-                        },
-                    },
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = PrimarycolorList;
+                            return colorList[params.dataIndex]
+                        }
+                    },//表示堆叠柱状图填充的颜色
                 }
             },
-            labelLine: {
-                length: 10,
-                length2: 20,
-                show: true,
-                color: '#e5323e'
-            },
-            itemStyle: {
-                borderRadius: 5,
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+            {
+                name: 'Sales',
+                type: 'bar',
+                radius: [20, 110],
+                center: ['50%', '50%'],
+                data: value2,
+                stack: 'LOSS',//表示在哪一列
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,//是否展示
+                        },
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = PrimarycolorList;
+                            return colorList[params.dataIndex]
+                        }
+                    },//表示堆叠柱状图填充的颜色
                 }
-            }
-        },
+            },
+            //{
+            //    name: 'Natural Year Bu-Sales',
+            //    type: 'pie',
+            //    radius: [30, 110],
+            //    center: ['75%', '50%'],
+            //    data: data,
+            //    roseType: 'radius',
+            //    label: {
+            //        normal: {
+            //            formatter: ['{c|{c}元({d}%)}', '{b|{b}}'].join('\n'),
+            //            show: true,
+            //            position: 'outside',
+            //            rich: {
+            //                c: {
+            //                    color: '#003366',
+            //                },
+            //                b: {
+            //                    color: '#4cabce',
+            //                },
+            //            },
+            //        }
+            //    },
+            //    labelLine: {
+            //        length: 10,
+            //        length2: 20,
+            //        show: true,
+            //        color: '#e5323e'
+            //    },
+            //    itemStyle: {
+            //        borderRadius: 5,
+            //        emphasis: {
+            //            shadowBlur: 10,
+            //            shadowOffsetX: 0,
+            //            shadowColor: 'rgba(0, 0, 0, 0.5)'
+            //        }
+            //    }
+            //},
 
         ]
     };

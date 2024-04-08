@@ -23,7 +23,7 @@ namespace LeanFine.Lf_Report
             //获取一同发送过来的参数
             //string command = context.Request["cmd",;
             context.Response.ContentType = "text/plain";
-            var q_pid = from p in DBCharts.Fico_Costing_Actual_Costs
+            var q_pid = from p in DBCharts.Fico_Monthly_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                             //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
                         where p.isDeleted == 0
@@ -50,7 +50,7 @@ namespace LeanFine.Lf_Report
                 lists.Add(obj);
             }
 
-            var q_id = from p in DBCharts.Fico_Costing_Actual_Costs
+            var q_id = from p in DBCharts.Fico_Monthly_Actual_Costs
                            //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                            //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
                        where p.isDeleted == 0
@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Report
                 var obj = new { id = dr["Bc_CostCode"], name = dr["Bc_CostName"], pid = dr["Bc_CorpCode"], pname = dr["Bc_CorpName"], };  //key，value
                 lists.Add(obj);
             }
-            var q_all = from p in DBCharts.Fico_Costing_Actual_Costs
+            var q_all = from p in DBCharts.Fico_Monthly_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                             //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
                         where p.isDeleted == 0

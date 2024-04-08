@@ -1,9 +1,9 @@
-﻿using FineUIPro;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using FineUIPro;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Accounting
 {
@@ -176,7 +176,7 @@ namespace LeanFine.Lf_Accounting
                 {
                     //IQueryable<Fico_Title> q = DB.Fico_Titles; //.Include(u => u.Dept);
 
-                    var q = from a in DB.Fico_Costing_Actual_Costs
+                    var q = from a in DB.Fico_Monthly_Actual_Costs
                             where a.Bc_ExpCategory.Contains("Exs.")
                             select a;
 

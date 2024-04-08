@@ -66,13 +66,13 @@
                     </PageItems>
                     <Columns>
                         <f:RowNumberField Width="35px" EnablePagingNumber="true" HeaderText="序号" />
-                        <f:BoundField DataField="D_SAP_ZPABD_Z001" SortField="D_SAP_ZPABD_Z001" MinWidth="100px" MaxWidth="100px" Width="100px" HeaderText="设变号码" />
-                        <f:BoundField DataField="D_SAP_ZPABD_Z005" SortField="D_SAP_ZPABD_Z005" MinWidth="100px" MaxWidth="100px" Width="100px" HeaderText="发行日期" />
-                        <f:BoundField DataField="D_SAP_ZPABD_Z003" SortField="D_SAP_ZPABD_Z003" HtmlEncode="false" MinWidth="350px" MaxWidth="550px" Width="350px" HeaderText="设变标题" />
-                        <f:BoundField DataField="D_SAP_ZPABD_Z002" SortField="D_SAP_ZPABD_Z002" MinWidth="150px" MaxWidth="150px" Width="150px" HeaderText="机种名" />
+                        <f:BoundField DataField="D_SAP_ZPABD_Z001" SortField="D_SAP_ZPABD_Z001" MinWidth="100px"  Width="100px" HeaderText="设变号码" />
+                        <f:BoundField DataField="D_SAP_ZPABD_Z005" SortField="D_SAP_ZPABD_Z005" MinWidth="100px"  Width="100px" HeaderText="发行日期" />
+                        <f:BoundField DataField="D_SAP_ZPABD_Z003" SortField="D_SAP_ZPABD_Z003" HtmlEncode="false" MinWidth="350px"  Width="350px" HeaderText="设变标题" />
+                        <f:BoundField DataField="D_SAP_ZPABD_Z002" SortField="D_SAP_ZPABD_Z002" MinWidth="150px"  Width="350px" HeaderText="机种名" />
                     
-                        <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_List%>" ColumnID="hlfNew" MinWidth="200px" MaxWidth="200px" 
-                            Width="200px" CommandName="EcnAdd" Text="<%$ Resources:GlobalResource,sys_Button_New_EC%>" />
+                        <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_List%>" ColumnID="hlfNew" MinWidth="100px" MaxWidth="100px" 
+                            Width="100px" CommandName="EcnAdd" Text="<%$ Resources:GlobalResource,sys_Button_New_EC%>" />
 
 
                     </Columns>

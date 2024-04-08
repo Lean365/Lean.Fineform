@@ -1,11 +1,11 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：Ajax异步交互式数据更新
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 //生产实绩
@@ -32,11 +32,11 @@ function AjaxData_Pp_Actual() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Pp_Actual(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_Pp_Actual(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -66,11 +66,11 @@ function AjaxData_Pp_Lastday_Actual() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Pp_Last_Actual(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_Pp_Last_Actual(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -99,11 +99,11 @@ function AjaxData_Pp_Defect() {
                     value2.push(list[i].value2);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Defect(name, value1, value2, value4, data);          //调用封装好的DefectmyChart
+                BindChartData_Pp_Defect(name, value1, value2, value4, data);          //调用封装好的DefectmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -129,11 +129,11 @@ function AjaxData_Pp_Reason() {
                 //    name.push(list[i].name);
                 //    value.push(list[i].value);
                 //}
-                BindmyChart_Pp_Reason(data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Reason(data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -161,11 +161,11 @@ function AjaxData_Pp_Rty() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Rty(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Rty(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -197,11 +197,11 @@ function AjaxData_Pp_Achieving_Rate() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Achieving_Rate(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Achieving_Rate(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -234,11 +234,11 @@ function AjaxData_Pp_Progress() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_Progress(name, value3, value4, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Progress(name, value3, value4, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -273,11 +273,11 @@ function AjaxData_Pp_LineLosstime() {
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
                 }
-                BindmyChart_Pp_LineLoss(name, value1, value2, value3, value4, value5, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_LineLoss(name, value1, value2, value3, value4, value5, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -312,11 +312,11 @@ function AjaxData_Pp_Losstime() {
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
                 }
-                BindmyChart_Pp_Loss(name, value1, value2, value3, value4, value5, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Loss(name, value1, value2, value3, value4, value5, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -344,11 +344,11 @@ function AjaxData_Pp_Linestop() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Pp_Linestop(name, value, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_Linestop(name, value, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -380,11 +380,11 @@ function AjaxData_Pp_ModelAchieve() {
                     value3.push(list[i].value3);
                     value4.push(list[i].value4);
                 }
-                BindmyChart_Pp_ModelAchieve(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_ModelAchieve(name, value3, value4);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -415,11 +415,11 @@ function AjaxData_Pp_YearAchieve() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Pp_YearAchieve(name, value1, value2, value3, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Pp_YearAchieve(name, value1, value2, value3, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -453,11 +453,11 @@ function AjaxData_Pp_Tracking_Lot() {
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
                 }
-                BindmyChart_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value5, data);          //调用封装好的ActualmyChart
+                BindChartData_Pp_Ttacking_Lot(name, value1, value2, value3, value4, value5, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -490,11 +490,11 @@ function AjaxData_Pp_Tracking_OPH() {
                     value4.push(list[i].value4);
                     value5.push(list[i].value5);
                 }
-                BindmyChart_Pp_Ttacking_OPH(name, value3, value4, value5, data);          //调用封装好的ActualmyChart
+                BindChartData_Pp_Ttacking_OPH(name, value3, value4, value5, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------

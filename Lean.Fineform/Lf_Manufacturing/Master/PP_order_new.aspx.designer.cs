@@ -195,6 +195,15 @@ namespace LeanFine.Lf_Manufacturing.Master
         protected global::FineUIPro.FormRow FormRow3;
 
         /// <summary>
+        /// Pordertype 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.DropDownList Pordertype;
+
+        /// <summary>
         /// Porderno 控件。
         /// </summary>
         /// <remarks>
@@ -204,15 +213,6 @@ namespace LeanFine.Lf_Manufacturing.Master
         protected global::FineUIPro.TextBox Porderno;
 
         /// <summary>
-        /// Porderroute 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox Porderroute;
-
-        /// <summary>
         /// FormRow8 控件。
         /// </summary>
         /// <remarks>
@@ -220,6 +220,15 @@ namespace LeanFine.Lf_Manufacturing.Master
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.FormRow FormRow8;
+
+        /// <summary>
+        /// Porderroute 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox Porderroute;
 
         /// <summary>
         /// Porderserial 控件。

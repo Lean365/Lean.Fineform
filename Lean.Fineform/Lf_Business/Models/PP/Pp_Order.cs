@@ -10,10 +10,10 @@ namespace LeanFine.Lf_Business.Models.PP
         public Guid GUID { get; set; }
 
         [Required, StringLength(4)]
-        public string Pordertype { get; set; }//订单类型
+        public string Porderplt { get; set; }//工厂
 
         [Required, StringLength(4)]
-        public string Porderplt { get; set; }//工厂
+        public string Pordertype { get; set; }//订单类型
 
         [Required, StringLength(7)]
         public string Porderno { get; set; }//单号

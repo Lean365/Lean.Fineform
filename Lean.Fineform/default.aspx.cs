@@ -1,8 +1,8 @@
-﻿using FineUIPro;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
 using System.Web.Security;
+using FineUIPro;
 
 namespace LeanFine
 {
@@ -23,22 +23,22 @@ namespace LeanFine
                 switch (CultureLang)
                 {
                     case "zh-cn":
-                        this.DDLCulture.Items.FindByText("简体中文").Selected = true;
+                        this.DdlCulture.Items.FindByText("简体中文").Selected = true;
                         Session["PreferredCulture"] = "zh-cn";
                         break;
 
                     case "en-us":
-                        this.DDLCulture.Items.FindByText("English").Selected = true;
+                        this.DdlCulture.Items.FindByText("English").Selected = true;
                         Session["PreferredCulture"] = "en-us";
                         break;
 
                     case "ja-jp":
-                        this.DDLCulture.Items.FindByText("日本語").Selected = true;
+                        this.DdlCulture.Items.FindByText("日本語").Selected = true;
                         Session["PreferredCulture"] = "ja-jp";
                         break;
 
                     default:
-                        this.DDLCulture.Items.FindByText("简体中文").Selected = true;
+                        this.DdlCulture.Items.FindByText("简体中文").Selected = true;
                         Session["PreferredCulture"] = "zh-cn";
                         break;
                 }
@@ -48,8 +48,8 @@ namespace LeanFine
 
         private void LoadData()
         {
-            tbxUserName.Text = "admin";
-            tbxPassword.Text = "admin";
+            //tbxUserName.Text = "admin";
+            //tbxPassword.Text = "admin";
             // 如果用户已经登录，则重定向到管理首页
             if (User.Identity.IsAuthenticated)
             {
@@ -74,9 +74,9 @@ namespace LeanFine
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void DDLCulture_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlCulture_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string value = DDLCulture.SelectedItem.Value;
+            string value = DdlCulture.SelectedItem.Value;
             Session["PreferredCulture"] = value;
             //重定向页面
             Response.Redirect(Request.Url.PathAndQuery);

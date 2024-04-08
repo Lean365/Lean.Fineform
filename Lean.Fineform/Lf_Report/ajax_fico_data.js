@@ -1,11 +1,11 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：Ajax异步交互式数据更新
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 
@@ -35,11 +35,11 @@ function AjaxData_Expense_Contrast() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Expense_Contrast(name, value1, value2);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Expense_Contrast(name, value1, value2);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -69,11 +69,11 @@ function AjaxData_Expense_DeptRequests() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_Expense_DeptRequests(name, value2, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Expense_DeptRequests(name, value2, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -102,11 +102,11 @@ function AjaxData_Expense_Actual() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Expense_Actual(name, value, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Expense_Actual(name, value, data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -134,11 +134,11 @@ function AjaxData_Expense_Tree() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_Expense_Tree(data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
+                BindChartData_Expense_Tree(data);       // 圆形不同的是数据类型是这样的：{value:335, name:'直接访问'},{value:310, name:'邮件营销'},{value:234, name:'联盟广告'}
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -167,11 +167,11 @@ function AjaxData_CostingMaterialcost() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingMaterialcost(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingMaterialcost(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -200,11 +200,11 @@ function AjaxData_CostingNeedQty() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingNeedQty(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingNeedQty(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -233,11 +233,11 @@ function AjaxData_CostingGrossOperatingMargin() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingGrossOperatingMargin(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingGrossOperatingMargin(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -266,11 +266,11 @@ function AjaxData_CostingComparedForecast() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingComparedForecast(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingComparedForecast(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -299,11 +299,11 @@ function AjaxData_CostingbuAmount() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingbuAmount(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingbuAmount(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -332,11 +332,11 @@ function AjaxData_CostingProductCost() {
                     value2.push(list[i].value2);
                     value3.push(list[i].value3);
                 }
-                BindmyChart_CostingProductCost(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingProductCost(name, value1, value2, value3, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -364,11 +364,11 @@ function AjaxData_CostingInvAMT() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_CostingInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -397,11 +397,11 @@ function AjaxData_CostingInvAMTbu() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_CostingInvAMTbu(name, value1, value2, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingInvAMTbu(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -430,11 +430,11 @@ function AjaxData_CostingMonthlyInvAMT() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_CostingMonthlyInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
+                BindChartData_CostingMonthlyInvAMT(name, value1, value2, data);          //调用封装好的ActualmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------

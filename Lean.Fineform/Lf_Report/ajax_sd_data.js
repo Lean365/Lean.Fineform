@@ -1,11 +1,11 @@
 ﻿/* !
  * Echarts图表封装模板
- * 版 本 20200416.008(https://github.com/davischeng)
+ * 版 本 20200416.008(https://github.com/Lean365)
  * Copyright 2020 LeanCloud.Inc
- * 创建人：Davis.Cheng
+ * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：Ajax异步交互式数据更新
- * https://github.com/davischeng/oneCube/blob/master/licenses.txt
+ * https://github.com/Lean365
  * Date: 2020-04-16T16:01Z
  */
 
@@ -30,11 +30,11 @@ function AjaxData_Sd_Regin() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_SD_Regin(name, value, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_Regin(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -59,11 +59,11 @@ function AjaxData_Sd_Destination() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_SD_Destination(name, value, data);          //调用封装好的DestmyChart
+                BindChartData_SD_Destination(name, value, data);          //调用封装好的DestmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -88,11 +88,11 @@ function AjaxData_Sd_BuCode() {
                     name.push(list[i].name);
                     value.push(list[i].value);
                 }
-                BindmyChart_SD_BuCode(name, value, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_BuCode(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -120,11 +120,11 @@ function AjaxData_Sd_FyJPStats() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_SD_FyJPStats(name, value1, value2, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_FyJPStats(name, value1, value2, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -152,11 +152,11 @@ function AjaxData_Sd_FyCNStats() {
                     value1.push(list[i].value1);
                     value2.push(list[i].value2);
                 }
-                BindmyChart_SD_FyCNStats(name, value1, value2, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_FyCNStats(name, value1, value2, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -177,18 +177,19 @@ function AjaxData_Sd_FyBuJPStats() {
             if (data) {
                 var list = eval(data);
                 var name = [];
-                var value = [];
+                var value1 = [];
+                var value2 = [];
                 //var value2 = [];
                 for (var i = 0; i < list.length; i++) {
                     name.push(list[i].name);
-                    value.push(list[i].value);
-                    // value2.push(list[i].value2);
+                    value1.push(list[i].value1);
+                    value2.push(list[i].value2);
                 }
-                BindmyChart_SD_FyBuJPStats(name, value, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_FyBuJPStats(name, value1, value2, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
@@ -216,11 +217,11 @@ function AjaxData_Sd_FyBuCNStats() {
                     value.push(list[i].value);
                     //value2.push(list[i].value2);
                 }
-                BindmyChart_SD_FyBuCNStats(name, value, data);          //调用封装好的ReginmyChart
+                BindChartData_SD_FyBuCNStats(name, value, data);          //调用封装好的ReginmyChart
             }
         },
         error: function (msg) {
-            alert("Relevant information is not available.无相关信息！");
+            alert(msg + "Relevant information is not available.无相关信息！");
         }
     });
     //---------------------------------------------------------------------------
