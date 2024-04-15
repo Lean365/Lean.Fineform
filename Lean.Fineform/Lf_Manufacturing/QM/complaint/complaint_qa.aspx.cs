@@ -42,8 +42,8 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
             CheckPowerWithButton("CoreComplaintQANew", BtnNew);
             //CheckPowerWithButton("CoreComplaintP1DNew", Btn_P1D_New);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
@@ -483,7 +483,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;

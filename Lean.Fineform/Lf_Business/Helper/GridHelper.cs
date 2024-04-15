@@ -158,7 +158,7 @@ namespace LeanFine
         /// <param name="sumTotala 合计字段"></param>
         /// <param name="sumTotalb 合计字段"></param>
         /// <param name="sumTotalc sumTotalb/sumTotala"></param>
-        public static void OutputSummaryData(DataTable source, FineUIPro.Grid grid, string sumTotala, string sumTotalb, string sumTotalc)
+        public static void GridSummaryData(DataTable source, FineUIPro.Grid grid, string sumTotala, string sumTotalb, string sumTotalc)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

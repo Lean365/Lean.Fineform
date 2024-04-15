@@ -34,13 +34,13 @@
                         <f:Toolbar runat="server">
                             <Items>
                                 <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
-                                    ID="DPstart" ShowRedStar="True" OnTextChanged="DPstart_TextChanged">
+                                    ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
                                 </f:DatePicker>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server">
                                 </f:ToolbarFill>
-                                <f:DatePicker ID="DPend" Readonly="false" Width="300px" CompareControl="DPstart" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" Width="300px" CompareControl="DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                     CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
                                 <f:ToolbarFill ID="ToolbarFill3" runat="server">
                                 </f:ToolbarFill>
@@ -52,16 +52,6 @@
                         </f:Toolbar>
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"
-                                    Text="<%$ Resources:GlobalResource,sys_Status_Pp_All%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnSecondAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_Normal%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnThirdAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_Rework%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-
 
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server">
                                 </f:ToolbarFill>

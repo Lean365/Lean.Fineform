@@ -76,10 +76,10 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             // 初始化用户所属部门
             //InitNoticeDept();
             //mocToDropDownList();
-            BindDDLStdClass();
-            BindDDLInsClass();
-            BindDDLLevel();
-            BindDDLcLevel();
+            BindDdlStdClass();
+            BindDdlInsClass();
+            BindDdlLevel();
+            BindDdlcLevel();
             BindData();
             BindStock();
             BindGrid();
@@ -193,7 +193,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             }
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
         }
 
         private void BindStock()
@@ -1557,7 +1557,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -1582,9 +1582,9 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         #endregion Events
 
-        #region DDLBindData
+        #region BindDdl Dropdown ListData
 
-        private void BindDDLcLevel()
+        private void BindDdlcLevel()
         {
             //查询LINQ去重复
             var q = from a in DB.Qm_CheckAQLs
@@ -1607,7 +1607,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmSamplinglevel.DataBind();
         }
 
-        private void BindDDLStdClass()
+        private void BindDdlStdClass()
         {
             IQueryable<Qm_CheckType> q = DB.Qm_CheckTypes;
             q = q.Where(u => u.Checktype.Contains("B"));
@@ -1620,7 +1620,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmJudgment.DataBind();
         }
 
-        private void BindDDLLevel()
+        private void BindDdlLevel()
         {
             //查询LINQ去重复
             var q = from a in DB.Qm_CheckTypes
@@ -1646,7 +1646,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmJudgmentlevel.DataBind();
         }
 
-        private void BindDDLInsClass()
+        private void BindDdlInsClass()
         {
             IQueryable<Qm_CheckType> q = DB.Qm_CheckTypes;
             q = q.Where(u => u.Checktype.Contains("A"));
@@ -1659,6 +1659,6 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmCheckmethod.DataBind();
         }
 
-        #endregion DDLBindData
+        #endregion BindDdl Dropdown ListData
     }
 }

@@ -52,10 +52,10 @@ namespace LeanFine.Lf_Admin
             tbxRemark.Text = current.Remark;
 
             // 绑定下拉列表
-            BindDDL(current);
+            BindDdl(current);
         }
 
-        private void BindDDL(Adm_Dept current)
+        private void BindDdl(Adm_Dept current)
         {
             List<Adm_Dept> mys = ResolveDDL<Adm_Dept>(DeptHelper.Adm_Depts, current.ID);
 

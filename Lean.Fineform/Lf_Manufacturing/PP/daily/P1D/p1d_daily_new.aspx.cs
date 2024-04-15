@@ -116,17 +116,17 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            BindDDLorder();
+            BindDdlorder();
 
-            BindDDLline();
+            BindDdlLine();
         }
 
         #endregion Page_Load
 
-        #region BindDDLData
+        #region BindDdlData
 
         //DDL查询LOT
-        private void BindDDLorder()
+        private void BindDdlorder()
         {
             //UpdatingHelper.UpdatePorderQty();
 
@@ -156,7 +156,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         }
 
         //DDL查询班组
-        private void BindDDLline()
+        private void BindDdlLine()
         {
             //查询LINQ去重复
             var q = from a in DB.Adm_Dicts
@@ -180,7 +180,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
         //DDL查询不良各类
 
-        #endregion BindDDLData
+        #endregion BindDdlData
 
         #region Events
 

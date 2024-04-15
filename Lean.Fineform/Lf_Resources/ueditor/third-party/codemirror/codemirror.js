@@ -439,7 +439,7 @@ var CodeMirror = (function () {
             e.dataTransfer.setDragImage(escapeElement, 0, 0);
             e.dataTransfer.setData("Text", txt);
         }
-        function handleKeyBinding(e) {
+        function handleKeyBindDdl(e) {
             var name = keyNames[e.keyCode], next = keyMap[options.keyMap].auto, bound, dropShift;
             if (name == null || e.altGraphKey) {
                 if (next) options.keyMap = next;
@@ -477,7 +477,7 @@ var CodeMirror = (function () {
             setShift(code == 16 || e.shiftKey);
             // First give onKeyEvent option a chance to handle this.
             if (options.onKeyEvent && options.onKeyEvent(instance, addStop(e))) return;
-            var handled = handleKeyBinding(e);
+            var handled = handleKeyBindDdl(e);
             if (window.opera) {
                 lastStoppedKey = handled ? e.keyCode : null;
                 // Opera has no cut event... we try to at least catch the key combo
@@ -488,7 +488,7 @@ var CodeMirror = (function () {
         function onKeyPress(e) {
             if (window.opera && e.keyCode == lastStoppedKey) { lastStoppedKey = null; e_preventDefault(e); return; }
             if (options.onKeyEvent && options.onKeyEvent(instance, addStop(e))) return;
-            if (window.opera && !e.which && handleKeyBinding(e)) return;
+            if (window.opera && !e.which && handleKeyBindDdl(e)) return;
             if (options.electricChars && mode.electricChars) {
                 var ch = String.fromCharCode(e.charCode == null ? e.keyCode : e.charCode);
                 if (mode.electricChars.indexOf(ch) > -1)

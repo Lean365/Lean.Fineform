@@ -42,8 +42,8 @@ namespace LeanFine.Lf_Manufacturing.Master
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
             CheckPowerWithButton("CoreTransportNew", btnNew);
             //CheckPowerWithButton("CoreProlineNew", btnP2d);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 

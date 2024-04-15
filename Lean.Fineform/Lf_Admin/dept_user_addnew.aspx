@@ -37,7 +37,7 @@
                 <f:Grid ID="Grid1" runat="server" ShowBorder="true" ShowHeader="false" EnableCheckBoxSelect="true"
                     DataKeyNames="ID,Name" AllowSorting="true" OnSort="Grid1_Sort"
                     SortField="Name" SortDirection="DESC" AllowPaging="true" IsDatabasePaging="true" OnPageIndexChange="Grid1_PageIndexChange"
-                    DataIDField="ID" ClearSelectionBeforePaging="false" ClearSelectionBeforeBinding="false" KeepPagedSelection="true" KeepCurrentSelection="true">
+                    DataIDField="ID" ClearSelectionBeforePaging="false"  ClearSelectionBeforeBinding="false" KeepPagedSelection="true" KeepCurrentSelection="true">
                     <Columns>
                         <f:RowNumberField />
                         <f:BoundField DataField="Name" SortField="Name" Width="100px" HeaderText="用户名" />

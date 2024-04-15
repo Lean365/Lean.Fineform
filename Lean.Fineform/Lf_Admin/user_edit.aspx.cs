@@ -153,7 +153,12 @@ namespace LeanFine.Lf_Admin
             item.Address = tbxAddress.Text.Trim();
             item.Remark = tbxRemark.Text.Trim();
             item.Enabled = cbxEnabled.Checked;
-
+            string deptName = tbSelectedDept.Text;
+            string roleNames = tbSelectedRole.Text;
+            string titleNames = tbSelectedTitle.Text;
+            string deptN = hfSelectedDept.Text;
+            string roleN = hfSelectedRole.Text;
+            string titleN = hfSelectedTitle.Text;
             if (String.IsNullOrEmpty(hfSelectedDept.Text))
             {
                 item.Dept = null;
@@ -167,10 +172,10 @@ namespace LeanFine.Lf_Admin
             }
 
             int[] roleIDs = StringUtil.GetIntArrayFromString(hfSelectedRole.Text);
-            ReplaceEntities<Adm_Role>(item.Roles, roleIDs);
+            ReplaceEntities(item.Roles, roleIDs);
 
             int[] titleIDs = StringUtil.GetIntArrayFromString(hfSelectedTitle.Text);
-            ReplaceEntities<Adm_Title>(item.Titles, titleIDs);
+            ReplaceEntities(item.Titles, titleIDs);
 
             DB.SaveChanges();
 

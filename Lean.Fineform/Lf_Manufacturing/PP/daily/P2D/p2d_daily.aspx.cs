@@ -38,7 +38,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void LoadData()
         {
-            //BindDDLGUID();
+            //BindDdlGUID();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
@@ -46,9 +46,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -64,7 +64,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
-            BindDDLLine();
+            BindDdlLine();
             BindGrid();
         }
 
@@ -82,7 +82,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             }).ToList();
             IQueryable<Pp_P2d_Output> q = DB.Pp_P2d_Outputs; //.Include(u => u.Dept);
 
-            //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
+            //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
@@ -94,8 +94,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 q = q.Where(u => u.ID.ToString().Contains(searchText) || u.Proorder.ToString().Contains(searchText) || u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -105,9 +105,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-            if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
+            if (this.DdlLine.SelectedIndex != -1 && this.DdlLine.SelectedIndex != 0)
             {
-                q = q.Where(u => u.Prolinename.Contains(this.DDLline.SelectedText));
+                q = q.Where(u => u.Prolinename.Contains(this.DdlLine.SelectedText));
             }
             //查询包含子集
             var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == "制二课")).AsQueryable();
@@ -135,7 +135,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //ttbSearchMessage.Text = "";
         }
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
             var LineType = (from a in DB.Adm_Dicts
                                 //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
@@ -147,8 +147,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 a.DictLabel,
                                 a.DictValue
                             }).ToList();
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             var q = from a in DB.Pp_P2d_Outputs
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                     where a.Prodate.CompareTo(sdate) >= 0
@@ -166,12 +166,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            DDLline.DataSource = qs;
-            DDLline.DataTextField = "Prolinename";
-            DDLline.DataValueField = "Prolinename";
-            DDLline.DataBind();
+            DdlLine.DataSource = qs;
+            DdlLine.DataTextField = "Prolinename";
+            DdlLine.DataValueField = "Prolinename";
+            DdlLine.DataBind();
 
-            this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+            this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
         #endregion Page_Load
@@ -180,16 +180,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -203,7 +203,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //CheckPowerWithWindowField("CoreOphEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreP2DOutputDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             CheckPowerWithLinkButtonField("CoreP2DOutputSubEdit", Grid1, "subeditField");
             CheckPowerWithLinkButtonField("CoreP2DOutputEdit", Grid1, "editField");
         }
@@ -443,29 +443,29 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
                 BindGrid();
             }
         }
 
         #endregion Events
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
             {
                 BindGrid();
             }
@@ -473,7 +473,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         protected void BtnList_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -484,7 +484,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -493,11 +493,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 join b in DB.Pp_P2d_Outputs on p.GUID equals b.GUID
                 where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
+                group p by new { p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, b.Proorderqty, p.Propcbaside, b.Prodirect, p.Propcbastated, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
                 select new
                 {
                     g.Key.Prodate,
+                    g.Key.Proorderqty,
                     g.Key.Prostime,
                     g.Key.Proetime,
                     g.Key.Prodirect,
@@ -505,15 +506,25 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     g.Key.Promodel,
                     g.Key.Prohbn,
                     g.Key.Prolot,
-                    g.Key.Prostdcapacity,
+                    g.Key.Propcbatype,
+                    g.Key.Propcbaside,
+                    g.Key.Propcbastated,
                     g.Key.Prorealqty,
                     g.Key.Prorealtime,
                     g.Key.Prostopcou,
                     g.Key.Prostopmemo,
                     g.Key.Probadcou,
                     g.Key.Probadmemo,
+                    g.Key.Prohandoffnum,
+                    g.Key.Prohandofftime,
+                    g.Key.Protime,
+                    g.Key.Promaketime,
+                    g.Key.Prodowntime,
                     g.Key.Prolinemin,
                     g.Key.Prolinestopmin,
+                    g.Key.Proshort,
+                    g.Key.Prolosstime,
+                    g.Key.Prost,
                 };
 
             // 在用户名称中搜索
@@ -523,8 +534,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.Prolinename.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -534,29 +545,81 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-            if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
             {
-                q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
             }
+            //检查统计按订单+批次
 
+            var insq = from p in DB.Pp_P2d_OutputSubs
+                       join a in DB.Pp_P2d_Inspection_Defects on p.Proorder equals a.Proorder into Inspection
+                       from aa in Inspection.DefaultIfEmpty()
+
+                       where p.isDeleted == 0
+
+                       select new
+                       {
+                           p.Proorder,
+                           p.Prolot,
+                           p.Prorealqty,
+                           Probadqty = aa == null ? 0 : aa.Probadqty,
+                       };
+            var manq = from p in DB.Pp_P2d_OutputSubs
+                       join a in DB.Pp_P2d_Manufacturing_Defects on p.Proorder equals a.Proorder into Manufacturing
+                       from aa in Manufacturing.DefaultIfEmpty()
+                       where p.isDeleted == 0
+                       select new
+                       {
+                           p.Proorder,
+                           p.Prolot,
+                           p.Prorealqty,
+                           Probadqty = aa == null ? 0 : aa.Probadqty,
+                       };
+            var q_all = (from cust in insq
+                         select cust)
+                         .Union
+                         (from emp in manq
+                          select emp);
+
+            var q_total = from p in q_all
+                          group p by new { p.Proorder, p.Prolot }
+                         into g
+                          select new
+                          {
+                              g.Key.Proorder,
+                              g.Key.Prolot,
+                              Prorealqty = g.Sum(p => p.Prorealqty),
+                              Probadqty = g.Sum(p => p.Probadqty),
+                          };
             var qs = from g in q
+                     join bq in q_total on g.Prolot equals bq.Prolot into TotalQty
+                     from aa in TotalQty.DefaultIfEmpty()
                      select new
                      {
                          生产日期 = g.Prodate,
-                         时间段 = g.Prostime + "-" + g.Proetime,
+                         单位 = "制二课",
                          班组 = g.Prolinename,
                          机种 = g.Promodel,
                          物料 = g.Prohbn,
-                         批次 = g.Prolot,
-                         计划 = g.Prostdcapacity,
-                         实绩 = g.Prorealqty,
-                         生产工数 = g.Prorealtime,
+                         批次 = g.Prolot.Substring(0, 6),
+
+                         板别 = g.Propcbatype != "" ? g.Propcbatype : "无区分",
+                         生产面 = g.Propcbaside != "" ? g.Propcbaside : "无区分",
+                         Lot数量 = g.Proorderqty,
+                         生产实绩 = g.Prorealqty,
+                         累计生产 = aa == null ? 0 : aa.Prorealqty,
+                         不良件数 = aa == null ? 0 : aa.Probadqty,
+                         完成状况 = g.Propcbastated,
+                         生产工数 = g.Protime,
+                         切换次数 = g.Prohandoffnum,
+                         切换时间 = g.Prohandofftime,
+                         切停机时间 = g.Prodowntime,
                          停线原因 = g.Prostopcou,
                          原因说明 = g.Prostopmemo,
                          未达成 = g.Probadcou,
                          未达成原因 = g.Probadmemo,
-                         损失工数 = g.Prolinestopmin,
-                         投入工数 = g.Prodirect * 60,
+                         损失工数 = g.Prolosstime,
+                         投入工数 = g.Promaketime,
                      };
             if (qs.Any())
             {

@@ -60,22 +60,22 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
         protected global::FineUIPro.FormRow FormRow1;
 
         /// <summary>
-        /// DPstart 控件。
+        /// DpStartDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DPstart;
+        protected global::FineUIPro.DatePicker DpStartDate;
 
         /// <summary>
-        /// DPend 控件。
+        /// DpEndDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DPend;
+        protected global::FineUIPro.DatePicker DpEndDate;
 
         /// <summary>
         /// ttbSearchMessage 控件。
@@ -105,13 +105,13 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
         protected global::FineUIPro.Toolbar Toolbar1;
 
         /// <summary>
-        /// DDLline 控件。
+        /// DdlLine 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DropDownList DDLline;
+        protected global::FineUIPro.DropDownList DdlLine;
 
         /// <summary>
         /// DDLModel 控件。

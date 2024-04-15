@@ -29,9 +29,9 @@
                     <Toolbars>
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <f:DatePicker ID="DPend" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
                                     Label="<%$ Resources:GlobalResource,Query_Select_Date%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server"></f:ToolbarFill>
                                 <f:Button ID="BtnExport" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"

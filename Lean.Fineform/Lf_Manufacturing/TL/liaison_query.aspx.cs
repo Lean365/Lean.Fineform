@@ -40,8 +40,8 @@ namespace LeanFine.Lf_Manufacturing.TL
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreTlNew", btnNew);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
@@ -55,7 +55,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
-            BindDDLModel();
+            BindDdlModel();
             BindGrid();
         }
 
@@ -176,7 +176,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
         #region Events
 
-        private void BindDDLModel()//ERP设变技术担当
+        private void BindDdlModel()//ERP设变技术担当
         {
             var q = from a in DB.Pp_Liaisons
                     orderby a.Ec_model

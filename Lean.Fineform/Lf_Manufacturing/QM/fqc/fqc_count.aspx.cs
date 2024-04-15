@@ -39,7 +39,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
@@ -59,14 +59,14 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
-            BindDDLLline();
+            BindDdlLline();
             BindGrid();
         }
 
@@ -74,8 +74,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         {
             //第三个为最终结果,将不为空的数据合并到所有集合中
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
@@ -89,9 +89,9 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             {
                 q = q.Where(u => u.qmCheckdate.CompareTo(edate) <= 0);
             }
-            if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
             {
-                q = q.Where(u => u.qmLine.ToString().Contains(DDLline.SelectedItem.Text));
+                q = q.Where(u => u.qmLine.ToString().Contains(DdlLine.SelectedItem.Text));
             }
             if (DDLlot.SelectedIndex != 0 && DDLlot.SelectedIndex != -1)
             {
@@ -136,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
             ConvertHelper.LinqConvertToDataTable(qs);
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
         }
 
         #endregion Page_Load
@@ -154,7 +154,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "subeditField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "editField");
-            CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
@@ -238,10 +238,10 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         #endregion Events
 
-        public void BindDDLLline()
+        public void BindDdlLline()
         {
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             //string slot = DDLlot.SelectedItem.Text;
             //查询LINQ去重复
             var q = from a in DB.Qm_Outgoings
@@ -259,19 +259,19 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            DDLline.DataSource = qs;
-            DDLline.DataTextField = "qmLine";
-            DDLline.DataValueField = "qmLine";
-            DDLline.DataBind();
+            DdlLine.DataSource = qs;
+            DdlLine.DataTextField = "qmLine";
+            DdlLine.DataValueField = "qmLine";
+            DdlLine.DataBind();
 
-            this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+            this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        public void BindDDLLot()
+        public void BindDdlLot()
         {
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-            string sline = DDLline.SelectedItem.Text;
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string sline = DdlLine.SelectedItem.Text;
             //查询LINQ去重复
             var q = from a in DB.Qm_Outgoings
                     where a.qmCheckdate.CompareTo(sdate) >= 0
@@ -296,13 +296,13 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             this.DDLlot.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        public void BindDDLhbn()
+        public void BindDdlhbn()
         {
-            if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
             {
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
-                string sline = DDLline.SelectedItem.Text;
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string sline = DdlLine.SelectedItem.Text;
                 string slot = DDLlot.SelectedItem.Text;
                 //查询LINQ去重复
                 var q = from a in DB.Qm_Outgoings
@@ -330,11 +330,11 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
             {
-                BindDDLLot();
+                BindDdlLot();
                 BindGrid();
             }
         }
@@ -343,7 +343,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         {
             if (DDLlot.SelectedIndex != -1 && DDLlot.SelectedIndex != 0)
             {
-                BindDDLhbn();
+                BindDdlhbn();
                 BindGrid();
             }
         }
@@ -353,22 +353,22 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
-                BindDDLLline();
+                BindDdlLline();
                 DDLlot.Items.Clear();
                 DDLhbn.Items.Clear();
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
-                BindDDLLline();
+                BindDdlLline();
                 DDLlot.Items.Clear();
                 DDLhbn.Items.Clear();
 
@@ -377,7 +377,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal aTotal = 0.0m;
@@ -409,7 +409,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -418,8 +418,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             Xlsbomitem = "DTA_sdate_Qualified rate";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
@@ -437,9 +437,9 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             {
                 q = q.Where(u => u.qmCheckdate.CompareTo(edate) <= 0);
             }
-            if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
             {
-                q = q.Where(u => u.qmLine.ToString().Contains(DDLline.SelectedItem.Text));
+                q = q.Where(u => u.qmLine.ToString().Contains(DdlLine.SelectedItem.Text));
             }
             if (DDLlot.SelectedIndex != 0 && DDLlot.SelectedIndex != -1)
             {

@@ -15,7 +15,7 @@ namespace LeanFine.Lf_Admin
         {
             get
             {
-                return "CoreKitOutput";
+                return "CoreFineExport";
             }
         }
 
@@ -43,11 +43,11 @@ namespace LeanFine.Lf_Admin
 
             if (DateTime.Now >= d1)
             {
-                DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+                DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
             else
             {
-                DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+                DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
@@ -60,7 +60,7 @@ namespace LeanFine.Lf_Admin
 
         private void BindData()
         {
-            string selectYearAreaStart = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string selectYearAreaStart = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             string fy;
             var fm = (from a in DB.Fico_Periods
                       where a.Btfm.Contains(selectYearAreaStart)
@@ -148,9 +148,9 @@ namespace LeanFine.Lf_Admin
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindData();
                 //PageContext.RegisterStartupScript("<script>updateChartInTabStrip();</script>");

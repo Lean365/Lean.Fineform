@@ -39,15 +39,15 @@ namespace LeanFine.Lf_Accounting
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/bad_p2d_new.aspx", "P2D新增不良记录");
 
@@ -65,7 +65,7 @@ namespace LeanFine.Lf_Accounting
             IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
             q = q.Where(u => u.Bc_TitleName.Contains("生产成本"));
             q = q.Where(u => u.Bc_CostCode != 7777);
@@ -169,9 +169,9 @@ namespace LeanFine.Lf_Accounting
             //}
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
@@ -205,7 +205,7 @@ namespace LeanFine.Lf_Accounting
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -214,7 +214,7 @@ namespace LeanFine.Lf_Accounting
             IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
             q = q.Where(u => u.Bc_TitleName.Contains("生产成本"));
             var qs = from p in q

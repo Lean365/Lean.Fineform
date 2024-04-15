@@ -153,7 +153,7 @@
         function onSelectedRoleTrigger2Click() {
             F('Window1').show(F.baseUrl + 'Lf_Admin/user_select_role.aspx?ids=' + F(hfSelectedRoleClientID).getValue() + '', '选择用户所属的角色');
         }
-
+        
         function updateSelectedRole(roleNames, roleIds) {
             F(tbSelectedRoleClientID).setValue(roleNames);
             F(hfSelectedRoleClientID).setValue(roleIds);
@@ -185,6 +185,7 @@
         }
 
         function updateSelectedDept(deptName, deptId) {
+            debugger;
             F(tbSelectedDeptClientID).setValue(deptName);
             F(hfSelectedDeptClientID).setValue(deptId);
             checkSelectedDeptTriggerStatus();

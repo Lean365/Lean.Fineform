@@ -37,14 +37,14 @@ namespace LeanFine.Lf_Accounting
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             ////CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -58,7 +58,7 @@ namespace LeanFine.Lf_Accounting
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 5000;
@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Accounting
         {
             try
             {
-                DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
+                DateTime dt = DateTime.Parse(DpEndDate.SelectedDate.Value.ToString(""));
                 string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
                 string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
                 string searchText = ttbSearchMessage.Text.Trim();
@@ -152,7 +152,7 @@ namespace LeanFine.Lf_Accounting
                         Grid1.DataBind();
 
                         // 当前页的合计
-                        //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                        //GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     }
                     else
                     {
@@ -195,16 +195,16 @@ namespace LeanFine.Lf_Accounting
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -351,9 +351,9 @@ namespace LeanFine.Lf_Accounting
 
         #endregion Events
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();
@@ -361,7 +361,7 @@ namespace LeanFine.Lf_Accounting
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -388,7 +388,7 @@ namespace LeanFine.Lf_Accounting
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -399,11 +399,11 @@ namespace LeanFine.Lf_Accounting
 
             if (rbtnFirstAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnSecondAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_General + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_General + "_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";

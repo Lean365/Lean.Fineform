@@ -47,8 +47,8 @@ namespace LeanFine.Lf_Manufacturing.MM
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            BindDDLH_code();
-            BindDDLC_code();
+            BindDdlH_code();
+            BindDdlC_code();
         }
 
         private void BindDataC()
@@ -132,7 +132,7 @@ namespace LeanFine.Lf_Manufacturing.MM
             }
         }
 
-        private void BindDDLH_code()
+        private void BindDdlH_code()
         {
             IQueryable<PURMA> q = DBHYF.PURMA;
 
@@ -149,7 +149,7 @@ namespace LeanFine.Lf_Manufacturing.MM
             this.H_Code.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLC_code()
+        private void BindDdlC_code()
         {
             IQueryable<PURMA> q = DBCYF.PURMA;
 

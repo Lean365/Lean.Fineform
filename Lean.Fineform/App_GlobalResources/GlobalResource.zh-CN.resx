@@ -1239,4 +1239,10 @@
   <data name="sys_Button_Batch" xml:space="preserve">
     <value>批量</value>
   </data>
+  <data name="menu_Pp_Short" xml:space="preserve">
+    <value>SMT点数</value>
+  </data>
+  <data name="menu_Pp_Smt" xml:space="preserve">
+    <value>SMT生产</value>
+  </data>
 </root>

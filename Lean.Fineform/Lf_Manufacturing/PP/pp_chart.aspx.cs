@@ -13,7 +13,7 @@ namespace LeanFine.Lf_Manufacturing.PP
         {
             get
             {
-                return "CoreKitOutput";
+                return "CoreFineExport";
             }
         }
 
@@ -39,17 +39,17 @@ namespace LeanFine.Lf_Manufacturing.PP
 
             if (DateTime.Now >= d1)
             {
-                DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+                DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
             else
             {
-                DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+                DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 getdate();
                 //BindGrid();
@@ -62,7 +62,7 @@ namespace LeanFine.Lf_Manufacturing.PP
 
         private string getdate()
         {
-            string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string strDate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
     }

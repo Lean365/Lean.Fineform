@@ -60,7 +60,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             strEc_newitem = strgroup[5].ToString().Trim();
             strdist = strgroup[6].ToString().Trim();
 
-            //BindDDLLine();
+            //BindDdlLine();
             BindData();
             BindGrid();
             //InitNewItem();

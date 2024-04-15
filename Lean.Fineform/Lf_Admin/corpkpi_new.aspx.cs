@@ -35,15 +35,15 @@ namespace LeanFine.Lf_Admin
         private void LoadData()
         {
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
-            BindDDLCorp();
-            BindDDLYear();
+            BindDdlCorp();
+            BindDdlYear();
 
             this.ddlCorpAnnual.SelectedValue = DateTime.Now.AddYears(1).ToString("yyyy");
         }
 
-        #region BindDDL
+        #region BindDdl
 
-        private void BindDDLCorp()
+        private void BindDdlCorp()
         {
             IQueryable<Adm_Institution> q = DB.Adm_Institutions;
             //q = q.Where(u => u.EnName.ToString().Contains("25"));
@@ -58,7 +58,7 @@ namespace LeanFine.Lf_Admin
             this.ddlCorpAbbrName.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLYear()
+        private void BindDdlYear()
         {
             int selectYearAreaStart = int.Parse(DateTime.Now.AddYears(0).ToString("yyyy"));
             int selectYearAreaEnd = int.Parse(DateTime.Now.AddYears(10).ToString("yyyy"));
@@ -84,7 +84,7 @@ namespace LeanFine.Lf_Admin
             this.ddlCorpAnnual.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        #endregion BindDDL
+        #endregion BindDdl
 
         #endregion Page_Load
 

@@ -69,13 +69,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected global::FineUIPro.TwinTriggerBox ttbSearchMessage;
 
         /// <summary>
-        /// DPstart 控件。
+        /// DpStartDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DPstart;
+        protected global::FineUIPro.DatePicker DpStartDate;
 
         /// <summary>
         /// Grid1 控件。

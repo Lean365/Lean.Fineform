@@ -44,7 +44,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
             //ID,Ec_no,Ec_model,Ec_bomitem,Ec_olditem,Ec_newitem
             strEcnNO = (strgroup[0].ToString().Trim());
 
-            BindDDLItemlist();
+            BindDdlItemlist();
             BindData();
             BindGrid();
         }
@@ -128,7 +128,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
         {
         }
 
-        private void BindDDLItemlist()//物料信息
+        private void BindDdlItemlist()//物料信息
         {
             #region 停产机种不导入
 

@@ -57,7 +57,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             strdist = strgroup[6].ToString().Trim();
 
             BindGrid();
-            BindDDLLine();
+            BindDdlLine();
             BindData();
 
             //InitNewItem();
@@ -651,7 +651,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             strMailto = "";
         }
 
-        private void BindDDLLine()
+        private void BindDdlLine()
         {
             IQueryable<Adm_Dict> q = DB.Adm_Dicts;
             q = q.Where(u => u.DictType.Contains("line_type_m"));

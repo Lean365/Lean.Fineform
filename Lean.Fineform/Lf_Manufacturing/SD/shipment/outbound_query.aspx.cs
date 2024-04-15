@@ -39,15 +39,15 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
-            CheckPowerWithButton("CoreKitOutput", BtnDestination);
-            CheckPowerWithButton("CoreKitOutput", BtnProfit);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnDestination);
+            CheckPowerWithButton("CoreFineExport", BtnProfit);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BtnDestination.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing.PP/manufacturing/shipment/outbound_destination.aspx", "目的地分析");
             BtnProfit.OnClientClick = Window1.GetShowReference("~/Lf_Report/outbound_echarts.aspx", "目的地分析");
@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
                             a.OUTS006,
                         });
             // 在用户名称中搜索
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             qs = qs.Where(u => u.OUTS001.CompareTo(edate) == 0);
 
             // 在查询添加之后，排序和分页之前获取总记录数
@@ -193,9 +193,9 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
             //}
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
@@ -229,7 +229,7 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -251,7 +251,7 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
                             目的地 = a.OUTS006,
                         });
             // 在用户名称中搜索
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             qs = qs.Where(u => u.出货日期.CompareTo(edate) == 0);
 
             if (qs.Any())

@@ -39,8 +39,8 @@ namespace LeanFine.Lf_Manufacturing.Master
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
             CheckPowerWithButton("CoreKanbanNew", btnNew);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
@@ -112,7 +112,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreKanbanEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreKanbanView", Grid1, "viewField");
-            CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreLineDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
         }

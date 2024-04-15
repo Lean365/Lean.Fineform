@@ -35,7 +35,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
@@ -54,7 +54,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-            DPstart.SelectedDate = DateTime.Now;
+            DpStartDate.SelectedDate = DateTime.Now;
 
             // 每页记录数
             Grid1.PageSize = 1000;
@@ -94,9 +94,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     {
                         q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    if (DPstart.SelectedDate.HasValue)
+                    if (DpStartDate.SelectedDate.HasValue)
                     {
-                        string dsdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
+                        string dsdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                         q = q.Where(u => u.Prodate.Contains(dsdate));
                     }
 
@@ -151,7 +151,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                     ConvertHelper.LinqConvertToDataTable(qs);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
                     ttbSearchMessage.Text = "";
                 }
                 if (rbtnSecondAuto.Checked)
@@ -182,7 +182,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     {
                         q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText) || u.Prodate.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    string dsdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
+                    string dsdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Prodate.Contains(dsdate));
 
                     var qcount = from p in q
@@ -224,7 +224,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                     ConvertHelper.LinqConvertToDataTable(qs);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
                     ttbSearchMessage.Text = "";
                 }
                 if (rbtnThirdAuto.Checked)
@@ -255,7 +255,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText) || u.Prodate.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
-                    string dsdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
+                    string dsdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Prodate.Contains(dsdate));
                     var qcount = from p in q
                                  group p by new { p.Prolot } into g
@@ -295,7 +295,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                     ConvertHelper.LinqConvertToDataTable(qs);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
                     ttbSearchMessage.Text = "";
                 }
             }
@@ -319,16 +319,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -493,7 +493,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
             ttbSearchMessage.Text = "";
             BindGrid();
@@ -501,7 +501,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #endregion Events
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
             ttbSearchMessage.Text = "";
 
@@ -509,7 +509,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -535,7 +535,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;

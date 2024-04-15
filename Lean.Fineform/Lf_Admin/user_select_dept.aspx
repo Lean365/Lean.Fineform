@@ -57,7 +57,7 @@
             var selectedRowData = grid1.getSelectedRow(true);
             deptId = selectedRowData.id;
             deptName = stripHtmlTags(selectedRowData.values.Name);
-
+            debugger;
 
             // 返回当前活动Window对象（浏览器窗口对象通过F.getActiveWindow().window获取）
             var activeWindow = F.getActiveWindow();

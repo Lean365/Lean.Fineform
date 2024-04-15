@@ -43,9 +43,9 @@
 
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <f:DatePicker ID="DPend" Readonly="false" Width="300px" CompareControl="DPstart" DateFormatString="yyyyMM" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" Width="300px" CompareControl="DpStartDate" DateFormatString="yyyyMM" AutoPostBack="true"
                                     CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
                                 <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"

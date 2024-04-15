@@ -43,9 +43,9 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //CheckPowerWithButton("CoreProophp2dNew", btnP1dNew);
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/fqc/fqc_notice_new.aspx", "新增");
@@ -64,8 +64,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         private void BindGrid()
         {
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             IQueryable<Qm_Unqualified> q = DB.Qm_Unqualifieds; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
@@ -82,9 +82,9 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             {
                 q = q.Where(u => u.qmCheckdate.CompareTo(edate) <= 0);
             }
-            if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
+            if (this.DdlLine.SelectedIndex != -1 && this.DdlLine.SelectedIndex != 0)
             {
-                q = q.Where(u => u.qmLine.Contains(this.DDLline.SelectedText));
+                q = q.Where(u => u.qmLine.Contains(this.DdlLine.SelectedText));
             }
 
             q = q.Where(u => u.qmRejectqty > 0);
@@ -111,10 +111,10 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             Grid1.DataBind();
         }
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             var q = from a in DB.Qm_Unqualifieds
                         //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                     where a.qmCheckdate.CompareTo(sdate) >= 0
@@ -129,20 +129,20 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            DDLline.DataSource = qs;
-            DDLline.DataTextField = "qmLine";
-            DDLline.DataValueField = "qmLine";
-            DDLline.DataBind();
-            this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+            DdlLine.DataSource = qs;
+            DdlLine.DataTextField = "qmLine";
+            DdlLine.DataValueField = "qmLine";
+            DdlLine.DataBind();
+            this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
         #endregion Page_Load
 
         #region Events
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
             {
                 BindGrid();
             }
@@ -161,20 +161,20 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
                 BindGrid();
             }
         }
@@ -182,7 +182,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         protected void Grid1_PreDataBound(object sender, EventArgs e)
         {
             // 数据绑定之前，进行权限检查
-            CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             CheckPowerWithLinkButtonField("CoreFqcNoticeEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreFqcNoticeDelete", Grid1, "deleteField");
         }
@@ -244,7 +244,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             if (e.CommandName == "Print")
             {
                 // 在操作之前进行权限检查
-                if (!CheckPower("CoreKitPrint"))
+                if (!CheckPower("CoreFinePrint"))
                 {
                     CheckPowerFailWithAlert();
                     return;

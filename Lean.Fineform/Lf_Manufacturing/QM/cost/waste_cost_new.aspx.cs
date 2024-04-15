@@ -48,15 +48,15 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             // 初始化用户所属部门
             //InitNoticeDept();
 
-            BindDDLModels();
+            BindDdlModels();
 
             Qcwdrec.Text = GetIdentityName();
         }
 
-        #region BindingData
+        #region BindDdlData
 
         //机种选择
-        private void BindDDLModels()
+        private void BindDdlModels()
         {
             //查询LINQ去重复
             var q = from a in DB.Pp_Manhours
@@ -83,7 +83,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
         }
 
         //物料选择
-        private void BindDDLMatItems()
+        private void BindDdlMatItems()
         {
             if (Qcwd002.SelectedIndex != 0 || Qcwd002.SelectedIndex != -1)
             {
@@ -152,7 +152,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion BindingData
+        #endregion BindDdlData
 
         #endregion Page_Load
 
@@ -321,7 +321,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
 
         protected void Qcwd002_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindDDLMatItems();
+            BindDdlMatItems();
         }
 
         protected void Qcwd004_SelectedIndexChanged(object sender, EventArgs e)
@@ -332,7 +332,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
         protected void Qcwd001_TextChanged(object sender, EventArgs e)
         {
             CheckIFRS();
-            BindDDLModels();
+            BindDdlModels();
         }
 
         public void dQcwd007()

@@ -50,8 +50,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         private void LoadData()
         {
-            BindDDLorder();
-            BindDDLuser();
+            BindDdlorder();
+            BindDdluser();
             userid = GetIdentityName();
             mysql = "select * from [dbo].[Qm_Outgoing];";
             CheckD = ConvertHelper.GetDataTable(mysql);
@@ -134,7 +134,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             }
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
         }
 
         private void BindStock()
@@ -936,7 +936,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             CheckDDLData();
         }
 
-        private void BindDDLuser()
+        private void BindDdluser()
         {
             var q_user = from a in DB.Adm_Dicts
                          where a.DictType.Contains("reason_type_q")
@@ -955,7 +955,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             qmInspector.DataBind();
         }
 
-        private void BindDDLorder()
+        private void BindDdlorder()
         {
             var arrs = DB.Pp_P1d_OutputSubs.Select(a => a.Proorder).ToArray();
 
@@ -980,7 +980,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             this.qmOrder.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLStdClass()//qmJudgment
+        private void BindDdlStdClass()//qmJudgment
         {
             IQueryable<Qm_CheckType> q = DB.Qm_CheckTypes;
             q = q.Where(u => u.Checktype.Contains("B"));
@@ -993,7 +993,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmJudgment.DataBind();
         }
 
-        private void BindDDLInsClass()//qmCheckmethod
+        private void BindDdlInsClass()//qmCheckmethod
         {
             IQueryable<Qm_CheckType> q = DB.Qm_CheckTypes;
             q = q.Where(u => u.Checktype.Contains("A"));
@@ -1006,7 +1006,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmCheckmethod.DataBind();
         }
 
-        private void BindDDLLine()
+        private void BindDdlLine()
         {
             if (this.qmOrder.SelectedIndex != 0 && this.qmOrder.SelectedIndex != -1)
             {
@@ -1035,7 +1035,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             }
         }
 
-        private void BindDDLLevel()
+        private void BindDdlLevel()
         {
             //查询LINQ去重复
             var q = from a in DB.Qm_CheckTypes
@@ -1061,7 +1061,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             ddlqmJudgmentlevel.DataBind();
         }
 
-        private void BindDDLcLevel()
+        private void BindDdlcLevel()
         {
             //查询LINQ去重复
             var q = from a in DB.Qm_CheckAQLs
@@ -1402,11 +1402,11 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 }
 
                 BindGrid();
-                BindDDLStdClass();
-                BindDDLInsClass();
+                BindDdlStdClass();
+                BindDdlInsClass();
 
-                BindDDLLevel();
-                BindDDLcLevel();
+                BindDdlLevel();
+                BindDdlcLevel();
             }
         }
 
@@ -1414,7 +1414,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         {
             if (qmOrder.SelectedIndex != -1 && qmOrder.SelectedIndex != 0)
             {
-                BindDDLLine();
+                BindDdlLine();
                 if (qmLine.SelectedIndex != -1 && qmLine.SelectedIndex != 0)
                 {
                     var q = from a in DB.Pp_P1d_Outputs
@@ -1482,11 +1482,11 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                     }
 
                     BindGrid();
-                    BindDDLStdClass();
-                    BindDDLInsClass();
+                    BindDdlStdClass();
+                    BindDdlInsClass();
 
-                    BindDDLLevel();
-                    BindDDLcLevel();
+                    BindDdlLevel();
+                    BindDdlcLevel();
                 }
             }
         }
@@ -2353,7 +2353,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

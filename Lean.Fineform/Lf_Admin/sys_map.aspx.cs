@@ -110,7 +110,7 @@ namespace LeanFine.Lf_Admin
             CheckPowerWithButton("CoreInboundScanView", Btn_Pp_inbound_query);
             CheckPowerWithButton("CoreOutboundScanView", Btn_Pp_outbound_query);
             CheckPowerWithButton("CoreLogView", Btn_sys_help);
-            CheckPowerWithButton("CoreKitOutput", Btn_sys_Charts);
+            CheckPowerWithButton("CoreFineExport", Btn_sys_Charts);
             //btnConfig.OnClientClick = Window1.GetShowReference("~/Lf_Admin/dept_new.aspx", "新增部门");
         }
 

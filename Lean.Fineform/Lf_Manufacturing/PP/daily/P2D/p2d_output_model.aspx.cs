@@ -44,8 +44,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
-            CheckPowerWithButton("CoreKitOutput", BtnRepair);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnRepair);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -56,9 +56,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/oph_p2d_new.aspx", "P2D新增不良记录");
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 1000;
@@ -71,331 +71,130 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         {
             try
             {
-                if (rbtnFirstAuto.Checked)
+                var q_all = from p in DB.Pp_P2d_OutputSubs
+                                //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
+                            where p.isDeleted == 0
+                            where p.Prorealqty != 0 //|| p.Prolinestopmin != 0
+                            select new
+                            {
+                                p.Prodate,
+                                p.Prolot,
+                                p.Promodel,
+                                p.Propcbatype,
+                                p.Propcbaside,
+                                p.Prost,
+                                p.Proshort,
+                                p.Prorate,
+                                p.Prorealqty,
+                                p.Prorealtotal,
+                                p.Protime,
+                                p.Prohandoffnum,
+                                p.Prohandofftime,
+                                p.Prodowntime,
+                                p.Prolosstime,
+                                p.Promaketime,
+                            };
+
+                var q =
+                    from p in q_all
+                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot } into g
+                    select new
+                    {
+                        g.Key.Prolot,
+                        g.Key.Prodate,
+                        g.Key.Promodel,
+                        g.Key.Propcbatype,
+                        g.Key.Propcbaside,
+                        Prost = g.Average(p => p.Prost),
+                        Proshort = g.Average(p => p.Proshort),
+                        Prorate = g.Average(p => p.Prorate),
+                        Prorealqty = g.Sum(p => p.Prorealqty),
+                        Prorealtotal = g.Sum(p => p.Prorealtotal),
+                        Protime = g.Sum(p => p.Protime),
+                        Prohandoffnum = g.Sum(p => p.Prohandoffnum),
+                        Prohandofftime = g.Sum(p => p.Prohandofftime),
+                        Prodowntime = g.Sum(p => p.Prodowntime),
+                        Prolosstime = g.Sum(p => p.Prolosstime),
+                        Promaketime = g.Sum(p => p.Promaketime),
+                        //Proworktime = g.Sum(p => p.Prorealtime),
+                        //Proplanqty = g.Sum(p => p.Prostdcapacity),
+                        //Proworkqty = g.Sum(p => p.Prorealqty),
+                        //Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
+                        //Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Average(p => p.Prost) : g.Average(p => p.Prost)),
+                        //Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
+                        //Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
+                    };
+                var qs = q.Select(p => new
                 {
-                    var q_all = from p in DB.Pp_P2d_OutputSubs
-                                    //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                                where p.isDeleted == 0
-                                where p.Prorealqty != 0 //|| p.Prolinestopmin != 0
-                                select new
-                                {
-                                    p.Prodate,
-                                    p.Prolinename,
-                                    p.Prodirect,
-                                    p.Proindirect,
-                                    p.Prolot,
-                                    p.Prohbn,
-                                    p.Prost,
-                                    p.Promodel,
-                                    p.Prorealtime,
-                                    p.Prostdcapacity,
-                                    p.Prorealqty,
-                                };
+                    p.Prodate,
+                    p.Prolot,
+                    p.Promodel,
+                    p.Propcbatype,
+                    p.Propcbaside,
+                    p.Prost,
+                    p.Proshort,
+                    p.Prorate,
+                    p.Prorealqty,
+                    p.Prorealtotal,
+                    p.Protime,
+                    p.Prohandoffnum,
+                    p.Prohandofftime,
+                    p.Prodowntime,
+                    p.Prolosstime,
+                    p.Promaketime,
+                }).ToList().Distinct();
 
-                    var q =
-                        from p in q_all
-                        group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel } into g
-                        select new
-                        {
-                            Prodate = g.Key.Prodate,
-                            Promodel = g.Key.Promodel,
-                            Prodirect = g.Average(p => p.Prodirect),
+                //qs.Count();
 
-                            Prost = g.Average(p => p.Prost),
-                            Proworktime = g.Sum(p => p.Prorealtime),
-                            Proplanqty = g.Sum(p => p.Prostdcapacity),
-                            Proworkqty = g.Sum(p => p.Prorealqty),
-                            Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
-                            Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Average(p => p.Prost) : g.Average(p => p.Prost)),
-                            Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
-                            Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
-                        };
-                    var qs = q.Select(E => new
-                    {
-                        E.Prodate,
-                        E.Promodel,
-                        E.Prodirect,
+                //IQueryable<Pp_Defect> q = DB.Pp_Defects; //.Include(u => u.Dept);
 
-                        E.Prost,
-                        E.Proworktime,
-                        E.Proplanqty,
-                        E.Proworkqty,
-                        E.Proworkst,
-                        E.Prodiffst,
-                        E.Prodiffqty,
-                        E.Proactivratio
-                    }).ToList().Distinct();
+                // 在用户名称中搜索
+                string searchText = ttbSearchMessage.Text.Trim();
+                if (!String.IsNullOrEmpty(searchText))
+                {
+                    q = q.Where(u => u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                }
 
-                    //qs.Count();
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
-                    //IQueryable<Pp_Defect> q = DB.Pp_Defects; //.Include(u => u.Dept);
+                if (!string.IsNullOrEmpty(sdate))
+                {
+                    q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
+                }
+                if (!string.IsNullOrEmpty(sdate))
+                {
+                    q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
+                }
 
-                    // 在用户名称中搜索
-                    string searchText = ttbSearchMessage.Text.Trim();
-                    if (!String.IsNullOrEmpty(searchText))
-                    {
-                        q = q.Where(u => u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
-                    }
+                // 在查询添加之后，排序和分页之前获取总记录数
+                Grid1.RecordCount = GridHelper.GetTotalCount(q);
+                if (Grid1.RecordCount != 0)
+                {
+                    // 排列和数据库分页
+                    //q = SortAndPage<Pp_P2d_Outputsub>(q, Grid1);
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
+                    //Grid1.RecordCount = GetTotalCount();
 
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
-                    }
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
-                    }
+                    // 2.获取当前分页数据
+                    DataTable table = GridHelper.GetPagedDataTable(Grid1, q);
 
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    Grid1.RecordCount = GridHelper.GetTotalCount(q);
-                    if (Grid1.RecordCount != 0)
-                    {
-                        // 排列和数据库分页
-                        //q = SortAndPage<Pp_P2d_Outputsub>(q, Grid1);
+                    Grid1.DataSource = q;
+                    Grid1.DataBind();
 
-                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
-                        //Grid1.RecordCount = GetTotalCount();
-
-                        // 2.获取当前分页数据
-                        DataTable table = GridHelper.GetPagedDataTable(Grid1, q);
-
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-
-                        ConvertHelper.LinqConvertToDataTable(q);
-                        // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-                    }
-                    else
-                    {
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-                    }
                     ConvertHelper.LinqConvertToDataTable(q);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                 }
-                if (rbtnSecondAuto.Checked)
+                else
                 {
-                    //Decimal ra = 0.85m;
-                    var q_normal = from p in DB.Pp_P2d_OutputSubs
-                                       //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                                   where p.isDeleted == 0
-                                   where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                                   where p.Proorder.Substring(0, 1).Contains("4")
-                                   select new
-                                   {
-                                       p.Prodate,
-                                       p.Prolinename,
-                                       p.Prodirect,
-                                       p.Proindirect,
-                                       p.Prolot,
-                                       p.Prohbn,
-                                       p.Prost,
-                                       p.Promodel,
-                                       p.Prorealtime,
-                                       p.Prostdcapacity,
-                                       p.Prorealqty,
-                                   };
-
-                    var q =
-                        from p in q_normal
-                        group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel } into g
-                        select new
-                        {
-                            Prodate = g.Key.Prodate,
-                            Promodel = g.Key.Promodel,
-                            Prodirect = g.Average(p => p.Prodirect),
-
-                            Prost = g.Average(p => p.Prost),
-                            Proworktime = g.Sum(p => p.Prorealtime),
-                            Proplanqty = g.Sum(p => p.Prostdcapacity),
-                            Proworkqty = g.Sum(p => p.Prorealqty),
-                            Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
-                            Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Average(p => p.Prost) : g.Average(p => p.Prost)),
-                            Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
-                            Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
-                        };
-                    var qs = q.Select(E => new
-                    {
-                        E.Prodate,
-                        E.Promodel,
-                        E.Prodirect,
-
-                        E.Prost,
-                        E.Proworktime,
-                        E.Proplanqty,
-                        E.Proworkqty,
-                        E.Proworkst,
-                        E.Prodiffst,
-                        E.Prodiffqty,
-                        E.Proactivratio
-                    }).ToList().Distinct();
-
-                    //qs.Count();
-
-                    //IQueryable<Pp_Defect> q = DB.Pp_Defects; //.Include(u => u.Dept);
-
-                    // 在用户名称中搜索
-                    string searchText = ttbSearchMessage.Text.Trim();
-                    if (!String.IsNullOrEmpty(searchText))
-                    {
-                        q = q.Where(u => u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
-                    }
-
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
-                    }
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
-                    }
-
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    Grid1.RecordCount = GridHelper.GetTotalCount(q);
-                    if (Grid1.RecordCount != 0)
-                    {
-                        // 排列和数据库分页
-                        //q = SortAndPage<Pp_P2d_Outputsub>(q, Grid1);
-
-                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
-                        //Grid1.RecordCount = GetTotalCount();
-
-                        // 2.获取当前分页数据
-                        DataTable table = GridHelper.GetPagedDataTable(Grid1, q);
-
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-
-                        ConvertHelper.LinqConvertToDataTable(q);
-                        // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-                    }
-                    else
-                    {
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-                    }
-                    ConvertHelper.LinqConvertToDataTable(q);
-                    // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    Grid1.DataSource = q;
+                    Grid1.DataBind();
                 }
-                if (rbtnThirdAuto.Checked)
-                {
-                    //Decimal ra = 0.85m;
-                    var q_rework = from p in DB.Pp_P2d_OutputSubs
-                                       //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                                   where p.isDeleted == 0
-                                   where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                                   where p.Proorder.Substring(0, 1).Contains("5")
-                                   select new
-                                   {
-                                       p.Prodate,
-                                       p.Prolinename,
-                                       p.Prodirect,
-                                       p.Proindirect,
-                                       p.Prolot,
-                                       p.Prohbn,
-                                       p.Prost,
-                                       p.Promodel,
-                                       p.Prorealtime,
-                                       p.Prostdcapacity,
-                                       p.Prorealqty,
-                                   };
-
-                    var q =
-                        from p in q_rework
-                        group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel } into g
-                        select new
-                        {
-                            Prodate = g.Key.Prodate,
-                            Promodel = g.Key.Promodel,
-                            Prodirect = g.Average(p => p.Prodirect),
-
-                            Prost = g.Average(p => p.Prost),
-                            Proworktime = g.Sum(p => p.Prorealtime),
-                            Proplanqty = g.Sum(p => p.Prostdcapacity),
-                            Proworkqty = g.Sum(p => p.Prorealqty),
-                            Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
-                            Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Average(p => p.Prost) : g.Average(p => p.Prost)),
-                            Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
-                            Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
-                        };
-                    var qs = q.Select(E => new
-                    {
-                        E.Prodate,
-                        E.Promodel,
-                        E.Prodirect,
-
-                        E.Prost,
-                        E.Proworktime,
-                        E.Proplanqty,
-                        E.Proworkqty,
-                        E.Proworkst,
-                        E.Prodiffst,
-                        E.Prodiffqty,
-                        E.Proactivratio
-                    }).ToList().Distinct();
-
-                    //qs.Count();
-
-                    //IQueryable<Pp_Defect> q = DB.Pp_Defects; //.Include(u => u.Dept);
-
-                    // 在用户名称中搜索
-                    string searchText = ttbSearchMessage.Text.Trim();
-                    if (!String.IsNullOrEmpty(searchText))
-                    {
-                        q = q.Where(u => u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
-                    }
-
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
-                    }
-                    if (!string.IsNullOrEmpty(sdate))
-                    {
-                        q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
-                    }
-
-                    // 在查询添加之后，排序和分页之前获取总记录数
-                    Grid1.RecordCount = GridHelper.GetTotalCount(q);
-                    if (Grid1.RecordCount != 0)
-                    {
-                        // 排列和数据库分页
-                        //q = SortAndPage<Pp_P2d_Outputsub>(q, Grid1);
-
-                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
-                        //Grid1.RecordCount = GetTotalCount();
-
-                        // 2.获取当前分页数据
-                        DataTable table = GridHelper.GetPagedDataTable(Grid1, q);
-
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-
-                        ConvertHelper.LinqConvertToDataTable(q);
-                        // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-                    }
-                    else
-                    {
-                        Grid1.DataSource = q;
-                        Grid1.DataBind();
-                    }
-                    ConvertHelper.LinqConvertToDataTable(q);
-                    // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
-                }
+                ConvertHelper.LinqConvertToDataTable(q);
+                // 当前页的合计
+                GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
             }
             catch (ArgumentNullException Message)
             {
@@ -417,43 +216,19 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
-        }
-
-        protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
-        {
-            // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
-            // 不处理取消选中菜单项的事件，从而防止此函数重复执行两次
-            if (!e.Checked)
-            {
-                return;
-            }
-
-            string checkedValue = String.Empty;
-            if (rbtnFirstAuto.Checked)
-            {
-                BindGrid();
-            }
-            else if (rbtnSecondAuto.Checked)
-            {
-                BindGrid();
-            }
-            else if (rbtnThirdAuto.Checked)
-            {
-                BindGrid();
-            }
         }
 
         protected void Grid1_PreDataBound(object sender, EventArgs e)
@@ -508,7 +283,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -519,7 +294,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Total_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Total_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -591,8 +366,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 }
                 else
                 {
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -623,7 +398,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUALQTY" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUALQTY" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 
@@ -648,7 +423,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected void BtnRepair_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -659,7 +434,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Total)_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Total)_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -732,8 +507,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 }
                 else
                 {
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -762,7 +537,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ReworkModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DPend.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ReworkModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 
@@ -793,24 +568,24 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //Grid1.AllowPaging = true;
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

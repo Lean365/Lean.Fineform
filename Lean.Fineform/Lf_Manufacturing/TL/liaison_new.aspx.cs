@@ -49,14 +49,14 @@ namespace LeanFine.Lf_Manufacturing.TL
 
             Ec_issuedate.SelectedDate = DateTime.Now;
             Ec_enterdate.SelectedDate = DateTime.Now;
-            BindDDLtype();
-            BindDDLModel();
-            BindDDLModelist();
-            BindDDLRegion();
-            BindDDLUserlist();
+            BindDdltype();
+            BindDdlModel();
+            BindDdlModelist();
+            BindDdlRegion();
+            BindDdlUserlist();
         }
 
-        private void BindDDLtype()
+        private void BindDdltype()
         {
             var q = from a in DB.Qm_DocNumbers
                     orderby a.Docnumber
@@ -83,7 +83,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
         #region Events
 
-        private void BindDDLUserlist()//ERP设变技术担当
+        private void BindDdlUserlist()//ERP设变技术担当
         {
             var q_user = from a in DB.Adm_Users
                          join b in DB.Adm_Depts on a.Dept.ID equals b.ID
@@ -104,7 +104,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             this.Ec_leader.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLModel()//ERP设变技术担当
+        private void BindDdlModel()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
                           orderby a.Promodel
@@ -136,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
         }
 
-        private void BindDDLModelist()//ERP设变技术担当
+        private void BindDdlModelist()//ERP设变技术担当
         {
             var q_model = from a in DB.Pp_Manhours
                           orderby a.Promodel
@@ -168,7 +168,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             //this.Ec_model.Items.Insert(1, new FineUIPro.ListItem("ALL", ""));
         }
 
-        private void BindDDLRegion()//ERP设变技术担当
+        private void BindDdlRegion()//ERP设变技术担当
         {
             var q_region = from a in DB.Pp_Manhours
                            orderby a.Prodesc

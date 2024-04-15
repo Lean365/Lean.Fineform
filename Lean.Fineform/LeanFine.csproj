@@ -318,6 +318,12 @@
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_opt.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_order_finish.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_monthly.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_monthly.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx" />
@@ -900,6 +906,8 @@
     <Content Include="Lf_Resources\menu\qapass.png" />
     <Content Include="Lf_Resources\menu\sopasy.png" />
     <Content Include="Lf_Resources\menu\soppcba.png" />
+    <Content Include="Lf_Resources\menu\prosmt.png" />
+    <Content Include="Lf_Resources\menu\propcb.png" />
     <Content Include="main.aspx" />
     <Content Include="Lf_Resources\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Lf_Resources\bootstrap\css\bootstrap-grid.min.css" />
@@ -4116,6 +4124,8 @@
     <Compile Include="Lf_Business\Models\PP\Pp_P1d_OutputSub.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P2d_Inspection_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P2d_Manufacturing_Defect.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P2d_Smt_Output.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P2d_Smt_Short.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P2d_Output.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P2d_OutputSub.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_SapEcn.cs" />
@@ -7020,6 +7030,48 @@
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_output_query.aspx.designer.cs">
       <DependentUpon>p2d_output_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short.aspx.cs">
+      <DependentUpon>p2d_smt_short.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short.aspx.designer.cs">
+      <DependentUpon>p2d_smt_short.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_edit.aspx.cs">
+      <DependentUpon>p2d_smt_short_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_edit.aspx.designer.cs">
+      <DependentUpon>p2d_smt_short_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_new.aspx.cs">
+      <DependentUpon>p2d_smt_short_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_short_new.aspx.designer.cs">
+      <DependentUpon>p2d_smt_short_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily.aspx.cs">
+      <DependentUpon>p2d_smt_daily.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily.aspx.designer.cs">
+      <DependentUpon>p2d_smt_daily.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_edit.aspx.cs">
+      <DependentUpon>p2d_smt_daily_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_edit.aspx.designer.cs">
+      <DependentUpon>p2d_smt_daily_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx.cs">
+      <DependentUpon>p2d_smt_daily_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx.designer.cs">
+      <DependentUpon>p2d_smt_daily_new.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_monthly.aspx.cs">
       <DependentUpon>p2d_inspection_defect_monthly.aspx</DependentUpon>

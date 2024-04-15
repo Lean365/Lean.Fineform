@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Admin
             }
 
             // 绑定上级菜单下拉列表
-            BindDDL(current);
+            BindDdl(current);
 
             // 预置图标列表
             InitIconList(iconList);
@@ -82,7 +82,7 @@ namespace LeanFine.Lf_Admin
             }
         }
 
-        private void BindDDL(Adm_Menu current)
+        private void BindDdl(Adm_Menu current)
         {
             List<Adm_Menu> mys = ResolveDDL<Adm_Menu>(MenuHelper.Adm_Menus, current.ID);
 

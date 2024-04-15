@@ -88,7 +88,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             DefDate.SelectedDate = DateTime.Now.AddDays(-1);
 
-            BindDDLline();
+            BindDdlLine();
 
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.无不良台数不超过当天生产的实绩。</div><div>2.同LOT不同订单的集计系统自动处理。</div><div>3.不良集计是按选择的日期，批次对应工单的完成情况计算出来的。</div><div>4.OPH中没有不良的批次自动追加到不良集计中。</div>");
         }
@@ -123,17 +123,17 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
-            BindDDLDept();
+            BindDdlDept();
         }
 
         #endregion Page_Load
 
-        #region DDLBindData
+        #region BindDdl Dropdown ListData
 
         //查询LOT
-        private void BindDDLprolot()
+        private void BindDdlprolot()
         {
             //查询LINQ去重复
 
@@ -168,7 +168,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         }
 
         //查询班组
-        private void BindDDLline()
+        private void BindDdlLine()
 
         {
             if (DefDate.SelectedDate.HasValue)
@@ -204,7 +204,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         }
 
         //  不良种类
-        private void BindDDLDept()
+        private void BindDdlDept()
         {
             //查询LINQ去重复
             var q = from a in DB.Adm_Dicts
@@ -229,7 +229,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             ddlProngdept.DataBind();
         }
 
-        #endregion DDLBindData
+        #endregion BindDdl Dropdown ListData
 
         #region Events
 
@@ -242,7 +242,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 promodel.Text = "";
                 proorder.Text = "";
                 proorderqty.Text = "";
-                BindDDLprolot();
+                BindDdlprolot();
             }
         }
 
@@ -1075,7 +1075,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected void DefDate_TextChanged(object sender, EventArgs e)
         {
             //绑定DDL
-            BindDDLline();
+            BindDdlLine();
         }
 
         #endregion Events
@@ -1182,7 +1182,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// </summary>
         /// <param name="source"></param>
         //
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

@@ -49,9 +49,9 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             //CheckPowerWithButton("CoreQcCostExport", BtnExport);
             //CheckPowerWithButton("CoreQcCostExport", Btn2003);
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
             btnNew1.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/rework_cost_new.aspx", "新增") + Window1.GetMaximizeReference();
             btnNew2.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/QM/cost/operation_cost_new.aspx", "新增") + Window1.GetMaximizeReference();
@@ -77,8 +77,8 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
 
             // 在用户名称中搜索
             //string searchText = ttbSearchMessage.Text.Trim();
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -120,7 +120,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             // 数据绑定之前，进行权限检查
             CheckPowerWithLinkButtonField("CoreOperationCostEdit", Grid1, "editField");
             CheckPowerWithLinkButtonField("CoreOperationCostDelete", Grid1, "deleteField");
-            CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
         }
 
@@ -222,17 +222,17 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }

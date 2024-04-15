@@ -49,7 +49,7 @@
                                     OnTrigger1Click="ttbSearchMessage_Trigger1Click">
                                 </f:TwinTriggerBox>
                                 <f:DatePicker runat="server" DateFormatString="yyyyMM" EmptyText="请选择日期" AutoPostBack="true"
-                                    ID="DPstart" ShowRedStar="True" OnTextChanged="DPstart_TextChanged">
+                                    ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
                                 </f:DatePicker>
                             </Items>
                         </f:FormRow>

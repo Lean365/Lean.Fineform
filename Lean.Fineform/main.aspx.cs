@@ -323,7 +323,8 @@ namespace LeanFine
                     case "生产进度": node.Text = global::Resources.GlobalResource.menu_Pp_ProducingProgress; break;
                     case "OPH报表": node.Text = global::Resources.GlobalResource.menu_Pp_OPH_Report; break;
                     case "看板管理": node.Text = global::Resources.GlobalResource.menu_Pp_Kanban; break;
-
+                    case "SMT点数": node.Text = global::Resources.GlobalResource.menu_Pp_Short; break;
+                    case "SMT日报": node.Text = global::Resources.GlobalResource.menu_Pp_Smt; break;
                     case "制一不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Defect; break;
                     case "制二不良": node.Text = global::Resources.GlobalResource.menu_Pp_P2d_Defect; break;
                     case "工程检查": node.Text = global::Resources.GlobalResource.menu_Pp_Inspection; break;
@@ -584,7 +585,7 @@ namespace LeanFine
         protected void Timer1_Tick(object sender, EventArgs e)
         {
             //显示时间右下角
-            txtDtime.Text = DateTime.Now.ToString();
+            //txtDtime.Text = DateTime.Now.ToString();
         }
     }
 }

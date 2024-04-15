@@ -1239,4 +1239,10 @@
   <data name="sys_Button_Batch" xml:space="preserve">
     <value>Batch</value>
   </data>
+  <data name="menu_Pp_Short" xml:space="preserve">
+    <value>SMT Short</value>
+  </data>
+  <data name="menu_Pp_Smt" xml:space="preserve">
+    <value>SMT Daily</value>
+  </data>
 </root>

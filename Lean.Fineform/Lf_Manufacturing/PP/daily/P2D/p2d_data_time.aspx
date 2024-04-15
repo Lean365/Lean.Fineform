@@ -32,9 +32,9 @@
                     <Toolbars>
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <f:DatePicker ID="DPend" Readonly="false" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                     Label="<%$ Resources:GlobalResource,Query_Select_Date%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
                                 <f:ToolbarSeparator ID="ToolbarSeparator1" runat="server">
                                 </f:ToolbarSeparator>

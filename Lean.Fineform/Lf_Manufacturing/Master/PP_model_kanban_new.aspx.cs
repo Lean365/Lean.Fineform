@@ -49,10 +49,10 @@ namespace LeanFine.Lf_Manufacturing.Master
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            BindDDLproLine();
+            BindDdlproLine();
         }
 
-        private void BindDDLproLine()
+        private void BindDdlproLine()
         {
             var q = from a in DB.Adm_Dicts
                     where a.DictType.Contains("line_type_m")
@@ -74,7 +74,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             this.ddlP_Kanban_Line.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLproOrder()//工单信息
+        private void BindDdlproOrder()//工单信息
         {
             var q = from p in DB.Pp_Orders
                         //where p.Porderhbn.Contains(Pitem)
@@ -110,7 +110,7 @@ namespace LeanFine.Lf_Manufacturing.Master
         {
             if (ddlP_Kanban_Line.SelectedIndex != -1 || ddlP_Kanban_Line.SelectedIndex != 0)
             {
-                BindDDLproOrder();
+                BindDdlproOrder();
             }
         }
 

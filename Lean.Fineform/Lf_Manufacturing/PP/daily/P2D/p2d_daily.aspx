@@ -20,13 +20,13 @@
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
                                 <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
-                                    ID="DPstart" ShowRedStar="True" OnTextChanged="DPstart_TextChanged">
+                                    ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
                                 </f:DatePicker>
-                                <f:DatePicker ID="DPend" Readonly="false" CompareControl="DPstart" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" CompareControl="DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                     CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
-                                <f:DropDownList ID="DDLline" Label="<%$ Resources:GlobalResource,Query_Pp_Line%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLline_SelectedIndexChanged">
+                                <f:DropDownList ID="DdlLine" Label="<%$ Resources:GlobalResource,Query_Pp_Line%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DdlLine_SelectedIndexChanged">
                                 </f:DropDownList>
                                 <f:TwinTriggerBox ID="ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Pp_EmptyText%>"
                                     Trigger1Icon="Clear" Trigger2Icon="Search" ShowTrigger1="false" OnTrigger2Click="ttbSearchMessage_Trigger2Click"
@@ -90,7 +90,7 @@
                         <%--<f:BoundField DataField="Prost" SortField="Prost" Width="80px" HeaderText="工时" />--%>
                         <%--<f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="60px" HeaderText="产能" />--%>
                         <f:BoundField DataField="Proorder" SortField="Proorder" Width="120px" HeaderText="生产工单" />
-                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" Width="120px" HeaderText="工单数量" />
+                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" Width="120px" HeaderText="Lot数量" />
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"
                             HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>"
                             ToolTip="<%$ Resources:GlobalResource,sys_Button_Delete%>" ConfirmText="<%$ Resources:GlobalResource,sys_Button_DeleteConfirmText%>"

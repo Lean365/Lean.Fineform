@@ -60,13 +60,13 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.Toolbar Toolbar2;
 
         /// <summary>
-        /// DPstart 控件。
+        /// DpStartDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DPstart;
+        protected global::FineUIPro.DatePicker DpStartDate;
 
         /// <summary>
         /// ToolbarFill2 控件。
@@ -78,13 +78,13 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.ToolbarFill ToolbarFill2;
 
         /// <summary>
-        /// DPend 控件。
+        /// DpEndDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DPend;
+        protected global::FineUIPro.DatePicker DpEndDate;
 
         /// <summary>
         /// ToolbarFill1 控件。

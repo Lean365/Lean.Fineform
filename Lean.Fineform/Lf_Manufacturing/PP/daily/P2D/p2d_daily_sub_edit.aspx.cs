@@ -30,7 +30,20 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #region Page_Load
 
-        public static string mysql, strProorder, strProorderqty, strProlinename, strProdate, strProdirect, strProindirect, strProlot, strPromodel, strProhbn, strPropbctype, strProst, strProshort, strProrate, strProstdcapacity, strTotaltag, strProstime, strProetime, strProrealqty, strPropcbserial, strProlinestopmin, strProstopcou, strProstopmemo, strProbadcou, strProbadmemo, strProlinemin, strProrealtime, strProworkst, strProstdiff, strProqtydiff, strProratio, strUDF01, strUDF02, strUDF03, strUDF04, strUDF05, strUDF06, strisDelete, strRemark, strModifier, strModifyDate;
+        public static string mysql, strProordertype, strProorder, strProorderqty, strProlinename, strProdate, strProdirect, strProindirect,
+                            strProlot, strPromodel, strProhbn, strPropcbatype, strPropcbaside,
+                            strProst, strProshort, strProrate, strProstdcapacity, strTotaltag,
+                            strProstime, strProetime, strProrealqty,
+                            strPropcbserial, strProlinestopmin, strProstopcou, strProstopmemo, strProbadcou, strProbadmemo,
+                            strProlinemin, strProrealtime,
+                            strPropcbastated, strProtime, strProhandoffnum, strProhandofftime, strProdowntime,
+                            strProlosstime, strPromaketime, strProworkst,
+                            strProstdiff, strProqtydiff, strProratio,
+                            strUDF01, strUDF02, strUDF03, strUDF04, strUDF05, strUDF06,
+                            strUDF51, strUDF52, strUDF53, strUDF54, strUDF55, strUDF56,
+                            strisDeleted, strRemark,
+                            strCreator, strCreateDate, strModifier, strModifyDate;
+
         public static int prorate;
         public static int ParentID, rowID;
         public static decimal orderqty, ophqty;
@@ -77,7 +90,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-
+            BindDdlPcbaType();
+            BindDdlProStated();
+            BindDdlProCause();
             Rate();
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.生产工数为1时，参与OPH计划台数统计。</div><div>2.同一时段生产多个工单时，计划台数系统自动处理，作业工数计算方法：<strong>多个工单具体的实绩工数+停线时间</strong></div><div>3.实绩工数的计算公式：<strong>作业工数-停线时间</strong></div><div>4.实绩工数不能为负数</div><div>4.生产实绩不能超过工单数量</div>");
             //MemoText.Text = "填写说明" + Environment.NewLine + "1.作业工数为1时，参与OPH计划台数统计。" + Environment.NewLine +"2.同一时段多个工单生产时，";
@@ -85,33 +100,141 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void BindGrid()
         {
-            //ParentID = GetQueryIntValue("ID");
+            try
+            {
+                //ParentID = GetQueryIntValue("ID");
 
-            //获取通过窗体传递的值
-            string strtransmit = GetQueryValue("Transtr");
-            //转字符串组
-            string[] strgroup = strtransmit.Split(',');
+                //获取通过窗体传递的值
+                string strtransmit = GetQueryValue("Transtr");
+                //转字符串组
+                string[] strgroup = strtransmit.Split(',');
 
-            ParentID = int.Parse(strgroup[0].ToString().Trim());
-            strProlinename = strgroup[1].ToString().Trim();
-            strProdate = strgroup[2].ToString().Trim();
-            strProlot = strgroup[3].ToString().Trim();
-            strPromodel = strgroup[4].ToString().Trim();
-            strProst = strgroup[5].ToString().Trim();
-            strProstdcapacity = strgroup[6].ToString().Trim();
-            strProorder = strgroup[7].ToString().Trim();
+                ParentID = int.Parse(strgroup[0].ToString().Trim());
+                strProlinename = strgroup[1].ToString().Trim();
+                strProdate = strgroup[2].ToString().Trim();
+                strProlot = strgroup[3].ToString().Trim();
+                strPromodel = strgroup[4].ToString().Trim();
+                strProst = strgroup[5].ToString().Trim();
+                strProstdcapacity = strgroup[6].ToString().Trim();
+                strProorder = strgroup[7].ToString().Trim();
 
-            IQueryable<Pp_P2d_OutputSub> q = DB.Pp_P2d_OutputSubs; //.Include(u => u.Dept);
-            q = q.Where(u => u.Parent.ToString() == ParentID.ToString());
-            //q.OrderBy(u => "100"+u.Prostime);
-            // 在查询添加之后，排序和分页之前获取总记录数
-            Grid1.RecordCount = q.Count();
+                IQueryable<Pp_P2d_OutputSub> q = DB.Pp_P2d_OutputSubs; //.Include(u => u.Dept);
+                q = q.Where(u => u.Parent.ToString() == ParentID.ToString());
+                //q.OrderBy(u => "100"+u.Prostime);
+                // 在查询添加之后，排序和分页之前获取总记录数
+                Grid1.RecordCount = q.Count();
 
-            // 排列和数据库分页
-            q = SortAndPage<Pp_P2d_OutputSub>(q, Grid1);
+                // 排列和数据库分页
+                q = SortAndPage<Pp_P2d_OutputSub>(q, Grid1);
 
-            Grid1.DataSource = q;
-            Grid1.DataBind();
+                Grid1.DataSource = q;
+                Grid1.DataBind();
+            }
+            catch (ArgumentNullException Message)
+            {
+                Alert.ShowInTop("空参数传递(err:null):" + Message);
+            }
+            catch (InvalidCastException Message)
+            {
+                Alert.ShowInTop("使用无效的类:" + Message);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                //var errorMessages = ex.EntityValidationErrors
+                //        .SelectMany(x => x.ValidationErrors)
+                //        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                //var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                //var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                //throw new System.Data.Entity.Validation.DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+
+                //判断字段赋值
+                var msg = string.Empty;
+                var errors = (from u in ex.EntityValidationErrors select u.ValidationErrors).ToList();
+                foreach (var item in errors)
+                    msg += item.FirstOrDefault().ErrorMessage;
+                Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
+            }
+        }
+
+        private void BindDdlPcbaType()
+        {
+            //查询LINQ去重复
+            var q = from a in DB.Mm_Materials
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                    where a.MatDescription.Contains("pcb")
+
+                    select new
+                    {
+                        a.MatDescription,
+                    };
+
+            var qs = q.Select(E => new { E.MatDescription }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            ddlPropcbatype.DataSource = qs;
+            ddlPropcbatype.DataTextField = "MatDescription";
+            ddlPropcbatype.DataValueField = "MatDescription";
+            ddlPropcbatype.DataBind();
+        }
+
+        private void BindDdlProStated()
+        {
+            //查询LINQ去重复
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                    where a.DictType.Contains("app_pro_status")
+
+                    select new
+                    {
+                        a.DictLabel,
+                        a.DictValue,
+                    };
+
+            var qs = q.Select(E => new { E.DictValue, E.DictLabel }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            ddlPropcbastated.DataSource = qs;
+            ddlPropcbastated.DataTextField = "DictValue";
+            ddlPropcbastated.DataValueField = "DictValue";
+            ddlPropcbastated.DataBind();
+        }
+
+        private void BindDdlProCause()
+        {
+            //查询LINQ去重复
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                    where a.DictType.Contains("reason_type_p")
+
+                    select new
+                    {
+                        a.DictLabel,
+                        a.DictValue,
+                    };
+
+            var qs = q.Select(E => new { E.DictValue, E.DictLabel }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            ddlProbadcou.DataSource = qs;
+            ddlProbadcou.DataTextField = "DictValue";
+            ddlProbadcou.DataValueField = "DictValue";
+            ddlProbadcou.DataBind();
         }
 
         #endregion Page_Load
@@ -134,6 +257,20 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                  .Where(u => u.ID == ParentID).FirstOrDefault();
 
             beforeInsNetOperateNotes();
+            // 板别
+            if (rowDict.ContainsKey("Propcbatype"))
+            {
+                rowData["Propcbatype"] = rowDict["Propcbatype"];
+                item.Propcbatype = (rowData["Propcbatype"].ToString().ToUpper());
+                strProrealqty = rowData["Propcbatype"].ToString();
+            }
+            // 多面板
+            if (rowDict.ContainsKey("Propcbaside"))
+            {
+                rowData["Propcbaside"] = rowDict["Propcbaside"];
+                item.Propcbaside = (rowData["Propcbaside"].ToString().ToUpper());
+                strProrealqty = rowData["Propcbaside"].ToString();
+            }
 
             // 生产实绩
             if (rowDict.ContainsKey("Prorealqty"))
@@ -143,39 +280,90 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 strProrealqty = rowData["Prorealqty"].ToString();
             }
             // 直接
-            if (rowDict.ContainsKey("Prodirect"))
-            {
-                rowData["Prodirect"] = rowDict["Prodirect"];
-                item.Prodirect = int.Parse(rowData["Prodirect"].ToString());
-                strProdirect = rowData["Prodirect"].ToString();
-            }
+            item.Prodirect = 0;
+
             // 间接
-            if (rowDict.ContainsKey("Proindirect"))
-            {
-                rowData["Proindirect"] = rowDict["Proindirect"];
-                item.Proindirect = int.Parse(rowData["Proindirect"].ToString());
-                strProindirect = rowData["Proindirect"].ToString();
-            }
+            item.Proindirect = 0;
+
             // 工数
-            if (rowDict.ContainsKey("Prolinemin"))
-            {
-                rowData["Prolinemin"] = rowDict["Prolinemin"];
-                item.Prolinemin = int.Parse(rowData["Prolinemin"].ToString());
-                strProlinemin = rowData["Prolinemin"].ToString();
-            }
+
+            item.Prolinemin = 0;
+
             // 实绩工数
-            if (rowDict.ContainsKey("Prorealtime"))
+
+            item.Prorealtime = 0;
+
+            // 未达成原因
+            if (rowDict.ContainsKey("Probadcou"))
             {
-                rowData["Prorealtime"] = rowDict["Prorealtime"];
-                item.Prorealtime = int.Parse(rowData["Prorealtime"].ToString());
-                strProrealtime = rowData["Prorealtime"].ToString();
+                rowData["Probadcou"] = rowDict["Probadcou"];
+                item.Probadcou = rowData["Probadcou"].ToString().ToUpper();
+                strProbadcou = rowData["Probadcou"].ToString();
             }
-            // 实绩工数
+
+            // 未达成备注
+            //if (rowDict.ContainsKey("Probadmemo"))
+            //{
+            //    rowData["Probadmemo"] = rowDict["Probadmemo"];
+            //    item.Probadmemo = rowData["Probadmemo"].ToString().ToUpper();
+            //    strProbadmemo = rowData["Probadmemo"].ToString();
+            //}
+            item.Probadmemo = "";
+            // 序列号
             if (rowDict.ContainsKey("Propcbserial"))
             {
                 rowData["Propcbserial"] = rowDict["Propcbserial"];
-                item.Propcbserial = rowData["Propcbserial"].ToString();
+                item.Propcbserial = rowData["Propcbserial"].ToString().ToUpper();
                 strPropcbserial = rowData["Propcbserial"].ToString();
+            }
+            // 生产工数
+            if (rowDict.ContainsKey("Protime"))
+            {
+                rowData["Protime"] = rowDict["Protime"];
+                item.Protime = int.Parse(rowData["Protime"].ToString());
+                strProtime = rowData["Protime"].ToString();
+            }
+            // 切换次数
+            if (rowDict.ContainsKey("Prohandoffnum"))
+            {
+                rowData["Prohandoffnum"] = rowDict["Prohandoffnum"];
+                item.Prohandoffnum = int.Parse(rowData["Prohandoffnum"].ToString());
+                strProhandoffnum = rowData["Prohandoffnum"].ToString();
+            }
+            // 切换时间
+            if (rowDict.ContainsKey("Prohandofftime"))
+            {
+                rowData["Prohandofftime"] = rowDict["Prohandofftime"];
+                item.Prohandofftime = int.Parse(rowData["Prohandofftime"].ToString());
+                strProhandofftime = rowData["Prohandofftime"].ToString();
+            }
+            // 切停机时间
+            if (rowDict.ContainsKey("Prodowntime"))
+            {
+                rowData["Prodowntime"] = rowDict["Prodowntime"];
+                item.Prodowntime = int.Parse(rowData["Prodowntime"].ToString());
+                strProdowntime = rowData["Prodowntime"].ToString();
+            }
+            // 损失工数
+            if (rowDict.ContainsKey("Prolosstime"))
+            {
+                rowData["Prolosstime"] = rowDict["Prolosstime"];
+                item.Prolosstime = int.Parse(rowData["Prolosstime"].ToString());
+                strProlosstime = rowData["Prolosstime"].ToString();
+            }
+            //投入工数
+            if (rowDict.ContainsKey("Promaketime"))
+            {
+                rowData["Promaketime"] = rowDict["Promaketime"];
+                item.Promaketime = int.Parse(rowData["Promaketime"].ToString());
+                strPromaketime = rowData["Promaketime"].ToString();
+            }
+            //完成情况
+            if (rowDict.ContainsKey("Propcbastated"))
+            {
+                rowData["Propcbastated"] = rowDict["Propcbastated"];
+                item.Propcbastated = (rowData["Propcbastated"].ToString()).ToUpper();
+                strPropcbastated = rowData["Propcbastated"].ToString();
             }
             item.Proworkst = 0;
             item.Prostdiff = 0;
@@ -198,7 +386,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //更新无不良台数
             UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
             //更新订单已生产数量
-            UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+            //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
         }
 
         //// 根据行ID来获取行数据
@@ -223,6 +411,14 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         a.Probadcou,
                         a.Probadmemo,
                         a.Prolinemin,
+                        a.Protime,
+                        a.Propcbaside,
+                        a.Prolosstime,
+                        a.Promaketime,
+                        a.Prohandoffnum,
+                        a.Prohandofftime,
+                        a.Propcbastated,
+                        a.Prodowntime,
                         a.Propcbatype,
                         a.Propcbserial,
                         a.Prorealtime,

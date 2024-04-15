@@ -52,14 +52,14 @@ namespace LeanFine.Lf_Manufacturing.EC
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            BindDDLUserlist();
+            BindDdlUserlist();
             BindData();
-            BindDDLAdmindist();
-            BindDDLItemlist();
-            BindDDLtype();
-            //BindDDLmodel();
-            //BindDDLohbn();
-            //BindDDLnhbn();
+            BindDdlAdmindist();
+            BindDdlItemlist();
+            BindDdltype();
+            //BindDdlmodel();
+            //BindDdlohbn();
+            //BindDdlnhbn();
             //InitOldItem();
             //InitNewItem();
             //InitModel();
@@ -256,7 +256,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #endregion 停产机种不导入
         }
 
-        private void BindDDLUserlist()//ERP设变技术担当
+        private void BindDdlUserlist()//ERP设变技术担当
         {
             var q_user = from a in DB.Adm_Users
                          join b in DB.Adm_Depts on a.Dept.ID equals b.ID
@@ -318,7 +318,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             Ec_letterno.Text = "";
         }
 
-        private void BindDDLAdmindist()
+        private void BindDdlAdmindist()
         {
             IQueryable<Adm_Dict> q = DB.Adm_Dicts;
             q = q.Where(u => u.DictType.Contains("app_ec_mgtype"));
@@ -335,7 +335,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             Ec_distinction.SelectedValue = "0";
         }
 
-        private void BindDDLtype()
+        private void BindDdltype()
         {
             var q = from a in DB.Qm_DocNumbers
                     where a.Doctype == "A"
@@ -6605,7 +6605,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         //制二课管理确认
 
-        private void BindDDLItemlist()//物料信息
+        private void BindDdlItemlist()//物料信息
         {
             #region 停产机种不导入
 

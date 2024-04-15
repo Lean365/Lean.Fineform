@@ -45,15 +45,15 @@ namespace LeanFine.Lf_Accounting
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
         }
 
         private void BindGrid()
         {
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-            DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+            DateTime dt = DateTime.Parse(DpEndDate.SelectedDate.Value.ToString(""));
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
             string FobDate = dt.AddMonths(-1).ToString("yyyyMMdd").Substring(0, 6);
@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Accounting
                         a.Bc_Balancedate,
                     };
 
-            //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
+            //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
@@ -163,9 +163,9 @@ namespace LeanFine.Lf_Accounting
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
                 //getdate();
@@ -179,7 +179,7 @@ namespace LeanFine.Lf_Accounting
 
         private string getdate()
         {
-            string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string strDate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
 
@@ -189,7 +189,7 @@ namespace LeanFine.Lf_Accounting
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -200,12 +200,12 @@ namespace LeanFine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "DTA-TAC_GrossProfit_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+            Xlsbomitem = "DTA-TAC_GrossProfit_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
-            DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+            DateTime dt = DateTime.Parse(DpEndDate.SelectedDate.Value.ToString(""));
             string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
             string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
@@ -233,7 +233,7 @@ namespace LeanFine.Lf_Accounting
                         a.Bc_Balancedate,
                     };
 
-            //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
+            //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 

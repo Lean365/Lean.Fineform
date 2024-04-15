@@ -46,7 +46,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             //CheckPowerWithButton("CoreEcnDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreProbadp1dNew", btnP1d);
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
             //CheckPowerWithButton("CorePlutoExport2003", Btn2003);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);

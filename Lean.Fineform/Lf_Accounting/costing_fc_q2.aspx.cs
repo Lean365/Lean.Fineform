@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Accounting
         //        GridHelper.AddDefColumInGrid(result.Columns, Grid1);
         //    }
 
-        //    //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+        //    //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
         //    string thisYear = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).ToShortDateString();
         //    string thisQuarter1 = DateTime.Parse(thisYear).AddMonths(3).ToString("yyyyMMdd").Substring(0, 6);
@@ -100,7 +100,7 @@ namespace LeanFine.Lf_Accounting
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
@@ -119,21 +119,21 @@ namespace LeanFine.Lf_Accounting
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-            DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-            BindDDLItem();
+            BindDdlItem();
         }
 
         private void BindGrid()
         {
             string thisYM = DateTime.Now.ToString("yyyyMM");
 
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             var q_ym = (from a in DB.Fico_Periods
                         where a.Btfm.CompareTo(thisYM) == 0
@@ -215,7 +215,7 @@ namespace LeanFine.Lf_Accounting
             //SQL语句
         }
 
-        private void BindDDLItem()
+        private void BindDdlItem()
         {
             var q_ver = from a in DB.Sd_Psis
                         where a.Bc_FY.CompareTo(FY) == 0
@@ -262,9 +262,9 @@ namespace LeanFine.Lf_Accounting
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
@@ -338,7 +338,7 @@ namespace LeanFine.Lf_Accounting
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -355,7 +355,7 @@ namespace LeanFine.Lf_Accounting
 
             string thisYM = DateTime.Now.ToString("yyyyMM");
 
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             var q_ym = (from a in DB.Fico_Periods
                         where a.Btfm.CompareTo(thisYM) == 0

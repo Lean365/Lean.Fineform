@@ -60,22 +60,22 @@ namespace LeanFine.Lf_Manufacturing.MM
         protected global::FineUIPro.FormRow FormRow1;
 
         /// <summary>
-        /// C_DPstart 控件。
+        /// C_DpStartDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker C_DPstart;
+        protected global::FineUIPro.DatePicker C_DpStartDate;
 
         /// <summary>
-        /// C_DPend 控件。
+        /// C_DpEndDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker C_DPend;
+        protected global::FineUIPro.DatePicker C_DpEndDate;
 
         /// <summary>
         /// C_ttbSearchMessage 控件。
@@ -159,22 +159,22 @@ namespace LeanFine.Lf_Manufacturing.MM
         protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// H_DPstart 控件。
+        /// H_DpStartDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker H_DPstart;
+        protected global::FineUIPro.DatePicker H_DpStartDate;
 
         /// <summary>
-        /// H_DPend 控件。
+        /// H_DpEndDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker H_DPend;
+        protected global::FineUIPro.DatePicker H_DpEndDate;
 
         /// <summary>
         /// H_ttbSearchMessage 控件。

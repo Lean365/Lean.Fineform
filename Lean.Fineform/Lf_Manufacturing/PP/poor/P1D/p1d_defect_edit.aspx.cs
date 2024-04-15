@@ -84,7 +84,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             BindData();
             BindGrid();
-            BindDDLDept();
+            BindDdlDept();
             //UpdateQty();
             //DefDate.SelectedDate = DateTime.Now.AddDays(-1);
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.无不良台数不超过当天生产的实绩。</div><div>2.同LOT不同订单的集计系统自动处理。</div><div>3.不良集计是按选择的日期，批次对应工单的完成情况计算出来的。</div><div>4.OPH中没有不良的批次自动追加到不良集计中。</div>");
@@ -188,9 +188,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //Grid1.DataBind();
             ConvertHelper.LinqConvertToDataTable(q);
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
-            BindDDLDept();
+            BindDdlDept();
         }
 
         #endregion Page_Load
@@ -200,7 +200,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         #region BindDataToDropDownList
 
         //  不良种类
-        private void BindDDLDept()
+        private void BindDdlDept()
         {
             //查询LINQ去重复
             var q = from a in DB.Adm_Dicts
@@ -1009,7 +1009,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// </summary>
         /// <param name="source"></param>
 
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

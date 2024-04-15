@@ -35,10 +35,10 @@ namespace LeanFine.Lf_Admin
         {
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
 
-            BindDDL();
+            BindDdl();
         }
 
-        private void BindDDL()
+        private void BindDdl()
         {
             List<Adm_Dept> depts = ResolveDDL<Adm_Dept>(DeptHelper.Adm_Depts);
 

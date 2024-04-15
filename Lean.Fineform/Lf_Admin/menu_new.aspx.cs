@@ -42,7 +42,7 @@ namespace LeanFine.Lf_Admin
 
             //ddlModules.SelectedValue = ModuleTypeHelper.Module2String(ModuleType.None);
 
-            BindDDL();
+            BindDdl();
 
             InitIconList(iconList);
         }
@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Admin
             }
         }
 
-        private void BindDDL()
+        private void BindDdl()
         {
             List<Adm_Menu> menus = ResolveDDL<Adm_Menu>(MenuHelper.Adm_Menus);
 

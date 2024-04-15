@@ -39,16 +39,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
-            CheckPowerWithButton("CoreKitOutput", BtnModel);
+            CheckPowerWithButton("CoreFineExport", BtnModel);
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,9 +61,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             //Grid1.PageSize = 1000;
@@ -122,8 +122,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // 在用户名称中搜索
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -166,7 +166,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             Grid1.DataBind();
 
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
         }
 
         #endregion Page_Load
@@ -197,7 +197,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "subeditField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "editField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
@@ -282,17 +282,17 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #endregion Events
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
@@ -304,7 +304,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -330,7 +330,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -341,7 +341,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetail";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetail";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -389,7 +389,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void GridtoExcel()
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -399,13 +399,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "-" + DPend.SelectedDate.Value.ToString("yyyyMM") + "Model_DefectDetail";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "-" + DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Model_DefectDetail";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
             List<DataTable> tables = new List<DataTable>();
             DataTable ma = new DataTable();
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             var q =
             (from p in DB.Pp_P1d_Defects
@@ -445,7 +445,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
             //}
 
-            //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
+            //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             var qs = q.Select(E => new
             {
@@ -469,7 +469,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             from p in DB.Pp_P1d_Defects
                              .Where(s => s.isDeleted == 0)
                             //.Where(s => s.Prodate.Contains(dd))
-                            //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDPstart) >= 0)
+                            //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
                             .Where(s => s.Prodate.Substring(0, 6).CompareTo(strPdate) == 0)
                             //.Where(s => s.Prolinename.Contains(strPline))
                             .Where(s => s.Prolot.Contains(strPlot))

@@ -907,6 +907,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 SMT Short 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Short {
+            get {
+                return ResourceManager.GetString("menu_Pp_Short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SMT Daily 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Smt {
+            get {
+                return ResourceManager.GetString("menu_Pp_Smt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 SOP 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Sop {

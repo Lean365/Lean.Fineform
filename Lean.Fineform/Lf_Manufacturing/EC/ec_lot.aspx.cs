@@ -43,12 +43,12 @@ namespace LeanFine.Lf_Manufacturing.EC
         private void LoadData()
         {
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
-            CheckPowerWithButton("CoreKitOutput", BtnIssueExport);
-            CheckPowerWithButton("CoreKitOutput", BtnEntryExport);
+            CheckPowerWithButton("CoreFineExport", BtnIssueExport);
+            CheckPowerWithButton("CoreFineExport", BtnEntryExport);
             //DateToDDL();
 
             // 权限检查
@@ -118,8 +118,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                                 a.Ec_teppletterdoc,
                             };
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     string searchText = ttbSearchMessage.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
@@ -227,8 +227,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                                 a.Ec_teppletterdoc,
                             };
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     string searchText = ttbSearchMessage.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
@@ -338,8 +338,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                                 a.Ec_teppletterdoc,
                             };
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     string searchText = ttbSearchMessage.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
@@ -440,18 +440,18 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 //ttbSearchMessage.Text = "";
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 //ttbSearchMessage.Text = "";
                 BindGrid();
@@ -535,7 +535,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected void BtnIssueExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -588,8 +588,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -717,8 +717,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -844,8 +844,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -934,7 +934,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected void BtnUnenforced_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -978,8 +978,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                          });
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
@@ -1098,7 +1098,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected void BtnImplemented_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -1142,8 +1142,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                          });
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
@@ -1263,7 +1263,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected void BtnEntryExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -1316,8 +1316,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -1445,8 +1445,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
@@ -1572,8 +1572,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                             a.Ec_teppletterdoc,
                         };
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))

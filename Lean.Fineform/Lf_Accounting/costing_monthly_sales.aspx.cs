@@ -46,7 +46,7 @@ namespace LeanFine.Lf_Accounting
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
         }
@@ -57,7 +57,7 @@ namespace LeanFine.Lf_Accounting
             {
                 if (rbtnFirstAuto.Checked)
                 {
-                    DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
+                    DateTime dt = DateTime.Parse(DpEndDate.SelectedDate.Value.ToString(""));
                     string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
                     string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
@@ -129,7 +129,7 @@ namespace LeanFine.Lf_Accounting
                         Grid1.DataBind();
 
                         // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q_count));
+                        GridSummaryData(ConvertHelper.LinqConvertToDataTable(q_count));
                     }
                     else
                     {
@@ -139,7 +139,7 @@ namespace LeanFine.Lf_Accounting
                 }
                 if (rbtnSecondAuto.Checked)
                 {
-                    DateTime dt = DateTime.Parse(DPend.SelectedDate.Value.ToString(""));
+                    DateTime dt = DateTime.Parse(DpEndDate.SelectedDate.Value.ToString(""));
                     string BomDate = dt.AddMonths(1).ToString("yyyyMMdd").Substring(0, 6);
                     string InvDate = dt.AddMonths(0).ToString("yyyyMMdd").Substring(0, 6);
 
@@ -202,7 +202,7 @@ namespace LeanFine.Lf_Accounting
                         Grid1.DataBind();
 
                         // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                        GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     }
                     else
                     {
@@ -248,9 +248,9 @@ namespace LeanFine.Lf_Accounting
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
                 //getdate();
@@ -288,7 +288,7 @@ namespace LeanFine.Lf_Accounting
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -317,7 +317,7 @@ namespace LeanFine.Lf_Accounting
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -328,7 +328,7 @@ namespace LeanFine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "MaterialCostRatio_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+            Xlsbomitem = "MaterialCostRatio_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

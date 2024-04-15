@@ -77,8 +77,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
 
             BindGrid();
-            BindDDLReason();
-            BindDDLStop();
+            BindDdlReason();
+            BindDdlStop();
             Rate();
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.生产工数为1时，参与OPH计划台数统计。</div><div>2.同一时段生产多个工单时，计划台数系统自动处理，作业工数计算方法：<strong>多个工单具体的实绩工数+停线时间</strong></div><div>3.实绩工数的计算公式：<strong>作业工数-停线时间</strong></div><div>4.实绩工数不能为负数</div><div>4.生产实绩不能超过工单数量</div>");
             //MemoText.Text = "填写说明" + Environment.NewLine + "1.作业工数为1时，参与OPH计划台数统计。" + Environment.NewLine +"2.同一时段多个工单生产时，";
@@ -508,9 +508,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
         #endregion Events
 
-        #region DDLBindData
+        #region BindDdl Dropdown ListData
 
-        private void BindDDLStop()
+        private void BindDdlStop()
         {
             //查询停线类别
             var q = from a in DB.Adm_Dicts
@@ -536,7 +536,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //将0行赋值DDL
         }
 
-        private void BindDDLReason()
+        private void BindDdlReason()
         {
             //查询原因类别
             var q = from a in DB.Adm_Dicts
@@ -562,6 +562,6 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //将0行赋值DDL
         }
 
-        #endregion DDLBindData
+        #endregion BindDdl Dropdown ListData
     }
 }

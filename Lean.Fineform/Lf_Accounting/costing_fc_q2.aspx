@@ -35,9 +35,9 @@
                     <Toolbars>
                         <f:Toolbar ID="Toolbar2" runat="server">
                             <Items>
-                                <f:DatePicker ID="DPend" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
+                                <f:DatePicker ID="DpEndDate" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
                                     Label="<%$ Resources:GlobalResource,Query_Select_Date%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
                                 
                                 <f:DropDownList ID="DDLItem" Label="<%$ Resources:GlobalResource,Query_Select_Text%>" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DDLItem_SelectedIndexChanged">

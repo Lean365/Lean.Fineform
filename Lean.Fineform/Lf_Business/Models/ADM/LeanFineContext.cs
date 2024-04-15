@@ -82,6 +82,8 @@ namespace LeanFine
         public DbSet<Pp_P2d_OutputSub> Pp_P2d_OutputSubs { get; set; }
         public DbSet<Pp_P2d_Inspection_Defect> Pp_P2d_Inspection_Defects { get; set; }
         public DbSet<Pp_P2d_Manufacturing_Defect> Pp_P2d_Manufacturing_Defects { get; set; }
+        public DbSet<Pp_P2d_Smt_Output> Pp_P2d_Smt_Outputs { get; set; }
+        public DbSet<Pp_P2d_Smt_Short> Pp_P2d_Smt_Shorts { get; set; }
         public DbSet<Pp_Defect_Total> Pp_Defect_Totals { get; set; }
         public DbSet<Pp_Transport> Pp_Transports { get; set; }
         public DbSet<Pp_Efficiency> Pp_Efficiencys { get; set; }

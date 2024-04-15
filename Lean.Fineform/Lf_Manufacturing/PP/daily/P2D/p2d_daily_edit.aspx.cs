@@ -47,7 +47,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             userid = GetIdentityName();
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
-            //BindDDLclass();
+            //BindDdlclass();
             //赋值
             BindData();
         }

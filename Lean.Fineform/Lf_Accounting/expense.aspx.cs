@@ -38,14 +38,14 @@ namespace LeanFine.Lf_Accounting
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             ////CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Accounting
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 5000;
@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_TitleNote.Contains("财务费用"));
                     q = q.Where(u => u.Bc_CostCode != 9999);
@@ -88,7 +88,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
@@ -104,7 +104,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_TitleNote.Contains("管理费用"));
                     q = q.Where(u => u.Bc_CostCode != 8888);
@@ -114,7 +114,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
 
@@ -131,7 +131,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_TitleNote.Contains("制造费用"));
                     q = q.Where(u => u.Bc_CostCode != 5555);
@@ -140,7 +140,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
@@ -158,7 +158,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_TitleNote.Contains("营业费用"));
                     q = q.Where(u => u.Bc_CostCode != 6666);
@@ -167,7 +167,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
 
@@ -184,7 +184,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_TitleNote.Contains("生产成本"));
                     q = q.Where(u => u.Bc_CostCode != 7777);
@@ -193,7 +193,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
@@ -211,7 +211,7 @@ namespace LeanFine.Lf_Accounting
                     IQueryable<Fico_Monthly_Actual_Cost> q = DB.Fico_Monthly_Actual_Costs; //.Include(u => u.Dept);
 
                     // 在用户名称中搜索
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Bc_YM.CompareTo(edate) == 0);
                     q = q.Where(u => u.Bc_ExpCategory.CompareTo("DTA") != 0);
                     if (!String.IsNullOrEmpty(searchText))
@@ -219,7 +219,7 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bc_TitleNote.Contains(searchText) || u.Bc_TitleName.Contains(searchText) || u.Bc_CostName.Contains(searchText));
                     }
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = q.Count();
 
@@ -264,16 +264,16 @@ namespace LeanFine.Lf_Accounting
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -436,9 +436,9 @@ namespace LeanFine.Lf_Accounting
 
         #endregion Events
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();
@@ -446,7 +446,7 @@ namespace LeanFine.Lf_Accounting
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -480,7 +480,7 @@ namespace LeanFine.Lf_Accounting
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -491,27 +491,27 @@ namespace LeanFine.Lf_Accounting
 
             if (rbtnFirstAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Finance + "Exs_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnSecondAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_General + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_General + "_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnThirdAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Manufacturing + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Manufacturing + "_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnFourthAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Operation + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_Operation + "_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnFifthAuto.Checked)
             {
-                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_ProdCost + "_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = global::Resources.GlobalResource.sys_Tab_Fico_Expense_ProdCost + "_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             if (rbtnSixthAuto.Checked)
             {
-                Xlsbomitem = "费用明细对比_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+                Xlsbomitem = "费用明细对比_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 

@@ -139,7 +139,7 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="生产台数" FieldType="Int">
+                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="Lot数量" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" Required="true" runat="server" Text="">
                                 </f:NumberBox>
@@ -159,8 +159,8 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prolinename" DataField="Prolinename" HeaderText="生产线别" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProlinename" Required="true" runat="server" EnableEdit="true" ForceSelection="true" AutoPostBack="True">
-                                </f:DropDownList>
+                                <f:TextBox ID="txtProlinename" Required="true" runat="server" >
+                                </f:TextBox>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Proinsqtime" SortField="Proinsqtime" DataField="Proinsqtime" HeaderText="检查工数" FieldType="Int">
@@ -177,7 +177,7 @@
                         </f:RenderField>
                         <f:RenderField Width="100px" ColumnID="Probadqty" DataField="Probadqty" HeaderText="不良数量" FieldType="Int">
                             <Editor>
-                                <f:NumberBox ID="numProbadqty" NoDecimal="true" NoNegative="true" MinValue="1" MaxValue="999" runat="server" AutoPostBack="true">
+                                <f:NumberBox ID="numProbadqty" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>

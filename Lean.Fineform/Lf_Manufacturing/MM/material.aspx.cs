@@ -46,8 +46,8 @@ namespace LeanFine.Lc_MM
             CheckPowerWithButton("CoreMMView", btnYFDataView);
             //CheckPowerWithButton("CoreLineNew", btnNew);
 
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 

@@ -40,16 +40,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
-            CheckPowerWithButton("CoreKitOutput", BtnModel);
+            CheckPowerWithButton("CoreFineExport", BtnModel);
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
@@ -61,7 +61,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-            BindDDLLot();
+            BindDdlLot();
             // 每页记录数
             //Grid1.PageSize = 1000;
             //ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
@@ -161,10 +161,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             Grid1.DataBind();
 
             // 当前页的合计
-            OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
         }
 
-        public void BindDDLLot()
+        public void BindDdlLot()
         {
             var q = from a in DB.Pp_P1d_Defects
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
@@ -214,7 +214,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "subeditField");
             //CheckPowerWithLinkButtonField("CoreOphEdit", Grid1, "editField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
@@ -309,7 +309,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         #endregion Events
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -335,7 +335,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -410,7 +410,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void GridtoExcel()
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -468,7 +468,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
             //}
 
-            //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
+            //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             var qs = q.Select(E => new
             {

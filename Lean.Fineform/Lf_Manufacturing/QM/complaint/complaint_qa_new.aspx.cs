@@ -54,8 +54,8 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             Cc_Serialno.Text = "--";
             Cc_DefectsQty.Text = "1";
             BindissueNoData();
-            BindDDLCustomer();
-            BindDDLModel();
+            BindDdlCustomer();
+            BindDdlModel();
         }
 
         //发行NO
@@ -83,7 +83,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             }
         }
 
-        public void BindDDLCustomer()
+        public void BindDdlCustomer()
         {
             var q_Customer = from a in DB.Sd_Customers
                              select new
@@ -102,7 +102,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             this.Cc_Customer.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        public void BindDDLModel()
+        public void BindDdlModel()
         {
             var q_Model = from a in DB.Pp_Manhours
                           join b in DB.Mm_Materials on a.Proitem equals b.MatItem

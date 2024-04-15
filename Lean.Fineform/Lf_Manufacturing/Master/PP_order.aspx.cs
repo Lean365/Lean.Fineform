@@ -38,8 +38,8 @@ namespace LeanFine.Lf_Manufacturing.Master
         private void LoadData()
         {
             // 权限检查
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             CheckPowerWithButton("CoreOrderNew", btnNew);
             //CheckPowerWithButton("CoreOrderNew", btnOrderIns);
             //CheckPowerWithButton("CoreOrderNew", btnSerialIns);

@@ -40,8 +40,8 @@ namespace LeanFine.Lf_Manufacturing.MM
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
 
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
@@ -55,10 +55,10 @@ namespace LeanFine.Lf_Manufacturing.MM
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
 
-            BindDDLHbn();
+            BindDdlHbn();
         }
 
-        private void BindDDLHbn()
+        private void BindDdlHbn()
         {
             var q = from a in DB.Yf_Billofmaterials
                     select new
@@ -224,7 +224,7 @@ namespace LeanFine.Lf_Manufacturing.MM
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;

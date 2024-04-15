@@ -37,17 +37,17 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
 
         private void LoadData()
         {
-            //BindDDLGUID();
+            //BindDdlGUID();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
-            CheckPowerWithButton("CoreKitOutput", Button1);
+            CheckPowerWithButton("CoreFineExport", Button1);
             //CheckPowerWithButton("CoreP1DOutputNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             //CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -63,7 +63,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
-            BindDDLLine();
+            BindDdlLine();
             BindGrid();
         }
 
@@ -94,8 +94,8 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                 q_all = q_all.Where(u => u.Pro_Model.ToString().Contains(searchText) || u.Pro_Process.ToString().Contains(searchText) || u.Pro_Item.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -105,9 +105,9 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             {
                 q_all = q_all.Where(u => u.Pro_Date.CompareTo(edate) <= 0);
             }
-            if (this.DDLline.SelectedIndex != -1 && this.DDLline.SelectedIndex != 0)
+            if (this.DdlLine.SelectedIndex != -1 && this.DdlLine.SelectedIndex != 0)
             {
-                q_all = q_all.Where(u => u.Pro_Line.Contains(this.DDLline.SelectedText));
+                q_all = q_all.Where(u => u.Pro_Line.Contains(this.DdlLine.SelectedText));
             }
             if (this.DDLModel.SelectedIndex != -1 && this.DDLModel.SelectedIndex != 0)
             {
@@ -141,10 +141,10 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             var q = from a in DB.Pp_Trackings
                         //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                     where a.Pro_Date.CompareTo(sdate) >= 0
@@ -159,21 +159,21 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            DDLline.DataSource = qs;
-            DDLline.DataTextField = "Pro_Line";
-            DDLline.DataValueField = "Pro_Line";
-            DDLline.DataBind();
+            DdlLine.DataSource = qs;
+            DdlLine.DataTextField = "Pro_Line";
+            DdlLine.DataValueField = "Pro_Line";
+            DdlLine.DataBind();
 
-            this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+            this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        public void BindDDLModel()
+        public void BindDdlModel()
         {
-            if (DDLline.SelectedIndex != 0 || DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 || DdlLine.SelectedIndex != -1)
             {
-                string line = DDLline.SelectedItem.Text;
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string line = DdlLine.SelectedItem.Text;
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
                 var q = from a in DB.Pp_Tracking_Counts
                             //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                         where a.Pro_Date.CompareTo(sdate) >= 0
@@ -198,15 +198,15 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        public void BindDDLLot()
+        public void BindDdlLot()
         {
             if (DDLModel.SelectedIndex != 0 || DDLModel.SelectedIndex != -1)
             {
-                string line = DDLline.SelectedItem.Text;
+                string line = DdlLine.SelectedItem.Text;
                 string model = DDLModel.SelectedItem.Text;
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
                 var q = from a in DB.Pp_Tracking_Counts
                             //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                         where a.Pro_Date.CompareTo(sdate) >= 0
@@ -238,16 +238,16 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -261,7 +261,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             //CheckPowerWithWindowField("CoreOphEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputEdit", Grid1, "subeditField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputEdit", Grid1, "editField");
         }
@@ -328,29 +328,29 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
-                BindDDLLine();
+                BindDdlLine();
             }
         }
 
         #endregion Events
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLline.SelectedIndex != -1 && DDLline.SelectedIndex != 0)
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
             {
-                BindDDLModel();
+                BindDdlModel();
                 BindGrid();
             }
         }
@@ -359,7 +359,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
         {
             if (DDLModel.SelectedIndex != -1 && DDLModel.SelectedIndex != 0)
             {
-                BindDDLLot();
+                BindDdlLot();
                 BindGrid();
             }
         }
@@ -374,7 +374,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
 
         protected void BtnList_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -385,7 +385,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DailyList";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -426,8 +426,8 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             }
             else
             {
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -437,9 +437,9 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                 {
                     q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                 }
-                if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+                if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
                 {
-                    q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                    q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
                 }
             }
 

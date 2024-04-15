@@ -51,7 +51,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             BindData();
         }
 
-        #region BindingData
+        #region BindDdlData
 
         private void BindData()
         {
@@ -189,7 +189,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量成本", "改修数据修改", OperateNotes);
         }
 
-        #endregion BindingData
+        #endregion BindDdlData
 
         #endregion Page_Load
 

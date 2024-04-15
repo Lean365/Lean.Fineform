@@ -52,7 +52,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             // 初始化用户所属部门
             //InitNoticeDept();
 
-            BindDDLproLine();
+            BindDdlproLine();
             BindData();
         }
 
@@ -111,7 +111,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "机种看板修改", OperateNotes);
         }
 
-        private void BindDDLproLine()
+        private void BindDdlproLine()
         {
             var q = from p in DB.Adm_Dicts
                     where p.DictType.Contains("line_type_m")

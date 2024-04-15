@@ -35,7 +35,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         private void InitGrid()
         {
             //SQL语句
-            //string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             var q = (from a in DB.Pp_P2d_OutputSubs
                      where a.Prorealqty != 0
                      //where a.Prodate.CompareTo(edate) == 0
@@ -79,7 +79,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void LoadData()
         {
-            DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
             BindGrid();
@@ -87,7 +87,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void BindGrid()
         {
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             //SQL语句
             var q = (from a in DB.Pp_P2d_OutputSubs
                      where a.Prorealqty != 0
@@ -154,9 +154,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }

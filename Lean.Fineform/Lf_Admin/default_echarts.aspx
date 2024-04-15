@@ -100,9 +100,9 @@
             <Toolbars>
                 <f:Toolbar runat="server">
                     <Items>
-                        <f:DatePicker ID="DPend" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
+                        <f:DatePicker ID="DpEndDate" Readonly="false" DateFormatString="yyyyMM" AutoPostBack="true"
                             Label="<%$ Resources:GlobalResource,Query_Select_Date%>"
-                            runat="server" ShowRedStar="True" OnTextChanged="DPend_TextChanged">
+                            runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                         </f:DatePicker>
                         <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
                     </Items>
@@ -266,26 +266,26 @@
         }
         //debugger;
         F.ready(function () {
-            var DPendID = '<%= DPend.ClientID %>';
+            var DpEndDateID = '<%= DpEndDate.ClientID %>';
 
                    //默认日期
-                   //F(DPendID).getText().substring(0, 4) + '年' + F(DPendID).getText().substring(4, 6) + '月'
-                   TransDates = F(DPendID).getText();
+                   //F(DpEndDateID).getText().substring(0, 4) + '年' + F(DpEndDateID).getText().substring(4, 6) + '月'
+                   TransDates = F(DpEndDateID).getText();
 
                    //TabStrip1ClientID默认选择ActiveTabIndex=0
                    //默认图表显示
                    AjaxData_Pp_Actual();
 
                    //DatePicker选择事件            
-                   F(DPendID).on('change', function () {
+                   F(DpEndDateID).on('change', function () {
                        //debugger;
-                       TransDates = F(DPendID).getText(); //文本失去光标时
+                       TransDates = F(DpEndDateID).getText(); //文本失去光标时
                        updateChartInTabStrip();
 
                    });
                    //DatePicker离开事件
-                   //F(DPendID).on('blur', function () {
-                   //    TransDates = F(DPendID).getText(); //文本失去光标时
+                   //F(DpEndDateID).on('blur', function () {
+                   //    TransDates = F(DpEndDateID).getText(); //文本失去光标时
                    //    updateChartInTabStrip();
                    //});
 

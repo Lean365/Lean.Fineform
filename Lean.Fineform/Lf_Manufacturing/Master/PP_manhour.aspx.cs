@@ -44,8 +44,8 @@ namespace LeanFine.Lf_Manufacturing.Master
             //CheckPowerWithButton("CoreProlineNew", btnP2d);
 
             CheckPowerWithButton("CoreManhourNew", btnNew);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
 
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_manhour_new.aspx", "新增");
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);

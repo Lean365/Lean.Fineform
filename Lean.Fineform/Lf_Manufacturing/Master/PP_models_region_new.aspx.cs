@@ -49,10 +49,10 @@ namespace LeanFine.Lf_Manufacturing.Master
 
             // 初始化用户所属部门
             //InitNoticeDept();
-            BindDDLHBN();
+            BindDdlHBN();
         }
 
-        private void BindDDLHBN()//物料信息
+        private void BindDdlHBN()//物料信息
         {
             var q = from a in DB.Pp_SapMaterials
                     where a.D_SAP_ZCA1D_Z004 != "ROH"

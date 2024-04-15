@@ -101,7 +101,7 @@
 
 
             //默认日期
-            //F(DPendID).getText().substring(0, 4) + '年' + F(DPendID).getText().substring(4, 6) + '月'
+            //F(DpEndDateID).getText().substring(0, 4) + '年' + F(DpEndDateID).getText().substring(4, 6) + '月'
             TransDates = F(DDLModel).getText();
 
             //TabStrip1ClientID默认选择ActiveTabIndex=0
@@ -116,8 +116,8 @@
 
             });
             //DatePicker离开事件
-            //F(DPendID).on('blur', function () {
-            //    TransDates = F(DPendID).getText(); //文本失去光标时
+            //F(DpEndDateID).on('blur', function () {
+            //    TransDates = F(DpEndDateID).getText(); //文本失去光标时
             //    updateChartInTabStrip();
             //});
 

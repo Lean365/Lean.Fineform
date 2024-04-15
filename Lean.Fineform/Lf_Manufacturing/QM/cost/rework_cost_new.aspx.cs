@@ -53,7 +53,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             // 初始化用户所属部门
             //InitNoticeDept();
 
-            BindDDLModel();
+            BindDdlModel();
             this.Tab2.Enabled = false;
             this.Tab3.Enabled = false;
             this.Tab4.Enabled = false;
@@ -63,9 +63,9 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             Qcrdqarec.Text = GetIdentityName();
         }
 
-        #region BindingData
+        #region BindDdlData
 
-        private void BindDDLModel()
+        private void BindDdlModel()
         {
             //查询LINQ去重复
             var q = from a in DB.Pp_Manhours
@@ -92,7 +92,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             this.Qcrd002.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        private void BindDDLLot()
+        private void BindDdlLot()
         {
             //查询LINQ去重复
             var q = from a in DB.Pp_Manhours
@@ -139,7 +139,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion BindingData
+        #endregion BindDdlData
 
         #endregion Page_Load
 
@@ -372,7 +372,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
 
         protected void Qcrd002_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindDDLLot();
+            BindDdlLot();
         }
 
         protected void Qcrd001_TextChanged(object sender, EventArgs e)

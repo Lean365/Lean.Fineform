@@ -41,7 +41,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithButton("CoreDefectDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreDefectNew", btnNew);
             //CheckPowerWithButton("CoreDefectNew", btnP2d);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -51,9 +51,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //btnNew.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
@@ -87,8 +87,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 // 在用户名称中搜索
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -139,7 +139,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //ttbSearchMessage.Text = "";
                 ConvertHelper.LinqConvertToDataTable(qs);
                 // 当前页的合计
-                OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+                GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
             }
             catch (ArgumentNullException Message)
             {
@@ -242,17 +242,17 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
@@ -275,7 +275,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -291,8 +291,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 // 在用户名称中搜索
 
-                string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!string.IsNullOrEmpty(sdate))
                 {
@@ -328,7 +328,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         #endregion ExportExcel
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

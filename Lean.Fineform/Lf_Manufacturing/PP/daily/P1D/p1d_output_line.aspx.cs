@@ -41,8 +41,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
-            CheckPowerWithButton("CoreKitOutput", BtnRepair);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnRepair);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -53,16 +53,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/oph_p2d_new.aspx", "P2D新增不良记录");
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 1000;
             ddlGridPageSize.SelectedValue = "1000";
 
             BindGrid();
-            BindDDLLine();
+            BindDdlLine();
         }
 
         private void BindGrid()
@@ -129,8 +129,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
                     //}
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -140,9 +140,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     {
                         q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                     }
-                    if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+                    if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
                     {
-                        q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                        q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
                     }
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -169,7 +169,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
                     ConvertHelper.LinqConvertToDataTable(q);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                 }
                 if (rbtnSecondAuto.Checked)
                 {
@@ -232,8 +232,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
                     //}
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -243,9 +243,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     {
                         q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                     }
-                    if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+                    if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
                     {
-                        q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                        q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
                     }
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -272,7 +272,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
                     ConvertHelper.LinqConvertToDataTable(q);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                 }
                 if (rbtnThirdAuto.Checked)
                 {
@@ -335,8 +335,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
                     //}
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -346,9 +346,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     {
                         q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                     }
-                    if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+                    if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
                     {
-                        q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                        q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
                     }
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -375,7 +375,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
                     ConvertHelper.LinqConvertToDataTable(q);
                     // 当前页的合计
-                    OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                 }
             }
             catch (ArgumentNullException Message)
@@ -392,11 +392,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             }
         }
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
             //查询LINQ去重复
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             var q = from a in DB.Pp_P1d_Outputs
                         //join b in DB.Ec_Subs on a.Porderhbn equals b.Ec_bomitem
                     where a.Prodate.CompareTo(sdate) >= 0
@@ -411,11 +411,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            DDLline.DataSource = qs;
-            DDLline.DataTextField = "Prolinename";
-            DDLline.DataValueField = "Prolinename";
-            DDLline.DataBind();
-            this.DDLline.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+            DdlLine.DataSource = qs;
+            DdlLine.DataTextField = "Prolinename";
+            DdlLine.DataValueField = "Prolinename";
+            DdlLine.DataBind();
+            this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
         #endregion Page_Load
@@ -424,16 +424,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -515,7 +515,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -526,7 +526,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -607,8 +607,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
             //}
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -618,9 +618,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-            if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
             {
-                q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
             }
             if (q.Any())
             {
@@ -646,7 +646,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DPstart.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DPstart.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
@@ -662,7 +662,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected void BtnRepair_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -673,7 +673,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -754,8 +754,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
             //}
 
-            string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -765,9 +765,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-            if (DDLline.SelectedIndex != 0 && DDLline.SelectedIndex != -1)
+            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
             {
-                q = q.Where(u => u.Prolinename.ToString().Contains(DDLline.SelectedItem.Text));
+                q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
             }
             if (q.Any())
             {
@@ -793,7 +793,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.ReworkLine_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DPend.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.ReworkLine_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
@@ -806,32 +806,32 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             }
         }
 
-        protected void DDLline_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
         {
             ttbSearchMessage.Text = "";
 
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
-                BindDDLLine();
+                BindDdlLine();
             }
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

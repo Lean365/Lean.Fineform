@@ -35,9 +35,9 @@ namespace LeanFine.Lf_Manufacturing.Master
 
         private void LoadData()
         {
-            //CheckPowerWithButton("CoreKitPrint", btn_PrintPreview);
-            //CheckPowerWithButton("CoreKitDesgin", btn_PrintDesign);
-            //CheckPowerWithButton("CoreKitDesgin", btn_PrintSetup);
+            //CheckPowerWithButton("CoreFinePrint", btn_PrintPreview);
+            //CheckPowerWithButton("CoreFinePrintDesgin", btn_PrintDesign);
+            //CheckPowerWithButton("CoreFinePrintDesgin", btn_PrintSetup);
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
             BindData();
         }

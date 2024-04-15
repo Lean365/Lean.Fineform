@@ -27,7 +27,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #region Page_Load
 
-        public static string formNo, issueNo, strDPstart, strDPend, strDate, strPline, strPlot, strDpdate, strDqty, strRqty, strPmodel, strPdept, strBrate, strCrate;
+        public static string formNo, issueNo, strDpStartDate, strDpEndDate, strDate, strPline, strPlot, strDpdate, strDqty, strRqty, strPmodel, strPdept, strBrate, strCrate;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,10 +44,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
-            CheckPowerWithButton("CoreKitOutput", BtnDetail);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnDetail);
 
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -58,9 +58,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneTimesheet/oph_p2d_new.aspx", "P2D新增不良记录");
 
             //本月第一天
-            //DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            //DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 300;
@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             try
             {
-                string Pdate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                 //查询在特定日期的全部工单
                 var q = from a in DB.Pp_Defect_Totals
 
@@ -119,8 +119,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
                 //}
 
-                //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                 //if (!string.IsNullOrEmpty(edate))
                 //{
@@ -204,7 +204,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     // 3.绑定到Grid
                     Grid1.DataSource = dtCount;
                     Grid1.DataBind();
-                    //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    //GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                 }
                 else
                 {
@@ -215,7 +215,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 // ConvertHelper.LinqConvertToDataTable(qs);
                 // 当前页的合计
-                //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
+                //GridSummaryData(ConvertHelper.LinqConvertToDataTable(qs));
             }
             catch (ArgumentNullException Message)
             {
@@ -237,16 +237,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -258,8 +258,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithWindowField("CoreOphEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreOphDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
         }
 
         protected void Grid1_PreRowDataBound(object sender, FineUIPro.GridPreRowEventArgs e)
@@ -309,7 +309,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             GridtoExcel();
 
             //// 在操作之前进行权限检查
-            //if (!CheckPower("CoreKitOutput"))
+            //if (!CheckPower("CoreFineExport"))
             //{
             //    CheckPowerFailWithAlert();
             //    return;
@@ -319,12 +319,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //string Xlsbomitem, ExportFileName;
 
             //// mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            //Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "Defect_DATA";
+            //Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Defect_DATA";
             ////mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             //ExportFileName = Xlsbomitem + ".xlsx";
             //List<DataTable> tables = new List<DataTable>();
             //DataTable ma=new DataTable();
-            //string pdate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             //var q = from a in DB.Pp_Defect_Totals
             //        where a.Prongbdel == false
@@ -362,8 +362,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             ////    q = q.Where(u => u.Prodate.ToString().Contains(dd));
             ////}
 
-            ////string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            ////string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             //if (!string.IsNullOrEmpty(edate))
             //{
@@ -379,7 +379,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //        var q2 =
             //                from p in DB.proDefects
             //                //.Where(s => s.Prodate.Contains(dd))
-            //                //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDPstart) >= 0)
+            //                //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
             //                .Where(s => s.Prodate.Substring(9, 8).CompareTo(edate) <= 0)
             //                //.Where(s => s.Prolinename.Contains(strPline))
             //                .Where(s => s.Prolot.Contains(strPlot))
@@ -415,7 +415,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void GridtoExcel()
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -426,12 +426,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string FsearchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(FsearchText))
             {
-                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "DefectDetail";
+                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "DefectDetail";
             }
             else
 
             {
-                Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "_LotDefectDetails";
+                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_LotDefectDetails";
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 
@@ -439,8 +439,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             ExportFileName = Xlsbomitem + ".xlsx";
             List<DataTable> tables = new List<DataTable>();
             DataTable ma = new DataTable();
-            //string pdate = DPend.SelectedDate.Value.ToString("yyyyMM");
-            string Pdate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+            string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             var q = from a in DB.Pp_Defect_Totals
                     join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
                     where a.isDeleted == 0
@@ -476,8 +476,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 q = q.Where(u => u.Prodate.ToString().Contains(Pdate));
             }
 
-            //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-            //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             //if (!string.IsNullOrEmpty(edate))
             //{
@@ -526,8 +526,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //向DataTable中更新日期，班组，机种
             for (int f = 0; f < dtCount.Rows.Count; f++)
             {
-                strDPstart = "";
-                strDPend = "";
+                strDpStartDate = "";
+                strDpEndDate = "";
                 string UpdatePline = "";
                 string UpdatePdate = "";
                 string UpdatePmodel = "";
@@ -582,15 +582,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     strPlot = ma.Rows[i][0].ToString();
                     //string sorder = ma.Rows[i][1].ToString();
                     //strPline= ma.Rows[i][2].ToString();
-                    strDPstart = ma.Rows[i][2].ToString().Substring(0, 8);
-                    strDPend = ma.Rows[i][2].ToString().Substring(9, 8);
+                    strDpStartDate = ma.Rows[i][2].ToString().Substring(0, 8);
+                    strDpEndDate = ma.Rows[i][2].ToString().Substring(9, 8);
                     var q2 =
                             from p in DB.Pp_P1d_Defects
                             .Where(s => s.isDeleted == 0)
                             //.Where(s => s.Prodate.Contains(dd))
-                            //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDPstart) >= 0)
-                            .Where(s => s.Prodate.CompareTo(strDPstart) >= 0)
-                            .Where(s => s.Prodate.CompareTo(strDPend) <= 0)
+                            //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
+                            .Where(s => s.Prodate.CompareTo(strDpStartDate) >= 0)
+                            .Where(s => s.Prodate.CompareTo(strDpEndDate) <= 0)
                             //.Where(s => s.Proorder.Contains(sorder))
                             .Where(s => (s.Prolot).Contains(strPlot))
                             //.Where(s => s.Prorealqty==s.Proorderqty)
@@ -680,7 +680,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -691,13 +691,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPend.SelectedDate.Value.ToString("yyyyMM") + "Defect_Data";
+            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Defect_Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
             try
             {
-                string Pdate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                 var q =
                 (from p in DB.Pp_P1d_Defects
                      //where p.Prorealqty==p.Prolotqty
@@ -716,8 +716,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     q = q.Where(u => u.Prodate.ToString().Contains(Pdate));
                 }
 
-                //string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                //string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                 //if (!string.IsNullOrEmpty(edate))
                 //{
@@ -765,9 +765,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //Grid1.AllowPaging = true;
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = String.Empty;
                 BindGrid();
@@ -775,7 +775,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;

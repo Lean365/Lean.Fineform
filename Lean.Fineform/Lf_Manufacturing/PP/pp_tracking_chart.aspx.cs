@@ -37,12 +37,12 @@ namespace LeanFine.Lf_Manufacturing.PP
         private void LoadData()
         {
             //本月第一天
-            //DPend.SelectedDate = DateTime.Now;
+            //DpEndDate.SelectedDate = DateTime.Now;
 
-            BindDDLModel();
+            BindDdlModel();
         }
 
-        public void BindDDLModel()
+        public void BindDdlModel()
         {
             string edate = DateTime.Now.ToString("yyyyMMdd");
 

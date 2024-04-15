@@ -28,11 +28,11 @@
                                 <f:FormRow ID="FormRow2" runat="server">
                                     <Items>
                                         <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
-                                            ID="H_DPstart" ShowRedStar="True" OnTextChanged="H_DPstart_TextChanged">
+                                            ID="H_DpStartDate" ShowRedStar="True" OnTextChanged="H_DpStartDate_TextChanged">
                                         </f:DatePicker>
-                                        <f:DatePicker ID="H_DPend" Readonly="false" Width="300px" CompareControl="H_DPstart" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                                        <f:DatePicker ID="H_DpEndDate" Readonly="false" Width="300px" CompareControl="H_DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                             CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                            runat="server" ShowRedStar="True" OnTextChanged="H_DPend_TextChanged">
+                                            runat="server" ShowRedStar="True" OnTextChanged="H_DpEndDate_TextChanged">
                                         </f:DatePicker>
                                         <f:ToolbarFill ID="ToolbarFill4" runat="server"></f:ToolbarFill>
                                         <f:TwinTriggerBox ID="H_ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Enter_EmptyText%>"
@@ -112,11 +112,11 @@
                                 <f:FormRow ID="FormRow1" runat="server">
                                     <Items>
                                         <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
-                                            ID="C_DPstart" ShowRedStar="True" OnTextChanged="C_DPstart_TextChanged">
+                                            ID="C_DpStartDate" ShowRedStar="True" OnTextChanged="C_DpStartDate_TextChanged">
                                         </f:DatePicker>
-                                        <f:DatePicker ID="C_DPend" Readonly="false" Width="300px" CompareControl="C_DPstart" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                                        <f:DatePicker ID="C_DpEndDate" Readonly="false" Width="300px" CompareControl="C_DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                             CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                            runat="server" ShowRedStar="True" OnTextChanged="C_DPend_TextChanged">
+                                            runat="server" ShowRedStar="True" OnTextChanged="C_DpEndDate_TextChanged">
                                         </f:DatePicker>
                                         <f:ToolbarFill ID="ToolbarFill3" runat="server"></f:ToolbarFill>
                                         <f:TwinTriggerBox ID="C_ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Enter_EmptyText%>"

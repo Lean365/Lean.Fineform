@@ -44,7 +44,7 @@ namespace LeanFine
             //声明返回的正确端口号
             int validPort = -1;
             //最小有效端口号
-            const int MINPORT = 0;
+            const int MImport = 0;
             //最大有效端口号
             const int MAXPORT = 65535;
 
@@ -58,7 +58,7 @@ namespace LeanFine
                 }
 
                 //检测端口范围
-                if ((Convert.ToInt32(port) < MINPORT) || (Convert.ToInt32(port) > MAXPORT))
+                if ((Convert.ToInt32(port) < MImport) || (Convert.ToInt32(port) > MAXPORT))
                 {
                     throw new Exception("端口号范围无效！");
                 }

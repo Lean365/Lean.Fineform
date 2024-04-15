@@ -74,7 +74,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
@@ -93,7 +93,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //btnPrint.OnClientClick = Window1.GetShowReference("~~/oneProduction/oneTimesheet/oph_report.aspx", "打印报表");
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
-            DPend.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now;//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
@@ -104,7 +104,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void BindGrid()
         {
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             //SQL语句
             var q = (from a in DB.Pp_P2d_OutputSubs
                      where a.Prorealqty != 0
@@ -165,9 +165,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
             }

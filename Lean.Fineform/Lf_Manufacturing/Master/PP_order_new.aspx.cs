@@ -49,13 +49,13 @@ namespace LeanFine.Lf_Manufacturing.Master
             // 初始化用户所属部门
             //InitNoticeDept();
 
-            BindDDLModel();
-            BindDDLType();
+            BindDdlModel();
+            BindDdlType();
             Porderdate.SelectedDate = DateTime.Now;
             Porderdate.MinDate = DateTime.Now;
         }
 
-        private void BindDDLModel()
+        private void BindDdlModel()
         {
             var list = (from c in DB.Pp_Manhours
                         group c by new { c.Promodel } into g
@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             MC003.DataBind();
         }
 
-        private void BindDDLItem()
+        private void BindDdlItem()
         {
             var list = (from c in DB.Pp_Manhours
                         where c.Promodel.Contains(this.MC003.SelectedItem.Text)
@@ -86,7 +86,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             Porderhbn.DataBind();
         }
 
-        private void BindDDLType()
+        private void BindDdlType()
         {
             var list = (from c in DB.Adm_Dicts
                         where c.DictType.Contains("app_mo_type")
@@ -262,7 +262,7 @@ namespace LeanFine.Lf_Manufacturing.Master
 
         protected void MC003_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindDDLItem();
+            BindDdlItem();
         }
 
         protected void Porderhbn_SelectedIndexChanged(object sender, EventArgs e)

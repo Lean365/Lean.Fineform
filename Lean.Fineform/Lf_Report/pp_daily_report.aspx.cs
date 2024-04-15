@@ -35,10 +35,10 @@ namespace LeanFine.Lf_Report
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreProdataDelete", btnDeleteSelected);
-            CheckPowerWithButton("CoreKitPrint", btn_PrintPreview);
-            CheckPowerWithButton("CoreKitDesgin", btn_PrintDesign);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
-            //CheckPowerWithButton("CoreKitOutput", Btn2003);
+            CheckPowerWithButton("CoreFinePrint", btn_PrintPreview);
+            CheckPowerWithButton("CoreFinePrintDesgin", btn_PrintDesign);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", Btn2003);
             //CheckPowerWithButton("CoreProdataNew", btnP2d);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);

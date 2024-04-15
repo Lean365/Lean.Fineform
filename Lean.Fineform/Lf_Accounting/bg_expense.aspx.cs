@@ -36,14 +36,14 @@ namespace LeanFine.Lf_Accounting
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             ////CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -57,16 +57,16 @@ namespace LeanFine.Lf_Accounting
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
 
             BindGrid();
-            BindDDLDept();
+            BindDdlDept();
         }
 
         private void BindGrid()
@@ -128,8 +128,8 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Accounting
 
                         ConvertHelper.LinqConvertToDataTable(q);
                         // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                        GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     }
                     else
                     {
@@ -223,8 +223,8 @@ namespace LeanFine.Lf_Accounting
                         q = q.Where(u => u.Bedept.ToString().Contains(searchText) || u.Beclasssub.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -256,7 +256,7 @@ namespace LeanFine.Lf_Accounting
 
                         ConvertHelper.LinqConvertToDataTable(q);
                         // 当前页的合计
-                        OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                        GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
                     }
                     else
                     {
@@ -298,16 +298,16 @@ namespace LeanFine.Lf_Accounting
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -461,7 +461,7 @@ namespace LeanFine.Lf_Accounting
             BindGrid();
         }
 
-        public void BindDDLDept()
+        public void BindDdlDept()
         {
             //查询LINQ去重复
             var q = from a in DB.Fico_Expenses
@@ -486,18 +486,18 @@ namespace LeanFine.Lf_Accounting
             this.DDLDept.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();
@@ -505,7 +505,7 @@ namespace LeanFine.Lf_Accounting
         }
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -532,7 +532,7 @@ namespace LeanFine.Lf_Accounting
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -543,7 +543,7 @@ namespace LeanFine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DPstart.SelectedDate.Value.ToString("yyyyMM") + "_OPH_DATA";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_OPH_DATA";
 
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";

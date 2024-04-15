@@ -87,22 +87,22 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected global::FineUIPro.Grid Grid1;
 
         /// <summary>
-        /// numProdirect 控件。
+        /// ddlPropcbatype 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox numProdirect;
+        protected global::FineUIPro.DropDownList ddlPropcbatype;
 
         /// <summary>
-        /// numProindirect 控件。
+        /// ddlPropcbaside 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox numProindirect;
+        protected global::FineUIPro.DropDownList ddlPropcbaside;
 
         /// <summary>
         /// numProrealqty 控件。
@@ -114,22 +114,22 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         protected global::FineUIPro.NumberBox numProrealqty;
 
         /// <summary>
-        /// numProlinemin 控件。
+        /// ddlPropcbastated 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox numProlinemin;
+        protected global::FineUIPro.DropDownList ddlPropcbastated;
 
         /// <summary>
-        /// numProrealtime 控件。
+        /// ddlProbadcou 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox numProrealtime;
+        protected global::FineUIPro.DropDownList ddlProbadcou;
 
         /// <summary>
         /// numPropcbserial 控件。
@@ -139,6 +139,60 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.TextBox numPropcbserial;
+
+        /// <summary>
+        /// numProtime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProtime;
+
+        /// <summary>
+        /// numProhandoffnum 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProhandoffnum;
+
+        /// <summary>
+        /// numProhandofftime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProhandofftime;
+
+        /// <summary>
+        /// numProdowntime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProdowntime;
+
+        /// <summary>
+        /// numProlosstime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProlosstime;
+
+        /// <summary>
+        /// numPromaketime 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numPromaketime;
 
         /// <summary>
         /// MemoText 控件。

@@ -75324,7 +75324,7 @@
 
     function makeBrushCommonSelectorForSeries(area) {
       var brushType = area.brushType;
-      // Do not use function binding or curry for performance.
+      // Do not use function BindDdl or curry for performance.
       var selectors = {
         point: function (itemLayout) {
           return selector[brushType].point(itemLayout, selectors, area);

@@ -54,9 +54,9 @@ namespace LeanFine.Lf_Manufacturing.EC
             //btnP1d.OnClientClick = Window1.GetShowReference("~/PlutoProinfo/probad_p1d_new.aspx", "P1D新增不良记录");
             //btnP2d.OnClientClick = Window1.GetShowReference("~/PlutoProinfo/probad_p2d_new.aspx", "P2D新增不良记录");
             //本月第一天
-            DPstart.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DPend.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
@@ -79,8 +79,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                         q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_leader.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_status.Contains(searchText));
                     }
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
                     if (!string.IsNullOrEmpty(sdate))
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
@@ -148,8 +148,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                     {
                         q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_leader.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_status.Contains(searchText));
                     }
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
                     if (!string.IsNullOrEmpty(sdate))
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
@@ -217,8 +217,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                         q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_leader.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_status.Contains(searchText));
                     }
 
-                    string sdate = DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                    string edate = DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
                     if (!string.IsNullOrEmpty(sdate))
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
@@ -458,18 +458,18 @@ namespace LeanFine.Lf_Manufacturing.EC
             BindGrid();
         }
 
-        protected void DPstart_TextChanged(object sender, EventArgs e)
+        protected void DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPstart.SelectedDate.HasValue)
+            if (DpStartDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();
             }
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 ttbSearchMessage.Text = "";
                 BindGrid();

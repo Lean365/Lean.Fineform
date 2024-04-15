@@ -38,14 +38,14 @@ namespace LeanFine.Lf_Accounting
 
         private void LoadData()
         {
-            //BindDDLData();
+            //BindDdlData();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreOphDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreProophp1dNew", btnPrint);
             ////CheckPowerWithButton("CoreProophp1dEdit", btnP1dEdit);
-            CheckPowerWithButton("CoreKitOutput", BtnExport);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Accounting
             //btnP1dEdit.OnClientClick = Window1.GetShowReference("~/cgwProinfo/prooph_p1d_edit.aspx?id={0}", "修改");
 
             //本月最后一天
-            //DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            //DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             // 每页记录数
             Grid1.PageSize = 5000;
@@ -99,7 +99,7 @@ namespace LeanFine.Lf_Accounting
                         Bc_TitleName = E.Bacnname
                     }).ToList().Distinct();
                     // 当前页的合计
-                    //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    //GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(qs.AsQueryable());
@@ -148,7 +148,7 @@ namespace LeanFine.Lf_Accounting
                         Bc_TitleName = "",
                     }).ToList().Distinct();
                     // 当前页的合计
-                    //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    //GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(qs.AsQueryable());
@@ -209,7 +209,7 @@ namespace LeanFine.Lf_Accounting
                               };
 
                     // 当前页的合计
-                    //OutputSummaryData(ConvertHelper.LinqConvertToDataTable(q));
+                    //GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
 
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(qss.AsQueryable());
@@ -268,16 +268,16 @@ namespace LeanFine.Lf_Accounting
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -429,7 +429,7 @@ namespace LeanFine.Lf_Accounting
         #endregion Events
 
         //合计表格
-        private void OutputSummaryData(DataTable source)
+        private void GridSummaryData(DataTable source)
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
@@ -456,7 +456,7 @@ namespace LeanFine.Lf_Accounting
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;

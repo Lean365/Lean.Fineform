@@ -44,7 +44,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
-            BindDDLLine();
+            BindDdlLine();
             BindGrid();
         }
 
@@ -100,7 +100,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             }
         }
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
             var q = from a in DB.Pp_P1d_Outputs
 
@@ -128,16 +128,16 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.ShowTrigger1 = true;
             BindGrid();
         }
 
         protected void ttbSearchMessage_Trigger1Click(object sender, EventArgs e)
         {
-            //BindDDLData();
-            //DDLline.Items.Clear();
+            //BindDdlData();
+            //DdlLine.Items.Clear();
             ttbSearchMessage.Text = String.Empty;
             ttbSearchMessage.ShowTrigger1 = false;
             BindGrid();
@@ -151,7 +151,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             //CheckPowerWithWindowField("CoreOphEdit", Grid1, "editField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputDelete", Grid1, "deleteField");
             //CheckPowerWithWindowField("CoreUserChangePassword", Grid1, "changePasswordField");
-            //CheckPowerWithLinkButtonField("CoreKitPrint", Grid1, "printField");
+            //CheckPowerWithLinkButtonField("CoreFinePrint", Grid1, "printField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputEdit", Grid1, "subeditField");
             //CheckPowerWithLinkButtonField("CoreP1DOutputEdit", Grid1, "editField");
         }
@@ -224,7 +224,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
 
         protected void BtnList_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;

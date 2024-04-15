@@ -884,7 +884,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
         #endregion Events
 
-        #region DDLBindData
+        #region BindDdl Dropdown ListData
 
         protected void qmDirectreason_TextChanged(object sender, EventArgs e)
         {
@@ -943,6 +943,6 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //qmNotes.Text = StringHelper.CNYcurD(qmNotes.Text.ToString().Trim());//会计金额大写转换
         }
 
-        #endregion DDLBindData
+        #endregion BindDdl Dropdown ListData
     }
 }

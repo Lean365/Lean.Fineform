@@ -51,7 +51,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             Cc_Operator.Text = "--";
             Cc_Station.Text = "--";
             Cc_Lot.Text = "--";
-            BindDDLLine();
+            BindDdlLine();
             BindData();
         }
 
@@ -129,7 +129,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
 
         #region Events
 
-        public void BindDDLLine()
+        public void BindDdlLine()
         {
             var q_Model = from a in DB.Adm_Dicts
                               //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem

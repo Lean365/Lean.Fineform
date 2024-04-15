@@ -57,11 +57,11 @@ namespace LeanFine.Lf_Manufacturing.EC
             strEc_no = strgroup[1].ToString().Trim();
             //strEc_newitem = strgroup[2].ToString().Trim();
             //DDL赋值必须现BindData之前
-            BindDDLtype();
-            BindDDLuser();
-            BindDDLadmindist();
+            BindDdltype();
+            BindDdluser();
+            BindDdladmindist();
             BindData();
-            BindDDLItemlist();
+            BindDdlItemlist();
             BindGrid();
             //guid = Guid.NewGuid().ToString();
             //InitNewItem();
@@ -74,7 +74,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             this.Ec_letterno.Text = "";
         }
 
-        private void BindDDLtype()
+        private void BindDdltype()
         {
             var q = from a in DB.Qm_DocNumbers
                     where a.Doctype == "A"
@@ -359,7 +359,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
         }
 
-        private void BindDDLuser()//ERP设变技术担当
+        private void BindDdluser()//ERP设变技术担当
         {
             var q_user = from a in DB.Adm_Users
                          join b in DB.Adm_Depts on a.Dept.ID equals b.ID
@@ -731,7 +731,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
         }
 
-        private void BindDDLadmindist()
+        private void BindDdladmindist()
         {
             IQueryable<Adm_Dict> ddl = DB.Adm_Dicts;
 
@@ -8868,7 +8868,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #endregion 1.更新EC单身
         }
 
-        private void BindDDLItemlist()//物料信息
+        private void BindDdlItemlist()//物料信息
         {
             #region 停产机种不导入
 

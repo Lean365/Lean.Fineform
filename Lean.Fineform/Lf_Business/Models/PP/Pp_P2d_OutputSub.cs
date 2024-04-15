@@ -34,7 +34,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public int Proindirect { get; set; }//间接人员
 
         [StringLength(20)]
-        public string Prolot { get; set; }//生产LOT
+        public string Prolot { get; set; }//LOT批次
 
         [StringLength(50)]
         public string Promodel { get; set; }//机种名
@@ -44,6 +44,9 @@ namespace LeanFine.Lf_Business.Models.PP
 
         [StringLength(20)]
         public string Propcbatype { get; set; }//生产板别
+
+        [StringLength(20)]
+        public string Propcbaside { get; set; } //	多面板
 
         public Decimal Prost { get; set; }//工时
 
@@ -62,6 +65,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Proetime { get; set; }//生产时间段
 
         public int Prorealqty { get; set; }//生产实绩
+        public int Prorealtotal { get; set; }//累计生产数
 
         [StringLength(2000)]
         public string Propcbserial { get; set; }//序列号
@@ -83,6 +87,15 @@ namespace LeanFine.Lf_Business.Models.PP
         public int Prolinemin { get; set; }//生产工数
         public int Prorealtime { get; set; }//实际工数
 
+        [StringLength(20)]
+        public string Propcbastated { get; set; }//	完成情况
+
+        public int Protime { get; set; }//生产工数
+        public int Prohandoffnum { get; set; }//切换次数
+        public int Prohandofftime { get; set; }//切换时间
+        public int Prodowntime { get; set; } //切停机时间
+        public int Prolosstime { get; set; } //损失工数
+        public int Promaketime { get; set; }//投入工数
         public Decimal Proworkst { get; set; }//实绩生产工时
         public Decimal Prostdiff { get; set; }//工时差异
         public int Proqtydiff { get; set; }//预计投入台数
@@ -112,9 +125,7 @@ namespace LeanFine.Lf_Business.Models.PP
 
         public int UDF53 { get; set; }
         public Decimal UDF54 { get; set; }
-
         public Decimal UDF55 { get; set; }
-
         public Decimal UDF56 { get; set; }
 
         [Required]

@@ -49,7 +49,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             // 每页记录数
             Grid1.PageSize = ConfigHelper.PageSize;
             ddlGridPageSize.SelectedValue = ConfigHelper.PageSize.ToString();
-            BindDDLModel();
+            BindDdlModel();
             BindGrid();
         }
 
@@ -477,7 +477,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             }
         }
 
-        private void BindDDLModel()
+        private void BindDdlModel()
         {
             var q = from a in DB.Pp_Ecs
                     join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no

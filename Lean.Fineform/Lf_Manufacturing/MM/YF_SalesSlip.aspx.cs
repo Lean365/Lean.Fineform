@@ -38,20 +38,20 @@ namespace LeanFine.Lf_Manufacturing.MM
         {
             //rbtnFirstAuto.Text=global::Resources.GlobalResource.Unenforced;
             //本月第一天
-            H_DPstart.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).AddYears(-15);
+            H_DpStartDate.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).AddYears(-15);
             //本月最后一天
-            H_DPend.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-12-31")).AddYears(-14);
+            H_DpEndDate.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-12-31")).AddYears(-14);
 
             //本月第一天
-            C_DPstart.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).AddYears(-15);
+            C_DpStartDate.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-01-01")).AddYears(-15);
             //本月最后一天
-            C_DPend.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-12-31")).AddYears(-14);
+            C_DpEndDate.SelectedDate = DateTime.Parse(DateTime.Now.ToString("yyyy-12-31")).AddYears(-14);
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
             //CheckPowerWithButton("CoreEcnDelete", btnDeleteSelected);
             //CheckPowerWithButton("CoreProbadp1dNew", btnP1d);
             //CheckPowerWithButton("CoreProbadp2dNew", btnP2d);
-            //CheckPowerWithButton("CoreKitOutput", BtnExport);
+            //CheckPowerWithButton("CoreFineExport", BtnExport);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -112,8 +112,8 @@ namespace LeanFine.Lf_Manufacturing.MM
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = C_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
@@ -185,18 +185,18 @@ namespace LeanFine.Lf_Manufacturing.MM
             }
         }
 
-        protected void C_DPstart_TextChanged(object sender, EventArgs e)
+        protected void C_DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (C_DPstart.SelectedDate.HasValue)
+            if (C_DpStartDate.SelectedDate.HasValue)
             {
                 C_ttbSearchMessage.Text = "";
                 BindGridC();
             }
         }
 
-        protected void C_DPend_TextChanged(object sender, EventArgs e)
+        protected void C_DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (C_DPend.SelectedDate.HasValue)
+            if (C_DpEndDate.SelectedDate.HasValue)
             {
                 C_ttbSearchMessage.Text = "";
                 BindGridC();
@@ -245,8 +245,8 @@ namespace LeanFine.Lf_Manufacturing.MM
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = H_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = H_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = H_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = H_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
@@ -318,18 +318,18 @@ namespace LeanFine.Lf_Manufacturing.MM
             }
         }
 
-        protected void H_DPstart_TextChanged(object sender, EventArgs e)
+        protected void H_DpStartDate_TextChanged(object sender, EventArgs e)
         {
-            if (H_DPstart.SelectedDate.HasValue)
+            if (H_DpStartDate.SelectedDate.HasValue)
             {
                 H_ttbSearchMessage.Text = "";
                 BindGridH();
             }
         }
 
-        protected void H_DPend_TextChanged(object sender, EventArgs e)
+        protected void H_DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (H_DPend.SelectedDate.HasValue)
+            if (H_DpEndDate.SelectedDate.HasValue)
             {
                 H_ttbSearchMessage.Text = "";
                 BindGridH();
@@ -454,7 +454,7 @@ namespace LeanFine.Lf_Manufacturing.MM
 
         protected void Btn_dta_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -465,7 +465,7 @@ namespace LeanFine.Lf_Manufacturing.MM
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "C100" + "_SS_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            Xlsbomitem = "C100" + "_SS_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -510,8 +510,8 @@ namespace LeanFine.Lf_Manufacturing.MM
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = C_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {
@@ -578,7 +578,7 @@ namespace LeanFine.Lf_Manufacturing.MM
 
         protected void Btn_tac_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -588,7 +588,7 @@ namespace LeanFine.Lf_Manufacturing.MM
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "H100" + "_SS_List_" + C_DPstart.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+            Xlsbomitem = "H100" + "_SS_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -632,8 +632,8 @@ namespace LeanFine.Lf_Manufacturing.MM
 
                 //q.Select(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
                 //q.Where(s => s.Endtag == 0 && s.Ec_model.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_no.Contains(searchText) || s.Ec_bomitem.Contains(searchText) || s.Ec_issuedate.Contains(searchText));
-                string sdate = H_DPstart.SelectedDate.Value.ToString("yyyyMMdd");
-                string edate = H_DPend.SelectedDate.Value.ToString("yyyyMMdd");
+                string sdate = H_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                string edate = H_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 if (!String.IsNullOrEmpty(searchText))
                 {

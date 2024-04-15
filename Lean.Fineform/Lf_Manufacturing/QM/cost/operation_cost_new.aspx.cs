@@ -51,7 +51,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             Qcodqcr.Text = GetIdentityName();
         }
 
-        #region BindingData
+        #region BindDdlData
 
         private void CheckIFRS()
         {
@@ -75,7 +75,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             }
         }
 
-        #endregion BindingData
+        #endregion BindDdlData
 
         #endregion Page_Load
 

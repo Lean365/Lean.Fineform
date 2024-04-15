@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Admin
         {
             if (!IsPostBack)
             {
-                BindDDLUser();
+                BindDdlUser();
                 LoadData();
             }
         }
@@ -184,7 +184,7 @@ namespace LeanFine.Lf_Admin
             BindGrid();
         }
 
-        private void BindDDLUser()
+        private void BindDdlUser()
         {
             if (GetIdentityName() == "admin")
             {

@@ -37,13 +37,13 @@ namespace LeanFine.Lf_Admin
             string ids = GetQueryValue("ids");
 
             // 绑定角色复选框列表
-            BindDDLRole();
+            BindDdlRole();
 
             // 初始化角色复选框列表的选择项
             cblJobTitle.SelectedValueArray = ids.Split(',');
         }
 
-        private void BindDDLRole()
+        private void BindDdlRole()
         {
             cblJobTitle.DataTextField = "Name";
             cblJobTitle.DataValueField = "ID";

@@ -21,7 +21,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [Required, StringLength(20)]
         public string Porderhbn { get; set; }//物料
 
-        [Required, StringLength(20)]
+        [StringLength(20)]
         public string Porderlot { get; set; }//Lot
 
         [Required]
@@ -33,10 +33,10 @@ namespace LeanFine.Lf_Business.Models.PP
         [Required, StringLength(8)]
         public string Porderdate { get; set; }//日期
 
-        [Required, StringLength(8)]
+        [StringLength(8)]
         public string Porderroute { get; set; }//工艺
 
-        [Required, StringLength(50)]
+        [StringLength(50)]
         public string Porderserial { get; set; }//序号
 
         [StringLength(255)]

@@ -3121,7 +3121,7 @@ typeof (exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter 
         var keywords = 'while validateset validaterange validatepattern validatelength validatecount ' +
             'until trap switch return ref process param parameter in if global: ' +
             'function foreach for finally filter end elseif else dynamicparam do default ' +
-            'continue cmdletbinding break begin alias \\? % #script #private #local #global ' +
+            'continue cmdletBindDdl break begin alias \\? % #script #private #local #global ' +
             'mandatory parametersetname position valuefrompipeline ' +
             'valuefrompipelinebypropertyname valuefromremainingarguments helpmessage ';
 
@@ -3226,7 +3226,7 @@ typeof (exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter 
             'END end ensure false for if in module new next nil not or raise redo rescue retry return ' +
             'self super then throw true undef unless until when while yield';
 
-        var builtins = 'Array Bignum Binding Class Continuation Dir Exception FalseClass File::Stat File Fixnum Fload ' +
+        var builtins = 'Array Bignum BindDdl Class Continuation Dir Exception FalseClass File::Stat File Fixnum Fload ' +
             'Hash Integer IO MatchData Method Module NilClass Numeric Object Proc Range Regexp String Struct::TMS Symbol ' +
             'ThreadGroup Thread Time TrueClass';
 

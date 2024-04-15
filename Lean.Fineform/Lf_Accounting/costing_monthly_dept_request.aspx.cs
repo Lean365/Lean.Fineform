@@ -45,7 +45,7 @@ namespace LeanFine.Lf_Accounting
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-            DPend.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddMonths(-1);//.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
 
             BindGrid();
         }
@@ -54,12 +54,12 @@ namespace LeanFine.Lf_Accounting
         {
             IQueryable<Sd_Mrp> q = DB.Sd_Mrps; //.Include(u => u.Dept);
 
-            //string sdate = this.DPstart.SelectedDate.Value.ToString("yyyyMM");
+            //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
 
             //q.Where(u => u.Prodate.Contains(sdate));
 
             // 在用户名称中搜索
-            string edate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             if (!string.IsNullOrEmpty(edate))
             {
@@ -114,9 +114,9 @@ namespace LeanFine.Lf_Accounting
             BindGrid();
         }
 
-        protected void DPend_TextChanged(object sender, EventArgs e)
+        protected void DpEndDate_TextChanged(object sender, EventArgs e)
         {
-            if (DPend.SelectedDate.HasValue)
+            if (DpEndDate.SelectedDate.HasValue)
             {
                 BindGrid();
                 //getdate();
@@ -130,7 +130,7 @@ namespace LeanFine.Lf_Accounting
 
         private string getdate()
         {
-            string strDate = DPend.SelectedDate.Value.ToString("yyyyMM");
+            string strDate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             return strDate;
         }
 
@@ -140,7 +140,7 @@ namespace LeanFine.Lf_Accounting
 
         protected void BtnExport_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
-            if (!CheckPower("CoreKitOutput"))
+            if (!CheckPower("CoreFineExport"))
             {
                 CheckPowerFailWithAlert();
                 return;
@@ -151,7 +151,7 @@ namespace LeanFine.Lf_Accounting
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "MRP_" + DPend.SelectedDate.Value.ToString("yyyyMM");
+            Xlsbomitem = "MRP_" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
             //ExportHelper.GetGridDataTable(Exgrid);
