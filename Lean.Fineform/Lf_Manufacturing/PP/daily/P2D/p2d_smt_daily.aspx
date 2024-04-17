@@ -80,7 +80,7 @@
         </f:Panel>
         <f:Window ID="Window1" runat="server" IsModal="true" Hidden="true" Target="Top" EnableResize="true"
             EnableMaximize="true" EnableIFrame="true" IFrameUrl="about:blank" Width="900px"
-            Height="500px" OnClose="Window1_Close">
+            Height="650px" OnClose="Window1_Close">
         </f:Window>
     </form>
 </body>

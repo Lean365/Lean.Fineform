@@ -238,11 +238,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         {
         }
 
+        protected void Proitem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
         protected void Propcbitem_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 
-        protected void Progpcb_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Propcba_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 

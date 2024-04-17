@@ -232,6 +232,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #endregion Events
 
+        #region Calculation
+
         //计算标准产能
         /// <summary>
         /// 标准产能计算
@@ -247,9 +249,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             }
         }
 
+        #endregion Calculation
+
+        #region Changed
+
         protected void prodirect_TextChanged(object sender, EventArgs e)
         {
             HourQty();
         }
+
+        #endregion Changed
     }
 }

@@ -78,6 +78,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 p.Prodate,
                                 p.Prolot,
                                 p.Prolinename,
+                                p.Promodel,
                                 p.Propcbatype,
                                 p.Propcbaside,
                                 p.Prost,
@@ -95,12 +96,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                 var q =
                     from p in q_all
-                    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Propcbatype, p.Propcbaside, p.Prost, } into g
+                    group p by new { p.Promodel, p.Prodate, p.Prolinename, p.Prolot, p.Propcbatype, p.Propcbaside, p.Prost, } into g
                     select new
                     {
                         g.Key.Prolot,
                         g.Key.Prodate,
                         g.Key.Prolinename,
+                        g.Key.Promodel,
                         g.Key.Propcbatype,
                         g.Key.Propcbaside,
                         Prost = g.Average(p => p.Prost),
@@ -613,23 +615,43 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         //合计表格
         private void GridSummaryData(DataTable source)
         {
-            Decimal pTotal = 0.0m;
-            Decimal rTotal = 0.0m;
-            Decimal ratio = 0.0m;
+            Decimal Prorealqtys = 0.0m;
+            Decimal Prorealtotals = 0.0m;
+            Decimal Protimes = 0.0m;//生产工数
+            Decimal Prohandoffnums = 0.0m;//切换次数
+            Decimal Prohandofftimes = 0.0m;//切换时间
+            Decimal Prodowntimes = 0.0m;//切停机时间
+            Decimal Prolosstimes = 0.0m;//损失工数
+            Decimal Promaketimes = 0.0m;//投入工数
+            //Decimal ratio = 0.0m;
 
             foreach (DataRow row in source.Rows)
             {
-                pTotal += Convert.ToDecimal(row["Proplanqty"]);
-                rTotal += Convert.ToDecimal(row["Proworkqty"]);
-                ratio = rTotal / pTotal;
+                Prorealqtys += Convert.ToDecimal(row["Prorealqty"]);
+                Prorealtotals += Convert.ToDecimal(row["Prorealtotal"]);
+                Protimes += Convert.ToDecimal(row["Protime"]);
+                Prohandoffnums += Convert.ToDecimal(row["Prohandoffnum"]);
+                Prohandofftimes += Convert.ToDecimal(row["Prohandofftime"]);
+                Prodowntimes += Convert.ToDecimal(row["Prodowntime"]);
+                Prolosstimes += Convert.ToDecimal(row["Prolosstime"]);
+                Promaketimes += Convert.ToDecimal(row["Promaketime"]);
+
+                //ratio = rTotal / pTotal;
             }
 
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
-            summary.Add("Proplanqty", pTotal.ToString("F2"));
-            summary.Add("Proworkqty", rTotal.ToString("F2"));
-            summary.Add("Proactivratio", ratio.ToString("p0"));
+            summary.Add("Prorealqty", Prorealqtys.ToString("F2"));
+            summary.Add("Prorealtotal", Prorealtotals.ToString("F2"));
+            summary.Add("Protime", Protimes.ToString("F2"));
+            summary.Add("Prohandoffnum", Prohandoffnums.ToString("F2"));
+            summary.Add("Prohandofftime", Prohandofftimes.ToString("F2"));
+            summary.Add("Prodowntime", Prodowntimes.ToString("F2"));
+            summary.Add("Prolosstime", Prolosstimes.ToString("F2"));
+            summary.Add("Promaketime", Promaketimes.ToString("F2"));
+
+            //summary.Add("Proactivratio", ratio.ToString("p0"));
 
             Grid1.SummaryData = summary;
         }

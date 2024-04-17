@@ -27,7 +27,7 @@
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="false" EnableTextSelection="true"
                     EnableCheckBoxSelect="true"
                     DataKeyNames="Prodate" AllowSorting="true" OnSort="Grid1_Sort" SortField="Prodate"
-                    SortDirection="DESC" AllowPaging="true" IsDatabasePaging="true" OnPreDataBound="Grid1_PreDataBound"
+                    SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" OnPreDataBound="Grid1_PreDataBound"
                     OnPreRowDataBound="Grid1_PreRowDataBound" EnableSummary="true" SummaryPosition="Bottom"
                     OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange">
                     <Toolbars>
@@ -77,17 +77,16 @@
                     </PageItems>
                     <Columns>
 
-                        <f:BoundField DataField="Prodate" SortField="Prodate" Width="100px" HeaderText="日期" />
-                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="100px" HeaderText="物料" />
-                        <f:BoundField DataField="Prost" SortField="Prost" Width="100px" HeaderText="ST" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Proplanqty" SortField="Proplanqty" ColumnID="Proplanqty" Width="100px" HeaderText="计划台数" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Proworktime" SortField="Proworktime" Width="100px" HeaderText="投入工时" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Proworkqty" SortField="Proworkqty" ColumnID="Proworkqty" Width="100px" HeaderText="实绩台数" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Prodirect" SortField="Prodirect" Width="100px" HeaderText="直接人员" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Proworkst" SortField="Proworkst" Width="100px" HeaderText="实绩ST" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Prodiffst" SortField="Prodiffst" Width="100px" HeaderText="ST差异" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Prodiffqty" SortField="Prodiffqty" Width="100px" HeaderText="台数差异" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Proactivratio" SortField="Proactivratio" ColumnID="Proactivratio" Width="100px" HeaderText="达成率" DataFormatString="{0:p0}" />
+                        <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="日期" />
+                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="120px" HeaderText="机种" />
+                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="实绩" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Prorealtotal" SortField="Prorealtotal" ColumnID="Prorealtotal" Width="80px" HeaderText="累计生产" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Protime" SortField="Protime" ColumnID="Protime" Width="80px" HeaderText="生产工数" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Prohandoffnum" SortField="Prohandoffnum" ColumnID="Prohandoffnum" Width="80px" HeaderText="切换次数" />
+                        <f:BoundField DataField="Prohandofftime" SortField="Prohandofftime" ColumnID="Prohandofftime" HeaderText="切换时间" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Prodowntime" SortField="Prodowntime" ColumnID="Prodowntime" HeaderText="切停机时间" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Prolosstime" SortField="Prolosstime" ColumnID="Prolosstime" HeaderText="损失工数" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Promaketime" SortField="Promaketime" ColumnID="Promaketime" HeaderText="投入工数" DataFormatString="{0:F0}" />
 
 
                     </Columns>

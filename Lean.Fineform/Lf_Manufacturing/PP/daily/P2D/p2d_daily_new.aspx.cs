@@ -1131,6 +1131,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #endregion Times
 
+        #region Changed
+
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.proorder.SelectedIndex != -1 && this.proorder.SelectedIndex != 0)
@@ -1209,6 +1211,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             // HourQty();
         }
 
+        #endregion Changed
+
+        #region 计算产能率
+
         //计算标准产能
         /// <summary>
         /// 标准产能计算
@@ -1223,5 +1229,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.0");
             }
         }
+
+        #endregion 计算产能率
     }
 }

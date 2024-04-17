@@ -48,8 +48,7 @@
                     </Rows>
                 </f:Form>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false" ForceFit="true" EnableTextSelection="true"
-                    EnableCheckBoxSelect="true"
-                    DataKeyNames="ID,Prodate" AllowSorting="true" OnSort="Grid1_Sort" SortField="Prodate" 
+                    EnableCheckBoxSelect="true"                    DataKeyNames="ID,Prodate" AllowSorting="true" OnSort="Grid1_Sort" SortField="ID" 
                     SortDirection="DESC" AllowPaging="true" IsDatabasePaging="true" OnPreDataBound="Grid1_PreDataBound"
                     OnPreRowDataBound="Grid1_PreRowDataBound" EnableSummary="true" SummaryPosition="Bottom"
                     OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange">

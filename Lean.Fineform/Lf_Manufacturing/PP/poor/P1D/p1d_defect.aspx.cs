@@ -103,7 +103,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             q = q.Where(u => u.isDeleted == 0);
 
             //查询包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable();
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable().OrderBy(u => u.Prodate);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q_include.Count();

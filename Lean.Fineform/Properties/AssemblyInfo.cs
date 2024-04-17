@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Lean365 Inc.")]
 [assembly: AssemblyProduct("Lean Manufacturing")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright © 2024 Lean365 Inc.")]
 [assembly: AssemblyTrademark("Lean365")]
 [assembly: AssemblyCulture("")]
 

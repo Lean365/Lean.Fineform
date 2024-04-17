@@ -176,6 +176,18 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #endregion Page_Load
 
+        #region Changed
+
+        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
+            {
+                BindGrid();
+            }
+        }
+
+        #endregion Changed
+
         #region Events
 
         protected void ttbSearchMessage_Trigger2Click(object sender, EventArgs e)
@@ -463,13 +475,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #endregion Events
 
-        protected void DdlLine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DdlLine.SelectedIndex != -1 && DdlLine.SelectedIndex != 0)
-            {
-                BindGrid();
-            }
-        }
+        #region Export
 
         protected void BtnList_Click(object sender, EventArgs e)
         {            // 在操作之前进行权限检查
@@ -635,5 +641,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
             }
         }
+
+        #endregion Export
     }
 }

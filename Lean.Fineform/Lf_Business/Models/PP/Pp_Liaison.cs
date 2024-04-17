@@ -31,19 +31,25 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Ec_letterno { get; set; }//技联NO
 
         [StringLength(500)]
-        public string Ec_letterdoc { get; set; }//技联NO
+        public string Ec_letterdoc { get; set; }//技联
 
         [StringLength(10)]
-        public string Ec_eppletterno { get; set; }//P番联络书
+        public string Ec_eppletterno { get; set; }//P番联络书NO
 
         [StringLength(500)]
         public string Ec_eppletterdoc { get; set; }//P番联络书
 
         [StringLength(10)]
-        public string Ec_teppletterno { get; set; }//P番联络书TCJ
+        public string Ec_teppletterno { get; set; }//P番联络书TCJNO
 
         [StringLength(500)]
         public string Ec_teppletterdoc { get; set; }//P番联络书TCJ
+        [StringLength(10)]
+        public string Ec_externalno { get; set; }//外部技联NO
+
+        [StringLength(500)]
+        public string Ec_externaldoc { get; set; }//外部技联
+
 
         [StringLength(255)]
         public string UDF01 { get; set; }

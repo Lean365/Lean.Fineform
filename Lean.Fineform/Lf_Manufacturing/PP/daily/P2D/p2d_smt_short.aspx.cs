@@ -25,7 +25,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #region Page_Load
 
-        //
+        /// <summary>
+        /// 页面加载事件处理函数
+        /// </summary>
+        /// <param name="sender">事件源</param>
+        /// <param name="e">事件参数</param>
 
         protected void Page_Load(object sender, EventArgs e)
         {

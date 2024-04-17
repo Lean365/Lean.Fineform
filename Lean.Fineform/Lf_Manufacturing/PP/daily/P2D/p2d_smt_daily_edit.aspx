@@ -40,7 +40,7 @@
                       </f:FormRow>
                       <f:FormRow ID="FormRow2" runat="server">
                           <Items>
-                              <f:Label runat="server" Label="生产机种" ID="Promodel"LabelWidth="120" LabelAlign="Right">
+                              <f:Label runat="server" Label="生产机种" ID="Promodel" LabelWidth="120" LabelAlign="Right">
                               </f:Label>
                           </Items>
                       </f:FormRow>

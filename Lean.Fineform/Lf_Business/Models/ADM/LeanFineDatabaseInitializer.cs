@@ -18,9 +18,13 @@ namespace LeanFine
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Output', RESEED, 910000001)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_OutputSub', RESEED, 920000001)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Qm_Outgoing', RESEED, 710000001)");
-            // context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Qm_Complaint', RESEED, 720000001)");
+
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P1d_Defect', RESEED, 510000001)");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Defect', RESEED, 520000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Inspection_Defect', RESEED, 530000001)");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Manufacturing_Defect', RESEED, 540000001)");
+            //context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Smt_Output', RESEED, 550000001)");
+            //context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Pp_P2d_Smt_Short', RESEED, 560000001)");
             context.Database.ExecuteSqlCommand(ProceduerHelper.DateProcedure);
 
             GetAdm_Configs().ForEach(c => context.Adm_Configs.Add(c));

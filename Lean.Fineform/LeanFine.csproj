@@ -509,6 +509,13 @@
     <Content Include="Lf_Report\bind_qm_echarts.js" />
     <Content Include="Lf_Report\bind_sd_echarts.js" />
     <Content Include="Lf_Report\define_echart.js" />
+    <Content Include="Lf_Resources\404\css\plugins.css" />
+    <Content Include="Lf_Resources\404\css\style.css" />
+    <Content Include="Lf_Resources\404\img\404.png" />
+    <Content Include="Lf_Resources\404\img\favicon.png" />
+    <Content Include="Lf_Resources\404\index.html" />
+    <Content Include="Lf_Resources\404\js\plugins.js" />
+    <Content Include="Lf_Resources\404\js\theme.js" />
     <Content Include="Lf_Resources\icon\tag_rep.png" />
     <Content Include="Lf_Resources\menu\btn_all.png" />
     <Content Include="Lf_Resources\menu\btn_batch.png" />
@@ -8509,6 +8516,7 @@
     <Content Include="Lf_Resources\echarts\package\dist\echarts.simple.js.map" />
     <Content Include="Lf_Resources\echarts\package\dist\extension\bmap.js.map" />
     <Content Include="Lf_Resources\echarts\package\dist\extension\dataTool.js.map" />
+    <Content Include="Lf_Resources\404\fonts\Unicons.woff2" />
     <None Include="packages.config" />
     <Content Include="Lf_Resources\bootstrap\css\bootstrap-grid.css.map" />
     <Content Include="Lf_Resources\bootstrap\css\bootstrap-grid.min.css.map" />
