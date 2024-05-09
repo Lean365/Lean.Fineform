@@ -881,30 +881,30 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void InsertDefectDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
             // 区分
-            UpdateDeftctDataRow("Prongdept", rowDict, rowData);
+            UpdateDataRow("Prongdept", rowDict, rowData);
 
             // 种类
-            //UpdateDeftctDataRow("Proclassmatter", rowDict, rowData);
+            //UpdateDataRow("Proclassmatter", rowDict, rowData);
 
             // 类别
-            //UpdateDeftctDataRow("Prongmatter", rowDict, rowData);
+            //UpdateDataRow("Prongmatter", rowDict, rowData);
 
             // 数量
-            UpdateDeftctDataRow("Probadqty", rowDict, rowData);
+            UpdateDataRow("Probadqty", rowDict, rowData);
 
             // 总数
-            //UpdateDeftctDataRow("Probadtotal", rowDict, rowData);
+            //UpdateDataRow("Probadtotal", rowDict, rowData);
 
             // 对策
-            UpdateDeftctDataRow("Probadnote", rowDict, rowData);
+            UpdateDataRow("Probadnote", rowDict, rowData);
 
-            UpdateDeftctDataRow("Udf001", rowDict, rowData);
+            UpdateDataRow("Udf001", rowDict, rowData);
             // 对策
-            UpdateDeftctDataRow("Probadreason", rowDict, rowData);
+            UpdateDataRow("Probadreason", rowDict, rowData);
         }
 
         //根据字段获取信息
-        private void UpdateDeftctDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
+        private void UpdateDataRow(string columnName, Dictionary<string, object> rowDict, DataRow rowData)
         {
             if (rowDict.ContainsKey(columnName))
             {

@@ -208,6 +208,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         //where b.Proecnno == strecn
                         //where b.Proecnbomitem == stritem
                     where a.DictType.Contains("reason_type_d")
+                    orderby a.DictLabel
                     select new
                     {
                         a.DictLabel,

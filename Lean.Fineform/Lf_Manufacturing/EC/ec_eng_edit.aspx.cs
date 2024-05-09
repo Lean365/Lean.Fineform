@@ -733,13 +733,14 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         private void BindDdladmindist()
         {
-            IQueryable<Adm_Dict> ddl = DB.Adm_Dicts;
+            IQueryable<Adm_Dict> q = DB.Adm_Dicts;
+            q = q.Where(u => u.DictType.Contains("app_ec_mgtype"));
 
             // 绑定到下拉列表（启用模拟树功能）
 
-            Ec_distinction.DataTextField = "Diffcnname";
-            Ec_distinction.DataValueField = "Difftype";
-            Ec_distinction.DataSource = ddl;
+            Ec_distinction.DataTextField = "DictLabel";
+            Ec_distinction.DataValueField = "DictValue";
+            Ec_distinction.DataSource = q;
             Ec_distinction.DataBind();
 
             // 选中根节点

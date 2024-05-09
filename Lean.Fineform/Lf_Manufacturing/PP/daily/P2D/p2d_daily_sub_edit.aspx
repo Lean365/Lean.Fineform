@@ -28,9 +28,61 @@
                 </f:Toolbar>
             </Toolbars>
             <Items>
+                <f:Form ID="SimpleForm1" ShowBorder="false" ShowHeader="false" runat="server" BodyPadding="10px"
+                    Title="SimpleForm">
+                    <Rows>
+                        <f:FormRow ID="FormRow2" runat="server">
+                            <Items>
+                                <f:Label runat="server" ID="guid" Label="生产日期" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label runat="server" ID="parent" Label="生产日期" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label ID="proordertype" runat="server" Label="订单类别"></f:Label>
+
+                            </Items>
+                        </f:FormRow>
+                        <f:FormRow ID="FormRow1" runat="server">
+                            <Items>
+                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
+                                <f:Label ID="proorder" runat="server" Label="生产订单"></f:Label>
+                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
+                            </Items>
+                        </f:FormRow>
+                        <f:FormRow ID="FormRow3" runat="server">
+                            <Items>
+                                <f:Label runat="server" ID="prodate" Label="生产日期" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label runat="server" ID="prolinename" Label="生产班组" ShowRedStar="True">
+                                </f:Label>
+                                <f:Label runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
+                                </f:Label>
+                            </Items>
+                        </f:FormRow>
+
+
+
+                    </Rows>
+                </f:Form>
+
+            </Items>
+            <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="false" ShowHeader="false" AllowCellEditing="true" ClicksToEdit="1" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true"
                     OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
+                    <Toolbars>
+                        <f:Toolbar runat="server" Position="Top">
+                            <Items>
+                                <f:Button ID="btnNew" Icon="Add" EnablePostBack="false" runat="server">
+                                </f:Button>
+                                <%--<f:Button ID="btnDel" Icon="DatabaseDelete" EnablePostBack="false" runat="server">
+                                </f:Button>--%>
+                                <f:Button ID="btnReset" Icon="Reload" EnablePostBack="false" runat="server">
+                                </f:Button>
+                                <f:ToolbarSeparator ID="ToolbarSeparator1" runat="server">
+                                </f:ToolbarSeparator>
+                            </Items>
+                        </f:Toolbar>
+                    </Toolbars>
                     <Columns>
                         <%--<f:RowNumberField />--%>
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete" ToolTip="删除"
@@ -41,7 +93,6 @@
                         <f:BoundField DataField="Promodel" SortField="Promodel" Width="100px" HeaderText="机种" />
                         <%--<f:BoundField DataField="Prohbn" SortField="Prohbn" Width="120px" HeaderText="生产物料" />--%>
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="100px" HeaderText="LOT" />
-
                         <%--<f:BoundField DataField="Prost" SortField="Prost" Width="120px" HeaderText="生产工时" />--%>
                         <%--<f:BoundField DataField="Proshort" SortField="Proshort" Width="120px" HeaderText="生产点数" />--%>
                         <%--<f:BoundField DataField="Prorate" SortField="Prorate" Width="120px" HeaderText="工时汇率" />--%>

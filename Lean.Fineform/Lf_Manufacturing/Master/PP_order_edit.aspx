@@ -46,8 +46,8 @@
                         <f:FormRow ID="FormRow7" runat="server">
                             <Items>
 
-                                <f:NumberBox runat="server" Label="订单台数" ID="Porderqty" NoDecimal="false" NoNegative="True" DecimalPrecision="2" Required="True" ShowRedStar="True" LabelAlign="Right">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="订单台数" ID="Porderqty" >
+                                </f:Label>
                                 <f:NumberBox runat="server" Label="已生产台数" ID="Porderreal" NoDecimal="false" NoNegative="True" DecimalPrecision="2" Required="True" ShowRedStar="True" LabelAlign="Right">
                                 </f:NumberBox>
                             </Items>
