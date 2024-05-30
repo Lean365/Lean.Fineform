@@ -985,13 +985,13 @@ namespace LeanFine
                                 },
                                 new Adm_Menu
                                 {
-                                    Name = "生产不良",
+                                    Name = "修理记录",
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_manufacturing_defect.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_repair_defect.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prorep.png",
-                                    ButtonName="Btn_Lf_Pp_"+"p2d_manufacturing_defect",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_repair_defect",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DManuDefectView").FirstOrDefault<Adm_Power>()
                                 },
                                 new Adm_Menu
@@ -1854,10 +1854,10 @@ namespace LeanFine
                         "CoreP2DInspDefectNew","制二生产","新增P2D检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_new.aspx",
                         "CoreP2DInspDefectEdit","制二生产","编辑P2D检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect_edit.aspx",
                         "CoreP2DInspDefectDelete","制二生产","删除P2D检查不良","~/Lf_Manufacturing/PP/poor/p2d_inspection_defect.aspx",
-                        "CoreP2DManuDefectView","制二生产","浏览P2D生产不良列表","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
-                        "CoreP2DManuDefectNew","制二生产","新增P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_new.aspx",
-                        "CoreP2DManuDefectEdit","制二生产","编辑P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect_edit.aspx",
-                        "CoreP2DManuDefectDelete","制二生产","删除P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_manufacturing_defect.aspx",
+                        "CoreP2DManuDefectView","制二生产","浏览P2D生产不良列表","~/Lf_Manufacturing/PP/poor/p2d_repair_defect.aspx",
+                        "CoreP2DManuDefectNew","制二生产","新增P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_repair_defect_new.aspx",
+                        "CoreP2DManuDefectEdit","制二生产","编辑P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_repair_defect_edit.aspx",
+                        "CoreP2DManuDefectDelete","制二生产","删除P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_repair_defect.aspx",
                         "CoreKanbanView","生产管理","浏览生产看板列表","~/Lf_Manufacturing/Master/Pp_model_kanban.aspx",
                         "CoreKanbanNew","生产管理","新增生产看板","~/Lf_Manufacturing/Master/Pp_model_kanban_new.aspx",
                         "CoreKanbanEdit","生产管理","编辑产看板","~/Lf_Manufacturing/Master/Pp_model_kanban_edit.aspx",

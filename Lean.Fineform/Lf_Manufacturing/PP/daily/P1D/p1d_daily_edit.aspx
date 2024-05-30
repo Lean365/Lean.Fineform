@@ -43,7 +43,7 @@
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:NumberBox ID="prodirect" FocusOnPageLoad="true" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="20" MinValue="1">
+                                <f:NumberBox ID="prodirect" FocusOnPageLoad="true" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="30" MinValue="1">
                                 </f:NumberBox>
                                 <f:NumberBox ID="proindirect" runat="server" Label="间接人数" Text="0" MaxValue="10" MinValue="0">
                                 </f:NumberBox>

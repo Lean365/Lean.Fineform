@@ -19,7 +19,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             get
             {
-                return "CoreP1DDefectView";
+                return "CoreP2DDefectView";
             }
         }
 
@@ -118,7 +118,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //        Min = g.Sum(p => p.Prorealtime),
             //    };
 
-            IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects; //.Include(u => u.Dept);
+            IQueryable<Pp_P2d_Defect> q = DB.Pp_P2d_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
 
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             Grid1.RecordCount = q.Count();
 
             // 排列和数据库分页
-            q = SortAndPage<Pp_P1d_Defect>(q, Grid1);
+            q = SortAndPage<Pp_P2d_Defect>(q, Grid1);
 
             Grid1.DataSource = q;
             Grid1.DataBind();

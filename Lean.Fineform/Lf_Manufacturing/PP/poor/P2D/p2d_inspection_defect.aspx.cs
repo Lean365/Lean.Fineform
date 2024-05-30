@@ -71,9 +71,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             where a.DictType.Contains("line_type_p")
                             select new
                             {
-                                a.DictLabel,
-                                a.DictValue
-                            }).ToList();
+                                DictLabel = a.DictLabel.Substring(0, 3),
+                                DictValue = a.DictValue.Substring(0, 3)
+                            }).Distinct().ToList();
             IQueryable<Pp_P2d_Inspection_Defect> q = DB.Pp_P2d_Inspection_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
@@ -282,7 +282,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "Inspection_defect_Data";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Smt_Inspection_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -359,23 +359,23 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         //合计表格
         private void GridSummaryData(DataTable source)
         {
-            Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
-            Decimal ratio = 0.0m;
+            Decimal cTotal = 0.0m;
+            Decimal bTotal = 0.0m;
 
             foreach (DataRow row in source.Rows)
             {
-                pTotal += 0;// Convert.ToDecimal(row["Prorealqty"]);
-                rTotal += Convert.ToDecimal(row["Probadqty"]);
-                ratio = 0;// rTotal / pTotal;
+                rTotal += Convert.ToDecimal(row["Prorealqty"]);
+                cTotal += Convert.ToDecimal(row["Proispqty"]);
+                bTotal += Convert.ToDecimal(row["Probadqty"]);
             }
 
             JObject summary = new JObject();
             //summary.Add("major", "全部合计");
 
-            summary.Add("Prorealqty", pTotal.ToString("F2"));
-            summary.Add("Probadqty", rTotal.ToString("F2"));
-            summary.Add("Probadtotal", ratio.ToString("p0"));
+            summary.Add("Prorealqty", rTotal.ToString("F2"));
+            summary.Add("Proispqty", cTotal.ToString("F2"));
+            summary.Add("Probadqty", bTotal.ToString("F2"));
 
             Grid1.SummaryData = summary;
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_manufacturing_defect.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.P2D.p2d_manufacturing_defect" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_repair_defect.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.P2D.p2d_repair_defect" %>
 
 <!DOCTYPE html>
 
@@ -98,7 +98,7 @@
                         <f:BoundField DataField="Promodel" SortField="Promodel" Width="150px" HeaderText="机种" />
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="100px" HeaderText="Lot" />
                         <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="60px" HeaderText="班组" />
-                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" Width="80px" HeaderText="生产" />
+                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="生产" />
                         <f:BoundField DataField="Propcbtype" SortField="Propcbtype" Width="80px" HeaderText="板别" />
                         <f:BoundField DataField="Propcbcardno" SortField="Propcbcardno" Width="120px" HeaderText="卡号" />
                         <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良" />

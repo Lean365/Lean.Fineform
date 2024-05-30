@@ -163,7 +163,7 @@
     <value>製品原価</value>
   </data>
   <data name="menu_Qm_FQC" xml:space="preserve">
-    <value>製品検査</value>
+    <value>検査</value>
   </data>
   <data name="menu_pp_defect_MOStatistics" xml:space="preserve">
     <value>指図纏め</value>
@@ -355,7 +355,7 @@
     <value>実施済み</value>
   </data>
   <data name="menu_Pp_OPH_Actual" xml:space="preserve">
-    <value>実績検索</value>
+    <value>検索</value>
   </data>
   <data name="sys_Actual_Edit" xml:space="preserve">
     <value>実績</value>
@@ -379,7 +379,7 @@
     <value>生産明細</value>
   </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
-    <value>生産進捗</value>
+    <value>進捗看板</value>
   </data>
   <data name="menu_Pp_MGT" xml:space="preserve">
     <value>生産管理</value>
@@ -388,7 +388,7 @@
     <value>生産工数</value>
   </data>
   <data name="menu_pp_defect_Production" xml:space="preserve">
-    <value>生産不具合</value>
+    <value>生産不良</value>
   </data>
   <data name="menu_Rpt_ppcharts" xml:space="preserve">
     <value>生産チャート</value>
@@ -550,7 +550,7 @@
     <value>検査免除</value>
   </data>
   <data name="menu_Qm_FQC_Query" xml:space="preserve">
-    <value>検査検索</value>
+    <value>検索</value>
   </data>
   <data name="menu_Qm_InspectionType" xml:space="preserve">
     <value>検査カテゴリ</value>
@@ -625,7 +625,7 @@
     <value>工数明細</value>
   </data>
   <data name="menu_Pp_Times_Query" xml:space="preserve">
-    <value>工数検索</value>
+    <value>検索</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
     <value>工時</value>
@@ -757,16 +757,16 @@
     <value>不具合数量</value>
   </data>
   <data name="menu_pp_defect_Query" xml:space="preserve">
-    <value>不具合検索</value>
+    <value>検索</value>
   </data>
   <data name="menu_Pp_P2d_Defect" xml:space="preserve">
-    <value>P2D不具合管理</value>
+    <value>P2D不良</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
     <value>不具合纏め</value>
   </data>
   <data name="menu_pp_defect_Type" xml:space="preserve">
-    <value>不具合カテゴリ</value>
+    <value>カテゴリ</value>
   </data>
   <data name="menu_Qm_FQC_UnqualifiedNotice" xml:space="preserve">
     <value>不合格通知</value>
@@ -1027,7 +1027,7 @@
     <value>Wiki</value>
   </data>
   <data name="menu_Pp_Tracking_Process" xml:space="preserve">
-    <value>STD工程順</value>
+    <value>工程順</value>
   </data>
   <data name="menu_Pp_Sop_Query" xml:space="preserve">
     <value>SOP確認</value>
@@ -1060,13 +1060,13 @@
     <value>PCBA.SOP</value>
   </data>
   <data name="menu_Pp_OPH_Report" xml:space="preserve">
-    <value>OPH諸表</value>
+    <value>諸表</value>
   </data>
   <data name="sys_Export_SheetDaily" xml:space="preserve">
     <value>OPH明細</value>
   </data>
   <data name="menu_Pp_OPH_Query" xml:space="preserve">
-    <value>OPH検索</value>
+    <value>検索</value>
   </data>
   <data name="co_Dept_OEM" xml:space="preserve">
     <value>OEM</value>
@@ -1081,7 +1081,7 @@
     <value>LOT纏め</value>
   </data>
   <data name="menu_pp_tracking_lot" xml:space="preserve">
-    <value>LOTトレーサビリティー</value>
+    <value>LOT</value>
   </data>
   <data name="rpt_Charts_Direct" xml:space="preserve">
     <value>Lot．直進率</value>
@@ -1150,7 +1150,7 @@
     <value>勘定科目</value>
   </data>
   <data name="menu_Pp_P1d_Defect" xml:space="preserve">
-    <value>P1D不具合管理</value>
+    <value>P1D不良</value>
   </data>
   <data name="menu_Pp_OPH" xml:space="preserve">
     <value>OPH</value>
@@ -1159,13 +1159,13 @@
     <value>P2D生産</value>
   </data>
   <data name="menu_Pp_TL_Liaison" xml:space="preserve">
-    <value>連絡書</value>
+    <value>リスト</value>
   </data>
   <data name="menu_Pp_TL" xml:space="preserve">
-    <value>生産連絡書</value>
+    <value>連絡書</value>
   </data>
   <data name="menu_Pp_TL_List" xml:space="preserve">
-    <value>リスト</value>
+    <value>検索</value>
   </data>
   <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
     <value>勘定科目</value>
@@ -1222,7 +1222,7 @@
     <value>原因明細</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
-    <value>検査履歴</value>
+    <value>検査</value>
   </data>
   <data name="sys_Slogan" xml:space="preserve">
     <value>グロバール企業としてのプライドを持ちQCDSへの限りない挑戦。</value>
@@ -1234,15 +1234,15 @@
     <value>生産不良</value>
   </data>
   <data name="menu_Pp_Repair" xml:space="preserve">
-    <value>修理履歴</value>
+    <value>修理</value>
   </data>
   <data name="sys_Button_Batch" xml:space="preserve">
     <value>一括</value>
   </data>
   <data name="menu_Pp_Short" xml:space="preserve">
-    <value>SMT ショート数</value>
+    <value>ショート数</value>
   </data>
   <data name="menu_Pp_Smt" xml:space="preserve">
-    <value>SMT生産</value>
+    <value>SMT</value>
   </data>
 </root>

@@ -87,7 +87,19 @@
                         <%--<f:RowNumberField />--%>
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete" ToolTip="删除"
                             ConfirmText="确定删除此记录？" ConfirmTarget="Top" CommandName="Delete" Width="50px" />
-                        <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="80px" HeaderText="班组" />
+                        <f:RenderField Width="180px" ColumnID="Prolinename" DataField="Prolinename" HeaderText="班组" FieldType="String">
+                            <Editor>
+                                <f:DropDownList ID="ddlProlinename" runat="server" EnableEdit="True" EmptyText="请选择生产班组" ForceSelection="false">
+                                </f:DropDownList>
+                            </Editor>
+                        </f:RenderField>
+                        <%--                        <f:RenderField Width="180px" ColumnID="Prodate" DataField="Prodate" HeaderText="日期" FieldType="String">
+                            <Editor>
+                                <f:DatePicker  runat="server" Required="true" DateFormatString="yyyyMMdd"
+                                    ID="dpkProdate" ShowRedStar="True">
+                                </f:DatePicker>
+                            </Editor>
+                        </f:RenderField>--%>
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="日期" />
                         <%--<f:BoundField DataField="Proorder" SortField="Proorder" Width="120px" HeaderText="生产工单" />--%>
                         <f:BoundField DataField="Promodel" SortField="Promodel" Width="100px" HeaderText="机种" />
@@ -176,6 +188,12 @@
                         <f:RenderField Width="100px" ColumnID="Promaketime" DataField="Promaketime" HeaderText="投入工数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numPromaketime" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="100px" ColumnID="UDF51" DataField="UDF51" HeaderText="不良台数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numUDF51" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>

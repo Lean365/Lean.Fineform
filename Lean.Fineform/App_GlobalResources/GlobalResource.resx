@@ -382,7 +382,7 @@
     <value>ReasonClassify</value>
   </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
-    <value>ProducingProgress</value>
+    <value>Progress</value>
   </data>
   <data name="menu_Pp_MGT" xml:space="preserve">
     <value>Manufacture</value>
@@ -397,10 +397,10 @@
     <value>PP Charts</value>
   </data>
   <data name="menu_Pp_Manufacture_P1D" xml:space="preserve">
-    <value>P1DManufacture</value>
+    <value>P1D MFG</value>
   </data>
   <data name="menu_Pp_Ec_MGT" xml:space="preserve">
-    <value>EcManage</value>
+    <value>Ec</value>
   </data>
   <data name="menu_Pp_Ec_Report" xml:space="preserve">
     <value>ECReport</value>
@@ -460,7 +460,7 @@
     <value>Operation</value>
   </data>
   <data name="menu_Qm_MGT" xml:space="preserve">
-    <value>QualityMGT</value>
+    <value>Quality</value>
   </data>
   <data name="menu_Rpt_qmcharts" xml:space="preserve">
     <value>QM Charts</value>
@@ -631,7 +631,7 @@
     <value>ManHourQuery</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
-    <value>Labortime</value>
+    <value>Manhours</value>
   </data>
   <data name="sys_Button_Update" xml:space="preserve">
     <value>Update</value>
@@ -688,7 +688,7 @@
     <value>Customer</value>
   </data>
   <data name="menu_Sd_CustomerMGT" xml:space="preserve">
-    <value>CustomerMGT</value>
+    <value>Customer</value>
   </data>
   <data name="menu_Pp_efficiency" xml:space="preserve">
     <value>Activation</value>
@@ -763,7 +763,7 @@
     <value>PoorQuery</value>
   </data>
   <data name="menu_Pp_P2d_Defect" xml:space="preserve">
-    <value>P2DPoorManage</value>
+    <value>P2D Poor</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
     <value>DefectDETL</value>
@@ -889,7 +889,7 @@
     <value>Password</value>
   </data>
   <data name="menu_Pp_Tracking" xml:space="preserve">
-    <value>MFG.Traceability</value>
+    <value>Traceability</value>
   </data>
   <data name="sys_Msg_Noedit" xml:space="preserve">
     <value>Data not modified</value>
@@ -958,7 +958,7 @@
     <value>Use Cost</value>
   </data>
   <data name="menu_Qm_ComplaintMGT" xml:space="preserve">
-    <value>ComplainMGT</value>
+    <value>Complain</value>
   </data>
   <data name="menu_Qm_Complaint" xml:space="preserve">
     <value>Complain</value>
@@ -1030,7 +1030,7 @@
     <value>Wiki</value>
   </data>
   <data name="menu_Pp_Tracking_Process" xml:space="preserve">
-    <value>STD.Processing</value>
+    <value>STD</value>
   </data>
   <data name="menu_Pp_Sop_Query" xml:space="preserve">
     <value>Sop.Confirm</value>
@@ -1063,13 +1063,13 @@
     <value>PCBA.SOP</value>
   </data>
   <data name="menu_Pp_OPH_Report" xml:space="preserve">
-    <value>OPHReport</value>
+    <value>Report</value>
   </data>
   <data name="sys_Export_SheetDaily" xml:space="preserve">
     <value>OPHDETL</value>
   </data>
   <data name="menu_Pp_OPH_Query" xml:space="preserve">
-    <value>OPHQuery</value>
+    <value>Query</value>
   </data>
   <data name="co_Dept_OEM" xml:space="preserve">
     <value>OEM</value>
@@ -1084,7 +1084,7 @@
     <value>LotStatistics</value>
   </data>
   <data name="menu_pp_tracking_lot" xml:space="preserve">
-    <value>Lot Traceability</value>
+    <value>Lot</value>
   </data>
   <data name="rpt_Charts_Direct" xml:space="preserve">
     <value>DDR</value>
@@ -1153,22 +1153,22 @@
     <value>RealTitles</value>
   </data>
   <data name="menu_Pp_P1d_Defect" xml:space="preserve">
-    <value>P1DPoorManage</value>
+    <value>P1D Poor</value>
   </data>
   <data name="menu_Pp_OPH" xml:space="preserve">
     <value>OPH</value>
   </data>
   <data name="menu_Pp_Manufacture_P2D" xml:space="preserve">
-    <value>P2DManufacture</value>
+    <value>P2D MFG</value>
   </data>
   <data name="menu_Pp_TL_Liaison" xml:space="preserve">
-    <value>Technical liaison</value>
+    <value>List</value>
   </data>
   <data name="menu_Pp_TL_List" xml:space="preserve">
-    <value>LiaisonList</value>
+    <value>Query</value>
   </data>
   <data name="menu_Pp_TL" xml:space="preserve">
-    <value>TL MGT</value>
+    <value>Technical liaison</value>
   </data>
   <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
     <value>Accounting</value>
@@ -1222,7 +1222,7 @@
     <value>Unenforced</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
-    <value>INSP Record</value>
+    <value>Inspection</value>
   </data>
   <data name="sys_Slogan" xml:space="preserve">
     <value>Our pride is being a global manufacture with the continuous QCDS challenge.</value>
@@ -1234,7 +1234,7 @@
     <value>Poor Prod</value>
   </data>
   <data name="menu_Pp_Repair" xml:space="preserve">
-    <value>Repair Record</value>
+    <value>Repair</value>
   </data>
   <data name="sys_Button_Batch" xml:space="preserve">
     <value>Batch</value>

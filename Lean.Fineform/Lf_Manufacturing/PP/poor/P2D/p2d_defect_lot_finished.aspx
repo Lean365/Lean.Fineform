@@ -16,7 +16,7 @@
                 <f:Tab ID="Tab1" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P2D/p2d_inspection_defect_monthly.aspx"
                     Title="检查集计" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P2D/p2d_manufacturing_defect_monthly.aspx"
+                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P2D/p2d_repair_defect_monthly.aspx"
                     Title="修理集计" runat="server">
                 </f:Tab>
 

@@ -344,7 +344,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          检验次数 = a.qmCheckout,
                          生产数 = a.qmProqty,
                      };
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Inspect Data";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Outgoing_Inspection_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

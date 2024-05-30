@@ -11,7 +11,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 {
 
 
-    public partial class p2d_manufacturing_defect_new
+    public partial class p2d_repair_defect_edit
     {
 
         /// <summary>
@@ -96,22 +96,40 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// DefDate 控件。
+        /// lblProdate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker DefDate;
+        protected global::FineUIPro.Label lblProdate;
 
         /// <summary>
-        /// proorder 控件。
+        /// FormRow3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DropDownList proorder;
+        protected global::FineUIPro.FormRow FormRow3;
+
+        /// <summary>
+        /// lblProlinename 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Label lblProlinename;
+
+        /// <summary>
+        /// lblProlot 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Label lblProlot;
 
         /// <summary>
         /// FormRow10 控件。
@@ -123,13 +141,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.FormRow FormRow10;
 
         /// <summary>
-        /// promodel 控件。
+        /// lblProrealqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label promodel;
+        protected global::FineUIPro.Label lblProrealqty;
+
+        /// <summary>
+        /// lblPromodel 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Label lblPromodel;
 
         /// <summary>
         /// FormRow1 控件。
@@ -141,31 +168,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.FormRow FormRow1;
 
         /// <summary>
-        /// promodelqty 控件。
+        /// lblProorder 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label promodelqty;
+        protected global::FineUIPro.Label lblProorder;
 
         /// <summary>
-        /// prolot 控件。
+        /// lblProorderqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolot;
-
-        /// <summary>
-        /// proorderqty 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.Label proorderqty;
+        protected global::FineUIPro.Label lblProorderqty;
 
         /// <summary>
         /// Grid1 控件。
@@ -204,24 +222,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.ToolbarSeparator ToolbarSeparator1;
 
         /// <summary>
-        /// ddlProlinename 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DropDownList ddlProlinename;
-
-        /// <summary>
-        /// ddlProngdept 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DropDownList ddlProngdept;
-
-        /// <summary>
         /// ddlPropcbtype 控件。
         /// </summary>
         /// <remarks>
@@ -229,24 +229,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.DropDownList ddlPropcbtype;
-
-        /// <summary>
-        /// txtPropcbcardno 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.TextBox txtPropcbcardno;
-
-        /// <summary>
-        /// ddlPropcbcheckout 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DropDownList ddlPropcbcheckout;
 
         /// <summary>
         /// numProrealqty 控件。
@@ -258,13 +240,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.NumberBox numProrealqty;
 
         /// <summary>
-        /// numProbadqty 控件。
+        /// txtProlinename 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox numProbadqty;
+        protected global::FineUIPro.TextBox txtProlinename;
+
+        /// <summary>
+        /// txtPropcbcardno 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox txtPropcbcardno;
 
         /// <summary>
         /// txtProbadnote 控件。
@@ -276,13 +267,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.TextBox txtProbadnote;
 
         /// <summary>
-        /// txtProbadset 控件。
+        /// ddlPropcbcheckout 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.TextBox txtProbadset;
+        protected global::FineUIPro.DropDownList ddlPropcbcheckout;
 
         /// <summary>
         /// txtProbadreason 控件。
@@ -294,13 +285,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.TextBox txtProbadreason;
 
         /// <summary>
-        /// ddlProbadprop 控件。
+        /// numProbadqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DropDownList ddlProbadprop;
+        protected global::FineUIPro.NumberBox numProbadqty;
 
         /// <summary>
         /// ddlProbadresponsibility 控件。
@@ -310,6 +301,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.DropDownList ddlProbadresponsibility;
+
+        /// <summary>
+        /// ddlProbadprop 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.DropDownList ddlProbadprop;
 
         /// <summary>
         /// ddlProbadrepairman 控件。

@@ -438,7 +438,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "DTA_sdate_Inspect Query";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Outgoing_Inspection_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -481,11 +481,17 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          查验号码 = g.qmCheckNotes,
                          检查员 = g.qmInspector,
                      };
-
-            ConvertHelper.LinqConvertToDataTable(qs);
-            Grid1.AllowPaging = false;
-            ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
-            Grid1.AllowPaging = true;
+            if (qs.Any())
+            {
+                ConvertHelper.LinqConvertToDataTable(qs);
+                Grid1.AllowPaging = false;
+                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                Grid1.AllowPaging = true;
+            }
+            else
+            {
+                Alert.ShowInTop("没有数据被导出！", "警告提示", MessageBoxIcon.Warning);
+            }
         }
     }
 }

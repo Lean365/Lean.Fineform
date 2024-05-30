@@ -109,8 +109,8 @@
                         <%--<f:BoundField DataField="Proorder" SortField="Proorder" Width="80px" HeaderText="订单" />--%>
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="100px" HeaderText="Lot" />
                         <f:BoundField DataField="Proorderqty" SortField="Proorderqty" Width="100px" HeaderText="订单数" />
-                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" Width="80px" HeaderText="生产数" />
-                        <f:BoundField DataField="Proispqty" SortField="Proispqty" Width="80px" HeaderText="检查数" />
+                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="生产数" />
+                        <f:BoundField DataField="Proispqty" SortField="Proispqty" ColumnID="Proispqty" Width="80px" HeaderText="检查数" />
                         <f:BoundField DataField="Propcbchecktype" SortField="Propcbchecktype" Width="80px" HeaderText="检查状况" />
                         <%--<f:BoundField DataField="Prolinename" SortField="Prolinename" Width="60px" HeaderText="线别" />--%>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_manufacturing_defect_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.P2D.p2d_manufacturing_defect_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_repair_defect_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.P2D.p2d_repair_defect_new" %>
 
 <!DOCTYPE html>
 
@@ -36,7 +36,6 @@
                         <f:Button ID="btnSaveClose" ValidateForms="SimpleForm1" Icon="SystemSaveClose" OnClick="btnSaveClose_Click"
                             runat="server" Text="<%$ Resources:GlobalResource,WindowsForm_SaveClose%>">
                         </f:Button>
-
                     </Items>
                 </f:Toolbar>
             </Toolbars>
@@ -46,41 +45,37 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="DefDate" Label="生产日期" ShowRedStar="True">
-                                </f:Label>
+                                <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="dpProdate" ShowRedStar="True" TabIndex="1" FocusOnPageLoad="true">
+                                </f:DatePicker>
+                                <%--<f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
+                                </f:DropDownList>--%>
+                                <f:DropDownList runat="server" ID="ddpProorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="ddpProorder_SelectedIndexChanged" TabIndex="3">
+                                </f:DropDownList>
+                            </Items>
+                        </f:FormRow>
 
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow3" runat="server">
-                            <Items>
-                                <f:Label runat="server" ID="prolinename" Label="生产班组" ShowRedStar="True">
-                                </f:Label>
-                                <f:Label runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
-                                </f:Label>
-                            </Items>
-                        </f:FormRow>
 
                         <f:FormRow ID="FormRow10" runat="server">
                             <Items>
-                                <f:Label ID="prorealqty" runat="server" Label="生产台数" Text="0">
-                                </f:Label>
-
-                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
+                                <%--<f:NumberBox ID="prorealqty" runat="server" Label="生产台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
+                                </f:NumberBox>--%>
+                                <%--<f:Label ID="pronobadqty" runat="server" Label="无不良台数" Text="0">
+                                </f:Label>--%>
+                                <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
+                                <f:Label ID="lblProlot" runat="server" Label="生产LOT"></f:Label>
+                                <f:Label ID="lblProorderqty" runat="server" Label="订单台数"></f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-
-                                <f:Label ID="proorder" runat="server" Label="生产订单"></f:Label>
-                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
                             </Items>
                         </f:FormRow>
+
                     </Rows>
                 </f:Form>
-
             </Items>
             <Items>
-                <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="2" EnableCheckBoxSelect="true"
+                <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="1" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
                     OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
                     <Toolbars>
@@ -89,7 +84,7 @@
                                 <f:Button ID="btnNew" Icon="Add" EnablePostBack="false" runat="server">
                                 </f:Button>
                                 <%--                                <f:Button ID="btnDel" Icon="DatabaseDelete" EnablePostBack="false" runat="server">
-                </f:Button>--%>
+                                </f:Button>--%>
                                 <f:Button ID="btnReset" Icon="Reload" EnablePostBack="false" runat="server">
                                 </f:Button>
                                 <f:ToolbarSeparator ID="ToolbarSeparator1" runat="server">
@@ -107,7 +102,7 @@
 
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="Lot数量" FieldType="Float">
+                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="生产数量" FieldType="Float">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" Required="true" runat="server" Text="">
                                 </f:NumberBox>
@@ -168,7 +163,6 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-
                     </Columns>
                 </f:Grid>
                 <f:Panel Height="150px" ShowHeader="false" BodyPadding="10px"
@@ -183,8 +177,8 @@
     </form>
     <script>
 
-        // 注意：专业版中改事件名为：afteredit，开源版中为：edit
-        function onGridAfterEdit(editor, params) {
+        // 注意：专业版中改事件名为：Contectext，开源版中为：edit
+        function onGridContectext(editor, params) {
             var me = this, columnId = params.column.id, rowId = params.record.getId();
             if (columnId === 'ChineseScore' || columnId === 'MathScore') {
                 var chineseScore = me.f_getCellValue(rowId, 'ChineseScore');

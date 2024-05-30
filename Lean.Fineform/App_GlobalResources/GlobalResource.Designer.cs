@@ -664,7 +664,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 EcManage 的本地化字符串。
+        ///   查找类似 Ec 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Ec_MGT {
             get {
@@ -736,7 +736,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 INSP Record 的本地化字符串。
+        ///   查找类似 Inspection 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Inspection {
             get {
@@ -772,7 +772,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Labortime 的本地化字符串。
+        ///   查找类似 Manhours 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Manhours {
             get {
@@ -781,7 +781,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 P1DManufacture 的本地化字符串。
+        ///   查找类似 P1D MFG 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Manufacture_P1D {
             get {
@@ -790,7 +790,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 P2DManufacture 的本地化字符串。
+        ///   查找类似 P2D MFG 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Manufacture_P2D {
             get {
@@ -844,7 +844,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 OPHQuery 的本地化字符串。
+        ///   查找类似 Query 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_OPH_Query {
             get {
@@ -853,7 +853,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 OPHReport 的本地化字符串。
+        ///   查找类似 Report 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_OPH_Report {
             get {
@@ -862,7 +862,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 P1DPoorManage 的本地化字符串。
+        ///   查找类似 P1D Poor 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_P1d_Defect {
             get {
@@ -871,7 +871,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 P2DPoorManage 的本地化字符串。
+        ///   查找类似 P2D Poor 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_P2d_Defect {
             get {
@@ -880,7 +880,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 ProducingProgress 的本地化字符串。
+        ///   查找类似 Progress 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_ProducingProgress {
             get {
@@ -898,7 +898,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Repair Record 的本地化字符串。
+        ///   查找类似 Repair 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Repair {
             get {
@@ -979,7 +979,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 TL MGT 的本地化字符串。
+        ///   查找类似 Technical liaison 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_TL {
             get {
@@ -988,7 +988,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Technical liaison 的本地化字符串。
+        ///   查找类似 List 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_TL_Liaison {
             get {
@@ -997,7 +997,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 LiaisonList 的本地化字符串。
+        ///   查找类似 Query 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_TL_List {
             get {
@@ -1006,7 +1006,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 MFG.Traceability 的本地化字符串。
+        ///   查找类似 Traceability 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Tracking {
             get {
@@ -1015,7 +1015,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 Lot Traceability 的本地化字符串。
+        ///   查找类似 Lot 的本地化字符串。
         /// </summary>
         internal static string menu_pp_tracking_lot {
             get {
@@ -1024,7 +1024,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 STD.Processing 的本地化字符串。
+        ///   查找类似 STD 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_Tracking_Process {
             get {
@@ -1051,7 +1051,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 ComplainMGT 的本地化字符串。
+        ///   查找类似 Complain 的本地化字符串。
         /// </summary>
         internal static string menu_Qm_ComplaintMGT {
             get {
@@ -1114,7 +1114,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 QualityMGT 的本地化字符串。
+        ///   查找类似 Quality 的本地化字符串。
         /// </summary>
         internal static string menu_Qm_MGT {
             get {
@@ -1240,7 +1240,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 CustomerMGT 的本地化字符串。
+        ///   查找类似 Customer 的本地化字符串。
         /// </summary>
         internal static string menu_Sd_CustomerMGT {
             get {

@@ -38,7 +38,7 @@
                 </f:Form>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false" 
                     EnableCheckBoxSelect="true" ForceFit="true" EnableTextSelection="true"
-                    DataKeyNames="ID,Prolinename,Prodate,Prolot,Promodel,Prost,Prostdcapacity,Proorder" AllowSorting="true" OnSort="Grid1_Sort" SortField="ID"
+                    DataKeyNames="Parent,Prolinename,Prodate,Prolot,Promodel,Prost,Prostdcapacity,Proorder" AllowSorting="true" OnSort="Grid1_Sort" SortField="ID"
                     SortDirection="DESC" AllowPaging="true" IsDatabasePaging="true" OnPreDataBound="Grid1_PreDataBound"
                     OnPreRowDataBound="Grid1_PreRowDataBound"
                     OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange">

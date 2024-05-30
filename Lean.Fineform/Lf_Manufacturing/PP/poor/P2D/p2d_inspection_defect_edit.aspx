@@ -46,32 +46,32 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="DefDate" Label="生产日期" ShowRedStar="True">
+                                <f:Label runat="server" ID="lblProinspdate" Label="生产日期" ShowRedStar="True">
                                 </f:Label>
 
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="prolinename" Label="生产班组" ShowRedStar="True">
+                                <f:Label runat="server" ID="lblProlinename" Label="生产班组" ShowRedStar="True">
                                 </f:Label>
-                                <f:Label runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
+                                <f:Label runat="server" ID="lblProlot" Label="生产LOT" ShowRedStar="True">
                                 </f:Label>
                             </Items>
                         </f:FormRow>
 
                         <f:FormRow ID="FormRow10" runat="server">
                             <Items>
-                                <f:Label ID="prorealqty" runat="server" Label="生产台数" Text="0">
+                                <f:Label ID="lblProrealqty" runat="server" Label="生产台数" Text="0">
                                 </f:Label>
-                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
+                                <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
 
-                                <f:Label ID="proorder" runat="server" Label="生产订单"></f:Label>
-                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
+                                <f:Label ID="lblProorder" runat="server" Label="生产订单"></f:Label>
+                                <f:Label ID="lblProorderqty" runat="server" Label="订单台数"></f:Label>
                             </Items>
                         </f:FormRow>
                     </Rows>
@@ -108,14 +108,14 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Provisualtype" SortField="Provisualtype" DataField="Provisualtype" HeaderText="目视" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProvisualtype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProvisualtype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
 
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Provctype" SortField="Provctype" DataField="Provctype" HeaderText="VC" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProvctype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProvctype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
@@ -143,7 +143,7 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="Lot数量" FieldType="Int">
+                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="生产数量" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" Required="true" runat="server" Text="">
                                 </f:NumberBox>
@@ -207,7 +207,7 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Probadtype" SortField="Probadtype" DataField="Probadtype" HeaderText="不良个所" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProbadtype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProbadtype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>

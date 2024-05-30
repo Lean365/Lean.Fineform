@@ -325,7 +325,7 @@
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_monthly.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_monthly.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_monthly.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_edit.aspx" />
@@ -336,9 +336,9 @@
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_edit.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_edit.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_new.aspx" />
@@ -7084,12 +7084,12 @@
     <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_monthly.aspx.designer.cs">
       <DependentUpon>p2d_inspection_defect_monthly.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_monthly.aspx.cs">
-      <DependentUpon>p2d_manufacturing_defect_monthly.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_monthly.aspx.cs">
+      <DependentUpon>p2d_repair_defect_monthly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_monthly.aspx.designer.cs">
-      <DependentUpon>p2d_manufacturing_defect_monthly.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_monthly.aspx.designer.cs">
+      <DependentUpon>p2d_repair_defect_monthly.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_defect_new.aspx.cs">
       <DependentUpon>p2d_defect_new.aspx</DependentUpon>
@@ -7161,26 +7161,26 @@
     <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_inspection_defect_new.aspx.designer.cs">
       <DependentUpon>p2d_inspection_defect_new.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect.aspx.cs">
-      <DependentUpon>p2d_manufacturing_defect.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect.aspx.cs">
+      <DependentUpon>p2d_repair_defect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect.aspx.designer.cs">
-      <DependentUpon>p2d_manufacturing_defect.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect.aspx.designer.cs">
+      <DependentUpon>p2d_repair_defect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_edit.aspx.cs">
-      <DependentUpon>p2d_manufacturing_defect_edit.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_edit.aspx.cs">
+      <DependentUpon>p2d_repair_defect_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_edit.aspx.designer.cs">
-      <DependentUpon>p2d_manufacturing_defect_edit.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_edit.aspx.designer.cs">
+      <DependentUpon>p2d_repair_defect_edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_new.aspx.cs">
-      <DependentUpon>p2d_manufacturing_defect_new.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx.cs">
+      <DependentUpon>p2d_repair_defect_new.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_manufacturing_defect_new.aspx.designer.cs">
-      <DependentUpon>p2d_manufacturing_defect_new.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx.designer.cs">
+      <DependentUpon>p2d_repair_defect_new.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\TL\liaison.aspx.cs">
       <DependentUpon>liaison.aspx</DependentUpon>

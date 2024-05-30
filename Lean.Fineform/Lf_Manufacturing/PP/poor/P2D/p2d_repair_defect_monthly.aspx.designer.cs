@@ -11,7 +11,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 {
 
 
-    public partial class p2d_manufacturing_defect_monthly
+    public partial class p2d_repair_defect_monthly
     {
 
         /// <summary>

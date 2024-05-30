@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 {
-    public partial class p2d_manufacturing_defect : PageBase
+    public partial class p2d_repair_defect : PageBase
     {
         #region ViewPower
 
@@ -51,7 +51,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
 
-            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_manufacturing_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_repair_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
             DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
@@ -73,9 +73,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             where a.DictType.Contains("line_type_p")
                             select new
                             {
-                                a.DictLabel,
-                                a.DictValue
-                            }).ToList();
+                                DictLabel = a.DictLabel.Substring(0, 2),
+                                DictValue = a.DictValue.Substring(0, 2)
+                            }).Distinct().ToList();
             IQueryable<Pp_P2d_Manufacturing_Defect> q = DB.Pp_P2d_Manufacturing_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
@@ -214,7 +214,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_manufacturing_defect_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_repair_defect_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
             }
 
             int del_ID = GetSelectedDataKeyID(Grid1);
@@ -284,7 +284,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "Manufacturing_defectd_Data";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

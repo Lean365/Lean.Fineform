@@ -45,11 +45,11 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="DefDate" ShowRedStar="True" OnTextChanged="DefDate_TextChanged" TabIndex="1" FocusOnPageLoad="true">
+                                <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="dpProinspdate" ShowRedStar="True" TabIndex="1" FocusOnPageLoad="true">
                                 </f:DatePicker>
-                                <%--                                <f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
+                                <%--<f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
                                 </f:DropDownList>--%>
-                                <f:DropDownList runat="server" ID="proorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="proorder_SelectedIndexChanged" TabIndex="3">
+                                <f:DropDownList runat="server" ID="ddpProorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="ddpProorder_SelectedIndexChanged" TabIndex="3">
                                 </f:DropDownList>
                             </Items>
                         </f:FormRow>
@@ -61,9 +61,9 @@
                                 </f:NumberBox>--%>
                                 <%--<f:Label ID="pronobadqty" runat="server" Label="无不良台数" Text="0">
                                 </f:Label>--%>
-                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
-                                <f:Label ID="prolot" runat="server" Label="生产LOT"></f:Label>
-                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
+                                <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
+                                <f:Label ID="lblProlot" runat="server" Label="生产LOT"></f:Label>
+                                <f:Label ID="lblProorderqty" runat="server" Label="订单台数"></f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
@@ -104,26 +104,26 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Provisualtype" SortField="Provisualtype" DataField="Provisualtype" HeaderText="目视" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProvisualtype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProvisualtype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
 
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Provctype" SortField="Provctype" DataField="Provctype" HeaderText="VC" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProvctype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProvctype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="A面" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
                             <Editor>
-                                <f:DatePicker ID="dpProsideadate" Required="true" runat="server">
+                                <f:DatePicker ID="dpProsideadate" Required="true" runat="server" >
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="B面" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
                             <Editor>
-                                <f:DatePicker ID="dpProsidebdate" Required="true" runat="server">
+                                <f:DatePicker ID="dpProsidebdate" Required="true" runat="server" >
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>
@@ -139,7 +139,7 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="Lot数量" FieldType="Int">
+                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="生产数量" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" Required="true" runat="server" Text="">
                                 </f:NumberBox>
@@ -159,7 +159,8 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prolinename" DataField="Prolinename" HeaderText="生产线别" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProlinename" Required="true" runat="server" >
+
+                                <f:TextBox ID="txtProlinename" Required="true" runat="server">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
@@ -177,13 +178,13 @@
                         </f:RenderField>
                         <f:RenderField Width="100px" ColumnID="Probadqty" DataField="Probadqty" HeaderText="不良数量" FieldType="Int">
                             <Editor>
-                                <f:NumberBox ID="numProbadqty" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="999" runat="server" AutoPostBack="true">
+                                <f:NumberBox ID="numProbadqty" NoDecimal="true" NoNegative="true" MinValue="1" MaxValue="999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prohandle" DataField="Prohandle" HeaderText="手贴" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProhandle" Required="true" runat="server" >
+                                <f:TextBox ID="txtProhandle" Required="true" runat="server">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
@@ -203,7 +204,7 @@
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Probadtype" SortField="Probadtype" DataField="Probadtype" HeaderText="不良个所" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProbadtype" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProbadtype" runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>

@@ -97,6 +97,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             BindDdlPcbaType();
             BindDdlProStated();
             BindDdlProCause();
+            BindDdlLine();
             Rate();
             MemoText.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.生产工数为1时，参与OPH计划台数统计。</div><div>2.同一时段生产多个工单时，计划台数系统自动处理，作业工数计算方法：<strong>多个工单具体的实绩工数+停线时间</strong></div><div>3.实绩工数的计算公式：<strong>作业工数-停线时间</strong></div><div>4.实绩工数不能为负数</div><div>4.生产实绩不能超过工单数量</div>");
             //MemoText.Text = "填写说明" + Environment.NewLine + "1.作业工数为1时，参与OPH计划台数统计。" + Environment.NewLine +"2.同一时段多个工单生产时，";
@@ -311,9 +312,37 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             ddlProbadcou.DataSource = qs;
-            ddlProbadcou.DataTextField = "DictValue";
+            ddlProbadcou.DataTextField = "DictLabel";
             ddlProbadcou.DataValueField = "DictValue";
             ddlProbadcou.DataBind();
+        }
+
+        //DDL查询班组
+        private void BindDdlLine()
+        {
+            //查询LINQ去重复
+            var q = from a in DB.Adm_Dicts
+                        //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                        //where b.Proecnno == strecn
+                    where a.DictType.Contains("line_type_p")
+                    //where !a.DictLabel.Contains("SMT")
+                    //where a.DictLabel.Contains("自")
+                    orderby a.DictLabel
+                    select new
+                    {
+                        DictLabel = a.DictLabel.Substring(0, a.DictLabel.Length - 1),
+                        DictValue = a.DictValue.Substring(0, a.DictValue.Length - 1),
+                    };
+
+            var qs = q.Select(E => new { E.DictValue, E.DictLabel }).ToList().Distinct();
+            //var list = (from c in DB.ProSapPorders
+            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
+            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
+            //3.2.将数据绑定到下拉框
+            ddlProlinename.DataSource = qs;
+            ddlProlinename.DataTextField = "DictLabel";
+            ddlProlinename.DataValueField = "DictLabel";
+            ddlProlinename.DataBind();
         }
 
         #endregion Page_Load
@@ -423,6 +452,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             strProlosstime = tb.Rows[tb.Rows.Count - 1]["Prolosstime"].ToString();
                             //投入工数
                             strPromaketime = tb.Rows[tb.Rows.Count - 1]["Promaketime"].ToString();
+
+                            //投入工数
+                            strUDF51 = tb.Rows[tb.Rows.Count - 1]["UDF51"].ToString();
                         }
                         Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
 
@@ -431,8 +463,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proordertype = strProordertype;
                         item.Proorder = strProorder;
                         item.Proorderqty = decimal.Parse(strProorderqty);
-                        item.Prolinename = strProlinename;
-                        item.Prodate = strProdate;
+                        item.Prolinename = ddlProlinename.SelectedItem.Text;
+                        item.Prodate = strProdate;//dpkProdate.SelectedDate.Value.ToString("yyyyMMdd");
                         item.Prodirect = int.Parse(strProdirect);
                         item.Proindirect = int.Parse(strProindirect);
                         item.Prolot = strProlot;
@@ -468,7 +500,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Prostdiff = decimal.Parse(strProstdiff);
                         item.Proqtydiff = int.Parse(strProqtydiff);
                         item.Proratio = int.Parse(strProratio);
-
+                        item.UDF51 = int.Parse(strUDF51);
                         item.GUID = Guid.NewGuid();
 
                         item.CreateDate = DateTime.Now;
@@ -596,6 +628,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             strProlosstime = tb.Rows[0]["Prolosstime"].ToString();
                             //投入工数
                             strPromaketime = tb.Rows[0]["Promaketime"].ToString();
+                            //投入工数
+                            strUDF51 = tb.Rows[0]["UDF51"].ToString();
                         }
                         Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
 
@@ -604,8 +638,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proordertype = strProordertype;
                         item.Proorder = strProorder;
                         item.Proorderqty = decimal.Parse(strProorderqty);
-                        item.Prolinename = strProlinename;
-                        item.Prodate = strProdate;
+                        item.Prolinename = ddlProlinename.SelectedItem.Text;
+                        item.Prodate = strProdate;//dpkProdate.SelectedDate.Value.ToString("yyyyMMdd");
                         item.Prodirect = int.Parse(strProdirect);
                         item.Proindirect = int.Parse(strProindirect);
                         item.Prolot = strProlot;
@@ -641,6 +675,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Prostdiff = decimal.Parse(strProstdiff);
                         item.Proqtydiff = int.Parse(strProqtydiff);
                         item.Proratio = int.Parse(strProratio);
+                        item.UDF51 = int.Parse(strUDF51);
+
                         item.isDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
@@ -735,7 +771,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             rowData["Proorderqty"] = strProorderqty;
 
-            rowData["Prolinename"] = strProlinename;
+            rowData["Prolinename"] = "";
 
             rowData["Prodate"] = strProdate;
 
@@ -803,6 +839,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         //获取新增行内容
         private void InsertDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
+            // 班组
+            UpdateDataRow("Prolinename", rowDict, rowData);
+            // 日期
+            UpdateDataRow("Prorate", rowDict, rowData);
             // 板别
             UpdateDataRow("Propcbatype", rowDict, rowData);
 
@@ -834,6 +874,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdateDataRow("Prolosstime", rowDict, rowData);
             // 投入工数
             UpdateDataRow("Promaketime", rowDict, rowData);
+            // 不良台数
+            UpdateDataRow("UDF51", rowDict, rowData);
         }
 
         private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
@@ -847,6 +889,20 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //     .Where(u => u.ID == ParentID).FirstOrDefault();
 
             beforeInsNetOperateNotes();
+            // 班组
+            if (rowDict.ContainsKey("Prolinename"))
+            {
+                rowData["Prolinename"] = rowDict["Prolinename"];
+                item.Prolinename = (rowData["Prolinename"].ToString().ToUpper());
+                strProlinename = rowData["Prolinename"].ToString();
+            }
+            // 日期
+            if (rowDict.ContainsKey("Prodate"))
+            {
+                rowData["Prodate"] = rowDict["Prodate"];
+                item.Prodate = rowData["Prodate"].ToString().ToUpper(); //Convert.ToDateTime(rowData["Prodate"].ToString().ToUpper()).ToString("yyyyMMdd");
+                strProdate = rowData["Prodate"].ToString();
+            }
             // 板别
             if (rowDict.ContainsKey("Propcbatype"))
             {
@@ -954,6 +1010,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 rowData["Propcbastated"] = rowDict["Propcbastated"];
                 item.Propcbastated = (rowData["Propcbastated"].ToString()).ToUpper();
                 strPropcbastated = rowData["Propcbastated"].ToString();
+            }
+            //不良台数
+            if (rowDict.ContainsKey("UDF51"))
+            {
+                rowData["UDF51"] = rowDict["UDF51"];
+                item.UDF51 = int.Parse(rowData["UDF51"].ToString());
+                strUDF51 = rowData["UDF51"].ToString();
             }
             item.Proworkst = 0;
             item.Prostdiff = 0;
