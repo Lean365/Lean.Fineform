@@ -970,11 +970,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 ManHourQuery 的本地化字符串。
+        ///   查找类似 P1D 的本地化字符串。
         /// </summary>
-        internal static string menu_Pp_Times_Query {
+        internal static string menu_Pp_Times_P1D {
             get {
-                return ResourceManager.GetString("menu_Pp_Times_Query", resourceCulture);
+                return ResourceManager.GetString("menu_Pp_Times_P1D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 P2D 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_Times_P2D {
+            get {
+                return ResourceManager.GetString("menu_Pp_Times_P2D", resourceCulture);
             }
         }
         

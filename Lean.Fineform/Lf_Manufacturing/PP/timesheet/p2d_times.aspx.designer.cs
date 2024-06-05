@@ -11,7 +11,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 {
 
 
-    public partial class times_query
+    public partial class p2d_times
     {
 
         /// <summary>

@@ -623,7 +623,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUALQTY" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "M" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 
@@ -659,7 +659,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Total)_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Rework(Model)_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
@@ -762,7 +762,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ReworkModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.ReworkModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "R" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 

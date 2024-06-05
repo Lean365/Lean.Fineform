@@ -76,7 +76,7 @@ function BindChartData_Pp_Actual(name, value1, value2, value3, data) {
                 saveAsImage: {
                     show: true,
                     title: 'IMG',
-                    name: 'DTA:' + '_班组生产统计',
+                    name: 'DTA_' + TransDates.substring(0, 4) + '年' + TransDates.substring(4, 6) + '月' + '_班组生产统计',
                 },// 保存为图片
             }
         },
@@ -252,9 +252,9 @@ function BindChartData_Pp_Actual(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#ed1941";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -276,8 +276,8 @@ function BindChartData_Pp_Actual(name, value1, value2, value3, data) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2024目标',
-                        yAxis: 112,
+                        name: 'FY2025目标',
+                        yAxis: 110,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -472,9 +472,9 @@ function BindChartData_Pp_Last_Actual(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#ed1941";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -1280,9 +1280,9 @@ function BindChartData_Pp_Achieving_Rate(name, value3, value4) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#ed1941";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -1303,8 +1303,8 @@ function BindChartData_Pp_Achieving_Rate(name, value3, value4) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2024目标',
-                        yAxis: 112,
+                        name: 'FY2025目标',
+                        yAxis: 110,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -1820,9 +1820,9 @@ function BindChartData_Pp_LineLoss(name, value1, value2, value3, value4, value5,
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#FF0000";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -2118,9 +2118,9 @@ function BindChartData_Pp_Loss(name, value1, value2, value3, value4, value5, dat
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#FF0000";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -2338,7 +2338,7 @@ function BindChartData_Pp_ModelAchieve(name, value3, value4) {
         },
         title: {
             text: '机种达成率统计',
-            subtext: '大于目标112%的10个机种，小于目标的后10个机种', //+ TransDates,
+            subtext: '大于目标110%的10个机种，小于目标的后10个机种', //+ TransDates,
             x: 'center'
         },
         tooltip: {
@@ -2463,9 +2463,9 @@ function BindChartData_Pp_ModelAchieve(name, value3, value4) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#ed1941";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -2486,8 +2486,8 @@ function BindChartData_Pp_ModelAchieve(name, value3, value4) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2024目标',
-                        yAxis: 112,
+                        name: 'FY2025目标',
+                        yAxis: 110,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -2741,9 +2741,9 @@ function BindChartData_Pp_YearAchieve(name, value1, value2, value3, data) {
                     normal: {
                         ///  通过params.value拿到对应的data里面的数据
                         color: function (params) {
-                            if (params.value < 112) {
+                            if (params.value < 110) {
                                 return "#ed1941";
-                            } else if (params.value >= 112) {
+                            } else if (params.value >= 110) {
                                 return "#1d953f";
                             }
                             return "#225a1f";
@@ -2765,8 +2765,8 @@ function BindChartData_Pp_YearAchieve(name, value1, value2, value3, data) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2024目标',
-                        yAxis: 112,
+                        name: 'FY2025目标',
+                        yAxis: 110,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'

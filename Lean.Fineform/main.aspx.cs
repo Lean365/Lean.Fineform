@@ -330,13 +330,14 @@ namespace LeanFine
                     case "工程检查": node.Text = global::Resources.GlobalResource.menu_Pp_Inspection; break;
                     case "生产不良": node.Text = global::Resources.GlobalResource.menu_Pp_Defect; break;
                     case "修理记录": node.Text = global::Resources.GlobalResource.menu_Pp_Repair; break;
+
                     case "工单统计": node.Text = global::Resources.GlobalResource.menu_pp_defect_MOStatistics; break;
                     case "LOT集计": node.Text = global::Resources.GlobalResource.menu_pp_defect_LotStatistics; break;
                     case "不具合查询": node.Text = global::Resources.GlobalResource.menu_pp_defect_Query; break;
 
                     case "工数": node.Text = global::Resources.GlobalResource.menu_Pp_Times; break;
-                    case "工数查询": node.Text = global::Resources.GlobalResource.menu_Pp_Times_Query; break;
-
+                    case "制一": node.Text = global::Resources.GlobalResource.menu_Pp_Times_P1D; break;
+                    case "制二": node.Text = global::Resources.GlobalResource.menu_Pp_Times_P2D; break;
                     case "图表": node.Text = global::Resources.GlobalResource.menu_Rpt; break;
                     case "生产图表": node.Text = global::Resources.GlobalResource.menu_Rpt_ppcharts; break;
 

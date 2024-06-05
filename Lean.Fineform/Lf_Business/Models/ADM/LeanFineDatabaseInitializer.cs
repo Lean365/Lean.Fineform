@@ -1041,10 +1041,20 @@ namespace LeanFine
                             {
                                 new Adm_Menu
                                 {
-                                    Name = "工数查询",
+                                    Name = "制一工数",
                                     SortIndex = 100,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/timesheet/times_query.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/timesheet/p1d_times.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/query.png",
+                                    ButtonName="Btn_Lf_Pp_"+"times_query",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTimeView").FirstOrDefault<Adm_Power>()
+                                },
+                                new Adm_Menu
+                                {
+                                    Name = "制二工数",
+                                    SortIndex = 110,
+                                    Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/timesheet/p2d_times.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
                                     ButtonName="Btn_Lf_Pp_"+"times_query",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreTimeView").FirstOrDefault<Adm_Power>()

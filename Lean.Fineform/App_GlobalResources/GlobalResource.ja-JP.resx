@@ -624,8 +624,8 @@
   <data name="sys_Export_SheetTime" xml:space="preserve">
     <value>工数明細</value>
   </data>
-  <data name="menu_Pp_Times_Query" xml:space="preserve">
-    <value>検索</value>
+  <data name="menu_Pp_P1D_Times" xml:space="preserve">
+    <value>製造1工数</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
     <value>工時</value>
@@ -1244,5 +1244,8 @@
   </data>
   <data name="menu_Pp_Smt" xml:space="preserve">
     <value>SMT</value>
+  </data>
+  <data name="menu_Pp_P2D_Times" xml:space="preserve">
+    <value>製造２工数</value>
   </data>
 </root>

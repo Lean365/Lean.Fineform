@@ -627,8 +627,8 @@
   <data name="sys_Export_SheetTime" xml:space="preserve">
     <value>TimeSheetDETL</value>
   </data>
-  <data name="menu_Pp_Times_Query" xml:space="preserve">
-    <value>ManHourQuery</value>
+  <data name="menu_Pp_Times_P1D" xml:space="preserve">
+    <value>P1D</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
     <value>Manhours</value>
@@ -1244,5 +1244,8 @@
   </data>
   <data name="menu_Pp_Smt" xml:space="preserve">
     <value>SMT Daily</value>
+  </data>
+  <data name="menu_Pp_Times_P2D" xml:space="preserve">
+    <value>P2D</value>
   </data>
 </root>

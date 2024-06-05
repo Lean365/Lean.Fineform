@@ -624,8 +624,8 @@
   <data name="sys_Export_SheetTime" xml:space="preserve">
     <value>工数明細</value>
   </data>
-  <data name="menu_Pp_Times_Query" xml:space="preserve">
-    <value>工数查询</value>
+  <data name="menu_Pp_Times_P1D" xml:space="preserve">
+    <value>制一</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
     <value>标准工时</value>
@@ -763,7 +763,7 @@
     <value>P2D不良</value>
   </data>
   <data name="sys_Export_SheetDefect" xml:space="preserve">
-    <value>不良集计</value>
+    <value>不良集计报告</value>
   </data>
   <data name="menu_pp_defect_Type" xml:space="preserve">
     <value>不良类别</value>
@@ -1244,5 +1244,8 @@
   </data>
   <data name="menu_Pp_Smt" xml:space="preserve">
     <value>SMT生产</value>
+  </data>
+  <data name="menu_Pp_Times_P2D" xml:space="preserve">
+    <value>制二</value>
   </data>
 </root>

@@ -513,7 +513,7 @@ namespace LeanFine.Lf_Admin
 
         protected void Btn_Pp_times_Query_Click(object sender, EventArgs e)
         {
-            string menu_Pp_Times_Query = global::Resources.GlobalResource.menu_Pp_Times_Query;
+            string menu_Pp_Times_Query = global::Resources.GlobalResource.menu_Pp_Times_P1D;
             PageContext.RegisterStartupScript("top.addExampleTab('menu_Pp_Times_Query','/Cube_PP/manufacturing/timesheet/times_query.aspx','" + menu_Pp_Times_Query + "', '/res/menu/query.png', '', true, ''); ");
         }
 

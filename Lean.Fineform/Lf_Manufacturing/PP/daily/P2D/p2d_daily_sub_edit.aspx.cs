@@ -854,7 +854,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             // 数量
             UpdateDataRow("Prorealqty", rowDict, rowData);
-
+            // 累计数量
+            UpdateDataRow("Prorealtotal", rowDict, rowData);
             // 完成
             UpdateDataRow("Propcbastated", rowDict, rowData);
 
@@ -924,6 +925,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 rowData["Prorealqty"] = rowDict["Prorealqty"];
                 item.Prorealqty = int.Parse(rowData["Prorealqty"].ToString());
                 strProrealqty = rowData["Prorealqty"].ToString();
+            }
+            // 累计生产
+            if (rowDict.ContainsKey("Prorealtotal"))
+            {
+                rowData["Prorealtotal"] = rowDict["Prorealtotal"];
+                item.Prorealtotal = int.Parse(rowData["Prorealtotal"].ToString());
+                strProrealtotal = rowData["Prorealtotal"].ToString();
             }
             // 直接
             item.Prodirect = 0;
@@ -1040,6 +1048,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
             //更新订单已生产数量
             //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+            //更新仕损工数
+            UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
         }
 
         //根据字段获取信息

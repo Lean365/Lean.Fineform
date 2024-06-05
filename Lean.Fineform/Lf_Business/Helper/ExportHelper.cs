@@ -512,7 +512,7 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "Modify Report";
+                wb.Properties.Category = "Rework Report";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
@@ -520,7 +520,7 @@ namespace LeanFine
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.Subject = "Lean Manufacturing";
-                wb.Properties.Title = "DTA Modify by Lines Output Report";
+                wb.Properties.Title = "DTA Rework by Lines Output Report";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
@@ -535,7 +535,7 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA Modify by Lines Output Report";
+                ws.Cells[1, 1].Value = "DTA Rework by Lines Output Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -774,7 +774,7 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "Modify Report";
+                wb.Properties.Category = "Rework Report";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
@@ -782,11 +782,11 @@ namespace LeanFine
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.Subject = "Lean Manufacturing";
-                wb.Properties.Title = "DTA Modify by Models Output Report";
+                wb.Properties.Title = "DTA Rework by Models Output Report";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Modify by Models Output Report";
+                ws.Cells[1, 2].Value = "DTA Rework by Models Output Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";

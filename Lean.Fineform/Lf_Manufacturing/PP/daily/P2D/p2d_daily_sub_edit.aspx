@@ -129,6 +129,12 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
+                        <f:RenderField Width="80px" ColumnID="Prorealtotal" DataField="Prorealtotal" HeaderText="累计完成" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numProrealtotal" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
                         <f:RenderField Width="80px" ColumnID="Propcbastated" DataField="Propcbastated" HeaderText="完成情况" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlPropcbastated" runat="server" EnableEdit="True" ForceSelection="false">

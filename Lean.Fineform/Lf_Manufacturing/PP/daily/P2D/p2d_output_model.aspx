@@ -77,16 +77,69 @@
                     </PageItems>
                     <Columns>
 
-                        <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="日期" />
-                        <f:BoundField DataField="Promodel" SortField="Promodel" Width="120px" HeaderText="机种" />
-                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="实绩" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Prorealtotal" SortField="Prorealtotal" ColumnID="Prorealtotal" Width="80px" HeaderText="累计生产" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Protime" SortField="Protime" ColumnID="Protime" Width="80px" HeaderText="生产工数" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Prohandoffnum" SortField="Prohandoffnum" ColumnID="Prohandoffnum" Width="80px" HeaderText="切换次数" />
-                        <f:BoundField DataField="Prohandofftime" SortField="Prohandofftime" ColumnID="Prohandofftime" HeaderText="切换时间" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Prodowntime" SortField="Prodowntime" ColumnID="Prodowntime" HeaderText="切停机时间" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Prolosstime" SortField="Prolosstime" ColumnID="Prolosstime" HeaderText="损失工数" DataFormatString="{0:F0}" />
-                        <f:BoundField DataField="Promaketime" SortField="Promaketime" ColumnID="Promaketime" HeaderText="投入工数" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="ID" SortField="ID" ColumnID="ID" Width="60px" Hidden="True" HeaderText="ID" />
+                        <f:BoundField DataField="GUID" SortField="GUID" ColumnID="GUID" Width="60px" Hidden="True" HeaderText="GUID" />
+                        <f:BoundField DataField="Parent" SortField="Parent" ColumnID="Parent" Width="60px" Hidden="True" HeaderText="Parent" />
+                        <f:BoundField DataField="Proordertype" SortField="Proordertype" ColumnID="Proordertype" Width="60px" Hidden="True" HeaderText="工单类别" />
+                        <f:BoundField DataField="Proorder" SortField="Proorder" ColumnID="Proorder" Width="60px" Hidden="True" HeaderText="工单号" />
+                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" ColumnID="Proorderqty" Width="60px" Hidden="False" HeaderText="LOT数" />
+                        <f:BoundField DataField="Prolinename" SortField="Prolinename" ColumnID="Prolinename" Width="60px" Hidden="True" HeaderText="班组" />
+                        <f:BoundField DataField="Prodate" SortField="Prodate" ColumnID="Prodate" Width="60px" Hidden="False" HeaderText="生产日期" />
+                        <f:BoundField DataField="Prodirect" SortField="Prodirect" ColumnID="Prodirect" Width="60px" Hidden="True" HeaderText="直接" />
+                        <f:BoundField DataField="Proindirect" SortField="Proindirect" ColumnID="Proindirect" Width="60px" Hidden="True" HeaderText="间接" />
+                        <f:BoundField DataField="Prolot" SortField="Prolot" ColumnID="Prolot" Width="60px" Hidden="False" HeaderText="批次LOT" />
+                        <f:BoundField DataField="Promodel" SortField="Promodel" ColumnID="Promodel" Width="60px" Hidden="True" HeaderText="机种" />
+                        <f:BoundField DataField="Prohbn" SortField="Prohbn" ColumnID="Prohbn" Width="60px" Hidden="True" HeaderText="物料" />
+                        <f:BoundField DataField="Propcbatype" SortField="Propcbatype" ColumnID="Propcbatype" Width="60px" Hidden="False" HeaderText="Pcb类别" />
+                        <f:BoundField DataField="Propcbaside" SortField="Propcbaside" ColumnID="Propcbaside" Width="60px" Hidden="False" HeaderText="板面" />
+                        <f:BoundField DataField="Prost" SortField="Prost" ColumnID="Prost" Width="60px" Hidden="True" HeaderText="ST" />
+                        <f:BoundField DataField="Proshort" SortField="Proshort" ColumnID="Proshort" Width="60px" Hidden="True" HeaderText="点数" />
+                        <f:BoundField DataField="Prorate" SortField="Prorate" ColumnID="Prorate" Width="60px" Hidden="True" HeaderText="汇率" />
+                        <f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" ColumnID="Prostdcapacity" Width="60px" Hidden="True" HeaderText="标产" />
+                        <f:BoundField DataField="Totaltag" SortField="Totaltag" ColumnID="Totaltag" Width="60px" Hidden="True" HeaderText="标记" />
+                        <f:BoundField DataField="Prostime" SortField="Prostime" ColumnID="Prostime" Width="60px" Hidden="True" HeaderText="生产时段" />
+                        <f:BoundField DataField="Proetime" SortField="Proetime" ColumnID="Proetime" Width="60px" Hidden="True" HeaderText="生产时段" />
+                        <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="60px" Hidden="False" HeaderText="生产实绩" />
+                        <f:BoundField DataField="Prorealtotal" SortField="Prorealtotal" ColumnID="Prorealtotal" Width="60px" Hidden="False" HeaderText="累计生产" />
+                        <f:BoundField DataField="Propcbserial" SortField="Propcbserial" ColumnID="Propcbserial" Width="60px" Hidden="True" HeaderText="序列号" />
+                        <f:BoundField DataField="Prolinestopmin" SortField="Prolinestopmin" ColumnID="Prolinestopmin" Width="60px" Hidden="True" HeaderText="停线时间" />
+                        <f:BoundField DataField="Prostopcou" SortField="Prostopcou" ColumnID="Prostopcou" Width="60px" Hidden="True" HeaderText="停线原因" />
+                        <f:BoundField DataField="Prostopmemo" SortField="Prostopmemo" ColumnID="Prostopmemo" Width="60px" Hidden="True" HeaderText="停线说明" />
+                        <f:BoundField DataField="Probadcou" SortField="Probadcou" ColumnID="Probadcou" Width="60px" Hidden="True" HeaderText="未达成" />
+                        <f:BoundField DataField="Probadmemo" SortField="Probadmemo" ColumnID="Probadmemo" Width="60px" Hidden="True" HeaderText="说明" />
+                        <f:BoundField DataField="Prolinemin" SortField="Prolinemin" ColumnID="Prolinemin" Width="60px" Hidden="True" HeaderText="生产工数" />
+                        <f:BoundField DataField="Prorealtime" SortField="Prorealtime" ColumnID="Prorealtime" Width="60px" Hidden="True" HeaderText="实际工数" />
+                        <f:BoundField DataField="Propcbastated" SortField="Propcbastated" ColumnID="Propcbastated" Width="60px" Hidden="False" HeaderText="完成状态" />
+                        <f:BoundField DataField="Protime" SortField="Protime" ColumnID="Protime" Width="60px" Hidden="False" HeaderText="生产工数" />
+                        <f:BoundField DataField="Prohandoffnum" SortField="Prohandoffnum" ColumnID="Prohandoffnum" Width="60px" Hidden="False" HeaderText="切换次数" />
+                        <f:BoundField DataField="Prohandofftime" SortField="Prohandofftime" ColumnID="Prohandofftime" Width="60px" Hidden="False" HeaderText="切换时间" />
+                        <f:BoundField DataField="Prodowntime" SortField="Prodowntime" ColumnID="Prodowntime" Width="60px" Hidden="False" HeaderText="切停机时间" />
+                        <f:BoundField DataField="Prolosstime" SortField="Prolosstime" ColumnID="Prolosstime" Width="60px" Hidden="False" HeaderText="损失工数" />
+                        <f:BoundField DataField="Promaketime" SortField="Promaketime" ColumnID="Promaketime" Width="60px" Hidden="False" HeaderText="投入工数" />
+                        <f:BoundField DataField="Proworkst" SortField="Proworkst" ColumnID="Proworkst" Width="60px" Hidden="True" HeaderText="实绩生产工时" />
+                        <f:BoundField DataField="Prostdiff" SortField="Prostdiff" ColumnID="Prostdiff" Width="60px" Hidden="True" HeaderText="工时差异" />
+                        <f:BoundField DataField="Proqtydiff" SortField="Proqtydiff" ColumnID="Proqtydiff" Width="60px" Hidden="True" HeaderText="预计投入台数" />
+                        <f:BoundField DataField="Proratio" SortField="Proratio" ColumnID="Proratio" Width="60px" Hidden="True" HeaderText="稼动率" />
+                        <f:BoundField DataField="UDF01" SortField="UDF01" ColumnID="UDF01" Width="60px" Hidden="True" HeaderText="自定义A" />
+                        <f:BoundField DataField="UDF02" SortField="UDF02" ColumnID="UDF02" Width="60px" Hidden="True" HeaderText="自定义B" />
+                        <f:BoundField DataField="UDF03" SortField="UDF03" ColumnID="UDF03" Width="60px" Hidden="True" HeaderText="自定义C" />
+                        <f:BoundField DataField="UDF04" SortField="UDF04" ColumnID="UDF04" Width="60px" Hidden="True" HeaderText="自定义D" />
+                        <f:BoundField DataField="UDF05" SortField="UDF05" ColumnID="UDF05" Width="60px" Hidden="True" HeaderText="自定义E" />
+                        <f:BoundField DataField="UDF06" SortField="UDF06" ColumnID="UDF06" Width="60px" Hidden="True" HeaderText="自定义F" />
+                        <f:BoundField DataField="UDF51" SortField="UDF51" ColumnID="UDF51" Width="60px" Hidden="False" HeaderText="修正仕损" />
+                        <f:BoundField DataField="UDF52" SortField="UDF52" ColumnID="UDF52" Width="60px" Hidden="False" HeaderText="手插仕损" />
+                        <f:BoundField DataField="UDF53" SortField="UDF53" ColumnID="UDF53" Width="60px" Hidden="True" HeaderText="自定义3" />
+                        <f:BoundField DataField="UDF54" SortField="UDF54" ColumnID="UDF54" Width="60px" Hidden="True" HeaderText="自定义4" />
+                        <f:BoundField DataField="UDF55" SortField="UDF55" ColumnID="UDF55" Width="60px" Hidden="True" HeaderText="自定义5" />
+                        <f:BoundField DataField="UDF56" SortField="UDF56" ColumnID="UDF56" Width="60px" Hidden="True" HeaderText="自定义6" />
+                        <f:BoundField DataField="isDeleted" SortField="isDeleted" ColumnID="isDeleted" Width="60px" Hidden="True" HeaderText="软删除" />
+                        <f:BoundField DataField="Remark" SortField="Remark" ColumnID="Remark" Width="60px" Hidden="True" HeaderText="备注" />
+                        <f:BoundField DataField="Creator" SortField="Creator" ColumnID="Creator" Width="60px" Hidden="True" HeaderText="创建者" />
+                        <f:BoundField DataField="CreateDate" SortField="CreateDate" ColumnID="CreateDate" Width="60px" Hidden="True" HeaderText="创建时间" />
+                        <f:BoundField DataField="Modifier" SortField="Modifier" ColumnID="Modifier" Width="60px" Hidden="True" HeaderText="更新者" />
+                        <f:BoundField DataField="ModifyDate" SortField="ModifyDate" ColumnID="ModifyDate" Width="60px" Hidden="True" HeaderText="更新时间" />
+
+
 
 
                     </Columns>

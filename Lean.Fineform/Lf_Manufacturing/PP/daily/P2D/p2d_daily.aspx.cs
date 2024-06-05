@@ -431,7 +431,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 DB.Pp_P2d_Outputs.Where(l => l.ID == del_ID).DeleteFromQuery();
 
                 //更新订单已生产数量
-                UpdatingHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
+                //UpdatingHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
 
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), "修改", "生产管理", "生产订单修改", OperateNotes);
             }

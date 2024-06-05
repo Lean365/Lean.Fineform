@@ -426,12 +426,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string FsearchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(FsearchText))
             {
-                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "DefectDetail";
+                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "DefectReport";
             }
             else
 
             {
-                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_LotDefectDetails";
+                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_LotDefectReport";
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 
@@ -691,7 +691,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Defect_Data";
+            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetails";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

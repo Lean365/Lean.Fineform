@@ -339,6 +339,7 @@
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\timesheet\p2d_times.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_edit.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_new.aspx" />
@@ -447,7 +448,7 @@
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_chart.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_tracking_chart.aspx" />
-    <Content Include="Lf_Manufacturing\PP\timesheet\times_query.aspx" />
+    <Content Include="Lf_Manufacturing\PP\timesheet\p1d_times.aspx" />
     <Content Include="Lf_Manufacturing\PP\tracking\lot_process.aspx" />
     <Content Include="Lf_Manufacturing\PP\tracking\lot_process_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\tracking\lot_tracking.aspx" />
@@ -7182,6 +7183,13 @@
     <Compile Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx.designer.cs">
       <DependentUpon>p2d_repair_defect_new.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lf_Manufacturing\PP\timesheet\p2d_times.aspx.cs">
+      <DependentUpon>p2d_times.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\timesheet\p2d_times.aspx.designer.cs">
+      <DependentUpon>p2d_times.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lf_Manufacturing\TL\liaison.aspx.cs">
       <DependentUpon>liaison.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -7941,12 +7949,12 @@
     <Compile Include="Lf_Manufacturing\PP\pp_tracking_chart.aspx.designer.cs">
       <DependentUpon>pp_tracking_chart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\timesheet\times_query.aspx.cs">
-      <DependentUpon>times_query.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\timesheet\p1d_times.aspx.cs">
+      <DependentUpon>p1d_times.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\timesheet\times_query.aspx.designer.cs">
-      <DependentUpon>times_query.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\timesheet\p1d_times.aspx.designer.cs">
+      <DependentUpon>p1d_times.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\tracking\lot_process.aspx.cs">
       <DependentUpon>lot_process.aspx</DependentUpon>

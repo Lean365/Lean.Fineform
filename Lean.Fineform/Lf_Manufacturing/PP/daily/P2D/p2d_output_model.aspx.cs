@@ -79,6 +79,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             {
                                 p.Prodate,
                                 p.Prolot,
+                                p.Proorderqty,
                                 p.Promodel,
                                 p.Propcbatype,
                                 p.Propcbaside,
@@ -97,10 +98,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                 var q =
                     from p in q_all
-                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot } into g
+                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
                     select new
                     {
                         g.Key.Prolot,
+                        g.Key.Proorderqty,
                         g.Key.Prodate,
                         g.Key.Promodel,
                         g.Key.Propcbatype,
@@ -128,6 +130,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     p.Prodate,
                     p.Prolot,
+                    p.Proorderqty,
                     p.Promodel,
                     p.Propcbatype,
                     p.Propcbaside,
