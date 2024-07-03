@@ -1219,7 +1219,7 @@
     <value>未实施点数</value>
   </data>
   <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
-    <value>原因类别</value>
+    <value>损失工数原因</value>
   </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
     <value>检查记录</value>

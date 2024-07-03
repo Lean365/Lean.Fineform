@@ -503,7 +503,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                 //ExportHelper.EpplustoXLSXfile(Exdt, Xlsbomitem, ExportFileName);
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Sheetname, ExportFileName, updateTime);
+                ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Sheetname, ExportFileName, "Workinghours", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -604,7 +604,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, updateTime);
+                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, "Losshours", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -709,7 +709,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, updateTime);
+                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, "Reason", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -798,7 +798,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, updateTime);
+                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, "Rework", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -885,7 +885,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, updateTime);
+                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Sheetname, ExportFileName, "ReasonTime", updateTime);
                 Grid1.AllowPaging = true;
             }
             else

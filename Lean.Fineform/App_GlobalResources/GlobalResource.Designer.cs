@@ -2590,7 +2590,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查找类似 ReasonClassify 的本地化字符串。
+        ///   查找类似 LossTimeReason 的本地化字符串。
         /// </summary>
         internal static string sys_Export_SheetReasonClassify {
             get {

@@ -250,7 +250,7 @@ namespace LeanFine
             }
         }
 
-        public static void EpplustoXLSXfiles(DataTable mydt, string mybname, string myfname, string update)
+        public static void EpplustoXLSXfiles(DataTable mydt, string mybname, string myfname, string mytitle, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -279,7 +279,7 @@ namespace LeanFine
 
                 //赋值单元格
 
-                ws.Cells[1, 1].Value = "DTA OPH " + mybname.Substring(fistr + 1, mybname.Length - fistr - 1) + " Report";
+                ws.Cells[1, 1].Value = "DTA OPH " + mytitle + " Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 

@@ -317,7 +317,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
             ExportFileName = Xlsbomitem + ".xlsx";
 
             Grid1.AllowPaging = false;
-            ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+            ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName, "ec_te", DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
             Grid1.AllowPaging = true;
         }
 

@@ -379,7 +379,7 @@
     <value>ProDETL</value>
   </data>
   <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
-    <value>ReasonClassify</value>
+    <value>LossTimeReason</value>
   </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
     <value>Progress</value>
