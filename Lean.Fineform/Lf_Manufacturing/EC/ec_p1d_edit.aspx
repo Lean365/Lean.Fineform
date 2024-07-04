@@ -23,6 +23,9 @@
                         <f:Button ID="btnSaveClose" ValidateForms="SimpleForm1" Icon="SystemSaveClose" OnClick="btnSaveClose_Click"
                             runat="server" Text="<%$ Resources:GlobalResource,WindowsForm_SaveMail%>">
                         </f:Button>
+                        <f:Button ID="btnIrrelevant" ValidateForms="SimpleForm1" Icon="TagsRed" OnClick="btnIrrelevant_Click"
+                            runat="server" Text="<%$ Resources:GlobalResource,WindowsForm_Irrelevant%>">
+                        </f:Button>
                     </Items>
                 </f:Toolbar>
             </Toolbars>

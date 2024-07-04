@@ -284,7 +284,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //在库明细查询SQL
             string Xlsbomitem, ExportFileName;
 
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Details";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 

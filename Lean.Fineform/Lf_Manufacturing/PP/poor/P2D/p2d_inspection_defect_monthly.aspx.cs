@@ -368,7 +368,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         个所区分 = E.Probadtype,
                     });
 
-                    ExportHelper.Inspection_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Inspection" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.Inspection_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pi" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 

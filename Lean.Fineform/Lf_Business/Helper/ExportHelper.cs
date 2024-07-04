@@ -1053,7 +1053,7 @@ namespace LeanFine
                 ExcelWorkbook wb = pck.Workbook;
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
                 //配置文件属性
-                wb.Properties.Category = "Manufacturing Defect";
+                wb.Properties.Category = "DTA Repair Details Report";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
@@ -1061,11 +1061,11 @@ namespace LeanFine
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.Subject = "Lean Manufacturing";
-                wb.Properties.Title = "DTA Manufacturing Defect Report";
+                wb.Properties.Title = "DTA Repair Details Report";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Manufacturing Defect Report";
+                ws.Cells[1, 2].Value = "DTA Repair Details Report";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";

@@ -42,7 +42,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             //CheckPowerWithButton("CoreOphNew", btnP1dNew);
             CheckPowerWithButton("CoreFineExport", BtnExport);
-            CheckPowerWithButton("CoreFineExport", BtnRepair);
+            //CheckPowerWithButton("CoreFineExport", BtnRepair);
 
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
@@ -62,7 +62,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             ddlGridPageSize.SelectedValue = "1000";
 
             BindGrid();
-            BindDdlLine();
+            //BindDdlLine();
         }
 
         private void BindGrid()
@@ -94,11 +94,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                     p.Prodowntime,
                                     p.Prolosstime,
                                     p.Promaketime,
+                                    p.UDF51,
+                                    p.UDF52,
                                 };
 
                     var q =
                         from p in q_all
-                        group p by new { Prodate = p.Prodate.Substring(0, 6), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                        group p by new { Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
                         select new
                         {
                             g.Key.Prolinename,
@@ -119,6 +121,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             Prodowntime = g.Sum(p => p.Prodowntime),
                             Prolosstime = g.Sum(p => p.Prolosstime),
                             Promaketime = g.Sum(p => p.Promaketime),
+                            UDF51 = g.Sum(p => p.UDF51),
+                            UDF52 = g.Sum(p => p.UDF52),
                             //Proworktime = g.Sum(p => p.Prorealtime),
                             //Proplanqty = g.Sum(p => p.Prostdcapacity),
                             //Proworkqty = g.Sum(p => p.Prorealqty),
@@ -147,6 +151,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         p.Prodowntime,
                         p.Prolosstime,
                         p.Promaketime,
+                        p.UDF51,
+                        p.UDF52,
                     }).ToList().Distinct();
 
                     //qs.Count();
@@ -157,7 +163,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     string searchText = ttbSearchMessage.Text.Trim();
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                        q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
                     string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
@@ -171,7 +177,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     {
                         q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                     }
-
+                    if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
+                    {
+                        q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
+                    }
                     // 在查询添加之后，排序和分页之前获取总记录数
                     Grid1.RecordCount = GridHelper.GetTotalCount(q);
                     if (Grid1.RecordCount != 0)
@@ -221,7 +230,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //查询LINQ去重复
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-            var q = from a in DB.Pp_P2d_Outputs
+            var q = from a in DB.Pp_P2d_OutputSubs
                         //join b in DB.Ec_Subs on a.Porderhbn equals b.Ec_bomitem
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
@@ -326,68 +335,93 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string Xlsbomitem, ExportFileName;
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
+            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Line_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
             ExportFileName = Xlsbomitem + ".xlsx";
 
-            var q_normal = from p in DB.Pp_P2d_OutputSubs
-                               //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                           where p.isDeleted == 0
-                           where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                           where p.Proorder.Substring(0, 1).Contains("4")
-                           select new
-                           {
-                               Prodate = p.Prodate,
-                               Prolinename = p.Prolinename,
-                               Prodirect = p.Prodirect,
-                               Proindirect = p.Proindirect,
-                               Prolot = p.Prolot,
-                               Prohbn = p.Prohbn,
-                               Prost = p.Prost,
-                               Promodel = p.Promodel,
-                               Prorealtime = p.Prorealtime,
-                               Prostdcapacity = p.Prostdcapacity,
-                               Prorealqty = p.Prorealqty,
-                           };
+            var q_all = from p in DB.Pp_P2d_OutputSubs
+                            //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
+                        where p.isDeleted == 0
+                        where p.Prorealqty != 0 //|| p.Prolinestopmin != 0
+                        select new
+                        {
+                            p.Prodate,
+                            p.Prolot,
+                            p.Proorderqty,
+                            p.Promodel,
+                            p.Propcbatype,
+                            p.Propcbaside,
+                            p.Prost,
+                            p.Proshort,
+                            p.Prorate,
+                            p.Prolinename,
+                            p.Prorealqty,
+                            p.Prorealtotal,
+                            p.Protime,
+                            p.Prohandoffnum,
+                            p.Prohandofftime,
+                            p.Prodowntime,
+                            p.Prolosstime,
+                            p.Promaketime,
+                            p.UDF51,
+                            p.UDF52,
+                        };
 
             var q =
-                from p in q_normal
-                group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn, p.Prost, p.Prodirect, p.Proindirect } into g
+                from p in q_all
+                group p by new { Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
                 select new
                 {
-                    Prodate = g.Key.Prodate,
-                    Prolinename = g.Key.Prolinename,
-                    Prodirect = g.Key.Prodirect,
-                    Proindirect = g.Key.Proindirect,
-                    Prolot = g.Key.Prolot,
-                    Prohbn = g.Key.Prohbn,
-                    Prost = g.Key.Prost,
-                    Promodel = g.Key.Promodel,
-                    Proworktime = g.Sum(p => p.Prorealtime),
-                    Proplanqty = g.Sum(p => p.Prostdcapacity),
-                    Proworkqty = g.Sum(p => p.Prorealqty),
-                    Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
-                    Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Key.Prost : g.Key.Prost),
-                    Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
-                    Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
+                    g.Key.Prolinename,
+                    g.Key.Prolot,
+                    g.Key.Proorderqty,
+                    g.Key.Prodate,
+                    g.Key.Promodel,
+                    g.Key.Propcbatype,
+                    g.Key.Propcbaside,
+                    Prost = g.Average(p => p.Prost),
+                    Proshort = g.Average(p => p.Proshort),
+                    Prorate = g.Average(p => p.Prorate),
+                    Prorealqty = g.Sum(p => p.Prorealqty),
+                    Prorealtotal = g.Sum(p => p.Prorealtotal),
+                    Protime = g.Sum(p => p.Protime),
+                    Prohandoffnum = g.Sum(p => p.Prohandoffnum),
+                    Prohandofftime = g.Sum(p => p.Prohandofftime),
+                    Prodowntime = g.Sum(p => p.Prodowntime),
+                    Prolosstime = g.Sum(p => p.Prolosstime),
+                    Promaketime = g.Sum(p => p.Promaketime),
+                    UDF51 = g.Sum(p => p.UDF51),
+                    UDF52 = g.Sum(p => p.UDF52),
+                    //Proworktime = g.Sum(p => p.Prorealtime),
+                    //Proplanqty = g.Sum(p => p.Prostdcapacity),
+                    //Proworkqty = g.Sum(p => p.Prorealqty),
+                    //Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
+                    //Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Average(p => p.Prost) : g.Average(p => p.Prost)),
+                    //Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
+                    //Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
                 };
-            var qs = q.Select(E => new
+            var qs = q.Select(p => new
             {
-                E.Prodate,
-                E.Prolinename,
-                E.Prodirect,
-                E.Proindirect,
-                E.Prolot,
-                E.Promodel,
-                E.Prohbn,
-                E.Prost,
-                E.Proworktime,
-                E.Proplanqty,
-                E.Proworkqty,
-                E.Proworkst,
-                E.Prodiffst,
-                E.Prodiffqty,
-                E.Proactivratio
+                p.Prolinename,
+                p.Prodate,
+                p.Prolot,
+                p.Proorderqty,
+                p.Promodel,
+                p.Propcbatype,
+                p.Propcbaside,
+                p.Prost,
+                p.Proshort,
+                p.Prorate,
+                p.Prorealqty,
+                p.Prorealtotal,
+                p.Protime,
+                p.Prohandoffnum,
+                p.Prohandofftime,
+                p.Prodowntime,
+                p.Prolosstime,
+                p.Promaketime,
+                p.UDF51,
+                p.UDF52,
             }).ToList().Distinct();
 
             //qs.Count();
@@ -398,17 +432,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prolot.Contains(searchText) || u.Prohbn.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            //else
-            //{
-            //    //当前日期
-            //    string dd = DateTime.Now.ToString("yyyyMMdd");
-            //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
-            //}
 
-            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -428,172 +456,28 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             .OrderBy(s => s.Prodate)
                           select new
                           {
-                              生产班组 = p.Prolinename,
+                              班组 = p.Prolinename,
                               生产日期 = p.Prodate,
                               生产批次 = p.Prolot,
-                              物料 = p.Prohbn,
-
+                              工单数量 = p.Proorderqty,
                               机种 = p.Promodel,
-                              ST = p.Prost,
-                              计划台数 = p.Proplanqty,
-                              直接 = p.Prodirect,
-                              间接 = p.Proindirect,
-                              工数 = p.Proworktime,
-
-                              实绩台数 = p.Proworkqty,
-                              实绩ST = (decimal)Math.Round(p.Proworkst, 2),
-                              ST差异 = (decimal)Math.Round(p.Prodiffst, 2),
-                              台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
-                              达成率 = (decimal)Math.Round(p.Proactivratio, 4),
+                              Pcb类别 = p.Propcbatype,
+                              板面 = p.Propcbaside,
+                              //ST=p.Prost,
+                              //SHort=p.Proshort,
+                              //汇率=p.Prorate,
+                              生产实绩 = p.Prorealqty,
+                              累计生产 = p.Prorealtotal,
+                              生产工数 = p.Protime,
+                              切换次数 = p.Prohandoffnum,
+                              切换时间 = p.Prohandofftime,
+                              切停机时间 = p.Prodowntime,
+                              损失工数 = p.Prolosstime,
+                              投入工数 = p.Promaketime,
+                              修正仕损 = p.UDF51,
+                              手插仕损 = p.UDF52,
                           };
-                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
-
-                //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
-                //Grid1.AllowPaging = true;
-            }
-            else
-
-            {
-                Alert.ShowInTop(global::Resources.GlobalResource.sys_Msg_Nodata, global::Resources.GlobalResource.sys_Alert_Title_Warning, MessageBoxIcon.Warning);
-            }
-        }
-
-        protected void BtnRepair_Click(object sender, EventArgs e)
-        {
-            // 在操作之前进行权限检查
-            if (!CheckPower("CoreFineExport"))
-            {
-                CheckPowerFailWithAlert();
-                return;
-            }
-
-            //DataTable Exp = new DataTable();
-            //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
-            // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
-
-            var q_rework = from p in DB.Pp_P2d_OutputSubs
-                               //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                           where p.isDeleted == 0
-                           where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                           where p.Proorder.Substring(0, 1).Contains("5")
-                           select new
-                           {
-                               Prodate = p.Prodate,
-                               Prolinename = p.Prolinename,
-                               Prodirect = p.Prodirect,
-                               Proindirect = p.Proindirect,
-                               Prolot = p.Prolot,
-                               Prohbn = p.Prohbn,
-                               Prost = p.Prost,
-                               Promodel = p.Promodel,
-                               Prorealtime = p.Prorealtime,
-                               Prostdcapacity = p.Prostdcapacity,
-                               Prorealqty = p.Prorealqty,
-                           };
-
-            var q =
-                from p in q_rework
-                group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn, p.Prost, p.Prodirect, p.Proindirect } into g
-                select new
-                {
-                    Prodate = g.Key.Prodate,
-                    Prolinename = g.Key.Prolinename,
-                    Prodirect = g.Key.Prodirect,
-                    Proindirect = g.Key.Proindirect,
-                    Prolot = g.Key.Prolot,
-                    Prohbn = g.Key.Prohbn,
-                    Prost = g.Key.Prost,
-                    Promodel = g.Key.Promodel,
-                    Proworktime = g.Sum(p => p.Prorealtime),
-                    Proplanqty = g.Sum(p => p.Prostdcapacity),
-                    Proworkqty = g.Sum(p => p.Prorealqty),
-                    Proworkst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) * 0.85m : 0),
-                    Prodiffst = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Prorealtime) / (g.Sum(p => p.Prorealqty) * 1.00m) - g.Key.Prost : g.Key.Prost),
-                    Prodiffqty = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) - g.Sum(p => p.Prostdcapacity) : 0),
-                    Proactivratio = (g.Sum(p => p.Prostdcapacity) != 0 ? (g.Sum(p => p.Prorealqty) * 1.00m) / g.Sum(p => p.Prostdcapacity) : 0),
-                };
-            var qs = q.Select(E => new
-            {
-                E.Prodate,
-                E.Prolinename,
-                E.Prodirect,
-                E.Proindirect,
-                E.Prolot,
-                E.Promodel,
-                E.Prohbn,
-                E.Prost,
-                E.Proworktime,
-                E.Proplanqty,
-                E.Proworkqty,
-                E.Proworkst,
-                E.Prodiffst,
-                E.Prodiffqty,
-                E.Proactivratio
-            }).ToList().Distinct();
-
-            //qs.Count();
-
-            //IQueryable<Pp_Defect> q = DB.Pp_Defects; //.Include(u => u.Dept);
-
-            // 在用户名称中搜索
-            string searchText = ttbSearchMessage.Text.Trim();
-            if (!String.IsNullOrEmpty(searchText))
-            {
-                q = q.Where(u => u.Prolot.Contains(searchText) || u.Prohbn.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
-            }
-            //else
-            //{
-            //    //当前日期
-            //    string dd = DateTime.Now.ToString("yyyyMMdd");
-            //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
-            //}
-
-            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
-            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-
-            if (!string.IsNullOrEmpty(sdate))
-            {
-                q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
-            }
-            if (!string.IsNullOrEmpty(sdate))
-            {
-                q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
-            }
-            if (DdlLine.SelectedIndex != 0 && DdlLine.SelectedIndex != -1)
-            {
-                q = q.Where(u => u.Prolinename.ToString().Contains(DdlLine.SelectedItem.Text));
-            }
-            if (q.Any())
-            {
-                var qss = from p in q
-                            .OrderBy(s => s.Prodate)
-                          select new
-                          {
-                              生产班组 = p.Prolinename,
-                              生产日期 = p.Prodate,
-                              生产批次 = p.Prolot,
-                              物料 = p.Prohbn,
-
-                              机种 = p.Promodel,
-                              ST = p.Prost,
-                              计划台数 = p.Proplanqty,
-                              直接 = p.Prodirect,
-                              间接 = p.Proindirect,
-                              工数 = p.Proworktime,
-
-                              实绩台数 = p.Proworkqty,
-                              实绩ST = (decimal)Math.Round(p.Proworkst, 2),
-                              ST差异 = (decimal)Math.Round(p.Prodiffst, 2),
-                              台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
-                              达成率 = (decimal)Math.Round(p.Proactivratio, 4),
-                          };
-                ExportHelper.ReworkLine_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "L" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
@@ -618,6 +502,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             if (DpStartDate.SelectedDate.HasValue)
             {
                 BindGrid();
+                BindDdlLine();
             }
         }
 

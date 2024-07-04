@@ -58,9 +58,7 @@
                                 <f:Button ID="BtnExport" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
                                     runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetNormal%>" OnClick="BtnExport_Click" CssClass="marginr">
                                 </f:Button>
-                                <f:Button ID="BtnRepair" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
-                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetRework%>" OnClick="BtnRepair_Click" CssClass="marginr">
-                                </f:Button>
+
 
                             </Items>
                         </f:Toolbar>
