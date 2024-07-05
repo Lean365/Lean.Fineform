@@ -589,7 +589,7 @@ namespace LeanFine
                         .Where(s => s.Prolinename == pline)
                        .Where(s => s.ID == id)
                         .ToList()
-                        .ForEach(x => { x.UDF51 = x.Prohandofftime * 21; x.Remark = "修正仕损工数"; });
+                        .ForEach(x => { x.UDF52 = x.Prohandofftime * 21; x.Remark = "修正仕损工数"; });
                     DB.SaveChanges();
                 }
                 if (pline == "手插")
@@ -598,7 +598,7 @@ namespace LeanFine
                         .Where(s => s.Prolinename == pline)
                        .Where(s => s.ID == id)
                         .ToList()
-                        .ForEach(x => { x.UDF52 = x.Prohandofftime * 16; x.Remark = "手插仕损工数"; });
+                        .ForEach(x => { x.UDF53 = x.Prohandofftime * 16; x.Remark = "手插仕损工数"; });
                     DB.SaveChanges();
                 }
             }

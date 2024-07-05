@@ -1421,7 +1421,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             }
 
             //更新无不良台数
-            int nobadqty = 0;
+            //int nobadqty = 0;
             string strPorder = "";
             string pdate = "";
             string strPlot = "";

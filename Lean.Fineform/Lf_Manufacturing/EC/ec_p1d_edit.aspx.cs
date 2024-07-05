@@ -340,7 +340,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         {
             if (e.EventArgument == "Confirm_OK")
             {
-                Alert.ShowInTop("此机种将设为与制二无关状态！");
+                Alert.ShowInTop("此机种将设为与制一无关状态！");
                 // 非AJAX回发
                 Irrelevant();
                 InsNetOperateNotes();
@@ -642,9 +642,9 @@ namespace LeanFine.Lf_Manufacturing.EC
                                               iqcModifyDate = item.iqcModifyDate,
 
                                               Ec_p1ddate = Ec_p1ddate.SelectedDate.Value.ToString("yyyyMMdd"),
-                                              Ec_p1dline = "与制二无关",
-                                              Ec_p1dlot = "与制二无关",
-                                              Ec_p1dnote = "与制二无关",
+                                              Ec_p1dline = "与制一无关",
+                                              Ec_p1dlot = "与制一无关",
+                                              Ec_p1dnote = "与制一无关",
                                               p1dModifier = GetIdentityName(),
                                               p1dModifyDate = DateTime.Now,
 

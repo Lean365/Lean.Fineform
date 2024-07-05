@@ -123,13 +123,13 @@
                         </f:RenderField>
 
 
-                        <f:RenderField Width="80px" ColumnID="Prorealqty" DataField="Prorealqty" HeaderText="生产实绩" FieldType="Int">
+                        <f:RenderField Width="80px" ColumnID="Prorealqty" DataField="Prorealqty" HeaderText="当日完成数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="80px" ColumnID="Prorealtotal" DataField="Prorealtotal" HeaderText="累计完成" FieldType="Int">
+                        <f:RenderField Width="80px" ColumnID="Prorealtotal" DataField="Prorealtotal" HeaderText="累计完成数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealtotal" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>

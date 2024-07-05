@@ -94,13 +94,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                     p.Prodowntime,
                                     p.Prolosstime,
                                     p.Promaketime,
+                                    p.Propcbastated,
                                     p.UDF51,
                                     p.UDF52,
+                                    p.UDF53,
                                 };
 
                     var q =
                         from p in q_all
-                        group p by new { Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                        group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
                         select new
                         {
                             g.Key.Prolinename,
@@ -110,6 +112,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             g.Key.Promodel,
                             g.Key.Propcbatype,
                             g.Key.Propcbaside,
+                            g.Key.Propcbastated,
                             Prost = g.Average(p => p.Prost),
                             Proshort = g.Average(p => p.Proshort),
                             Prorate = g.Average(p => p.Prorate),
@@ -123,6 +126,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             Promaketime = g.Sum(p => p.Promaketime),
                             UDF51 = g.Sum(p => p.UDF51),
                             UDF52 = g.Sum(p => p.UDF52),
+                            UDF53 = g.Sum(p => p.UDF53),
                             //Proworktime = g.Sum(p => p.Prorealtime),
                             //Proplanqty = g.Sum(p => p.Prostdcapacity),
                             //Proworkqty = g.Sum(p => p.Prorealqty),
@@ -151,8 +155,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         p.Prodowntime,
                         p.Prolosstime,
                         p.Promaketime,
+                        p.Propcbastated,
                         p.UDF51,
                         p.UDF52,
+                        p.UDF53,
                     }).ToList().Distinct();
 
                     //qs.Count();
@@ -363,13 +369,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             p.Prodowntime,
                             p.Prolosstime,
                             p.Promaketime,
+                            p.Propcbastated,
                             p.UDF51,
                             p.UDF52,
+                            p.UDF53,
                         };
 
             var q =
                 from p in q_all
-                group p by new { Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
                 select new
                 {
                     g.Key.Prolinename,
@@ -379,6 +387,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     g.Key.Promodel,
                     g.Key.Propcbatype,
                     g.Key.Propcbaside,
+                    g.Key.Propcbastated,
                     Prost = g.Average(p => p.Prost),
                     Proshort = g.Average(p => p.Proshort),
                     Prorate = g.Average(p => p.Prorate),
@@ -392,6 +401,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     Promaketime = g.Sum(p => p.Promaketime),
                     UDF51 = g.Sum(p => p.UDF51),
                     UDF52 = g.Sum(p => p.UDF52),
+                    UDF53 = g.Sum(p => p.UDF53),
                     //Proworktime = g.Sum(p => p.Prorealtime),
                     //Proplanqty = g.Sum(p => p.Prostdcapacity),
                     //Proworkqty = g.Sum(p => p.Prorealqty),
@@ -420,8 +430,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 p.Prodowntime,
                 p.Prolosstime,
                 p.Promaketime,
+                p.Propcbastated,
                 p.UDF51,
                 p.UDF52,
+                p.UDF53,
             }).ToList().Distinct();
 
             //qs.Count();
@@ -459,7 +471,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               班组 = p.Prolinename,
                               生产日期 = p.Prodate,
                               生产批次 = p.Prolot,
-                              工单数量 = p.Proorderqty,
+                              LOT数量 = p.Proorderqty,
                               机种 = p.Promodel,
                               Pcb类别 = p.Propcbatype,
                               板面 = p.Propcbaside,
@@ -468,14 +480,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               //汇率=p.Prorate,
                               生产实绩 = p.Prorealqty,
                               累计生产 = p.Prorealtotal,
+                              完成状态 = p.Propcbastated,
                               生产工数 = p.Protime,
                               切换次数 = p.Prohandoffnum,
                               切换时间 = p.Prohandofftime,
                               切停机时间 = p.Prodowntime,
                               损失工数 = p.Prolosstime,
                               投入工数 = p.Promaketime,
-                              修正仕损 = p.UDF51,
-                              手插仕损 = p.UDF52,
+                              不良台数 = p.UDF51,
+                              修正仕损 = p.UDF52,
+                              手插仕损 = p.UDF53,
                           };
                 ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "L" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
 

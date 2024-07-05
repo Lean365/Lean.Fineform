@@ -106,26 +106,26 @@
 
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Provisualtype" SortField="Provisualtype" DataField="Provisualtype" HeaderText="目视" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Provisualtype" SortField="Provisualtype" DataField="Provisualtype" HeaderText="目视线别" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlProvisualtype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
 
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Provctype" SortField="Provctype" DataField="Provctype" HeaderText="VC" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Provctype" SortField="Provctype" DataField="Provctype" HeaderText="AOI线别" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlProvctype"  runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="A面"  Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
+                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面"  Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
                             <Editor>
                                 <f:DatePicker ID="dpProsideadate" Required="true" runat="server" >
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="B面" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
+                        <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="T面" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
                             <Editor>
                                 <f:DatePicker ID="dpProsidebdate" Required="true" runat="server" >
                                 </f:DatePicker>
@@ -143,7 +143,7 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="生产数量" FieldType="Int">
+                        <f:RenderField Width="200px" ColumnID="Prorealqty" SortField="Prorealqty" DataField="Prorealqty" HeaderText="当日完成数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProrealqty" Required="true" runat="server" Text="">
                                 </f:NumberBox>
