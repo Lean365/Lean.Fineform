@@ -807,6 +807,15 @@ namespace LeanFine.Lf_Manufacturing.EC
             Ec_p1dline.SelectedValue = "0";
         }
 
+        protected void btnIrrelevant_Click(object sender, EventArgs e)
+        {
+            PageContext.RegisterStartupScript(Confirm.GetShowReference("警告！点击确定此机种将设为与制一课无关状态。",
+                        String.Empty,
+                        MessageBoxIcon.Question,
+                        PageManager1.GetCustomEventReference(false, "Confirm_OK"), // 第一个参数 false 用来指定当前不是AJAX请求
+                        PageManager1.GetCustomEventReference("Confirm_Cancel")));
+        }
+
         #region NetOperateNotes
 
         private void InsNetOperateNotes()

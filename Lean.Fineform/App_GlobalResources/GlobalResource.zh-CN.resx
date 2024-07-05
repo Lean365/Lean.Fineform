@@ -1123,7 +1123,7 @@
     <value>DTA通讯簿</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>精益生产--DTA</value>
+    <value>DTA--精益生产</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>DB用户</value>

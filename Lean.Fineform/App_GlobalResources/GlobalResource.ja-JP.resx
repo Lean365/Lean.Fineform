@@ -1123,7 +1123,7 @@
     <value>DTA連絡先</value>
   </data>
   <data name="sys_LeanName" xml:space="preserve">
-    <value>リーン生産--DTA</value>
+    <value>DTA--リーン生産</value>
   </data>
   <data name="sys_Tab_Oa_List_SysUser" xml:space="preserve">
     <value>DBユーザー</value>
