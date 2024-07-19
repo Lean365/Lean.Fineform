@@ -918,9 +918,21 @@ namespace LeanFine
                                 },
                                 new Adm_Menu
                                 {
-                                    Name = "SMT点数",
+                                    Name = "生产进度",
 
                                     SortIndex = 120,
+                                    Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_order_finish.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/prodaily.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_daily",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
+                                },
+
+                                new Adm_Menu
+                                {
+                                    Name = "SMT点数",
+
+                                    SortIndex = 130,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_smt_short.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/propcb.png",
@@ -931,7 +943,7 @@ namespace LeanFine
                                 {
                                     Name = "SMT日报",
 
-                                    SortIndex = 130,
+                                    SortIndex = 140,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_smt_daily.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prosmt.png",
@@ -942,7 +954,7 @@ namespace LeanFine
                                 {
                                     Name = "OPH查询",
 
-                                    SortIndex = 140,
+                                    SortIndex = 150,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",

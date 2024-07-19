@@ -121,7 +121,12 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-
+                        <f:RenderField Width="80px" ColumnID="UDF54" DataField="UDF54" HeaderText="Lot数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numUDF54" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
 
                         <f:RenderField Width="80px" ColumnID="Prorealqty" DataField="Prorealqty" HeaderText="当日完成数" FieldType="Int">
                             <Editor>
@@ -129,12 +134,7 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="80px" ColumnID="Prorealtotal" DataField="Prorealtotal" HeaderText="累计完成数" FieldType="Int">
-                            <Editor>
-                                <f:NumberBox ID="numProrealtotal" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
-                                </f:NumberBox>
-                            </Editor>
-                        </f:RenderField>
+
                         <f:RenderField Width="80px" ColumnID="Propcbastated" DataField="Propcbastated" HeaderText="完成情况" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlPropcbastated" runat="server" EnableEdit="True" ForceSelection="false">
@@ -200,6 +200,12 @@
                         <f:RenderField Width="100px" ColumnID="UDF51" DataField="UDF51" HeaderText="不良台数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numUDF51" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
+                                </f:NumberBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="80px" ColumnID="Prorealtotal" DataField="Prorealtotal" HeaderText="累计完成数" FieldType="Int">
+                            <Editor>
+                                <f:NumberBox ID="numProrealtotal" FocusOnPageLoad="true" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" AutoPostBack="true">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>

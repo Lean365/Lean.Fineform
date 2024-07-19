@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             defaultObj.Add("Proinsqtime", 0);
             defaultObj.Add("Proaoitime", 0);
             defaultObj.Add("Probadqty", 0);
-            defaultObj.Add("Prolinename", "SMT");
+            defaultObj.Add("Prolinename", "");
             defaultObj.Add("Probadcontent", "-");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");

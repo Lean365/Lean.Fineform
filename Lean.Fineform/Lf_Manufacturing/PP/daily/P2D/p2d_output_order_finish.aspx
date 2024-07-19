@@ -103,8 +103,9 @@
                     <Columns>
 
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="104px" HeaderText="生产LOT" />
-                        <%--<f:BoundField DataField="Promodel" SortField="Promodel"  Width="102px" HeaderText="机种" />--%>
-                        <f:BoundField DataField="Prolotqty" SortField="Prolotqty" ColumnID="Prolotqty" Width="101px" HeaderText="数量" />
+                        <f:BoundField DataField="Propcbatype" SortField="Propcbatype"  Width="102px" HeaderText="板别" />
+                        <f:BoundField DataField="Propcbaside" SortField="Propcbaside"  Width="102px" HeaderText="多面板" />
+                        <f:BoundField DataField="Prolotqty" SortField="Prolotqty" ColumnID="Prolotqty" Width="101px" HeaderText="Lot数量" />
 
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="107px" HeaderText="已生产" />
                         <f:BoundField DataField="Prostatus" SortField="Prostatus" ColumnID="Prostatus" Width="107px" HeaderText="状态" />

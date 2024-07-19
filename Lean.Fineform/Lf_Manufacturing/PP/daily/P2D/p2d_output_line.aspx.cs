@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 {
                                     p.Prodate,
                                     p.Prolot,
-                                    p.Proorderqty,
+                                    p.UDF54,
                                     p.Promodel,
                                     p.Propcbatype,
                                     p.Propcbaside,
@@ -102,12 +102,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                     var q =
                         from p in q_all
-                        group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                        group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.UDF54 } into g
                         select new
                         {
                             g.Key.Prolinename,
                             g.Key.Prolot,
-                            g.Key.Proorderqty,
+                            g.Key.UDF54,
                             g.Key.Prodate,
                             g.Key.Promodel,
                             g.Key.Propcbatype,
@@ -140,7 +140,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         p.Prolinename,
                         p.Prodate,
                         p.Prolot,
-                        p.Proorderqty,
+                        p.UDF54,
                         p.Promodel,
                         p.Propcbatype,
                         p.Propcbaside,
@@ -172,8 +172,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
-                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
-                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
                     if (!string.IsNullOrEmpty(sdate))
                     {
@@ -353,7 +353,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         {
                             p.Prodate,
                             p.Prolot,
-                            p.Proorderqty,
+                            p.UDF54,
                             p.Promodel,
                             p.Propcbatype,
                             p.Propcbaside,
@@ -377,12 +377,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             var q =
                 from p in q_all
-                group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                group p by new { p.Propcbastated, Prodate = p.Prodate.Substring(0, 8), p.Prolinename, p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.UDF54 } into g
                 select new
                 {
                     g.Key.Prolinename,
                     g.Key.Prolot,
-                    g.Key.Proorderqty,
+                    g.Key.UDF54,
                     g.Key.Prodate,
                     g.Key.Promodel,
                     g.Key.Propcbatype,
@@ -415,7 +415,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 p.Prolinename,
                 p.Prodate,
                 p.Prolot,
-                p.Proorderqty,
+                p.UDF54,
                 p.Promodel,
                 p.Propcbatype,
                 p.Propcbaside,
@@ -447,8 +447,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
-            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
-            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+            string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
 
             if (!string.IsNullOrEmpty(sdate))
             {
@@ -471,7 +471,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               班组 = p.Prolinename,
                               生产日期 = p.Prodate,
                               生产批次 = p.Prolot,
-                              LOT数量 = p.Proorderqty,
+                              LOT数量 = p.UDF54,
                               机种 = p.Promodel,
                               Pcb类别 = p.Propcbatype,
                               板面 = p.Propcbaside,

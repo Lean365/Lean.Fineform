@@ -79,7 +79,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             {
                                 p.Prodate,
                                 p.Prolot,
-                                p.Proorderqty,
+                                p.UDF54,
                                 p.Promodel,
                                 p.Propcbatype,
                                 p.Propcbaside,
@@ -96,15 +96,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 p.Promaketime,
                                 p.UDF51,
                                 p.UDF52,
+                                p.UDF53,
                             };
 
                 var q =
                     from p in q_all
-                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot } into g
                     select new
                     {
                         g.Key.Prolot,
-                        g.Key.Proorderqty,
+                        UDF54 = g.Sum(p => p.UDF54),
                         g.Key.Prodate,
                         g.Key.Promodel,
                         g.Key.Propcbatype,
@@ -122,6 +123,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         Promaketime = g.Sum(p => p.Promaketime),
                         UDF51 = g.Sum(p => p.UDF51),
                         UDF52 = g.Sum(p => p.UDF52),
+                        UDF53 = g.Sum(p => p.UDF53),
                         //Proworktime = g.Sum(p => p.Prorealtime),
                         //Proplanqty = g.Sum(p => p.Prostdcapacity),
                         //Proworkqty = g.Sum(p => p.Prorealqty),
@@ -134,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     p.Prodate,
                     p.Prolot,
-                    p.Proorderqty,
+                    p.UDF54,
                     p.Promodel,
                     p.Propcbatype,
                     p.Propcbaside,
@@ -151,6 +153,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     p.Promaketime,
                     p.UDF51,
                     p.UDF52,
+                    p.UDF53,
                 }).ToList().Distinct();
 
                 //qs.Count();
@@ -317,7 +320,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             {
                                 p.Prodate,
                                 p.Prolot,
-                                p.Proorderqty,
+                                p.UDF54,
                                 p.Promodel,
                                 p.Propcbatype,
                                 p.Propcbaside,
@@ -334,15 +337,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 p.Promaketime,
                                 p.UDF51,
                                 p.UDF52,
+                                p.UDF53,
                             };
 
                 var q =
                     from p in q_all
-                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.Proorderqty } into g
+                    group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel, p.Propcbatype, p.Propcbaside, p.Prolot, p.UDF54 } into g
                     select new
                     {
                         g.Key.Prolot,
-                        g.Key.Proorderqty,
+                        g.Key.UDF54,
                         g.Key.Prodate,
                         g.Key.Promodel,
                         g.Key.Propcbatype,
@@ -360,6 +364,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         Promaketime = g.Sum(p => p.Promaketime),
                         UDF51 = g.Sum(p => p.UDF51),
                         UDF52 = g.Sum(p => p.UDF52),
+                        UDF53 = g.Sum(p => p.UDF53),
                         //Proworktime = g.Sum(p => p.Prorealtime),
                         //Proplanqty = g.Sum(p => p.Prostdcapacity),
                         //Proworkqty = g.Sum(p => p.Prorealqty),
@@ -372,7 +377,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     p.Prodate,
                     p.Prolot,
-                    p.Proorderqty,
+                    p.UDF54,
                     p.Promodel,
                     p.Propcbatype,
                     p.Propcbaside,
@@ -389,6 +394,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     p.Promaketime,
                     p.UDF51,
                     p.UDF52,
+                    p.UDF53,
                 }).ToList().Distinct();
 
                 //qs.Count();
@@ -422,7 +428,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               {
                                   生产日期 = p.Prodate,
                                   生产批次 = p.Prolot,
-                                  工单数量 = p.Proorderqty,
+                                  LOT数量 = p.UDF54,
                                   机种 = p.Promodel,
                                   Pcb类别 = p.Propcbatype,
                                   板面 = p.Propcbaside,
@@ -437,8 +443,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                   切停机时间 = p.Prodowntime,
                                   损失工数 = p.Prolosstime,
                                   投入工数 = p.Promaketime,
-                                  修正仕损 = p.UDF51,
-                                  手插仕损 = p.UDF52,
+                                  不良数量 = p.UDF51,
+                                  修正仕损 = p.UDF52,
+                                  手插仕损 = p.UDF53,
                               };
                     ExportHelper.ModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "M" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
                 }

@@ -453,8 +453,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             //投入工数
                             strPromaketime = tb.Rows[tb.Rows.Count - 1]["Promaketime"].ToString();
 
-                            //投入工数
+                            //不良数量
                             strUDF51 = tb.Rows[tb.Rows.Count - 1]["UDF51"].ToString();
+                            //LOT数量
+                            strUDF54 = tb.Rows[tb.Rows.Count - 1]["UDF54"].ToString();
                         }
                         Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
 
@@ -501,6 +503,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proqtydiff = int.Parse(strProqtydiff);
                         item.Proratio = int.Parse(strProratio);
                         item.UDF51 = int.Parse(strUDF51);
+                        //不良数量
+                        item.UDF54 = decimal.Parse(strUDF54);
                         item.GUID = Guid.NewGuid();
 
                         item.CreateDate = DateTime.Now;
@@ -628,8 +632,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             strProlosstime = tb.Rows[0]["Prolosstime"].ToString();
                             //投入工数
                             strPromaketime = tb.Rows[0]["Promaketime"].ToString();
-                            //投入工数
+                            //不良数量
                             strUDF51 = tb.Rows[0]["UDF51"].ToString();
+                            //不良数量
+                            strUDF54 = tb.Rows[0]["UDF54"].ToString();
                         }
                         Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
 
@@ -676,7 +682,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proqtydiff = int.Parse(strProqtydiff);
                         item.Proratio = int.Parse(strProratio);
                         item.UDF51 = int.Parse(strUDF51);
-
+                        item.UDF54 = decimal.Parse(strUDF54);
                         item.isDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
@@ -877,6 +883,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdateDataRow("Promaketime", rowDict, rowData);
             // 不良台数
             UpdateDataRow("UDF51", rowDict, rowData);
+            // LOT台数
+            UpdateDataRow("UDF54", rowDict, rowData);
         }
 
         private void UpdateDataRow(Dictionary<string, object> rowDict, DataRow rowData)
@@ -1026,6 +1034,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 item.UDF51 = int.Parse(rowData["UDF51"].ToString());
                 strUDF51 = rowData["UDF51"].ToString();
             }
+            //LOT台数
+            if (rowDict.ContainsKey("UDF54"))
+            {
+                rowData["UDF54"] = rowDict["UDF54"];
+                item.UDF54 = int.Parse(rowData["UDF54"].ToString());
+                strUDF54 = rowData["UDF54"].ToString();
+            }
             item.Proworkst = 0;
             item.Prostdiff = 0;
             item.Proratio = 0;
@@ -1037,6 +1052,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             afterInsNetOperateNotes();
             //更新不良数据中的实绩生产数量，按日期，工单，班组
             UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+
+            //更新累计生产数量
+            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, userid, item.Propcbatype, item.Propcbaside);
 
             //更新不良集计数据中的实绩生产数量,按工单
             UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);

@@ -499,7 +499,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     //join b in DB.Pp_P2d_Outputs on p.GUID equals b.GUID
                 where p.isDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                group p by new { p.Proorder, p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, p.Proorderqty, p.Propcbaside, p.Prodirect, p.Propcbastated, p.Prorealqty, p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
+                group p by new { p.Proorder, p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, p.Proorderqty, p.Propcbaside, p.Prodirect, p.Propcbastated, p.Prorealqty, p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin, p.UDF51, p.UDF52, p.UDF53, p.UDF54, p.Prorealtotal }
                 into g
                 select new
                 {
@@ -517,6 +517,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     g.Key.Propcbaside,
                     g.Key.Propcbastated,
                     g.Key.Prorealqty,
+                    g.Key.Prorealtotal,
                     g.Key.Prorealtime,
                     g.Key.Prostopcou,
                     g.Key.Prostopmemo,
@@ -532,6 +533,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     g.Key.Proshort,
                     g.Key.Prolosstime,
                     g.Key.Prost,
+                    g.Key.UDF51,
+                    g.Key.UDF52,
+                    g.Key.UDF53,
+                    g.Key.UDF54,
                 };
 
             // 在用户名称中搜索
@@ -618,10 +623,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                          工单 = g.Proorder,
                          板别 = g.Propcbatype != "" ? g.Propcbatype : "无区分",
                          生产面 = g.Propcbaside != "" ? g.Propcbaside : "无区分",
-                         Lot数量 = g.Proorderqty,
+                         Lot数量 = g.UDF54,
                          生产实绩 = g.Prorealqty,
-                         累计生产 = g == null ? 0 : g.Prorealqty,
-                         不良件数 = aa == null ? 0 : aa.Probadqty,
+                         累计生产 = g == null ? 0 : g.Prorealtotal,
+                         //不良件数 = aa == null ? 0 : aa.Probadqty,
                          完成状况 = g.Propcbastated,
                          生产工数 = g.Protime,
                          切换次数 = g.Prohandoffnum,
@@ -633,6 +638,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                          未达成原因 = g.Probadmemo,
                          损失工数 = g.Prolosstime,
                          投入工数 = g.Promaketime,
+                         不良台数 = g.UDF51,
+                         修正仕损 = g.UDF52,
+                         手插仕损 = g.UDF53,
                      };
             if (qs.Any())
             {

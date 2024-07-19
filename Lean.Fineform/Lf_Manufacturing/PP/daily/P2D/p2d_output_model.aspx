@@ -80,12 +80,13 @@
                         <f:BoundField DataField="Parent" SortField="Parent" ColumnID="Parent" Width="60px" Hidden="True" HeaderText="Parent" />
                         <f:BoundField DataField="Proordertype" SortField="Proordertype" ColumnID="Proordertype" Width="60px" Hidden="True" HeaderText="工单类别" />
                         <f:BoundField DataField="Proorder" SortField="Proorder" ColumnID="Proorder" Width="60px" Hidden="True" HeaderText="工单号" />
-                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" ColumnID="Proorderqty" Width="60px" Hidden="False" HeaderText="LOT数" />
+                        <f:BoundField DataField="Proorderqty" SortField="Proorderqty" ColumnID="Proorderqty" Width="60px" Hidden="True" HeaderText="工单数" />
                         <f:BoundField DataField="Prolinename" SortField="Prolinename" ColumnID="Prolinename" Width="60px" Hidden="True" HeaderText="班组" />
                         <f:BoundField DataField="Prodate" SortField="Prodate" ColumnID="Prodate" Width="60px" Hidden="False" HeaderText="生产日期" />
                         <f:BoundField DataField="Prodirect" SortField="Prodirect" ColumnID="Prodirect" Width="60px" Hidden="True" HeaderText="直接" />
                         <f:BoundField DataField="Proindirect" SortField="Proindirect" ColumnID="Proindirect" Width="60px" Hidden="True" HeaderText="间接" />
                         <f:BoundField DataField="Prolot" SortField="Prolot" ColumnID="Prolot" Width="60px" Hidden="False" HeaderText="批次LOT" />
+                        <f:BoundField DataField="UDF54" SortField="UDF54" ColumnID="UDF54" Width="60px" Hidden="False" HeaderText="LOT数" />
                         <f:BoundField DataField="Promodel" SortField="Promodel" ColumnID="Promodel" Width="60px" Hidden="True" HeaderText="机种" />
                         <f:BoundField DataField="Prohbn" SortField="Prohbn" ColumnID="Prohbn" Width="60px" Hidden="True" HeaderText="物料" />
                         <f:BoundField DataField="Propcbatype" SortField="Propcbatype" ColumnID="Propcbatype" Width="60px" Hidden="False" HeaderText="Pcb类别" />
@@ -124,10 +125,10 @@
                         <f:BoundField DataField="UDF04" SortField="UDF04" ColumnID="UDF04" Width="60px" Hidden="True" HeaderText="自定义D" />
                         <f:BoundField DataField="UDF05" SortField="UDF05" ColumnID="UDF05" Width="60px" Hidden="True" HeaderText="自定义E" />
                         <f:BoundField DataField="UDF06" SortField="UDF06" ColumnID="UDF06" Width="60px" Hidden="True" HeaderText="自定义F" />
-                        <f:BoundField DataField="UDF51" SortField="UDF51" ColumnID="UDF51" Width="60px" Hidden="False" HeaderText="修正仕损" />
-                        <f:BoundField DataField="UDF52" SortField="UDF52" ColumnID="UDF52" Width="60px" Hidden="False" HeaderText="手插仕损" />
-                        <f:BoundField DataField="UDF53" SortField="UDF53" ColumnID="UDF53" Width="60px" Hidden="True" HeaderText="自定义3" />
-                        <f:BoundField DataField="UDF54" SortField="UDF54" ColumnID="UDF54" Width="60px" Hidden="True" HeaderText="自定义4" />
+                        <f:BoundField DataField="UDF51" SortField="UDF51" ColumnID="UDF51" Width="60px" Hidden="False" HeaderText="不良数量" />
+                        <f:BoundField DataField="UDF52" SortField="UDF52" ColumnID="UDF52" Width="60px" Hidden="False" HeaderText="修正仕损" />
+                        <f:BoundField DataField="UDF53" SortField="UDF53" ColumnID="UDF53" Width="60px" Hidden="False" HeaderText="手插仕损3" />
+                        <%--<f:BoundField DataField="UDF54" SortField="UDF54" ColumnID="UDF54" Width="60px" Hidden="True" HeaderText="自定义4" />--%>
                         <f:BoundField DataField="UDF55" SortField="UDF55" ColumnID="UDF55" Width="60px" Hidden="True" HeaderText="自定义5" />
                         <f:BoundField DataField="UDF56" SortField="UDF56" ColumnID="UDF56" Width="60px" Hidden="True" HeaderText="自定义6" />
                         <f:BoundField DataField="isDeleted" SortField="isDeleted" ColumnID="isDeleted" Width="60px" Hidden="True" HeaderText="软删除" />

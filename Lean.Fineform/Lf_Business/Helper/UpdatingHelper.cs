@@ -634,5 +634,119 @@ namespace LeanFine
                 Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
             }
         }
+
+        public static void UpdateP2DRealTotal(string OrderNo, string uid, string Propcbatype, string Propcbaside)
+        {
+            try
+            {
+                //求和
+                var q =
+                    (from p in DB.Pp_P2d_OutputSubs
+                     .Where(s => s.isDeleted == 0)
+                    .Where(s => s.Prorealqty != 0)
+                    //.Where(s => s.Prodate == pdate)
+                    .Where(s => s.Proorder == OrderNo)
+                    .Where(s => s.Propcbatype == Propcbatype)
+                    .Where(s => s.Propcbaside == Propcbaside)
+
+                     group p by new
+                     {
+                         p.Proorder,
+                         p.Propcbatype,
+                         p.Propcbaside,
+                     }
+                        into g
+                     select new
+                     {
+                         g.Key.Proorder,
+                         g.Key.Propcbatype,
+                         g.Key.Propcbaside,
+
+                         Prorealtotal = g.Sum(p => p.Prorealqty),
+                     }).ToList();
+
+                //判断查询是否为空
+
+                if (q.Any())
+                {
+                    //for遍历
+                    for (int i = 0; i < q.Count; i++)
+                    {
+                        int cc = q[i].Prorealtotal;
+
+                        DB.Pp_P2d_OutputSubs
+                             .Where(s => s.Proorder == OrderNo && s.Propcbatype == Propcbatype && s.Propcbaside == Propcbaside)
+
+                           .ToList()
+                           .ForEach(x => { x.Prorealtotal = cc; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                        DB.SaveChanges();
+                    }
+                }
+                //求和
+                //var qs =
+                //    (from p in DB.Pp_P1d_Defects
+                //     .Where(s => s.isDeleted == 0)
+                //    .Where(s => s.Prorealqty != 0)
+                //    .Where(s => s.Proorder == porder)
+
+                //     group p by new
+                //     {
+                //         p.Proorder,
+                //     }
+                //        into g
+                //     select new
+                //     {
+                //         Proorder = g.Key.Proorder,
+
+                //         Probadamount = g.Sum(p => p.Probadqty),
+                //     }).ToList();
+                //if (qs.Any())
+                //{
+                //    int ccs = qs[0].Probadamount;
+
+                //    DB.Pp_P1d_Defects
+                //         .Where(s => s.Proorder == porder)
+                //       .ToList()
+                //       .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                //    DB.SaveChanges();
+                //    DB.Pp_Defect_Totals
+                //       .Where(s => s.Proorder == porder)
+                //       .ToList()
+                //       .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                //    DB.SaveChanges();
+                //}
+            }
+            catch (ArgumentNullException Message)
+            {
+                Alert.ShowInTop("空参数传递(err:null):" + Message);
+            }
+            catch (InvalidCastException Message)
+            {
+                Alert.ShowInTop("使用无效的类:" + Message);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                //var errorMessages = ex.EntityValidationErrors
+                //        .SelectMany(x => x.ValidationErrors)
+                //        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                //var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                //var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                //throw new System.Data.Entity.Validation.DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+
+                //判断字段赋值
+                var msg = string.Empty;
+                var errors = (from u in ex.EntityValidationErrors select u.ValidationErrors).ToList();
+                foreach (var item in errors)
+                    msg += item.FirstOrDefault().ErrorMessage;
+                Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
+            }
+        }
     }
 }

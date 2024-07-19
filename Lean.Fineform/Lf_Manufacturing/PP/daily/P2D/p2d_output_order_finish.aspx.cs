@@ -70,20 +70,19 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 if (rbtnFirstAuto.Checked)
                 {
                     var q =
-                    from p in DB.Pp_P2d_OutputSubs
-                    join b in DB.Pp_P2d_Outputs on p.Parent equals b.ID
-                    where p.isDeleted == 0
-                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                    group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
+                    from b in DB.Pp_P2d_OutputSubs
+                    where b.isDeleted == 0
+
+                    group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
                     select new
                     {
-                        Prodate = g.Key.Prodate,
-                        Proorder = g.Key.Proorder,
-                        Prolotqty = g.Key.Proorderqty,
-                        Promodel = g.Key.Promodel,
-                        Prohbn = g.Key.Prohbn,
-                        Prolot = g.Key.Prolot,
-                        Prost = g.Key.Prost,
+                        g.Key.Prodate,
+                        g.Key.Proorder,
+                        Prolotqty = g.Key.UDF54,
+                        g.Key.Propcbatype,
+                        g.Key.Propcbaside,
+                        g.Key.Prolot,
+                        //Prost = g.Key.Prost,
                         Prorealqty = g.Sum(p => p.Prorealqty),
                     };
 
@@ -92,7 +91,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Propcbatype.ToString().Contains(searchText) || u.Propcbaside.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     if (DpStartDate.SelectedDate.HasValue)
                     {
@@ -101,12 +100,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     }
 
                     var qcount = from p in q
-                                 group p by new { p.Prolot } into g
+                                 group p by new { p.Prolot, p.Propcbatype, p.Propcbaside } into g
                                  select new
                                  {
                                      Prolotqty = g.Sum(p => p.Prolotqty),
-                                     Prolot = g.Key.Prolot,
-
+                                     g.Key.Prolot,
+                                     g.Key.Propcbatype,
+                                     g.Key.Propcbaside,
                                      Prorealqty = g.Sum(p => p.Prorealqty),
                                  };
                     var qs = from a in qcount
@@ -115,6 +115,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                              {
                                  a.Prolotqty,
                                  a.Prolot,
+                                 a.Propcbatype,
+                                 a.Propcbaside,
                                  a.Prorealqty,
                                  Prostatus = (a.Prolotqty == a.Prorealqty ? "◎已完成" : "◎未完成"),
                                  Prodiff = a.Prolotqty - a.Prorealqty,
@@ -157,40 +159,40 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 if (rbtnSecondAuto.Checked)
                 {
                     var q =
-                            from p in DB.Pp_P2d_OutputSubs
-                            join b in DB.Pp_P2d_Outputs on p.Parent equals b.ID
-                            where p.isDeleted == 0
-                            where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                            group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
+                    from b in DB.Pp_P2d_OutputSubs
+                    where b.isDeleted == 0
 
-                            select new
-                            {
-                                Prodate = g.Key.Prodate,
-                                Proorder = g.Key.Proorder,
-                                Prolotqty = g.Key.Proorderqty,
-                                Promodel = g.Key.Promodel,
-                                Prohbn = g.Key.Prohbn,
-                                Prolot = g.Key.Prolot,
-                                Prost = g.Key.Prost,
-                                Prorealqty = g.Sum(p => p.Prorealqty),
-                            };
+                    group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
+                    select new
+                    {
+                        g.Key.Prodate,
+                        g.Key.Proorder,
+                        Prolotqty = g.Key.UDF54,
+                        g.Key.Propcbatype,
+                        g.Key.Propcbaside,
+                        g.Key.Prolot,
+                        //Prost = g.Key.Prost,
+                        Prorealqty = g.Sum(p => p.Prorealqty),
+                    };
 
                     // 在用户名称中搜索
                     string searchText = ttbSearchMessage.Text.Trim();
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText) || u.Prodate.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Propcbatype.ToString().Contains(searchText) || u.Propcbaside.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
                     string dsdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Prodate.Contains(dsdate));
 
                     var qcount = from p in q
-                                 group p by new { p.Prolot } into g
+                                 group p by new { p.Prolot, p.Propcbatype, p.Propcbaside } into g
                                  select new
                                  {
                                      Prolotqty = g.Sum(p => p.Prolotqty),
-                                     Prolot = g.Key.Prolot,
+                                     g.Key.Prolot,
+                                     g.Key.Propcbatype,
+                                     g.Key.Propcbaside,
 
                                      Prorealqty = g.Sum(p => p.Prorealqty),
                                  };
@@ -200,6 +202,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                              {
                                  a.Prolotqty,
                                  a.Prolot,
+                                 a.Propcbatype,
+                                 a.Propcbaside,
                                  a.Prorealqty,
                                  Prostatus = (a.Prolotqty == a.Prorealqty ? "◎已完成" : "◎未完成"),
                                  Prodiff = a.Prolotqty - a.Prorealqty,
@@ -230,40 +234,40 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 if (rbtnThirdAuto.Checked)
                 {
                     var q =
-                            from p in DB.Pp_P2d_OutputSubs
-                            join b in DB.Pp_P2d_Outputs on p.Parent equals b.ID
-                            where p.isDeleted == 0
-                            where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                            group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
-                            select new
-                            {
-                                Prodate = g.Key.Prodate,
-                                Proorder = g.Key.Proorder,
-                                Prolotqty = g.Key.Proorderqty,
-                                Promodel = g.Key.Promodel,
-                                Prohbn = g.Key.Prohbn,
-                                Prolot = g.Key.Prolot,
-                                Prost = g.Key.Prost,
-                                Prorealqty = g.Sum(p => p.Prorealqty),
-                            };
+                    from b in DB.Pp_P2d_OutputSubs
+                    where b.isDeleted == 0
+
+                    group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
+                    select new
+                    {
+                        g.Key.Prodate,
+                        g.Key.Proorder,
+                        Prolotqty = g.Key.UDF54,
+                        g.Key.Propcbatype,
+                        g.Key.Propcbaside,
+                        g.Key.Prolot,
+                        //Prost = g.Key.Prost,
+                        Prorealqty = g.Sum(p => p.Prorealqty),
+                    };
 
                     // 在用户名称中搜索
                     string searchText = ttbSearchMessage.Text.Trim();
 
                     if (!String.IsNullOrEmpty(searchText))
                     {
-                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Prohbn.ToString().Contains(searchText) || u.Promodel.ToString().Contains(searchText) || u.Prodate.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                        q = q.Where(u => u.Prolot.ToString().Contains(searchText) || u.Propcbatype.ToString().Contains(searchText) || u.Propcbaside.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
 
                     string dsdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                     q = q.Where(u => u.Prodate.Contains(dsdate));
                     var qcount = from p in q
-                                 group p by new { p.Prolot } into g
+                                 group p by new { p.Prolot, p.Propcbatype, p.Propcbaside } into g
                                  select new
                                  {
                                      Prolotqty = g.Sum(p => p.Prolotqty),
-                                     Prolot = g.Key.Prolot,
-
+                                     g.Key.Prolot,
+                                     g.Key.Propcbatype,
+                                     g.Key.Propcbaside,
                                      Prorealqty = g.Sum(p => p.Prorealqty),
                                  };
                     var qs = from a in qcount
@@ -271,6 +275,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                              {
                                  a.Prolotqty,
                                  a.Prolot,
+                                 a.Propcbatype,
+                                 a.Propcbaside,
                                  a.Prorealqty,
                                  Prostatus = (a.Prolotqty == a.Prorealqty ? "◎已完成" : "◎未完成"),
                                  Prodiff = a.Prolotqty - a.Prorealqty,

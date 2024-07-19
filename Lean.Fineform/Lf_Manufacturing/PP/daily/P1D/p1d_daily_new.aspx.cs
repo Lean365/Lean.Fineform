@@ -656,7 +656,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                             //where a.Proecnoldhbn == strProecnoldhbn
                             //where a.Proecnnewhbn == strProecnnewhbn
 
-                            orderby b.Propset descending
+                            orderby b.Prost descending
+
                             select new
                             {
                                 a.Pordertype,
@@ -682,8 +683,18 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
                     if (q.Any())
                     {
+                        //var qt = q.ToList();
+                        //ProOrderType = qt[0].Pordertype;
+                        //prohbn.Text = qt[0].Porderhbn;
+                        //promodel.Text = qt[0].Promodel;
+                        //prolot.Text = qt[0].Porderlot;
+
+                        //prolotqty.Text = qt[0].Porderqty.ToString();
+                        ////prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
+                        //prosn.Text = qs[0].Porderserial;
+
                         var maxst = from a in q
-                                    group a by new { a.Pordertype, a.Porderlot, a.Porderhbn, a.Promodel, a.Prost, a.Porderqty, a.Porderserial }
+                                    group a by new { a.Pordertype, a.Porderlot, a.Porderhbn, a.Promodel, a.Porderqty, a.Porderserial }
                              into g
                                     select new
                                     {

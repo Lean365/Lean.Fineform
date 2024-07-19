@@ -69,10 +69,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                                 //where b.Proecnno == strecn
                                 //where b.Proecnbomitem == stritem
                             where a.DictType.Contains("line_type_p")
+                            where a.DictLabel.Contains("SMT")
                             select new
                             {
-                                DictLabel = a.DictLabel.Substring(0, 3),
-                                DictValue = a.DictValue.Substring(0, 3)
+                                DictLabel = a.DictLabel.Substring(3, 1),
+                                DictValue = a.DictValue.Substring(3, 1)
                             }).Distinct().ToList();
             IQueryable<Pp_P2d_Inspection_Defect> q = DB.Pp_P2d_Inspection_Defects; //.Include(u => u.Dept);
 
@@ -122,18 +123,19 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                                 //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                                 //where b.Proecnno == strecn
                                 //where b.Proecnbomitem == stritem
-                            where a.DictType.Contains("reason_type_p")
+                            where a.DictType.Contains("line_type_p")
+                            where a.DictLabel.Contains("SMT")
                             select new
                             {
-                                a.DictLabel,
-                                a.DictValue
+                                DictLabel = a.DictLabel.Substring(3, 1),
+                                DictValue = a.DictValue.Substring(3, 1)
                             }).ToList();
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-            var q = from a in DB.Pp_P1d_Defects
+            var q = from a in DB.Pp_P2d_Inspection_Defects
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
-                    where a.Prodate.CompareTo(sdate) >= 0
-                    where a.Prodate.CompareTo(edate) <= 0
+                    where a.Proinspdate.CompareTo(sdate) >= 0
+                    where a.Proinspdate.CompareTo(edate) <= 0
                     select new
                     {
                         a.Prolinename
