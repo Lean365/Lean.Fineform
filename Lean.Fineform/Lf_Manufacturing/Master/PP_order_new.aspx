@@ -54,7 +54,7 @@
                         </f:FormRow>
                         <f:FormRow ID="FormRow7" runat="server">
                             <Items>
-                                <f:TextBox runat="server" Label="生产LOT" ID="Porderlot" ShowRedStar="True" LabelAlign="Right" RegexPattern="ALPHA_NUMERIC">
+                                <f:TextBox runat="server" Label="生产LOT" ID="Porderlot" ShowRedStar="True" LabelAlign="Right">
                                 </f:TextBox>
                                 <f:NumberBox runat="server" Label="生产台数" ID="Porderqty" NoDecimal="false" NoNegative="True" DecimalPrecision="2" Required="True" ShowRedStar="True" LabelAlign="Right">
                                 </f:NumberBox>

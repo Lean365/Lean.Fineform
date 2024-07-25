@@ -49,6 +49,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             //InitNoticeDept();
 
             BindData();
+            BindDdlType();
         }
 
         private void BindData()
@@ -74,13 +75,26 @@ namespace LeanFine.Lf_Manufacturing.Master
             this.Porderno.Text = current.Porderno.ToString();
             this.Porderroute.Text = current.Porderroute.ToString();
             this.Porderserial.Text = current.Porderserial;
-            this.Pordertype.Text = current.Pordertype;
+            this.Pordertype.SelectedValue = current.Pordertype;
             this.Remark.Text = current.Remark;
             //修改前日志
             string BeforeModi = current.Porderdate + "," + current.Porderno + "," + current.Porderhbn + "," + current.Porderlot + "," + current.Porderqty;
             string OperateType = "修改";
             string OperateNotes = "beEdit* " + BeforeModi + " *beEdit 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "订单修改", OperateNotes);
+        }
+
+        private void BindDdlType()
+        {
+            var list = (from c in DB.Adm_Dicts
+                        where c.DictType.Contains("app_mo_type")
+                        select new { c.DictLabel, c.DictValue }).ToList();
+
+            //3.2.将数据绑定到下拉框
+            Pordertype.DataSource = list;
+            Pordertype.DataTextField = "DictLabel";
+            Pordertype.DataValueField = "DictValue";
+            Pordertype.DataBind();
         }
 
         #endregion Page_Load
@@ -186,7 +200,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                 .Where(u => u.GUID == ids).FirstOrDefault();
 
             item.Porderdate = this.Porderdate.SelectedDate.Value.ToString("yyyyMMdd");
-
+            item.Pordertype = this.Pordertype.SelectedValue;
             item.Porderlot = this.Porderlot.Text.ToUpper();
             item.Porderqty = decimal.Parse(this.Porderqty.Text);
             item.Porderreal = decimal.Parse(this.Porderreal.Text);

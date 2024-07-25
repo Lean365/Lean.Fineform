@@ -136,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         //where b.Proecnno == strecn
                         //where b.Proecnbomitem == stritem
                     where a.Porderqty - a.Porderreal > 0
-                    where a.Pordertype.Contains("ZDTA") || a.Pordertype.Contains("ZDTB")
+                    where a.Pordertype.Contains("ZDTA") || a.Pordertype.Contains("ZDTB") || a.Pordertype.Contains("ZDTC") || a.Pordertype.Contains("ZDTG")
                     orderby a.Porderno
                     select new
                     {

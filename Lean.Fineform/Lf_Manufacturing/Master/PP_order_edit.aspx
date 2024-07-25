@@ -39,14 +39,14 @@
                             <Items>
                                 <f:Label runat="server" Label="生产物料" LabelAlign="Right" ID="Porderhbn" ShowRedStar="true">
                                 </f:Label>
-                                <f:TextBox runat="server" Label="生产LOT" ID="Porderlot" Required="true" ShowRedStar="True" LabelAlign="Right" RegexPattern="ALPHA_NUMERIC">
+                                <f:TextBox runat="server" Label="生产LOT" ID="Porderlot" Required="true" ShowRedStar="True" LabelAlign="Right">
                                 </f:TextBox>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow7" runat="server">
                             <Items>
 
-                                <f:Label runat="server" Label="订单台数" ID="Porderqty" >
+                                <f:Label runat="server" Label="订单台数" ID="Porderqty">
                                 </f:Label>
                                 <f:NumberBox runat="server" Label="已生产台数" ID="Porderreal" NoDecimal="false" NoNegative="True" DecimalPrecision="2" Required="True" ShowRedStar="True" LabelAlign="Right">
                                 </f:NumberBox>
@@ -54,8 +54,8 @@
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:Label runat="server" Label="工单类别" ID="Pordertype" ShowRedStar="True" LabelAlign="Right">
-                                </f:Label>
+                                <f:DropDownList runat="server" Label="工单类别" ID="Pordertype" ShowRedStar="true" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" EnableEdit="true" ForceSelection="true" AutoPostBack="True"  LabelAlign="Right">
+                                </f:DropDownList>
                                 <f:Label runat="server" Label="生产工单" ID="Porderno" ShowRedStar="True" LabelAlign="Right">
                                 </f:Label>
 

@@ -186,7 +186,7 @@ namespace LeanFine.Lf_Manufacturing.Master
         private void SaveItem()//新增生产日报
         {
             Pp_Order item = new Pp_Order();
-
+            item.Pordertype = this.Pordertype.SelectedValue;
             item.Porderno = this.Porderno.Text.ToUpper();
             item.Porderhbn = this.Porderhbn.SelectedText;
             item.Porderlot = this.Porderlot.Text.ToUpper();
