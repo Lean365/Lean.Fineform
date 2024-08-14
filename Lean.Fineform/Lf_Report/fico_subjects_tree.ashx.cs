@@ -26,7 +26,7 @@ namespace LeanFine.Lf_Report
             var q_pid = from p in DBCharts.Fico_Monthly_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                             //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.Bc_ExpCategory.Contains("DTA")
                         select new
                         {
@@ -53,7 +53,7 @@ namespace LeanFine.Lf_Report
             var q_id = from p in DBCharts.Fico_Monthly_Actual_Costs
                            //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                            //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                       where p.isDeleted == 0
+                       where p.IsDeleted == 0
                        where p.Bc_ExpCategory.Contains("DTA")
                        select new
                        {
@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Report
             var q_all = from p in DBCharts.Fico_Monthly_Actual_Costs
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                             //where p.Bc_YM.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.Bc_ExpCategory.Contains("DTA")
                         select new
                         {

@@ -287,7 +287,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -297,7 +297,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -368,7 +368,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -410,7 +410,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDeleted,
+                             b.IsDeleted,
                              b.Remark,
                              b.Creator,
                              b.CreateDate,
@@ -461,7 +461,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                                                                   UDF55 = a.UDF55,
                                                                   UDF56 = a.UDF56,
 
-                                                                  isDeleted = a.isDeleted,
+                                                                  IsDeleted = a.IsDeleted,
                                                                   Remark = a.Remark,
                                                                   Creator = a.Creator,
                                                                   CreateDate = a.CreateDate,
@@ -534,7 +534,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -544,7 +544,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -599,7 +599,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -629,7 +629,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDeleted,
+                             b.IsDeleted,
                              b.Remark,
                              b.Creator,
                              b.CreateDate,
@@ -668,7 +668,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                                                                       UDF55 = a.UDF55,
                                                                       UDF56 = a.UDF56,
 
-                                                                      isDeleted = a.isDeleted,
+                                                                      IsDeleted = a.IsDeleted,
                                                                       Remark = a.Remark,
                                                                       Creator = a.Creator,
                                                                       CreateDate = a.CreateDate,

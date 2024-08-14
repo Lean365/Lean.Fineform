@@ -100,7 +100,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
 
             //查询包含子集
             var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable();
@@ -313,7 +313,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             if (q.Any())
             {
                 var qs = from p in q

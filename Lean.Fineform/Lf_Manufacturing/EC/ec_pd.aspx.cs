@@ -70,7 +70,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
 
                             where b.Ec_procurement == "F"
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where string.IsNullOrEmpty(b.Ec_purdate)// == "" || b.Ec_purdate == null
                             orderby b.Ec_entrydate descending
                             //where a.Remark.Contains("OK") == false
@@ -110,7 +110,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.Ec_procurement == "F"
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
                             orderby b.Ec_entrydate descending
                             select new
@@ -149,7 +149,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             where b.Ec_procurement == "F"
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             //where b.Ec_purdate == "" || b.Ec_purdate == null
                             orderby b.Ec_entrydate descending
                             select new
@@ -260,7 +260,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                             //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on a.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_procurement == "F"
 
                             //where a.Ec_newqty!=0
@@ -304,7 +304,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                 //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
                                 // join c in DB.Pp_SapMaterials on a.Ec_newitem equals c.D_SAP_ZCA1D_Z002
                             where !string.IsNullOrEmpty(a.Ec_purdate)
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_procurement == "F"
                             select new
                             {
@@ -345,7 +345,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                                 //join b in DB.Pp_Ecs on a.Ec_no equals b.Ec_no
                                 // join c in DB.Pp_SapMaterials on a.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_procurement == "F"
                             where a.Ec_no.Contains(strecnno)
                             //where a.Ec_purdate == ""

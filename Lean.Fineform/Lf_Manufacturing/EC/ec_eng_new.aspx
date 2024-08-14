@@ -55,22 +55,22 @@
                                                 </f:Label>
                                             </Items>
                                         </f:FormRow>
-                                        <f:FormRow ID="FormRow9" runat="server">
+                                        <%--<f:FormRow ID="FormRow9" runat="server">
                                             <Items>
-                                                <f:RadioButtonList ID="isModifysop" Label="SOP确认" ColumnNumber="2" runat="server"
-                                                    AutoPostBack="true" OnSelectedIndexChanged="isModifysop_SelectedIndexChanged"
+                                                <f:RadioButtonList ID="IsSopUpdate" Label="SOP确认" ColumnNumber="2" runat="server"
+                                                    AutoPostBack="true" OnSelectedIndexChanged="IsSopUpdate_SelectedIndexChanged"
                                                     ShowRedStar="true" Required="true">
                                                     <f:RadioItem Text="是" Value="1" Selected="true" />
                                                     <f:RadioItem Text="否" Value="0" />
                                                 </f:RadioButtonList>
-                                                <f:RadioButtonList ID="isConfirm" Label="制二课管理" ColumnNumber="2" runat="server"
-                                                    AutoPostBack="true" OnSelectedIndexChanged="isConfirm_SelectedIndexChanged"
+                                                <f:RadioButtonList ID="IsManage" Label="制二课管理" ColumnNumber="2" runat="server"
+                                                    AutoPostBack="true" OnSelectedIndexChanged="IsManage_SelectedIndexChanged"
                                                     ShowRedStar="true" Required="true">
                                                     <f:RadioItem Text="是" Value="1" />
                                                     <f:RadioItem Text="否" Value="0" Selected="true" />
                                                 </f:RadioButtonList>
                                             </Items>
-                                        </f:FormRow>
+                                        </f:FormRow>--%>
                                         <f:FormRow ID="FormRow4" runat="server">
                                             <Items>
                                                 <f:Label ID="Ec_detailstent" runat="server" Label="设变内容" ShowRedStar="True" Text="-" Height="150px">
@@ -199,7 +199,7 @@
                                 <f:BoundField DataField="Ec_bomno" ColumnID="Ec_bomno" SortField="Ec_bomno" EnableLock="true" Width="100px" HeaderText="番号" />
                                 <f:BoundField DataField="Ec_procurement" ColumnID="Ec_procurement" SortField="Ec_procurement" EnableLock="true" Width="100px" HeaderText="采购类别" />
                                 <f:BoundField DataField="Ec_location" ColumnID="Ec_location" SortField="Ec_location" EnableLock="true" Width="100px" HeaderText="存储位置" />
-                                <f:BoundField DataField="isCheck" ColumnID="isCheck" SortField="isCheck" EnableLock="true" Width="100px" HeaderText="QC检查" />
+                                <f:BoundField DataField="IsCheck" ColumnID="IsCheck" SortField="IsCheck" EnableLock="true" Width="100px" HeaderText="QC检查" />
                                 <f:BoundField DataField="Ec_model" ColumnID="Ec_model" SortField="Ec_model" EnableLock="true" Width="150px" HeaderText="机种" />
 
 

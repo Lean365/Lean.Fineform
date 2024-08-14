@@ -271,7 +271,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "不良联络删除", OperateNotes);
 
-                current.isDeleted = 0;
+                current.IsDeleted = 0;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();

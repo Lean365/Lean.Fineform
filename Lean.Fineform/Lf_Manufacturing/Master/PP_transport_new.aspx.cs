@@ -129,7 +129,7 @@ namespace LeanFine.Lf_Manufacturing.Master
 
             // 添加所有用户
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = remark.Text;
             item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();

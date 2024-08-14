@@ -34,7 +34,7 @@ namespace LeanFine.Lf_Report
                         //join b in DBCharts.MM_Materials on a.Bc_Item equals b.MatItem
                     where a.Bc_YM.CompareTo(sdate) >= 0
                     where a.Bc_YM.CompareTo(atedate) <= 0
-                    where a.isDeleted == 0
+                    where a.IsDeleted == 0
                     select new
                     {
                         a.Bc_YM,

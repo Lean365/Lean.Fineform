@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
             {
                 q = q.Where(u => u.Customer_ID.Contains(searchText) || u.Customer_Name.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -181,7 +181,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "销售管理", "客户信息删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

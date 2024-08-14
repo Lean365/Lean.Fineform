@@ -98,7 +98,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             {
                 q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_olditem.ToString().Contains(searchText) || u.Ec_newitem.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted != 1);
+            q = q.Where(u => u.IsDeleted != 1);
 
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();

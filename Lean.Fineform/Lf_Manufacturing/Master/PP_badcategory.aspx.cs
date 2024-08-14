@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             {
                 q = q.Where(u => u.ngclass.Contains(searchText) || u.ngcode.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -185,7 +185,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "不良原因删除", OperateNotes);
                 //DB.Pp_Defect_Codes.Where(l => l.GUID == del_ID).Delete();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

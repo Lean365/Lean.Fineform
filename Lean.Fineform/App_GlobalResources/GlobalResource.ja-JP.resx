@@ -1248,4 +1248,13 @@
   <data name="menu_Pp_P2D_Times" xml:space="preserve">
     <value>製造２工数</value>
   </data>
+  <data name="sys_Button_Unrelated" xml:space="preserve">
+    <value>関係なし</value>
+  </data>
+  <data name="sys_Status_Internal" xml:space="preserve">
+    <value>内部</value>
+  </data>
+  <data name="sys_Status_Region" xml:space="preserve">
+    <value>全仕向地</value>
+  </data>
 </root>

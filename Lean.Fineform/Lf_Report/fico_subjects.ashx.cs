@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Report
             var q_all = from p in DBCharts.Fico_Expenses
                             //where p.Befm.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Befm.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.UDF01 == "" || p.UDF01 == null
                         where p.Bedept != "DTA"
                         select new

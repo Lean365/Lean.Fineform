@@ -68,12 +68,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             //where b.Ec_iqcdate != ""
                             //where b.Ec_pmcdate != ""
                             where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
 
-                            where b.isConfirm == 1 || b.isConfirm == 3
+                            where b.IsManage == 1 || b.IsManage == 3
                             orderby b.Ec_entrydate descending
                             //where a.Remark.Contains("OK") == false
                             select new
@@ -114,13 +114,13 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
                                                                      //where b.Ec_pmcdate != ""
                                                                      //where c.D_SAP_ZCA1D_Z030 == "C003" || c.D_SAP_ZCA1D_Z010 == "E"
 
                             //where a.Remark.Contains("OK") == false
-                            where b.isConfirm == 1 || b.isConfirm == 3
+                            where b.IsManage == 1 || b.IsManage == 3
                             orderby b.Ec_entrydate descending
                             select new
                             {
@@ -159,12 +159,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
 
                             //where a.Remark.Contains("OK") == false
                             //where c.D_SAP_ZCA1D_Z030 == "C003" || c.D_SAP_ZCA1D_Z010 == "E"
 
-                            where b.isConfirm == 1 || b.isConfirm == 3
+                            where b.IsManage == 1 || b.IsManage == 3
                             orderby b.Ec_entrydate descending
                             select new
                             {
@@ -254,8 +254,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDeleted == 0
-                              where b.isConfirm == 1 || b.isConfirm == 3
+                              where b.IsDeleted == 0
+                              where b.IsManage == 1 || b.IsManage == 3
                               select new
                               {
                                   a.Ec_documents,
@@ -306,8 +306,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               where !string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDeleted == 0
-                              where b.isConfirm == 1 || b.isConfirm == 3
+                              where b.IsDeleted == 0
+                              where b.IsManage == 1 || b.IsManage == 3
                               select new
                               {
                                   a.Ec_documents,
@@ -361,8 +361,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
                               //where string.IsNullOrEmpty(b.Ec_p2ddate)// == "" || b.Ec_p2ddate == null
-                              where b.isDeleted == 0
-                              where b.isConfirm == 1 || b.isConfirm == 3
+                              where b.IsDeleted == 0
+                              where b.IsManage == 1 || b.IsManage == 3
                               select new
                               {
                                   a.Ec_documents,

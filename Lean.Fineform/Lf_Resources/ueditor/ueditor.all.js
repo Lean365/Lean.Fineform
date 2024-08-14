@@ -25011,7 +25011,7 @@
             getStateDom: function () {
                 return this.getDom('state');
             },
-            isChecked: function () {
+            IsChecked: function () {
                 return this.hasState('checked');
             },
             setChecked: function (checked) {

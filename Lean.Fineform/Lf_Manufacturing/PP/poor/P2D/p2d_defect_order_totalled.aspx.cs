@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
                             //where (from d in DB.Pp_P1d_Outputs
-                            //       where d.isDeleted == 0
+                            //       where d.IsDeleted == 0
                             //       select d.Prolot)
                             //       .Contains(a.Prolot)//投入日期
                         where a.Prolinename.Contains("制")
@@ -99,7 +99,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     q = q.Where(u => u.Prodate.Substring(9, 8).CompareTo(edate) <= 0);
                 }
 
-                q = q.Where(u => u.isDeleted == 0);
+                q = q.Where(u => u.IsDeleted == 0);
 
                 var qs = (from p in q
 
@@ -303,7 +303,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
                 }
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
 
             var qs = from p in q
                      .OrderBy(s => s.Prodate)

@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDeleted { get; set; }	//13	//	删除标记
+        public byte IsDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注

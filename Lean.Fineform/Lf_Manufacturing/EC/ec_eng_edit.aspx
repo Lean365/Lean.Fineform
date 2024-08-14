@@ -6,7 +6,34 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <style type="text/css">
+        .f-grid-row .f-grid-cell-editMm {
+            background-color: #b3e19d;
+            color: #fff;
+        }
+
+        .f-grid-row .f-grid-cell-editPcba {
+            background-color: #f3d19e;
+            color: #fff;
+        }
+
+        .f-grid-row .f-grid-cell-editAssy {
+            background-color: #a0cfff;
+            color: #fff;
+        }
+
+        .f-grid-row .f-grid-cell-editPe {
+            background-color: #fab6b6;
+            color: #fff;
+        }
+
+        .f-grid-row .f-grid-cell-editPcba a,
+        .f-grid-row .f-grid-cell-editPcba a:hover {
+            color: #fff;
+        }
+    </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" runat="server" AjaxTimeout="3600" />
@@ -55,22 +82,22 @@
                                                 </f:Label>
                                             </Items>
                                         </f:FormRow>
-                                        <f:FormRow ID="FormRow9" runat="server">
+                                        <%--                                        <f:FormRow ID="FormRow9" runat="server">
                                             <Items>
-                                                <f:RadioButtonList ID="isModifysop" Label="SOP确认" ColumnNumber="2" runat="server"
-                                                    AutoPostBack="true" OnSelectedIndexChanged="isModifysop_SelectedIndexChanged"
+                                                <f:RadioButtonList ID="IsSopUpdate" Label="SOP确认" ColumnNumber="2" runat="server"
+                                                    AutoPostBack="true" OnSelectedIndexChanged="IsSopUpdate_SelectedIndexChanged"
                                                     ShowRedStar="true" Required="true">
                                                     <f:RadioItem Text="是" Value="1" Selected="true" />
                                                     <f:RadioItem Text="否" Value="0" />
                                                 </f:RadioButtonList>
-                                                <f:RadioButtonList ID="isConfirm" Label="制二课管理" ColumnNumber="2" runat="server"
-                                                    AutoPostBack="true" OnSelectedIndexChanged="isConfirm_SelectedIndexChanged"
+                                                <f:RadioButtonList ID="IsManage" Label="制二课管理" ColumnNumber="2" runat="server"
+                                                    AutoPostBack="true" OnSelectedIndexChanged="IsManage_SelectedIndexChanged"
                                                     ShowRedStar="true" Required="true">
                                                     <f:RadioItem Text="是" Value="1" />
                                                     <f:RadioItem Text="否" Value="0" Selected="true" />
                                                 </f:RadioButtonList>
                                             </Items>
-                                        </f:FormRow>
+                                        </f:FormRow>--%>
                                         <f:FormRow ID="FormRow4" runat="server">
                                             <Items>
                                                 <f:Label ID="Ec_detailstent" runat="server" Label="设变内容" Height="150px">
@@ -158,11 +185,11 @@
                 <f:Tab Title="物料确认" BodyPadding="10px" runat="server">
                     <Items>
                         <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false"
-                            EnableCheckBoxSelect="true" ForceFit="false" ColumnWidth="100px"
-                            DataKeyNames="Ec_no" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
+                            EnableCheckBoxSelect="false" ForceFit="false" ColumnWidth="100px"
+                            DataKeyNames="Ec_no,Ec_model,Ec_bomitem" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
                             SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableTextSelection="true"
                             OnPageIndexChange="Grid1_PageIndexChange" OnRowDataBound="Grid1_RowDataBound"
-                            OnPreRowDataBound="Grid1_PreRowDataBound">
+                            OnPreRowDataBound="Grid1_PreRowDataBound" OnRowCommand="Grid1_RowCommand">
                             <Toolbars>
                                 <f:Toolbar ID="Toolbar2" runat="server">
                                     <Items>
@@ -188,8 +215,18 @@
                                 </f:DropDownList>
                             </PageItems>
                             <Columns>
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_MM%>" Width="100px" Icon="TableEdit" ColumnID="editMm" CommandName="EditMm" Text="<%$ Resources:GlobalResource,sys_Button_Unrelated%>" ConfirmTarget="Top" ConfirmText="确实定要设为与<部管课无关>吗？" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_P2D%>" Width="100px" Icon="TableEdit" ColumnID="editPcba" CommandName="EditPcba" Text="<%$ Resources:GlobalResource,sys_Button_Unrelated%>" ConfirmTarget="Top" ConfirmText="确定要设为与<制二课无关>吗？" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_P1D%>" Width="100px" Icon="TableEdit" ColumnID="editAssy" CommandName="EditAssy" Text="<%$ Resources:GlobalResource,sys_Button_Unrelated%>" ConfirmTarget="Top" ConfirmText="确定要设为与<组立无关>吗？" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_PE%>" Width="100px" Icon="TableEdit" ColumnID="editPe" CommandName="EditPe" Text="<%$ Resources:GlobalResource,menu_Pp_Sop%>" ConfirmTarget="Top" ConfirmText="确定不用更新SOP吗？" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Width="100px" Icon="delete" ColumnID="editDel" CommandName="EditDel" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>" />
+                                <f:BoundField DataField="IsManage" SortField="IsManage" Width="120px" HeaderText="管理" />
+                                <f:BoundField DataField="IsMmManage" SortField="IsMmManage" Width="120px" HeaderText="部管" />
+                                <f:BoundField DataField="IsPcbaManage" SortField="IsPcbaManage" Width="120px" HeaderText="制二" />
+                                <f:BoundField DataField="IsAssyManage" SortField="IsAssyManage" Width="120px" HeaderText="组立" />
                                 <f:RowNumberField Width="35px" EnablePagingNumber="true" />
                                 <f:BoundField DataField="Ec_no" ColumnID="Ec_no" SortField="Ec_no" EnableLock="true" Width="100px" HeaderText="设变号码" />
+                                <f:BoundField DataField="Ec_model" ColumnID="Ec_model" SortField="Ec_model" EnableLock="true" Width="150px" HeaderText="机种" />
                                 <f:BoundField DataField="Ec_bomitem" ColumnID="Ec_bomitem" SortField="Ec_bomitem" EnableLock="true" Width="150px" HeaderText="完成品" />
                                 <f:BoundField DataField="Ec_bomsubitem" ColumnID="Ec_bomsubitem" SortField="Ec_bomsubitem" EnableLock="true" Width="150px" HeaderText="上阶品号" />
                                 <f:BoundField DataField="Ec_olditem" ColumnID="Ec_olditem" SortField="Ec_olditem" EnableLock="true" Width="150px" HeaderText="旧品号" />
@@ -197,14 +234,14 @@
                                 <f:BoundField DataField="Ec_oldqty" ColumnID="Ec_oldqty" SortField="Ec_oldqty" EnableLock="true" Width="100px" HeaderText="数量" />
                                 <f:BoundField DataField="Ec_oldset" ColumnID="Ec_oldset" SortField="Ec_oldset" EnableLock="true" Width="100px" HeaderText="位置" />
                                 <f:BoundField DataField="Ec_newitem" ColumnID="Ec_newitem" SortField="Ec_newitem" EnableLock="true" Width="150px" HeaderText="新品号" />
-                                <f:BoundField DataField="Ec_newtext" ColumnID="Ec_newtext" SortField="Ec_newtext" DataToolTipField="Ec_newtext" EnableLock="true" Width="100px"  HeaderText="品名" />
+                                <f:BoundField DataField="Ec_newtext" ColumnID="Ec_newtext" SortField="Ec_newtext" DataToolTipField="Ec_newtext" EnableLock="true" Width="100px" HeaderText="品名" />
                                 <f:BoundField DataField="Ec_newqty" ColumnID="Ec_newqty" SortField="Ec_newqty" EnableLock="true" Width="100px" HeaderText="数量" />
                                 <f:BoundField DataField="Ec_newset" ColumnID="Ec_newset" SortField="Ec_newset" EnableLock="true" Width="100px" HeaderText="位置" />
                                 <f:BoundField DataField="Ec_bomno" ColumnID="Ec_bomno" SortField="Ec_bomno" EnableLock="true" Width="100px" HeaderText="番号" />
                                 <f:BoundField DataField="Ec_procurement" ColumnID="Ec_procurement" SortField="Ec_procurement" EnableLock="true" Width="100px" HeaderText="采购类别" />
                                 <f:BoundField DataField="Ec_location" ColumnID="Ec_location" SortField="Ec_location" EnableLock="true" Width="100px" HeaderText="存储位置" />
-                                <f:BoundField DataField="isCheck" ColumnID="isCheck" SortField="isCheck" EnableLock="true" Width="100px" HeaderText="QC检查" />
-                                <f:BoundField DataField="Ec_model" ColumnID="Ec_model" SortField="Ec_model" EnableLock="true" Width="150px" HeaderText="机种" />
+                                <f:BoundField DataField="IsCheck" ColumnID="IsCheck" SortField="IsCheck" EnableLock="true" Width="100px" HeaderText="QC检查" />
+
 
 
                             </Columns>

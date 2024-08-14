@@ -96,7 +96,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
             string mocorder = qmOrder.SelectedItem.Text;
             string mocline = qmLine.SelectedItem.Text;
-            q = q.Where(u => u.isDeleted == 0 && u.qmOrder.Contains(mocorder));
+            q = q.Where(u => u.IsDeleted == 0 && u.qmOrder.Contains(mocorder));
             q = q.Where(u => u.qmLine.Contains(mocline));
 
             //if (GetIdentityName() != "admin")
@@ -142,7 +142,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             var q =
                    from p in DB.Qm_Outgoings
                    where p.qmOrder == this.qmOrder.SelectedItem.Text
-                   where p.isDeleted == 0
+                   where p.IsDeleted == 0
                    group p by p.qmOrder into g
                    select new
                    {
@@ -192,7 +192,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //删除记录
                 //DB.proDefects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -511,7 +511,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -521,7 +521,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -576,7 +576,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -606,7 +606,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDeleted,
+                             b.IsDeleted,
                              b.Remark,
                              b.Creator,
                              b.CreateDate,
@@ -645,7 +645,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                                                                       UDF55 = a.UDF55,
                                                                       UDF56 = a.UDF56,
 
-                                                                      isDeleted = a.isDeleted,
+                                                                      IsDeleted = a.IsDeleted,
                                                                       Remark = a.Remark,
                                                                       Creator = a.Creator,
                                                                       CreateDate = a.CreateDate,
@@ -701,7 +701,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
             if (!reult.Any())
             {
@@ -711,7 +711,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select a).ToList();
                 if (q.Any())
                 {
@@ -782,7 +782,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          where a.qmCheckdate == prodate
                          where a.qmLine == proline
                          where a.qmRejectqty > 0
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
                          select new
                          {
                              b.GUID,
@@ -824,7 +824,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                              b.UDF55,
                              b.UDF56,
 
-                             b.isDeleted,
+                             b.IsDeleted,
                              b.Remark,
                              b.Creator,
                              b.CreateDate,
@@ -875,7 +875,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                                                                   UDF55 = a.UDF55,
                                                                   UDF56 = a.UDF56,
 
-                                                                  isDeleted = a.isDeleted,
+                                                                  IsDeleted = a.IsDeleted,
                                                                   Remark = a.Remark,
                                                                   Creator = a.Creator,
                                                                   CreateDate = a.CreateDate,
@@ -1610,7 +1610,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 string DelOperateType = "修改";
                 string DelOperateNotes = "beEdit产品检验记录* " + Deltext + " *beEdit产品检验记录 的记录可能将被修改";
                 OperateLogHelper.InsNetOperateNotes(userid, DelOperateType, "质量管理", "产品检验记录修改", DelOperateNotes);
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -1723,7 +1723,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                         item.UDF55 = 0;
                         item.UDF56 = 0;
 
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
 
@@ -1957,7 +1957,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                         item.UDF55 = 0;
                         item.UDF56 = 0;
 
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.qmSpecialNotes = dqmSpecialNotes;
                         item.GUID = Guid.NewGuid();
 
@@ -2144,7 +2144,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             rowData["Udf006"] = 0;
             rowData["GUID"] = Guid.NewGuid();
 
-            rowData["isDeleted"] = 0;
+            rowData["IsDeleted"] = 0;
             rowData["CreateDate"] = DateTime.Now;
             rowData["CREATOR"] = GetIdentityName();
             //item.CreateDate = DateTime.Now;

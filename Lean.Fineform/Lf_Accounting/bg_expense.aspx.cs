@@ -79,7 +79,7 @@ namespace LeanFine.Lf_Accounting
                     from p in DB.Fico_Expenses
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.UDF01 != "Exs."
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     select new
                     {
                         p.GUID,
@@ -172,7 +172,7 @@ namespace LeanFine.Lf_Accounting
                 {
                     var q = from p in DB.Fico_Expenses
                                 //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                            where p.isDeleted == 0
+                            where p.IsDeleted == 0
                             where p.UDF01 == "Exs."
                             //where p.Bsdept != "DTA"
                             select new

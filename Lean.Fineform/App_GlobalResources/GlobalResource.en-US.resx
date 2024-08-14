@@ -1248,4 +1248,13 @@
   <data name="menu_Pp_Times_P2D" xml:space="preserve">
     <value>P2D</value>
   </data>
+  <data name="sys_Button_Unrelated" xml:space="preserve">
+    <value>Unrelated</value>
+  </data>
+  <data name="sys_Status_Internal" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="sys_Status_Region" xml:space="preserve">
+    <value>All Model</value>
+  </data>
 </root>

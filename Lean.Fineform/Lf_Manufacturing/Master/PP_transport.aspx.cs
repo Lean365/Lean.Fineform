@@ -70,7 +70,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             {
                 q = q.Where(u => u.Transportype.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -184,7 +184,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "运输方式删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

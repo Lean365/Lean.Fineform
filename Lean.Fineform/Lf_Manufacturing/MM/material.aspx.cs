@@ -167,7 +167,7 @@ namespace LeanFine.Lc_MM
                 string OperateNotes = "Del管理员* " + Newtext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "物料管理", "物料管理信息删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 DB.SaveChanges();
 
                 BindGrid();

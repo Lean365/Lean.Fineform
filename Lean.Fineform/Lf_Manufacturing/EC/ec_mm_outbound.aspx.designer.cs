@@ -123,49 +123,76 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.Button btnChangeOutboundItems;
 
         /// <summary>
-        /// btnOutboundmm 控件。
+        /// btnMmManage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.MenuButton btnOutboundmm;
+        protected global::FineUIPro.MenuButton btnMmManage;
 
         /// <summary>
-        /// btnOutboundp2d 控件。
+        /// btnMmNoManage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.MenuButton btnOutboundp2d;
+        protected global::FineUIPro.MenuButton btnMmNoManage;
 
         /// <summary>
-        /// btnOutboundCommon 控件。
+        /// btnPcbaManage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.MenuButton btnOutboundCommon;
+        protected global::FineUIPro.MenuButton btnPcbaManage;
 
         /// <summary>
-        /// btnOutboundnommp2d 控件。
+        /// btnPcbaNoManage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.MenuButton btnOutboundnommp2d;
+        protected global::FineUIPro.MenuButton btnPcbaNoManage;
 
         /// <summary>
-        /// btnNotOutboundItems 控件。
+        /// btnAssyManage 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.MenuButton btnNotOutboundItems;
+        protected global::FineUIPro.MenuButton btnAssyManage;
+
+        /// <summary>
+        /// btnAssyNoManage 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.MenuButton btnAssyNoManage;
+
+        /// <summary>
+        /// btnCommonManage 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.MenuButton btnCommonManage;
+
+        /// <summary>
+        /// btnCommonNoManage 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.MenuButton btnCommonNoManage;
 
         /// <summary>
         /// Grid1 控件。

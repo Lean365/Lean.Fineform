@@ -140,7 +140,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             // q = q.Where(u => u.Promodel != "0");
             //if (GetIdentityName() != "admin")
             //{)
@@ -467,7 +467,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
 
             var qs = from g in q
                      select new

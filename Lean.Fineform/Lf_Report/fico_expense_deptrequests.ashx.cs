@@ -30,7 +30,7 @@ namespace LeanFine.Lf_Report
                         where p.Bc_YM.CompareTo(atedate) == 0
                         where p.Bc_Plnt.CompareTo("C100") == 0
                         // where p.Bc_MoveType.Contains("201")
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
 
                         select new
                         {

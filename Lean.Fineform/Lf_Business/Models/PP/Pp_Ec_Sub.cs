@@ -47,7 +47,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Ec_procurement { get; set; }   //采购区分
 
         [StringLength(1)]
-        public string isCheck { get; set; }   //检验否
+        public string IsCheck { get; set; }   //检验否
 
         [StringLength(4)]
         public string Ec_location { get; set; }   //存放位置
@@ -56,7 +56,19 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Ec_eol { get; set; }   //EOL标志
 
         [Required]
-        public byte isConfirm { get; set; }  //是否管理判断
+        public byte IsSopUpdate { get; set; }  //13	//	SOP更新标记
+
+        [Required]
+        public byte IsManage { get; set; }  //部品管理标记
+
+        [Required]
+        public byte IsMmManage { get; set; }  //部管
+
+        [Required]
+        public byte IsPcbaManage { get; set; }  //组立
+
+        [Required]
+        public byte IsAssyManage { get; set; }  //制二
 
         [StringLength(4)]
         public string Ec_bomno { get; set; }//BOM番号
@@ -75,6 +87,9 @@ namespace LeanFine.Lf_Business.Models.PP
 
         [StringLength(8)]
         public string Ec_bomdate { get; set; }//BOM生效日期
+
+        //[Required]
+        //public byte IsManage { get; set; }  //13	//	管理标记
 
         [Required]
         [StringLength(8)]
@@ -222,7 +237,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDeleted { get; set; }	//13	//	删除标记
+        public byte IsDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注

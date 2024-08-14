@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             {
                 q = q.Where(u => u.Proratedate.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -183,7 +183,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产赁率", "生产赁率信息删除", OperateNotes);
 
                 //DB.Pp_Efficiencys.Where(l => l.ID == del_ID).Delete();
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

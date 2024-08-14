@@ -151,7 +151,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // 在用户名称中搜索
             string ddate = this.DefDate.Text;
-            q = q.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Prodate.Contains(ddate));
+            q = q.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Prodate.Contains(ddate));
 
             //if (GetIdentityName() != "admin")
             //{)
@@ -255,7 +255,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //删除记录
                 //DB.Pp_P1d_Defects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -288,7 +288,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string OperateNotes = "Del生产不良*" + Contectext + " *Del生产不良 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-                item.isDeleted = 1;
+                item.IsDeleted = 1;
                 DB.SaveChanges();
 
                 //重新绑定
@@ -405,7 +405,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         item.Probadset = Probadset;
                         //不良原因
                         item.Probadreason = Probadreason;
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -572,7 +572,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                         //不良原因
                         item.Probadreason = Probadreason;
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -697,7 +697,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //不良原因
             rowData["Probadreason"] = "";
 
-            rowData["isDeleted"] = 0;
+            rowData["IsDeleted"] = 0;
 
             rowData["GUID"] = Guid.NewGuid();
             rowData["UDF01"] = "";
@@ -993,7 +993,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             if (Oldnobadqty != int.Parse(pronobadqty.Text))
             {
                 string ddate = this.DefDate.Text;
-                var Pp_Def = DB.Pp_P1d_Defects.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Prodate.Contains(ddate));
+                var Pp_Def = DB.Pp_P1d_Defects.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Prodate.Contains(ddate));
                 foreach (var Pp_P1d_Defects in Pp_Def)
                 {
                     Pp_P1d_Defects.Pronobadqty = int.Parse(this.pronobadqty.Text);

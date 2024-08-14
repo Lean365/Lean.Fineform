@@ -12,12 +12,13 @@
             white-space: normal;
             word-break: break-all;
         }*/
-        .f-grid-row .f-grid-cell-isConfirm {
+        .f-grid-row .f-grid-cell-IsManage {
             font-size: 75%;
             /*background-color: #66CCCC;*/
             /*color: #fff;*/
         }
-                .f-grid-row .f-grid-cell-UDF06 {
+
+        .f-grid-row .f-grid-cell-UDF06 {
             font-size: 75%;
             /*background-color: #66CCCC;*/
             /*color: #fff;*/
@@ -26,11 +27,52 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server"  AjaxTimeout="3600"  />
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" AjaxTimeout="3600" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
             ShowHeader="false" Title="设计变更ECN">
+            <Toolbars>
+                <f:Toolbar ID="Toolbar3" runat="server">
+                    <Items>
+                        <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
+                            ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
+                        </f:DatePicker>
+                        <f:ToolbarSeparator ID="ToolbarSeparator3" runat="server"></f:ToolbarSeparator>
+                        <f:DatePicker ID="DpEndDate" Readonly="false" CompareControl="DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
+                            CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
+                            runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
+                        </f:DatePicker>
+                        <f:ToolbarFill ID="ToolbarFill3" runat="server"></f:ToolbarFill>
+                        <f:TwinTriggerBox ID="ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Pp_EC_EmptyText%>"
+                            Trigger1Icon="Clear" Trigger2Icon="Search" ShowTrigger1="false" OnTrigger2Click="ttbSearchMessage_Trigger2Click"
+                            OnTrigger1Click="ttbSearchMessage_Trigger1Click">
+                        </f:TwinTriggerBox>
+                    </Items>
+                </f:Toolbar>
+            </Toolbars>
+
             <Items>
+                <f:Form ID="Form3" runat="server" ShowHeader="false" ShowBorder="false" LabelAlign="Right">
+                    <Rows>
+                        <f:FormRow ID="FormRow2" runat="server">
+                            <Items>
+                                <f:RadioButtonList ID="rblAuto" runat="server" AutoPostBack="true"
+                                    OnSelectedIndexChanged="rblAuto_SelectedIndexChanged" >                                    
+                                    <f:RadioItem Text="<%$ Resources:GlobalResource,sys_Status_All%>" Value="0" Selected="true"/>
+                                    <f:RadioItem Text="<%$ Resources:GlobalResource,sys_Status_Region%>" Value="1" />
+                                    <f:RadioItem Text="<%$ Resources:GlobalResource,co_Dept_MM%>" Value="2" />
+                                    <f:RadioItem Text="<%$ Resources:GlobalResource,sys_Status_Internal%>" Value="3" />
+                                    <f:RadioItem Text="<%$ Resources:GlobalResource,co_Dept_TE%>" Value="4" />
+                                    
+                                </f:RadioButtonList>
+                                <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
+                                <f:Button ID="btnNew" runat="server" Icon="Add" EnablePostBack="false" Text="<%$ Resources:GlobalResource,sys_Button_New%>">
+                                </f:Button>
+                            </Items>
+                        </f:FormRow>
+                    </Rows>
+                </f:Form>
+
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false" ForceFit="true" IsFluid="true"
                     DataKeyNames="GUID,Ec_no" AllowSorting="true" SortField="Ec_issuedate"
                     SortDirection="DESC" AllowPaging="true" IsDatabasePaging="true"
@@ -39,46 +81,6 @@
                     OnPreRowDataBound="Grid1_PreRowDataBound"
                     OnRowCommand="Grid1_RowCommand"
                     OnPageIndexChange="Grid1_PageIndexChange" EnableRowDoubleClickEvent="true" OnRowDoubleClick="Grid1_RowDoubleClick">
-                    <Toolbars>
-                        <f:Toolbar ID="Toolbar2" runat="server">
-                            <Items>
-                                <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
-                                    ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
-                                </f:DatePicker>
-                                <f:ToolbarFill ID="ToolbarFill4" runat="server"></f:ToolbarFill>
-                                
-                                <f:DatePicker ID="DpEndDate" Readonly="false" CompareControl="DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
-                                    CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
-                                    runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
-                                </f:DatePicker>
-                                <f:ToolbarFill ID="ToolbarFill3" runat="server"></f:ToolbarFill>
-                                <f:TwinTriggerBox ID="ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Pp_EC_EmptyText%>"
-                                    Trigger1Icon="Clear" Trigger2Icon="Search" ShowTrigger1="false" OnTrigger2Click="ttbSearchMessage_Trigger2Click"
-                                    OnTrigger1Click="ttbSearchMessage_Trigger1Click">
-                                </f:TwinTriggerBox>
-                            </Items>
-
-                        </f:Toolbar>
-
-                        <f:Toolbar ID="Toolbar1" runat="server">
-                            <Items>
-                                <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"
-                                    Text="<%$ Resources:GlobalResource, sys_Status_Pp_EC_Fixed %>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnSecondAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_EC_Work%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnThirdAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_EC_All%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:ToolbarFill ID="ToolbarFill2" runat="server">
-                                </f:ToolbarFill>
-                                <f:Button ID="btnNew" runat="server" Icon="Add" EnablePostBack="false" Text="<%$ Resources:GlobalResource,sys_Button_New%>">
-                                </f:Button>
-
-                            </Items>
-                        </f:Toolbar>
-                    </Toolbars>
                     <PageItems>
                         <f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
                         </f:ToolbarSeparator>
@@ -99,9 +101,12 @@
                         <f:HyperLinkField DataTextField="Ec_no" SortField="Ec_no" Width="90px" HeaderText="设变号码" MinWidth="100px" DataNavigateUrlFields="Ec_documents" />
                         <f:BoundField DataField="UDF06" ColumnID="UDF06" SortField="UDF06" Width="200px" MinWidth="200px" HtmlEncode="false" HeaderText="设变标题" />
                         <f:BoundField DataField="Ec_leader" SortField="Ec_leader" Width="80px" MinWidth="80px" HeaderText="担当" />
-                        <f:BoundField DataField="Ec_distinction" SortField="Ec_distinction" Width="80px" MinWidth="80px" HeaderText="管理" />
-                        <f:BoundField DataField="isModifysop" SortField="isModifysop" Width="80px" MinWidth="80px" HeaderText="SOP" />
-                        <f:BoundField DataField="isConfirm" ColumnID="isConfirm" SortField="isConfirm" Width="80px" MinWidth="80px" HeaderText="物料" />
+                        <f:BoundField DataField="Ec_distinction" SortField="Ec_distinction" Width="80px" MinWidth="80px" HeaderText="管理区分" />
+                        <%--<f:BoundField DataField="IsSopUpdate" SortField="IsSopUpdate" Width="80px" MinWidth="80px" HeaderText="SOP" />
+                        <f:BoundField DataField="IsManage" ColumnID="IsManage" SortField="IsManage" Width="80px" MinWidth="80px" HeaderText="物料管理区分" />
+                        <f:BoundField DataField="IsMmManage" ColumnID="IsMmManage" SortField="IsMmManage" Width="80px" MinWidth="80px" HeaderText="部管" />
+                        <f:BoundField DataField="IsPcbaManage" ColumnID="IsPcbaManage" SortField="IsPcbaManage" Width="80px" MinWidth="80px" HeaderText="制二" />
+                        <f:BoundField DataField="IsAssyManage" ColumnID="IsAssyManage" SortField="IsAssyManage" Width="80px" MinWidth="80px" HeaderText="组立" />--%>
                         <f:BoundField DataField="Ec_status" SortField="Ec_status" Width="80px" MinWidth="80px" HeaderText="状态" />
                         <f:HyperLinkField DataTextField="Ec_letterno" Width="100px" HeaderText="技联NO." MinWidth="100px" DataNavigateUrlFields="Ec_letterdoc" />
                         <f:HyperLinkField DataTextField="Ec_eppletterno" Width="100px" HeaderText="P番(DTA)" MinWidth="100px" DataNavigateUrlFields="Ec_eppletterdoc" />

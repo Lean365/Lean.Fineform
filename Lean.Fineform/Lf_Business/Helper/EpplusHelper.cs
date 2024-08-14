@@ -60,12 +60,12 @@ namespace LeanFine
         /// </summary>
         /// <param name="ExcelPackage">ExcelPackage</param>
         /// <param name="sourceTable">数据源</param>
-        /// <param name="isDeletedSameNameSheet">是否删除同名的sheet</param>
-        public void AppendSheetToWorkBook(DataTable sourceTable, bool isDeletedSameNameSheet)
+        /// <param name="IsDeletedSameNameSheet">是否删除同名的sheet</param>
+        public void AppendSheetToWorkBook(DataTable sourceTable, bool IsDeletedSameNameSheet)
         {
             //Create the worksheet
 
-            ExcelWorksheet ws = AddSheet(sourceTable.TableName, isDeletedSameNameSheet);
+            ExcelWorksheet ws = AddSheet(sourceTable.TableName, IsDeletedSameNameSheet);
 
             //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
             ws.Cells["A1"].LoadFromDataTable(sourceTable, true);
@@ -107,10 +107,10 @@ namespace LeanFine
         /// <param name="ExcelPackage"></param>
         /// <param name="list">数据源</param>
         /// <param name="sheetName">sheet名称</param>
-        /// <param name="isDeletedSameNameSheet">是否删除已存在的同名sheet，false时将重命名导出的sheet</param>
-        public void AppendSheetToWorkBook<T>(IEnumerable<T> list, string sheetName, bool isDeletedSameNameSheet)
+        /// <param name="IsDeletedSameNameSheet">是否删除已存在的同名sheet，false时将重命名导出的sheet</param>
+        public void AppendSheetToWorkBook<T>(IEnumerable<T> list, string sheetName, bool IsDeletedSameNameSheet)
         {
-            ExcelWorksheet ws = AddSheet(sheetName, isDeletedSameNameSheet);
+            ExcelWorksheet ws = AddSheet(sheetName, IsDeletedSameNameSheet);
 
             //Load the datatable into the sheet, starting from cell A1. Print the column names on row 1
             ws.Cells["A1"].LoadFromCollection(list, true);
@@ -224,11 +224,11 @@ namespace LeanFine
         /// </summary>
         /// <param name="ExcelPackage">ExcelPackage</param>
         /// <param name="sheetName">sheet名称</param>
-        /// <param name="isDeletedSameNameSheet">如果存在同名的sheet是否删除</param>
+        /// <param name="IsDeletedSameNameSheet">如果存在同名的sheet是否删除</param>
         /// <returns></returns>
-        private ExcelWorksheet AddSheet(string sheetName, bool isDeletedSameNameSheet)
+        private ExcelWorksheet AddSheet(string sheetName, bool IsDeletedSameNameSheet)
         {
-            if (isDeletedSameNameSheet)
+            if (IsDeletedSameNameSheet)
             {
                 DeleteSheet(sheetName);
             }

@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             //{)
             //    q = q.Where(u => u.Name != "admin");
             //}
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             // 过滤启用状态
             //if (rblEnableStatus.SelectedValue != "all")
             //{
@@ -187,7 +187,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "生产订单删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

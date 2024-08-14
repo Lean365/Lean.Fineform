@@ -85,7 +85,7 @@ namespace LeanFine.Lf_Admin
             item.EnSlogan = TXTentSlogan_en.Text;
             item.JpSlogan = TXTentSlogan_ja.Text;
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.isEnabled = 0;
             item.Remark = "";
             item.CreateDate = DateTime.Now;

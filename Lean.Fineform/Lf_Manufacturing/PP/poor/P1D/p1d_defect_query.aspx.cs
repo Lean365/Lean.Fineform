@@ -135,7 +135,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 // 在用户名称中搜索
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             var qs = from a in q
                      select a;
 
@@ -487,7 +487,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     strPmodel = ma.Rows[i][1].ToString();
                     var q2 =
                             from p in DB.Pp_P1d_Defects
-                             .Where(s => s.isDeleted == 0)
+                             .Where(s => s.IsDeleted == 0)
                               .Where(s => s.Prolot.CompareTo(strLot) == 0)
                             .Where(s => s.Promodel.CompareTo(strPmodel) == 0)
                             //.Where(s => s.Prorealqty==s.Proorderqty)

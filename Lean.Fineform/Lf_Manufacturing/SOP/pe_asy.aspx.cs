@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_pengadate == ""
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -103,7 +103,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_pengadate != ""
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -141,7 +141,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             //where a.Ec_qadate == "" || a.Ec_qadate == null
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
@@ -207,7 +207,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ec_Sops
-                              where a.isDeleted == 0
+                              where a.IsDeleted == 0
                               where a.Ec_pengadate == ""
                               //where a.Ec_distinction != 4
                               //where a.Remark.Contains("OK") == false
@@ -258,7 +258,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     //查询LINQ去重复
                     var doc = from a in DB.Pp_Ec_Sops
-                              where a.isDeleted == 0
+                              where a.IsDeleted == 0
                               where a.Ec_pengadate != ""
                               //where a.Ec_distinction != 4
                               //where a.Remark.Contains("OK") == false

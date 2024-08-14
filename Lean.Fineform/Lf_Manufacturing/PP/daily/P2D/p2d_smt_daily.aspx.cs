@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.Promodel.Contains(searchText) || u.Proitem.Contains(searchText) || u.Propcbitem.Contains(searchText) || u.Propcba.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
@@ -163,7 +163,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "产品工时删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

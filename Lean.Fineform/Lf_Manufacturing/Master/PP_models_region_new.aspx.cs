@@ -59,7 +59,7 @@ namespace LeanFine.Lf_Manufacturing.Master
                     where a.D_SAP_ZCA1D_Z010 != "F"
                     where a.D_SAP_ZCA1D_Z011 != "50"
                     where a.D_SAP_ZCA1D_Z002 != "" && !(from d in DB.Pp_SapModelDests
-                                                        where d.isDeleted == 0
+                                                        where d.IsDeleted == 0
 
                                                         where d.D_SAP_DEST_Z001 == a.D_SAP_ZCA1D_Z002
                                                         select d.D_SAP_DEST_Z001)

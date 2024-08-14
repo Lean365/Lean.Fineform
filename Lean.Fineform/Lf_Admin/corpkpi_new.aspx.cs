@@ -100,7 +100,7 @@ namespace LeanFine.Lf_Admin
             item.CorpTarget_EN = tbxCorpTarget_EN.Text.Trim();
             item.CorpTarget_JA = tbxCorpTarget_JA.Text.Trim();
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = "";
             item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();

@@ -152,7 +152,7 @@
                         <f:BoundField DataField="UDF54" SortField="UDF54" ColumnID="UDF54" Width="60px" Hidden="True" HeaderText="自定义4" />
                         <f:BoundField DataField="UDF55" SortField="UDF55" ColumnID="UDF55" Width="60px" Hidden="True" HeaderText="自定义5" />
                         <f:BoundField DataField="UDF56" SortField="UDF56" ColumnID="UDF56" Width="60px" Hidden="True" HeaderText="自定义6" />
-                        <f:BoundField DataField="isDeleted" SortField="isDeleted" ColumnID="isDeleted" Width="60px" Hidden="True" HeaderText="软删除" />
+                        <f:BoundField DataField="IsDeleted" SortField="IsDeleted" ColumnID="IsDeleted" Width="60px" Hidden="True" HeaderText="软删除" />
                         <f:BoundField DataField="Remark" SortField="Remark" ColumnID="Remark" Width="60px" Hidden="True" HeaderText="备注" />
                         <f:BoundField DataField="Creator" SortField="Creator" ColumnID="Creator" Width="60px" Hidden="True" HeaderText="创建者" />
                         <f:BoundField DataField="CreateDate" SortField="CreateDate" ColumnID="CreateDate" Width="60px" Hidden="True" HeaderText="创建时间" />

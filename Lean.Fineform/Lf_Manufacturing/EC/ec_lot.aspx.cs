@@ -80,7 +80,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where b.Ec_newitem != "0"
                             where !b.Ec_pmcmemo.Contains("EOL")
                             where a.Ec_distinction != 4
@@ -190,7 +190,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where b.Ec_newitem != "0"
                             where !b.Ec_pmcmemo.Contains("EOL")
                             where a.Ec_distinction != 4
@@ -301,7 +301,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where b.Ec_newitem != "0"
                             where !b.Ec_pmcmemo.Contains("EOL")
                             where a.Ec_distinction != 4
@@ -550,7 +550,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4
@@ -679,7 +679,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4
@@ -807,7 +807,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4
@@ -950,7 +950,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q =
                         (from a in DB.Pp_Ecs
                          join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                         where b.isDeleted == 0
+                         where b.IsDeleted == 0
                          where b.Ec_newitem != "0"
                          where !b.Ec_pmcmemo.Contains("EOL")
                          where a.Ec_distinction != 4
@@ -1114,7 +1114,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q =
                         (from a in DB.Pp_Ecs
                          join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                         where b.isDeleted == 0
+                         where b.IsDeleted == 0
                          where b.Ec_newitem != "0"
                          where !b.Ec_pmcmemo.Contains("EOL")
                          where a.Ec_distinction != 4
@@ -1278,7 +1278,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4
@@ -1407,7 +1407,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4
@@ -1535,7 +1535,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on b.Ec_olditem equals c.D_SAP_ZCA1D_Z002
-                        where b.isDeleted == 0
+                        where b.IsDeleted == 0
                         where b.Ec_newitem != "0"
                         where !b.Ec_pmcmemo.Contains("EOL")
                         where a.Ec_distinction != 4

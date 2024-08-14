@@ -25,7 +25,7 @@ namespace LeanFine.Lf_Report
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
             var q_all = from a in DBCharts.Qm_Outgoings
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         where a.qmCheckdate.Substring(0, 6).CompareTo(atedate) == 0
                         select a;
 

@@ -32,7 +32,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
         #region Page_Load
 
-        public static string strWhouse, strPur, isCheck, strEol, fullname, shortname, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc, oldEc_distinction, oldisModifysop, oldisComfirm;
+        public static string strWhouse, strPur, IsCheck, strEol, fullname, shortname, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc, oldEc_distinction, oldIsSopUpdate, oldisComfirm;
         public static string strID, strEc_no, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset;
 
         protected void Page_Load(object sender, EventArgs e)

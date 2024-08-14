@@ -219,7 +219,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             item.UDF54 = 0;
             item.UDF55 = 0;
             item.UDF56 = 0;
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = remark.Text;
 
             item.CreateDate = DateTime.Now;

@@ -76,8 +76,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 var q = from a in DB.Pp_P2d_Manufacturing_Defects
 
                             //join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
-                        where a.isDeleted == 0
-                        //where b.isDeleted == 0
+                        where a.IsDeleted == 0
+                        //where b.IsDeleted == 0
                         //where a.Proorder.Substring(0, 2).Contains("44")
                         where a.Prodate.Contains(Pdate)
                         //where a.Prolinename.Contains("制")

@@ -31,7 +31,7 @@ namespace LeanFine.Lf_Report
             context.Response.ContentType = "text/plain";
             var q = from a in DBCharts.Fico_Monthly_Inventorys
                     where a.Bc_YM.CompareTo(atedate) == 0
-                    where a.isDeleted == 0
+                    where a.IsDeleted == 0
                     select a;
 
             var q_count = from a in q

@@ -117,7 +117,7 @@ namespace LeanFine.Lf_Admin
             item.DictValue = txtDictValue.Text;
             item.DictSort = Convert.ToInt32(numDictSort.Text);
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
 
             item.Remark = txtRemark.Text;
             item.ModifyDate = DateTime.Now;

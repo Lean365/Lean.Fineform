@@ -432,8 +432,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                                              Ec_procurement = item.Ec_procurement,
                                              Ec_location = item.Ec_location,
                                              Ec_eol = item.Ec_eol,
-                                             isCheck = item.isCheck,
-                                             isConfirm = item.isConfirm,
+                                             IsCheck = item.IsCheck,
+                                             IsManage = item.IsManage,
 
                                              Ec_bomdate = item.Ec_bomdate,
                                              Ec_entrydate = item.Ec_entrydate,
@@ -493,7 +493,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                              UDF54 = item.UDF54,
                                              UDF55 = item.UDF55,
                                              UDF56 = item.UDF56,
-                                             isDeleted = item.isDeleted,
+                                             IsDeleted = item.IsDeleted,
                                              Remark = item.Remark,
                                              Creator = item.Creator,
                                              CreateDate = item.CreateDate,
@@ -546,7 +546,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                             Ec_note = Ec_purnote.Text.ToUpper(),
                                             //item.Ec_issuedate = "";
                                             isEnd = 0,
-                                            isDeleted = 0,
+                                            IsDeleted = 0,
                                             Remark = "",
                                             Creator = GetIdentityName(),
                                             CreateDate = DateTime.Now,

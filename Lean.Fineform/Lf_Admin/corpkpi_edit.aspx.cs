@@ -117,7 +117,7 @@ namespace LeanFine.Lf_Admin
             item.CorpTarget_EN = tbxCorpTarget_EN.Text;
             item.CorpTarget_JA = tbxCorpTarget_JA.Text;
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
 
             item.Remark = "";
             item.ModifyDate = DateTime.Now;

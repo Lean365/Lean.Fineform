@@ -106,7 +106,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             {
                 q = q.Where(u => u.Prolinename.Contains(this.DdlLine.SelectedText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //查询包含子集
             var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable().OrderByDescending(u => u.Prodate);
 
@@ -485,7 +485,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                 join b in DB.Pp_P1d_Outputs on p.GUID equals b.GUID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g

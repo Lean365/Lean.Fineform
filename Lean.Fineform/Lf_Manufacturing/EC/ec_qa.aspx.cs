@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where string.IsNullOrEmpty(b.Ec_qadate)// == "" || b.Ec_qadate == null
 
                             //where a.Remark.Contains("OK") == false
@@ -107,7 +107,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_qadate)// != "" || b.Ec_qadate != null
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
@@ -148,7 +148,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             orderby b.Ec_entrydate descending
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             select new
                             {
                                 a.Ec_no,
@@ -215,7 +215,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
                               where string.IsNullOrEmpty(b.Ec_qadate) //== "" || a.Ec_qadate == null
@@ -283,7 +283,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
                               where !string.IsNullOrEmpty(b.Ec_qadate) //== "" || a.Ec_qadate == null
@@ -351,7 +351,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where a.Ec_no.Contains(strecnno)
 
                               //where string.IsNullOrEmpty(b.Ec_qadate) //== "" || a.Ec_qadate == null

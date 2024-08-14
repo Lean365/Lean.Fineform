@@ -64,7 +64,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             {
                 var q = from a in DB.Qm_Outgoings
                             //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         where a.qmRejectqty != 0
                         where !(from d in DB.Qm_Improvements
                                 select d.qmInspector + d.qmProlot + d.qmOrder + d.qmModels + d.qmMaterial + d.qmCheckdate + d.qmRejectqty.ToString())

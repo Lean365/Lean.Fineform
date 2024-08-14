@@ -66,12 +66,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)//b.Ec_purdate != "" || b.Ec_purdate != null
 
                             where string.IsNullOrEmpty(b.Ec_pmcdate) //== ""  || b.Ec_pmcdate == null
                             //where a.Ec_distinction != 4
-                            where b.isConfirm != 0
+                            where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new
@@ -145,11 +145,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != ""|| b.Ec_purdate != null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""  || b.Ec_pmcdate != null
                             //where a.Ec_distinction != 4
-                            where b.isConfirm != 0
+                            where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new
@@ -222,11 +222,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             //where b.Ec_purdate != ""|| b.Ec_purdate != null
                             //where b.Ec_pmcdate != ""|| b.Ec_pmcdate != null
                             //where a.Ec_distinction != 4
-                            where b.isConfirm != 0
+                            where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new
@@ -327,7 +327,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where a.Ec_no.Contains(strecnno)
                               where !string.IsNullOrEmpty(b.Ec_purdate)
                               where string.IsNullOrEmpty(b.Ec_pmcdate)//==""|| E.Ec_pmcdate == null
@@ -382,7 +382,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var sub = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where a.Ec_no.Contains(strecnno)
                               where !string.IsNullOrEmpty(b.Ec_purdate)
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)//==""|| E.Ec_pmcdate == null
@@ -438,7 +438,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               join c in DB.Pp_SapMaterials on b.Ec_bomsubitem equals c.D_SAP_ZCA1D_Z002
                               where a.Ec_no.Contains(strecnno)
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               //where !string.IsNullOrEmpty(b.Ec_purdate)
                               //where string.IsNullOrEmpty(b.Ec_pmcdate)//==""|| E.Ec_pmcdate == null
                               orderby b.Ec_entrydate

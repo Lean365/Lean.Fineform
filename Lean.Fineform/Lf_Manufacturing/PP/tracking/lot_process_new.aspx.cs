@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             {
                 var q_all = from a in DB.Pp_P1d_Outputs
                             where !(from d in DB.Pp_Tracking_Times
-                                    where d.isDeleted == 0
+                                    where d.IsDeleted == 0
                                     select d.Pro_Item)
                                                              .Contains(a.Prohbn)
                             select new
@@ -300,7 +300,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                                                                            UDF54 = 0,
                                                                            UDF55 = 0,
                                                                            UDF56 = 0,
-                                                                           isDeleted = 0,
+                                                                           IsDeleted = 0,
                                                                            Remark = "",
                                                                            Creator = GetIdentityName(),
                                                                            CreateDate = DateTime.Now,

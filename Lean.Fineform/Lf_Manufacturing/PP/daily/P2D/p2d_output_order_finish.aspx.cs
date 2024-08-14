@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     var q =
                     from b in DB.Pp_P2d_OutputSubs
-                    where b.isDeleted == 0
+                    where b.IsDeleted == 0
 
                     group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
                     select new
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     var q =
                     from b in DB.Pp_P2d_OutputSubs
-                    where b.isDeleted == 0
+                    where b.IsDeleted == 0
 
                     group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
                     select new
@@ -235,7 +235,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     var q =
                     from b in DB.Pp_P2d_OutputSubs
-                    where b.isDeleted == 0
+                    where b.IsDeleted == 0
 
                     group b by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.UDF54, b.Propcbatype, b.Propcbaside, b.Prolot } into g
                     select new

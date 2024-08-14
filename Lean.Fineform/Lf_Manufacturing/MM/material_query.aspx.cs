@@ -80,7 +80,7 @@ namespace LeanFine.Lc_MM
                     RoundingVal.Text = qs[0].RoundingVal.ToString();
                     LeadTime.Text = qs[0].LeadTime.ToString();
                     ProDays.Text = qs[0].ProDays.ToString();
-                    isCheck.Text = qs[0].isCheck;
+                    IsCheck.Text = qs[0].IsCheck;
                     ProfitCenter.Text = qs[0].ProfitCenter;
                     DiffCode.Text = qs[0].DiffCode;
                     isLot.Text = qs[0].isLot;

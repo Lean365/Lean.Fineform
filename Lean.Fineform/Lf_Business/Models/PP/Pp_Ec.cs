@@ -52,11 +52,11 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(500)]
         public string Ec_teppletterdoc { get; set; }//P番联络书TCJ
 
-        [Required]
-        public byte isModifysop { get; set; }  //13	//	SOP修改标记
+        //[Required]
+        //public byte IsSopUpdate { get; set; }  //13	//	SOP更新标记
 
-        [Required]
-        public byte isConfirm { get; set; }  //13	//	管理标记
+        //[Required]
+        //public byte IsManage { get; set; }  //13	//	管理标记
 
         [Required]
         [StringLength(8)]
@@ -92,7 +92,7 @@ namespace LeanFine.Lf_Business.Models.PP
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDeleted { get; set; }	//13	//	删除标记
+        public byte IsDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注

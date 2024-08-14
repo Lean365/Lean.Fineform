@@ -85,18 +85,18 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                             where string.IsNullOrEmpty(b.Ec_iqcdate)// == "" || b.Ec_iqcdate == null
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
-                            where b.isCheck == "X"
+                            where b.IsCheck == "X"
                             orderby b.Ec_entrydate descending
                             select new
                             {
                                 a.Ec_no,
-                                b.isCheck,
+                                b.IsCheck,
                                 a.Ec_distinction,
                                 b.Ec_model,
                                 b.Ec_bomitem,
@@ -194,18 +194,18 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
-                            where b.isCheck == "X"
+                            where b.IsCheck == "X"
                             orderby b.Ec_entrydate descending
                             select new
                             {
                                 a.Ec_no,
-                                b.isCheck,
+                                b.IsCheck,
                                 a.Ec_distinction,
                                 b.Ec_model,
                                 b.Ec_bomitem,
@@ -303,15 +303,15 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             //join c in DB.Pp_SapMaterials on b.Ec_newitem equals c.D_SAP_ZCA1D_Z002
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false
-                            where b.isCheck == "X"
+                            where b.IsCheck == "X"
                             orderby b.Ec_entrydate descending
                             select new
                             {
                                 a.Ec_no,
-                                b.isCheck,
+                                b.IsCheck,
                                 a.Ec_distinction,
                                 b.Ec_model,
                                 b.Ec_bomitem,
@@ -439,8 +439,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               where string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
                               where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null'
-                              where b.isCheck == "X"
-                              where b.isDeleted == 0
+                              where b.IsCheck == "X"
+                              where b.IsDeleted == 0
                               select new
                               {
                                   a.Ec_documents,
@@ -507,8 +507,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               where !string.IsNullOrEmpty(b.Ec_iqcdate)// != "" || b.Ec_iqcdate != null
                               where !string.IsNullOrEmpty(b.Ec_purdate)// != "" || b.Ec_purdate != null
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
-                              where b.isCheck == "X"
-                              where b.isDeleted == 0
+                              where b.IsCheck == "X"
+                              where b.IsDeleted == 0
                               select new
                               {
                                   a.Ec_documents,
@@ -571,8 +571,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var doc = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where a.Ec_no.Contains(ecnno)
-                              where b.isCheck == "X"
-                              where b.isDeleted == 0
+                              where b.IsCheck == "X"
+                              where b.IsDeleted == 0
 
                               select new
                               {

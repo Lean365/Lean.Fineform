@@ -340,7 +340,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         a.UDF55,
                         a.UDF56,
 
-                        a.isDeleted,
+                        a.IsDeleted,
                         a.Remark,
                         a.Creator,
                         a.CreateDate,

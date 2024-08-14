@@ -72,7 +72,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 {
                     var q_all = from p in DB.Pp_P2d_OutputSubs
                                     //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                                where p.isDeleted == 0
+                                where p.IsDeleted == 0
                                 where p.Prorealqty != 0 //|| p.Prolinestopmin != 0
                                 select new
                                 {
@@ -347,7 +347,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             var q_all = from p in DB.Pp_P2d_OutputSubs
                             //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.Prorealqty != 0 //|| p.Prolinestopmin != 0
                         select new
                         {

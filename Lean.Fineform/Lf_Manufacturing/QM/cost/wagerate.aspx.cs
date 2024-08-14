@@ -72,7 +72,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
             {
                 q = q.Where(u => u.Qcsd001.ToString().Contains(searchText));
             }
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             //else
             //{
             //    //当前日期
@@ -206,7 +206,7 @@ namespace LeanFine.Lf_Manufacturing.QM.cost
 
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "品质业务", "工资率数据删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

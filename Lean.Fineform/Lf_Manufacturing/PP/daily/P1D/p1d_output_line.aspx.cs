@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 {
                     var q_all = from p in DB.Pp_P1d_OutputSubs
                                     //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                                where p.isDeleted == 0
+                                where p.IsDeleted == 0
                                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                                 select new
                                 {
@@ -175,7 +175,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 {
                     var q_normal = from p in DB.Pp_P1d_OutputSubs
                                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                                   where p.isDeleted == 0
+                                   where p.IsDeleted == 0
                                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
                                    where p.Proorder.Substring(0, 1).Contains("4")
                                    select new
@@ -278,7 +278,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 {
                     var q_rework = from p in DB.Pp_P1d_OutputSubs
                                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                                   where p.isDeleted == 0
+                                   where p.IsDeleted == 0
                                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
                                    where p.Proorder.Substring(0, 1).Contains("5")
                                    select new
@@ -532,7 +532,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             var q_normal = from p in DB.Pp_P1d_OutputSubs
                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                           where p.isDeleted == 0
+                           where p.IsDeleted == 0
                            where p.Prorealtime != 0 || p.Prolinestopmin != 0
                            where p.Proorder.Substring(0, 1).Contains("4")
                            select new
@@ -679,7 +679,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             var q_rework = from p in DB.Pp_P1d_OutputSubs
                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                           where p.isDeleted == 0
+                           where p.IsDeleted == 0
                            where p.Prorealtime != 0 || p.Prolinestopmin != 0
                            where p.Proorder.Substring(0, 1).Contains("5")
                            select new

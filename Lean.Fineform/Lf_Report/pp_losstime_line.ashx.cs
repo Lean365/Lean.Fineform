@@ -31,7 +31,7 @@ namespace LeanFine.Lf_Report
                 from p in DBCharts.Pp_P1d_OutputSubs
                 where p.Prodate.Substring(0, 6).CompareTo(transdate) == 0
                 //where p.Prodate.CompareTo(enddate.ToString()) <= 0
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Prolinename } into g
                 select new

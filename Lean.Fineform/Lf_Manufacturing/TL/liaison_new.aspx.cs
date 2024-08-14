@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
         #endregion ViewPower
 
-        public static string strMana, isCheck, strMailto, strWhouse, strPur, strEol, strEcnno, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, fileName, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc;
+        public static string strMana, IsCheck, strMailto, strWhouse, strPur, strEol, strEcnno, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, fileName, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc;
         public static long iFileSizeLimit = Convert.ToInt32(ConfigurationManager.AppSettings["FileSizeLimit"]);
 
         #region Page_Load
@@ -203,7 +203,7 @@ namespace LeanFine.Lf_Manufacturing.TL
 
             if (!string.IsNullOrEmpty(inputNo))
             {
-                Pp_Liaison tl = DB.Pp_Liaisons.Where(u => u.Ec_letterno == inputNo && u.isDeleted == 0).FirstOrDefault();
+                Pp_Liaison tl = DB.Pp_Liaisons.Where(u => u.Ec_letterno == inputNo && u.IsDeleted == 0).FirstOrDefault();
 
                 if (tl == null)
                 {
@@ -310,7 +310,7 @@ namespace LeanFine.Lf_Manufacturing.TL
                         item.Ec_teppletterno = "";
                     }
 
-                    item.isDeleted = 0;
+                    item.IsDeleted = 0;
 
                     item.GUID = Guid.NewGuid();
                     item.CreateDate = DateTime.Now;

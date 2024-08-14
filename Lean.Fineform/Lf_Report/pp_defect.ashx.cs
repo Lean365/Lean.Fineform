@@ -28,8 +28,8 @@ namespace LeanFine.Lf_Report
             //查询在特定日期的全部工单
             var q = from a in DBCharts.Pp_Defect_Totals
                         //join b in DBCharts.PP_Outputs on a.Prolot equals b.Prolot
-                    where a.isDeleted == 0
-                    //where b.isDeleted == 0
+                    where a.IsDeleted == 0
+                    //where b.IsDeleted == 0
                     where a.Prodate.Contains(atedate)
                     //where a.Prorealqty != a.Pronobadqty
                     select new

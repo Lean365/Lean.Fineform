@@ -80,7 +80,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                     var q =
                             (from a in DB.Pp_Ec_Sops
                                  //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
                              where string.IsNullOrEmpty(a.Ec_pengadate) || string.IsNullOrEmpty(a.Ec_pengpdate)
 
                              orderby a.Ec_entrydate descending
@@ -158,7 +158,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                             (from a in DB.Pp_Ec_Sops
 
                                  //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
                              where !string.IsNullOrEmpty(a.Ec_pengadate) || !string.IsNullOrEmpty(a.Ec_pengpdate)
                              orderby a.Ec_entrydate descending
                              select new
@@ -231,7 +231,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                             (from a in DB.Pp_Ec_Sops
                                  //where c.Ec_qadate.ToString() == "" || c.Ec_qadate == null
                                  //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
                              orderby a.Ec_entrydate descending
                              select new
                              {

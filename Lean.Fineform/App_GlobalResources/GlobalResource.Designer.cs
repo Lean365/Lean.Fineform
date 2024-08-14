@@ -2419,6 +2419,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Unrelated 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Unrelated {
+            get {
+                return ResourceManager.GetString("sys_Button_Unrelated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Update 的本地化字符串。
         /// </summary>
         internal static string sys_Button_Update {
@@ -2968,6 +2977,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Internal 的本地化字符串。
+        /// </summary>
+        internal static string sys_Status_Internal {
+            get {
+                return ResourceManager.GetString("sys_Status_Internal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Distinction 的本地化字符串。
         /// </summary>
         internal static string sys_Status_mm {
@@ -3126,6 +3144,15 @@ namespace Resources {
         internal static string sys_Status_Processed {
             get {
                 return ResourceManager.GetString("sys_Status_Processed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 All Model 的本地化字符串。
+        /// </summary>
+        internal static string sys_Status_Region {
+            get {
+                return ResourceManager.GetString("sys_Status_Region", resourceCulture);
             }
         }
         

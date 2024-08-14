@@ -211,7 +211,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         //    //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报删除", OperateNotes);
         //    //    //删除记录
         //    //    //DB.Pp_Ecns.Where(l => l.ID == del_ID).Delete();
-        //    //    current.isDeleted = 1;
+        //    //    current.IsDeleted = 1;
         //    //    DB.SaveChanges();
         //    //    //重新绑定
 
@@ -286,7 +286,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //item.Proratio = int.Parse(proratio.Text);
             // 添加所有用户
 
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = remark.Text;
             item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
@@ -359,7 +359,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         item.Remark = remark.Text;
                         item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         DB.Pp_P1d_OutputSubs.Add(item);
                         DB.SaveChanges();
 
@@ -425,7 +425,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 item.Probadtotal = 0;
                 item.Prodirectrate = 0;
                 item.Probadrate = 0;
-                item.isDeleted = 0;
+                item.IsDeleted = 0;
                 item.Remark = "";
 
                 item.Promodel = promodel.Text;

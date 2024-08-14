@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Office.OA
                     {
                         q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.IsDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("A") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -109,7 +109,7 @@ namespace LeanFine.Lf_Office.OA
                     {
                         q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.IsDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("C") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -145,7 +145,7 @@ namespace LeanFine.Lf_Office.OA
                     {
                         q = q.Where(u => u.Su_Name_CN.Contains(searchText) || u.Su_Name_EN.Contains(searchText) || u.Su_Email.Contains(searchText) || u.Su_Code.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                     }
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.IsDeleted == 0);
                     q = q.Where(u => u.Su_Type.CompareTo("B") == 0);
                     if (rblEnableStatus.SelectedValue != "all")
                     {
@@ -277,7 +277,7 @@ namespace LeanFine.Lf_Office.OA
                 string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "日常办公", "通讯信息删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 //current.Endtag = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;

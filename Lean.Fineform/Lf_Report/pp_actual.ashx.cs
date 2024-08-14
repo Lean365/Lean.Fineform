@@ -25,7 +25,7 @@ namespace LeanFine.Lf_Report
             context.Response.ContentType = "text/plain";
             var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                         where p.Prodate.Substring(0, 6).Contains(atedate)
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         select new
                         {

@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
                          join b in DB.Pp_SapEcns on a.D_SAP_ZPABD_S001 equals b.D_SAP_ZPABD_Z001
                          //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                          //where b.Ec_distinction == 1
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
 
                          select new
                          {

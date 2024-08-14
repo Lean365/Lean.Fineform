@@ -57,7 +57,7 @@ namespace LeanFine.Lf_Admin
             {
                 q = q.Where(r => r.ShortName.Contains(searchText));
             }
-            q = q.Where(r => r.isDeleted == 0 && r.isEnabled == 0);
+            q = q.Where(r => r.IsDeleted == 0 && r.isEnabled == 0);
             // 在查询添加之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();
 
@@ -134,7 +134,7 @@ namespace LeanFine.Lf_Admin
                 string OperateNotes = "Del管理员* " + Newtext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "公司部门", "公司信息删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.isEnabled = 1;
                 DB.SaveChanges();
 

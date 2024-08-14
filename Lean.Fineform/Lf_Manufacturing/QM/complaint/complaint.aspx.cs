@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() == "" || a.Cc_ProcessDate == null
                              //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {
@@ -132,7 +132,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() != "" || a.Cc_ProcessDate != null
                              //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {
@@ -192,7 +192,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                                  //where a.p1dModifyDate.ToString() == "" || a.p1dModifyDate == null
                                  //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {
@@ -388,7 +388,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "客诉信息删除", OperateNotes);
 
-            //    current.isDeleted = 1;
+            //    current.IsDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
             //    current.ModifyDate = DateTime.Now;
@@ -453,7 +453,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() == "" || a.Cc_ProcessDate == null
                              //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {
@@ -499,7 +499,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                              where a.Cc_ProcessDate.ToString() != "" || a.Cc_ProcessDate != null
                              //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {
@@ -545,7 +545,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                             (from a in DB.Qm_Complaints
                                  //where a.p1dModifyDate.ToString() == "" || a.p1dModifyDate == null
                                  //where b.Ec_distinction == 1
-                             where a.isDeleted == 0
+                             where a.IsDeleted == 0
 
                              select new
                              {

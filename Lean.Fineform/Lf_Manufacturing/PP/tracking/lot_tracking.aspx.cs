@@ -70,7 +70,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
         private void BindGrid()
         {
             var q_all = from p in DB.Pp_Tracking_Counts
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         select new
                         {
                             p.Pro_Date,
@@ -392,7 +392,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                 join b in DB.Pp_P1d_Outputs on p.GUID equals b.GUID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { b.Prodirect, b.Prostdcapacity, p.Prorealqty, b.Promodel, b.Prohbn, b.Prolot, b.Prodate, p.Prostime, p.Proetime, b.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g

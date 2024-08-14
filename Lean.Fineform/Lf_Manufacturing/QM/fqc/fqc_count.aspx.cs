@@ -102,7 +102,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             var qs = from p in q
                      group p by new
                      {
@@ -450,7 +450,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 q = q.Where(u => u.qmMaterial.ToString().Contains(DDLhbn.SelectedItem.Text));
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             var qs = from p in q
                      group p by new
                      {

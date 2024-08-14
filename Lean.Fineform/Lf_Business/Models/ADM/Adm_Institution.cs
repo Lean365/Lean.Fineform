@@ -87,7 +87,7 @@ namespace LeanFine
         //[Range(1, 100, ErrorMessage = "{0}在{0}与{1}之间")] //带参数的错误信息
         [Required]
         [DefaultValue(1)]//默认值
-        public byte isDeleted { get; set; } = 0;//删除标记默认值
+        public byte IsDeleted { get; set; } = 0;//删除标记默认值
 
         [DefaultValue(0)]//默认值
         public byte isEnabled { get; set; } = 0;//有效标记默认值

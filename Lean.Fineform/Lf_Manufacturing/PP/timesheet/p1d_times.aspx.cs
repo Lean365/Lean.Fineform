@@ -76,7 +76,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                 var q =
                     from p in DB.Pp_P1d_OutputSubs
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
                     group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn } into g
                     select new
@@ -196,7 +196,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealqty != 0
                 group p by new { p.Prodate, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
@@ -401,7 +401,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q = from a in DB.Pp_P1d_OutputSubs
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
-                    where a.isDeleted == 0
+                    where a.IsDeleted == 0
                     //join b in DB.Pp_Ecs on a.Porderhbn equals b.Ec_bomitem
                     //where b.Ec_no == strecn
                     // where a.lineclass == "M"
@@ -542,7 +542,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
@@ -646,7 +646,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
 
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Probadcou, p.Probadmemo }
@@ -662,7 +662,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var qs_c =
                 (from p in q
                      //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                     //where p.isDeleted == 0
+                     //where p.IsDeleted == 0
                  where p.Prodate.CompareTo(sdate) == 0 && !string.IsNullOrEmpty(p.Probadcou)
 
                  group p by new { Prodate = sdate }
@@ -748,7 +748,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 where p.Prostopmemo != ""
                 where p.Prostopmemo != null
@@ -837,7 +837,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 where p.Prolinestopmin > 0
 
                 group p by new { Prodate = p.Prodate.Substring(0, 6), p.Prostopcou }

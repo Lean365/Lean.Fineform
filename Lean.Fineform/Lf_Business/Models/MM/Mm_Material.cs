@@ -56,7 +56,7 @@ namespace LeanFine.Lf_Business.Models.MM
         public Decimal ProDays { get; set; }    //8	//	自制生产天数
 
         [StringLength(1)]
-        public String isCheck { get; set; } //1	//	过账到检验库存
+        public String IsCheck { get; set; } //1	//	过账到检验库存
 
         [Required, StringLength(5)]
         public string ProfitCenter { get; set; }    //5	//	利益センタ
@@ -131,7 +131,7 @@ namespace LeanFine.Lf_Business.Models.MM
         public Decimal UDF56 { get; set; }
 
         [Required]
-        public byte isDeleted { get; set; }	//13	//	删除标记
+        public byte IsDeleted { get; set; }	//13	//	删除标记
 
         [StringLength(400)]
         public string Remark { get; set; }//备注

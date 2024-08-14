@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         {
             try
             {
-                if (rbtnFirstAuto.Checked)
+                if (rblAuto.SelectedValue == "0")
                 {
                     IQueryable<Pp_Ec> q = DB.Pp_Ecs; //.Include(u => u.Dept);
 
@@ -89,9 +89,9 @@ namespace LeanFine.Lf_Manufacturing.EC
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                     }
-                    q = q.Where(u => u.Ec_status.Contains("Fixed"));
+                    //q = q.Where(u => u.Ec_distinction == 1);
 
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.IsDeleted == 0);
                     q = q.OrderByDescending(u => u.Ec_issuedate);
 
                     var qs = q.Select(E => new
@@ -103,8 +103,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                         E.UDF06,
                         E.Ec_leader,
                         Ec_distinction = (E.Ec_distinction == 1 ? "全仕向" : (E.Ec_distinction == 2 ? "部管" : (E.Ec_distinction == 3 ? "内部" : "技术"))),
-                        isConfirm = (E.isConfirm == 0 ? "制二不管理" : "制二管理"),
-                        isModifysop = (E.isModifysop == 0 ? "不更新" : "需更新"),
+                        //IsManage = (E.IsManage == 0 ? "不管理" : (E.IsManage == 1 ? "共通" : (E.IsManage == 2 ? "部管" : (E.IsManage == 3 ? "制二" : (E.IsManage == 4 ? "组立" : "不管理"))))),
+                        //IsSopUpdate = (E.IsSopUpdate == 0 ? "不更新" : "需更新"),
                         Ec_status = (E.Ec_status.Contains("Work in Process") ? "WIP" : (E.Ec_status.Contains("Change at P.P.") ? "Change" : E.Ec_status)),
                         E.Ec_letterno,
                         E.Ec_letterdoc,
@@ -113,6 +113,10 @@ namespace LeanFine.Lf_Manufacturing.EC
                         E.Ec_teppletterno,
                         E.Ec_teppletterdoc,
                         E.CreateDate,
+                        //IsManage = (E.IsManage == 0 ? "按部门" : (b.IsManage == 1 ? "全部门" : (b.IsManage == 2 ? "不管理" : "按部门"))),
+                        //IsMmManage = (b.IsMmManage == 0 ? "无关" : (b.IsMmManage == 1 ? "有关" : "无关")),
+                        //IsPcbaManage = (b.IsPcbaManage == 0 ? "无关" : (b.IsPcbaManage == 1 ? "有关" : "无关")),
+                        //IsAssyManage = (b.IsAssyManage == 0 ? "无关" : (b.IsAssyManage == 1 ? "有关" : "无关")),
                     });
 
                     // 在查询添加之后，排序和分页之前获取总记录数
@@ -137,7 +141,80 @@ namespace LeanFine.Lf_Manufacturing.EC
                         Grid1.DataBind();
                     }
                 }
-                else if (rbtnSecondAuto.Checked)
+                else if (rblAuto.SelectedValue == "1")
+                {
+                    IQueryable<Pp_Ec> q = DB.Pp_Ecs; //.Include(u => u.Dept);
+
+                    // 在用户名称中搜索
+                    string searchText = ttbSearchMessage.Text.Trim();
+                    if (!String.IsNullOrEmpty(searchText))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_leader.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_status.Contains(searchText));
+                    }
+
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    if (!string.IsNullOrEmpty(sdate))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
+                    }
+                    if (!string.IsNullOrEmpty(edate))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
+                    }
+                    q = q.Where(u => u.Ec_distinction == 1);
+
+                    q = q.Where(u => u.IsDeleted == 0);
+                    q = q.OrderByDescending(u => u.Ec_issuedate);
+
+                    var qs = q.Select(E => new
+                    {
+                        E.GUID,
+                        E.Ec_no,
+                        E.Ec_issuedate,
+                        E.Ec_documents,
+                        E.UDF06,
+                        E.Ec_leader,
+                        Ec_distinction = (E.Ec_distinction == 1 ? "全仕向" : (E.Ec_distinction == 2 ? "部管" : (E.Ec_distinction == 3 ? "内部" : "技术"))),
+                        //IsManage = (E.IsManage == 0 ? "不管理" : (E.IsManage == 1 ? "共通" : (E.IsManage == 2 ? "部管" : (E.IsManage == 3 ? "制二" : (E.IsManage == 4 ? "组立" : "不管理"))))),
+                        //IsSopUpdate = (E.IsSopUpdate == 0 ? "不更新" : "需更新"),
+                        Ec_status = (E.Ec_status.Contains("Work in Process") ? "WIP" : (E.Ec_status.Contains("Change at P.P.") ? "Change" : E.Ec_status)),
+                        E.Ec_letterno,
+                        E.Ec_letterdoc,
+                        E.Ec_eppletterno,
+                        E.Ec_eppletterdoc,
+                        E.Ec_teppletterno,
+                        E.Ec_teppletterdoc,
+                        E.CreateDate,
+                        //IsManage = (E.IsManage == 0 ? "按部门" : (b.IsManage == 1 ? "全部门" : (b.IsManage == 2 ? "不管理" : "按部门"))),
+                        //IsMmManage = (b.IsMmManage == 0 ? "无关" : (b.IsMmManage == 1 ? "有关" : "无关")),
+                        //IsPcbaManage = (b.IsPcbaManage == 0 ? "无关" : (b.IsPcbaManage == 1 ? "有关" : "无关")),
+                        //IsAssyManage = (b.IsAssyManage == 0 ? "无关" : (b.IsAssyManage == 1 ? "有关" : "无关")),
+                    });
+
+                    // 在查询添加之后，排序和分页之前获取总记录数
+                    Grid1.RecordCount = GridHelper.GetTotalCount(qs);
+                    if (Grid1.RecordCount != 0)
+                    {
+                        // 排列和数据库分页
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
+
+                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
+                        //Grid1.RecordCount = GetTotalCount();
+
+                        // 2.获取当前分页数据
+                        DataTable table = GridHelper.GetPagedDataTable(Grid1, qs);
+
+                        Grid1.DataSource = table;
+                        Grid1.DataBind();
+                    }
+                    else
+                    {
+                        Grid1.DataSource = "";
+                        Grid1.DataBind();
+                    }
+                }
+                else if (rblAuto.SelectedValue == "2")
                 {
                     IQueryable<Pp_Ec> q = DB.Pp_Ecs; //.Include(u => u.Dept);
 
@@ -161,8 +238,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                     //string yy = DateTime.Now.Year.ToString();//获取当前年份
                     //q = q.Where(u => u.Ec_issuedate.Substring(0, 4).Contains(yy));
 
-                    q = q.Where(u => u.Ec_status.Contains("Work in Process"));
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.Ec_distinction == 2);
+                    q = q.Where(u => u.IsDeleted == 0);
                     q = q.OrderByDescending(u => u.Ec_issuedate);
                     var qs = q.Select(E => new
                     {
@@ -173,8 +250,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                         E.UDF06,
                         E.Ec_leader,
                         Ec_distinction = (E.Ec_distinction == 1 ? "全仕向" : (E.Ec_distinction == 2 ? "部管" : (E.Ec_distinction == 3 ? "内部" : "技术"))),
-                        isConfirm = (E.isConfirm == 0 ? "制二不管理" : "制二管理"),
-                        isModifysop = (E.isModifysop == 0 ? "不更新" : "需更新"),
+                        //IsManage = (E.IsManage == 0 ? "制二不管理" : "制二管理"),
+                        //IsSopUpdate = (E.IsSopUpdate == 0 ? "不更新" : "需更新"),
                         Ec_status = (E.Ec_status.Contains("Work in Process") ? "WIP" : (E.Ec_status.Contains("Change at P.P.") ? "Change" : E.Ec_status)),
                         E.Ec_letterno,
                         E.Ec_letterdoc,
@@ -206,7 +283,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                         Grid1.DataBind();
                     }
                 }
-                else if (rbtnThirdAuto.Checked)
+                else if (rblAuto.SelectedValue == "3")
                 {
                     IQueryable<Pp_Ec> q = DB.Pp_Ecs; //.Include(u => u.Dept);
 
@@ -227,7 +304,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                     {
                         q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
                     }
-                    q = q.Where(u => u.isDeleted == 0);
+                    q = q.Where(u => u.IsDeleted == 0);
+                    q = q.Where(u => u.Ec_distinction == 3);
                     q = q.OrderByDescending(u => u.Ec_issuedate);
                     q = q.OrderByDescending(u => u.Ec_issuedate);
                     var qs = q.Select(E => new
@@ -239,8 +317,75 @@ namespace LeanFine.Lf_Manufacturing.EC
                         E.UDF06,
                         E.Ec_leader,
                         Ec_distinction = (E.Ec_distinction == 1 ? "全仕向" : (E.Ec_distinction == 2 ? "部管" : (E.Ec_distinction == 3 ? "内部" : "技术"))),
-                        isConfirm = (E.isConfirm == 0 ? "制二不管理" : "制二管理"),
-                        isModifysop = (E.isModifysop == 0 ? "不更新" : "需更新"),
+                        //IsManage = (E.IsManage == 0 ? "制二不管理" : "制二管理"),
+                        //IsSopUpdate = (E.IsSopUpdate == 0 ? "不更新" : "需更新"),
+                        Ec_status = (E.Ec_status.Contains("Work in Process") ? "WIP" : (E.Ec_status.Contains("Change at P.P.") ? "Change" : E.Ec_status)),
+                        E.Ec_letterno,
+                        E.Ec_letterdoc,
+                        E.Ec_eppletterno,
+                        E.Ec_eppletterdoc,
+                        E.Ec_teppletterno,
+                        E.Ec_teppletterdoc,
+                        E.CreateDate,
+                    }); ;
+                    // 在查询添加之后，排序和分页之前获取总记录数
+                    Grid1.RecordCount = GridHelper.GetTotalCount(qs);
+                    if (Grid1.RecordCount != 0)
+                    {
+                        // 排列和数据库分页
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
+
+                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
+                        //Grid1.RecordCount = GetTotalCount();
+
+                        // 2.获取当前分页数据
+                        DataTable table = GridHelper.GetPagedDataTable(Grid1, qs);
+
+                        Grid1.DataSource = table;
+                        Grid1.DataBind();
+                    }
+                    else
+                    {
+                        Grid1.DataSource = "";
+                        Grid1.DataBind();
+                    }
+                }
+                else if (rblAuto.SelectedValue == "4")
+                {
+                    IQueryable<Pp_Ec> q = DB.Pp_Ecs; //.Include(u => u.Dept);
+
+                    // 在用户名称中搜索
+                    string searchText = ttbSearchMessage.Text.Trim();
+                    if (!String.IsNullOrEmpty(searchText))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.Contains(searchText) || u.Ec_leader.Contains(searchText) || u.Ec_no.Contains(searchText) || u.Ec_status.Contains(searchText));
+                    }
+
+                    string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+                    if (!string.IsNullOrEmpty(sdate))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(sdate) >= 0);
+                    }
+                    if (!string.IsNullOrEmpty(edate))
+                    {
+                        q = q.Where(u => u.Ec_issuedate.CompareTo(edate) <= 0);
+                    }
+                    q = q.Where(u => u.IsDeleted == 0);
+                    q = q.Where(u => u.Ec_distinction == 4);
+                    q = q.OrderByDescending(u => u.Ec_issuedate);
+                    q = q.OrderByDescending(u => u.Ec_issuedate);
+                    var qs = q.Select(E => new
+                    {
+                        E.GUID,
+                        E.Ec_no,
+                        E.Ec_issuedate,
+                        E.Ec_documents,
+                        E.UDF06,
+                        E.Ec_leader,
+                        Ec_distinction = (E.Ec_distinction == 1 ? "全仕向" : (E.Ec_distinction == 2 ? "部管" : (E.Ec_distinction == 3 ? "内部" : "技术"))),
+                        //IsManage = (E.IsManage == 0 ? "制二不管理" : "制二管理"),
+                        //IsSopUpdate = (E.IsSopUpdate == 0 ? "不更新" : "需更新"),
                         Ec_status = (E.Ec_status.Contains("Work in Process") ? "WIP" : (E.Ec_status.Contains("Change at P.P.") ? "Change" : E.Ec_status)),
                         E.Ec_letterno,
                         E.Ec_letterdoc,
@@ -385,14 +530,14 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 //foreach (var Pp_Ec_Subs in Ec_n)
                 //{
-                //    Pp_Ec_Subs.isDeleted = 1;
+                //    Pp_Ec_Subs.IsDeleted = 1;
                 //    Pp_Ec_Subs.Endtag = 1;
                 //    Pp_Ec_Subs.Modifier = GetIdentityName();
                 //    Pp_Ec_Subs.ModifyDate = DateTime.Now;
                 //}
                 //DB.SaveChanges();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -402,7 +547,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var Pp_Ec_Sub = DB.Pp_Ecs.Where(c => c.Ec_no.Contains(Contectext));
                 foreach (var Pp_Ecs in Pp_Ec_Sub)
                 {
-                    Pp_Ecs.isDeleted = 1;
+                    Pp_Ecs.IsDeleted = 1;
                     Pp_Ecs.Modifier = GetIdentityName();
                     Pp_Ecs.ModifyDate = DateTime.Now;
                 }
@@ -410,36 +555,45 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 //DB.Pp_Ecs
                 //        .Where(t => t.Ec_no == Contectext)
-                //        .Update(t => new Pp_Ec_Sub { isDeleted = 1 });
+                //        .Update(t => new Pp_Ec_Sub { IsDeleted = 1 });
                 //DB.SaveChanges();
 
                 BindGrid();
             }
         }
 
-        protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
+        protected void rblAuto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
-            // 不处理取消选中菜单项的事件，从而防止此函数重复执行两次
-            if (!e.Checked)
-            {
-                return;
-            }
-
-            string checkedValue = String.Empty;
-            if (rbtnFirstAuto.Checked)
-            {
-                BindGrid();
-            }
-            else if (rbtnSecondAuto.Checked)
-            {
-                BindGrid();
-            }
-            else if (rbtnThirdAuto.Checked)
-            {
-                BindGrid();
-            }
+            BindGrid();
         }
+
+        //protected void rbtnAuto_CheckedChanged(object sender, CheckedEventArgs e)
+        //{
+        //    // 单选框按钮的CheckedChanged事件会触发两次，一次是取消选中的菜单项，另一次是选中的菜单项；
+        //    // 不处理取消选中菜单项的事件，从而防止此函数重复执行两次
+        //    if (!e.Checked)
+        //    {
+        //        return;
+        //    }
+
+        //    string checkedValue = String.Empty;
+        //    if (rbtnAll.Checked)
+        //    {
+        //        BindGrid();
+        //    }
+        //    else if (rbtnMm.Checked)
+        //    {
+        //        BindGrid();
+        //    }
+        //    else if (rbtnInternal.Checked)
+        //    {
+        //        BindGrid();
+        //    }
+        //    else if (rbtnTe.Checked)
+        //    {
+        //        BindGrid();
+        //    }
+        //}
 
         protected void Window1_Close(object sender, EventArgs e)
         {

@@ -106,7 +106,7 @@
                                         <f:FormRow ID="FormRow9" runat="server">
                                             <Items>
                                                 <f:Label ID="LeadTime" EncodeText="false" CssClass="customlabel" Label="Lead Time" runat="server" />
-                                                <f:Label ID="isCheck" Label="检验库存" runat="server" />
+                                                <f:Label ID="IsCheck" Label="检验库存" runat="server" />
                                             </Items>
                                         </f:FormRow>
                                         <f:FormRow ID="FormRow11" runat="server">

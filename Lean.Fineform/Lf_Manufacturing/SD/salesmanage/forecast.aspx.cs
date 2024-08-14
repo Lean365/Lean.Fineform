@@ -46,7 +46,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
         //        FY = q_ym[0].Btfy.ToString();
 
         //        var q = (from a in DB.Sd_Psis
-        //                 where a.isDeleted == 0
+        //                 where a.IsDeleted == 0
         //                 //where a.Bc_YM.CompareTo(thisQuarter1) >= 0
         //                 where a.Bc_FY.CompareTo(FY) == 0
         //                 //orderby a.Prostime + "~" + a.Proetime
@@ -144,7 +144,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
                 var q = from a in DB.Sd_Psis
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                         where a.Bc_FY.CompareTo(FY) == 0
                         //orderby a.Prostime + "~" + a.Proetime
@@ -297,7 +297,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                 FY = q_ym[0].Btfy.ToString();
                 HT_FY.HeaderText = q_ym[0].Btfy.ToString();
                 var q = from a in DB.Sd_Psis
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         //where a.Bc_YM.CompareTo(thisQuarter1) >=0
                         where a.Bc_FY.CompareTo(FY) == 0
                         //orderby a.Prostime + "~" + a.Proetime

@@ -42,22 +42,13 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.Panel Panel1;
 
         /// <summary>
-        /// Grid1 控件。
+        /// Toolbar3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Grid Grid1;
-
-        /// <summary>
-        /// Toolbar2 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.Toolbar Toolbar2;
+        protected global::FineUIPro.Toolbar Toolbar3;
 
         /// <summary>
         /// DpStartDate 控件。
@@ -69,13 +60,13 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.DatePicker DpStartDate;
 
         /// <summary>
-        /// ToolbarFill4 控件。
+        /// ToolbarSeparator3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.ToolbarFill ToolbarFill4;
+        protected global::FineUIPro.ToolbarSeparator ToolbarSeparator3;
 
         /// <summary>
         /// DpEndDate 控件。
@@ -105,49 +96,40 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.TwinTriggerBox ttbSearchMessage;
 
         /// <summary>
-        /// Toolbar1 控件。
+        /// Form3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Toolbar Toolbar1;
+        protected global::FineUIPro.Form Form3;
 
         /// <summary>
-        /// rbtnFirstAuto 控件。
+        /// FormRow2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnFirstAuto;
+        protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// rbtnSecondAuto 控件。
+        /// rblAuto 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnSecondAuto;
+        protected global::FineUIPro.RadioButtonList rblAuto;
 
         /// <summary>
-        /// rbtnThirdAuto 控件。
+        /// ToolbarFill1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnThirdAuto;
-
-        /// <summary>
-        /// ToolbarFill2 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.ToolbarFill ToolbarFill2;
+        protected global::FineUIPro.ToolbarFill ToolbarFill1;
 
         /// <summary>
         /// btnNew 控件。
@@ -157,6 +139,15 @@ namespace LeanFine.Lf_Manufacturing.EC
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Button btnNew;
+
+        /// <summary>
+        /// Grid1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Grid Grid1;
 
         /// <summary>
         /// ToolbarSeparator2 控件。

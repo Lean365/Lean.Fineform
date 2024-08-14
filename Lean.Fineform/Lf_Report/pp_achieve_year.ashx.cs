@@ -33,7 +33,7 @@ namespace LeanFine.Lf_Report
 
             var qs =
                 from p in DBCharts.Pp_P1d_OutputSubs
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { Prodate = p.Prodate.Substring(0, 4) } into g
 

@@ -99,7 +99,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // 在用户名称中搜索
             string ddate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
-            q = q.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(prolinename.SelectedItem.Text) && u.Prolot.Contains(prolot.SelectedItem.Text) && u.Prodate.Contains(ddate));
+            q = q.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(prolinename.SelectedItem.Text) && u.Prolot.Contains(prolot.SelectedItem.Text) && u.Prodate.Contains(ddate));
 
             //if (GetIdentityName() != "admin")
             //{)
@@ -144,7 +144,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 var q = from p in DB.Pp_P1d_Outputs
                         where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline)
                             && !(from d in DB.Pp_P1d_Defects
-                                 where d.isDeleted == 0
+                                 where d.IsDeleted == 0
                                  where d.Prodate == Prodate
                                  where d.Prolinename == p.Prolinename
                                  select d.Proorder)//20220815修改之前是d.Prolots
@@ -180,7 +180,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
                         where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P1d_Defects
-                                                               where d.isDeleted == 0
+                                                               where d.IsDeleted == 0
                                                                where d.Prodate == Prodate
                                                                where d.Prolinename == a.Prolinename
                                                                select d.Prolot)
@@ -259,7 +259,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 var q_output = from a in DB.Pp_P1d_OutputSubs
                                    //join b in DB.Pp_P1d_OutputSubs on a.ID equals b.Parent.ID
 
-                               where a.isDeleted == 0
+                               where a.IsDeleted == 0
                                where a.Prodate == sdate
                                where a.Prolinename == sline
                                where a.Prolot == slot
@@ -401,7 +401,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string OperateNotes = "Del* " + Contectext + " *Del 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-                item.isDeleted = 1;
+                item.IsDeleted = 1;
                 item.Modifier = GetIdentityName();
                 item.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -522,7 +522,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         item.Probadset = Probadset;
                         //不良原因
                         item.Probadreason = Probadreason;
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -691,7 +691,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         item.Probadset = Probadset;
                         //不良原因
                         item.Probadreason = Probadreason;
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -817,7 +817,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //不良原因
             rowData["Probadreason"] = "";
 
-            rowData["isDeleted"] = 0;
+            rowData["IsDeleted"] = 0;
 
             rowData["GUID"] = Guid.NewGuid();
             rowData["UDF01"] = "";
@@ -1055,7 +1055,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //删除记录
                 //DB.Pp_P1d_Defects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();

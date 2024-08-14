@@ -497,7 +497,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             var q =
                 from p in DB.Pp_P2d_OutputSubs
                     //join b in DB.Pp_P2d_Outputs on p.GUID equals b.GUID
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                 group p by new { p.Proorder, p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, p.Proorderqty, p.Propcbaside, p.Prodirect, p.Propcbastated, p.Prorealqty, p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin, p.UDF51, p.UDF52, p.UDF53, p.UDF54, p.Prorealtotal }
                 into g
@@ -568,7 +568,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                        { p.Proorder, p.Prodate, p.Promodel, p.Propcbatype } equals new { a.Proorder, Prodate = a.Proinspdate, a.Promodel, Propcbatype = a.Propcbtype } into Inspection
                        from aa in Inspection.DefaultIfEmpty()
 
-                       where p.isDeleted == 0
+                       where p.IsDeleted == 0
 
                        select new
                        {
@@ -582,7 +582,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                        join a in DB.Pp_P2d_Manufacturing_Defects on new
                        { p.Proorder, p.Prodate, p.Promodel, p.Propcbatype } equals new { a.Proorder, a.Prodate, a.Promodel, Propcbatype = a.Propcbtype } into Manufacturing
                        from aa in Manufacturing.DefaultIfEmpty()
-                       where p.isDeleted == 0
+                       where p.IsDeleted == 0
                        select new
                        {
                            p.Prodate,

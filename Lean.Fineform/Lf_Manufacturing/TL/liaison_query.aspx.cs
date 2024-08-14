@@ -285,7 +285,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             //    string OperateNotes = "Del* " + Deltext + "*Del 的记录已被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "基础资料", "技联信息删除", OperateNotes);
 
-            //    current.isDeleted = 1;
+            //    current.IsDeleted = 1;
             //    //current.Endtag = 1;
             //    current.Modifier = GetIdentityName();
             //    current.ModifyDate = DateTime.Now;

@@ -1248,4 +1248,13 @@
   <data name="menu_Pp_Times_P2D" xml:space="preserve">
     <value>制二</value>
   </data>
+  <data name="sys_Button_Unrelated" xml:space="preserve">
+    <value>无关</value>
+  </data>
+  <data name="sys_Status_Internal" xml:space="preserve">
+    <value>内部</value>
+  </data>
+  <data name="sys_Status_Region" xml:space="preserve">
+    <value>全仕向</value>
+  </data>
 </root>

@@ -34,7 +34,7 @@ namespace LeanFine.Lf_Report
             //string command = context.Request["cmd"];
             context.Response.ContentType = "text/plain";
             var q = from p in DBCharts.Pp_Tracking_Counts
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     where p.Pro_Date.Contains(tdate)
                     where p.Pro_Model.Contains(tmodel)
                     where p.Pro_Lot.Contains(tlot)

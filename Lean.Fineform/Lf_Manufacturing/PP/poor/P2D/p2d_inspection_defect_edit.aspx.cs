@@ -154,7 +154,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
             // 在用户名称中搜索
             string ddate = this.lblProinspdate.Text;
-            q = q.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(lblProlinename.Text) && u.Prolot.Contains(lblProlot.Text) && u.Proinspdate.Contains(ddate));
+            q = q.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(lblProlinename.Text) && u.Prolot.Contains(lblProlot.Text) && u.Proinspdate.Contains(ddate));
 
             //if (GetIdentityName() != "admin")
             //{)
@@ -279,7 +279,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         //                //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
         //                //where b.Proecnno == strecn
         //                //where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P2d_Inspection_Defects
-        //                //                                       where d.isDeleted == 0
+        //                //                                       where d.IsDeleted == 0
         //                //                                       where d.Prodate == Prodate
         //                //                                       where d.Prolinename == a.Prolinename
         //                //                                       select d.Prolot)
@@ -504,7 +504,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 //删除记录
                 //DB.Pp_P2d_Inspection_Defects.Where(l => l.ID == del_ID).Delete();
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 DB.SaveChanges();
                 //重新绑定
                 BindGrid();
@@ -535,7 +535,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 string OperateNotes = "Del生产不良*" + Contectext + " *Del生产不良 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-                item.isDeleted = 1;
+                item.IsDeleted = 1;
                 DB.SaveChanges();
 
                 //重新绑定
@@ -631,7 +631,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         item.Probadcontent = strProbadcontent;
                         item.Probadtype = strProbadtype;
 
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -777,7 +777,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         item.Probadcontent = strProbadcontent;
                         item.Probadtype = strProbadtype;
 
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -908,7 +908,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             rowData["UDF54"] = 0;
             rowData["UDF55"] = 0;
             rowData["UDF56"] = 0;
-            rowData["isDeleted"] = 0;
+            rowData["IsDeleted"] = 0;
             rowData["Remark"] = "";
             rowData["Creator"] = GetIdentityName();
             rowData["CreateDate"] = DateTime.Now;
@@ -1459,7 +1459,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         //    if (Oldnobadqty != int.Parse(pronobadqty.Text))
         //    {
         //        string ddate = this.DefDate.Text;
-        //        var Pp_Def = DB.Pp_P2d_Inspection_Defects.Where(u => u.isDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Proinspdate.Contains(ddate));
+        //        var Pp_Def = DB.Pp_P2d_Inspection_Defects.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(prolinename.Text) && u.Prolot.Contains(prolot.Text) && u.Proinspdate.Contains(ddate));
         //        foreach (var Pp_P2d_Inspection_Defects in Pp_Def)
         //        {
         //            Pp_P2d_Inspection_Defects.Pronobadqty = int.Parse(this.pronobadqty.Text);

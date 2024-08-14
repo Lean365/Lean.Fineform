@@ -78,7 +78,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
                          join a in DB.Pp_Ec_Subs on b.Ec_no equals a.Ec_no
                          //where a.Ec_qadate.ToString() == "" || a.Ec_qadate == null
                          //where b.Ec_distinction == 1
-                         where a.isDeleted == 0
+                         where a.IsDeleted == 0
 
                          select new
                          {

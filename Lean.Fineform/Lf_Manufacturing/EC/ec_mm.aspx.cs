@@ -67,12 +67,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where string.IsNullOrEmpty(b.Ec_mmdate)
                             where !string.IsNullOrEmpty(b.Ec_iqcdate)// != ""
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""
 
-                            where b.isConfirm == 1 || b.isConfirm == 2
+                            where b.IsManage == 1 || b.IsManage == 2
                             orderby b.Ec_entrydate descending
                             select new
                             {
@@ -111,12 +111,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             where !string.IsNullOrEmpty(b.Ec_mmdate)
                             where !string.IsNullOrEmpty(b.Ec_iqcdate)// != ""
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""
 
-                            where b.isConfirm == 1 || b.isConfirm == 2
+                            where b.IsManage == 1 || b.IsManage == 2
                             orderby b.Ec_entrydate descending
                             select new
                             {
@@ -154,12 +154,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     var q = from a in DB.Pp_Ecs
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
-                            where b.isDeleted == 0
+                            where b.IsDeleted == 0
                             //where string.IsNullOrEmpty(b.Ec_mmdate)
                             //where !string.IsNullOrEmpty(b.Ec_iqcdate)// != ""
                             //where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""
 
-                            where b.isConfirm == 1 || b.isConfirm == 2
+                            where b.IsManage == 1 || b.IsManage == 2
                             orderby b.Ec_entrydate descending
                             select new
                             {
@@ -228,12 +228,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
 
                               where a.Ec_no.Contains(strecnno)
-                              where b.isDeleted == 0
+                              where b.IsDeleted == 0
                               where string.IsNullOrEmpty(b.Ec_mmdate)
                               where !string.IsNullOrEmpty(b.Ec_iqcdate)// != ""
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""
                               //where a.Ec_newitem != "0"
-                              where b.isConfirm == 1 || b.isConfirm == 2
+                              where b.IsManage == 1 || b.IsManage == 2
                               select new
                               {
                                   a.Ec_documents,
@@ -301,8 +301,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                               where !string.IsNullOrEmpty(b.Ec_mmdate)
                               where !string.IsNullOrEmpty(b.Ec_iqcdate)// != ""
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""
-                              where b.isDeleted == 0
-                              where b.isConfirm == 1 || b.isConfirm == 2
+                              where b.IsDeleted == 0
+                              where b.IsManage == 1 || b.IsManage == 2
                               select new
                               {
                                   a.Ec_documents,
@@ -366,8 +366,8 @@ namespace LeanFine.Lf_Manufacturing.EC
                     var doc = from a in DB.Pp_Ecs
                               join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                               where a.Ec_no.Contains(strecnno)
-                              where b.isDeleted == 0
-                              where b.isConfirm == 1 || b.isConfirm == 2
+                              where b.IsDeleted == 0
+                              where b.IsManage == 1 || b.IsManage == 2
                               select new
                               {
                                   a.Ec_documents,

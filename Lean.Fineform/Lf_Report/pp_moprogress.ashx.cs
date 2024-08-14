@@ -32,7 +32,7 @@ namespace LeanFine.Lf_Report
             var q_all = from p in DBCharts.Pp_P1d_OutputSubs
                             // where p.Prodate.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Prodate.Substring(0, 6).CompareTo(atedate) == 0
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         //where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         select new

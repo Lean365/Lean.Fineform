@@ -33,7 +33,7 @@ namespace LeanFine.Lf_Report
                  where !string.IsNullOrEmpty(p.Probadmemo)
                  where !string.IsNullOrEmpty(p.Probadcou)
                  where !string.IsNullOrEmpty(p.Probadmemo)
-                 where p.isDeleted == 0
+                 where p.IsDeleted == 0
                  group p by new { Probadcou = p.Probadcou.Substring(0, 6), Probadmemo = p.Probadmemo.Substring(0, 6) }
                             into g
                  select new

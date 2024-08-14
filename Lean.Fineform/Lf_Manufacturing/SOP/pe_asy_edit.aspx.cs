@@ -344,7 +344,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                                                   UDF54 = item.UDF54,
                                                   UDF55 = item.UDF55,
                                                   UDF56 = item.UDF56,
-                                                  isDeleted = item.isDeleted,
+                                                  IsDeleted = item.IsDeleted,
                                                   Remark = item.Remark,
                                                   Creator = item.Creator,
                                                   CreateDate = item.CreateDate,

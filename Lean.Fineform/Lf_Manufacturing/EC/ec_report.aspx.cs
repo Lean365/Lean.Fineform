@@ -75,7 +75,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                          where b.Ec_qadate == "" && b.Ec_qadate == null
                          // where a.Ec_qadate==null
                          //where b.Ec_distinction == 1
-                         where b.isDeleted == 0
+                         where b.IsDeleted == 0
                          orderby a.Ec_issuedate, b.Ec_no, b.Ec_model, b.Ec_bomitem
                          //where a.Ec_model.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_no.Contains(searchText) || a.Ec_bomitem.Contains(searchText) || b.Ec_issuedate.Contains(searchText)
                          select new
@@ -143,7 +143,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                              Ec_qalot = b.Ec_qalot,
 
                              Ec_qanote = b.Ec_qanote,
-                             Ec_subdel = b.isDeleted,
+                             Ec_subdel = b.IsDeleted,
 
                              //Processstatus = (a.Ec_issuedate == "" || a.Ec_issuedate == null ? "◎采购未处理" :
                              //(a.Ec_pmcdate == "" || a.Ec_pmcdate == null ? "◎生管未处理" :

@@ -140,7 +140,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 q = q.Where(u => u.Prolot.Contains(searchText) || u.Promodel.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             var qs = from a in q
                      select a;
 
@@ -467,7 +467,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     strPdate = ma.Rows[i][2].ToString();
                     var q2 =
                             from p in DB.Pp_P1d_Defects
-                             .Where(s => s.isDeleted == 0)
+                             .Where(s => s.IsDeleted == 0)
                             //.Where(s => s.Prodate.Contains(dd))
                             //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
                             .Where(s => s.Prodate.Substring(0, 6).CompareTo(strPdate) == 0)

@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
         {
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
@@ -258,7 +258,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 string OperateNotes = "Del产品检验记录* " + Deltext + "*Del产品检验记录 的记录已被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "质量管理", "产品检验记录删除", OperateNotes);
 
-                current.isDeleted = 1;
+                current.IsDeleted = 1;
                 current.Modifier = GetIdentityName();
                 current.ModifyDate = DateTime.Now;
                 DB.SaveChanges();
@@ -300,7 +300,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             string Xlsbomitem, ExportFileName;
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
-            q = q.Where(u => u.isDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0);
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))

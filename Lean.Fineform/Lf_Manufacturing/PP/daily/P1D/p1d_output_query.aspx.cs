@@ -76,7 +76,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 var q =
                     from p in DB.Pp_P1d_OutputSubs
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
                     group p by new { p.Proorder, p.Proorderqty, p.Prolinename, p.Prodate, p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
                     select new

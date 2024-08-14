@@ -72,7 +72,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     var q =
                     from p in DB.Pp_P1d_OutputSubs
                     join b in DB.Pp_P1d_Outputs on p.Parent equals b.ID
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
                     group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
                     select new
@@ -159,7 +159,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     var q =
                             from p in DB.Pp_P1d_OutputSubs
                             join b in DB.Pp_P1d_Outputs on p.Parent equals b.ID
-                            where p.isDeleted == 0
+                            where p.IsDeleted == 0
                             where p.Prorealtime != 0 || p.Prolinestopmin != 0
                             group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
 
@@ -232,7 +232,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     var q =
                             from p in DB.Pp_P1d_OutputSubs
                             join b in DB.Pp_P1d_Outputs on p.Parent equals b.ID
-                            where p.isDeleted == 0
+                            where p.IsDeleted == 0
                             where p.Prorealtime != 0 || p.Prolinestopmin != 0
                             group p by new { Prodate = b.Prodate.Substring(0, 6), b.Proorder, b.Proorderqty, b.Promodel, b.Prohbn, b.Prolot, b.Prost } into g
                             select new

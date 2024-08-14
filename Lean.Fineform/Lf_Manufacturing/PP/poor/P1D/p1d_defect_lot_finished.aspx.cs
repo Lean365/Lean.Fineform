@@ -78,8 +78,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 var q = from a in DB.Pp_Defect_Totals
 
                         join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
-                        where a.isDeleted == 0
-                        where b.isDeleted == 0
+                        where a.IsDeleted == 0
+                        where b.IsDeleted == 0
                         //where a.Proorder.Substring(0, 2).Contains("44")
                         //where b.Prodate.Contains(Pdate)
                         //where a.Proorderqty == a.Prorealqty
@@ -443,8 +443,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             var q = from a in DB.Pp_Defect_Totals
                     join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
-                    where a.isDeleted == 0
-                    where b.isDeleted == 0
+                    where a.IsDeleted == 0
+                    where b.IsDeleted == 0
                     //where a.Proorder.Substring(0, 2).Contains("44")
                     //where b.Prodate.Substring(0, 6).CompareTo(Pdate) == 0
                     //where a.Proorderqty == a.Prorealqty
@@ -485,7 +485,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //}
             q = q.Distinct();
             var counts = from a in q
-                             //where a.isDeleted == 0
+                             //where a.IsDeleted == 0
                              //where a.Proorderqty == a.Prorealqty
                          group a by new
                          {
@@ -586,7 +586,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     strDpEndDate = ma.Rows[i][2].ToString().Substring(9, 8);
                     var q2 =
                             from p in DB.Pp_P1d_Defects
-                            .Where(s => s.isDeleted == 0)
+                            .Where(s => s.IsDeleted == 0)
                             //.Where(s => s.Prodate.Contains(dd))
                             //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
                             .Where(s => s.Prodate.CompareTo(strDpStartDate) >= 0)

@@ -34,7 +34,7 @@ namespace LeanFine.Lf_Report
                             //where p.Prodate.Substring(0, 6).CompareTo(sdate) >= 0
                         where p.Prodate.Substring(0, 6).CompareTo(atedate) == 0
                         //join b in DB.PP_Outputs on p.Parent.ID equals b.ID
-                        where p.isDeleted == 0
+                        where p.IsDeleted == 0
                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
                         select new
                         {

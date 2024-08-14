@@ -52,7 +52,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
         {
             var q = from p in DB.Pp_Tracking_Times
                         //join b in DB.Pp_Tracking_Times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     select new
                     {
                         p.Pro_Item,
@@ -237,7 +237,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
             ExportFileName = Xlsbomitem + ".xlsx";
             var q = from p in DB.Pp_Tracking_Times
                         //join b in DB.Pp_Tracking_Times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
-                    where p.isDeleted == 0
+                    where p.IsDeleted == 0
                     select new
                     {
                         ItemMaster = p.Pro_Item,

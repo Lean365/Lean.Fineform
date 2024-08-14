@@ -136,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //查询LINQ去重复
 
             var a = from c in DB.Pp_Manhours
-                    where c.isDeleted == 0
+                    where c.IsDeleted == 0
                     //where c.Prowctext.Contains("二")
                     select c.Proitem;
 
@@ -154,7 +154,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //                    //where b.Proecnbomitem == stritem
             //                where a.Porderqty> 0
             //&& (from d in DB.Pp_Manhours
-            //     where d.isDeleted == 0
+            //     where d.IsDeleted == 0
             //     where d.Prowctext.Contains("二")
             //     where d.Proitem == a.Porderhbn
             //     select d.Proitem)//20220815修改之前是d.Prolots
@@ -385,7 +385,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //item.Proratio = int.Parse(proratio.Text);
                 // 添加所有用户
 
-                item.isDeleted = 0;
+                item.IsDeleted = 0;
                 item.Remark = remark.Text;
                 item.CreateDate = DateTime.Now;
                 item.Creator = GetIdentityName();
@@ -529,7 +529,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                             item.Remark = remark.Text;
                                             item.CreateDate = DateTime.Now;
                                             item.Creator = GetIdentityName();
-                                            item.isDeleted = 0;
+                                            item.IsDeleted = 0;
                                             DB.Pp_P2d_OutputSubs.Add(item);
                                             DB.SaveChanges();
 
@@ -590,7 +590,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 //        item.Remark = remark.Text;
                                 //        item.CreateDate = DateTime.Now;
                                 //        item.Creator = GetIdentityName();
-                                //        item.isDeleted = 0;
+                                //        item.IsDeleted = 0;
                                 //        DB.Pp_P2d_OutputSubs.Add(item);
                                 //        DB.SaveChanges();
 
@@ -652,7 +652,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 //        item.Remark = remark.Text;
                                 //        item.CreateDate = DateTime.Now;
                                 //        item.Creator = GetIdentityName();
-                                //        item.isDeleted = 0;
+                                //        item.IsDeleted = 0;
                                 //        DB.Pp_P2d_OutputSubs.Add(item);
                                 //        DB.SaveChanges();
 
@@ -726,7 +726,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 //            item.Remark = remark.Text;
                                 //            item.CreateDate = DateTime.Now;
                                 //            item.Creator = GetIdentityName();
-                                //            item.isDeleted = 0;
+                                //            item.IsDeleted = 0;
                                 //            DB.Pp_P2d_OutputSubs.Add(item);
                                 //            DB.SaveChanges();
 
@@ -788,7 +788,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                         item.Remark = remark.Text;
                                         item.CreateDate = DateTime.Now;
                                         item.Creator = GetIdentityName();
-                                        item.isDeleted = 0;
+                                        item.IsDeleted = 0;
                                         DB.Pp_P2d_OutputSubs.Add(item);
                                         DB.SaveChanges();
 
@@ -851,7 +851,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                         item.Remark = remark.Text;
                                         item.CreateDate = DateTime.Now;
                                         item.Creator = GetIdentityName();
-                                        item.isDeleted = 0;
+                                        item.IsDeleted = 0;
                                         DB.Pp_P2d_OutputSubs.Add(item);
                                         DB.SaveChanges();
 
@@ -948,7 +948,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             item.Probadtotal = 0;
             item.Prodirectrate = 0;
             item.Probadrate = 0;
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = "";
             //item.Promodel = promodel.Text;
             item.GUID = Guid.NewGuid();

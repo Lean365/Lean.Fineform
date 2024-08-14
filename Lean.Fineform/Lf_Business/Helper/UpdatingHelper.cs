@@ -26,7 +26,7 @@ namespace LeanFine
             //更新生产实绩
             var q =
                     (from p in DB.Pp_P1d_OutputSubs
-                     where p.isDeleted == 0
+                     where p.IsDeleted == 0
                      where p.Proorder == strPorder
                      where p.Prodate == strPdate
                      where p.Prolinename == strPline
@@ -60,7 +60,7 @@ namespace LeanFine
             //更新生产实绩
             var q =
                     (from p in DB.Pp_P1d_OutputSubs
-                     where p.isDeleted == 0
+                     where p.IsDeleted == 0
                      where p.Proorder == strPorder
                      group p by p.Prolot into g
                      select new
@@ -90,7 +90,7 @@ namespace LeanFine
             int okQty = 0;
             var noqs =
                 from p in DB.Pp_P1d_Defects
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 where p.Proorder == strPorder
                 group p by new
                 {
@@ -126,7 +126,7 @@ namespace LeanFine
             }
             //统计无不良台数（无不良录入时）
             var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDeleted == 0);
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.IsDeleted == 0);
 
             var okqty = (from a in results
                          group a by a.Proorder
@@ -162,7 +162,7 @@ namespace LeanFine
 
             var noqs =
                 (from p in DB.Pp_P1d_Defects
-                 where p.isDeleted == 0
+                 where p.IsDeleted == 0
                  where p.Proorder == strPorder
                  where p.Prodate == strPdate
                  where p.Prolinename == Pline
@@ -198,7 +198,7 @@ namespace LeanFine
             //string strPorder, string strPdate, string strPline
             // assumes that the ID property is an int - change the generic type if it's not
             var ids = new HashSet<string>(DB.Pp_P1d_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
-            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.isDeleted == 0);
+            var results = DB.Pp_P1d_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.IsDeleted == 0);
 
             var q = (from a in results
                      group a by a.Proorder
@@ -254,7 +254,7 @@ namespace LeanFine
             //求和
             var q =
                 (from p in DB.Pp_P1d_Defects
-                 .Where(s => s.isDeleted == 0)
+                 .Where(s => s.IsDeleted == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Prodate == pdate)
                 .Where(s => s.Proorder == porder)
@@ -296,7 +296,7 @@ namespace LeanFine
             //求和
             var qs =
                 (from p in DB.Pp_P1d_Defects
-                 .Where(s => s.isDeleted == 0)
+                 .Where(s => s.IsDeleted == 0)
                 .Where(s => s.Prorealqty != 0)
                 .Where(s => s.Proorder == porder)
 
@@ -418,7 +418,7 @@ namespace LeanFine
             try
             {
                 var q_count = (from a in DB.Pp_P1d_OutputSubs
-                               where a.isDeleted == 0
+                               where a.IsDeleted == 0
                                where a.Proorder.Contains(OrderNo)
                                group a by new
                                {
@@ -642,7 +642,7 @@ namespace LeanFine
                 //求和
                 var q =
                     (from p in DB.Pp_P2d_OutputSubs
-                     .Where(s => s.isDeleted == 0)
+                     .Where(s => s.IsDeleted == 0)
                     .Where(s => s.Prorealqty != 0)
                     //.Where(s => s.Prodate == pdate)
                     .Where(s => s.Proorder == OrderNo)
@@ -685,7 +685,7 @@ namespace LeanFine
                 //求和
                 //var qs =
                 //    (from p in DB.Pp_P1d_Defects
-                //     .Where(s => s.isDeleted == 0)
+                //     .Where(s => s.IsDeleted == 0)
                 //    .Where(s => s.Prorealqty != 0)
                 //    .Where(s => s.Proorder == porder)
 

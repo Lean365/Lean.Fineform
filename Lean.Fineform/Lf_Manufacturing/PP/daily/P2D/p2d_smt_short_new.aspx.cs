@@ -141,7 +141,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             item.UDF54 = 0;
             item.UDF55 = 0;
             item.UDF56 = 0;
-            item.isDeleted = 0;
+            item.IsDeleted = 0;
             item.Remark = "";
             item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();

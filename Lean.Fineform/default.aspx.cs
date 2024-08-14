@@ -61,8 +61,8 @@ namespace LeanFine
             tbText.Text = versionName;
             //tbText.Text = String.Format(productName + versionName);
             //Window1.Title = String.Format("LeanManufacturing v{0}", GetProductVersion());
-            //tbxUserName.Text = "admin";
-            //tbxPassword.Text = "admin";
+            tbxUserName.Text = "admin";
+            tbxPassword.Text = "Lean@fine";
         }
 
         #endregion Page_Load

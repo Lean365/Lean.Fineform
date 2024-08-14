@@ -32,7 +32,7 @@ namespace LeanFine.Lf_Report
             var q = from a in DBCharts.Fico_Monthly_Inventorys
                     join b in DBCharts.Mm_Materials on a.Bc_Item equals b.MatItem
                     where a.Bc_YM.CompareTo(atedate) == 0
-                    where a.isDeleted == 0
+                    where a.IsDeleted == 0
                     select new
                     {
                         b.ProfitCenter,

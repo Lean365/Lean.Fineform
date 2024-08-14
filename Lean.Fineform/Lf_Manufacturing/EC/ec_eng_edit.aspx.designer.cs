@@ -168,33 +168,6 @@ namespace LeanFine.Lf_Manufacturing.EC
         protected global::FineUIPro.Label sReason;
 
         /// <summary>
-        /// FormRow9 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow9;
-
-        /// <summary>
-        /// isModifysop 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.RadioButtonList isModifysop;
-
-        /// <summary>
-        /// isConfirm 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.RadioButtonList isConfirm;
-
-        /// <summary>
         /// FormRow4 控件。
         /// </summary>
         /// <remarks>

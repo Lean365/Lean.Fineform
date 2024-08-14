@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var ss = from b in qss
                          where b.D_SAP_DEST_Z002 != ""
                          where b.D_SAP_ZPABD_S001 != "" && !(from d in DB.Pp_Ec_Subs
-                                                             where d.isDeleted == 0
+                                                             where d.IsDeleted == 0
                                                              select d.Ec_no)
                                                           .Contains(b.D_SAP_ZPABD_S001)
                          select new

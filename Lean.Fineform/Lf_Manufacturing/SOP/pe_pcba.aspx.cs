@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
 
                             where a.Ec_pengpdate == ""
                             orderby a.Ec_entrydate descending
@@ -104,7 +104,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             where a.Ec_pengpdate != ""
 
                             //where a.Ec_distinction != 4
@@ -142,7 +142,7 @@ namespace LeanFine.Lf_Manufacturing.SOP
                 {
                     var q = from a in DB.Pp_Ec_Sops
                                 //join b in DB.Pp_Ec_Sops on a.Ec_no equals b.Ec_no
-                            where a.isDeleted == 0
+                            where a.IsDeleted == 0
                             //where a.Ec_qadate == ""
                             //where a.Ec_distinction != 4
                             //where a.Remark.Contains("OK") == false

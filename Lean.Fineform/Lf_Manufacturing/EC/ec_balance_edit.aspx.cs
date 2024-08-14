@@ -136,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                          item.isEnd,
                          item.Creator,
                          item.CreateDate,
-                         item.isDeleted,
+                         item.IsDeleted,
                      }).ToList();
             List<Pp_Ec_Balance> UpdateList = (from item in q
                                               select new Pp_Ec_Balance
@@ -159,7 +159,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                   isEnd = item.isEnd,
                                                   Creator = item.Creator,
                                                   CreateDate = item.CreateDate,
-                                                  isDeleted = item.isDeleted,
+                                                  IsDeleted = item.IsDeleted,
                                                   Modifier = GetIdentityName(),
                                                   ModifyDate = DateTime.Now,
                                               }).ToList();

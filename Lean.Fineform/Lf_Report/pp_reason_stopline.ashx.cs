@@ -32,7 +32,7 @@ namespace LeanFine.Lf_Report
                 //where p.Probadmemo != "NULL"
                 //where !string.IsNullOrEmpty(p.Prostopcou)
                 //where !string.IsNullOrEmpty(p.Probadmemo)
-                where p.isDeleted == 0
+                where p.IsDeleted == 0
                 //where p.Prorealtime != 0 || p.Prolinestopmin != 0
 
                 //group p by new { Prodate = p.Prodate.Substring(0, 6), p.Probadcou }

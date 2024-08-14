@@ -49,7 +49,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             strProstdiff, strProqtydiff, strProratio,
                             strUDF01, strUDF02, strUDF03, strUDF04, strUDF05, strUDF06,
                             strUDF51, strUDF52, strUDF53, strUDF54, strUDF55, strUDF56,
-                            strisDeleted, strRemark,
+                            strIsDeleted, strRemark,
                             strCreator, strCreateDate, strModifier, strModifyDate;
 
         public static int prorate;
@@ -371,7 +371,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //    string OperateNotes = "Del* " + Contectext + " *Del 的记录可能将被删除";
             //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
 
-            //    item.isDeleted = 1;
+            //    item.IsDeleted = 1;
             //    DB.SaveChanges();
 
             //    //重新绑定
@@ -683,7 +683,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proratio = int.Parse(strProratio);
                         item.UDF51 = int.Parse(strUDF51);
                         item.UDF54 = decimal.Parse(strUDF54);
-                        item.isDeleted = 0;
+                        item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
 
@@ -1122,7 +1122,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //            a.UDF04,
             //            a.UDF05,
             //            a.UDF06,
-            //            a.isDeleted,
+            //            a.IsDeleted,
             //            a.Remark,
             //            a.Creator,
             //            a.CreateDate,

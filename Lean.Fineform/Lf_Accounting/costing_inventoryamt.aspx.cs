@@ -72,7 +72,7 @@ namespace LeanFine.Lf_Accounting
 
                 var q = from a in DB.Fico_Monthly_Inventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         select a;
 
                 //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
@@ -134,7 +134,7 @@ namespace LeanFine.Lf_Accounting
 
                 var q = from a in DB.Fico_Monthly_Inventorys
                             //where a.Bc_Financialym.CompareTo(FY) == 0
-                        where a.isDeleted == 0
+                        where a.IsDeleted == 0
                         select a;
 
                 //string sdate = this.DpStartDate.SelectedDate.Value.ToString("yyyyMM");
