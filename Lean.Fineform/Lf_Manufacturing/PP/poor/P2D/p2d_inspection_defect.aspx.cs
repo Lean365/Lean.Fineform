@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Proinspdate.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Promodel.Contains(searchText) || u.Proinspdate.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
