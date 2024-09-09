@@ -66,7 +66,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             defaultObj.Add("Proinsqtime", 0);
             defaultObj.Add("Proaoitime", 0);
             defaultObj.Add("Probadqty", 0);
-            defaultObj.Add("Prolinename", "");
+            defaultObj.Add("Prolinename", "1");
             defaultObj.Add("Probadcontent", "-");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");
@@ -596,7 +596,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             strProrealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();   //生产
                             strProispqty = tb.Rows[tb.Rows.Count - 1]["Proispqty"].ToString();    //检查
                             strPropcbchecktype = tb.Rows[tb.Rows.Count - 1]["Propcbchecktype"].ToString();  //检查状态
-                            strProlinename = "SMT";// tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();  //线别
+                            strProlinename = tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();  //线别
                             strProinsqtime = tb.Rows[tb.Rows.Count - 1]["Proinsqtime"].ToString();  //检查工数
                             strProaoitime = tb.Rows[tb.Rows.Count - 1]["Proaoitime"].ToString();   //AOI工数
                             strProbadqty = tb.Rows[tb.Rows.Count - 1]["Probadqty"].ToString();    //不良数量
@@ -742,7 +742,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             strProrealqty = tb.Rows[0]["Prorealqty"].ToString();   //生产
                             strProispqty = tb.Rows[0]["Proispqty"].ToString();    //检查
                             strPropcbchecktype = tb.Rows[0]["Propcbchecktype"].ToString();  //检查状态
-                            strProlinename = "SMT";// tb.Rows[0]["Prolinename"].ToString();  //线别
+                            strProlinename = tb.Rows[0]["Prolinename"].ToString();  //线别
                             strProinsqtime = tb.Rows[0]["Proinsqtime"].ToString();  //检查工数
                             strProaoitime = tb.Rows[0]["Proaoitime"].ToString();   //AOI工数
                             strProbadqty = tb.Rows[0]["Probadqty"].ToString();    //不良数量
@@ -883,7 +883,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 rowData["Prosidebdate"] = dpProsidebdate.SelectedDate;
             }
             //线别
-            rowData["Prolinename"] = "SMT";
+            rowData["Prolinename"] = "1";
             //检查台数
             rowData["Proispqty"] = 0;
 

@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-        <style>
+    <style>
         /*.f-grid-row .f-grid-cell-inner {
             font-size:small;
             white-space: normal;
@@ -17,10 +17,17 @@
             /*background-color: #66CCCC;*/
             /*color: #fff;*/
         }
-                .f-grid-row .f-grid-cell-Ec_issuedate {
+
+        .f-grid-row .f-grid-cell-Ec_issuedate {
             font-size: 75%;
             /*background-color: #66CCCC;*/
             /*color: #fff;*/
+        }
+
+        .color2 {
+            background-color: #fff;
+            color: #F56C6C; /*红色*/
+            font-weight: bold; /* 加粗文字 */
         }
     </style>
 </head>
@@ -45,12 +52,12 @@
                                 <f:DatePicker runat="server" Label="<%$ Resources:GlobalResource,Query_Startdate%>" DateFormatString="yyyyMMdd" EmptyText="<%$ Resources:GlobalResource,Query_Startdate_EmptyText%>" AutoPostBack="true"
                                     ID="DpStartDate" ShowRedStar="True" OnTextChanged="DpStartDate_TextChanged">
                                 </f:DatePicker>
-                                 <f:ToolbarFill ID="ToolbarFill4" runat="server"></f:ToolbarFill>                                
+                                <f:ToolbarFill ID="ToolbarFill4" runat="server"></f:ToolbarFill>
                                 <f:DatePicker ID="DpEndDate" Readonly="false" CompareControl="DpStartDate" DateFormatString="yyyyMMdd" AutoPostBack="true"
                                     CompareOperator="GreaterThan" CompareMessage="<%$ Resources:GlobalResource,Query_Enddate_EmptyText%>" Label="<%$ Resources:GlobalResource,Query_Enddate%>"
                                     runat="server" ShowRedStar="True" OnTextChanged="DpEndDate_TextChanged">
                                 </f:DatePicker>
-                                 <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
+                                <f:ToolbarFill ID="ToolbarFill1" runat="server"></f:ToolbarFill>
                                 <f:TwinTriggerBox ID="ttbSearchMessage" runat="server" ShowLabel="false" EmptyText="<%$ Resources:GlobalResource,Query_Pp_EC_EmptyText%>"
                                     Trigger1Icon="Clear" Trigger2Icon="Search" ShowTrigger1="false" OnTrigger2Click="ttbSearchMessage_Trigger2Click"
                                     OnTrigger1Click="ttbSearchMessage_Trigger1Click">
@@ -60,8 +67,8 @@
                         </f:Toolbar>
 
                         <f:Toolbar ID="Toolbar1" runat="server">
-                            <Items>                              
-                               
+                            <Items>
+
                                 <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"
                                     Text="<%$ Resources:GlobalResource, sys_Status_Pp_EC_Unenforced %>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
                                 </f:RadioButton>
@@ -84,7 +91,8 @@
                                 </f:Button>
                                 <f:Button ID="BtnImplemented" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
                                     runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetEcn_Implemented%>" OnClick="BtnImplemented_Click" CssClass="marginr">
-                                </f:Button>                            </Items>
+                                </f:Button>
+                            </Items>
                         </f:Toolbar>
                     </Toolbars>
                     <PageItems>

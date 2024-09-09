@@ -161,7 +161,7 @@
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="100px" ColumnID="Protime" DataField="Protime" HeaderText="生产工数" FieldType="Int">
+                        <f:RenderField Width="100px" ColumnID="Protime" DataField="Protime" HeaderText="总工数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProtime" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
                                 </f:NumberBox>
@@ -185,7 +185,7 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="100px" ColumnID="Prolosstime" DataField="Prolosstime" HeaderText="损失工数" FieldType="Int">
+                        <f:RenderField Width="100px" ColumnID="Prolosstime" DataField="Prolosstime" HeaderText="修工数" FieldType="Int">
                             <Editor>
                                 <f:NumberBox ID="numProlosstime" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
                                 </f:NumberBox>

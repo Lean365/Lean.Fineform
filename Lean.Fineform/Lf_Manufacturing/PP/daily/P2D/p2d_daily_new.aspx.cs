@@ -358,7 +358,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                 item.Proorderqty = Decimal.Parse(prolotqty.Text);
 
-                item.Promodel = "二";// promodel.Text;
+                item.Promodel = promodel.Text;
 
                 item.Prost = 0;//Decimal.Parse(prost.Text);
                 //item.Prosubst = Decimal.Parse(prosubst.Text);
@@ -404,6 +404,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 SaveSubItem();
                 //更新单头机种
                 UpdateItem(strProModel);
+                //删除无单身数据
+                UpdatingHelper.DelOutputPcbaSubs(ParentID, "制二课", prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
             }
             catch (ArgumentNullException Message)
             {
@@ -456,10 +458,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     string itemtype = hbn[0].Pordertype.ToString();
                     var res = (from p in DB.Pp_Manhours
                                where p.Proitem.Contains(itemhbn)
+                               where p.Prowctext.Contains("SMT")
                                orderby p.Prowctext
                                //where p.Age > 30 && p.Department == "研发部"
                                select p).ToList();
                     int icount = res.Count();
+
                     if (itemtype.Contains("ZDTD") || itemtype.Contains("ZDTE") || itemtype.Contains("ZDTF"))
                     {
                         //判断查询是否为空
@@ -1165,6 +1169,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     {
                         // 切勿使用 source.Count() > 0
                         var qs = q.Distinct().Take(1).ToList();
+
                         if (qs[0].Porderno != "")
                         {
                             pordertype.Text = qs[0].Pordertype;
@@ -1175,13 +1180,34 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             prolotqty.Text = qs[0].Porderqty.ToString();
                             //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
                             prosn.Text = qs[0].Porderserial;
+                            var pShort = (from p in DB.Pp_Manhours
+                                          where p.Proitem.Contains(prohbn.Text)
+                                          where p.Prowctext.Contains("SMT")
+                                          orderby p.Prowctext
+                                          //where p.Age > 30 && p.Department == "研发部"
+                                          select p).ToList();
+                            if (!pShort.Any())
+                            {
+                                Alert.ShowInTop("没有找到对应班组的SMT的生产点数！，请联系技术添加！", MessageBoxIcon.Warning);
+                                return;
+                            }
                             //HourQty();
                         }
                         else
                         {
-                            // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
-                            Alert.ShowInTop("ST为0！", String.Empty, ActiveWindow.GetHideReference());
+                            //var pShort = (from p in DB.Pp_Manhours
+                            //              where p.Proitem.Contains(prohbn.Text)
+                            //              where p.Prowctext.Contains("SMT")
+                            //              orderby p.Prowctext
+                            //              //where p.Age > 30 && p.Department == "研发部"
+                            //              select p).ToList();
+
+                            //if (!pShort.Any())
+                            //{
+                            Alert.ShowInTop("没有找到对应班组的SMT的生产点数！，请联系技术添加！", MessageBoxIcon.Warning);
                             return;
+                            //}
+                            // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
                         }
                     }
                     else

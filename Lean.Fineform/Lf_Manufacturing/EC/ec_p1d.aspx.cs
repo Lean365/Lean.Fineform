@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                             where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
                             where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
-
+                            where b.IsAssyManage == 1
                             // where b.Ec_newitem != "0"
                             orderby b.Ec_entrydate descending
                             //where a.Remark.Contains("OK") == false
@@ -116,7 +116,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                             where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
                             where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
-
+                            where b.IsAssyManage == 1
                             //where b.Ec_newitem != "0"
                             orderby b.Ec_entrydate descending
 
@@ -159,6 +159,46 @@ namespace LeanFine.Lf_Manufacturing.EC
                             join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                             orderby b.Ec_entrydate descending
                             where b.IsDeleted == 0
+                            where b.IsAssyManage == 1
+                            select new
+                            {
+                                a.Ec_no,
+                                a.Ec_distinction,
+                                b.Ec_model,
+                                b.Ec_bomitem,
+                                b.Ec_bomsubitem,
+                                b.Ec_olditem,
+                                b.Ec_newitem,
+                                a.Ec_issuedate,
+                            };
+                    string searchText = ttbSearchEcnsub.Text.Trim();
+                    if (!String.IsNullOrEmpty(searchText))
+                    {
+                        q = q.Where(u => u.Ec_no.ToString().Contains(searchText) || u.Ec_model.ToString().Contains(searchText) || u.Ec_bomitem.ToString().Contains(searchText) || u.Ec_bomsubitem.ToString().Contains(searchText) || u.Ec_olditem.ToString().Contains(searchText) || u.Ec_newitem.ToString().Contains(searchText) || u.Ec_issuedate.ToString().Contains(searchText));
+                    }
+
+                    var qs = q.Select(E => new { E.Ec_no, E.Ec_issuedate }).ToList().Distinct();
+                    //// 在查询添加之后，排序和分页之前获取总记录数
+                    //Grid1.RecordCount = GridHelper.GetTotalCount(q);
+
+                    //if (Grid1.RecordCount != 0)
+                    //{
+                    //    // 排列和数据库分页
+                    //    GridHelper.GetPagedDataTable(Grid1, q);
+                    //}
+
+                    Grid1.DataSource = qs;
+                    Grid1.DataBind();
+
+                    Grid1.SelectedRowIndex = 0;
+                }
+                else if (rbtnFourthAuto.Checked)
+                {
+                    var q = from a in DB.Pp_Ecs
+                            join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
+                            orderby b.Ec_entrydate descending
+                            where b.IsDeleted == 0
+                            where b.IsAssyManage == 0
                             select new
                             {
                                 a.Ec_no,
@@ -232,7 +272,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                               where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
                               where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
-
+                              where b.IsAssyManage == 1
                               //where a.Ec_newitem != "0"
                               orderby b.Ec_entrydate
                               select new
@@ -312,7 +352,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                               where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                               where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
                               where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
-
+                              where b.IsAssyManage == 1
                               //where a.Ec_newitem != "0"
                               orderby b.Ec_entrydate
                               select new
@@ -392,7 +432,88 @@ namespace LeanFine.Lf_Manufacturing.EC
                               //where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
                               //where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
                               //where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
+                              where b.IsAssyManage == 1
+                              //where a.Ec_newitem != "0"
+                              orderby b.Ec_entrydate
+                              select new
+                              {
+                                  a.Ec_documents,
+                                  a.Ec_letterno,
+                                  a.Ec_letterdoc,
+                                  a.Ec_eppletterno,
+                                  a.Ec_eppletterdoc,
+                                  a.Ec_teppletterno,
+                                  a.Ec_teppletterdoc,
+                                  Ec_p1ddate = b.Ec_p1ddate == null ? "" : b.Ec_p1ddate,
+                                  b.Ec_p1dline,
+                                  b.Ec_p1dlot,
 
+                                  b.Ec_p1dnote,
+                                  b.Ec_model,
+                                  b.Ec_bomitem,
+                                  b.Ec_no,
+
+                                  b.Ec_pmclot,
+                              };
+
+                    //查询LINQ去重复
+                    var q = doc.Select(E =>
+                    new
+                    {
+                        E.Ec_documents,
+                        E.Ec_letterno,
+                        E.Ec_letterdoc,
+                        E.Ec_eppletterno,
+                        E.Ec_eppletterdoc,
+                        E.Ec_teppletterno,
+                        E.Ec_teppletterdoc,
+                        E.Ec_p1ddate,
+                        E.Ec_p1dline,
+                        E.Ec_p1dlot,
+
+                        E.Ec_p1dnote,
+                        E.Ec_model,
+                        E.Ec_bomitem,
+                        E.Ec_no,
+
+                        E.Ec_pmclot,
+                    }).Distinct();
+                    //q = q.Where(u => u.Ec_no.Contains(ecnno) && u.Ec_p1ddate != "");
+
+                    // 在查询添加之后，排序和分页之前获取总记录数
+                    Grid2.RecordCount = GridHelper.GetTotalCount(q);
+                    if (Grid2.RecordCount != 0)
+                    {
+                        // 排列和数据库分页
+                        //q = SortAndPage<Pp_P1d_Outputsub>(q, Grid1);
+
+                        // 1.设置总项数（特别注意：数据库分页一定要设置总记录数RecordCount）
+                        //Grid1.RecordCount = GetTotalCount();
+
+                        // 2.获取当前分页数据
+                        DataTable table = GridHelper.GetPagedDataTable(Grid2, q);
+
+                        Grid2.DataSource = table;
+                        Grid2.DataBind();
+                    }
+                    else
+                    {
+                        Grid2.DataSource = "";
+                        Grid2.DataBind();
+                    }
+                }
+                else if (rbtnFourthAuto.Checked)
+                {
+                    //查询LINQ去重复
+                    var doc = from a in DB.Pp_Ecs
+                              join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
+                              where b.IsDeleted == 0
+                              where a.Ec_no.Contains(strecnno)
+                              //where string.IsNullOrEmpty(b.Ec_p1ddate)// == "" || b.Ec_p1ddate == null
+                              //where !string.IsNullOrEmpty(b.Ec_pmcdate)// != "" || b.Ec_pmcdate != null
+                              //where !string.IsNullOrEmpty(b.Ec_mmdate)// != "" || b.Ec_mmdate != null
+                              //where !string.IsNullOrEmpty(b.Ec_p2ddate)// != "" || b.Ec_p2ddate != null
+                              where b.IsAssyManage == 0
                               //where a.Ec_newitem != "0"
                               orderby b.Ec_entrydate
                               select new
@@ -588,6 +709,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 BindGrid2();
             }
             else if (rbtnThirdAuto.Checked)
+            {
+                BindGrid1();
+                BindGrid2();
+            }
+            else if (rbtnFourthAuto.Checked)
             {
                 BindGrid1();
                 BindGrid2();

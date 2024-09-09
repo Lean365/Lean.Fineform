@@ -71,7 +71,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                             where string.IsNullOrEmpty(b.Ec_pmcdate) //== ""  || b.Ec_pmcdate == null
                             //where a.Ec_distinction != 4
-                            where b.IsManage != 0
+                            //where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new
@@ -149,7 +149,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             where !string.IsNullOrEmpty(b.Ec_purdate)// != ""|| b.Ec_purdate != null
                             where !string.IsNullOrEmpty(b.Ec_pmcdate)// != ""  || b.Ec_pmcdate != null
                             //where a.Ec_distinction != 4
-                            where b.IsManage != 0
+                            //where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new
@@ -226,7 +226,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             //where b.Ec_purdate != ""|| b.Ec_purdate != null
                             //where b.Ec_pmcdate != ""|| b.Ec_pmcdate != null
                             //where a.Ec_distinction != 4
-                            where b.IsManage != 0
+                            //where b.IsManage != 0
                             //where a.Remark.Contains("OK") == false
                             orderby b.Ec_entrydate descending
                             select new

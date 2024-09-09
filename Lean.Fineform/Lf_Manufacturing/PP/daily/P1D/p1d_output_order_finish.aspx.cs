@@ -412,19 +412,35 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         //}
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-            //DataRowView row = e.DataItem as DataRowView;
-            //if (row != null)
-            //{
-            if (e.Values[3].ToString() == "◎已完成")
+            DataRowView row = e.DataItem as DataRowView;
+
+            // 状态
+            string eProstatus = row["Prostatus"].ToString();
+            BoundField cProstatus = Grid1.FindColumn("Prostatus") as BoundField;
+            if (eProstatus == "◎已完成")
             {
-                e.Values[3] = String.Format(" <span><font color='green'>{0}</font></span>", e.Values[3]);
+                e.CellCssClasses[cProstatus.ColumnIndex] = "color1";
             }
             else
             {
-                e.Values[3] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[3]);
+                e.CellCssClasses[cProstatus.ColumnIndex] = "color2";
             }
 
-            //}
+            // 差异
+            int eProdiff = Convert.ToInt32(row["Prodiff"]);
+            BoundField cProdiff = Grid1.FindColumn("Prodiff") as BoundField;
+            if (eProdiff < 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color2";
+            }
+            if (eProdiff == 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color3";
+            }
+            if (eProdiff > 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color4";
+            }
         }
 
         protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)

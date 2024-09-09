@@ -1,34 +1,32 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p2d_output_order_finish.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.daily.P2D.p2d_output_order_finish" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <style>
-        .x-grid-row-summary .x-grid-cell-inner {
-            font-weight: bold;
-            color: red;
-        }
-
-        .x-grid-row-summary .x-grid-cell {
-            background-color: #fff !important;
-        }
-
         .color1 {
-            background-color: #0094ff;
-            color: #fff;
+            background-color: #fff;
+            color: #79bbff; /*蓝色*/
         }
 
         .color2 {
-            background-color: #0026ff;
-            color: #fff;
+            background-color: #fff;
+            color: #F56C6C; /*红色*/
+             font-weight: bold; /* 加粗文字 */
         }
 
         .color3 {
-            background-color: #b200ff;
-            color: #fff;
+            background-color: #fff;
+            color: #337ecc; /*蓝色*/
+        }
+
+        .color4 {
+            background-color: #fff;
+            color: #c45656; /*红色*/
+            font-weight: bold; /* 加粗文字 */
+            font-style: italic; /* 倾斜文字 */
         }
     </style>
 </head>
@@ -103,8 +101,8 @@
                     <Columns>
 
                         <f:BoundField DataField="Prolot" SortField="Prolot" Width="104px" HeaderText="生产LOT" />
-                        <f:BoundField DataField="Propcbatype" SortField="Propcbatype"  Width="102px" HeaderText="板别" />
-                        <f:BoundField DataField="Propcbaside" SortField="Propcbaside"  Width="102px" HeaderText="多面板" />
+                        <f:BoundField DataField="Propcbatype" SortField="Propcbatype" Width="102px" HeaderText="板别" />
+                        <f:BoundField DataField="Propcbaside" SortField="Propcbaside" Width="102px" HeaderText="多面板" />
                         <f:BoundField DataField="Prolotqty" SortField="Prolotqty" ColumnID="Prolotqty" Width="101px" HeaderText="Lot数量" />
 
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="107px" HeaderText="已生产" />

@@ -68,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             defaultObj.Add("Proinsqtime", 0);
             defaultObj.Add("Proaoitime", 0);
             defaultObj.Add("Probadqty", 0);
-            defaultObj.Add("Prolinename", "SMT");
+            defaultObj.Add("Prolinename", "1");
             defaultObj.Add("Probadcontent", "-");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");
@@ -919,7 +919,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 rowData["Prosidebdate"] = dpProsidebdate.SelectedDate;
             }
             //线别
-            rowData["Prolinename"] = "SMT";
+            rowData["Prolinename"] = "1";
             //检查台数
             rowData["Proispqty"] = 0;
 
@@ -1131,7 +1131,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 rowData["Prolinename"] = rowDict["Prolinename"];
                 if (string.IsNullOrEmpty(rowData["Prolinename"].ToString()))
                 {
-                    Alert.ShowInTop("线别不能为空！");
+                    Alert.ShowInTop("线别不能为空！请输入1或2");
                     return;
                 }
                 else

@@ -303,6 +303,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报新增", OperateNotes);
 
             SaveSubItem();
+            //删除无单身数据
+            UpdatingHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
         }
 
         //新增新增生产日报单身

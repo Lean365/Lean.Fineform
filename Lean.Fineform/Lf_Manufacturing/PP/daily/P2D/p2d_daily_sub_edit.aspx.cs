@@ -1054,7 +1054,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新累计生产数量
-            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, userid, item.Propcbatype, item.Propcbaside);
+            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prolinename, userid, item.Propcbatype, item.Propcbaside);
 
             //更新不良集计数据中的实绩生产数量,按工单
             UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);

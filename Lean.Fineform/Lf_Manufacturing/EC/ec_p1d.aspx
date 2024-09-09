@@ -6,21 +6,19 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-        <style type="text/css">
+    <style type="text/css">
         .f-grid-row .f-grid-cell-Ec_pmclot {
-            font-size:75%;
+            font-size: 75%;
             background-color: #66CCCC;
             color: #fff;
         }
-
-
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" AutoSizePanelID="RegionPanel1" runat="server" EnableFStateValidation="false"></f:PageManager>
         <f:RegionPanel ID="RegionPanel1" ShowBorder="false" runat="server">
-                        <Toolbars>
+            <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>
                         <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"
@@ -30,6 +28,9 @@
                             OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
                         </f:RadioButton>
                         <f:RadioButton ID="rbtnThirdAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_EC_All%>" runat="server"
+                            OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                        </f:RadioButton>
+                        <f:RadioButton ID="rbtnFourthAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Notoutbound%>" runat="server"
                             OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
                         </f:RadioButton>
                         <%--<f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">
@@ -48,7 +49,7 @@
                 <f:Region ID="Region1" ShowBorder="false" ShowHeader="false" Width="120px" Position="Left" Layout="Fit" BodyPadding="5px" runat="server">
                     <Items>
                         <f:Grid ID="Grid1" runat="server" ShowBorder="true" ShowHeader="false" EnableCheckBoxSelect="false" DataKeyNames="ID,Ec_no,Ec_model," AllowSorting="true"
-                            OnSort="Grid1_Sort" SortField="Ec_issuedate" SortDirection="DESC" AllowPaging="false" EnableMultiSelect="false" EnableRowDoubleClickEvent="False" 
+                            OnSort="Grid1_Sort" SortField="Ec_issuedate" SortDirection="DESC" AllowPaging="false" EnableMultiSelect="false" EnableRowDoubleClickEvent="False"
                             EnableRowClickEvent="true" OnRowClick="Grid1_RowClick">
 
                             <Columns>

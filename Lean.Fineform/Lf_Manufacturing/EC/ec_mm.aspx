@@ -8,12 +8,10 @@
     <title></title>
     <style type="text/css">
         .f-grid-row .f-grid-cell-Ec_pmclot {
-            font-size:75%;
+            font-size: 75%;
             background-color: #66CCCC;
             color: #fff;
         }
-
-
     </style>
 </head>
 <body>
@@ -30,6 +28,9 @@
                             OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
                         </f:RadioButton>
                         <f:RadioButton ID="rbtnThirdAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_EC_All%>" runat="server"
+                            OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
+                        </f:RadioButton>
+                        <f:RadioButton ID="rbtnFourthAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Notoutbound%>" runat="server"
                             OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
                         </f:RadioButton>
                         <%--<f:ToolbarSeparator ID="ToolbarSeparator2" runat="server">

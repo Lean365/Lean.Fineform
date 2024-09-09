@@ -119,7 +119,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                  a.Propcbaside,
                                  a.Prorealqty,
                                  Prostatus = (a.Prolotqty == a.Prorealqty ? "◎已完成" : "◎未完成"),
-                                 Prodiff = a.Prolotqty - a.Prorealqty,
+                                 Prodiff = a.Prorealqty - a.Prolotqty,
                              };
 
                     // q = q.Where(u => u.Promodel != "0");
@@ -418,17 +418,54 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         //}
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
         {
-            //DataRowView row = e.DataItem as DataRowView;
-            //if (row != null)
-            //{
-            if (e.Values[3].ToString() == "◎已完成")
+            // e.DataItem  -> System.Data.DataRowView or custom class.
+            // e.RowIndex -> Current row index.
+            // e.Values -> Rendered html for each column of this row.
+
+            // e.DataItem  -> System.Data.DataRowView or custom class.
+            // e.RowIndex -> Current row index.
+            // e.Values -> Rendered html for each column of this row.
+
+            DataRowView row = e.DataItem as DataRowView;
+
+            // 状态
+            string eProstatus = row["Prostatus"].ToString();
+            BoundField cProstatus = Grid1.FindColumn("Prostatus") as BoundField;
+            if (eProstatus == "◎已完成")
             {
-                e.Values[3] = String.Format(" <span><font color='green'>{0}</font></span>", e.Values[3]);
+                e.CellCssClasses[cProstatus.ColumnIndex] = "color1";
             }
             else
             {
-                e.Values[3] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[3]);
+                e.CellCssClasses[cProstatus.ColumnIndex] = "color2";
             }
+
+            // 差异
+            int eProdiff = Convert.ToInt32(row["Prodiff"]);
+            BoundField cProdiff = Grid1.FindColumn("Prodiff") as BoundField;
+            if (eProdiff < 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color2";
+            }
+            if (eProdiff == 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color3";
+            }
+            if (eProdiff > 0)
+            {
+                e.CellCssClasses[cProdiff.ColumnIndex] = "color4";
+            }
+            //DataRowView row = e.DataItem as DataRowView;
+            //if (row != null)
+            //{
+            //if (e.Values[5].ToString() == "◎已完成")
+            //{
+            //    e.Values[6] = String.Format(" <span><font color='green'>{0}</font></span>", e.Values[6]);
+            //}
+            //else
+            //{
+            //    e.Values[6] = String.Format(" <span><font color='red'>{0}</font></span>", e.Values[6]);
+            //}
 
             //}
         }

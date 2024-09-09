@@ -38,6 +38,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         private void LoadData()
         {
+            //更新P2D实时总量
+            //UpdatingHelper.UpdateP2DRealTotals();
             //BindDdlGUID();
             // 权限检查
             //CheckPowerWithButton("CoreNoticeEdit", btnChangeEnableUsers);
@@ -628,7 +630,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                          累计生产 = g == null ? 0 : g.Prorealtotal,
                          //不良件数 = aa == null ? 0 : aa.Probadqty,
                          完成状况 = g.Propcbastated,
-                         生产工数 = g.Protime,
+                         总工数 = g.Protime,
                          切换次数 = g.Prohandoffnum,
                          切换时间 = g.Prohandofftime,
                          切停机时间 = g.Prodowntime,
@@ -636,7 +638,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                          原因说明 = g.Prostopmemo,
                          未达成 = g.Probadcou,
                          未达成原因 = g.Probadmemo,
-                         损失工数 = g.Prolosstime,
+                         修工数 = g.Prolosstime,
                          投入工数 = g.Promaketime,
                          不良台数 = g.UDF51,
                          修正仕损 = g.UDF52,

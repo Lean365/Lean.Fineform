@@ -108,14 +108,14 @@
                         <f:BoundField DataField="Prostopmemo" SortField="Prostopmemo" ColumnID="Prostopmemo" Width="60px" Hidden="True" HeaderText="停线说明" />
                         <f:BoundField DataField="Probadcou" SortField="Probadcou" ColumnID="Probadcou" Width="60px" Hidden="True" HeaderText="未达成" />
                         <f:BoundField DataField="Probadmemo" SortField="Probadmemo" ColumnID="Probadmemo" Width="60px" Hidden="True" HeaderText="说明" />
-                        <f:BoundField DataField="Prolinemin" SortField="Prolinemin" ColumnID="Prolinemin" Width="60px" Hidden="True" HeaderText="生产工数" />
+                        <f:BoundField DataField="Prolinemin" SortField="Prolinemin" ColumnID="Prolinemin" Width="60px" Hidden="True" HeaderText="总工数" />
                         <f:BoundField DataField="Prorealtime" SortField="Prorealtime" ColumnID="Prorealtime" Width="60px" Hidden="True" HeaderText="实际工数" />
                         <f:BoundField DataField="Propcbastated" SortField="Propcbastated" ColumnID="Propcbastated" Width="60px" Hidden="False" HeaderText="完成状态" />
-                        <f:BoundField DataField="Protime" SortField="Protime" ColumnID="Protime" Width="60px" Hidden="False" HeaderText="生产工数" />
+                        <f:BoundField DataField="Protime" SortField="Protime" ColumnID="Protime" Width="60px" Hidden="False" HeaderText="总工数" />
                         <f:BoundField DataField="Prohandoffnum" SortField="Prohandoffnum" ColumnID="Prohandoffnum" Width="60px" Hidden="False" HeaderText="切换次数" />
                         <f:BoundField DataField="Prohandofftime" SortField="Prohandofftime" ColumnID="Prohandofftime" Width="60px" Hidden="False" HeaderText="切换时间" />
                         <f:BoundField DataField="Prodowntime" SortField="Prodowntime" ColumnID="Prodowntime" Width="60px" Hidden="False" HeaderText="切停机时间" />
-                        <f:BoundField DataField="Prolosstime" SortField="Prolosstime" ColumnID="Prolosstime" Width="60px" Hidden="False" HeaderText="损失工数" />
+                        <f:BoundField DataField="Prolosstime" SortField="Prolosstime" ColumnID="Prolosstime" Width="60px" Hidden="False" HeaderText="修工数" />
                         <f:BoundField DataField="Promaketime" SortField="Promaketime" ColumnID="Promaketime" Width="60px" Hidden="False" HeaderText="投入工数" />
                         <f:BoundField DataField="Proworkst" SortField="Proworkst" ColumnID="Proworkst" Width="60px" Hidden="True" HeaderText="实绩生产工时" />
                         <f:BoundField DataField="Prostdiff" SortField="Prostdiff" ColumnID="Prostdiff" Width="60px" Hidden="True" HeaderText="工时差异" />
