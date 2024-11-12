@@ -87,10 +87,10 @@
                         </f:ToolbarText>
                         <f:DropDownList ID="ddlGridPageSize" Width="80px" AutoPostBack="true" OnSelectedIndexChanged="ddlGridPageSize_SelectedIndexChanged"
                             runat="server">
-                            <f:ListItem Text="10" Value="10" />
-                            <f:ListItem Text="20" Value="20" />
-                            <f:ListItem Text="50" Value="50" />
                             <f:ListItem Text="100" Value="100" />
+                            <f:ListItem Text="200" Value="200" />
+                            <f:ListItem Text="500" Value="500" />
+                            <f:ListItem Text="1000" Value="1000" />
                         </f:DropDownList>
                     </PageItems>
                     <Columns>
@@ -104,6 +104,7 @@
                         <%--<f:CheckBoxField DataField="IsManage" SortField="IsManage" HeaderText="管理否" RenderAsStaticField="true"
                             Width="80px" />--%>
                         <f:BoundField DataField="Ec_model" SortField="Ec_model" Width="180px" HeaderText="机种名称" />
+                        <f:BoundField DataField="Ec_bomitem" SortField="Ec_bomitem" Width="180px" HeaderText="完成品" />
                         <f:BoundField DataField="Ec_newitem" SortField="Ec_newitem" Width="180px" HeaderText="新物料" />
                         <f:BoundField DataField="Ec_newtext" SortField="Ec_newtext" Width="180px" HeaderText="物料描述" />
 

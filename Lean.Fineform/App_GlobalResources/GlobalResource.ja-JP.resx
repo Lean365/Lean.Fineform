@@ -378,6 +378,9 @@
   <data name="sys_Export_SheetNormal" xml:space="preserve">
     <value>生産明細</value>
   </data>
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+    <value>損失工数原因</value>
+  </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
     <value>進捗看板</value>
   </data>
@@ -624,8 +627,8 @@
   <data name="sys_Export_SheetTime" xml:space="preserve">
     <value>工数明細</value>
   </data>
-  <data name="menu_Pp_P1D_Times" xml:space="preserve">
-    <value>製造1工数</value>
+  <data name="menu_Pp_Times_P1D" xml:space="preserve">
+    <value>製造1</value>
   </data>
   <data name="menu_Pp_Manhours" xml:space="preserve">
     <value>工時</value>
@@ -1161,11 +1164,11 @@
   <data name="menu_Pp_TL_Liaison" xml:space="preserve">
     <value>リスト</value>
   </data>
-  <data name="menu_Pp_TL" xml:space="preserve">
-    <value>連絡書</value>
-  </data>
   <data name="menu_Pp_TL_List" xml:space="preserve">
     <value>検索</value>
+  </data>
+  <data name="menu_Pp_TL" xml:space="preserve">
+    <value>連絡書</value>
   </data>
   <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
     <value>勘定科目</value>
@@ -1218,9 +1221,6 @@
   <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
     <value>未実施点数</value>
   </data>
-  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
-    <value>損失工数原因</value>
-  </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
     <value>検査</value>
   </data>
@@ -1245,8 +1245,8 @@
   <data name="menu_Pp_Smt" xml:space="preserve">
     <value>SMT</value>
   </data>
-  <data name="menu_Pp_P2D_Times" xml:space="preserve">
-    <value>製造２工数</value>
+  <data name="menu_Pp_Times_P2D" xml:space="preserve">
+    <value>製造2</value>
   </data>
   <data name="sys_Button_Unrelated" xml:space="preserve">
     <value>関係なし</value>
@@ -1256,5 +1256,29 @@
   </data>
   <data name="sys_Status_Region" xml:space="preserve">
     <value>全仕向地</value>
+  </data>
+  <data name="menu_Pp_P1D_Times" xml:space="preserve">
+    <value>製造1工数</value>
+  </data>
+  <data name="menu_Pp_P2D_Times" xml:space="preserve">
+    <value>製造２工数</value>
+  </data>
+  <data name="sys_Export_SheetP2dConfirm" xml:space="preserve">
+    <value>確認OPH</value>
+  </data>
+  <data name="sys_Export_SheetP2dDaily" xml:space="preserve">
+    <value>P2D OPHレポート</value>
+  </data>
+  <data name="menu_Pp_P2d_SwitchNote" xml:space="preserve">
+    <value>切り替え</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Defect" xml:space="preserve">
+    <value>改修不良</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Output" xml:space="preserve">
+    <value>改修生产</value>
+  </data>
+  <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
+    <value>切替データがないので、切替履歴を追加します。</value>
   </data>
 </root>

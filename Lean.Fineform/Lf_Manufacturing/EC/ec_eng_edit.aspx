@@ -224,7 +224,7 @@
                                 <f:BoundField DataField="IsMmManage" SortField="IsMmManage" Width="120px" HeaderText="部管" />
                                 <f:BoundField DataField="IsPcbaManage" SortField="IsPcbaManage" Width="120px" HeaderText="制二" />
                                 <f:BoundField DataField="IsAssyManage" SortField="IsAssyManage" Width="120px" HeaderText="组立" />
-                                <f:RowNumberField Width="35px" EnablePagingNumber="true" />
+                                <f:RowNumberField Width="35px" EnablePagingNumber="true" HeaderText="IDX"/>
                                 <f:BoundField DataField="Ec_no" ColumnID="Ec_no" SortField="Ec_no" EnableLock="true" Width="100px" HeaderText="设变号码" />
                                 <f:BoundField DataField="Ec_model" ColumnID="Ec_model" SortField="Ec_model" EnableLock="true" Width="150px" HeaderText="机种" />
                                 <f:BoundField DataField="Ec_bomitem" ColumnID="Ec_bomitem" SortField="Ec_bomitem" EnableLock="true" Width="150px" HeaderText="完成品" />

@@ -48,7 +48,10 @@
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server">
                                 </f:ToolbarFill>
                                 <f:Button ID="BtnList" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
-                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_Sheet%>" OnClick="BtnList_Click" CssClass="marginr">
+                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetP2dConfirm%>" OnClick="BtnList_Click" CssClass="marginr">
+                                </f:Button>
+                                <f:Button ID="BtnDaily" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
+                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetP2dDaily%>" OnClick="BtnDaily_Click" CssClass="marginr">
                                 </f:Button>
                                 <f:ToolbarFill ID="ToolbarFill2" runat="server">
                                 </f:ToolbarFill>

@@ -50,6 +50,42 @@ namespace LeanFine
         }
 
         /// <summary>
+        /// 更新不良表（pp_defect）中实际生产数量，条件按日期，订单，班组
+        /// </summary>
+        /// <param name="strPorder"></param>
+        /// <param name="strPdate"></param>
+        /// <param name="strPline"></param>
+        public static void ModifyDefectRealqty_Update(string strPorder, string strPdate, string strPline, string uid)
+        {
+            int realQty = 0;
+
+            //更新生产实绩
+            var q =
+                    (from p in DB.Pp_P1d_Modify_OutputSubs
+                     where p.IsDeleted == 0
+                     where p.Proorder == strPorder
+                     where p.Prodate == strPdate
+                     where p.Prolinename == strPline
+                     group p by p.Prolot into g
+                     select new
+                     {
+                         TotalQty = g.Sum(p => p.Prorealqty)
+                     }).ToList();
+            if (q.Any())
+            {
+                realQty = q[0].TotalQty;
+            }
+
+            DB.Pp_P1d_Modify_Defects
+              .Where(s => s.Proorder == strPorder)
+              .Where(s => s.Prodate == strPdate)
+              .Where(s => s.Prolinename == strPline)
+              .ToList()
+              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+            DB.SaveChanges();
+        }
+
+        /// <summary>
         /// 更新订单不良集计表（Pp_Defect_Totals），条件按订单,生产实绩（Prorealqty）
         /// </summary>
         /// <param name="strPorder"></param>
@@ -60,6 +96,37 @@ namespace LeanFine
             //更新生产实绩
             var q =
                     (from p in DB.Pp_P1d_OutputSubs
+                     where p.IsDeleted == 0
+                     where p.Proorder == strPorder
+                     group p by p.Prolot into g
+                     select new
+                     {
+                         TotalQty = g.Sum(p => p.Prorealqty)
+                     }).ToList();
+            if (q.Any())
+            {
+                realQty = q[0].TotalQty;
+            }
+
+            DB.Pp_Defect_Totals
+              .Where(s => s.Proorder == strPorder)
+
+              .ToList()
+              .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+            DB.SaveChanges();
+        }
+
+        /// <summary>
+        /// 更新订单不良集计表（Pp_Defect_Totals），条件按订单,生产实绩（Prorealqty）
+        /// </summary>
+        /// <param name="strPorder"></param>
+        public static void ModifyDefectTotalRealqty_Update(string strPorder, string uid)
+        {
+            int realQty = 0;
+
+            //更新生产实绩
+            var q =
+                    (from p in DB.Pp_P1d_Modify_OutputSubs
                      where p.IsDeleted == 0
                      where p.Proorder == strPorder
                      group p by p.Prolot into g
@@ -151,6 +218,76 @@ namespace LeanFine
         }
 
         /// <summary>
+        /// 更新无不良台数，条件生产订单，（Pronobadqty）
+        /// </summary>
+        /// <param name="strPorder"></param>
+        public static void ModifynoDefectQty_Update(string strPorder, string uid)
+        {
+            int noQty = 0;
+            int okQty = 0;
+            var noqs =
+                from p in DB.Pp_P1d_Modify_Defects
+                where p.IsDeleted == 0
+                where p.Proorder == strPorder
+                group p by new
+                {
+                    p.Prolinename,
+                    p.Prodate,
+                    p.Proorder,
+                    p.Pronobadqty,
+                }
+                     into g
+                select new
+                {
+                    g.Key.Prodate,
+                    g.Key.Prolinename,
+                    g.Key.Proorder,
+                    g.Key.Pronobadqty,
+                };
+
+            //统计无不良台数（有不良录入时）
+            var noqty = (from p in noqs
+                         group p by new
+                         {
+                             p.Proorder,
+                         }
+                        into g
+                         select new
+                         {
+                             TotalQty = g.Sum(p => p.Pronobadqty)
+                         }).ToList();
+
+            if (noqty.Any())
+            {
+                noQty = noqty[0].TotalQty;
+            }
+            //统计无不良台数（无不良录入时）
+            var ids = new HashSet<string>(DB.Pp_P1d_Modify_Defects.Select(x => x.Prodate + x.Proorder + x.Prolinename));
+            var results = DB.Pp_P1d_Modify_OutputSubs.Where(x => !ids.Contains(x.Prodate + x.Proorder + x.Prolinename) && x.Proorder == strPorder && x.IsDeleted == 0);
+
+            var okqty = (from a in results
+                         group a by a.Proorder
+                                into g
+
+                         select new
+                         {
+                             TotalQty = g.Sum(p => p.Prorealqty)
+                         }).ToList();
+            if (okqty.Any())
+            {
+                okQty = okqty[0].TotalQty;
+            }
+
+            DB.Pp_Defect_Totals
+                  .Where(s => s.Proorder == strPorder)
+                  //.Where(s => s.Prodate == strPdate)
+
+                  .ToList()
+                  .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+            DB.SaveChanges();
+        }
+
+        /// <summary>
         /// 判断订单是否已经录入不良集计，（Proorder判断）
         /// </summary>
         /// <param name="strPorder"></param>
@@ -162,6 +299,44 @@ namespace LeanFine
 
             var noqs =
                 (from p in DB.Pp_P1d_Defects
+                 where p.IsDeleted == 0
+                 where p.Proorder == strPorder
+                 where p.Prodate == strPdate
+                 where p.Prolinename == Pline
+                 group p by new
+                 {
+                     p.Prolinename,
+                     p.Prodate,
+                     p.Proorder,
+                 }
+                     into g
+                 select new
+                 {
+                     TotalQty = g.Sum(p => p.Pronobadqty)
+                 }).ToList();
+            if (noqs.Any())
+            {
+                noQty = noqs[0].TotalQty;
+
+                if (noQty > 0)
+                {
+                    Alert.ShowInTop("日期：" + strPdate + ",订单：" + strPorder + ",班组：" + Pline + ",已经输入了不良集计，需要重新输入无不良台数进行更新！");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断订单是否已经录入不良集计，（Proorder判断）
+        /// </summary>
+        /// <param name="strPorder"></param>
+        /// <param name="strPdate"></param>
+        /// <param name="Pline"></param>
+        public static void ModifyCheckDefectData(string strPorder, string strPdate, string Pline)
+        {
+            int noQty = 0;
+
+            var noqs =
+                (from p in DB.Pp_P1d_Modify_Defects
                  where p.IsDeleted == 0
                  where p.Proorder == strPorder
                  where p.Prodate == strPdate
@@ -316,6 +491,91 @@ namespace LeanFine
                 int ccs = qs[0].Probadamount;
 
                 DB.Pp_P1d_Defects
+                     .Where(s => s.Proorder == porder)
+                   .ToList()
+                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                DB.SaveChanges();
+                DB.Pp_Defect_Totals
+                   .Where(s => s.Proorder == porder)
+                   .ToList()
+                   .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                DB.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// 更新不具合合计，pp_defects=>Probadamount，Pp_Defect_Totals=>Probadtotal
+        /// </summary>
+        /// <param name="pdate"></param>
+        /// <param name="pline"></param>
+        /// <param name="porder"></param>
+        public static void ModifyUpdatebadAmount(string pdate, string pline, string porder, string uid)
+        {
+            //求和
+            var q =
+                (from p in DB.Pp_P1d_Modify_Defects
+                 .Where(s => s.IsDeleted == 0)
+                .Where(s => s.Prorealqty != 0)
+                .Where(s => s.Prodate == pdate)
+                .Where(s => s.Proorder == porder)
+                .Where(s => s.Prolinename == pline)
+
+                 group p by new
+                 {
+                     p.Prodate,
+                     p.Proorder,
+                     p.Prolinename,
+                 }
+                    into g
+                 select new
+                 {
+                     Prodate = g.Key.Prodate,
+                     Proorder = g.Key.Proorder,
+                     Prolinename = g.Key.Prolinename,
+
+                     Probadamount = g.Sum(p => p.Probadqty),
+                 }).ToList();
+
+            //判断查询是否为空
+
+            if (q.Any())
+            {
+                //for遍历
+                for (int i = 0; i < q.Count; i++)
+                {
+                    int cc = q[i].Probadamount;
+
+                    DB.Pp_P1d_Modify_Defects
+                         .Where(s => s.Prolinename == pline && s.Proorder == porder && s.Prodate == pdate)
+
+                       .ToList()
+                       .ForEach(x => { x.Probadamount = cc; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                    DB.SaveChanges();
+                }
+            }
+            //求和
+            var qs =
+                (from p in DB.Pp_P1d_Modify_Defects
+                 .Where(s => s.IsDeleted == 0)
+                .Where(s => s.Prorealqty != 0)
+                .Where(s => s.Proorder == porder)
+
+                 group p by new
+                 {
+                     p.Proorder,
+                 }
+                    into g
+                 select new
+                 {
+                     Proorder = g.Key.Proorder,
+
+                     Probadamount = g.Sum(p => p.Probadqty),
+                 }).ToList();
+            if (qs.Any())
+            {
+                int ccs = qs[0].Probadamount;
+
+                DB.Pp_P1d_Modify_Defects
                      .Where(s => s.Proorder == porder)
                    .ToList()
                    .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
@@ -643,7 +903,7 @@ namespace LeanFine
         /// <param name="uid"></param>
         /// <param name="Propcbatype"></param>
         /// <param name="Propcbaside"></param>
-        public static void UpdateP2DRealTotal(string OrderNo, string Prolinename, string uid, string Propcbatype, string Propcbaside)
+        public static void UpdateP2DRealTotal(string OrderNo, string ProDate, string uid)
         {
             try
             {
@@ -652,11 +912,11 @@ namespace LeanFine
                     (from p in DB.Pp_P2d_OutputSubs
                      .Where(s => s.IsDeleted == 0)
                     .Where(s => s.Prorealqty != 0)
-                    //.Where(s => s.Prodate == pdate)
+                    //.Where(s => s.Prodate == ProDate)
                     .Where(s => s.Proorder == OrderNo)
-                    .Where(s => s.Propcbatype == Propcbatype)
-                    .Where(s => s.Propcbaside == Propcbaside)
-                    .Where(s => s.Prolinename == Prolinename)
+                         //.Where(s => s.Propcbatype == Propcbatype)
+                         //.Where(s => s.Propcbaside == Propcbaside)
+                         //.Where(s => s.Prolinename == Prolinename)
                      group p by new
                      {
                          p.Prolinename,
@@ -679,13 +939,17 @@ namespace LeanFine
 
                 if (q.Any())
                 {
+                    //var qs=q.Where(s => s.Prodate == ProDate).ToList();
                     //for遍历
                     for (int i = 0; i < q.Count; i++)
                     {
                         int cc = q[i].Prorealtotal;
+                        string Prolinename = q[i].Prolinename;
+                        string Propcbatype = q[i].Propcbatype;
+                        string Propcbaside = q[i].Propcbaside;
 
                         DB.Pp_P2d_OutputSubs
-                             .Where(s => s.Proorder == OrderNo && s.Prolinename == Prolinename && s.Propcbatype == Propcbatype && s.Propcbaside == Propcbaside)
+                             .Where(s => s.Prodate.CompareTo(ProDate) >= 0 && s.Proorder == OrderNo && s.Prolinename == Prolinename && s.Propcbatype == Propcbatype && s.Propcbaside == Propcbaside)
 
                            .ToList()
                            .ForEach(x => { x.Prorealtotal = cc; x.Modifier = uid; x.ModifyDate = DateTime.Now; });

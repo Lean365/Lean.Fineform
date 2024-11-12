@@ -21,7 +21,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(200)]
         public string Prodate { get; set; } //生产日期
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string Proorder { get; set; } //生产订单
 
         public int Proorderqty { get; set; }//订单数量

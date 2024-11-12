@@ -871,11 +871,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 RepairDefect 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P1d_Repair_Defect {
+            get {
+                return ResourceManager.GetString("menu_Pp_P1d_Repair_Defect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 RepairOutput 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P1d_Repair_Output {
+            get {
+                return ResourceManager.GetString("menu_Pp_P1d_Repair_Output", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 P1D Manhour 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P1D_Times {
+            get {
+                return ResourceManager.GetString("menu_Pp_P1D_Times", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 P2D Poor 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_P2d_Defect {
             get {
                 return ResourceManager.GetString("menu_Pp_P2d_Defect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SwitchNote 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P2d_SwitchNote {
+            get {
+                return ResourceManager.GetString("menu_Pp_P2d_SwitchNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 P2D Manhour 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P2D_Times {
+            get {
+                return ResourceManager.GetString("menu_Pp_P2D_Times", resourceCulture);
             }
         }
         
@@ -2590,6 +2635,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 OPH Export Confirm 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_SheetP2dConfirm {
+            get {
+                return ResourceManager.GetString("sys_Export_SheetP2dConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 OPH P2d Daily 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_SheetP2dDaily {
+            get {
+                return ResourceManager.GetString("sys_Export_SheetP2dDaily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 BadReasonDETL 的本地化字符串。
         /// </summary>
         internal static string sys_Export_SheetReason {
@@ -2829,6 +2892,15 @@ namespace Resources {
         internal static string sys_Msg_Noedit {
             get {
                 return ResourceManager.GetString("sys_Msg_Noedit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 No switching data, please add switching record. 的本地化字符串。
+        /// </summary>
+        internal static string sys_Msg_NoSwitchdata {
+            get {
+                return ResourceManager.GetString("sys_Msg_NoSwitchdata", resourceCulture);
             }
         }
         

@@ -378,6 +378,9 @@
   <data name="sys_Export_SheetNormal" xml:space="preserve">
     <value>生产明细</value>
   </data>
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+    <value>损失工数原因</value>
+  </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
     <value>生产进度</value>
   </data>
@@ -1161,11 +1164,11 @@
   <data name="menu_Pp_TL_Liaison" xml:space="preserve">
     <value>联络书</value>
   </data>
-  <data name="menu_Pp_TL" xml:space="preserve">
-    <value>技联</value>
-  </data>
   <data name="menu_Pp_TL_List" xml:space="preserve">
     <value>查询</value>
+  </data>
+  <data name="menu_Pp_TL" xml:space="preserve">
+    <value>技联</value>
   </data>
   <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
     <value>会计科目</value>
@@ -1218,9 +1221,6 @@
   <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
     <value>未实施点数</value>
   </data>
-  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
-    <value>损失工数原因</value>
-  </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
     <value>检查记录</value>
   </data>
@@ -1230,11 +1230,11 @@
   <data name="menu_Sys_Dict" xml:space="preserve">
     <value>数据字典</value>
   </data>
-  <data name="menu_Pp_Repair" xml:space="preserve">
-    <value>修理记录</value>
-  </data>
   <data name="menu_Pp_Defect" xml:space="preserve">
     <value>生产不良</value>
+  </data>
+  <data name="menu_Pp_Repair" xml:space="preserve">
+    <value>修理记录</value>
   </data>
   <data name="sys_Button_Batch" xml:space="preserve">
     <value>批量</value>
@@ -1256,5 +1256,29 @@
   </data>
   <data name="sys_Status_Region" xml:space="preserve">
     <value>全仕向</value>
+  </data>
+  <data name="menu_Pp_P1D_Times" xml:space="preserve">
+    <value>制一工数</value>
+  </data>
+  <data name="menu_Pp_P2D_Times" xml:space="preserve">
+    <value>制二工数</value>
+  </data>
+  <data name="sys_Export_SheetP2dConfirm" xml:space="preserve">
+    <value>导出确认</value>
+  </data>
+  <data name="sys_Export_SheetP2dDaily" xml:space="preserve">
+    <value>导出日报</value>
+  </data>
+  <data name="menu_Pp_P2d_SwitchNote" xml:space="preserve">
+    <value>切换记录</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Defect" xml:space="preserve">
+    <value>改修不良</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Output" xml:space="preserve">
+    <value>改修生产</value>
+  </data>
+  <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
+    <value>没有切换数据，请添加切换记录。</value>
   </data>
 </root>

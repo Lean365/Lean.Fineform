@@ -1257,4 +1257,34 @@
   <data name="sys_Status_Region" xml:space="preserve">
     <value>All Model</value>
   </data>
+  <data name="menu_Pp_P1D_Times" xml:space="preserve">
+    <value>P1D Manhour</value>
+  </data>
+  <data name="menu_Pp_P2D_Times" xml:space="preserve">
+    <value>P2D Manhour</value>
+  </data>
+  <data name="sys_Export_SheetP2dConfirm" xml:space="preserve">
+    <value>OPH Export Confirm</value>
+    <comment>导出确认</comment>
+  </data>
+  <data name="sys_Export_SheetP2dDaily" xml:space="preserve">
+    <value>OPH P2d Daily</value>
+    <comment>制二日报</comment>
+  </data>
+  <data name="menu_Pp_P2d_SwitchNote" xml:space="preserve">
+    <value>SwitchNote</value>
+    <comment>SwitchNote</comment>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Defect" xml:space="preserve">
+    <value>RepairDefect</value>
+    <comment>RepairDefect</comment>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Output" xml:space="preserve">
+    <value>RepairOutput</value>
+    <comment>RepairOutput</comment>
+  </data>
+  <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
+    <value>No switching data, please add switching record.</value>
+    <comment>NoSwitchdata</comment>
+  </data>
 </root>

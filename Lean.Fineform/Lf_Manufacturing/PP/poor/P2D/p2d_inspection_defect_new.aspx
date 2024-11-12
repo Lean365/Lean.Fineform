@@ -115,13 +115,13 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="A面" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面实装" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
                             <Editor>
                                 <f:DatePicker ID="dpProsideadate" Required="true" runat="server" >
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="B面" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="T面实装" Renderer="Date" RendererArgument="yyyyMMdd" FieldType="String">
                             <Editor>
                                 <f:DatePicker ID="dpProsidebdate" Required="true" runat="server" >
                                 </f:DatePicker>

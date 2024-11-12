@@ -102,8 +102,8 @@
                         <f:BoundField DataField="Propcbtype" SortField="Propcbtype" Width="80px" HeaderText="板别" />
                         <%-- <f:BoundField DataField="Provisualtype" SortField="Provisualtype" Width="80px" HeaderText="目视" />--%>
                         <%--<f:BoundField DataField="Provctype" SortField="Provctype" Width="80px" HeaderText="VC线别" />--%>
-                        <%--<f:BoundField DataField="Prosideadate" SortField="Prosideadate" Width="80px" HeaderText="生产日期" />--%>
-                        <%--<f:BoundField DataField="Prosidebdate" SortField="Prosidebdate" Width="80px" HeaderText="生产日期" />--%>
+                        <f:BoundField DataField="Prosideadate" SortField="Prosideadate" Width="80px" HeaderText="B面实装" />
+                        <f:BoundField DataField="Prosidebdate" SortField="Prosidebdate" Width="80px" HeaderText="T面实装" />
                         <%--<f:BoundField DataField="Prodshiftname" SortField="Prodshiftname" Width="80px" HeaderText="生产班别" />--%>
                         <f:BoundField DataField="Procensor" SortField="Procensor" Width="80px" HeaderText="检查" />
                         <%--<f:BoundField DataField="Proorder" SortField="Proorder" Width="80px" HeaderText="订单" />--%>
@@ -119,8 +119,8 @@
                         <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良" />
                         <%--<f:BoundField DataField="Probadamount" SortField="Probadamount"  Width="100px" HeaderText="不良总数" />--%>
                         <%--<f:BoundField DataField="Prohandle" SortField="Prohandle" Width="120px" HeaderText="手贴" />--%>
-                        <f:BoundField DataField="Probadserial" SortField="Probadserial" Width="120px" HeaderText="流水" />
-                        <f:BoundField DataField="Probadcontent" SortField="Probadcontent" Width="150px" HeaderText="内容" />
+                        <%--<f:BoundField DataField="Probadserial" SortField="Probadserial" Width="120px" HeaderText="流水" />--%>
+                        <%--<f:BoundField DataField="Probadcontent" SortField="Probadcontent" Width="150px" HeaderText="内容" />--%>
                         <f:BoundField DataField="Probadtype" SortField="Probadtype" Width="150px" HeaderText="个所" />
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"
                             HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>"

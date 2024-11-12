@@ -794,7 +794,17 @@ namespace LeanFine
                                     ButtonName="Btn_Lf_Pp_"+"p1d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
+                                new Adm_Menu
+                                {
+                                    Name = "改修生产",
 
+                                    SortIndex = 110,
+                                    Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_daily.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/prorepaired.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_daily",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
+                                },
                                 new Adm_Menu
                                 {
                                     Name = "OPH查询",
@@ -813,7 +823,7 @@ namespace LeanFine
                                     SortIndex = 130,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_output_order_finish.aspx",
-                                    ImageUrl = "~/Lf_Resources/menu/push.png",
+                                    ImageUrl = "~/Lf_Resources/menu/propush.png",
                                     ButtonName="Btn_Lf_Pp_"+"p1d_output_order_finish",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()
                                 },
@@ -862,6 +872,17 @@ namespace LeanFine
                                 },
                                 new Adm_Menu
                                 {
+                                    Name = "改修不良",
+
+                                    SortIndex = 110,
+                                    Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_modify_defect.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/prorepaired.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p1d_defect",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
+                                },
+                                new Adm_Menu
+                                {
                                     Name = "工单统计",
 
                                     SortIndex = 120,
@@ -877,7 +898,7 @@ namespace LeanFine
 
                                     SortIndex = 130,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_lot_finished.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/report.png",
                                     ButtonName="Btn_Lf_Pp_"+"p1d_defect_lot_finished",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DDefectView").FirstOrDefault<Adm_Power>()
@@ -918,12 +939,23 @@ namespace LeanFine
                                 },
                                 new Adm_Menu
                                 {
-                                    Name = "生产进度",
+                                    Name = "切换记录",
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_switch_note.aspx",
+                                    ImageUrl = "~/Lf_Resources/menu/proswitchtime.png",
+                                    ButtonName="Btn_Lf_Pp_"+"p2d_daily",
+                                    ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DNoteView").FirstOrDefault<Adm_Power>()
+                                },
+                                new Adm_Menu
+                                {
+                                    Name = "生产进度",
+
+                                    SortIndex = 130,
+                                    Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_order_finish.aspx",
-                                    ImageUrl = "~/Lf_Resources/menu/prodaily.png",
+                                    ImageUrl = "~/Lf_Resources/menu/propush.png",
                                     ButtonName="Btn_Lf_Pp_"+"p2d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DOutputView").FirstOrDefault<Adm_Power>()
                                 },
@@ -932,7 +964,7 @@ namespace LeanFine
                                 {
                                     Name = "SMT点数",
 
-                                    SortIndex = 130,
+                                    SortIndex = 140,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_smt_short.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/propcb.png",
@@ -943,7 +975,7 @@ namespace LeanFine
                                 {
                                     Name = "SMT日报",
 
-                                    SortIndex = 140,
+                                    SortIndex = 150,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_smt_daily.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prosmt.png",
@@ -954,7 +986,7 @@ namespace LeanFine
                                 {
                                     Name = "OPH查询",
 
-                                    SortIndex = 150,
+                                    SortIndex = 160,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_query.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/query.png",
@@ -965,7 +997,7 @@ namespace LeanFine
                                 new Adm_Menu
                                 {
                                     Name = "OPH报表",
-                                    SortIndex = 160,
+                                    SortIndex = 170,
                                     Remark = "三级菜单",
                                     NavigateUrl = "~/Lf_Manufacturing/PP/daily/P2D/p2d_output_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/reportl.png",
@@ -1012,7 +1044,7 @@ namespace LeanFine
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_order_totalled.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p1d_defect_opt.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prostats.png",
                                     ButtonName="Btn_Lf_Pp_"+"p2d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()
@@ -1868,6 +1900,10 @@ namespace LeanFine
                         "CoreP2DOutputEdit","制二生产","编辑P2D生产日报","~/Lf_Manufacturing/PP/daily/P2D_daily_edit.aspx",
                         "CoreP2DOutputDelete","制二生产","删除P2D生产日报","~/Lf_Manufacturing/PP/daily/P2D_daily.aspx",
                         "CoreP2DOutputSubEdit","制二生产","编辑P2D生产日报SUB","~/Lf_Manufacturing/PP/daily/P2D_daily_sub_edit.aspx",
+                        "CoreP2DNoteView","制二生产","浏览P2D切换记录列表","~/Lf_Manufacturing/PP/daily/p2d_output_note.aspx",
+                        "CoreP2DNoteNew","制二生产","新增P2D切换记录","~/Lf_Manufacturing/PP/daily/p2d_output_note_new.aspx",
+                        "CoreP2DNoteEdit","制二生产","编辑P2D切换记录","~/Lf_Manufacturing/PP/daily/p2d_output_note_edit.aspx",
+                        "CoreP2DNoteDelete","制二生产","删除P2D切换记录","~/Lf_Manufacturing/PP/daily/p2d_output_note.aspx",
                         "CoreP2DDefectView","制二生产","浏览P2D生产不良列表","~/Lf_Manufacturing/PP/poor/p2d_defect.aspx",
                         "CoreP2DDefectNew","制二生产","新增P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_defect_new.aspx",
                         "CoreP2DDefectEdit","制二生产","编辑P2D生产不良","~/Lf_Manufacturing/PP/poor/p2d_defect_edit.aspx",

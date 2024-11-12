@@ -58,6 +58,9 @@ namespace LeanFine.Lf_Manufacturing.EC
             BindGrid2();
         }
 
+        //IsAssyManage==1为不管理
+        //IsAssyManage==0为管理
+        //IsAssyManage==null为全部
         private void BindGrid1()
         {
             try

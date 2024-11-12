@@ -194,11 +194,47 @@ namespace LeanFine
                 //赋值单元格
                 ws.Cells[1, 2].Value = mybname;
                 //pck.Save();
-                ws.Cells[2, 2].Value = "Date";
-                ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
-                ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
-                ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                //ws.Cells[2, 2].Value = "发行日期";
+                //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
+                //ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ////赋值单元格
+                //ws.Cells[1, 1].Value = "DTA Lines Output Report";
+                //ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                //ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = DateTime.Now.ToString("yyyy-MM-dd") + ":" + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 25].Value = "稼働率:";
+                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 25].Style.Font.Size = 10;
+                ws.Cells[2, 26].Value = "85.00%";
+                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 26].Style.Font.Size = 10;
+                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + DateTime.Now.ToString("yyyy-MM-dd").Substring(0, 4);
+                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 23].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
+                ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 15].Style.Font.Size = 6;
+
                 ws.Cells["A6"].LoadFromDataTable(mydt, true);
                 //Example how to Format Column 1 as numeric
                 //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
@@ -235,6 +271,280 @@ namespace LeanFine
                 //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
                 //Response.BinaryWrite(pck.GetAsByteArray());
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myfname);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //导出管理日报，2007格式文件For EPPLUS类
+        public static void SheetP2dDaily_EpplustoXLSXfile(DataTable mydt, string mybname, string myfname, string issuedate, string proddate, string proweek, string SmtParm, string AiParm, string HandParm, string RepairParm)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                // Set the page setup for horizontal printing
+                ws.View.PageLayoutView = true; // Optional: Set to Page Layout view
+                ws.PrinterSettings.Orientation = eOrientation.Landscape; // Set to landscape orientation
+                ws.PrinterSettings.FitToPage = true; // Fit to page
+                ws.PrinterSettings.FitToHeight = 1; // Fit to 1 page height
+                ws.PrinterSettings.FitToWidth = 1; // Fit to 1 page width
+                //配置文件属性
+                wb.Properties.Title = mybname;
+                wb.Properties.Subject = "Data";
+                wb.Properties.Category = "Excel";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = mybname;
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                // 加载图片
+                ws.Cells["A1:B1"].Merge = true;
+
+                //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                //var image = new FileInfo(imagePath);
+                if (image.Exists)
+                {
+                    var excelImage = ws.Drawings.AddPicture("MyImage", image);
+                    excelImage.SetPosition(0, 0, 0, 0); // Set position (row, rowOffset, column, columnOffset)
+                    excelImage.SetSize(118, 24); // Set size (width, height)
+                    excelImage.From.Column = 0; // Column A
+                    excelImage.From.Row = 0; // Row 2 (A2)
+                    excelImage.From.ColumnOff = 0; // No offset
+                    excelImage.From.RowOff = 0; // No offset
+                }
+
+                // Center the image in the merged cell
+                ws.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                //赋值单元格
+                //ws.Cells[1, 2].Value = mybname;
+                //pck.Save();
+                //ws.Cells[2, 2].Value = "发行日期";
+                //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
+                //ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ////赋值单元格
+                //ws.Cells[1, 1].Value = "DTA Lines Output Report";
+                //ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                //ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                //ws.Cells[1, 7].Value = "制造二课生产管理日报表";
+                //ws.Cells[1, 7].Style.Font.Size = 16;
+
+                // 合并单元格
+                ws.Cells["C1:W1"].Merge = true;
+                ws.Cells["C1"].Value = "制造二课生产管理日报表";
+                ws.Cells["C1"].Style.Font.Size = 16;
+                ws.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["Y1:Z1"].Merge = true;
+                ws.Cells["Y1"].Value = "FORM NO:DTA-04-Z021";
+                ws.Cells["Y1"].Style.Font.Size = 8;
+                ws.Cells["Y1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells["Y1"].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells["C1:W1"].Merge = true;
+                ws.Cells[5, 1].Value = "发行日:";
+                ws.Cells[5, 1].Style.Font.Size = 8;
+                ws.Cells[5, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 2].Value = issuedate;
+                ws.Cells[5, 2].Style.Font.Size = 8;
+                ws.Cells[5, 3].Value = "生产日:";
+                ws.Cells[5, 3].Style.Font.Size = 8;
+                ws.Cells[5, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 4].Value = proddate;
+                ws.Cells[5, 4].Style.Font.Size = 8;
+                ws.Cells[5, 5].Value = proweek;// System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
+                ws.Cells[5, 5].Style.Font.Size = 8;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells["C2:W2"].Merge = true;
+                ws.Cells["C2"].Value = "Company:DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells["C2"].Style.Font.Size = 8;
+                ws.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                ws.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells[2, 13].Value = "Company:";
+                //ws.Cells[2, 14].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 25].Value = "稼働率:";
+                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 25].Style.Font.Size = 10;
+                ws.Cells[2, 26].Value = "85.00%";
+                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 26].Style.Font.Size = 10;
+                ws.Cells[3, 26].Value = "Program Designer : DTA EDP Davis.Ching " + DateTime.Now.ToString("yyyy-MM-dd").Substring(0, 4);
+                ws.Cells[3, 26].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 26].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
+
+                ws.Cells[5, 26].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 26].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 26].Style.Font.Size = 6;
+                ws.Cells[6, 1, 6, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[6, 1, 6, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[6, 1, 6, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                for (int i = 1; i <= mydt.Rows.Count + 4; i++)
+                {
+                    //int row = 6 - i;
+                    for (int j = 1; j <= 26; j++)
+                    {
+                        ws.Cells[6, 1, 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[i + 6, 1, i + 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        //ws.Cells[5, 1, 5, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                    }
+                    ws.Cells[i + 6, 1, i + 6, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                }
+
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+                ws.View.FreezePanes(7, 19);
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                var total = 0.0; // Variable to hold the sum
+                var totalRepair = 0.0; // Variable to hold the sum
+                var startRow = 7; // Adjust this to your starting row
+
+                // Loop through the rows in column K (11th column)
+                for (int row = startRow; row <= ws.Dimension.End.Row; row++)
+                {
+                    var cellValue = ws.Cells[row, 11].Value; // Column K is the 11th column
+                    if (cellValue != null && double.TryParse(cellValue.ToString(), out double value))
+                    {
+                        if (ws.Cells[row, 3].Text == "修正")
+                        {
+                            total += value; // Add to total if it's a valid number
+                        }
+                    }
+                    var cellValueRepair = ws.Cells[row, 24].Value; // Column K is the 11th column
+                    if (cellValueRepair != null && double.TryParse(cellValueRepair.ToString(), out double valueRepair))
+                    {
+                        if (ws.Cells[row, 3].Text == "修正")
+                        {
+                            totalRepair += valueRepair; // Add to total if it's a valid number
+                        }
+                    }
+                }
+                //string totalstr = "A" + (mydt.Rows.Count + 7)+":" + "B" + (mydt.Rows.Count + 7);
+
+                ws.Cells["A" + (mydt.Rows.Count + 7) + ":" + "B" + (mydt.Rows.Count + 7)].Merge = true;
+                ws.Cells["A" + (mydt.Rows.Count + 7)].Value = "生产总台数(修正)";
+                ws.Cells["A" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["A" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                ws.Cells["C" + (mydt.Rows.Count + 7) + ":" + "D" + (mydt.Rows.Count + 7)].Merge = true;
+                ws.Cells["C" + (mydt.Rows.Count + 7)].Value = "无不良台数(修正)";
+                ws.Cells["C" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["C" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                ws.Cells["E" + (mydt.Rows.Count + 7) + ":" + "F" + (mydt.Rows.Count + 7)].Merge = true;
+                ws.Cells["E" + (mydt.Rows.Count + 7)].Value = "直行率";
+                ws.Cells["E" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["E" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                ws.Cells["G" + (mydt.Rows.Count + 7) + ":" + "H" + (mydt.Rows.Count + 7)].Merge = true;
+                ws.Cells["G" + (mydt.Rows.Count + 7)].Value = "不良率";
+                ws.Cells["G" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["G" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+
+                ws.Cells["A" + (mydt.Rows.Count + 8) + ":" + "B" + (mydt.Rows.Count + 10)].Merge = true;
+                string totalstrA = "A" + (mydt.Rows.Count + 8);
+                ws.Cells[totalstrA].Value = total;
+                ws.Cells[totalstrA].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells[totalstrA].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                ws.Cells[totalstrA].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+                ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Merge = true;
+                ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Value = total - totalRepair;
+                ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+
+                //ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Merge = true;
+                ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Value = (total - totalRepair) / total;
+                ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                //ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Merge = true;
+                ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Value = totalRepair / total;
+                ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                //ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["I" + (mydt.Rows.Count + 7) + ":" + "I" + (mydt.Rows.Count + 10)].Merge = true;
+                ws.Cells["I" + (mydt.Rows.Count + 7)].Value = "备注";
+                ws.Cells["I" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["I" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                ws.Cells["J" + (mydt.Rows.Count + 7) + ":" + "Z" + (mydt.Rows.Count + 7)].Merge = true;
+                ws.Cells["J" + (mydt.Rows.Count + 7)].Value = SmtParm;// " SMT切  次，总切换时间  分";
+                ws.Cells["J" + (mydt.Rows.Count + 7)].Style.WrapText = true;
+                ws.Cells["J" + (mydt.Rows.Count + 8) + ":" + "Z" + (mydt.Rows.Count + 8)].Merge = true;
+                ws.Cells["J" + (mydt.Rows.Count + 8)].Value = AiParm;// " 自插停机时间  分";
+                ws.Cells["J" + (mydt.Rows.Count + 8)].Style.WrapText = true;
+                ws.Cells["J" + (mydt.Rows.Count + 9) + ":" + "Z" + (mydt.Rows.Count + 9)].Merge = true;
+                ws.Cells["J" + (mydt.Rows.Count + 9)].Value = HandParm;// " 手插读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟.合计:  人*  分钟=  分钟。";
+                ws.Cells["J" + (mydt.Rows.Count + 9)].Style.WrapText = true;
+                ws.Cells["J" + (mydt.Rows.Count + 10) + ":" + "Z" + (mydt.Rows.Count + 10)].Merge = true;
+                ws.Cells["J" + (mydt.Rows.Count + 10)].Value = RepairParm;// " 修正读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟,合计:  人*  分钟=  分钟。";
+                ws.Cells["J" + (mydt.Rows.Count + 10)].Style.WrapText = true;
 
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
@@ -290,24 +600,24 @@ namespace LeanFine
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 4].Value = "Company:";
                 ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 14].Value = "稼働率:";
-                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 14].Style.Font.Size = 10;
-                ws.Cells[2, 15].Value = "85.00%";
-                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
-                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 15].Style.Font.Size = 6;
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[2, 25].Value = "稼働率:";
+                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 25].Style.Font.Size = 10;
+                ws.Cells[2, 26].Value = "85.00%";
+                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 26].Style.Font.Size = 10;
+                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 23].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
 
                 ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
                 ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
@@ -399,9 +709,9 @@ namespace LeanFine
                 var aTableRange = ws.Cells[1, 1, 1, 15];
                 aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                var bTableRange = ws.Cells[2, 1, 2, 15];
+                var bTableRange = ws.Cells[2, 1, 2, 26];
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                var cTableRange = ws.Cells[3, 1, 3, 15];
+                var cTableRange = ws.Cells[3, 1, 3, 23];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 var dTableRange = ws.Cells[5, 1, 5, 15];
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
@@ -418,24 +728,24 @@ namespace LeanFine
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 4].Value = "Company:";
                 ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 14].Value = "稼働率:";
-                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 14].Style.Font.Size = 10;
-                ws.Cells[2, 15].Value = "85.00%";
-                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
-                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 15].Style.Font.Size = 6;
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[2, 25].Value = "稼働率:";
+                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 25].Style.Font.Size = 10;
+                ws.Cells[2, 26].Value = "85.00%";
+                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 26].Style.Font.Size = 10;
+                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 23].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
                 ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
                 ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
                 ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
@@ -527,9 +837,9 @@ namespace LeanFine
                 var aTableRange = ws.Cells[1, 1, 1, 15];
                 aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                var bTableRange = ws.Cells[2, 1, 2, 15];
+                var bTableRange = ws.Cells[2, 1, 2, 26];
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                var cTableRange = ws.Cells[3, 1, 3, 15];
+                var cTableRange = ws.Cells[3, 1, 3, 23];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 var dTableRange = ws.Cells[5, 1, 5, 15];
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
@@ -546,24 +856,24 @@ namespace LeanFine
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 4].Value = "Company:";
                 ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 14].Value = "稼働率:";
-                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 14].Style.Font.Size = 10;
-                ws.Cells[2, 15].Value = "85.00%";
-                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 15].Style.Font.Size = 10;
-                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
-                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 15].Style.Font.Size = 6;
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[2, 25].Value = "稼働率:";
+                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 25].Style.Font.Size = 10;
+                ws.Cells[2, 26].Value = "85.00%";
+                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 26].Style.Font.Size = 10;
+                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 23].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
                 ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
                 ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
                 ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
@@ -689,10 +999,10 @@ namespace LeanFine
                 var cTableRange = ws.Cells[3, 1, 3, 11];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 14].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
@@ -824,10 +1134,10 @@ namespace LeanFine
                 var cTableRange = ws.Cells[3, 1, 3, 11];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 14].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
@@ -969,10 +1279,10 @@ namespace LeanFine
                 var cTableRange = ws.Cells[3, 1, 3, 23];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 7].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 7].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 7].Style.Font.Size = 10;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 14].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells[5, 23].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
@@ -2619,7 +2929,7 @@ namespace LeanFine
             FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read);
             byte[] buffer = new byte[file.Length];
             file.Read(buffer, 0, (int)file.Length);
-            return wb.AddPicture(buffer, PictureType.JPEG);
+            return wb.AddPicture(buffer, NPOI.SS.UserModel.PictureType.JPEG);
         }
     }
 }

@@ -511,7 +511,24 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Creator = GetIdentityName();
                         DB.Pp_P2d_OutputSubs.Add(item);
                         DB.SaveChanges();
+                        //更新不良数据中的实绩生产数量，按日期，工单，班组
+                        UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
+                        //更新累计生产数量
+                        UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
+
+                        //更新不良集计数据中的实绩生产数量,按工单
+                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
+
+                        //判断不良是否录入
+                        UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+
+                        //更新无不良台数
+                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
+                        //更新订单已生产数量
+                        //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+                        //更新仕损工数
+                        UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
                         //新建日志
                         string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Protime + "," + item.Promodel + "," + item.Prohandoffnum + "," + item.Prohandofftime + "," + item.Prodowntime;
                         string OperateType = "新增";
@@ -644,7 +661,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Proordertype = strProordertype;
                         item.Proorder = strProorder;
                         item.Proorderqty = decimal.Parse(strProorderqty);
-                        item.Prolinename = ddlProlinename.SelectedItem.Text;
+                        item.Prolinename = strProlinename;
                         item.Prodate = strProdate;//dpkProdate.SelectedDate.Value.ToString("yyyyMMdd");
                         item.Prodirect = int.Parse(strProdirect);
                         item.Proindirect = int.Parse(strProindirect);
@@ -658,8 +675,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Prorate = decimal.Parse(strProrate);
                         item.Prostdcapacity = decimal.Parse(strProstdcapacity);
                         item.Totaltag = false;
-                        item.Prostime = strProstime;
-                        item.Proetime = strProetime;
+                        item.Prostime = strProlinename;
+                        item.Proetime = strProlinename;
                         item.Prorealqty = int.Parse(strProrealqty);
                         item.Prorealtotal = int.Parse(strProrealtotal);
                         item.Propcbserial = strPropcbserial;
@@ -691,7 +708,24 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         item.Creator = GetIdentityName();
                         DB.Pp_P2d_OutputSubs.Add(item);
                         DB.SaveChanges();
+                        //更新不良数据中的实绩生产数量，按日期，工单，班组
+                        UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
+                        //更新累计生产数量
+                        UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
+
+                        //更新不良集计数据中的实绩生产数量,按工单
+                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
+
+                        //判断不良是否录入
+                        UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+
+                        //更新无不良台数
+                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
+                        //更新订单已生产数量
+                        //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+                        //更新仕损工数
+                        UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
                         //新建日志
                         string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Protime + "," + item.Promodel + "," + item.Prohandoffnum + "," + item.Prohandofftime + "," + item.Prodowntime;
                         string OperateType = "新增";
@@ -1054,7 +1088,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新累计生产数量
-            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prolinename, userid, item.Propcbatype, item.Propcbaside);
+            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
             UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
@@ -1200,7 +1234,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 ////DataRow row = FindRowByID(rowID);
                 EditDataRow();
-
+                //更新累计生产数量
+                //UpdatingHelper.UpdateP2DRealTotal(item.Proorder, strProlinename, userid, item.Propcbatype, item.Propcbaside);
                 //UpdateDataRow(modifiedDict[rowIndex], row);
 
                 //报表重建
@@ -1210,6 +1245,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //更新不具合实绩
 
                 // Common.UpdateDefectQty(Ophguid);
+
+                //更新累计生产数量
+                UpdatingHelper.UpdateP2DRealTotal(this.proorder.Text, this.prodate.Text, userid);
             }
             catch (ArgumentNullException Message)
             {

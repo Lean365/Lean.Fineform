@@ -98,6 +98,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                              //where b.Ec_distinction == 1
                              where b.IsDeleted == 0
                              //where b.IsManage == 1
+                             orderby b.IsMmManage, b.IsPcbaManage, b.IsAssyManage
                              select new
                              {
                                  b.GUID,

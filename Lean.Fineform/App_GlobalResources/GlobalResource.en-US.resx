@@ -378,6 +378,9 @@
   <data name="sys_Export_SheetNormal" xml:space="preserve">
     <value>ProDETL</value>
   </data>
+  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
+    <value>LossTimeReason</value>
+  </data>
   <data name="menu_Pp_ProducingProgress" xml:space="preserve">
     <value>Progress</value>
   </data>
@@ -1161,11 +1164,11 @@
   <data name="menu_Pp_TL_Liaison" xml:space="preserve">
     <value>List</value>
   </data>
-  <data name="menu_Pp_TL" xml:space="preserve">
-    <value>Technical liaison</value>
-  </data>
   <data name="menu_Pp_TL_List" xml:space="preserve">
     <value>Query</value>
+  </data>
+  <data name="menu_Pp_TL" xml:space="preserve">
+    <value>Technical liaison</value>
   </data>
   <data name="rpt_Charts_Fico_Accounting" xml:space="preserve">
     <value>Accounting</value>
@@ -1218,9 +1221,6 @@
   <data name="sys_Export_SheetEcn_Unenforced" xml:space="preserve">
     <value>Unenforced</value>
   </data>
-  <data name="sys_Export_SheetReasonClassify" xml:space="preserve">
-    <value>LossTimeReason</value>
-  </data>
   <data name="menu_Pp_Inspection" xml:space="preserve">
     <value>Inspection</value>
   </data>
@@ -1256,5 +1256,29 @@
   </data>
   <data name="sys_Status_Region" xml:space="preserve">
     <value>All Model</value>
+  </data>
+  <data name="menu_Pp_P1D_Times" xml:space="preserve">
+    <value>P1D Manhour</value>
+  </data>
+  <data name="menu_Pp_P2D_Times" xml:space="preserve">
+    <value>P2D Manhour</value>
+  </data>
+  <data name="sys_Export_SheetP2dConfirm" xml:space="preserve">
+    <value>OPH Export Confirm</value>
+  </data>
+  <data name="sys_Export_SheetP2dDaily" xml:space="preserve">
+    <value>OPH P2d Daily</value>
+  </data>
+  <data name="menu_Pp_P2d_SwitchNote" xml:space="preserve">
+    <value>SwitchNote</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Defect" xml:space="preserve">
+    <value>RepairDefect</value>
+  </data>
+  <data name="menu_Pp_P1d_Repair_Output" xml:space="preserve">
+    <value>RepairOutput</value>
+  </data>
+  <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
+    <value>No switching data, please add switching record.</value>
   </data>
 </root>

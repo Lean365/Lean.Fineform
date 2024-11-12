@@ -77,9 +77,14 @@ namespace LeanFine
         public DbSet<Pp_P1d_Defect> Pp_P1d_Defects { get; set; }
         public DbSet<Pp_P1d_Output> Pp_P1d_Outputs { get; set; }
         public DbSet<Pp_P1d_OutputSub> Pp_P1d_OutputSubs { get; set; }
+
+        public DbSet<Pp_P1d_Modify_Defect> Pp_P1d_Modify_Defects { get; set; }
+        public DbSet<Pp_P1d_Modify_Output> Pp_P1d_Modify_Outputs { get; set; }
+        public DbSet<Pp_P1d_Modify_OutputSub> Pp_P1d_Modify_OutputSubs { get; set; }
         public DbSet<Pp_P2d_Defect> Pp_P2d_Defects { get; set; }
         public DbSet<Pp_P2d_Output> Pp_P2d_Outputs { get; set; }
         public DbSet<Pp_P2d_OutputSub> Pp_P2d_OutputSubs { get; set; }
+        public DbSet<Pp_P2d_Switch_Note> Pp_P2d_Switch_Notes { get; set; }
         public DbSet<Pp_P2d_Inspection_Defect> Pp_P2d_Inspection_Defects { get; set; }
         public DbSet<Pp_P2d_Manufacturing_Defect> Pp_P2d_Manufacturing_Defects { get; set; }
         public DbSet<Pp_P2d_Smt_Output> Pp_P2d_Smt_Outputs { get; set; }

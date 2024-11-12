@@ -15,6 +15,12 @@
             /*color: #fff;*/
         }
 
+        .f-grid-row .f-grid-cell-Ec_model {
+            font-size: 75%;
+            /*background-color: #66CCCC;*/
+            /*color: #fff;*/
+        }
+
         .f-grid-row .f-grid-cell-Ec_p2ddate {
             font-size: 100%;
             /*background-color: #66CCCC;*/
@@ -22,9 +28,9 @@
         }
 
         .f-grid-row .f-grid-cell-Ec_p2dlot {
-            font-size: 50%;
-            /*background-color: #66CCCC;*/
-            /*color: #fff;*/
+            font-size: 75%;
+            background-color: #fcc7c7;
+            color: #fff;
         }
 
         .f-grid-row .f-grid-cell-Ec_pmclot {
@@ -50,6 +56,7 @@
             /*background-color: #66CCCC;*/
             /*color: #fff;*/
         }
+
 
         .f-grid-row .f-grid-cell-Ec_newitem {
             font-size: 75%;
@@ -133,16 +140,16 @@
                                 <%--<f:BoundField DataField="Ec_details" SortField="Ec_details "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="内容"></f:BoundField>
                             <f:BoundField DataField="Ec_leader" SortField="Ec_leader "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="担当"></f:BoundField>--%>
                                 <%--<f:BoundField DataField="Remark" SortField="Remark "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="备注"></f:BoundField>--%>
-                                <f:BoundField DataField="Ec_model" SortField="Ec_model " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="机种"></f:BoundField>
+                                <f:BoundField DataField="Ec_model" ColumnID="Ec_model" SortField="Ec_model " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="机种"></f:BoundField>
                                 <%--<f:BoundField DataField="Ec_bomitem" SortField="Ec_bomitem "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="完成品"></f:BoundField>--%>
                                 <f:BoundField DataField="Ec_bomsubitem" ColumnID="Ec_bomsubitem" SortField="Ec_bomsubitem " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="上阶品号"></f:BoundField>
                                 <f:BoundField DataField="D_SAP_ZCA1D_Z005" ColumnID="D_SAP_ZCA1D_Z005" SortField="D_SAP_ZCA1D_Z005 " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="文本" DataToolTipField="D_SAP_ZCA1D_Z005"></f:BoundField>
                                 <f:BoundField DataField="Ec_olditem" ColumnID="Ec_olditem" SortField="Ec_olditem " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="旧品号"></f:BoundField>
-                                <f:BoundField DataField="Ec_oldset" SortField="Ec_oldset " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="位置"></f:BoundField>
+                                <f:BoundField DataField="Ec_oldset" SortField="Ec_oldset " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="O位置"></f:BoundField>
                                 <f:BoundField DataField="Ec_newitem" ColumnID="Ec_newitem" SortField="Ec_newitem " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="新品号"></f:BoundField>
                                 <%--<f:BoundField DataField="Ec_newtext" SortField="Ec_newtext "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="文本"></f:BoundField>--%>
                                 <%--<f:BoundField DataField="Ec_newqty" SortField="Ec_newqty "  DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="数量"></f:BoundField>--%>
-                                <f:BoundField DataField="Ec_newset" SortField="Ec_newset " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="位置"></f:BoundField>
+                                <f:BoundField DataField="Ec_newset" SortField="Ec_newset " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="N位置"></f:BoundField>
                                 <f:BoundField DataField="Ec_bomno" SortField="Ec_bomno " DataFormatString="{0}" ExpandUnusedSpace="true" HeaderText="BOM番号"></f:BoundField>
                             </Columns>
                         </f:Grid>
