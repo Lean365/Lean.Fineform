@@ -1281,4 +1281,7 @@
   <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
     <value>没有切换数据，请添加切换记录。</value>
   </data>
+  <data name="sys_Export_Modify" xml:space="preserve">
+    <value>导出改修明细</value>
+  </data>
 </root>

@@ -123,33 +123,6 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected global::FineUIPro.Toolbar Toolbar1;
 
         /// <summary>
-        /// rbtnFirstAuto 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnFirstAuto;
-
-        /// <summary>
-        /// rbtnSecondAuto 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnSecondAuto;
-
-        /// <summary>
-        /// rbtnThirdAuto 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.RadioButton rbtnThirdAuto;
-
-        /// <summary>
         /// ToolbarFill1 控件。
         /// </summary>
         /// <remarks>
@@ -166,15 +139,6 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Button BtnExport;
-
-        /// <summary>
-        /// BtnRepair 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.Button BtnRepair;
 
         /// <summary>
         /// ToolbarSeparator2 控件。

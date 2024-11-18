@@ -89,7 +89,7 @@ namespace LeanFine
         /// 更新订单不良集计表（Pp_Defect_Totals），条件按订单,生产实绩（Prorealqty）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void DefectTotalRealqty_Update(string strPorder, string uid)
+        public static void DefectTotalRealqty_Update(string strPorder, string uid, string strLineType)
         {
             int realQty = 0;
 
@@ -110,7 +110,7 @@ namespace LeanFine
 
             DB.Pp_Defect_Totals
               .Where(s => s.Proorder == strPorder)
-
+                  .Where(s => s.Remark.Contains(strLineType))
               .ToList()
               .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
@@ -120,7 +120,7 @@ namespace LeanFine
         /// 更新订单不良集计表（Pp_Defect_Totals），条件按订单,生产实绩（Prorealqty）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void ModifyDefectTotalRealqty_Update(string strPorder, string uid)
+        public static void ModifyDefectTotalRealqty_Update(string strPorder, string uid, string strLineType)
         {
             int realQty = 0;
 
@@ -141,7 +141,7 @@ namespace LeanFine
 
             DB.Pp_Defect_Totals
               .Where(s => s.Proorder == strPorder)
-
+                                .Where(s => s.Remark.Contains(strLineType))
               .ToList()
               .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
@@ -151,7 +151,7 @@ namespace LeanFine
         /// 更新无不良台数，条件生产订单，（Pronobadqty）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void noDefectQty_Update(string strPorder, string uid)
+        public static void noDefectQty_Update(string strPorder, string uid, string strLineType)
         {
             int noQty = 0;
             int okQty = 0;
@@ -210,7 +210,7 @@ namespace LeanFine
 
             DB.Pp_Defect_Totals
                   .Where(s => s.Proorder == strPorder)
-                  //.Where(s => s.Prodate == strPdate)
+                  .Where(s => s.Remark.Contains(strLineType))
 
                   .ToList()
                   .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
@@ -221,7 +221,7 @@ namespace LeanFine
         /// 更新无不良台数，条件生产订单，（Pronobadqty）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void ModifynoDefectQty_Update(string strPorder, string uid)
+        public static void ModifynoDefectQty_Update(string strPorder, string uid, string strLineType)
         {
             int noQty = 0;
             int okQty = 0;
@@ -280,7 +280,7 @@ namespace LeanFine
 
             DB.Pp_Defect_Totals
                   .Where(s => s.Proorder == strPorder)
-                  //.Where(s => s.Prodate == strPdate)
+                   .Where(s => s.Remark.Contains(strLineType))
 
                   .ToList()
                   .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
@@ -393,7 +393,7 @@ namespace LeanFine
         /// 更新不良集计(Probadtotal)
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void badQtyTotal(string strPorder, string uid)
+        public static void badQtyTotal(string strPorder, string uid, string strLineType)
         {
             int BadTotalQty = 0;
             var q = (from a in DB.Pp_P1d_Defects
@@ -411,8 +411,8 @@ namespace LeanFine
             }
             DB.Pp_Defect_Totals
                   .Where(s => s.Proorder == strPorder)
-                  //.Where(s => s.Prodate == strPdate)
-
+                                    //.Where(s => s.Prodate == strPdate)
+                                    .Where(s => s.Remark.Contains(strLineType))
                   .ToList()
                   .ForEach(x => { x.Probadtotal = BadTotalQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
@@ -424,7 +424,7 @@ namespace LeanFine
         /// <param name="pdate"></param>
         /// <param name="pline"></param>
         /// <param name="porder"></param>
-        public static void UpdatebadAmount(string pdate, string pline, string porder, string uid)
+        public static void UpdatebadAmount(string pdate, string pline, string porder, string uid, string strLineType)
         {
             //求和
             var q =
@@ -497,6 +497,7 @@ namespace LeanFine
                 DB.SaveChanges();
                 DB.Pp_Defect_Totals
                    .Where(s => s.Proorder == porder)
+                   .Where(s => s.Remark.Contains(strLineType))
                    .ToList()
                    .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();
@@ -509,7 +510,7 @@ namespace LeanFine
         /// <param name="pdate"></param>
         /// <param name="pline"></param>
         /// <param name="porder"></param>
-        public static void ModifyUpdatebadAmount(string pdate, string pline, string porder, string uid)
+        public static void ModifyUpdatebadAmount(string pdate, string pline, string porder, string uid, string strLineType)
         {
             //求和
             var q =
@@ -582,6 +583,7 @@ namespace LeanFine
                 DB.SaveChanges();
                 DB.Pp_Defect_Totals
                    .Where(s => s.Proorder == porder)
+                   .Where(s => s.Remark.Contains(strLineType))
                    .ToList()
                    .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();

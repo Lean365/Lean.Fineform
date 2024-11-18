@@ -229,12 +229,13 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                 CheckPowerFailWithAlert();
                 return;
             }
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DateTime.Now.ToString("yyyyMMdd");
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            Xlsbomitem = "Lot_Process_Times";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = "Lot_Process_Times";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
             var q = from p in DB.Pp_Tracking_Times
                         //join b in DB.Pp_Tracking_Times on new { p.Pro_Item, p.Pro_Process } equals new { b.Pro_Item, b.Pro_Process }
                     where p.IsDeleted == 0
@@ -266,7 +267,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                 ConvertHelper.LinqConvertToDataTable(q);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(q), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(q), Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = true;
             }
             else

@@ -492,22 +492,22 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             }
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = updateTime + "_Workinghours";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = updateTime + "_Workinghours";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             //ExportHelper.GetGridDataTable(Exgrid);
             if (Grid1.RecordCount != 0)
             {
                 //DataTable source = GetDataTable.Getdt(mysql);
                 //导出2007格式
-                //ExportHelper.EpplustoXLSXfile(Exdt, Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(Exdt, Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName, "Workinghours", updateTime);
+                ExportHelper.EpplusToExcels(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "Workinghours", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -528,7 +528,8 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string updateTime;
             if (DpStartDate.SelectedDate.Value.ToString("yyyyMM") == DpEndDate.SelectedDate.Value.ToString("yyyyMM"))
             {
@@ -539,9 +540,9 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                 updateTime = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "~" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = updateTime + "_Losshours";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = updateTime + "_Losshours";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q =
                 from p in DB.Pp_P1d_OutputSubs
@@ -608,7 +609,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName, "Losshours", updateTime);
+                ExportHelper.EpplusToExcels(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "Losshours", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -629,7 +630,8 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             string updateTime;
             if (DpStartDate.SelectedDate.Value.ToString("yyyyMM") == DpEndDate.SelectedDate.Value.ToString("yyyyMM"))
             {
@@ -640,9 +642,9 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                 updateTime = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "~" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = updateTime + "_Reason";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = updateTime + "_Reason";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             var q =
@@ -711,7 +713,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName, "Reason", updateTime);
+                ExportHelper.EpplusToExcels(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "Reason", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -732,7 +734,8 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             string updateTime;
             if (DpStartDate.SelectedDate.Value.ToString("yyyyMM") == DpEndDate.SelectedDate.Value.ToString("yyyyMM"))
             {
@@ -743,9 +746,9 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                 updateTime = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "~" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = updateTime + "_Rework";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = updateTime + "_Rework";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q =
                 from p in DB.Pp_P1d_OutputSubs
@@ -800,7 +803,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName, "Rework", updateTime);
+                ExportHelper.EpplusToExcels(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "Rework", updateTime);
                 Grid1.AllowPaging = true;
             }
             else
@@ -821,7 +824,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string XlsTitle, ExportFileName;
+            string XlsTitle, Export_FileName;
             string updateTime;
             if (DpStartDate.SelectedDate.Value.ToString("yyyyMM") == DpEndDate.SelectedDate.Value.ToString("yyyyMM"))
             {
@@ -833,8 +836,8 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
             XlsTitle = updateTime + "_ReasonTime";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = XlsTitle + ".xlsx";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = XlsTitle + ".xlsx";
 
             var q =
                 from p in DB.Pp_P1d_OutputSubs
@@ -887,7 +890,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
 
                 Grid1.AllowPaging = false;
 
-                ExportHelper.EpplustoXLSXfiles(ConvertHelper.LinqConvertToDataTable(qs), XlsTitle, ExportFileName, "ReasonTime", updateTime);
+                ExportHelper.EpplusToExcels(ConvertHelper.LinqConvertToDataTable(qs), XlsTitle, Export_FileName, "ReasonTime", updateTime);
                 Grid1.AllowPaging = true;
             }
             else

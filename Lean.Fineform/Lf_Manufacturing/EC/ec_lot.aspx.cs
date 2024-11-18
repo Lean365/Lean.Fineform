@@ -541,7 +541,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 return;
             }
 
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
 
@@ -661,11 +661,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_unenforced_Issuedate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    Prefix_XlsxName = "ec_Lot_unenforced_Issuedate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -789,11 +790,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_enforced_Issuedate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    Prefix_XlsxName = "ec_Lot_enforced_Issuedate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -916,11 +917,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_Issuedate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    Prefix_XlsxName = "ec_Lot_Issuedate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -939,7 +940,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 CheckPowerFailWithAlert();
                 return;
             }
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
 
@@ -1049,11 +1050,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Unenforced_List";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    Prefix_XlsxName = "ec_Unenforced_List";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -1103,7 +1105,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 CheckPowerFailWithAlert();
                 return;
             }
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
 
@@ -1214,11 +1216,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Implemented_List";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    Prefix_XlsxName = "ec_Implemented_List";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -1269,7 +1272,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 return;
             }
 
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
 
@@ -1389,11 +1392,12 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_unenforced_Entrydate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+                    Prefix_XlsxName = "ec_Lot_unenforced_Entrydate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -1517,11 +1521,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_enforced_Entrydate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    Prefix_XlsxName = "ec_Lot_enforced_Entrydate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else
@@ -1644,11 +1648,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 {
                     int c = GridHelper.GetTotalCount(qs);
                     ConvertHelper.LinqConvertToDataTable(qs);
-                    Xlsbomitem = "ec_Lot_Entrydate";
-                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    Prefix_XlsxName = "ec_Lot_Entrydate";
+                    //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     //Grid1.AllowPaging = true;
                 }
                 else

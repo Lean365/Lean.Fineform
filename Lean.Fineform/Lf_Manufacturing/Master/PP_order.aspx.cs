@@ -169,7 +169,7 @@ namespace LeanFine.Lf_Manufacturing.Master
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_order_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/Master/Pp_order_edit.aspx?GUID=" + keys[0].ToString() + "&type=1"));//+ Window1.GetMaximizeReference()窗口最大化+ Window1.GetMaximizeReference());
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 

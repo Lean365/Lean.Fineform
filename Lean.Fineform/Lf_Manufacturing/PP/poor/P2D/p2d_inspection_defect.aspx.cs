@@ -52,9 +52,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_inspection_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
-            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(-1);//DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(-1);//DateTime.Today; //DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
@@ -281,12 +282,23 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected void BtnExport_Click(object sender, EventArgs e)
         {
             //DataTable Exp = new DataTable();
-            //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Inspection_Details";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            //定义文件前缀和文件名变量
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            // 在操作之前进行权限检查
+            if (!CheckPower("CoreFineExport"))
+            {
+                CheckPowerFailWithAlert();
+                return;
+            }
+            if (DpStartDate.SelectedDate.Value != DpEndDate.SelectedDate.Value)
+            {
+                Alert.ShowInTop("日报只能导出一天的数据！");
+                return;
+            }
+            SheetName = "I" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "_P2d_Inspection_Details";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             IQueryable<Pp_P2d_Inspection_Defect> q = DB.Pp_P2d_Inspection_Defects; //.Include(u => u.Dept);
 
@@ -331,7 +343,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                              批次 = p.Prolot,
                              数量 = p.Proorderqty,
                              生产数 = p.Prorealqty,
-                             检查数 = p.Proispqty,
+                             当天检查数 = p.Proispqty,
                              检查状态 = p.Propcbchecktype,
                              线别 = p.Prolinename,
                              检查工数 = p.Proinsqtime,
@@ -341,12 +353,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                              流水 = p.Probadserial,
                              内容 = p.Probadcontent,
                              个所 = p.Probadtype,
-                             不良率 = (p.Proispqty != 0 ? p.Prorealqty / p.Proispqty : 0)
+                             当天不良率 = (p.Proispqty != 0 ? (decimal)p.Probadqty / p.Proispqty : 0)
                          };
 
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                ExportHelper.P2dIsnp_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), SheetName, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek));
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else

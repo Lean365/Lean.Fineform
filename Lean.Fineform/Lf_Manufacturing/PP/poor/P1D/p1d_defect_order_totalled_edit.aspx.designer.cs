@@ -96,13 +96,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// DefDate 控件。
+        /// prodate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label DefDate;
+        protected global::FineUIPro.Label prodate;
 
         /// <summary>
         /// FormRow3 控件。
@@ -114,13 +114,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow3;
 
         /// <summary>
-        /// prolinename 控件。
+        /// linename 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolinename;
+        protected global::FineUIPro.Label linename;
 
         /// <summary>
         /// FormRow4 控件。
@@ -175,24 +175,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.NumberBox pronobadqty;
-
-        /// <summary>
-        /// FormRow9 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow9;
-
-        /// <summary>
-        /// probadqty 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.NumberBox probadqty;
 
         /// <summary>
         /// FormRow6 控件。

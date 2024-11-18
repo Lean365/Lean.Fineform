@@ -31,15 +31,13 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="DefDate" Label="生产日期" ShowRedStar="True">
+                                <f:Label runat="server" ID="prodate" Label="生产日期" ShowRedStar="True">
                                 </f:Label>
-
-
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="prolinename" Label="生产班组" ShowRedStar="True">
+                                <f:Label runat="server" ID="linename" Label="生产班组" ShowRedStar="True">
                                 </f:Label>
                             </Items>
                         </f:FormRow>

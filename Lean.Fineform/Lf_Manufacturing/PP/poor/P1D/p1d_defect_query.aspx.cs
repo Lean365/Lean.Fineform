@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #region Page_Load
 
-        public static string tracestr, Xlsbomitem, ExportFileName;
+        public static string tracestr, Prefix_XlsxName, Export_FileName;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -347,16 +347,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                Xlsbomitem = searchText + "_DefectDetail";
-                ExportFileName = Xlsbomitem + ".xlsx";
+                Prefix_XlsxName = searchText + "_DefectDetail";
+                Export_FileName = Prefix_XlsxName + ".xlsx";
             }
             else
             {
                 string DdlStringText = DDLlot.SelectedItem.Text;
                 if (DDLlot.SelectedIndex != -1)
                 {
-                    Xlsbomitem = DdlStringText + "_DefectDetail";
-                    ExportFileName = Xlsbomitem + ".xlsx";
+                    Prefix_XlsxName = DdlStringText + "_DefectDetail";
+                    Export_FileName = Prefix_XlsxName + ".xlsx";
                 }
 
                 // 在用户名称中搜索
@@ -364,7 +364,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
 
             //IQueryable<proDefect> q = DB.proDefects; //.Include(u => u.Dept);
 
@@ -392,7 +392,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 //ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = true;
             }
             else
@@ -418,16 +418,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                Xlsbomitem = searchText + "_DefectDetail";
-                ExportFileName = Xlsbomitem.ToUpper() + ".xlsx";
+                Prefix_XlsxName = searchText + "_DefectDetail";
+                Export_FileName = Prefix_XlsxName.ToUpper() + ".xlsx";
             }
             else
             {
                 string DdlStringText = DDLlot.SelectedItem.Text;
                 if (DDLlot.SelectedIndex != -1)
                 {
-                    Xlsbomitem = DdlStringText + "_DefectDetail";
-                    ExportFileName = Xlsbomitem.ToUpper() + ".xlsx";
+                    Prefix_XlsxName = DdlStringText + "_DefectDetail";
+                    Export_FileName = Prefix_XlsxName.ToUpper() + ".xlsx";
                 }
 
                 // 在用户名称中搜索
@@ -528,7 +528,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                     tables.Add(ex);
                 }
-                ExportHelper.TableListToExcel(tables, ma, ExportFileName, 6);
+                ExportHelper.ExportMultipleSheets(tables, ma, Export_FileName);
             }
             else
 

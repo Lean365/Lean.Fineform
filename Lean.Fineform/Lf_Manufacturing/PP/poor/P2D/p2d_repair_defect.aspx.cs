@@ -54,9 +54,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P2D/p2d_repair_defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
-            DpStartDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
+            DpStartDate.SelectedDate = DateTime.Now.AddDays(-1);//DateTime.Now.AddDays(1 - DateTime.Now.Day).Date;
             //本月最后一天
-            DpEndDate.SelectedDate = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+            DpEndDate.SelectedDate = DateTime.Now.AddDays(-1);//DateTime.Today; //DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1);
+
             // 每页记录数
             Grid1.PageSize = 5000;
             ddlGridPageSize.SelectedValue = "5000";
@@ -74,8 +75,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             where a.DictLabel.Contains("修正")
                             select new
                             {
-                                DictLabel = a.DictLabel.Substring(0, 2),
-                                DictValue = a.DictLabel.Substring(0, 2)
+                                DictLabel = a.DictLabel.Substring(1, 2),
+                                DictValue = a.DictLabel.Substring(1, 2)
                             }).Distinct().ToList();
             IQueryable<Pp_P2d_Manufacturing_Defect> q = DB.Pp_P2d_Manufacturing_Defects; //.Include(u => u.Dept);
 
@@ -129,8 +130,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             where a.DictLabel.Contains("修正")
                             select new
                             {
-                                DictLabel = a.DictLabel.Substring(0, 2),
-                                DictValue = a.DictLabel.Substring(0, 2)
+                                DictLabel = a.DictLabel.Substring(1, 2),
+                                DictValue = a.DictLabel.Substring(1, 2)
                             }).ToList();
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
@@ -284,11 +285,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         {
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Details";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            // 在操作之前进行权限检查
+            if (!CheckPower("CoreFineExport"))
+            {
+                CheckPowerFailWithAlert();
+                return;
+            }
+            if (DpStartDate.SelectedDate.Value != DpEndDate.SelectedDate.Value)
+            {
+                Alert.ShowInTop("日报只能导出一天的数据！");
+                return;
+            }
+            SheetName = "R" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "_P2d_Repair_Details";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             IQueryable<Pp_P2d_Manufacturing_Defect> q = DB.Pp_P2d_Manufacturing_Defects; //.Include(u => u.Dept);
 
@@ -326,7 +338,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                              批次 = p.Prolot,
                              批量 = p.Proorderqty,
                              板别 = p.Propcbtype,
-                             生产台数 = p.Prorealqty,
+                             当日生产台数 = p.Prorealqty,
                              线别 = p.Prolinename,
                              卡号 = p.Propcbcardno,
                              不良症状 = p.Probadnote,
@@ -339,12 +351,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                              流水 = p.Probadserial,
                              修理 = p.Probadrepairman,
                              //不良率 = p.Probadqty/ p.Prorealqty,
-                             不良率 = (p.Prorealqty != 0 ? p.Probadqty / p.Prorealqty : 0)
+                             当天不良率 = (p.Prorealqty != 0 ? (decimal)p.Probadqty / p.Prorealqty : 0)
                          };
 
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                ExportHelper.P2dRepair_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), SheetName, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek));
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else

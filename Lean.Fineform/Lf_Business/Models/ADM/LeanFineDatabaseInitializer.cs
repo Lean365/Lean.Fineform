@@ -1044,7 +1044,7 @@ namespace LeanFine
 
                                     SortIndex = 120,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p1d_defect_opt.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/poor/P2D/p2d_defect_order_totalled.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prostats.png",
                                     ButtonName="Btn_Lf_Pp_"+"p2d_defect_order_totalled",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP2DDefectView").FirstOrDefault<Adm_Power>()

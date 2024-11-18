@@ -428,7 +428,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 item.Prodirectrate = 0;
                 item.Probadrate = 0;
                 item.IsDeleted = 0;
-                item.Remark = "";
+                item.Remark = "ASSY";
 
                 item.Promodel = promodel.Text;
                 item.GUID = Guid.NewGuid();
@@ -606,7 +606,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //判断重复
             string input = proorder.SelectedItem.Text.Trim();
 
-            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input).FirstOrDefault();
+            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input && u.Remark.Contains("ASSY")).FirstOrDefault();
 
             if (current != null)
             {

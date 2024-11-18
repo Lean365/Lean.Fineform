@@ -8,9 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using FineUIPro;
-using NPOI;
 using NPOI.SS.UserModel;
-using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -165,7 +163,7 @@ namespace LeanFine
         }
 
         //导出2007格式文件For EPPLUS类
-        public static void EpplustoXLSXfile(DataTable mydt, string mybname, string myfname)
+        public static void EpplusToExcel(DataTable mydt, string mySheetName, string myExport_FileName)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -178,21 +176,21 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
-                wb.Properties.Title = mybname;
+                wb.Properties.Title = mySheetName;
                 wb.Properties.Subject = "Data";
                 wb.Properties.Category = "Excel";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = mybname;
+                wb.Properties.Keywords = mySheetName;
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = mybname;
+                ws.Cells[1, 2].Value = mySheetName;
                 //pck.Save();
                 //ws.Cells[2, 2].Value = "发行日期";
                 //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
@@ -276,7 +274,7 @@ namespace LeanFine
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -286,8 +284,7 @@ namespace LeanFine
             }
         }
 
-        //导出管理日报，2007格式文件For EPPLUS类
-        public static void SheetP2dDaily_EpplustoXLSXfile(DataTable mydt, string mybname, string myfname, string issuedate, string proddate, string proweek, string SmtParm, string AiParm, string HandParm, string RepairParm)
+        public static void P2dRepair_EpplusToExcel(DataTable mydt, string mySheetName, string myExport_FileName, string issuedate, string proddate, string proweek)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -300,7 +297,7 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 // Set the page setup for horizontal printing
                 ws.View.PageLayoutView = true; // Optional: Set to Page Layout view
                 ws.PrinterSettings.Orientation = eOrientation.Landscape; // Set to landscape orientation
@@ -308,13 +305,13 @@ namespace LeanFine
                 ws.PrinterSettings.FitToHeight = 1; // Fit to 1 page height
                 ws.PrinterSettings.FitToWidth = 1; // Fit to 1 page width
                 //配置文件属性
-                wb.Properties.Title = mybname;
+                wb.Properties.Title = mySheetName;
                 wb.Properties.Subject = "Data";
                 wb.Properties.Category = "Excel";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = mybname;
+                wb.Properties.Keywords = mySheetName;
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
@@ -341,7 +338,558 @@ namespace LeanFine
                 ws.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 ws.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                 //赋值单元格
-                //ws.Cells[1, 2].Value = mybname;
+                //ws.Cells[1, 2].Value = mySheetName;
+                //pck.Save();
+                //ws.Cells[2, 2].Value = "发行日期";
+                //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
+                //ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ////赋值单元格
+                //ws.Cells[1, 1].Value = "DTA Lines Output Report";
+                //ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                //ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                //ws.Cells[1, 7].Value = "制造二课生产管理日报表";
+                //ws.Cells[1, 7].Style.Font.Size = 16;
+
+                // 合并单元格
+                ws.Cells["C1:Q1"].Merge = true;
+                ws.Cells["C1"].Value = "修理日报表";
+                ws.Cells["C1"].Style.Font.Size = 16;
+                ws.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["R1:S1"].Merge = true;
+                ws.Cells["R1"].Value = "FORM NO:DTA-04-Z008";
+                ws.Cells["R1"].Style.Font.Size = 8;
+                ws.Cells["R1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells["R1"].Style.Font.Color.SetColor(Color.DarkGray);
+                //ws.Cells["C1:Q1"].Merge = true;
+                ws.Cells[5, 1].Value = "发行日:";
+                ws.Cells[5, 1].Style.Font.Size = 8;
+                ws.Cells[5, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 2].Value = issuedate;
+                ws.Cells[5, 2].Style.Font.Size = 8;
+                ws.Cells[5, 3].Value = "生产日:";
+                ws.Cells[5, 3].Style.Font.Size = 8;
+                ws.Cells[5, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 4].Value = proddate;
+                ws.Cells[5, 4].Style.Font.Size = 8;
+                ws.Cells[5, 5].Value = proweek;// System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
+                ws.Cells[5, 5].Style.Font.Size = 8;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells["C2:Q2"].Merge = true;
+                ws.Cells["C2"].Value = "Company:DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells["C2"].Style.Font.Size = 8;
+                ws.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                ws.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells[2, 13].Value = "Company:";
+                //ws.Cells[2, 14].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 19].Value = "稼働率:";
+                ws.Cells[2, 19].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 19].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 19].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 19].Style.Font.Size = 10;
+                ws.Cells[2, 19].Value = "85.00%";
+                ws.Cells[2, 19].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 19].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 19].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 19].Style.Font.Size = 10;
+                ws.Cells[3, 19].Value = "Program Designer : DTA EDP Davis.Ching " + DateTime.Now.ToString("yyyy-MM-dd").Substring(0, 4);
+                ws.Cells[3, 19].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 19].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 19].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
+
+                ws.Cells[5, 19].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 19].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 19].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 19].Style.Font.Size = 6;
+                ws.Cells[6, 1, 6, 19].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[6, 1, 6, 19].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[6, 1, 6, 19].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //for (int i = 1; i <= mydt.Rows.Count + 4; i++)
+                //{
+                //    //int row = 6 - i;
+                //    for (int j = 1; j <= 19; j++)
+                //    {
+                //        ws.Cells[6, 1, 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                //        ws.Cells[i + 6, 1, i + 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                //        //ws.Cells[5, 1, 5, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                //    }
+                //    ws.Cells[i + 6, 1, i + 6, 19].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //}
+
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+                ws.View.FreezePanes(7, 20);
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                //var total = 0.0; // Variable to hold the sum
+                //var totalRepair = 0.0; // Variable to hold the sum
+                //var startRow = 7; // Adjust this to your starting row
+
+                //// Loop through the rows in column K (11th column)
+                //for (int row = startRow; row <= ws.Dimension.End.Row; row++)
+                //{
+                //    var cellValue = ws.Cells[row, 11].Value; // Column K is the 11th column
+                //    if (cellValue != null && double.TryParse(cellValue.ToString(), out double value))
+                //    {
+                //        if (ws.Cells[row, 3].Text == "修正")
+                //        {
+                //            total += value; // Add to total if it's a valid number
+                //        }
+                //    }
+                //    var cellValueRepair = ws.Cells[row, 24].Value; // Column K is the 11th column
+                //    if (cellValueRepair != null && double.TryParse(cellValueRepair.ToString(), out double valueRepair))
+                //    {
+                //        if (ws.Cells[row, 3].Text == "修正")
+                //        {
+                //            totalRepair += valueRepair; // Add to total if it's a valid number
+                //        }
+                //    }
+                //}
+                //string totalstr = "A" + (mydt.Rows.Count + 7)+":" + "B" + (mydt.Rows.Count + 7);
+
+                //ws.Cells["A" + (mydt.Rows.Count + 7) + ":" + "B" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Value = "生产总台数(修正)";
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 7) + ":" + "D" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Value = "无不良台数(修正)";
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 7) + ":" + "F" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Value = "直行率";
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 7) + ":" + "H" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Value = "不良率";
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+
+                //ws.Cells["A" + (mydt.Rows.Count + 8) + ":" + "B" + (mydt.Rows.Count + 10)].Merge = true;
+                //string totalstrA = "A" + (mydt.Rows.Count + 8);
+                //ws.Cells[totalstrA].Value = total;
+                //ws.Cells[totalstrA].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells[totalstrA].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells[totalstrA].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Value = total - totalRepair;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Value = (total - totalRepair) / total;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Value = totalRepair / total;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["I" + (mydt.Rows.Count + 7) + ":" + "I" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Value = "备注";
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                //ws.Cells["J" + (mydt.Rows.Count + 7) + ":" + "Z" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 7)].Value = SmtParm;// " SMT切  次，总切换时间  分";
+                //ws.Cells["J" + (mydt.Rows.Count + 7)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 8) + ":" + "Z" + (mydt.Rows.Count + 8)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 8)].Value = AiParm;// " 自插停机时间  分";
+                //ws.Cells["J" + (mydt.Rows.Count + 8)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 9) + ":" + "Z" + (mydt.Rows.Count + 9)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 9)].Value = HandParm;// " 手插读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟.合计:  人*  分钟=  分钟。";
+                //ws.Cells["J" + (mydt.Rows.Count + 9)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 10) + ":" + "Z" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 10)].Value = RepairParm;// " 修正读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟,合计:  人*  分钟=  分钟。";
+                //ws.Cells["J" + (mydt.Rows.Count + 10)].Style.WrapText = true;
+                // 设置 S 列为百分数格式
+                ws.Cells["S7:S" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        public static void P2dIsnp_EpplusToExcel(DataTable mydt, string mySheetName, string myExport_FileName, string issuedate, string proddate, string proweek)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("I" + mySheetName);
+                // Set the page setup for horizontal printing
+                ws.View.PageLayoutView = true; // Optional: Set to Page Layout view
+                ws.PrinterSettings.Orientation = eOrientation.Landscape; // Set to landscape orientation
+                ws.PrinterSettings.FitToPage = true; // Fit to page
+                ws.PrinterSettings.FitToHeight = 1; // Fit to 1 page height
+                ws.PrinterSettings.FitToWidth = 1; // Fit to 1 page width
+                //配置文件属性
+                wb.Properties.Title = mySheetName;
+                wb.Properties.Subject = "Data";
+                wb.Properties.Category = "Excel";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = mySheetName;
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                // 加载图片
+                ws.Cells["A1:B1"].Merge = true;
+
+                //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                //var image = new FileInfo(imagePath);
+                if (image.Exists)
+                {
+                    var excelImage = ws.Drawings.AddPicture("MyImage", image);
+                    excelImage.SetPosition(0, 0, 0, 0); // Set position (row, rowOffset, column, columnOffset)
+                    excelImage.SetSize(118, 24); // Set size (width, height)
+                    excelImage.From.Column = 0; // Column A
+                    excelImage.From.Row = 0; // Row 2 (A2)
+                    excelImage.From.ColumnOff = 0; // No offset
+                    excelImage.From.RowOff = 0; // No offset
+                }
+
+                // Center the image in the merged cell
+                ws.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                //赋值单元格
+                //ws.Cells[1, 2].Value = mySheetName;
+                //pck.Save();
+                //ws.Cells[2, 2].Value = "发行日期";
+                //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //ws.Cells[2, 3].Value = DateTime.Now.ToString("yyyy-MM-dd");
+                //ws.Cells[2, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //ws.Cells[2, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ////赋值单元格
+                //ws.Cells[1, 1].Value = "DTA Lines Output Report";
+                //ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                //ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                //ws.Cells[1, 7].Value = "制造二课生产管理日报表";
+                //ws.Cells[1, 7].Style.Font.Size = 16;
+
+                // 合并单元格
+                ws.Cells["C1:V1"].Merge = true;
+                ws.Cells["C1"].Value = "检查日报表";
+                ws.Cells["C1"].Style.Font.Size = 16;
+                ws.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["W1:X1"].Merge = true;
+                ws.Cells["W1"].Value = "FORM NO:DTA-04-Z007";
+                ws.Cells["W1"].Style.Font.Size = 8;
+                ws.Cells["W1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells["W1"].Style.Font.Color.SetColor(Color.DarkGray);
+                //ws.Cells["C1:V1"].Merge = true;
+                ws.Cells[5, 1].Value = "发行日:";
+                ws.Cells[5, 1].Style.Font.Size = 8;
+                ws.Cells[5, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 2].Value = issuedate;
+                ws.Cells[5, 2].Style.Font.Size = 8;
+                ws.Cells[5, 3].Value = "生产日:";
+                ws.Cells[5, 3].Style.Font.Size = 8;
+                ws.Cells[5, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 4].Value = proddate;
+                ws.Cells[5, 4].Style.Font.Size = 8;
+                ws.Cells[5, 5].Value = proweek;// System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
+                ws.Cells[5, 5].Style.Font.Size = 8;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells["C2:V2"].Merge = true;
+                ws.Cells["C2"].Value = "Company:DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells["C2"].Style.Font.Size = 8;
+                ws.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                ws.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells[2, 13].Value = "Company:";
+                //ws.Cells[2, 14].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 23].Value = "稼働率:";
+                ws.Cells[2, 23].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 23].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 23].Style.Font.Size = 10;
+                ws.Cells[2, 24].Value = "85.00%";
+                ws.Cells[2, 24].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 24].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 24].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 24].Style.Font.Size = 10;
+                ws.Cells[3, 24].Value = "Program Designer : DTA EDP Davis.Ching " + DateTime.Now.ToString("yyyy-MM-dd").Substring(0, 4);
+                ws.Cells[3, 24].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 24].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 24].Style.Font.Size = 6;
+                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                ws.Cells[4, 14].Style.Font.Size = 10;
+
+                ws.Cells[5, 24].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 24].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 24].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 24].Style.Font.Size = 6;
+                ws.Cells[6, 1, 6, 24].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[6, 1, 6, 24].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[6, 1, 6, 24].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //for (int i = 1; i <= mydt.Rows.Count + 4; i++)
+                //{
+                //    //int row = 6 - i;
+                //    for (int j = 1; j <= 26; j++)
+                //    {
+                //        ws.Cells[6, 1, 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                //        ws.Cells[i + 6, 1, i + 6, j].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                //        //ws.Cells[5, 1, 5, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                //    }
+                //    ws.Cells[i + 6, 1, i + 6, 26].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //}
+
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+                ws.View.FreezePanes(7, 19);
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                //var total = 0.0; // Variable to hold the sum
+                //var totalRepair = 0.0; // Variable to hold the sum
+                //var startRow = 7; // Adjust this to your starting row
+
+                //// Loop through the rows in column K (11th column)
+                //for (int row = startRow; row <= ws.Dimension.End.Row; row++)
+                //{
+                //    var cellValue = ws.Cells[row, 11].Value; // Column K is the 11th column
+                //    if (cellValue != null && double.TryParse(cellValue.ToString(), out double value))
+                //    {
+                //        if (ws.Cells[row, 3].Text == "修正")
+                //        {
+                //            total += value; // Add to total if it's a valid number
+                //        }
+                //    }
+                //    var cellValueRepair = ws.Cells[row, 24].Value; // Column K is the 11th column
+                //    if (cellValueRepair != null && double.TryParse(cellValueRepair.ToString(), out double valueRepair))
+                //    {
+                //        if (ws.Cells[row, 3].Text == "修正")
+                //        {
+                //            totalRepair += valueRepair; // Add to total if it's a valid number
+                //        }
+                //    }
+                //}
+                // 设置单元格格式为百分比
+
+                //string totalstr = "A" + (mydt.Rows.Count + 7)+":" + "B" + (mydt.Rows.Count + 7);
+
+                //ws.Cells["A" + (mydt.Rows.Count + 7) + ":" + "B" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Value = "生产总台数(修正)";
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["A" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 7) + ":" + "D" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Value = "无不良台数(修正)";
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 7) + ":" + "F" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Value = "直行率";
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 7) + ":" + "H" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Value = "不良率";
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Center the text;
+
+                //ws.Cells["A" + (mydt.Rows.Count + 8) + ":" + "B" + (mydt.Rows.Count + 10)].Merge = true;
+                //string totalstrA = "A" + (mydt.Rows.Count + 8);
+                //ws.Cells[totalstrA].Value = total;
+                //ws.Cells[totalstrA].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells[totalstrA].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells[totalstrA].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Value = total - totalRepair;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["C" + (mydt.Rows.Count + 8) + ":" + "D" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "#,##0.00"; // 设置千分位格式
+
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Value = (total - totalRepair) / total;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["E" + (mydt.Rows.Count + 8) + ":" + "F" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Value = totalRepair / total;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // Center the text;
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // Center the text ver
+                //ws.Cells["G" + (mydt.Rows.Count + 8) + ":" + "H" + (mydt.Rows.Count + 10)].Style.Numberformat.Format = "0.00%"; // 设置千分位格式
+                ////ws.Cells[totalstrA].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["I" + (mydt.Rows.Count + 7) + ":" + "I" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Value = "备注";
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //ws.Cells["I" + (mydt.Rows.Count + 7)].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                //ws.Cells["J" + (mydt.Rows.Count + 7) + ":" + "Z" + (mydt.Rows.Count + 7)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 7)].Value = SmtParm;// " SMT切  次，总切换时间  分";
+                //ws.Cells["J" + (mydt.Rows.Count + 7)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 8) + ":" + "Z" + (mydt.Rows.Count + 8)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 8)].Value = AiParm;// " 自插停机时间  分";
+                //ws.Cells["J" + (mydt.Rows.Count + 8)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 9) + ":" + "Z" + (mydt.Rows.Count + 9)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 9)].Value = HandParm;// " 手插读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟.合计:  人*  分钟=  分钟。";
+                //ws.Cells["J" + (mydt.Rows.Count + 9)].Style.WrapText = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 10) + ":" + "Z" + (mydt.Rows.Count + 10)].Merge = true;
+                //ws.Cells["J" + (mydt.Rows.Count + 10)].Value = RepairParm;// " 修正读工程表6分钟,合计: *6=  分钟, 人切换机种  次  分钟,合计:  人*  分钟=  分钟。";
+                //ws.Cells["J" + (mydt.Rows.Count + 10)].Style.WrapText = true;
+                // 设置 X 列为百分数格式
+                ws.Cells["X7:X" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //导出管理日报，2007格式文件For EPPLUS类
+        public static void P2dDaily_EpplusToExcel(DataTable mydt, string mySheetName, string myExport_FileName, string issuedate, string proddate, string proweek, string SmtParm, string AiParm, string HandParm, string RepairParm)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
+                // Set the page setup for horizontal printing
+                ws.View.PageLayoutView = true; // Optional: Set to Page Layout view
+                ws.PrinterSettings.Orientation = eOrientation.Landscape; // Set to landscape orientation
+                ws.PrinterSettings.FitToPage = true; // Fit to page
+                ws.PrinterSettings.FitToHeight = 1; // Fit to 1 page height
+                ws.PrinterSettings.FitToWidth = 1; // Fit to 1 page width
+                //配置文件属性
+                wb.Properties.Title = mySheetName;
+                wb.Properties.Subject = "Data";
+                wb.Properties.Category = "Excel";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = mySheetName;
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                // 加载图片
+                ws.Cells["A1:B1"].Merge = true;
+
+                //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                //var image = new FileInfo(imagePath);
+                if (image.Exists)
+                {
+                    var excelImage = ws.Drawings.AddPicture("MyImage", image);
+                    excelImage.SetPosition(0, 0, 0, 0); // Set position (row, rowOffset, column, columnOffset)
+                    excelImage.SetSize(118, 24); // Set size (width, height)
+                    excelImage.From.Column = 0; // Column A
+                    excelImage.From.Row = 0; // Row 2 (A2)
+                    excelImage.From.ColumnOff = 0; // No offset
+                    excelImage.From.RowOff = 0; // No offset
+                }
+
+                // Center the image in the merged cell
+                ws.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                //赋值单元格
+                //ws.Cells[1, 2].Value = mySheetName;
                 //pck.Save();
                 //ws.Cells[2, 2].Value = "发行日期";
                 //ws.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
@@ -550,7 +1098,7 @@ namespace LeanFine
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -560,7 +1108,7 @@ namespace LeanFine
             }
         }
 
-        public static void EpplustoXLSXfiles(DataTable mydt, string mybname, string myfname, string mytitle, string update)
+        public static void EpplusToExcels(DataTable mydt, string mySheetName, string myExport_FileName, string mytitle, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -572,17 +1120,17 @@ namespace LeanFine
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
             using (ExcelPackage pck = new ExcelPackage())
             {
-                int fistr = mybname.IndexOf("_");
+                int fistr = mySheetName.IndexOf("_");
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname.Substring(fistr + 1, mybname.Length - fistr - 1));
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName.Substring(fistr + 1, mySheetName.Length - fistr - 1));
                 //配置文件属性
-                wb.Properties.Title = mybname;
+                wb.Properties.Title = mySheetName;
                 wb.Properties.Subject = "Data";
                 wb.Properties.Category = "Excel";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
-                wb.Properties.Keywords = mybname;
+                wb.Properties.Keywords = mySheetName;
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
@@ -668,7 +1216,7 @@ namespace LeanFine
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -679,7 +1227,7 @@ namespace LeanFine
         }
 
         //按班组导出Line Output Report
-        public static void LineOutput_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        public static void LineOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -693,7 +1241,7 @@ namespace LeanFine
             {
                 Color borderColor = Color.FromArgb(155, 155, 155);
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
                 wb.Properties.Category = "Report";
                 wb.Properties.Author = "Davis.Ching";
@@ -717,7 +1265,7 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA Lines Output Report";
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -728,24 +1276,24 @@ namespace LeanFine
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 ws.Cells[2, 4].Value = "Company:";
                 ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 25].Value = "稼働率:";
-                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 25].Style.Font.Size = 10;
-                ws.Cells[2, 26].Value = "85.00%";
-                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 26].Style.Font.Size = 10;
-                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
-                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 23].Style.Font.Size = 6;
-                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 14].Style.Font.Size = 10;
+                ws.Cells[2, 14].Value = "稼働率:";
+                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                ws.Cells[2, 15].Value = "85.00%";
+                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 15].Style.Font.Size = 6;
+                ws.Cells[4, 15].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 15].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 15].Style.Font.Size = 10;
                 ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
                 ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
                 ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
@@ -766,8 +1314,8 @@ namespace LeanFine
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
-                //integer without displaying the number 0 in the cell
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
 
                 ////number with 1 decimal place
                 //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
@@ -791,12 +1339,146 @@ namespace LeanFine
                 //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
                 //Response.BinaryWrite(pck.GetAsByteArray());
-
+                // 设置 X 列为百分数格式
+                ws.Cells["O7:O" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //按班组导出Line Output Report
+        public static void ModifyLineOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                Color borderColor = Color.FromArgb(155, 155, 155);
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
+                //配置文件属性
+                wb.Properties.Category = "Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Lines Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                var aTableRange = ws.Cells[1, 1, 1, 15];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                var bTableRange = ws.Cells[2, 1, 2, 26];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var cTableRange = ws.Cells[3, 1, 3, 23];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var dTableRange = ws.Cells[5, 1, 5, 15];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+
+                //赋值单元格
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別改修OPH)";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 14].Value = "稼働率:";
+                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                ws.Cells[2, 15].Value = "85.00%";
+                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 15].Style.Font.Size = 6;
+                ws.Cells[4, 15].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 15].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 15].Style.Font.Size = 10;
+                ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 15].Style.Font.Size = 6;
+
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 16);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                // 设置 X 列为百分数格式
+                ws.Cells["O7:O" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -807,7 +1489,7 @@ namespace LeanFine
         }
 
         //按班组导出Rework Output Report
-        public static void ReworkLine_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        public static void ReworkLine_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -820,7 +1502,7 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
                 wb.Properties.Category = "Rework Report";
                 wb.Properties.Author = "Davis.Ching";
@@ -845,7 +1527,7 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA Rework by Lines Output Report";
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別改修OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -854,26 +1536,30 @@ namespace LeanFine
                 ws.Cells[2, 1].Value = "Date";
                 ws.Cells[2, 2].Value = update;
                 ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+
                 ws.Cells[2, 4].Value = "Company:";
                 ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
-                ws.Cells[2, 25].Value = "稼働率:";
-                ws.Cells[2, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 25].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 25].Style.Font.Size = 10;
-                ws.Cells[2, 26].Value = "85.00%";
-                ws.Cells[2, 26].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells[2, 26].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
-                ws.Cells[2, 26].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[2, 26].Style.Font.Size = 10;
-                ws.Cells[3, 23].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
-                ws.Cells[3, 23].Style.Font.Color.SetColor(Color.DarkGray);
-                ws.Cells[3, 23].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[3, 23].Style.Font.Size = 6;
-                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells[4, 14].Style.Font.Size = 10;
+                ws.Cells[2, 14].Value = "稼働率:";
+                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 14].Style.Font.Size = 10;
+                ws.Cells[2, 15].Value = "85.00%";
+                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図発行済み";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 15].Style.Font.Size = 6;
+                ws.Cells[4, 15].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 15].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 15].Style.Font.Size = 10;
                 ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
                 ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
                 ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
@@ -893,8 +1579,8 @@ namespace LeanFine
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
-                //integer without displaying the number 0 in the cell
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
 
                 ////number with 1 decimal place
                 //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
@@ -918,12 +1604,13 @@ namespace LeanFine
                 //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
                 //Response.BinaryWrite(pck.GetAsByteArray());
-
+                // 设置 X 列为百分数格式
+                ws.Cells["O7:O" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -934,7 +1621,7 @@ namespace LeanFine
         }
 
         //按班组导出Model Output Report
-        public static void ModelOutput_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        public static void ModelOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -947,7 +1634,7 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
                 wb.Properties.Category = "Model Output Report";
                 wb.Properties.Author = "Davis.Ching";
@@ -961,7 +1648,7 @@ namespace LeanFine
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Model Output Report";
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
@@ -999,10 +1686,10 @@ namespace LeanFine
                 var cTableRange = ws.Cells[3, 1, 3, 11];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 14].Style.Font.Size = 10;
+                ws.Cells[4, 11].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 11].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 11].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
@@ -1028,8 +1715,8 @@ namespace LeanFine
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
-                //integer without displaying the number 0 in the cell
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
 
                 ////number with 1 decimal place
                 //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
@@ -1053,12 +1740,13 @@ namespace LeanFine
                 //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
                 //Response.BinaryWrite(pck.GetAsByteArray());
-
+                // 设置 X 列为百分数格式
+                ws.Cells["K7:K" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -1068,8 +1756,8 @@ namespace LeanFine
             }
         }
 
-        //按班组导出Rework Model Report
-        public static void ReworkModel_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        //按班组导出Model Output Report
+        public static void ModifyModelOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -1082,9 +1770,9 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
-                wb.Properties.Category = "Rework Report";
+                wb.Properties.Category = "Model Output Report";
                 wb.Properties.Author = "Davis.Ching";
                 wb.Properties.Comments = "Lean365 Inc.";
                 wb.Properties.Company = "DTA";
@@ -1092,11 +1780,11 @@ namespace LeanFine
                 wb.Properties.Manager = "Davis.Ching";
                 wb.Properties.Status = "Normal";
                 wb.Properties.Subject = "Lean Manufacturing";
-                wb.Properties.Title = "DTA Rework by Models Output Report";
+                wb.Properties.Title = "DTA Model Output Report";
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Rework by Models Output Report";
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別改修OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
@@ -1125,6 +1813,10 @@ namespace LeanFine
                 //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
                 var bTableRange = ws.Cells[2, 1, 2, 11];
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
@@ -1134,10 +1826,150 @@ namespace LeanFine
                 var cTableRange = ws.Cells[3, 1, 3, 11];
                 cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                ws.Cells[4, 14].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
-                ws.Cells[4, 14].Style.Font.Color.SetColor(Color.DarkSeaGreen);
-                ws.Cells[4, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells[4, 14].Style.Font.Size = 10;
+                ws.Cells[4, 11].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 11].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 11].Style.Font.Size = 10;
+                //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 11].Style.Font.Size = 6;
+                var dTableRange = ws.Cells[5, 1, 5, 11];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+                ws.View.FreezePanes(7, 12);
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                // 设置 X 列为百分数格式
+                ws.Cells["K7:K" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        //按班组导出Rework Model Report
+        public static void ReworkModel_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
+                //配置文件属性
+                wb.Properties.Category = "Rework Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Rework by Models Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別改修OPH)";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                //ws.Cells[1, 1].Style.Border.Bottom.Color.SetColor(Color.FromArgb(0, 0, 0));
+                var aTableRange = ws.Cells[1, 1, 1, 11];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 10].Value = "稼働率:";
+                ws.Cells[2, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 10].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 10].Style.Font.Size = 10;
+                ws.Cells[2, 11].Value = "85.00%";
+                ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 11].Style.Font.Size = 10;
+                //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
+                var bTableRange = ws.Cells[2, 1, 2, 11];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図発行済み";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 11].Style.Font.Size = 6;
+                var cTableRange = ws.Cells[3, 1, 3, 11];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[4, 11].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 11].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 11].Style.Font.Size = 10;
                 //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
@@ -1162,8 +1994,8 @@ namespace LeanFine
                 //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
                 //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
                 ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
-                //integer without displaying the number 0 in the cell
-                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
 
                 ////number with 1 decimal place
                 //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
@@ -1187,12 +2019,13 @@ namespace LeanFine
                 //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
                 //Response.BinaryWrite(pck.GetAsByteArray());
-
+                // 设置 X 列为百分数格式
+                ws.Cells["K7:K" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
                 //写到客户端（下载）
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -1203,7 +2036,7 @@ namespace LeanFine
         }
 
         //检查集计表 Inspection Report
-        public static void Inspection_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        public static void Inspection_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -1216,7 +2049,7 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //.Properties.Category = "类别"
                 //.Properties.Author = "作者"
                 //.Properties.Comments = "备注"
@@ -1241,7 +2074,7 @@ namespace LeanFine
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA Inspection Details Report";
+                ws.Cells[1, 2].Value = "DTA製造1課SMT检查记录表";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
@@ -1337,7 +2170,7 @@ namespace LeanFine
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -1348,7 +2181,7 @@ namespace LeanFine
         }
 
         //修理集计表 Manufacturing Report
-        public static void Manufacturing_XlsxFile(DataTable mydt, string mybname, string myfname, string update)
+        public static void Manufacturing_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -1361,7 +2194,7 @@ namespace LeanFine
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorkbook wb = pck.Workbook;
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mybname);
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
                 //配置文件属性
                 wb.Properties.Category = "DTA Repair Details Report";
                 wb.Properties.Author = "Davis.Ching";
@@ -1471,7 +2304,7 @@ namespace LeanFine
                 HttpContext.Current.Response.Clear();
                 //asp.net输出的Excel文件名
                 //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
-                string fileName = HttpUtility.UrlEncode(myfname);
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
                 HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
                 HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
@@ -1540,1282 +2373,1289 @@ namespace LeanFine
         /// <param name="dts">要导入的数据集合</param>
         /// <param name="strExcelFileName">定义Excel文件名</param>
         /// <param name="indexType">给个 1 就行</param>
-        public static bool TableListToExcels(List<DataTable> dts, DataTable main, string strExcelFileName, int indexType)
-        {
-            bool fs = false;
-
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            //Create Excel的属性中的来源以及说明等
-            POIXMLProperties props = workbook.GetProperties();
-            props.CoreProperties.Creator = "Davis.Ching";
-            props.CoreProperties.Created = DateTime.Now;
-            props.CoreProperties.Category = "生产管理";
-            if (!props.CustomProperties.Contains("Lean365"))
-                props.CustomProperties.AddProperty("Lean365", "Lean365");
-
-            props.CoreProperties.Modified = DateTime.Now;
-
-            props.CoreProperties.Keywords = "Lean365";
-
-            props.CoreProperties.Subject = "生产不良集计";
-            props.CoreProperties.Title = "DTA精益生产系统";
-            props.CoreProperties.LastModifiedByUser = "Davis.Ching";
-
-            DataSet set = new DataSet();
-            foreach (DataTable dt in dts)
-            {
-                //Sheet名称
-                //.Replace("[", "(").Replace("]", "）").Replace("/", "&").Replace("?", "_").Replace("*", "_").Replace(":", "_").Replace("\\", "&")
-                XSSFSheet sheet = (XSSFSheet)workbook.CreateSheet(dt.TableName.Replace("[", "(").Replace("]", "）").Replace("/", "&").Replace("?", "_").Replace("*", "_").Replace(":", "_").Replace("\\", "&"));
-                //sheet.DefaultColumnWidth = 100 * 256;
-                //sheet.DefaultRowHeight = 30 * 20;
-
-                sheet.PrintSetup.PaperSize = 9;
-
-                //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.BottomMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.TopMargin, (double)0.5);
-                //sheet.FitToPage = false;
-                //默认格式，边框
-                XSSFCellStyle DefStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                DefStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                //下边框没有
-                XSSFCellStyle BotStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                BotStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Hair;
-                BotStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                BotStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                BotStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                //表内容样式
-                XSSFCellStyle ContStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                ContStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                ContStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                ContStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                ContStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                //字体
-                IFont font9 = workbook.CreateFont();
-                font9.IsBold = false;
-                font9.FontHeightInPoints = 9;
-                ContStyles.SetFont(font9);
-                //XSSFDataFormat intFormat = workbook.CreateDataFormat() as XSSFDataFormat;
-
-                //ContStyles.DataFormat = intFormat.GetFormat("0");
-                //表内数字样式
-                XSSFCellStyle IntStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                IntStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                IntStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                IntStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                IntStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-
-                //字体
-                IFont intfont9 = workbook.CreateFont();
-                intfont9.IsBold = false;
-                intfont9.FontHeightInPoints = 9;
-                IntStyles.SetFont(intfont9);
-                XSSFDataFormat intFormat = workbook.CreateDataFormat() as XSSFDataFormat;
-
-                IntStyles.DataFormat = intFormat.GetFormat("0");
-
-                //标题文字，字体加粗，大小12，居中
-                ICellStyle Centerstyle = workbook.CreateCellStyle();
-                Centerstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.BottomBorderColor = IndexedColors.Black.Index;
-                Centerstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.LeftBorderColor = IndexedColors.Green.Index;
-                Centerstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.RightBorderColor = IndexedColors.Blue.Index;
-                Centerstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                Centerstyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
-                Centerstyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
-
-                IFont font20 = workbook.CreateFont();
-                font20.IsBold = false;
-                font20.FontHeightInPoints = 18;
-                Centerstyle.SetFont(font20);
-
-                //标题文字，字体，大小12，居中
-                ICellStyle Rightstyles = workbook.CreateCellStyle();
-                Rightstyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.BottomBorderColor = IndexedColors.Black.Index;
-                Rightstyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.LeftBorderColor = IndexedColors.Green.Index;
-                Rightstyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                //defstyle.RightBorderColor = IndexedColors.Blue.Index;
-                Rightstyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                Rightstyles.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
-                Rightstyles.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
-                //字体
-                IFont fontCont9 = workbook.CreateFont();
-                fontCont9.IsBold = false;
-                fontCont9.FontHeightInPoints = 9;
-                Rightstyles.SetFont(fontCont9);
-                //string sorder = dt.TableName.Substring(0, dt.TableName.Length - 2).Substring(dt.TableName.Substring(0, dt.TableName.Length - 2).Length-6, 6);
-                //string slot = dt.TableName.Substring(0, dt.TableName.Length - 2).Substring(0,dt.TableName.Substring(0, dt.TableName.Length - 2).Length - 6);
-                var qs = from g in main.AsEnumerable()
-                         select g;
-                //判断字符的位置并截取完整的生产批次
-                string llot = dt.TableName.Substring(0, dt.TableName.IndexOf("_"));
-                var q =
-                    (from g in main.AsEnumerable()
-                     where g.Field<string>("Prolot") == llot
-                     //where g.Field<string>("Proorder") == sorder
-                     select g).ToList();
-
-                if (q.Any())
-                {
-                    int rowCout = dt.Rows.Count;
-                    int PageCount = (int)Math.Ceiling(rowCout / 47.00);
-
-                    if (PageCount == 0)
-                    {
-                        //创建表格为58行，6列
-                        for (int i = 0; i < 53; i++)
-                        {
-                            XSSFRow row = (XSSFRow)sheet.CreateRow(i);
-                            for (int j = 0; j < 10; j++)
-                            {
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
-                                cell.CellStyle = DefStyles;
-                            }
-                            sheet.GetRow(i).Height = 16 * 20;
-                        }
-
-                        //处理表头
-                        for (int i = 0; i < 2; i++)//i表示第一行的列数
-                        {
-                            sheet.GetRow(0).Height = 20 * 20;
-                            sheet.GetRow(1).Height = 20 * 20;
-                            sheet.GetRow(2).Height = 16 * 20;
-                            sheet.GetRow(3).Height = 16 * 20;
-                            sheet.GetRow(4).Height = 16 * 20;
-                            sheet.GetRow(5).Height = 16 * 20;
-                            sheet.GetRow(48).Height = 20 * 20;
-                            sheet.GetRow(49).Height = 16 * 20;
-                            sheet.GetRow(50).Height = 16 * 20;
-                            sheet.GetRow(51).Height = 16 * 20;
-                            sheet.GetRow(52).Height = 16 * 20;
-
-                            if (i == 1)//将第一行第一列、第二行第一列合并
-                            {
-                                //插入图片
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
-                                HttpRuntime.AppDomainAppPath.ToString();
-
-                                IDrawing patriarch = sheet.CreateDrawingPatriarch();
-                                //create the anchor
-                                XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
-                                anchor.AnchorType = AnchorType.MoveDontResize;
-                                //load the picture and get the picture index in the workbook
-                                //first picture
-                                int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
-                                XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
-                                //Reset the image to the original size.
-                                picture.Resize();   //Note: Resize will reset client anchor you set.
-                                picture.LineStyle = LineStyle.DashDotGel;
-
-                                //将图片文件读入一个字符串
-                                //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
-                                //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
-
-                                //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
-
-                                //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
-                                //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
-                                ////把图片插到相应的位置
-                                //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
-                                //pict.Resize();
-                                cell.CellStyle = Centerstyle;
-
-                                //合并第一行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
-                                row1cell3.SetCellValue("文书名");
-                                row1cell3.CellStyle = BotStyles;
-
-                                //合并第二行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
-                                row2cell3.SetCellValue("不良集计");
-                                row2cell3.CellStyle = Centerstyle;
-
-                                //合并第一行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
-                                row1cell5.SetCellValue("发行元：DTA制一课");
-                                row1cell5.CellStyle = Rightstyles;
-
-                                //合并第二行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
-                                row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
-                                row2cell5.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
-                                //row50cell5.SetCellValue("承认");
-                                row50cell0.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 7, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(48).GetCell(7);
-                                row50cell5.SetCellValue("承  认");
-                                row50cell5.CellStyle = Rightstyles;
-
-                                //合并第50行第一列和第三列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 8, 8));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(48).GetCell(8);
-                                row50cell6.SetCellValue("确  认");
-                                row50cell6.CellStyle = Rightstyles;
-                                //合并第50行第四列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(48).GetCell(9);
-                                row50cell7.SetCellValue("担  当");
-                                row50cell7.CellStyle = Rightstyles;
-                                //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
-                                //row50cell8.SetCellValue("页码");
-                                //row50cell8.CellStyle = DefStyles;
-                            }
-                        }
-                        for (int f = 5; f < 48; f++)
-                        {
-                            //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
-                            //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                        }
-                        sheet.GetRow(2).GetCell(0).SetCellValue("机种");
-                        //合并2,3
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
-                        sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
-
-                        //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
-                        //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
-                        sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
-                        sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(2).GetCell(3).SetCellValue("班组");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
-                        sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
-                        sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
-                        sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
-
-                        sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
-                        sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
-                        //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
-                        sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
-
-                        sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
-                        //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
-                        sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
-
-                        sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
-                        //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
-                        sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
-
-                        sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
-                        //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
-                        //sheet.Header.Left = "TEAC";
-                        //sheet.Header.Right = "DTA-04-Z038-B";
-                        ////sheet.Header.Center = "不良集计";
-                        sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
-                        //sheet.Footer.Left = "配布:品管课";
-                        //sheet.Footer.Center = "承认：            确认：            担当：            ";
-                        sheet.Footer.Right = "DTA-04-Z038-C";
-                        //用column name 作为列名
-                        int icolIndex = 0;
-
-                        sheet.GetRow(5).GetCell(0).SetCellValue("区分");
-                        sheet.GetRow(5).GetCell(1).SetCellValue("不良症状");
-                        sheet.GetRow(5).GetCell(3).SetCellValue("不良个所");
-                        sheet.GetRow(5).GetCell(4).SetCellValue("不良原因");
-                        sheet.GetRow(5).GetCell(9).SetCellValue("件数");
-
-                        XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
-                        foreach (DataColumn item in dt.Columns)
-                        {
-                            switch (icolIndex)
-                            {
-                                case 0:
-                                    XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellA.SetCellValue(item.ColumnName);
-                                    cellA.CellStyle = DefStyles;
-                                    break;
-
-                                case 1:
-                                    XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellB.SetCellValue(item.ColumnName);
-                                    cellB.CellStyle = DefStyles;
-                                    break;
-
-                                case 2:
-                                    XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellC.SetCellValue(item.ColumnName);
-                                    cellC.CellStyle = DefStyles;
-                                    break;
-
-                                case 3:
-                                    XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellD.SetCellValue(item.ColumnName);
-                                    cellD.CellStyle = DefStyles;
-                                    break;
-
-                                case 4:
-                                    XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
-                                    cellE.SetCellValue(item.ColumnName);
-                                    cellE.CellStyle = DefStyles;
-                                    break;
-                                    //case 5:
-                                    //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
-                                    //    cellF.SetCellValue(item.ColumnName);
-                                    //    cellF.CellStyle = DefStyles;
-                                    //    break;
-                            }
-
-                            icolIndex++;
-                        }
-                        if (indexType == 6)
-                        {
-                            //建立内容行
-                            int iRowIndex = 6;
-                            int iCellIndex = 0;
-                            foreach (DataRow Rowitem in dt.Rows)
-                            {
-                                if (iRowIndex < 49)
-                                {
-                                    XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
-                                    foreach (DataColumn Colitem in dt.Columns)
-                                    {
-                                        switch (iCellIndex)
-                                        {
-                                            case 0:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                                string typeA = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
-
-                                                cellA.CellStyle = ContStyles;
-                                                break;
-
-                                            case 1:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                                string typeB = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
-                                                cellB.CellStyle = ContStyles;
-                                                break;
-
-                                            case 2:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                                string typeC = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
-                                                cellC.CellStyle = ContStyles;
-                                                break;
-
-                                            case 3:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                                string typeD = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
-                                                cellD.CellStyle = ContStyles;
-                                                break;
-
-                                            case 4:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
-                                                string typeE = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
-                                                cellE.CellStyle = IntStyles;
-                                                break;
-                                                //case 5:
-                                                //    //从第二列开始
-                                                //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
-                                                //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
-                                                //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
-                                                //    cellF.CellStyle = ContStyles;
-                                                //    break;
-                                        }
-
-                                        iCellIndex++;
-                                    }
-                                    iCellIndex = 0;
-                                    iRowIndex++;
-                                }
-                            }
-                        }
-
-                        //自适应列宽
-                        //AutoColumnWidth(sheet);
-                        //sheet.trackAllColumnsForAutoSizing();
-                        for (int i = 0; i < icolIndex; i++)
-                        {
-                            // 调整每一列宽度
-                            sheet.AutoSizeColumn(i);
-                            // 解决自动设置列宽中文失效的问题
-                            //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
-                        }
-                    }
-                    if (PageCount == 1)
-                    {
-                        //创建表格为58行，6列
-                        for (int i = 0; i < 53; i++)
-                        {
-                            XSSFRow row = (XSSFRow)sheet.CreateRow(i);
-                            for (int j = 0; j < 10; j++)
-                            {
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
-                                cell.CellStyle = DefStyles;
-                            }
-                            sheet.GetRow(i).Height = 16 * 20;
-                        }
-
-                        //处理表头
-                        for (int i = 0; i < 2; i++)//i表示第一行的列数
-                        {
-                            sheet.GetRow(0).Height = 20 * 20;
-                            sheet.GetRow(1).Height = 20 * 20;
-                            sheet.GetRow(2).Height = 16 * 20;
-                            sheet.GetRow(3).Height = 16 * 20;
-                            sheet.GetRow(4).Height = 16 * 20;
-                            sheet.GetRow(5).Height = 16 * 20;
-                            sheet.GetRow(48).Height = 20 * 20;
-                            sheet.GetRow(49).Height = 16 * 20;
-                            sheet.GetRow(50).Height = 16 * 20;
-                            sheet.GetRow(51).Height = 16 * 20;
-                            sheet.GetRow(52).Height = 16 * 20;
-
-                            if (i == 1)//将第一行第一列、第二行第一列合并
-                            {
-                                //插入图片
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
-                                HttpRuntime.AppDomainAppPath.ToString();
-
-                                IDrawing patriarch = sheet.CreateDrawingPatriarch();
-                                //create the anchor
-                                XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
-                                anchor.AnchorType = AnchorType.MoveDontResize;
-                                //load the picture and get the picture index in the workbook
-                                //first picture
-                                int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
-                                XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
-                                //Reset the image to the original size.
-                                picture.Resize();   //Note: Resize will reset client anchor you set.
-                                picture.LineStyle = LineStyle.DashDotGel;
-
-                                //将图片文件读入一个字符串
-                                //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
-                                //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
-
-                                //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
-
-                                //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
-                                //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
-                                ////把图片插到相应的位置
-                                //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
-                                //pict.Resize();
-                                cell.CellStyle = Centerstyle;
-
-                                //合并第一行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
-                                row1cell3.SetCellValue("文书名");
-                                row1cell3.CellStyle = BotStyles;
-
-                                //合并第二行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
-                                row2cell3.SetCellValue("不良集计");
-                                row2cell3.CellStyle = Centerstyle;
-
-                                //合并第一行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
-                                row1cell5.SetCellValue("发行元：DTA制一课");
-                                row1cell5.CellStyle = Rightstyles;
-
-                                //合并第二行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
-                                row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
-                                row2cell5.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
-                                //row50cell5.SetCellValue("承认");
-                                row50cell0.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 7, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(48).GetCell(7);
-                                row50cell5.SetCellValue("承  认");
-                                row50cell5.CellStyle = Rightstyles;
-
-                                //合并第50行第一列和第三列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 8, 8));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(48).GetCell(8);
-                                row50cell6.SetCellValue("确  认");
-                                row50cell6.CellStyle = Rightstyles;
-                                //合并第50行第四列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(48).GetCell(9);
-                                row50cell7.SetCellValue("担  当");
-                                row50cell7.CellStyle = Rightstyles;
-                                //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
-                                //row50cell8.SetCellValue("页码");
-                                //row50cell8.CellStyle = DefStyles;
-                            }
-                        }
-                        for (int f = 5; f < 48; f++)
-                        {
-                            //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
-                            //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                        }
-                        sheet.GetRow(2).GetCell(0).SetCellValue("机种");
-                        //合并2,3
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
-                        sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
-
-                        //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
-                        //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
-                        sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
-                        sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(2).GetCell(3).SetCellValue("班组");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
-                        sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
-                        sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
-                        sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
-
-                        sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
-                        sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
-                        //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
-                        sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
-
-                        sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
-                        //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
-                        sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
-
-                        sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
-                        //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
-                        sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
-
-                        sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
-                        //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
-                        //sheet.Header.Left = "TEAC";
-                        //sheet.Header.Right = "DTA-04-Z038-B";
-                        ////sheet.Header.Center = "不良集计";
-                        sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
-                        //sheet.Footer.Left = "配布:品管课";
-                        //sheet.Footer.Center = "承认：            确认：            担当：            ";
-                        sheet.Footer.Right = "DTA-04-Z038-C";
-                        //用column name 作为列名
-                        int icolIndex = 0;
-                        XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
-
-                        foreach (DataColumn item in dt.Columns)
-                        {
-                            switch (icolIndex)
-                            {
-                                case 0:
-                                    XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellA.SetCellValue(item.ColumnName);
-                                    cellA.CellStyle = DefStyles;
-                                    break;
-
-                                case 1:
-                                    XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellB.SetCellValue(item.ColumnName);
-                                    cellB.CellStyle = DefStyles;
-                                    break;
-
-                                case 2:
-                                    XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellC.SetCellValue(item.ColumnName);
-                                    cellC.CellStyle = DefStyles;
-                                    break;
-
-                                case 3:
-                                    XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellD.SetCellValue(item.ColumnName);
-                                    cellD.CellStyle = DefStyles;
-                                    break;
-
-                                case 4:
-                                    XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
-                                    cellE.SetCellValue(item.ColumnName);
-                                    cellE.CellStyle = DefStyles;
-                                    break;
-                                    //case 5:
-                                    //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
-                                    //    cellF.SetCellValue(item.ColumnName);
-                                    //    cellF.CellStyle = DefStyles;
-                                    //    break;
-                            }
-
-                            icolIndex++;
-                        }
-                        if (indexType == 6)
-                        {
-                            //建立内容行
-                            int iRowIndex = 6;
-                            int iCellIndex = 0;
-                            foreach (DataRow Rowitem in dt.Rows)
-                            {
-                                if (iRowIndex < 49)
-                                {
-                                    XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
-                                    foreach (DataColumn Colitem in dt.Columns)
-                                    {
-                                        switch (iCellIndex)
-                                        {
-                                            case 0:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                                string typeA = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
-
-                                                cellA.CellStyle = ContStyles;
-                                                break;
-
-                                            case 1:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                                string typeB = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
-                                                cellB.CellStyle = ContStyles;
-                                                break;
-
-                                            case 2:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                                string typeC = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
-                                                cellC.CellStyle = ContStyles;
-                                                break;
-
-                                            case 3:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                                string typeD = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
-                                                cellD.CellStyle = ContStyles;
-                                                break;
-
-                                            case 4:
-                                                //从第二列开始
-                                                //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
-                                                string typeE = Rowitem[Colitem].GetType().FullName.ToString();
-                                                cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
-                                                cellE.CellStyle = IntStyles;
-                                                break;
-                                                //case 5:
-                                                //    //从第二列开始
-                                                //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                                //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
-                                                //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
-                                                //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
-                                                //    cellF.CellStyle = ContStyles;
-                                                //    break;
-                                        }
-
-                                        iCellIndex++;
-                                    }
-                                    iCellIndex = 0;
-                                    iRowIndex++;
-                                }
-                            }
-                        }
-
-                        //自适应列宽
-                        //AutoColumnWidth(sheet);
-                        //sheet.trackAllColumnsForAutoSizing();
-                        for (int i = 0; i < icolIndex; i++)
-                        {
-                            // 调整每一列宽度
-                            sheet.AutoSizeColumn(i);
-                            // 解决自动设置列宽中文失效的问题
-                            //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
-                        }
-                    }
-                    if (PageCount > 1)
-                    {
-                        //创建表格为数据行53行，加表头表尾10行，10列
-                        for (int i = 0; i < rowCout + 15; i++)
-                        {
-                            XSSFRow row = (XSSFRow)sheet.CreateRow(i);
-                            for (int j = 0; j < 10; j++)
-                            {
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
-                                cell.CellStyle = DefStyles;
-                            }
-                            sheet.GetRow(i).Height = 16 * 20;
-                        }
-
-                        //处理表头
-                        for (int i = 0; i < 2; i++)//i表示第一行的列数
-                        {
-                            //表头
-                            sheet.GetRow(0).Height = 20 * 20;
-                            sheet.GetRow(1).Height = 20 * 20;
-                            sheet.GetRow(2).Height = 16 * 20;
-                            sheet.GetRow(3).Height = 16 * 20;
-                            sheet.GetRow(4).Height = 16 * 20;
-                            sheet.GetRow(5).Height = 16 * 20;
-                            //表尾
-                            sheet.GetRow(rowCout + 15 - 5).Height = 20 * 20;
-                            sheet.GetRow(rowCout + 15 - 4).Height = 16 * 20;
-                            sheet.GetRow(rowCout + 15 - 3).Height = 16 * 20;
-                            sheet.GetRow(rowCout + 15 - 2).Height = 16 * 20;
-                            sheet.GetRow(rowCout + 15 - 1).Height = 16 * 20;
-
-                            if (i == 1)//将第一行第一列、第二行第一列合并
-                            {
-                                //插入图片
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
-                                XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
-                                HttpRuntime.AppDomainAppPath.ToString();
-
-                                IDrawing patriarch = sheet.CreateDrawingPatriarch();
-                                //create the anchor
-                                XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
-                                anchor.AnchorType = AnchorType.MoveDontResize;
-                                //load the picture and get the picture index in the workbook
-                                //first picture
-                                int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
-                                XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
-                                //Reset the image to the original size.
-                                picture.Resize();   //Note: Resize will reset client anchor you set.
-                                picture.LineStyle = LineStyle.DashDotGel;
-
-                                //将图片文件读入一个字符串
-                                //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
-                                //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
-
-                                //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
-
-                                //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
-                                //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
-                                ////把图片插到相应的位置
-                                //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
-                                //pict.Resize();
-                                cell.CellStyle = Centerstyle;
-
-                                //合并第一行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
-                                row1cell3.SetCellValue("文书名");
-                                row1cell3.CellStyle = BotStyles;
-
-                                //合并第二行第三列和第四列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
-                                row2cell3.SetCellValue("不良集计");
-                                row2cell3.CellStyle = Centerstyle;
-
-                                //合并第一行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
-                                row1cell5.SetCellValue("发行元：DTA制一课");
-                                row1cell5.CellStyle = Rightstyles;
-
-                                //合并第二行第五列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
-                                row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
-                                row2cell5.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 5, rowCout + 15 - 1, 0, 6));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(0);
-                                //row50cell5.SetCellValue("承认");
-                                row50cell0.CellStyle = Rightstyles;
-
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 7, 7));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(7);
-                                row50cell5.SetCellValue("承  认");
-                                row50cell5.CellStyle = Rightstyles;
-
-                                //合并第50行第一列和第三列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 8, 8));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(8);
-                                row50cell6.SetCellValue("确  认");
-                                row50cell6.CellStyle = Rightstyles;
-                                //合并第50行第四列和第六列
-                                //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(9);
-                                row50cell7.SetCellValue("担  当");
-                                row50cell7.CellStyle = Rightstyles;
-                                //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
-                                //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
-                                //XSSFTextbox txt = item as XSSFTextbox;
-
-                                //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
-                                //row50cell8.SetCellValue("页码");
-                                //row50cell8.CellStyle = DefStyles;
-                            }
-                        }
-                        for (int f = 5; f < rowCout + 10; f++)
-                        {
-                            //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
-                            //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
-                        }
-                        sheet.GetRow(2).GetCell(0).SetCellValue("机种");
-                        //合并2,3
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
-                        sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
-
-                        //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
-                        //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
-                        sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
-                        sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
-
-                        sheet.GetRow(2).GetCell(3).SetCellValue("班组");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
-                        sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
-                        sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
-                        sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
-
-                        sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
-                        sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
-                        //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
-                        sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
-
-                        sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
-                        //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
-                        sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
-
-                        sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
-                        //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
-                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
-                        sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
-
-                        sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
-                        //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
-
-                        //sheet.Header.Left = "TEAC";
-                        //sheet.Header.Right = "DTA-04-Z038-B";
-                        ////sheet.Header.Center = "不良集计";
-                        sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
-                        //sheet.Footer.Left = "配布:品管课";
-                        //sheet.Footer.Center = "承认：            确认：            担当：            ";
-                        sheet.Footer.Right = "DTA-04-Z038-C";
-
-                        //用column name 作为列名
-                        int icolIndex = 0;
-                        XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
-
-                        foreach (DataColumn item in dt.Columns)
-                        {
-                            switch (icolIndex)
-                            {
-                                case 0:
-                                    XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellA.SetCellValue(item.ColumnName);
-                                    cellA.CellStyle = DefStyles;
-                                    break;
-
-                                case 1:
-                                    XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
-                                    cellB.SetCellValue(item.ColumnName);
-                                    cellB.CellStyle = DefStyles;
-                                    break;
-
-                                case 2:
-                                    XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellC.SetCellValue(item.ColumnName);
-                                    cellC.CellStyle = DefStyles;
-                                    break;
-
-                                case 3:
-                                    XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
-                                    cellD.SetCellValue(item.ColumnName);
-                                    cellD.CellStyle = DefStyles;
-                                    break;
-
-                                case 4:
-                                    XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
-                                    cellE.SetCellValue(item.ColumnName);
-                                    cellE.CellStyle = DefStyles;
-                                    break;
-                                    //case 5:
-                                    //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
-                                    //    cellF.SetCellValue(item.ColumnName);
-                                    //    cellF.CellStyle = DefStyles;
-                                    //    break;
-                            }
-
-                            icolIndex++;
-                        }
-                        if (indexType == 6)
-                        {
-                            //建立内容行
-                            int iRowIndex = 6;
-                            int iCellIndex = 0;
-                            foreach (DataRow Rowitem in dt.Rows)
-                            {
-                                XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
-                                foreach (DataColumn Colitem in dt.Columns)
-                                {
-                                    switch (iCellIndex)
-                                    {
-                                        case 0:
-                                            //从第二列开始
-                                            //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                            string typeA = Rowitem[Colitem].GetType().FullName.ToString();
-                                            cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
-
-                                            cellA.CellStyle = ContStyles;
-                                            break;
-
-                                        case 1:
-                                            //从第二列开始
-                                            //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
-                                            string typeB = Rowitem[Colitem].GetType().FullName.ToString();
-                                            cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
-                                            cellB.CellStyle = ContStyles;
-                                            break;
-
-                                        case 2:
-                                            //从第二列开始
-                                            //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                            string typeC = Rowitem[Colitem].GetType().FullName.ToString();
-                                            cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
-                                            cellC.CellStyle = ContStyles;
-                                            break;
-
-                                        case 3:
-                                            //从第二列开始
-                                            //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
-                                            string typeD = Rowitem[Colitem].GetType().FullName.ToString();
-                                            cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
-                                            cellD.CellStyle = ContStyles;
-                                            break;
-
-                                        case 4:
-                                            //从第二列开始
-                                            //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
-                                            string typeE = Rowitem[Colitem].GetType().FullName.ToString();
-                                            cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
-                                            cellE.CellStyle = IntStyles;
-                                            break;
-                                            //case 5:
-                                            //    //从第二列开始
-                                            //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
-                                            //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
-                                            //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
-                                            //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
-                                            //    cellF.CellStyle = ContStyles;
-                                            //    break;
-                                    }
-
-                                    iCellIndex++;
-                                }
-                                iCellIndex = 0;
-                                iRowIndex++;
-                            }
-                        }
-
-                        //自适应列宽
-                        //AutoColumnWidth(sheet);
-                        //sheet.trackAllColumnsForAutoSizing();
-                        for (int i = 0; i < icolIndex; i++)
-                        {
-                            // 调整每一列宽度
-                            sheet.AutoSizeColumn(i);
-                            // 解决自动设置列宽中文失效的问题
-                            //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
-                        }
-                    }
-                }
-
-                sheet.RepeatingRows = new CellRangeAddress(0, 5, -1, -1);
-                sheet.PrintSetup.Scale = 97;
-                sheet.PrintSetup.FitWidth = 1;
-                sheet.PrintSetup.FitHeight = 0;
-                AddRengionBorder(sheet, workbook, 0, 0, 0, 4);
-            }
-
-            //发送到客户端
-            MemoryStream ms = new MemoryStream();
-            workbook.Write(ms);
-            //HttpContext.Current.Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", HttpUtility.UrlEncode("WS" + "_" + DateTime.Now.ToString("yyyy-MM-dd"), System.Text.Encoding.UTF8)));
-
-            //HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
-            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
-            //HttpContext.Current.Response.AddHeader("Content-Length", ms.Length.ToString());
-            HttpContext.Current.Response.AddHeader("Content-Transfer-Encoding", "binary");
-            HttpContext.Current.Response.ContentType = "application/octet-stream;charset=utf-8";
-            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-
-            HttpContext.Current.Response.BinaryWrite(ms.ToArray());
-            HttpContext.Current.Response.Flush();
-
-            HttpContext.Current.Response.End();
-            workbook = null;
-            ms.Close();
-            ms.Dispose();
-
-            return fs;
-        }
-
-        public static bool TableListToExcel(List<DataTable> dts, DataTable main, string strExcelFileName, int indexType)
-        {
-            bool fs = false;
-
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            DataSet set = new DataSet();
-            foreach (DataTable dt in dts)
-            {
-                XSSFSheet sheet = (XSSFSheet)workbook.CreateSheet(dt.TableName);
-                //sheet.DefaultColumnWidth = 100 * 256;
-                //sheet.DefaultRowHeight = 30 * 20;
-
-                sheet.PrintSetup.PaperSize = 9;
-
-                //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.BottomMargin, (double)0.5);
-                //sheet.SetMargin(MarginType.TopMargin, (double)0.5);
-                //sheet.FitToPage = false;
-                XSSFCellStyle cellStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text来看
-                //cellStyle.DataFormat = XSSFDataFormat.;
-                //cellStyles.DataFormat = XSSFDataFormat.GetBuiltinFormat("0");
-
-                cellStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                //XSSFFont cellfonts = workbook.CreateFont() as XSSFFont;
-                //    cellfonts.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Normal;
-                //cellStyles.SetFont(cellfonts);
-
-                var q = (from g in main.AsEnumerable()
-                         where g.Field<string>("Prolot") == dt.TableName.Substring(0, dt.TableName.Length - 2)
-
-                         select g).ToList();
-
-                XSSFCellStyle DefStyles = (XSSFCellStyle)workbook.CreateCellStyle();
-                DefStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                DefStyles.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
-                ////字体
-                //XSSFFont headerfont = workbook.CreateFont() as XSSFFont;
-
-                //headerfont.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
-                //DefStyles.SetFont(headerfont);
-
-                //用column name 作为列名
-                int icolIndex = 0;
-                XSSFRow headerRow = (XSSFRow)sheet.CreateRow(0);
-
-                foreach (DataColumn item in dt.Columns)
-                {
-                    XSSFCell cell = (XSSFCell)headerRow.CreateCell(icolIndex); ;
-                    cell.SetCellValue(item.ColumnName);
-                    cell.CellStyle = DefStyles;
-                    icolIndex++;
-                }
-
-                XSSFCellStyle cellStyle = (XSSFCellStyle)workbook.CreateCellStyle();
-                //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text来看
-                //cellStyle.DataFormat = XSSFDataFormat.;
-                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
-                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
-                //XSSFFont cellfont = workbook.CreateFont() as XSSFFont;
-                //    cellfont.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Normal;
-                //cellStyle.SetFont(cellfont);
-                if (indexType == 6)
-                {
-                    //建立内容行
-                    int iRowIndex = 1;
-                    int iCellIndex = 0;
-                    foreach (DataRow Rowitem in dt.Rows)
-                    {
-                        XSSFRow DataRow = (XSSFRow)sheet.CreateRow(iRowIndex);
-                        foreach (DataColumn Colitem in dt.Columns)
-                        {
-                            XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex);
-                            string type = Rowitem[Colitem].GetType().FullName.ToString();
-                            cell.SetCellValue(GetValue(Rowitem[Colitem].ToString(), type));
-                            cell.CellStyle = cellStyle;
-
-                            iCellIndex++;
-                        }
-                        iCellIndex = 0;
-                        iRowIndex++;
-                    }
-                    //自适应列宽
-                    //AutoColumnWidth(sheet, 0);
-                    //for (int i = 0; i < icolIndex; i++)
-                    //{
-                    //    sheet.AutoSizeColumn(i);
-                    //}
-
-                    //设置自适应宽度
-                    for (int columnNum = 0; columnNum <= 10; columnNum++)
-                    {
-                        int columnWidth = sheet.GetColumnWidth(columnNum) / 256;
-                        for (int rowNum = 1; rowNum <= sheet.LastRowNum; rowNum++)
-                        {
-                            XSSFRow currentRow = (XSSFRow)sheet.GetRow(rowNum);
-                            if (currentRow.GetCell(columnNum) != null)
-                            {
-                                XSSFCell currentCell = (XSSFCell)currentRow.GetCell(columnNum);
-                                int length = Encoding.Default.GetBytes(currentCell.ToString()).Length;
-                                if (columnWidth < length)
-                                {
-                                    columnWidth = length;
-                                }
-                            }
-                        }
-                        sheet.SetColumnWidth(columnNum, columnWidth * 200);
-                    }
-                }
-
-                AddRengionBorder(sheet, workbook, 0, 0, 0, 1);
-            }
-            //发送到客户端
-            MemoryStream ms = new MemoryStream();
-            workbook.Write(ms);
-            //HttpContext.Current.Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", HttpUtility.UrlEncode("WS" + "_" + DateTime.Now.ToString("yyyy-MM-dd"), System.Text.Encoding.UTF8)));
-
-            //HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
-            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
-            //HttpContext.Current.Response.AddHeader("Content-Length", ms.Length.ToString());
-            HttpContext.Current.Response.AddHeader("Content-Transfer-Encoding", "binary");
-            HttpContext.Current.Response.ContentType = "application/octet-stream;charset=utf-8";
-            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-
-            HttpContext.Current.Response.BinaryWrite(ms.ToArray());
-            HttpContext.Current.Response.Flush();
-
-            HttpContext.Current.Response.End();
-            workbook = null;
-            ms.Close();
-            ms.Dispose();
-
-            return fs;
-        }
+        //public static bool TableListToExcels(List<DataTable> dts, DataTable main, string strExcelFileName, int indexType)
+        //{
+        //    bool fs = false;
+
+        //    XSSFWorkbook workbook = new XSSFWorkbook();
+        //    //Create Excel的属性中的来源以及说明等
+        //    POIXMLProperties props = workbook.GetProperties();
+        //    props.CoreProperties.Creator = "Davis.Ching";
+        //    props.CoreProperties.Created = DateTime.Now;
+        //    props.CoreProperties.Category = "生产管理";
+        //    if (!props.CustomProperties.Contains("Lean365"))
+        //        props.CustomProperties.AddProperty("Lean365", "Lean365");
+
+        //    props.CoreProperties.Modified = DateTime.Now;
+
+        //    props.CoreProperties.Keywords = "Lean365";
+
+        //    props.CoreProperties.Subject = "生产不良集计";
+        //    props.CoreProperties.Title = "DTA精益生产系统";
+        //    props.CoreProperties.LastModifiedByUser = "Davis.Ching";
+
+        //    DataSet set = new DataSet();
+        //    foreach (DataTable dt in dts)
+        //    {
+        //        //Sheet名称
+        //        //.Replace("[", "(").Replace("]", "）").Replace("/", "&").Replace("?", "_").Replace("*", "_").Replace(":", "_").Replace("\\", "&")
+        //        XSSFSheet sheet = (XSSFSheet)workbook.CreateSheet(dt.TableName.Replace("[", "(").Replace("]", "）").Replace("/", "&").Replace("?", "_").Replace("*", "_").Replace(":", "_").Replace("\\", "&"));
+        //        //sheet.DefaultColumnWidth = 100 * 256;
+        //        //sheet.DefaultRowHeight = 30 * 20;
+
+        //        sheet.PrintSetup.PaperSize = 9;
+
+        //        //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.BottomMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.TopMargin, (double)0.5);
+        //        //sheet.FitToPage = false;
+        //        //默认格式，边框
+        //        XSSFCellStyle DefStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        DefStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //下边框没有
+        //        XSSFCellStyle BotStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        BotStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Hair;
+        //        BotStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        BotStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        BotStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+        //        //表内容样式
+        //        XSSFCellStyle ContStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        ContStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        ContStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        ContStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        ContStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+        //        //字体
+        //        IFont font9 = workbook.CreateFont();
+        //        font9.IsBold = false;
+        //        font9.FontHeightInPoints = 9;
+        //        ContStyles.SetFont(font9);
+        //        //XSSFDataFormat intFormat = workbook.CreateDataFormat() as XSSFDataFormat;
+
+        //        //ContStyles.DataFormat = intFormat.GetFormat("0");
+        //        //表内数字样式
+        //        XSSFCellStyle IntStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        IntStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        IntStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        IntStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        IntStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+
+        //        //字体
+        //        IFont intfont9 = workbook.CreateFont();
+        //        intfont9.IsBold = false;
+        //        intfont9.FontHeightInPoints = 9;
+        //        IntStyles.SetFont(intfont9);
+        //        XSSFDataFormat intFormat = workbook.CreateDataFormat() as XSSFDataFormat;
+
+        //        IntStyles.DataFormat = intFormat.GetFormat("0");
+
+        //        //标题文字，字体加粗，大小12，居中
+        //        ICellStyle Centerstyle = workbook.CreateCellStyle();
+        //        Centerstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.BottomBorderColor = IndexedColors.Black.Index;
+        //        Centerstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.LeftBorderColor = IndexedColors.Green.Index;
+        //        Centerstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.RightBorderColor = IndexedColors.Blue.Index;
+        //        Centerstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        Centerstyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
+        //        Centerstyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+
+        //        IFont font20 = workbook.CreateFont();
+        //        font20.IsBold = false;
+        //        font20.FontHeightInPoints = 18;
+        //        Centerstyle.SetFont(font20);
+
+        //        //标题文字，字体，大小12，居中
+        //        ICellStyle Rightstyles = workbook.CreateCellStyle();
+        //        Rightstyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.BottomBorderColor = IndexedColors.Black.Index;
+        //        Rightstyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.LeftBorderColor = IndexedColors.Green.Index;
+        //        Rightstyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //defstyle.RightBorderColor = IndexedColors.Blue.Index;
+        //        Rightstyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        Rightstyles.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
+        //        Rightstyles.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+        //        //字体
+        //        IFont fontCont9 = workbook.CreateFont();
+        //        fontCont9.IsBold = false;
+        //        fontCont9.FontHeightInPoints = 9;
+        //        Rightstyles.SetFont(fontCont9);
+        //        //string sorder = dt.TableName.Substring(0, dt.TableName.Length - 2).Substring(dt.TableName.Substring(0, dt.TableName.Length - 2).Length-6, 6);
+        //        //string slot = dt.TableName.Substring(0, dt.TableName.Length - 2).Substring(0,dt.TableName.Substring(0, dt.TableName.Length - 2).Length - 6);
+        //        var qs = from g in main.AsEnumerable()
+        //                 select g;
+        //        //判断字符的位置并截取完整的生产批次
+        //        string llot = dt.TableName.Substring(0, dt.TableName.IndexOf("_"));
+        //        var q =
+        //            (from g in main.AsEnumerable()
+        //             where g.Field<string>("Prolot") == llot
+        //             //where g.Field<string>("Proorder") == sorder
+        //             select g).ToList();
+
+        //        if (q.Any())
+        //        {
+        //            int rowCout = dt.Rows.Count;
+        //            int PageCount = (int)Math.Ceiling(rowCout / 47.00);
+
+        //            if (PageCount == 0)
+        //            {
+        //                //创建表格为58行，6列
+        //                for (int i = 0; i < 53; i++)
+        //                {
+        //                    XSSFRow row = (XSSFRow)sheet.CreateRow(i);
+        //                    for (int j = 0; j < 10; j++)
+        //                    {
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
+        //                        cell.CellStyle = DefStyles;
+        //                    }
+        //                    sheet.GetRow(i).Height = 16 * 20;
+        //                }
+
+        //                //处理表头
+        //                for (int i = 0; i < 2; i++)//i表示第一行的列数
+        //                {
+        //                    sheet.GetRow(0).Height = 20 * 20;
+        //                    sheet.GetRow(1).Height = 20 * 20;
+        //                    sheet.GetRow(2).Height = 16 * 20;
+        //                    sheet.GetRow(3).Height = 16 * 20;
+        //                    sheet.GetRow(4).Height = 16 * 20;
+        //                    sheet.GetRow(5).Height = 16 * 20;
+        //                    sheet.GetRow(48).Height = 20 * 20;
+        //                    sheet.GetRow(49).Height = 16 * 20;
+        //                    sheet.GetRow(50).Height = 16 * 20;
+        //                    sheet.GetRow(51).Height = 16 * 20;
+        //                    sheet.GetRow(52).Height = 16 * 20;
+
+        //                    if (i == 1)//将第一行第一列、第二行第一列合并
+        //                    {
+        //                        //插入图片
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
+        //                        HttpRuntime.AppDomainAppPath.ToString();
+
+        //                        IDrawing patriarch = sheet.CreateDrawingPatriarch();
+        //                        //create the anchor
+        //                        XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
+        //                        anchor.AnchorType = AnchorType.MoveDontResize;
+        //                        //load the picture and get the picture index in the workbook
+        //                        //first picture
+        //                        int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
+        //                        XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
+        //                        //Reset the image to the original size.
+        //                        picture.Resize();   //Note: Resize will reset client anchor you set.
+        //                        picture.LineStyle = LineStyle.DashDotGel;
+
+        //                        //将图片文件读入一个字符串
+        //                        //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+        //                        //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
+
+        //                        //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
+
+        //                        //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
+        //                        //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
+        //                        ////把图片插到相应的位置
+        //                        //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
+        //                        //pict.Resize();
+        //                        cell.CellStyle = Centerstyle;
+
+        //                        //合并第一行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
+        //                        row1cell3.SetCellValue("文书名");
+        //                        row1cell3.CellStyle = BotStyles;
+
+        //                        //合并第二行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
+        //                        row2cell3.SetCellValue("不良集计");
+        //                        row2cell3.CellStyle = Centerstyle;
+
+        //                        //合并第一行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
+        //                        row1cell5.SetCellValue("发行元：DTA制一课");
+        //                        row1cell5.CellStyle = Rightstyles;
+
+        //                        //合并第二行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
+        //                        row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
+        //                        row2cell5.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
+        //                        //row50cell5.SetCellValue("承认");
+        //                        row50cell0.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 7, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(48).GetCell(7);
+        //                        row50cell5.SetCellValue("承  认");
+        //                        row50cell5.CellStyle = Rightstyles;
+
+        //                        //合并第50行第一列和第三列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 8, 8));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(48).GetCell(8);
+        //                        row50cell6.SetCellValue("确  认");
+        //                        row50cell6.CellStyle = Rightstyles;
+        //                        //合并第50行第四列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(48).GetCell(9);
+        //                        row50cell7.SetCellValue("担  当");
+        //                        row50cell7.CellStyle = Rightstyles;
+        //                        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
+        //                        //row50cell8.SetCellValue("页码");
+        //                        //row50cell8.CellStyle = DefStyles;
+        //                    }
+        //                }
+        //                for (int f = 5; f < 48; f++)
+        //                {
+        //                    //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
+        //                    //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                }
+        //                sheet.GetRow(2).GetCell(0).SetCellValue("机种");
+        //                //合并2,3
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
+        //                sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
+
+        //                //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
+        //                //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
+        //                sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
+        //                sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(2).GetCell(3).SetCellValue("班组");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
+        //                sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
+        //                sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
+        //                sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
+
+        //                sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
+        //                sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
+        //                //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
+        //                sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
+
+        //                sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
+        //                //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
+        //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
+
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
+        //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
+
+        //                sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
+        //                //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
+        //                //sheet.Header.Left = "TEAC";
+        //                //sheet.Header.Right = "DTA-04-Z038-B";
+        //                ////sheet.Header.Center = "不良集计";
+        //                sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
+        //                //sheet.Footer.Left = "配布:品管课";
+        //                //sheet.Footer.Center = "承认：            确认：            担当：            ";
+        //                sheet.Footer.Right = "DTA-04-Z038-C";
+        //                //用column name 作为列名
+        //                int icolIndex = 0;
+
+        //                sheet.GetRow(5).GetCell(0).SetCellValue("区分");
+        //                sheet.GetRow(5).GetCell(1).SetCellValue("不良症状");
+        //                sheet.GetRow(5).GetCell(3).SetCellValue("不良个所");
+        //                sheet.GetRow(5).GetCell(4).SetCellValue("不良原因");
+        //                sheet.GetRow(5).GetCell(9).SetCellValue("件数");
+
+        //                XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
+        //                foreach (DataColumn item in dt.Columns)
+        //                {
+        //                    switch (icolIndex)
+        //                    {
+        //                        case 0:
+        //                            XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellA.SetCellValue(item.ColumnName);
+        //                            cellA.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 1:
+        //                            XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellB.SetCellValue(item.ColumnName);
+        //                            cellB.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 2:
+        //                            XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellC.SetCellValue(item.ColumnName);
+        //                            cellC.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 3:
+        //                            XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellD.SetCellValue(item.ColumnName);
+        //                            cellD.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 4:
+        //                            XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
+        //                            cellE.SetCellValue(item.ColumnName);
+        //                            cellE.CellStyle = DefStyles;
+        //                            break;
+        //                            //case 5:
+        //                            //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
+        //                            //    cellF.SetCellValue(item.ColumnName);
+        //                            //    cellF.CellStyle = DefStyles;
+        //                            //    break;
+        //                    }
+
+        //                    icolIndex++;
+        //                }
+        //                if (indexType == 6)
+        //                {
+        //                    //建立内容行
+        //                    int iRowIndex = 6;
+        //                    int iCellIndex = 0;
+        //                    foreach (DataRow Rowitem in dt.Rows)
+        //                    {
+        //                        if (iRowIndex < 49)
+        //                        {
+        //                            XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
+        //                            foreach (DataColumn Colitem in dt.Columns)
+        //                            {
+        //                                switch (iCellIndex)
+        //                                {
+        //                                    case 0:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                        string typeA = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
+
+        //                                        cellA.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 1:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                        string typeB = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
+        //                                        cellB.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 2:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                        string typeC = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
+        //                                        cellC.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 3:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                        string typeD = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
+        //                                        cellD.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 4:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
+        //                                        string typeE = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
+        //                                        cellE.CellStyle = IntStyles;
+        //                                        break;
+        //                                        //case 5:
+        //                                        //    //从第二列开始
+        //                                        //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
+        //                                        //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
+        //                                        //    cellF.CellStyle = ContStyles;
+        //                                        //    break;
+        //                                }
+
+        //                                iCellIndex++;
+        //                            }
+        //                            iCellIndex = 0;
+        //                            iRowIndex++;
+        //                        }
+        //                    }
+        //                }
+
+        //                //自适应列宽
+        //                //AutoColumnWidth(sheet);
+        //                //sheet.trackAllColumnsForAutoSizing();
+        //                for (int i = 0; i < icolIndex; i++)
+        //                {
+        //                    // 调整每一列宽度
+        //                    sheet.AutoSizeColumn(i);
+        //                    // 解决自动设置列宽中文失效的问题
+        //                    //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
+        //                }
+        //            }
+        //            if (PageCount == 1)
+        //            {
+        //                //创建表格为58行，6列
+        //                for (int i = 0; i < 53; i++)
+        //                {
+        //                    XSSFRow row = (XSSFRow)sheet.CreateRow(i);
+        //                    for (int j = 0; j < 10; j++)
+        //                    {
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
+        //                        cell.CellStyle = DefStyles;
+        //                    }
+        //                    sheet.GetRow(i).Height = 16 * 20;
+        //                }
+
+        //                //处理表头
+        //                for (int i = 0; i < 2; i++)//i表示第一行的列数
+        //                {
+        //                    sheet.GetRow(0).Height = 20 * 20;
+        //                    sheet.GetRow(1).Height = 20 * 20;
+        //                    sheet.GetRow(2).Height = 16 * 20;
+        //                    sheet.GetRow(3).Height = 16 * 20;
+        //                    sheet.GetRow(4).Height = 16 * 20;
+        //                    sheet.GetRow(5).Height = 16 * 20;
+        //                    sheet.GetRow(48).Height = 20 * 20;
+        //                    sheet.GetRow(49).Height = 16 * 20;
+        //                    sheet.GetRow(50).Height = 16 * 20;
+        //                    sheet.GetRow(51).Height = 16 * 20;
+        //                    sheet.GetRow(52).Height = 16 * 20;
+
+        //                    if (i == 1)//将第一行第一列、第二行第一列合并
+        //                    {
+        //                        //插入图片
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
+        //                        HttpRuntime.AppDomainAppPath.ToString();
+
+        //                        IDrawing patriarch = sheet.CreateDrawingPatriarch();
+        //                        //create the anchor
+        //                        XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
+        //                        anchor.AnchorType = AnchorType.MoveDontResize;
+        //                        //load the picture and get the picture index in the workbook
+        //                        //first picture
+        //                        int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
+        //                        XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
+        //                        //Reset the image to the original size.
+        //                        picture.Resize();   //Note: Resize will reset client anchor you set.
+        //                        picture.LineStyle = LineStyle.DashDotGel;
+
+        //                        //将图片文件读入一个字符串
+        //                        //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+        //                        //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
+
+        //                        //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
+
+        //                        //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
+        //                        //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
+        //                        ////把图片插到相应的位置
+        //                        //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
+        //                        //pict.Resize();
+        //                        cell.CellStyle = Centerstyle;
+
+        //                        //合并第一行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
+        //                        row1cell3.SetCellValue("文书名");
+        //                        row1cell3.CellStyle = BotStyles;
+
+        //                        //合并第二行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
+        //                        row2cell3.SetCellValue("不良集计");
+        //                        row2cell3.CellStyle = Centerstyle;
+
+        //                        //合并第一行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
+        //                        row1cell5.SetCellValue("发行元：DTA制一课");
+        //                        row1cell5.CellStyle = Rightstyles;
+
+        //                        //合并第二行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
+        //                        row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
+        //                        row2cell5.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(48, 52, 0, 6));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(48).GetCell(0);
+        //                        //row50cell5.SetCellValue("承认");
+        //                        row50cell0.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 7, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(48).GetCell(7);
+        //                        row50cell5.SetCellValue("承  认");
+        //                        row50cell5.CellStyle = Rightstyles;
+
+        //                        //合并第50行第一列和第三列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 8, 8));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(48).GetCell(8);
+        //                        row50cell6.SetCellValue("确  认");
+        //                        row50cell6.CellStyle = Rightstyles;
+        //                        //合并第50行第四列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(49, 52, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(48).GetCell(9);
+        //                        row50cell7.SetCellValue("担  当");
+        //                        row50cell7.CellStyle = Rightstyles;
+        //                        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
+        //                        //row50cell8.SetCellValue("页码");
+        //                        //row50cell8.CellStyle = DefStyles;
+        //                    }
+        //                }
+        //                for (int f = 5; f < 48; f++)
+        //                {
+        //                    //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
+        //                    //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                }
+        //                sheet.GetRow(2).GetCell(0).SetCellValue("机种");
+        //                //合并2,3
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
+        //                sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
+
+        //                //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
+        //                //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
+        //                sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
+        //                sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(2).GetCell(3).SetCellValue("班组");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
+        //                sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
+        //                sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
+        //                sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
+
+        //                sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
+        //                sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
+        //                //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
+        //                sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
+
+        //                sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
+        //                //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
+        //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
+
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
+        //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
+
+        //                sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
+        //                //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
+        //                //sheet.Header.Left = "TEAC";
+        //                //sheet.Header.Right = "DTA-04-Z038-B";
+        //                ////sheet.Header.Center = "不良集计";
+        //                sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
+        //                //sheet.Footer.Left = "配布:品管课";
+        //                //sheet.Footer.Center = "承认：            确认：            担当：            ";
+        //                sheet.Footer.Right = "DTA-04-Z038-C";
+        //                //用column name 作为列名
+        //                int icolIndex = 0;
+        //                XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
+
+        //                foreach (DataColumn item in dt.Columns)
+        //                {
+        //                    switch (icolIndex)
+        //                    {
+        //                        case 0:
+        //                            XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellA.SetCellValue(item.ColumnName);
+        //                            cellA.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 1:
+        //                            XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellB.SetCellValue(item.ColumnName);
+        //                            cellB.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 2:
+        //                            XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellC.SetCellValue(item.ColumnName);
+        //                            cellC.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 3:
+        //                            XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellD.SetCellValue(item.ColumnName);
+        //                            cellD.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 4:
+        //                            XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
+        //                            cellE.SetCellValue(item.ColumnName);
+        //                            cellE.CellStyle = DefStyles;
+        //                            break;
+        //                            //case 5:
+        //                            //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
+        //                            //    cellF.SetCellValue(item.ColumnName);
+        //                            //    cellF.CellStyle = DefStyles;
+        //                            //    break;
+        //                    }
+
+        //                    icolIndex++;
+        //                }
+        //                if (indexType == 6)
+        //                {
+        //                    //建立内容行
+        //                    int iRowIndex = 6;
+        //                    int iCellIndex = 0;
+        //                    foreach (DataRow Rowitem in dt.Rows)
+        //                    {
+        //                        if (iRowIndex < 49)
+        //                        {
+        //                            XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
+        //                            foreach (DataColumn Colitem in dt.Columns)
+        //                            {
+        //                                switch (iCellIndex)
+        //                                {
+        //                                    case 0:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                        string typeA = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
+
+        //                                        cellA.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 1:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                        string typeB = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
+        //                                        cellB.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 2:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                        string typeC = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
+        //                                        cellC.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 3:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                        string typeD = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
+        //                                        cellD.CellStyle = ContStyles;
+        //                                        break;
+
+        //                                    case 4:
+        //                                        //从第二列开始
+        //                                        //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
+        //                                        string typeE = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
+        //                                        cellE.CellStyle = IntStyles;
+        //                                        break;
+        //                                        //case 5:
+        //                                        //    //从第二列开始
+        //                                        //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                        //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
+        //                                        //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                        //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
+        //                                        //    cellF.CellStyle = ContStyles;
+        //                                        //    break;
+        //                                }
+
+        //                                iCellIndex++;
+        //                            }
+        //                            iCellIndex = 0;
+        //                            iRowIndex++;
+        //                        }
+        //                    }
+        //                }
+
+        //                //自适应列宽
+        //                //AutoColumnWidth(sheet);
+        //                //sheet.trackAllColumnsForAutoSizing();
+        //                for (int i = 0; i < icolIndex; i++)
+        //                {
+        //                    // 调整每一列宽度
+        //                    sheet.AutoSizeColumn(i);
+        //                    // 解决自动设置列宽中文失效的问题
+        //                    //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
+        //                }
+        //            }
+        //            if (PageCount > 1)
+        //            {
+        //                //创建表格为数据行53行，加表头表尾10行，10列
+        //                for (int i = 0; i < rowCout + 15; i++)
+        //                {
+        //                    XSSFRow row = (XSSFRow)sheet.CreateRow(i);
+        //                    for (int j = 0; j < 10; j++)
+        //                    {
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(i).CreateCell(j);
+        //                        cell.CellStyle = DefStyles;
+        //                    }
+        //                    sheet.GetRow(i).Height = 16 * 20;
+        //                }
+
+        //                //处理表头
+        //                for (int i = 0; i < 2; i++)//i表示第一行的列数
+        //                {
+        //                    //表头
+        //                    sheet.GetRow(0).Height = 20 * 20;
+        //                    sheet.GetRow(1).Height = 20 * 20;
+        //                    sheet.GetRow(2).Height = 16 * 20;
+        //                    sheet.GetRow(3).Height = 16 * 20;
+        //                    sheet.GetRow(4).Height = 16 * 20;
+        //                    sheet.GetRow(5).Height = 16 * 20;
+        //                    //表尾
+        //                    sheet.GetRow(rowCout + 15 - 5).Height = 20 * 20;
+        //                    sheet.GetRow(rowCout + 15 - 4).Height = 16 * 20;
+        //                    sheet.GetRow(rowCout + 15 - 3).Height = 16 * 20;
+        //                    sheet.GetRow(rowCout + 15 - 2).Height = 16 * 20;
+        //                    sheet.GetRow(rowCout + 15 - 1).Height = 16 * 20;
+
+        //                    if (i == 1)//将第一行第一列、第二行第一列合并
+        //                    {
+        //                        //插入图片
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 1));
+        //                        XSSFCell cell = (XSSFCell)sheet.GetRow(0).GetCell(1);
+        //                        HttpRuntime.AppDomainAppPath.ToString();
+
+        //                        IDrawing patriarch = sheet.CreateDrawingPatriarch();
+        //                        //create the anchor
+        //                        XSSFClientAnchor anchor = new XSSFClientAnchor(500, 200, 0, 0, 0, 0, 1, 1);
+        //                        anchor.AnchorType = AnchorType.MoveDontResize;
+        //                        //load the picture and get the picture index in the workbook
+        //                        //first picture
+        //                        int imageId = LoadImage(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png", workbook);
+        //                        XSSFPicture picture = (XSSFPicture)patriarch.CreatePicture(anchor, imageId);
+        //                        //Reset the image to the original size.
+        //                        picture.Resize();   //Note: Resize will reset client anchor you set.
+        //                        picture.LineStyle = LineStyle.DashDotGel;
+
+        //                        //将图片文件读入一个字符串
+        //                        //byte[] bytes = File.ReadAllBytes(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+        //                        //int pictureIdx = workbook.AddPicture(bytes, NPOI.SS.UserModel.PictureType.JPEG);
+
+        //                        //NPOI.SS.UserModel.IDrawing patriarch = sheet.CreateDrawingPatriarch();
+
+        //                        //// 插图片的位置  HSSFClientAnchor（dx1,dy1,dx2,dy2,col1,row1,col2,row2) 后面再作解释
+        //                        //XSSFClientAnchor anchor = new XSSFClientAnchor(1023, 0, 1023, 0, 0, 0, 1, 1);
+        //                        ////把图片插到相应的位置
+        //                        //XSSFPicture pict = (XSSFPicture)patriarch.CreatePicture(anchor, pictureIdx);
+        //                        //pict.Resize();
+        //                        cell.CellStyle = Centerstyle;
+
+        //                        //合并第一行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell3 = (XSSFCell)sheet.GetRow(0).GetCell(2);
+        //                        row1cell3.SetCellValue("文书名");
+        //                        row1cell3.CellStyle = BotStyles;
+
+        //                        //合并第二行第三列和第四列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 2, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell3 = (XSSFCell)sheet.GetRow(1).GetCell(2);
+        //                        row2cell3.SetCellValue("不良集计");
+        //                        row2cell3.CellStyle = Centerstyle;
+
+        //                        //合并第一行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row1cell5 = (XSSFCell)sheet.GetRow(0).GetCell(8);
+        //                        row1cell5.SetCellValue("发行元：DTA制一课");
+        //                        row1cell5.CellStyle = Rightstyles;
+
+        //                        //合并第二行第五列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row2cell5 = (XSSFCell)sheet.GetRow(1).GetCell(8);
+        //                        row2cell5.SetCellValue("发行日期：" + DateTime.Now.ToString("yyyy-MM-dd"));
+        //                        row2cell5.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 5, rowCout + 15 - 1, 0, 6));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell0 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(0);
+        //                        //row50cell5.SetCellValue("承认");
+        //                        row50cell0.CellStyle = Rightstyles;
+
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 7, 7));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell5 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(7);
+        //                        row50cell5.SetCellValue("承  认");
+        //                        row50cell5.CellStyle = Rightstyles;
+
+        //                        //合并第50行第一列和第三列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 8, 8));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        XSSFCell row50cell6 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(8);
+        //                        row50cell6.SetCellValue("确  认");
+        //                        row50cell6.CellStyle = Rightstyles;
+        //                        //合并第50行第四列和第六列
+        //                        //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(rowCout + 15 - 4, rowCout + 15 - 1, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        XSSFCell row50cell7 = (XSSFCell)sheet.GetRow(rowCout + 15 - 5).GetCell(9);
+        //                        row50cell7.SetCellValue("担  当");
+        //                        row50cell7.CellStyle = Rightstyles;
+        //                        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(50, 52, 9, 9));
+        //                        //sheet.GetRow(0).CreateCell(0).SetCellValue("不良集计");
+        //                        //XSSFTextbox txt = item as XSSFTextbox;
+
+        //                        //XSSFCell row50cell8 = (XSSFCell)sheet.GetRow(49).GetCell(9);
+        //                        //row50cell8.SetCellValue("页码");
+        //                        //row50cell8.CellStyle = DefStyles;
+        //                    }
+        //                }
+        //                for (int f = 5; f < rowCout + 10; f++)
+        //                {
+        //                    //CellRangeAddress有4个参数：起始行号，终止行号， 起始列号，终止列号
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 4, 8));
+        //                    //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(f, f, 1, 2));
+        //                }
+        //                sheet.GetRow(2).GetCell(0).SetCellValue("机种");
+        //                //合并2,3
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 1, 2));
+        //                sheet.GetRow(2).GetCell(1).SetCellValue(q[0].Field<string>("Promodel"));
+
+        //                //sheet.CreateRow(1).CreateCell(0).SetCellValue("机种");//创建第一行/创建第一单元格/设置第一单元格的内容[可以分开创建，但必须先创建行才能创建单元格不然报错]
+        //                //sheet.GetRow(1).CreateCell(1).SetCellValue(strmodel);//获取第一行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(3).GetCell(0).SetCellValue("批次");//创建第二行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 1, 2));
+        //                sheet.GetRow(3).GetCell(1).SetCellValue(q[0].Field<string>("Prolot"));//获取第二行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(4).GetCell(0).SetCellValue("期间");//创建第三行/创建第一单元格/设置第一单元格的内容
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 1, 2));
+        //                sheet.GetRow(4).GetCell(1).SetCellValue(q[0].Field<string>("Prodate"));//获取第三行/创建第二单元格/设置第二单元格的内容
+
+        //                sheet.GetRow(2).GetCell(3).SetCellValue("班组");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 4, 5));
+        //                sheet.GetRow(2).GetCell(4).SetCellValue(q[0].Field<string>("Prolinename"));
+        //                sheet.GetRow(3).GetCell(3).SetCellValue("直行率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 4, 5));
+        //                sheet.GetRow(3).GetCell(4).SetCellValue(q[0].Field<string>("Prodirectrate"));
+
+        //                sheet.GetRow(4).GetCell(3).SetCellValue("不良率");
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 4, 5));
+        //                sheet.GetRow(4).GetCell(4).SetCellValue(q[0].Field<string>("Probadrate"));
+        //                //sheet.GetRow(3).GetCell(3).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 2, 6, 8));
+        //                sheet.GetRow(2).GetCell(6).SetCellValue("生产数量");
+
+        //                sheet.GetRow(2).GetCell(9).SetCellValue(q[0].Field<Int32>("Prorealqty"));
+        //                //sheet.GetRow(1).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
+        //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
+
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
+        //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
+        //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
+
+        //                sheet.GetRow(4).GetCell(9).SetCellValue(q[0].Field<Int32>("Probadtotal"));
+        //                //sheet.GetRow(3).GetCell(5).SetCellType(CellType.Numeric);
+
+        //                //sheet.Header.Left = "TEAC";
+        //                //sheet.Header.Right = "DTA-04-Z038-B";
+        //                ////sheet.Header.Center = "不良集计";
+        //                sheet.Footer.Center = "页码：&P / &N";//&P当前页码&N总页码数
+        //                //sheet.Footer.Left = "配布:品管课";
+        //                //sheet.Footer.Center = "承认：            确认：            担当：            ";
+        //                sheet.Footer.Right = "DTA-04-Z038-C";
+
+        //                //用column name 作为列名
+        //                int icolIndex = 0;
+        //                XSSFRow headerRow = (XSSFRow)sheet.GetRow(5);
+
+        //                foreach (DataColumn item in dt.Columns)
+        //                {
+        //                    switch (icolIndex)
+        //                    {
+        //                        case 0:
+        //                            XSSFCell cellA = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellA.SetCellValue(item.ColumnName);
+        //                            cellA.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 1:
+        //                            XSSFCell cellB = (XSSFCell)headerRow.GetCell(icolIndex + 0);
+        //                            cellB.SetCellValue(item.ColumnName);
+        //                            cellB.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 2:
+        //                            XSSFCell cellC = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellC.SetCellValue(item.ColumnName);
+        //                            cellC.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 3:
+        //                            XSSFCell cellD = (XSSFCell)headerRow.GetCell(icolIndex + 1);
+        //                            cellD.SetCellValue(item.ColumnName);
+        //                            cellD.CellStyle = DefStyles;
+        //                            break;
+
+        //                        case 4:
+        //                            XSSFCell cellE = (XSSFCell)headerRow.GetCell(icolIndex + 5);
+        //                            cellE.SetCellValue(item.ColumnName);
+        //                            cellE.CellStyle = DefStyles;
+        //                            break;
+        //                            //case 5:
+        //                            //    XSSFCell cellF = (XSSFCell)headerRow.GetCell(icolIndex + 4);
+        //                            //    cellF.SetCellValue(item.ColumnName);
+        //                            //    cellF.CellStyle = DefStyles;
+        //                            //    break;
+        //                    }
+
+        //                    icolIndex++;
+        //                }
+        //                if (indexType == 6)
+        //                {
+        //                    //建立内容行
+        //                    int iRowIndex = 6;
+        //                    int iCellIndex = 0;
+        //                    foreach (DataRow Rowitem in dt.Rows)
+        //                    {
+        //                        XSSFRow DataRow = (XSSFRow)sheet.GetRow(iRowIndex);
+        //                        foreach (DataColumn Colitem in dt.Columns)
+        //                        {
+        //                            switch (iCellIndex)
+        //                            {
+        //                                case 0:
+        //                                    //从第二列开始
+        //                                    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    XSSFCell cellA = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                    string typeA = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    cellA.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeA));
+
+        //                                    cellA.CellStyle = ContStyles;
+        //                                    break;
+
+        //                                case 1:
+        //                                    //从第二列开始
+        //                                    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    XSSFCell cellB = (XSSFCell)DataRow.GetCell(iCellIndex + 0);
+        //                                    string typeB = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    cellB.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeB));
+        //                                    cellB.CellStyle = ContStyles;
+        //                                    break;
+
+        //                                case 2:
+        //                                    //从第二列开始
+        //                                    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    XSSFCell cellC = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                    string typeC = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    cellC.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeC));
+        //                                    cellC.CellStyle = ContStyles;
+        //                                    break;
+
+        //                                case 3:
+        //                                    //从第二列开始
+        //                                    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    XSSFCell cellD = (XSSFCell)DataRow.GetCell(iCellIndex + 1);
+        //                                    string typeD = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    cellD.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeD));
+        //                                    cellD.CellStyle = ContStyles;
+        //                                    break;
+
+        //                                case 4:
+        //                                    //从第二列开始
+        //                                    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    XSSFCell cellE = (XSSFCell)DataRow.GetCell(iCellIndex + 5);
+        //                                    string typeE = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    cellE.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeE));
+        //                                    cellE.CellStyle = IntStyles;
+        //                                    break;
+        //                                    //case 5:
+        //                                    //    //从第二列开始
+        //                                    //    //XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex + 1);
+        //                                    //    XSSFCell cellF = (XSSFCell)DataRow.GetCell(iCellIndex + 4);
+        //                                    //    string typeF = Rowitem[Colitem].GetType().FullName.ToString();
+        //                                    //    cellF.SetCellValue(GetValue(Rowitem[Colitem].ToString(), typeF));
+        //                                    //    cellF.CellStyle = ContStyles;
+        //                                    //    break;
+        //                            }
+
+        //                            iCellIndex++;
+        //                        }
+        //                        iCellIndex = 0;
+        //                        iRowIndex++;
+        //                    }
+        //                }
+
+        //                //自适应列宽
+        //                //AutoColumnWidth(sheet);
+        //                //sheet.trackAllColumnsForAutoSizing();
+        //                for (int i = 0; i < icolIndex; i++)
+        //                {
+        //                    // 调整每一列宽度
+        //                    sheet.AutoSizeColumn(i);
+        //                    // 解决自动设置列宽中文失效的问题
+        //                    //sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) * 17 / 10);
+        //                }
+        //            }
+        //        }
+
+        //        sheet.RepeatingRows = new CellRangeAddress(0, 5, -1, -1);
+        //        sheet.PrintSetup.Scale = 97;
+        //        sheet.PrintSetup.FitWidth = 1;
+        //        sheet.PrintSetup.FitHeight = 0;
+        //        AddRengionBorder(sheet, workbook, 0, 0, 0, 4);
+        //    }
+
+        //    //发送到客户端
+        //    MemoryStream ms = new MemoryStream();
+        //    workbook.Write(ms);
+        //    //HttpContext.Current.Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", HttpUtility.UrlEncode("WS" + "_" + DateTime.Now.ToString("yyyy-MM-dd"), System.Text.Encoding.UTF8)));
+
+        //    //HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
+        //    HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
+        //    //HttpContext.Current.Response.AddHeader("Content-Length", ms.Length.ToString());
+        //    HttpContext.Current.Response.AddHeader("Content-Transfer-Encoding", "binary");
+        //    HttpContext.Current.Response.ContentType = "application/octet-stream;charset=utf-8";
+        //    HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
+
+        //    HttpContext.Current.Response.BinaryWrite(ms.ToArray());
+        //    HttpContext.Current.Response.Flush();
+
+        //    HttpContext.Current.Response.End();
+        //    workbook = null;
+        //    ms.Close();
+        //    ms.Dispose();
+
+        //    return fs;
+        //}
+        /// <summary>
+        /// NPOI导出Excel
+        /// </summary>
+        /// <param name="dts"></param>
+        /// <param name="main"></param>
+        /// <param name="strExcelFileName"></param>
+        /// <param name="indexType"></param>
+        /// <returns></returns>
+        //public static bool TableListToExcel(List<DataTable> dts, DataTable main, string strExcelFileName, int indexType)
+        //{
+        //    bool fs = false;
+
+        //    XSSFWorkbook workbook = new XSSFWorkbook();
+        //    DataSet set = new DataSet();
+        //    foreach (DataTable dt in dts)
+        //    {
+        //        XSSFSheet sheet = (XSSFSheet)workbook.CreateSheet(dt.TableName);
+        //        //sheet.DefaultColumnWidth = 100 * 256;
+        //        //sheet.DefaultRowHeight = 30 * 20;
+
+        //        sheet.PrintSetup.PaperSize = 9;
+
+        //        //sheet.SetMargin(MarginType.LeftMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.RightMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.BottomMargin, (double)0.5);
+        //        //sheet.SetMargin(MarginType.TopMargin, (double)0.5);
+        //        //sheet.FitToPage = false;
+        //        XSSFCellStyle cellStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text来看
+        //        //cellStyle.DataFormat = XSSFDataFormat.;
+        //        //cellStyles.DataFormat = XSSFDataFormat.GetBuiltinFormat("0");
+
+        //        cellStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //XSSFFont cellfonts = workbook.CreateFont() as XSSFFont;
+        //        //    cellfonts.IsBold = (short)NPOI.SS.UserModel.FontIsBold.Normal;
+        //        //cellStyles.SetFont(cellfonts);
+
+        //        var q = (from g in main.AsEnumerable()
+        //                 where g.Field<string>("Prolot") == dt.TableName.Substring(0, dt.TableName.Length - 2)
+
+        //                 select g).ToList();
+
+        //        XSSFCellStyle DefStyles = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        DefStyles.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        DefStyles.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+        //        ////字体
+        //        //XSSFFont headerfont = workbook.CreateFont() as XSSFFont;
+
+        //        //headerfont.IsBold = (short)NPOI.SS.UserModel.FontIsBold.Bold;
+        //        //DefStyles.SetFont(headerfont);
+
+        //        //用column name 作为列名
+        //        int icolIndex = 0;
+        //        XSSFRow headerRow = (XSSFRow)sheet.CreateRow(0);
+
+        //        foreach (DataColumn item in dt.Columns)
+        //        {
+        //            XSSFCell cell = (XSSFCell)headerRow.CreateCell(icolIndex); ;
+        //            cell.SetCellValue(item.ColumnName);
+        //            cell.CellStyle = DefStyles;
+        //            icolIndex++;
+        //        }
+
+        //        XSSFCellStyle cellStyle = (XSSFCellStyle)workbook.CreateCellStyle();
+        //        //为避免日期格式被Excel自动替换，所以设定 format 为 『@』 表示一率当成text来看
+        //        //cellStyle.DataFormat = XSSFDataFormat.;
+        //        cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+        //        //XSSFFont cellfont = workbook.CreateFont() as XSSFFont;
+        //        //    cellfont.IsBold = (short)NPOI.SS.UserModel.FontIsBold.Normal;
+        //        //cellStyle.SetFont(cellfont);
+        //        if (indexType == 6)
+        //        {
+        //            //建立内容行
+        //            int iRowIndex = 1;
+        //            int iCellIndex = 0;
+        //            foreach (DataRow Rowitem in dt.Rows)
+        //            {
+        //                XSSFRow DataRow = (XSSFRow)sheet.CreateRow(iRowIndex);
+        //                foreach (DataColumn Colitem in dt.Columns)
+        //                {
+        //                    XSSFCell cell = (XSSFCell)DataRow.CreateCell(iCellIndex);
+        //                    string type = Rowitem[Colitem].GetType().FullName.ToString();
+        //                    cell.SetCellValue(GetValue(Rowitem[Colitem].ToString(), type));
+        //                    cell.CellStyle = cellStyle;
+
+        //                    iCellIndex++;
+        //                }
+        //                iCellIndex = 0;
+        //                iRowIndex++;
+        //            }
+        //            //自适应列宽
+        //            //AutoColumnWidth(sheet, 0);
+        //            //for (int i = 0; i < icolIndex; i++)
+        //            //{
+        //            //    sheet.AutoSizeColumn(i);
+        //            //}
+
+        //            //设置自适应宽度
+        //            for (int columnNum = 0; columnNum <= 10; columnNum++)
+        //            {
+        //                int columnWidth = sheet.GetColumnWidth(columnNum) / 256;
+        //                for (int rowNum = 1; rowNum <= sheet.LastRowNum; rowNum++)
+        //                {
+        //                    XSSFRow currentRow = (XSSFRow)sheet.GetRow(rowNum);
+        //                    if (currentRow.GetCell(columnNum) != null)
+        //                    {
+        //                        XSSFCell currentCell = (XSSFCell)currentRow.GetCell(columnNum);
+        //                        int length = Encoding.Default.GetBytes(currentCell.ToString()).Length;
+        //                        if (columnWidth < length)
+        //                        {
+        //                            columnWidth = length;
+        //                        }
+        //                    }
+        //                }
+        //                sheet.SetColumnWidth(columnNum, columnWidth * 200);
+        //            }
+        //        }
+
+        //        AddRengionBorder(sheet, workbook, 0, 0, 0, 1);
+        //    }
+        //    //发送到客户端
+        //    MemoryStream ms = new MemoryStream();
+        //    workbook.Write(ms);
+        //    //HttpContext.Current.Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", HttpUtility.UrlEncode("WS" + "_" + DateTime.Now.ToString("yyyy-MM-dd"), System.Text.Encoding.UTF8)));
+
+        //    //HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
+        //    HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + strExcelFileName);
+        //    //HttpContext.Current.Response.AddHeader("Content-Length", ms.Length.ToString());
+        //    HttpContext.Current.Response.AddHeader("Content-Transfer-Encoding", "binary");
+        //    HttpContext.Current.Response.ContentType = "application/octet-stream;charset=utf-8";
+        //    HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
+
+        //    HttpContext.Current.Response.BinaryWrite(ms.ToArray());
+        //    HttpContext.Current.Response.Flush();
+
+        //    HttpContext.Current.Response.End();
+        //    workbook = null;
+        //    ms.Close();
+        //    ms.Dispose();
+
+        //    return fs;
+        //}
 
         /// <summary>
         /// NPOI自适应列宽
@@ -2930,6 +3770,910 @@ namespace LeanFine
             byte[] buffer = new byte[file.Length];
             file.Read(buffer, 0, (int)file.Length);
             return wb.AddPicture(buffer, NPOI.SS.UserModel.PictureType.JPEG);
+        }
+
+        /// <summary>
+        /// 导出Excel,多Sheet
+        /// </summary>
+        /// <param name="dataTables">数据表集合</param>
+        /// <param name="HeaderInfo">表头信息</param>
+        /// <param name="myExport_FileName">导出文件名称</param>
+        public static void ExportMultipleSheets(List<DataTable> dataTables, DataTable HeaderInfo, string myExport_FileName)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                ExcelWorkbook wb = package.Workbook;
+
+                //配置文件属性
+                wb.Properties.Category = "制一课不良集计";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "不良集计";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "制一课不良集计";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+                for (int i = 0; i < dataTables.Count; i++)
+                {
+                    DataTable dt = dataTables[i];
+                    int pageCount = (int)Math.Ceiling(dt.Rows.Count / 41.0);
+                    if (dt.Rows.Count == 0)
+                    {
+                        // 创建工作表
+                        var worksheet = package.Workbook.Worksheets.Add(dt.TableName + "_P1");
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        var qs = from g in HeaderInfo.AsEnumerable()
+                                 select g;
+                        //判断字符的位置并截取完整的生产批次
+                        string llot = dt.TableName;//.Substring(0, dt.TableName.IndexOf("_"));
+                        var q =
+                        (from g in HeaderInfo.AsEnumerable()
+                         where g.Field<string>("Prolot") == llot
+                         //where g.Field<string>("Proorder") == sorder
+                         select g).ToList();
+                        if (q.Any())
+                        {
+                            int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                            worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                            worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                            worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                            worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                            worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                            worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                            worksheet.Cells["J3"].Value = Prorealqty;
+                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J5"].Value = Probadtotal;
+                        }
+
+                        // 加载图片
+                        worksheet.Cells["A1:B2"].Merge = true;
+
+                        //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                        var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                        //var image = new FileInfo(imagePath);
+                        if (image.Exists)
+                        {
+                            var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                            excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                            excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                            excelImage.From.Column = 0; // 设置图片起始列
+                            excelImage.From.Row = 0; // 设置图片起始行
+                        }
+
+                        // Center the image in the merged cell
+                        worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        // 设置边框
+                        var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                        A1B2.Top.Style = ExcelBorderStyle.Thin;
+                        A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                        A1B2.Left.Style = ExcelBorderStyle.Thin;
+                        A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C1:H1"].Merge = true;
+                        worksheet.Cells["C1"].Value = "文书名";
+                        worksheet.Cells["C1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                        var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                        c1h1.Top.Style = ExcelBorderStyle.Thin;
+                        c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                        c1h1.Left.Style = ExcelBorderStyle.Thin;
+                        c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I1:J1"].Merge = true;
+
+                        worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                        worksheet.Cells["I1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                        I1J1.Top.Style = ExcelBorderStyle.Thin;
+                        I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                        I1J1.Left.Style = ExcelBorderStyle.Thin;
+                        I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C2:H2"].Merge = true;
+                        worksheet.Cells["C2"].Value = "不良集计";
+
+                        worksheet.Cells["C2"].Style.Font.Size = 18;
+                        worksheet.Cells["C2"].Style.Font.Bold = true;
+                        //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                        var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                        C2H2.Top.Style = ExcelBorderStyle.Thin;
+                        C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                        C2H2.Left.Style = ExcelBorderStyle.Thin;
+                        C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I2:J2"].Merge = true;
+                        worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                        worksheet.Cells["I2"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                        var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                        I2J2.Top.Style = ExcelBorderStyle.Thin;
+                        I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                        I2J2.Left.Style = ExcelBorderStyle.Thin;
+                        I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["A3"].Value = "机种";
+                        worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A4"].Value = "批次";
+                        worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A5"].Value = "期间";
+                        worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B3:C3"].Merge = true;
+                        worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B4:C4"].Merge = true;
+                        worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B5:C5"].Merge = true;
+                        worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D3"].Value = "班组";
+                        worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D4"].Value = "直行率";
+                        worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D5"].Value = "不良率";
+                        worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["E3:G3"].Merge = true;
+                        worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E4:G4"].Merge = true;
+                        worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E5:G5"].Merge = true;
+                        worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["H3:I3"].Merge = true;
+                        worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Merge = true;
+                        worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Merge = true;
+                        worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Value = "生产数量";
+                        worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H4"].Value = "无不良台数";
+                        worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H5"].Value = "不良总件数";
+                        worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        //表头
+                        worksheet.Cells[6, 1].Value = "区分";
+                        worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 1].Style.Font.Bold = true;
+                        worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["B6:C6"].Merge = true;
+                        worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 2].Value = "不良症状";
+                        worksheet.Cells[6, 2].Style.Font.Bold = true;
+                        worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["D6:E6"].Merge = true;
+                        worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 4].Value = "不良个所";
+                        worksheet.Cells[6, 4].Style.Font.Bold = true;
+                        worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["F6:I6"].Merge = true;
+                        worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 6].Value = "不良原因";
+                        worksheet.Cells[6, 6].Style.Font.Bold = true;
+                        worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 10].Value = "件数";
+                        worksheet.Cells[6, 10].Style.Font.Bold = true;
+                        worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        // 计算当前页的记录范围
+                        int startRow = 1 * 41;
+                        int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                        int sq = 0;//dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                        for (int j = 0; j < sq; j++)
+                        {
+                            //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                            worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                            worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                            //for (int j = 0; j < dataTable.Columns.Count; j++)
+                            //{
+                            //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //}
+                        }
+                        int bkrowscount = 42 + 6;
+                        int bkrowstart = sq + 6;
+                        for (int b = bkrowstart; b < bkrowscount; b++)
+                        {
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        }
+
+                        worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:D52"].Merge = true;
+
+                        worksheet.Cells["E48:F48"].Merge = true;
+                        worksheet.Cells["E48"].Value = "承认";
+                        worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E49:F52"].Merge = true;
+
+                        worksheet.Cells["G48:H48"].Merge = true;
+                        worksheet.Cells["G48"].Value = "确认";
+                        worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["G49:H52"].Merge = true;
+
+                        worksheet.Cells["I48:J48"].Merge = true;
+                        worksheet.Cells["I48"].Value = "担当";
+                        worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["I49:J52"].Merge = true;
+                        // 添加数据到工作表
+
+                        // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                        worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                        worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                        // Set footer with page number and ISO number
+                        worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                        worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + "1" + " of " + "1"; // &P for current page, &N for total pages
+                    }
+                    else
+                    {
+                        for (int page = 0; page < pageCount; page++)
+                        {
+                            // 创建工作表
+                            var worksheet = package.Workbook.Worksheets.Add(dt.TableName + $"_P{page + 1}");
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            var qs = from g in HeaderInfo.AsEnumerable()
+                                     select g;
+                            //判断字符的位置并截取完整的生产批次
+                            string llot = dt.TableName;//.Substring(0, dt.TableName.IndexOf("_"));
+                            var q =
+                            (from g in HeaderInfo.AsEnumerable()
+                             where g.Field<string>("Prolot") == llot
+                             //where g.Field<string>("Proorder") == sorder
+                             select g).ToList();
+                            if (q.Any())
+                            {
+                                int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                                worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                                worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                                worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                                worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                                worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                                worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                                worksheet.Cells["J3"].Value = Prorealqty;
+                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J5"].Value = Probadtotal;
+                            }
+
+                            // 加载图片
+                            worksheet.Cells["A1:B2"].Merge = true;
+
+                            //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                            var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                            //var image = new FileInfo(imagePath);
+                            if (image.Exists)
+                            {
+                                var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                                excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                                excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                                excelImage.From.Column = 0; // 设置图片起始列
+                                excelImage.From.Row = 0; // 设置图片起始行
+                            }
+
+                            // Center the image in the merged cell
+                            worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            // 设置边框
+                            var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                            A1B2.Top.Style = ExcelBorderStyle.Thin;
+                            A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                            A1B2.Left.Style = ExcelBorderStyle.Thin;
+                            A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C1:H1"].Merge = true;
+                            worksheet.Cells["C1"].Value = "文书名";
+                            worksheet.Cells["C1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                            c1h1.Top.Style = ExcelBorderStyle.Thin;
+                            c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                            c1h1.Left.Style = ExcelBorderStyle.Thin;
+                            c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I1:J1"].Merge = true;
+
+                            worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                            worksheet.Cells["I1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                            I1J1.Top.Style = ExcelBorderStyle.Thin;
+                            I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                            I1J1.Left.Style = ExcelBorderStyle.Thin;
+                            I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C2:H2"].Merge = true;
+                            worksheet.Cells["C2"].Value = "不良集计";
+
+                            worksheet.Cells["C2"].Style.Font.Size = 18;
+                            worksheet.Cells["C2"].Style.Font.Bold = true;
+                            //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                            C2H2.Top.Style = ExcelBorderStyle.Thin;
+                            C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                            C2H2.Left.Style = ExcelBorderStyle.Thin;
+                            C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I2:J2"].Merge = true;
+                            worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                            worksheet.Cells["I2"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                            var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                            I2J2.Top.Style = ExcelBorderStyle.Thin;
+                            I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                            I2J2.Left.Style = ExcelBorderStyle.Thin;
+                            I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["A3"].Value = "机种";
+                            worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A4"].Value = "批次";
+                            worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A5"].Value = "期间";
+                            worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B3:C3"].Merge = true;
+                            worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B4:C4"].Merge = true;
+                            worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B5:C5"].Merge = true;
+                            worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D3"].Value = "班组";
+                            worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D4"].Value = "直行率";
+                            worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D5"].Value = "不良率";
+                            worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["E3:G3"].Merge = true;
+                            worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E4:G4"].Merge = true;
+                            worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E5:G5"].Merge = true;
+                            worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["H3:I3"].Merge = true;
+                            worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Merge = true;
+                            worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Merge = true;
+                            worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Value = "生产数量";
+                            worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H4"].Value = "无不良台数";
+                            worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H5"].Value = "不良总件数";
+                            worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            //表头
+                            worksheet.Cells[6, 1].Value = "区分";
+                            worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 1].Style.Font.Bold = true;
+                            worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["B6:C6"].Merge = true;
+                            worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 2].Value = "不良症状";
+                            worksheet.Cells[6, 2].Style.Font.Bold = true;
+                            worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["D6:E6"].Merge = true;
+                            worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 4].Value = "不良个所";
+                            worksheet.Cells[6, 4].Style.Font.Bold = true;
+                            worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["F6:I6"].Merge = true;
+                            worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 6].Value = "不良原因";
+                            worksheet.Cells[6, 6].Style.Font.Bold = true;
+                            worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 10].Value = "件数";
+                            worksheet.Cells[6, 10].Style.Font.Bold = true;
+                            worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            // 计算当前页的记录范围
+                            int startRow = page * 41;
+                            int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                            int sq = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                            for (int j = 0; j < sq; j++)
+                            {
+                                //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                                worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                                worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                                //for (int j = 0; j < dataTable.Columns.Count; j++)
+                                //{
+                                //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //}
+                            }
+                            int bkrowscount = 42 + 6;
+                            int bkrowstart = sq + 6;
+                            for (int b = bkrowstart; b < bkrowscount; b++)
+                            {
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            }
+
+                            worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:D52"].Merge = true;
+
+                            worksheet.Cells["E48:F48"].Merge = true;
+                            worksheet.Cells["E48"].Value = "承认";
+                            worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E49:F52"].Merge = true;
+
+                            worksheet.Cells["G48:H48"].Merge = true;
+                            worksheet.Cells["G48"].Value = "确认";
+                            worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["G49:H52"].Merge = true;
+
+                            worksheet.Cells["I48:J48"].Merge = true;
+                            worksheet.Cells["I48"].Value = "担当";
+                            worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["I49:J52"].Merge = true;
+                            // 添加数据到工作表
+
+                            // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                            worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                            worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                            // Set footer with page number and ISO number
+                            worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                            worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + $"{page + 1}" + " of " + pageCount; // &P for current page, &N for total pages
+                                                                                                                        //worksheet.HeaderFooter.Footer.Font.Size = 8; // Set font size to 8
+                        }
+                    }
+                }
+
+                // ... existing code ...
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(package.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
         }
     }
 }

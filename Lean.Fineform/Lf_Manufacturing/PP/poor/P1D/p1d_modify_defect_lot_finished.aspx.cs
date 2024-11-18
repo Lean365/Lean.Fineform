@@ -317,12 +317,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //}
             ////DataTable Exp = new DataTable();
             ////在库明细查询SQL
-            //string Xlsbomitem, ExportFileName;
+            //string Prefix_XlsxName, Export_FileName,SheetName;
 
             //// mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            //Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Defect_DATA";
-            ////mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            //ExportFileName = Xlsbomitem + ".xlsx";
+            //Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Defect_DATA";
+            ////mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            //Export_FileName = Prefix_XlsxName + ".xlsx";
             //List<DataTable> tables = new List<DataTable>();
             //DataTable ma=new DataTable();
             //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
@@ -410,7 +410,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //    }
             //}
 
-            //ExportHelper.TableListToExcels(tables, ma, ExportFileName, 6);
+            //ExportHelper.TableListToExcels(tables, ma, Export_FileName, 6);
         }
 
         private void GridtoExcel()
@@ -423,21 +423,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             }
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             string FsearchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(FsearchText))
             {
-                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "ModifyDefectReport";
+                Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + FsearchText + "_" + "ModifyDefectReport";
             }
             else
 
             {
-                Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_LotModifyDefectReport";
+                Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_LotModifyDefectReport";
             }
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
 
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
             List<DataTable> tables = new List<DataTable>();
             DataTable ma = new DataTable();
             //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
@@ -447,6 +448,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     where a.IsDeleted == 0
                     where b.IsDeleted == 0
                     where a.Proorder.Contains("M")
+                    where a.Remark.Contains("ASSY")
                     //where a.Proorder.Substring(0, 2).Contains("44")
                     //where b.Prodate.Substring(0, 6).CompareTo(Pdate) == 0
                     //where a.Proorderqty == a.Prorealqty
@@ -619,12 +621,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                };
                     DataTable ex = ConvertHelper.LinqConvertToDataTable(qsub);
                     //sheet名称不能包含以下字符"[","]","\","/","?",":","*"
-                    ex.TableName = strPlot + "_" + i;
+                    ex.TableName = strPlot;// + "_" + i;
 
                     tables.Add(ex);
                 }
 
-                ExportHelper.TableListToExcels(tables, ma, ExportFileName, 6);
+                ExportHelper.ExportMultipleSheets(tables, ma, Export_FileName);
             }
             else
             {
@@ -690,12 +692,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_ModifyDefectDetails";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_ModifyDefectDetails";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             try
             {
@@ -741,7 +743,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         原因 = E.Probadreason,
                     });
 
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                 }
                 else
 
@@ -763,7 +765,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             }
 
             //Grid1.AllowPaging = false;
-            //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+            //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             //Grid1.AllowPaging = true;
         }
 

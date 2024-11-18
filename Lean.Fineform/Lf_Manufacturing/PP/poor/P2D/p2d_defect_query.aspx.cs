@@ -338,12 +338,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetail";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DefectDetail";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             //IQueryable<proDefect> q = DB.proDefects; //.Include(u => u.Dept);
 
@@ -371,7 +371,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 //ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = true;
             }
             else
@@ -396,12 +396,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             }
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "-" + DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Model_DefectDetail";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "-" + DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "Model_DefectDetail";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
             List<DataTable> tables = new List<DataTable>();
             DataTable ma = new DataTable();
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMM");
@@ -510,7 +510,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                     tables.Add(ex);
                 }
-                ExportHelper.TableListToExcel(tables, ma, ExportFileName, 6);
+                ExportHelper.ExportMultipleSheets(tables, ma, Export_FileName);
             }
             else
 

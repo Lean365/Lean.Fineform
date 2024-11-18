@@ -20,10 +20,10 @@
                     Title="按机种" runat="server">
                 </f:Tab>
                 <f:Tab ID="Tab4" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_output_line.aspx"
-                    Title="按班组改修" runat="server">
+                    Title="班组改修" runat="server">
                 </f:Tab>
                 <f:Tab ID="Tab3" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_output_model.aspx"
-                    Title="按机种改修" runat="server">
+                    Title="机种改修" runat="server">
                 </f:Tab>
 
 

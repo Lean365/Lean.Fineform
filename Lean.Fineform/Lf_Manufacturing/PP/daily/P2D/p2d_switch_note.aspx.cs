@@ -77,15 +77,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 //q = q.Where(u => u.Prodate.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            q = q.Where(u => u.IsDeleted == 0);
+            q = q.Where(u => u.IsDeleted == 0).OrderByDescending(u => u.Prodate);
             //if (GetIdentityName() != "admin")
             //{)
             //    q = q.Where(u => u.Name != "admin");
             //}
-            string sdate = Prodate.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = Prodate.SelectedDate.Value.ToString("yyyyMM");
             if (!string.IsNullOrEmpty(sdate))
             {
-                q = q.Where(u => u.Prodate.CompareTo(sdate) == 0);
+                q = q.Where(u => u.Prodate.Substring(0, 6).CompareTo(sdate) == 0);
             }
             // 过滤启用状态
             //if (rblEnableStatus.SelectedValue != "all")
@@ -153,7 +153,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_switch_note_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_switch_note_edit.aspx?GUID=" + keys[0].ToString() + "&type=1"));//+ Window1.GetMaximizeReference()窗口最大化
             }
             Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
 
@@ -221,12 +221,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "S" + Prodate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = Prodate.SelectedDate.Value.ToString("yyyyMM") + "_p2d_switch_note";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = Prodate.SelectedDate.Value.ToString("yyyyMM") + "_p2d_switch_note";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q =
                 from p in DB.Pp_P2d_Switch_Notes
@@ -297,7 +297,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), SheetName, Export_FileName);
                 Grid1.AllowPaging = true;
             }
             else

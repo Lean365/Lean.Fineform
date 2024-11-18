@@ -518,13 +518,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
                         //更新不良集计数据中的实绩生产数量,按工单
-                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
+                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
 
                         //判断不良是否录入
                         UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
 
                         //更新无不良台数
-                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
+                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
                         //更新订单已生产数量
                         //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
                         //更新仕损工数
@@ -715,13 +715,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
                         //更新不良集计数据中的实绩生产数量,按工单
-                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
+                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
 
                         //判断不良是否录入
                         UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
 
                         //更新无不良台数
-                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
+                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
                         //更新订单已生产数量
                         //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
                         //更新仕损工数
@@ -1091,13 +1091,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
-            UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid);
+            UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
 
             //判断不良是否录入
             UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(item.Proorder, userid);
+            UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
             //更新订单已生产数量
             //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
             //更新仕损工数

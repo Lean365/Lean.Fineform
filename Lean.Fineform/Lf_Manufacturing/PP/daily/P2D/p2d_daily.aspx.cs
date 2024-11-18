@@ -423,7 +423,7 @@ RepairSwitchTotalTime;
             if (e.CommandName == "EditOph")
             {
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/daily/P2D/p2d_daily_edit.aspx?ID=" + keys[0].ToString() + "&type=1"));//+ Window1.GetMaximizeReference()窗口最大化 + Window1.GetMaximizeReference());
             }
             if (e.CommandName == "EditOphsub")
             {
@@ -508,12 +508,12 @@ RepairSwitchTotalTime;
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Output_Details";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Output_Details";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q =
                 from p in DB.Pp_P2d_OutputSubs
@@ -669,7 +669,7 @@ RepairSwitchTotalTime;
                 //ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = true;
             }
             else
@@ -692,18 +692,18 @@ RepairSwitchTotalTime;
                 }
                 if (DpStartDate.SelectedDate.Value != DpEndDate.SelectedDate.Value)
                 {
-                    Alert.ShowInTop("日报只能查询一天的数据！");
+                    Alert.ShowInTop("日报只能导出一天的数据！");
                     return;
                 }
 
                 //DataTable Exp = new DataTable();
                 //在库明细查询SQL
-                string Xlsbomitem, ExportFileName;
-
+                string Prefix_XlsxName, Export_FileName, SheetName;
+                SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
                 // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-                Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "_P2d_Output_Details";
-                //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-                ExportFileName = Xlsbomitem + ".xlsx";
+                Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "_P2d_Output_Details";
+                //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+                Export_FileName = Prefix_XlsxName + ".xlsx";
 
                 var q =
                     from p in DB.Pp_P2d_OutputSubs
@@ -859,7 +859,7 @@ RepairSwitchTotalTime;
                     //ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.SheetP2dDaily_EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), sdate, ExportFileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek), SmtParm, AiParm, HandParm, RepairParm);
+                    ExportHelper.P2dDaily_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), sdate, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek), SmtParm, AiParm, HandParm, RepairParm);
                     Grid1.AllowPaging = true;
                 }
                 else
@@ -906,7 +906,7 @@ RepairSwitchTotalTime;
                 RepairSwitchTotalTime = qs[0].ProRepairSwitchTotalTime;
 
                 SmtParm = "SMT切换" + SmtSwitchNum + "次,总切换时间" + SmtSwitchTotalTime + "分钟。";
-                AiParm = "自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
+                AiParm = "自插停机时间" + AiStopTime + "分钟。"; //"自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
                 HandParm = "手插读取工程表6分钟，合计：" + HandPerson + "人*" + HandSopTime + "分=" + HandSopTotalTime + "分钟," + HandPerson + "人切换机种" + HandSwitchNum + "次" + HandSwitchTime + "分钟，合计：" + HandPerson + "人*" + HandSwitchTime + "分=" + HandSwitchTotalTime + "分钟。";
                 RepairParm = "修正读取工程表6分钟，合计：" + RepairPerson + "人*" + RepairSopTime + "分=" + RepairSopTotalTime + "分钟," + RepairPerson + "人切换机种" + RepairSwitchNum + "次" + RepairSwitchTime + "分钟，合计：" + RepairPerson + "人*" + RepairSwitchTime + "分=" + RepairSwitchTotalTime + "分钟。";
             }

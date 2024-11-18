@@ -1287,4 +1287,7 @@
     <value>No switching data, please add switching record.</value>
     <comment>NoSwitchdata</comment>
   </data>
+  <data name="sys_Export_Modify" xml:space="preserve">
+    <value>Export Modify Detl</value>
+  </data>
 </root>

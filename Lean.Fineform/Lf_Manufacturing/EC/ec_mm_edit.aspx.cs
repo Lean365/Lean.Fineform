@@ -102,7 +102,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                         where b.Ec_location != "C003"
                         where a.Ec_no == strEc_no
                         where b.Ec_model == strEc_model
-                        where b.Ec_mmdate == ""
+                        where string.IsNullOrEmpty(b.Ec_mmdate)
                         //where a.Ec_bomitem == strEc_bomitem
                         //where a.Ec_olditem == strEc_olditem
                         //where a.Ec_newitem == strEc_newitem
@@ -203,10 +203,11 @@ namespace LeanFine.Lf_Manufacturing.EC
                 var q = from a in DB.Pp_Ecs
                         join b in DB.Pp_Ec_Subs on a.Ec_no equals b.Ec_no
                         //join c in DB.Pp_SapMaterials on a.Ec_olditem equals c.D_SAP_ZCA1D_Z002
+                        where b.Ec_location != "C003"
                         where a.Ec_no == strEc_no
                         where b.Ec_model == strEc_model
-                        where b.Ec_mmdate == ""
-                        where b.Ec_mmlot != ("仓库C003")
+                        where string.IsNullOrEmpty(b.Ec_mmdate)
+                        //where b.Ec_mmlot != ("仓库C003")
                         //where a.Ec_bomitem == strEc_bomitem
                         //where a.Ec_olditem == strEc_olditem
                         //where a.Ec_newitem == strEc_newitem

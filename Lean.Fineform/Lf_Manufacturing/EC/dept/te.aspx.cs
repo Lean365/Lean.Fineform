@@ -309,15 +309,16 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
                 CheckPowerFailWithAlert();
                 return;
             }
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            Xlsbomitem = "ec_" + xlsname;
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = "ec_" + xlsname;
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             Grid1.AllowPaging = false;
-            ExportHelper.EpplustoXLSXfiles(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName, "ec_te", DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+            ExportHelper.EpplusToExcels(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "ec_te", DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
             Grid1.AllowPaging = true;
         }
 

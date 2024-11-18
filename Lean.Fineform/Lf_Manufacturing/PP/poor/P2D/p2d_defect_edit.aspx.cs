@@ -966,7 +966,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             strPlot = prolot.Text;
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(strPorder, GetIdentityName());
+            UpdatingHelper.noDefectQty_Update(strPorder, GetIdentityName(), "PCBA");
 
             //UpdatingHelper.okOrder_Update(strPorder);
 
@@ -974,7 +974,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //UpdatingHelper.UpdatebadTotal(this.DefDate.Text, prolinename.Text, strPorder);
             //Common.UpdateDefectQty();
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, GetIdentityName());
+            UpdatingHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, GetIdentityName(), "PCBA");
             //更新无不良台数
             //Common.UpdatenobadAmount(this.DefDate.Text, prolinename.Text, strPorder, nobadqty);
 

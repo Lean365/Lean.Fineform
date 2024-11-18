@@ -277,12 +277,12 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_PSI";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_PSI";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             string thisYM = DateTime.Now.ToString("yyyyMM");
 
@@ -328,7 +328,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                     DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(result, Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(result, Prefix_XlsxName, Export_FileName);
                     Grid1.AllowPaging = true;
                 }
                 else

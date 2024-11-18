@@ -1171,9 +1171,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string order = prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1);
             string lot = prolot.SelectedItem.Text.Substring(0, prolot.SelectedItem.Text.IndexOf(","));
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(order, userid);
+            UpdatingHelper.noDefectQty_Update(order, userid, "ASSY");
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName());
+            UpdatingHelper.UpdatebadAmount(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName(), "ASSY");
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

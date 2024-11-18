@@ -4101,9 +4101,7 @@
     <Compile Include="Lf_Business\Helper\JsonHelper.cs" />
     <Compile Include="Lf_Business\Helper\MailHelper.cs" />
     <Compile Include="Lf_Business\Helper\MenuHelper.cs" />
-    <Compile Include="Lf_Business\Helper\MiniExcelHelper.cs" />
     <Compile Include="Lf_Business\Helper\NetHelper.cs" />
-    <Compile Include="Lf_Business\Helper\NpoiHelper.cs" />
     <Compile Include="Lf_Business\Helper\OperateLogHelper.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

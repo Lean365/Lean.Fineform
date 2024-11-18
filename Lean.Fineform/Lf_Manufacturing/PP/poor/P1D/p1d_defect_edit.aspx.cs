@@ -979,10 +979,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             strPlot = prolot.Text;
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(strPorder, userid);
+            UpdatingHelper.noDefectQty_Update(strPorder, userid, "ASSY");
 
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, userid);
+            UpdatingHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, userid, "ASSY");
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

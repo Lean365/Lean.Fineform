@@ -297,7 +297,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
             IQueryable<Qm_Outgoing> q = DB.Qm_Outgoings; //.Include(u => u.Dept);
 
             q = q.Where(u => u.IsDeleted == 0);
@@ -344,9 +344,11 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                          检验次数 = a.qmCheckout,
                          生产数 = a.qmProqty,
                      };
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Outgoing_Inspection_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Outgoing_Inspection_Report";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             DataTable ExportTB = ConvertHelper.LinqConvertToDataTable(qs);
             //直接用这个判断即可，是不是很简单
@@ -357,7 +359,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
             if (ExportTB != null && ExportTB.Rows.Count > 0)
             {
-                ExportHelper.EpplustoXLSXfile(ExportTB, Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ExportTB, Prefix_XlsxName, Export_FileName);
             }
             else
             {

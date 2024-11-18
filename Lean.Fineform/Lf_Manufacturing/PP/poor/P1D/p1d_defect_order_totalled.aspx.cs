@@ -68,6 +68,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //IQueryable<Pp_Defect_Total> q = DB.Pp_Defect_Totals; //.Include(u => u.Dept);
 
                 var q = from a in DB.Pp_Defect_Totals
+
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
                             //where (from d in DB.Pp_P1d_Outputs
@@ -75,7 +76,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //       select d.Prolot)
                             //       .Contains(a.Prolot)//投入日期
                             //where a.Proorder.Substring(0, 2).Contains("44")
-                        where !a.Prolinename.Contains("制")
+                        where a.Remark.Contains("ASSY")
                         select a;
 
                 // 在用户名称中搜索
@@ -204,7 +205,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/p1d_defect_order_totalled_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_order_totalled_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
             }
 
             //string defectID = GetSelectedDataKeyGUID(Grid1);
@@ -273,11 +274,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             IQueryable<Pp_Defect_Total> q = DB.Pp_Defect_Totals; //.Include(u => u.Dept);
 
@@ -319,9 +320,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                          订单数量 = p.Proorderqty,
                      };
 
-            ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+            ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), SheetName, Export_FileName);
             //Grid1.AllowPaging = false;
-            //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+            //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             //Grid1.AllowPaging = true;
         }
 

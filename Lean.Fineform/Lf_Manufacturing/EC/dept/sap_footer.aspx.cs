@@ -306,15 +306,15 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
                 CheckPowerFailWithAlert();
                 return;
             }
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName;
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            Xlsbomitem = "ec_" + xlsname;
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = "ec_" + xlsname;
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             Grid1.AllowPaging = false;
-            ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+            ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             Grid1.AllowPaging = true;
         }
 

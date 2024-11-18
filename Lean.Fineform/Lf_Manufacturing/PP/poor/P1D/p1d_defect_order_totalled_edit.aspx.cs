@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public static string mysql, userid, ConnStr;
         public static int rowID, delrowID, editrowID, totalSum;
-        public static string Prolot, Prolinename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept;
+        //public static string Prolot, Linename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -69,9 +69,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 return;
             }
 
-            DefDate.Text = current[0].Prodate;
+            prodate.Text = current[0].Prodate;
             // 选中当前节点的父节点
-            prolinename.Text = current[0].Prolinename;
+            linename.Text = current[0].Prolinename;
 
             prolot.Text = current[0].Prolot;
 
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public void UpdateDefectQty()
         {
-            string dd = DefDate.Text.Substring(0, 6);
+            string dd = prodate.Text.Substring(0, 6);
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                         .Where(s => s.Prodate.Substring(0, 6).CompareTo(dd) == 0)
@@ -262,7 +262,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = prolot.Text.Trim() + "," + prolot.Text + "," + DefDate.Text + "," + prolinename.Text + "," + prorealqty.Text + "," + pronobadqty.Text + "," + promodel.Text;
+            string ModifiedText = prolot.Text.Trim() + "," + prolot.Text + "," + prodate.Text + "," + linename.Text + "," + prorealqty.Text + "," + pronobadqty.Text + "," + promodel.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit生产不良* " + ModifiedText + "*afEdit生产不良 的订单记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "系统管理", "不具合修改", OperateNotes);

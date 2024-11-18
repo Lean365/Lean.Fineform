@@ -1396,7 +1396,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             item.Prodirectrate = 0;
             item.Probadrate = 0;
             item.IsDeleted = 0;
-            item.Remark = "";
+            item.Remark = "PCBA";
             //item.Promodel = promodel.Text;
             item.GUID = Guid.NewGuid();
             item.Creator = GetIdentityName();
@@ -1541,7 +1541,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //判断重复
             string input = proorder.SelectedItem.Text.Trim();
 
-            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input).FirstOrDefault();
+            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input && u.Remark.Contains("PCBA")).FirstOrDefault();
 
             if (current != null)
             {

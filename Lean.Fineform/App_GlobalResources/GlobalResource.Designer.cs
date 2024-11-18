@@ -2518,6 +2518,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Export Modify Detl 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_Modify {
+            get {
+                return ResourceManager.GetString("sys_Export_Modify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Export 的本地化字符串。
         /// </summary>
         internal static string sys_Export_Sheet {

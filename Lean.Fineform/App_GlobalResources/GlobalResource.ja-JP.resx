@@ -1281,4 +1281,7 @@
   <data name="sys_Msg_NoSwitchdata" xml:space="preserve">
     <value>切替データがないので、切替履歴を追加します。</value>
   </data>
+  <data name="sys_Export_Modify" xml:space="preserve">
+    <value>スプレッドシート改修明細</value>
+  </data>
 </root>

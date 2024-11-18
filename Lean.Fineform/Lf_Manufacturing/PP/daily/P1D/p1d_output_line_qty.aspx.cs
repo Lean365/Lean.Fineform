@@ -593,12 +593,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Line_Output_Report";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q_normal = from p in DB.Pp_P1d_OutputSubs
                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
@@ -717,10 +717,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "ACTUAL" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else
@@ -741,12 +741,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Line)_Output_Report";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q_rework = from p in DB.Pp_P1d_OutputSubs
                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
@@ -864,10 +864,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qss), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qss), Prefix_XlsxName, Export_FileName);
 
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else

@@ -280,11 +280,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             IQueryable<Pp_P2d_Defect> q = DB.Pp_P2d_Defects; //.Include(u => u.Dept);
 
@@ -327,9 +327,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              不良件数 = p.Probadqty,
                          };
 
-                ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else

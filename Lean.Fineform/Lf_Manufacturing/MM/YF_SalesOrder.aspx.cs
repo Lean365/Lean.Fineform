@@ -464,12 +464,12 @@ namespace LeanFine.Lf_Manufacturing.MM
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "C100" + "_SO_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = "C100" + "_SO_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             //查询LINQ去重复
 
@@ -556,7 +556,7 @@ namespace LeanFine.Lf_Manufacturing.MM
                     ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     Grid1.AllowPaging = true;
                 }
                 else
@@ -588,12 +588,12 @@ namespace LeanFine.Lf_Manufacturing.MM
             }
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMM");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = "H100" + "_SO_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = "H100" + "_SO_List_" + C_DpStartDate.SelectedDate.Value.ToString("yyyyMMdd") + "~" + C_DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             //查询LINQ去重复
 
@@ -680,7 +680,7 @@ namespace LeanFine.Lf_Manufacturing.MM
                     ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplustoXLSXfile(ConvertHelper.LinqConvertToDataTable(qs), Xlsbomitem, ExportFileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
                     Grid1.AllowPaging = true;
                 }
                 else

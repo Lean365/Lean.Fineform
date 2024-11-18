@@ -298,12 +298,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[proOutputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpEndDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Repair_Report";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             try
             {
@@ -356,7 +356,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         修理 = E.Probadrepairman,
                     });
 
-                    ExportHelper.Manufacturing_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pr" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.Manufacturing_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pr" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 
@@ -378,7 +378,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             }
 
             //Grid1.AllowPaging = false;
-            //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+            //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             //Grid1.AllowPaging = true;
         }
 

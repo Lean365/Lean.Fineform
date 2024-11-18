@@ -338,12 +338,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
-
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_P2d_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Xlsbomitem = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Line_Output_Report";
-            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Xlsbomitem + "'";
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_P2d_Line_Output_Report";
+            //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             var q_all = from p in DB.Pp_P2d_OutputSubs
                             //join b in DB.Pp_P2d_Outputs on p.Parent.ID equals b.ID
@@ -491,10 +491,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               修正仕损 = p.UDF52,
                               手插仕损 = p.UDF53,
                           };
-                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "L" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), ExportFileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
+                ExportHelper.LineOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "L" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
 
                 //Grid1.AllowPaging = false;
-                //ExportHelper.EpplustoXLSXfile(ExportHelper.GetGridDataTable(Grid1), Xlsbomitem, ExportFileName);
+                //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;
             }
             else

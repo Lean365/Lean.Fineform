@@ -346,15 +346,15 @@ namespace LeanFine.Lf_Manufacturing.EC
         {
             //DataTable Exp = new DataTable();
             //在库明细查询SQL
-            string Xlsbomitem, ExportFileName;
+            string Prefix_XlsxName, Export_FileName, SheetName;
+            SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
+            Prefix_XlsxName = "Ec__DetailsData_" + myrexname;
 
-            Xlsbomitem = "Ec__DetailsData_" + myrexname;
-
-            ExportFileName = Xlsbomitem + ".xlsx";
+            Export_FileName = Prefix_XlsxName + ".xlsx";
 
             //DataTable source = GetDataTable.Getdt(mysql);
             //导出2007格式
-            ExportHelper.EpplustoXLSXfile(table, Xlsbomitem, ExportFileName);
+            ExportHelper.EpplusToExcel(table, Prefix_XlsxName, Export_FileName);
         }
 
         protected void Btn2003_Click(object sender, EventArgs e)
