@@ -186,7 +186,7 @@
                     <Items>
                         <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false"
                             EnableCheckBoxSelect="false" ForceFit="false" ColumnWidth="100px"
-                            DataKeyNames="Ec_no,Ec_model,Ec_bomitem" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
+                            DataKeyNames="Ec_no,Ec_model,Ec_bomitem,Ec_bomsubitem,Ec_olditem,Ec_newitem" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
                             SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableTextSelection="true"
                             OnPageIndexChange="Grid1_PageIndexChange" OnRowDataBound="Grid1_RowDataBound"
                             OnPreRowDataBound="Grid1_PreRowDataBound" OnRowCommand="Grid1_RowCommand">
@@ -219,7 +219,7 @@
                                 <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_P2D%>" Width="100px" Icon="TableEdit" ColumnID="editPcba" CommandName="EditPcba" Text="<%$ Resources:GlobalResource,sys_Button_Unrelated%>" ConfirmTarget="Top" ConfirmText="确定要设为与<制二课无关>吗？" />
                                 <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_P1D%>" Width="100px" Icon="TableEdit" ColumnID="editAssy" CommandName="EditAssy" Text="<%$ Resources:GlobalResource,sys_Button_Unrelated%>" ConfirmTarget="Top" ConfirmText="确定要设为与<组立无关>吗？" />
                                 <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,co_Dept_PE%>" Width="100px" Icon="TableEdit" ColumnID="editPe" CommandName="EditPe" Text="<%$ Resources:GlobalResource,menu_Pp_Sop%>" ConfirmTarget="Top" ConfirmText="确定不用更新SOP吗？" />
-                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Width="100px" Icon="delete" ColumnID="editDel" CommandName="EditDel" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Width="100px" Icon="delete" ColumnID="deleteField" CommandName="deleteField" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>" />
                                 <f:BoundField DataField="IsManage" SortField="IsManage" Width="120px" HeaderText="管理" />
                                 <f:BoundField DataField="IsMmManage" SortField="IsMmManage" Width="120px" HeaderText="部管" />
                                 <f:BoundField DataField="IsPcbaManage" SortField="IsPcbaManage" Width="120px" HeaderText="制二" />

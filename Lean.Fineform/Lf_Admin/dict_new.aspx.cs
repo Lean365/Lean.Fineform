@@ -39,7 +39,7 @@ namespace LeanFine.Lf_Admin
             //labResult.Text = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.班组类别：制二课请输入：P,制一课请输入：M,品保部请输入：Q</div><div>2.班组类别：只能输入P，Q,M。</div>");
             //Publisher.Text = GetIdentityName();
             btnClose.OnClientClick = ActiveWindow.GetHideReference();
-
+            numDictSort.Text = "99";
             // 初始化用户
             //InitNoticeUser();
 

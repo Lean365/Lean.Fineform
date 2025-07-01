@@ -490,7 +490,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                     //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
                     Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 客诉明细");
                     //Grid1.AllowPaging = true;
                 }
                 if (rbtnSecondAuto.Checked)
@@ -537,7 +537,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                     //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
                     Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 客诉明细");
                     //Grid1.AllowPaging = true;
                 }
                 if (rbtnThirdAuto.Checked)
@@ -583,7 +583,7 @@ namespace LeanFine.Lf_Manufacturing.QM.complaint
                     //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
                     Export_FileName = Prefix_XlsxName + ".xlsx";
                     //Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 客诉明细");
                     //Grid1.AllowPaging = true;
                 }
             }

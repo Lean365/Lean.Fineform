@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
@@ -139,7 +140,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                             where a.DictType.Contains("line_type_m")
                             select new
                             {
-                                a.DictValue
+                                a.DictLabel
                             }).ToList();
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
@@ -153,7 +154,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                     };
 
             //包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictValue));
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel));
 
             var qs = q_include.Select(E => new { E.Prolinename, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -413,7 +414,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).DeleteFromQuery();
 
                 //更新订单已生产数量
-                UpdatingHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
+                UpdateP1dHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
 
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), "修改", "生产管理", "生产订单修改", OperateNotes);
             }
@@ -557,7 +558,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 生产日报");
                 Grid1.AllowPaging = true;
             }
             else

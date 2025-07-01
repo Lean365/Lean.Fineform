@@ -335,13 +335,21 @@
     <Content Include="Lf_Manufacturing\MM\YF_SalesSlip.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_SalesOrder.aspx" />
     <Content Include="Lf_Manufacturing\MM\YF_ShipmentOrder.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_sub_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_daily.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_daily_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_daily_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_daily_sub_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_kanban.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_line.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_model.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_model.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_line.aspx" />
+    <Content Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_model.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily_new.aspx" />
@@ -364,6 +372,12 @@
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_moc_finished.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_lot_finished.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_new.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_modify_defect_lot_finished.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_modify_defect_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_modify_defect.aspx" />
@@ -488,8 +502,8 @@
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_lot_finished.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_new.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx" />
-    <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order.aspx" />
+    <Content Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_chart.aspx" />
     <Content Include="Lf_Manufacturing\PP\pp_tracking_chart.aspx" />
@@ -4113,7 +4127,16 @@
     <Compile Include="Lf_Business\Helper\SqlHelper.cs" />
     <Compile Include="Lf_Business\Helper\SsoHelper.cs" />
     <Compile Include="Lf_Business\Helper\StringHelper.cs" />
-    <Compile Include="Lf_Business\Helper\UpdatingHelper.cs">
+    <Compile Include="Lf_Business\Helper\UpdateModiHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Business\Helper\UpdateP1dHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Business\Helper\UpdateEppHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Business\Helper\UpdatingP2dHelper.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Lf_Business\Helper\ValidatorTools.cs" />
@@ -4158,9 +4181,16 @@
     <Compile Include="Lf_Business\Models\MM\Mm_Material.cs" />
     <Compile Include="Lf_Business\Models\MM\YF_Billofmaterial.cs" />
     <Compile Include="Lf_Business\Models\OA\Oa_Contact.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P1d_Lot.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P2d_Lot.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P1d_Order.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_Defect_P2d_Order.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_Epp_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P1d_Modify_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P1d_Modify_Output.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P1d_Modify_OutputSub.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_Epp_Output.cs" />
+    <Compile Include="Lf_Business\Models\PP\Pp_P1d_Epp_OutputSub.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P2d_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_P1d_Defect.cs" />
     <Compile Include="Lf_Business\Models\PP\Pp_Defect_Code.cs" />
@@ -6988,6 +7018,34 @@
     <Compile Include="Lf_Manufacturing\MM\YF_ShipmentOrder.aspx.designer.cs">
       <DependentUpon>YF_ShipmentOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily.aspx.cs">
+      <DependentUpon>p1d_epp_daily.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily.aspx.designer.cs">
+      <DependentUpon>p1d_epp_daily.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_edit.aspx.cs">
+      <DependentUpon>p1d_epp_daily_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_edit.aspx.designer.cs">
+      <DependentUpon>p1d_epp_daily_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_new.aspx.cs">
+      <DependentUpon>p1d_epp_daily_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_new.aspx.designer.cs">
+      <DependentUpon>p1d_epp_daily_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_sub_edit.aspx.cs">
+      <DependentUpon>p1d_epp_daily_sub_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_daily_sub_edit.aspx.designer.cs">
+      <DependentUpon>p1d_epp_daily_sub_edit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_daily.aspx.cs">
       <DependentUpon>p1d_modify_daily.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -7023,6 +7081,13 @@
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_data_kanban.aspx.designer.cs">
       <DependentUpon>p1d_data_kanban.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_line.aspx.cs">
+      <DependentUpon>p1d_epp_output_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_line.aspx.designer.cs">
+      <DependentUpon>p1d_epp_output_line.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_line.aspx.cs">
       <DependentUpon>p1d_modify_output_line.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -7030,12 +7095,33 @@
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_line.aspx.designer.cs">
       <DependentUpon>p1d_modify_output_line.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_model.aspx.cs">
+      <DependentUpon>p1d_epp_output_model.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_epp_output_model.aspx.designer.cs">
+      <DependentUpon>p1d_epp_output_model.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_model.aspx.cs">
       <DependentUpon>p1d_modify_output_model.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_modify_output_model.aspx.designer.cs">
       <DependentUpon>p1d_modify_output_model.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_line.aspx.cs">
+      <DependentUpon>p1d_zdtb_output_line.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_line.aspx.designer.cs">
+      <DependentUpon>p1d_zdtb_output_line.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_model.aspx.cs">
+      <DependentUpon>p1d_zdtb_output_model.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\daily\P1D\p1d_zdtb_output_model.aspx.designer.cs">
+      <DependentUpon>p1d_zdtb_output_model.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_daily.aspx.cs">
       <DependentUpon>p2d_daily.aspx</DependentUpon>
@@ -7190,6 +7276,48 @@
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\daily\P2D\p2d_smt_daily_new.aspx.designer.cs">
       <DependentUpon>p2d_smt_daily_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_moc_finished.aspx.cs">
+      <DependentUpon>p1d_defect_moc_finished.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_moc_finished.aspx.designer.cs">
+      <DependentUpon>p1d_defect_moc_finished.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect.aspx.cs">
+      <DependentUpon>p1d_epp_defect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect.aspx.designer.cs">
+      <DependentUpon>p1d_epp_defect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_edit.aspx.cs">
+      <DependentUpon>p1d_epp_defect_edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_edit.aspx.designer.cs">
+      <DependentUpon>p1d_epp_defect_edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_lot_finished.aspx.cs">
+      <DependentUpon>p1d_epp_defect_lot_finished.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_lot_finished.aspx.designer.cs">
+      <DependentUpon>p1d_epp_defect_lot_finished.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_new.aspx.cs">
+      <DependentUpon>p1d_epp_defect_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_epp_defect_new.aspx.designer.cs">
+      <DependentUpon>p1d_epp_defect_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_new.aspx.cs">
+      <DependentUpon>pp_defect_order_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_new.aspx.designer.cs">
+      <DependentUpon>pp_defect_order_new.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_modify_defect_lot_finished.aspx.cs">
       <DependentUpon>p1d_modify_defect_lot_finished.aspx</DependentUpon>
@@ -8062,19 +8190,19 @@
     <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_new.aspx.designer.cs">
       <DependentUpon>p1d_defect_new.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx.cs">
-      <DependentUpon>p1d_defect_order_totalled.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order.aspx.cs">
+      <DependentUpon>pp_defect_order.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled.aspx.designer.cs">
-      <DependentUpon>p1d_defect_order_totalled.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order.aspx.designer.cs">
+      <DependentUpon>pp_defect_order.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx.cs">
-      <DependentUpon>p1d_defect_order_totalled_edit.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_edit.aspx.cs">
+      <DependentUpon>pp_defect_order_edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_order_totalled_edit.aspx.designer.cs">
-      <DependentUpon>p1d_defect_order_totalled_edit.aspx</DependentUpon>
+    <Compile Include="Lf_Manufacturing\PP\poor\P1D\pp_defect_order_edit.aspx.designer.cs">
+      <DependentUpon>pp_defect_order_edit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\poor\P1D\p1d_defect_query.aspx.cs">
       <DependentUpon>p1d_defect_query.aspx</DependentUpon>
@@ -8783,7 +8911,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5416</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44347/</IISUrl>
+          <IISUrl>http://localhost:5416/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

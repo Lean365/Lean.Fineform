@@ -49,16 +49,16 @@
                                     <Menu runat="server">
                                         <f:MenuButton ID="btnMmManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnMmManage_Click" runat="server" Text="部管课管理">
                                         </f:MenuButton>
-                                        <f:MenuButton ID="btnMmNoManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnMmNoManage_Click" runat="server" Text="部管课不管理">
+                                        <f:MenuButton ID="btnMmNoManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnMmNoManage_Click" runat="server" Text="部管不管理">
                                         </f:MenuButton>
                                         <f:MenuButton ID="btnPcbaManage" IconUrl="~/Lf_Resources/menu/change/dept_p2d.png" OnClick="btnPcbaManage_Click" runat="server" Text="制二课管理">
                                         </f:MenuButton>
                                         <f:MenuButton ID="btnPcbaNoManage" IconUrl="~/Lf_Resources/menu/change/dept_no.png" OnClick="btnPcbaNoManage_Click" runat="server"
-                                            Text="管制二不管理">
+                                            Text="制二不管理">
                                         </f:MenuButton>
                                         <f:MenuButton ID="btnAssyManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnAssyManage_Click" runat="server" Text="制一课管理">
                                         </f:MenuButton>
-                                        <f:MenuButton ID="btnAssyNoManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnAssyNoManage_Click" runat="server" Text="制一课不管理">
+                                        <f:MenuButton ID="btnAssyNoManage" IconUrl="~/Lf_Resources/menu/change/dept_mm.png" OnClick="btnAssyNoManage_Click" runat="server" Text="制一不管理">
                                         </f:MenuButton>
                                         <f:MenuButton ID="btnCommonManage" IconUrl="~/Lf_Resources/menu/change/dept_all.png" OnClick="btnCommonManage_Click" runat="server" Text="全部管理">
                                         </f:MenuButton>

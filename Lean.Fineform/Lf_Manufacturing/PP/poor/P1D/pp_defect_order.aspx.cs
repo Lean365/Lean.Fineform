@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
-    public partial class p1d_defect_order_totalled : PageBase
+    public partial class pp_defect_order : PageBase
     {
         #region ViewPower
 
@@ -42,12 +42,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //CheckPowerWithButton("CoreDefectNew", btnNew);
             //CheckPowerWithButton("CoreDefectNew", btnP2d);
             //CheckPowerWithButton("CoreFineExport", BtnExport);
-
+            CheckPowerWithButton("CoreP1DDefectNew", btnNew);
+            CheckPowerWithButton("CoreFineExport", BtnExport);
             //ResolveDeleteButtonForGrid(btnDeleteSelected, Grid1);
 
             //ResolveEnableStatusButtonForGrid(btnEnableUsers, Grid1, true);
             //ResolveEnableStatusButtonForGrid(btnDisableUsers, Grid1, false);
-
+            btnNew.OnClientClick = Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P1D/pp_defect_order_new.aspx", "新增");
             //btnNew.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_new.aspx", "新增") + Window1.GetMaximizeReference();
             //btnP2d.OnClientClick = Window1.GetShowReference("~/oneProduction/oneDefect/defect_p2d_new.aspx", "新增");
             //本月第一天
@@ -67,7 +68,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 //IQueryable<Pp_Defect_Total> q = DB.Pp_Defect_Totals; //.Include(u => u.Dept);
 
-                var q = from a in DB.Pp_Defect_Totals
+                var q = from a in DB.Pp_Defect_P1d_Orders
 
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
@@ -76,7 +77,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //       select d.Prolot)
                             //       .Contains(a.Prolot)//投入日期
                             //where a.Proorder.Substring(0, 2).Contains("44")
-                        where a.Remark.Contains("ASSY")
+                        where a.Prodept.Contains("ASSY")
                         select a;
 
                 // 在用户名称中搜索
@@ -117,8 +118,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                               p.Probadtotal,
                               Prodirectrate = ((p.Prorealqty == 0 ? 0 : (decimal)p.Pronobadqty / p.Prorealqty)),//  保留一位,
                               Probadrate = ((p.Prorealqty == 0 ? 0 : (decimal)p.Probadtotal / p.Prorealqty)),
-                              Promodel = p.Promodel,
-                          }); ;
+                              p.Promodel,
+                              p.Proitem,
+                              p.Prodept
+                          });
 
                 Grid1.RecordCount = GridHelper.GetTotalCount(qs);
                 // 排列和数据库分页
@@ -205,7 +208,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 object[] keys = Grid1.DataKeys[e.RowIndex];
                 //labResult.Text = keys[0].ToString();
-                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_order_totalled_edit.aspx?GUID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
+                PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Manufacturing/PP/poor/P1D/pp_defect_order_edit.aspx?GUID=" + keys[0].ToString() + "&type=1"));
             }
 
             //string defectID = GetSelectedDataKeyGUID(Grid1);
@@ -320,7 +323,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                          订单数量 = p.Proorderqty,
                      };
 
-            ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), SheetName, Export_FileName);
+            ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), SheetName, Export_FileName, "DTA 生产不良日报");
             //Grid1.AllowPaging = false;
             //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             //Grid1.AllowPaging = true;

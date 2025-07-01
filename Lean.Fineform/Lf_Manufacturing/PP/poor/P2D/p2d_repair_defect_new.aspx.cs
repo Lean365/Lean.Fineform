@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -1248,7 +1249,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //string lot = proorder.SelectedItem.Text.Substring(0, proorder.SelectedItem.Text.IndexOf(","));
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(order, GetIdentityName(), "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(order, GetIdentityName(), "PCBA");
 
             //更新不具合件数
             //UpdatingHelper.UpdatebadTotal(this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1));

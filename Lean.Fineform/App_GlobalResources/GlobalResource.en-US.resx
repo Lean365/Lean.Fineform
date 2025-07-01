@@ -1284,4 +1284,34 @@
   <data name="sys_Export_Modify" xml:space="preserve">
     <value>Export Modify Detl</value>
   </data>
+  <data name="menu_Pp_OPHEpp" xml:space="preserve">
+    <value>Epp</value>
+  </data>
+  <data name="sys_Button_Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="sys_Button_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="sys_Button_Line_B" xml:space="preserve">
+    <value>Line Rework(B)</value>
+  </data>
+  <data name="sys_Button_Model_B" xml:space="preserve">
+    <value>Model(B)</value>
+  </data>
+  <data name="sys_Button_Line_N" xml:space="preserve">
+    <value>Line Rework(N)</value>
+  </data>
+  <data name="sys_Button_Model_N" xml:space="preserve">
+    <value>Model(N)</value>
+  </data>
+  <data name="sys_Button_Line_E" xml:space="preserve">
+    <value>Line EPP</value>
+  </data>
+  <data name="sys_Button_Model_E" xml:space="preserve">
+    <value>Model EPP</value>
+  </data>
+  <data name="menu_Pp_P1d_Epp_Defect" xml:space="preserve">
+    <value>EppDefect</value>
+  </data>
 </root>

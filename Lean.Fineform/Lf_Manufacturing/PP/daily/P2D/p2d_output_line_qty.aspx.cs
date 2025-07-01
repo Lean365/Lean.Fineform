@@ -864,7 +864,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                               台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                               达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                           };
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qss), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qss), Prefix_XlsxName, Export_FileName, "DTA 生产日报");
 
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);

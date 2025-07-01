@@ -328,7 +328,7 @@ namespace LeanFine.Lf_Manufacturing.SD.salesmanage
                     DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(result, Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(result, Prefix_XlsxName, Export_FileName, "DTA Forecat明细");
                     Grid1.AllowPaging = true;
                 }
                 else

@@ -91,7 +91,7 @@
                         <f:BoundField DataField="Promodel" SortField="Promodel" Width="100px" HeaderText="物料" />
                         <f:BoundField DataField="Prost" SortField="Prost" Width="100px" HeaderText="ST" DataFormatString="{0:F2}" />
                         <f:BoundField DataField="Proplanqty" SortField="Proplanqty" ColumnID="Proplanqty" Width="100px" HeaderText="计划台数" DataFormatString="{0:F2}" />
-                        <f:BoundField DataField="Proworktime" SortField="Proworktime" Width="100px" HeaderText="投入工时" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Proworktime" SortField="Proworktime" ColumnID="Proworktime" Width="100px" HeaderText="投入工时" DataFormatString="{0:F0}" />
                         <f:BoundField DataField="Proworkqty" SortField="Proworkqty" ColumnID="Proworkqty" Width="100px" HeaderText="实绩台数" DataFormatString="{0:F0}" />
                         <f:BoundField DataField="Prodirect" SortField="Prodirect" Width="100px" HeaderText="直接人员" DataFormatString="{0:F0}" />
                         <f:BoundField DataField="Proworkst" SortField="Proworkst" Width="100px" HeaderText="实绩ST" DataFormatString="{0:F2}" />

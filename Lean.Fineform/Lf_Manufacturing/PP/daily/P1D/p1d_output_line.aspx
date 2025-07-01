@@ -99,7 +99,7 @@
                         <f:BoundField DataField="Proplanqty" SortField="Proplanqty" ColumnID="Proplanqty" Width="140px" HeaderText="计划台数" DataFormatString="{0:F2}" />
                         <f:BoundField DataField="Prodirect" SortField="Prodirect" Width="80px" HeaderText="直接" />
                         <f:BoundField DataField="Proindirect" SortField="Proindirect" Width="80px" HeaderText="间接" />
-                        <f:BoundField DataField="Proworktime" SortField="Proworktime" Width="100px" HeaderText="生产工数" DataFormatString="{0:F0}" />
+                        <f:BoundField DataField="Proworktime" SortField="Proworktime" ColumnID="Proworktime" Width="100px" HeaderText="生产工数" DataFormatString="{0:F0}" />
                         <f:BoundField DataField="Proworkqty" SortField="Proworkqty" ColumnID="Proworkqty" Width="100px" HeaderText="实绩台数" DataFormatString="{0:F0}" />
 
                         <f:BoundField DataField="Proworkst" SortField="Proworkst" Width="100px" HeaderText="实绩ST" DataFormatString="{0:F2}" />

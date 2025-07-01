@@ -1290,4 +1290,43 @@
   <data name="sys_Export_Modify" xml:space="preserve">
     <value>Export Modify Detl</value>
   </data>
+  <data name="menu_Pp_OPHEpp" xml:space="preserve">
+    <value>Epp</value>
+  </data>
+  <data name="sys_Button_Line" xml:space="preserve">
+    <value>Line</value>
+    <comment>Line</comment>
+  </data>
+  <data name="sys_Button_Model" xml:space="preserve">
+    <value>Model</value>
+    <comment>Model</comment>
+  </data>
+  <data name="sys_Button_Line_B" xml:space="preserve">
+    <value>Line_B</value>
+    <comment>Line_B</comment>
+  </data>
+  <data name="sys_Button_Model_B" xml:space="preserve">
+    <value>Model_B</value>
+    <comment>Model_B</comment>
+  </data>
+  <data name="sys_Button_Line_N" xml:space="preserve">
+    <value>Line_N</value>
+    <comment>Line_N</comment>
+  </data>
+  <data name="sys_Button_Model_N" xml:space="preserve">
+    <value>Model_N</value>
+    <comment>Model_N</comment>
+  </data>
+  <data name="sys_Button_Line_E" xml:space="preserve">
+    <value>Line_E</value>
+    <comment>Line_E</comment>
+  </data>
+  <data name="sys_Button_Model_E" xml:space="preserve">
+    <value>Model_E</value>
+    <comment>Model_E</comment>
+  </data>
+  <data name="menu_Pp_P1d_Epp_Defect" xml:space="preserve">
+    <value>EppDefect</value>
+    <comment>EppDefect</comment>
+  </data>
 </root>

@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -232,10 +233,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 DB.Pp_P1d_Defects.Where(l => l.ID == del_ID).DeleteFromQuery();
 
                 //更新无不良台数
-                UpdatingHelper.noDefectQty_Update(current.Proorder, GetIdentityName(), "ASSY");
+                UpdateModiHelper.P1d_Defect_Modi_Orders_Update_For_NoBadQty(current.Proorder, GetIdentityName(), "ASSYM");
 
                 //更新不具合合计
-                UpdatingHelper.UpdatebadAmount(current.Prodate, current.Prolinename, current.Proorder, GetIdentityName(), "ASSY");
+                UpdateModiHelper.UpdatebadAmount(current.Prodate, current.Prolinename, current.Proorder, GetIdentityName(), "ASSYM");
 
                 BindGrid();
             }
@@ -339,7 +340,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              不良件数 = p.Probadqty,
                          };
 
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 改修不良明细");
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;

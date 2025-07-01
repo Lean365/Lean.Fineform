@@ -7,7 +7,9 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
@@ -113,6 +115,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             Grid1.DataSource = q;
             Grid1.DataBind();
+
+            ConvertHelper.LinqConvertToDataTable(q);
+            // 当前页的合计
+            GridSummaryData(ConvertHelper.LinqConvertToDataTable(q));
         }
 
         #endregion Page_Load
@@ -286,18 +292,18 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             DB.SaveChanges();
 
             //更新不良数据中的实绩生产数量，按日期，工单，班组
-            UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+            UpdateP1dHelper.Pp_P1d_Defect_Update_For_Realqty(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
-            UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_Realqty(item.Proorder, userid, "ASSY");
 
             //判断不良是否录入
-            UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+            UpdateP1dHelper.Pp_P1d_Defect_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(item.Proorder, userid, "ASSY");
             //更新订单已生产数量
-            UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+            UpdateP1dHelper.UpdateOrderRealQty(item.Proorder, userid);
         }
 
         //// 根据行ID来获取行数据
@@ -563,5 +569,33 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         }
 
         #endregion BindDdl Dropdown ListData
+        /// <summary>
+        /// 合计表格
+        /// </summary>
+        /// <param name="source"></param>
+        //
+        private void GridSummaryData(DataTable source)
+        {
+            Decimal pTotal = 0.0m;
+            Decimal rTotal = 0.0m;
+            Decimal ratio = 0.0m;
+
+            foreach (DataRow row in source.Rows)
+            {
+                pTotal += Convert.ToDecimal(row["Prostdcapacity"]);
+                rTotal += Convert.ToInt32(row["Prorealqty"]);
+                ratio = 0;// rTotal / pTotal;
+            }
+
+            JObject summary = new JObject();
+            //summary.Add("major", "全部合计");
+
+            summary.Add("Prostdcapacity", pTotal.ToString("F2"));
+            summary.Add("Prorealqty", rTotal.ToString("F2"));
+            summary.Add("Probadtotal", ratio.ToString("p0"));
+
+            Grid1.SummaryData = summary;
+        }
+
     }
 }

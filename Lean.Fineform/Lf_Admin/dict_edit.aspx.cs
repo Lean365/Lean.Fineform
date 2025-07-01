@@ -132,45 +132,13 @@ namespace LeanFine.Lf_Admin
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "数据字典", "字典信息修改", OperateNotes);
         }
 
-        private void CheckData()
-        {
-            //ValidatorTools.IsTelePhoneNumber(TXTentOuterPhone.Text);
-            //ValidatorTools.IsTelePhoneNumber(TXTentFax.Text);
-            //ValidatorTools.IsInteger(TXTentInnerPhone.Text);
-            //ValidatorTools.IsInteger(NUMSortCode.Text);
 
-            ////判断修改内容
-            //int id = GetQueryIntValue("id");
-            //proLine current = DB.proLines.Find(id);
-            ////decimal cQcpd005 = current.Qcpd005;
-            //string checkdata1 = current.linename;
-
-            //if (this.linename.Text == checkdata1)//decimal.Parse(this.LF001.Text) == cLF001 && this.Qcpd005.Text == cQcpd004)
-            //{
-            //    Alert alert = new Alert();
-            //    alert.Message = global::Resources.GlobalResource.sys_Msg_Noedit;
-            //    alert.IconFont = IconFont.Warning;
-            //    alert.Target = Target.Top;
-            //    Alert.ShowInTop();
-            //    //PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
-            //}
-            //判断重复
-            string InputData = txtDictType.Text.Trim() + txtDictLabel.Text.Trim();
-
-            Adm_Dict redata = DB.Adm_Dicts.Where(u => u.DictType + u.DictLabel == InputData).FirstOrDefault();
-
-            if (redata != null)
-            {
-                Alert.ShowInTop("字典信息,字典< " + InputData + ">已经存在！修改即可");
-                return;
-            }
-        }
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
         {
             try
             {
-                CheckData();
+                //CheckData();
                 SaveItem();
             }
             catch (ArgumentNullException Message)

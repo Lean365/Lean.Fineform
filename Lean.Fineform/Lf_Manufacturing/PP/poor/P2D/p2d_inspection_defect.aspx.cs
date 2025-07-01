@@ -292,7 +292,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             }
             if (DpStartDate.SelectedDate.Value != DpEndDate.SelectedDate.Value)
             {
-                Alert.ShowInTop("日报只能导出一天的数据！");
+                Alert.ShowInTop("日报只能导出一天的数据！", MessageBoxIcon.Warning);
                 return;
             }
             SheetName = "I" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");

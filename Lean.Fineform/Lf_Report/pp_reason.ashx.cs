@@ -76,7 +76,7 @@ namespace LeanFine.Lf_Report
                 //context.Response.Write(jsS.Serialize(lists));                   //返回数据
             }
             var q_memo = (from p in q_Rows
-                          select p).ToList();
+                          select p).ToList().Take(10);
 
             if (q_memo.Any())
             {

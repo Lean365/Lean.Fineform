@@ -327,7 +327,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              不良件数 = p.Probadqty,
                          };
 
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 修理不良明细");
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
                 //Grid1.AllowPaging = true;

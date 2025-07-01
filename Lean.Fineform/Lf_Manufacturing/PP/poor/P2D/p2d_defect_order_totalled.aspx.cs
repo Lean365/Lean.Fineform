@@ -65,9 +65,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             try
             {
-                //IQueryable<Pp_Defect_Total> q = DB.Pp_Defect_Totals; //.Include(u => u.Dept);
+                //IQueryable<Pp_Defect_P2d_Order> q = DB.Pp_Defect_P2d_Orders; //.Include(u => u.Dept);
 
-                var q = from a in DB.Pp_Defect_Totals
+                var q = from a in DB.Pp_Defect_P2d_Orders
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
                             //where (from d in DB.Pp_P1d_Outputs
@@ -279,7 +279,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
             Export_FileName = Prefix_XlsxName + ".xlsx";
 
-            IQueryable<Pp_Defect_Total> q = DB.Pp_Defect_Totals; //.Include(u => u.Dept);
+            IQueryable<Pp_Defect_P2d_Order> q = DB.Pp_Defect_P2d_Orders; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
@@ -304,6 +304,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 }
             }
             q = q.Where(u => u.IsDeleted == 0);
+            q = q.Where(u => u.Remark.Contains("PCBA"));
 
             var qs = from p in q
                      .OrderBy(s => s.Prodate)
@@ -319,7 +320,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                          订单数量 = p.Proorderqty,
                      };
 
-            ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+            ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 修理不良明细");
             //Grid1.AllowPaging = false;
             //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
             //Grid1.AllowPaging = true;

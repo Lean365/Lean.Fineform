@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -1142,7 +1143,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             strPlot = lblProlot.Text;
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(strPorder, GetIdentityName(), "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(strPorder, GetIdentityName(), "PCBA");
 
             //UpdatingHelper.okOrder_Update(strPorder);
 
@@ -1150,7 +1151,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //UpdatingHelper.UpdatebadTotal(this.lblProdate.Text, prolinename.Text, strPorder);
             //Common.UpdateDefectQty();
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.lblProdate.Text, lblProlinename.Text, strPorder, GetIdentityName(), "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_BadTotal_Update(this.lblProdate.Text, lblProlinename.Text, strPorder, GetIdentityName(), "PCBA");
             //更新无不良台数
             //Common.UpdatenobadAmount(this.lblProdate.Text, prolinename.Text, strPorder, nobadqty);
 

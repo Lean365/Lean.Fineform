@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_eng_new" %>
+﻿<%@ Page Language="C#" ValidateRequest="false" AutoEventWireup="true" CodeBehind="ec_eng_new.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.EC.ec_eng_new" %>
 
 <!DOCTYPE html>
 
@@ -155,9 +155,9 @@
                     <Items>
                         <f:Grid ID="Grid1" runat="server" BoxFlex="1" ShowBorder="true" ShowHeader="false"
                             EnableCheckBoxSelect="true" ForceFit="false" MinColumnWidth="100px"
-                            DataKeyNames="Ec_no" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
+                            DataKeyNames="Ec_no,Ec_model,Ec_bomitem,Ec_bomsubitem,Ec_olditem,Ec_newitem" AllowSorting="true" OnSort="Grid1_Sort" SortField="Ec_bomitem"
                             SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableTextSelection="true"
-                            OnPageIndexChange="Grid1_PageIndexChange" OnRowDataBound="Grid1_RowDataBound"
+                            OnPageIndexChange="Grid1_PageIndexChange" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand"
                             OnPreRowDataBound="Grid1_PreRowDataBound">
                             <Toolbars>
                                 <f:Toolbar ID="Toolbar2" runat="server">
@@ -185,6 +185,7 @@
                             </PageItems>
                             <Columns>
                                 <f:RowNumberField Width="35px" EnablePagingNumber="true" />
+                                <f:LinkButtonField HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Width="100px" Icon="delete" ColumnID="deleteField" CommandName="deleteField" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>" />
                                 <f:BoundField DataField="Ec_no" ColumnID="Ec_no" SortField="Ec_no" EnableLock="true" Width="100px" HeaderText="设变号码" />
                                 <f:BoundField DataField="Ec_bomitem" ColumnID="Ec_bomitem" SortField="Ec_bomitem" EnableLock="true" Width="150px" HeaderText="完成品" />
                                 <f:BoundField DataField="Ec_bomsubitem" ColumnID="Ec_bomsubitem" SortField="Ec_bomsubitem" EnableLock="true" Width="150px" HeaderText="上阶品号" />

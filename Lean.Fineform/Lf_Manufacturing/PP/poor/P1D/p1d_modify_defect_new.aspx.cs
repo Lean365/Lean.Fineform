@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -1180,10 +1181,14 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             string order = prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1);
             string lot = prolot.SelectedItem.Text.Substring(0, prolot.SelectedItem.Text.IndexOf(","));
+            //更新生产实绩
+            UpdateModiHelper.P1d_Defect_Modi_Update_For_Realqty(order, this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, GetIdentityName());
+            //更新生产实绩
+            UpdateModiHelper.P1d_Defect_Modi_Orders_Update_For_Realqty(order, userid, "ASSYM");
             //更新无不良台数
-            UpdatingHelper.ModifynoDefectQty_Update(order, userid, "ASSY");
+            UpdateModiHelper.P1d_Defect_Modi_Orders_Update_For_NoBadQty(order, userid, "ASSYM");
             //更新不具合合计
-            UpdatingHelper.ModifyUpdatebadAmount(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName(), "ASSY");
+            UpdateModiHelper.UpdatebadAmount(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName(), "ASSYM");
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

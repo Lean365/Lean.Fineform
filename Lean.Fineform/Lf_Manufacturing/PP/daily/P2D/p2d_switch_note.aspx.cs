@@ -85,7 +85,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             string sdate = Prodate.SelectedDate.Value.ToString("yyyyMM");
             if (!string.IsNullOrEmpty(sdate))
             {
-                q = q.Where(u => u.Prodate.Substring(0, 6).CompareTo(sdate) == 0);
+                q = q.Where(u => u.Prodate.Substring(0, 6).CompareTo(sdate) == 0).OrderByDescending(u => u.Prodate);
             }
             // 过滤启用状态
             //if (rblEnableStatus.SelectedValue != "all")
@@ -263,11 +263,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             {
                 q = q.Where(u => u.ProSmtSwitchNum.ToString().Contains(searchText) || u.ProHandSwitchNum.ToString().Contains(searchText) || u.ProRepairPerson.ToString().Contains(searchText) || u.ProRepairSwitchNum.ToString().Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
-            string sdate = Prodate.SelectedDate.Value.ToString("yyyyMMdd");
+            string sdate = Prodate.SelectedDate.Value.ToString("yyyyMM");
 
             if (!string.IsNullOrEmpty(sdate))
             {
-                q = q.Where(u => u.Prodate.CompareTo(sdate) >= 0);
+                q = q.Where(u => u.Prodate.Substring(0, 6).CompareTo(sdate) == 0);
             }
 
             var qs = from p in q
@@ -297,7 +297,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), SheetName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), SheetName, Export_FileName, "製造2課切替工数");
                 Grid1.AllowPaging = true;
             }
             else

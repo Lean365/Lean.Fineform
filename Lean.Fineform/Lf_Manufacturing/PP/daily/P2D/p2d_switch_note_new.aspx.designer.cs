@@ -174,7 +174,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProHandSopTime;
+        protected global::FineUIPro.Label ProHandSopTime;
 
         /// <summary>
         /// ProHandPerson 控件。
@@ -192,7 +192,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProHandSopTotalTime;
+        protected global::FineUIPro.Label ProHandSopTotalTime;
 
         /// <summary>
         /// FormRow7 控件。
@@ -228,7 +228,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProHandSwitchTotalTime;
+        protected global::FineUIPro.Label ProHandSwitchTotalTime;
 
         /// <summary>
         /// FormRow3 控件。
@@ -246,7 +246,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProRepairSopTime;
+        protected global::FineUIPro.Label ProRepairSopTime;
 
         /// <summary>
         /// ProRepairPerson 控件。
@@ -264,7 +264,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProRepairSopTotalTime;
+        protected global::FineUIPro.Label ProRepairSopTotalTime;
 
         /// <summary>
         /// FormRow8 控件。
@@ -300,7 +300,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox ProRepairSwitchTotalTime;
+        protected global::FineUIPro.Label ProRepairSwitchTotalTime;
 
         /// <summary>
         /// Window1 控件。

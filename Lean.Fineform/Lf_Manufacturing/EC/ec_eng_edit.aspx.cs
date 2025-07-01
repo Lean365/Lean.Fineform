@@ -34,7 +34,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         #region Page_Load
 
         public static string strWhouse, strPur, IsCheck, strEol, fullname, shortname, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc, oldEc_distinction, oldIsSopUpdate, oldisComfirm;
-        public static string strID, strEc_no, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset;
+        public static string strID, strEc_no, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, delEc, delBitem, delMitem, delOitem, delNitem;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -484,15 +484,16 @@ namespace LeanFine.Lf_Manufacturing.EC
                     return;
                 }
                 var q = (from a in DB.Pp_Ec_Subs
-                             //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                             //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
-                             //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
-                             //                                   select d.D_SAP_ZCA1D_Z002)
-                             //                                .Contains(a.D_SAP_ZPABD_S002)
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
-                             //                                   select d.D_SAP_DEST_Z001)
-                             //                                 .Contains(a.D_SAP_ZPABD_S002)
+                         where a.IsDeleted == 0
+                         //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
+                         //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
+                         //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
+                         //                                   select d.D_SAP_ZCA1D_Z002)
+                         //                                .Contains(a.D_SAP_ZPABD_S002)
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
+                         //                                   select d.D_SAP_DEST_Z001)
+                         //                                 .Contains(a.D_SAP_ZPABD_S002)
                          where a.Ec_no == (strEc)
                          where a.Ec_model == (strModel)
                          where a.Ec_bomitem == (strItem)
@@ -622,15 +623,16 @@ namespace LeanFine.Lf_Manufacturing.EC
                     return;
                 }
                 var q = (from a in DB.Pp_Ec_Subs
-                             //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                             //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
-                             //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
-                             //                                   select d.D_SAP_ZCA1D_Z002)
-                             //                                .Contains(a.D_SAP_ZPABD_S002)
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
-                             //                                   select d.D_SAP_DEST_Z001)
-                             //                                 .Contains(a.D_SAP_ZPABD_S002)
+                         where a.IsDeleted == 0
+                         //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
+                         //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
+                         //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
+                         //                                   select d.D_SAP_ZCA1D_Z002)
+                         //                                .Contains(a.D_SAP_ZPABD_S002)
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
+                         //                                   select d.D_SAP_DEST_Z001)
+                         //                                 .Contains(a.D_SAP_ZPABD_S002)
                          where a.Ec_no == (strEc)
                          where a.Ec_model == (strModel)
                          where a.Ec_bomitem == (strItem)
@@ -759,15 +761,16 @@ namespace LeanFine.Lf_Manufacturing.EC
                     return;
                 }
                 var q = (from a in DB.Pp_Ec_Subs
-                             //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
-                             //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
-                             //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
-                             //                                   select d.D_SAP_ZCA1D_Z002)
-                             //                                .Contains(a.D_SAP_ZPABD_S002)
-                             //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
-                             //                                   select d.D_SAP_DEST_Z001)
-                             //                                 .Contains(a.D_SAP_ZPABD_S002)
+                         where a.IsDeleted == 0
+                         //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
+                         //join b in DB.Pp_Ec_Subs on a.D_SAP_ZPABD_Z001 equals b.Ec_no
+                         //join c in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
+                         //                                   select d.D_SAP_ZCA1D_Z002)
+                         //                                .Contains(a.D_SAP_ZPABD_S002)
+                         //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.ProSapModelDests
+                         //                                   select d.D_SAP_DEST_Z001)
+                         //                                 .Contains(a.D_SAP_ZPABD_S002)
                          where a.Ec_no == (strEc)
                          where a.Ec_model == (strModel)
                          where a.Ec_bomitem == (strItem)
@@ -900,14 +903,27 @@ namespace LeanFine.Lf_Manufacturing.EC
                 //PageContext.RegisterStartupScript(Window1.GetShowReference("~/Lf_Report/daily_report.aspx?ID=" + keys[0].ToString() + "&type=1") + Window1.GetMaximizeReference());
             }
             //int del_ID = GetSelectedDataKeyID(Grid1);
-            if (e.CommandName == "EditDel")
+            if (e.CommandName == "deleteField")
             {
                 // 在操作之前进行权限检查
-                if (!CheckPower("CoreEcENGDelete"))
+                if (!CheckPower("CoreEcENGSubDelete"))
                 {
                     CheckPowerFailWithAlert();
                     return;
                 }
+
+                //查询选中行ID
+                int[] selections = Grid1.SelectedRowIndexArray;
+                foreach (int rowIndex in selections)
+                {
+                    delEc = Grid1.DataKeys[rowIndex][0].ToString();
+                    delBitem = Grid1.DataKeys[rowIndex][2].ToString();
+                    delMitem = Grid1.DataKeys[rowIndex][3].ToString();
+                    delOitem = Grid1.DataKeys[rowIndex][4].ToString();
+                    delNitem = Grid1.DataKeys[rowIndex][5].ToString();
+                }
+                //Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
+
                 //删除日志
                 //int userID = GetSelectedDataKeyID(Grid1);
                 //var q = from a in DB.Pp_Ec_Subs
@@ -917,13 +933,23 @@ namespace LeanFine.Lf_Manufacturing.EC
                 //        select a;
 
                 // Pp_Ec_Sub current = DB.Pp_Ec_Subs.Find(del_ID);
-                string Contectext = strEc + "," + strModel + "," + strItem;
+                string Contectext = delEc + "," + strModel + "," + delBitem + "," + delMitem + "," + delOitem + "," + delNitem;
                 string OperateType = "删除";//操作标记
                 string OperateNotes = "Del生产* " + Contectext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "设变删除标记", OperateNotes);
 
                 DB.Pp_Ec_Subs
-                    .Where(it => it.Ec_no == strEc && it.Ec_model == strModel && it.Ec_bomitem == strItem)
+                    .Where(it => it.Ec_no == delEc && it.Ec_bomitem == delBitem && it.Ec_bomsubitem == delMitem && it.Ec_olditem == delOitem && it.Ec_newitem == delNitem)
+                    .ToList()
+                    .ForEach(x =>
+                    {
+                        x.IsDeleted = 1;
+                        x.Modifier = GetIdentityName();
+                        x.ModifyDate = DateTime.Now;
+                    });
+
+                DB.Pp_SapEcnSubs
+                    .Where(it => it.D_SAP_ZPABD_S001 == delEc && it.D_SAP_ZPABD_S002 == delBitem && it.D_SAP_ZPABD_S003 == delMitem && it.D_SAP_ZPABD_S004 == delOitem && it.D_SAP_ZPABD_S008 == delNitem)
                     .ToList()
                     .ForEach(x =>
                     {
@@ -952,6 +978,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
+            CheckPowerWithLinkButtonField("CoreEcENGSubDelete", Grid1, "deleteField");
         }
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
@@ -1302,6 +1329,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     #region 停产机种不导入
 
                     var q_NotEollist = from a in DB.Pp_SapEcnSubs
+                                       where a.IsDeleted == 0
                                        where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                                                                           where d.D_SAP_ZCA1D_Z034 == ""
                                                                           select d.D_SAP_ZCA1D_Z002)
@@ -7616,6 +7644,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 #region 6.更新旧品库存
 
                 var ItemStock = from a in DB.Pp_Ec_Subs
+                                where a.IsDeleted == 0
                                 where a.Ec_no.Contains(Ec_no.Text)
                                 where a.Ec_olditem != "0"
                                 select a;
@@ -7978,6 +8007,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region Pp_Ecs
 
             var q_NotEollist = from a in DB.Pp_Ec_Subs
+                               where a.IsDeleted == 0
                                where a.Ec_no.Contains(Ec_no.Text)
                                select a;
 
@@ -8948,6 +8978,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region 停产机种不导入
 
             var q_NotEollist = from a in DB.Pp_SapEcnSubs
+                               where a.IsDeleted == 0
                                where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                                                                   where d.D_SAP_ZCA1D_Z034 == ""
                                                                   select d.D_SAP_ZCA1D_Z002)
@@ -9060,13 +9091,14 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region 停产机种不导入
 
             var q = from a in DB.Pp_Ec_Subs
-                        //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
-                        //                                   where d.D_SAP_ZCA1D_Z034 == ""
-                        //                                   select d.D_SAP_ZCA1D_Z002)
-                        //                                .Contains(a.D_SAP_ZPABD_S002)
-                        //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapModelDests
-                        //                                   select d.D_SAP_DEST_Z001)
-                        //                                 .Contains(a.D_SAP_ZPABD_S002)
+                    where a.IsDeleted == 0
+                    //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
+                    //                                   where d.D_SAP_ZCA1D_Z034 == ""
+                    //                                   select d.D_SAP_ZCA1D_Z002)
+                    //                                .Contains(a.D_SAP_ZPABD_S002)
+                    //where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapModelDests
+                    //                                   select d.D_SAP_DEST_Z001)
+                    //                                 .Contains(a.D_SAP_ZPABD_S002)
                     where a.Ec_no.Contains(Ec_no.Text)
                     select a;
 
@@ -9106,6 +9138,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         {
             // 获取要更新的订单
             var DelSubs = DB.Pp_Ec_Subs
+
                 .Where(it => it.Ec_no.Contains(Ec_no.Text))
                 .ToList();
 

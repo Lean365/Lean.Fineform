@@ -7,6 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
@@ -286,16 +287,16 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             DB.SaveChanges();
 
             //更新不良数据中的实绩生产数量，按日期，工单，班组
-            UpdatingHelper.ModifyDefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+            UpdateModiHelper.P1d_Defect_Modi_Update_For_Realqty(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
-            UpdatingHelper.ModifyDefectTotalRealqty_Update(item.Proorder, userid, "ASSY");
+            UpdateModiHelper.P1d_Defect_Modi_Orders_Update_For_Realqty(item.Proorder, userid, "ASSYM");
 
             //判断不良是否录入
-            UpdatingHelper.ModifyCheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+            UpdateModiHelper.P1d_Defect_Modi_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
             //更新无不良台数
-            UpdatingHelper.ModifynoDefectQty_Update(item.Proorder, userid, "ASSY");
+            UpdateModiHelper.P1d_Defect_Modi_Orders_Update_For_NoBadQty(item.Proorder, userid, "ASSYM");
             //更新订单已生产数量
             //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
         }

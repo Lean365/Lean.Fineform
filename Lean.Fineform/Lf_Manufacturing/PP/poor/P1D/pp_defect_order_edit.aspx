@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="p1d_defect_order_totalled_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.p1d_defect_order_totalled_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="pp_defect_order_edit.aspx.cs" Inherits="LeanFine.Lf_Manufacturing.PP.poor.p1d_defect_order_totalled_edit" %>
 
 <!DOCTYPE html>
 
@@ -29,59 +29,43 @@
                 <f:Form ID="SimpleForm1" ShowBorder="false" ShowHeader="false" runat="server" BodyPadding="10px"
                     Title="SimpleForm">
                     <Rows>
-                        <f:FormRow ID="FormRow2" runat="server">
+                        <f:FormRow ID="FormRow7" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="prodate" Label="生产日期" ShowRedStar="True">
+                                <f:Label runat="server" Label="生产日期"  ID="lblProdate" >
                                 </f:Label>
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow3" runat="server">
-                            <Items>
-                                <f:Label runat="server" ID="linename" Label="生产班组" ShowRedStar="True">
-                                </f:Label>
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow4" runat="server">
-                            <Items>
-                                <f:Label runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
-                                </f:Label>
-                            </Items>
-                        </f:FormRow>
-
-                        <f:FormRow ID="FormRow10" runat="server">
-                            <Items>
-                                <f:Label ID="prorealqty" runat="server" Label="生产台数" Text="0">
+                                <f:Label runat="server" ID="lblProlinename" Label="生产班组" >
                                 </f:Label>
 
-
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow5" runat="server">
-                            <Items>
-                                <f:NumberBox ID="pronobadqty" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
-                                </f:NumberBox>
-                            </Items>
-                        </f:FormRow>
-                        <f:FormRow ID="FormRow6" runat="server">
-                            <Items>
-                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:Label ID="promodelqty" runat="server" Label="机种台数"></f:Label>
-
-
+                                <f:Label runat="server" ID="lblProlot" Label="生产LOT">
+                                </f:Label>
+                                <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
                             </Items>
                         </f:FormRow>
-                        <f:FormRow ID="FormRow7" runat="server">
+
+                        <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label ID="proorder" runat="server" Label="生产订单"></f:Label>
+
+                                <f:NumberBox ID="numPronobadqty" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
+                                </f:NumberBox>
+                                <f:NumberBox ID="numProbadtotal" runat="server" Label="不良件数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
+                                </f:NumberBox>
                             </Items>
                         </f:FormRow>
-                        <f:FormRow ID="FormRow8" runat="server">
-                            <Items>
-                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
+                        <f:FormRow ID="FormRow3" runat="server">
+                            <Items>                                
+                                <f:Label ID="lblProorder" runat="server" Label="生产订单"></f:Label>
+                                <f:Label ID="lblProorderqty" runat="server" Label="订单台数"></f:Label>
+                            </Items>
+                        </f:FormRow>
+                        <f:FormRow ID="FormRow4" runat="server">
+                            <Items>                                
+                                <f:Label ID="lblProitem" runat="server" Label="生产物料"></f:Label>
+                                <f:Label ID="lblProrealqty" runat="server" Label="生产台数" Text="0">
+                                </f:Label>
                             </Items>
                         </f:FormRow>
                     </Rows>

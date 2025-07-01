@@ -356,7 +356,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         修理 = E.Probadrepairman,
                     });
 
-                    ExportHelper.Manufacturing_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pr" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.Repair_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pr" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 

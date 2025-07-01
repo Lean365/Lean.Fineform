@@ -372,48 +372,48 @@ RepairSwitchTotalTime;
 
             int compeditMonth = editDate.Month - lastDate.Month;
 
-            if (compNum == -1)
-            {
-                if (compeditYear < 0)
-                {
-                    Alert.ShowInTop("旧数据不能再修改！");
-                    return;
-                }
-                if (compeditYear == 0)
-                {
-                    if (compeditMonth == 0)
-                    {
-                        Alert.ShowInTop("每月10号，停止修改上月数据！");
-                        return;
-                    }
-                    if (compeditMonth < 0)
-                    {
-                        Alert.ShowInTop("旧数据不能再修改！");
-                        return;
-                    }
-                }
-            }
-            if (compNum == 0)
-            {
-                if (compeditYear < 0)
-                {
-                    Alert.ShowInTop("旧数据不能再修改！");
-                    return;
-                }
-                if (compeditYear == 0)
-                {
-                    if (compeditMonth == 0)
-                    {
-                        Alert.ShowInTop("每月10号，停止修改上月数据！");
-                        return;
-                    }
-                    if (compeditMonth < 0)
-                    {
-                        Alert.ShowInTop("旧数据不能再修改！");
-                        return;
-                    }
-                }
-            }
+            //if (compNum == -1)
+            //{
+            //    if (compeditYear < 0)
+            //    {
+            //        Alert.ShowInTop("旧数据不能再修改！");
+            //        return;
+            //    }
+            //    if (compeditYear == 0)
+            //    {
+            //        if (compeditMonth == 0)
+            //        {
+            //            Alert.ShowInTop("每月10号，停止修改上月数据！");
+            //            return;
+            //        }
+            //        if (compeditMonth < 0)
+            //        {
+            //            Alert.ShowInTop("旧数据不能再修改！");
+            //            return;
+            //        }
+            //    }
+            //}
+            //if (compNum == 0)
+            //{
+            //    if (compeditYear < 0)
+            //    {
+            //        Alert.ShowInTop("旧数据不能再修改！");
+            //        return;
+            //    }
+            //    if (compeditYear == 0)
+            //    {
+            //        if (compeditMonth == 0)
+            //        {
+            //            Alert.ShowInTop("每月10号，停止修改上月数据！");
+            //            return;
+            //        }
+            //        if (compeditMonth < 0)
+            //        {
+            //            Alert.ShowInTop("旧数据不能再修改！");
+            //            return;
+            //        }
+            //    }
+            //}
 
             if (e.CommandName == "PrintOph")
             {
@@ -669,7 +669,7 @@ RepairSwitchTotalTime;
                 //ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), Prefix_XlsxName, Export_FileName, "DTA 生产日报");
                 Grid1.AllowPaging = true;
             }
             else
@@ -692,7 +692,7 @@ RepairSwitchTotalTime;
                 }
                 if (DpStartDate.SelectedDate.Value != DpEndDate.SelectedDate.Value)
                 {
-                    Alert.ShowInTop("日报只能导出一天的数据！");
+                    Alert.ShowInTop("日报只能导出一天的数据！", MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -710,7 +710,7 @@ RepairSwitchTotalTime;
                         //join b in DB.Pp_P2d_Outputs on p.GUID equals b.GUID
                     where p.IsDeleted == 0
                     //where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                    group p by new { p.Proorder, p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, p.Proorderqty, p.Propcbaside, p.Prodirect, p.Propcbastated, p.Prorealqty, p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin, p.UDF51, p.UDF52, p.UDF53, p.UDF54, p.Prorealtotal }
+                    group p by new { p.Proorder, p.Proshort, p.Prost, p.Propcbatype, p.Prohandoffnum, p.Prohandofftime, p.Protime, p.Promaketime, p.Prodowntime, p.Prolosstime, p.Proorderqty, p.Propcbaside, p.Propcbastated, p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealqty, p.Prorealtime, p.Prolinemin, p.Prolinestopmin, p.UDF51, p.UDF52, p.UDF53, p.UDF54, p.Prorealtotal, p.CreateDate }
                     into g
                     select new
                     {
@@ -719,7 +719,6 @@ RepairSwitchTotalTime;
                         g.Key.Proorderqty,
                         g.Key.Prostime,
                         g.Key.Proetime,
-                        g.Key.Prodirect,
                         g.Key.Prolinename,
                         g.Key.Promodel,
                         g.Key.Prohbn,
@@ -730,10 +729,6 @@ RepairSwitchTotalTime;
                         g.Key.Prorealqty,
                         g.Key.Prorealtotal,
                         g.Key.Prorealtime,
-                        g.Key.Prostopcou,
-                        g.Key.Prostopmemo,
-                        g.Key.Probadcou,
-                        g.Key.Probadmemo,
                         g.Key.Prohandoffnum,
                         g.Key.Prohandofftime,
                         g.Key.Protime,
@@ -748,6 +743,7 @@ RepairSwitchTotalTime;
                         g.Key.UDF52,
                         g.Key.UDF53,
                         g.Key.UDF54,
+                        g.Key.CreateDate,
                     };
 
                 // 在用户名称中搜索
@@ -820,6 +816,41 @@ RepairSwitchTotalTime;
                                   Probadqty = g.Sum(p => p.Probadqty),
                               };
                 var qorder = q.OrderBy(p => p.Prodate).ThenBy(s => s.Prolinename).ToList();
+                //var qs = from g in qorder
+                //         join bq in q_total on g.Promodel equals bq.Promodel into TotalQty
+                //         from aa in TotalQty.DefaultIfEmpty()
+                //         select new
+                //         {
+                //             生产日期 = g.Prodate,
+                //             单位 = "制二课",
+                //             班组 = g.Prolinename.Substring(1, g.Prolinename.Length - 1),
+                //             机种 = g.Promodel,
+                //             物料 = g.Prohbn,
+                //             板别 = g.Propcbatype != "" ? g.Propcbatype : "",
+                //             生产面 = g.Propcbaside != "" ? g.Propcbaside : "",
+                //             批次 = g.Prolot,
+                //             工单 = g.Proorder,
+
+                //             Lot数量 = g.UDF54,
+                //             生产实绩 = g.Prorealqty,
+                //             累计生产 = g == null ? 0 : g.Prorealtotal,
+                //             //不良件数 = aa == null ? 0 : aa.Probadqty,
+                //             完成状况 = g.Propcbastated,
+                //             总工数 = g.Protime,
+                //             当日切换次数 = g.Prohandoffnum,
+                //             当日切换时间 = g.Prohandofftime,
+                //             当日切停机时间 = g.Prodowntime,
+                //             停线原因 = g.Prostopcou,
+                //             原因说明 = g.Prostopmemo,
+                //             未达成 = g.Probadcou,
+                //             未达成原因 = g.Probadmemo,
+                //             修工数 = g.Prolosstime,
+                //             投入工数 = g.Promaketime,
+                //             不良台数 = g.UDF51,
+                //             修正仕损 = g.UDF52,
+                //             手插仕损 = g.UDF53,
+                //         };
+
                 var qs = from g in qorder
                          join bq in q_total on g.Promodel equals bq.Promodel into TotalQty
                          from aa in TotalQty.DefaultIfEmpty()
@@ -840,26 +871,53 @@ RepairSwitchTotalTime;
                              累计生产 = g == null ? 0 : g.Prorealtotal,
                              //不良件数 = aa == null ? 0 : aa.Probadqty,
                              完成状况 = g.Propcbastated,
-                             总工数 = g.Protime,
-                             当日切换次数 = g.Prohandoffnum,
-                             当日切换时间 = g.Prohandofftime,
-                             当日切停机时间 = g.Prodowntime,
-                             停线原因 = g.Prostopcou,
-                             原因说明 = g.Prostopmemo,
-                             未达成 = g.Probadcou,
-                             未达成原因 = g.Probadmemo,
-                             修工数 = g.Prolosstime,
-                             投入工数 = g.Promaketime,
+                             //总工数 = g.Protime,
+                             //当日切换次数 = g.Prohandoffnum,
+                             //当日切换时间 = g.Prohandofftime,
+                             //当日切停机时间 = g.Prodowntime,
+                             //停线原因 = g.Prostopcou,
+                             //原因说明 = g.Prostopmemo,
+                             //未达成 = g.Probadcou,
+                             //未达成原因 = g.Probadmemo,
+                             //修工数 = g.Prolosstime,
+                             //投入工数 = g.Promaketime,
                              不良台数 = g.UDF51,
-                             修正仕损 = g.UDF52,
-                             手插仕损 = g.UDF53,
+                             录入日期 = g.CreateDate
+                             //修正仕损 = g.UDF52,
+                             //手插仕损 = g.UDF53,
                          };
+                //去重
+                var q_distinct = from d in qs
+                                 group d by new { d.生产日期, d.单位, d.班组, d.机种, d.物料, d.板别, d.生产面, d.批次, d.工单, d.Lot数量, d.生产实绩, d.累计生产, d.完成状况, d.不良台数, d.录入日期 }
+                                into g
+                                 select new
+                                 {
+                                     g.Key.生产日期,
+                                     g.Key.单位,
+                                     g.Key.班组,
+                                     g.Key.机种,
+                                     g.Key.物料,
+                                     g.Key.板别,
+                                     g.Key.生产面,
+                                     g.Key.批次,
+                                     g.Key.工单,
+                                     g.Key.Lot数量,
+                                     g.Key.生产实绩,
+                                     g.Key.累计生产,
+                                     g.Key.完成状况,
+                                     g.Key.不良台数,
+                                     //g.Key.录入日期,
+
+                                 };
+
+
                 if (qs.Any())
                 {
                     //ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.P2dDaily_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), sdate, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek), SmtParm, AiParm, HandParm, RepairParm);
+                    //ExportHelper.P2dDaily_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs.AsQueryable().Distinct()), sdate, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek), SmtParm, AiParm, HandParm, RepairParm);
+                    ExportHelper.P2dDailySimp_EpplusToExcel(ConvertHelper.LinqConvertToDataTable(q_distinct.AsQueryable()), sdate, Export_FileName, DpStartDate.SelectedDate.Value.AddDays(1).ToString("yyyy-MM-dd"), DpStartDate.SelectedDate.Value.ToString("yyyy-MM-dd"), System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DpStartDate.SelectedDate.Value.DayOfWeek), SmtParm, AiParm, HandParm, RepairParm);
                     Grid1.AllowPaging = true;
                 }
                 else
@@ -906,7 +964,15 @@ RepairSwitchTotalTime;
                 RepairSwitchTotalTime = qs[0].ProRepairSwitchTotalTime;
 
                 SmtParm = "SMT切换" + SmtSwitchNum + "次,总切换时间" + SmtSwitchTotalTime + "分钟。";
-                AiParm = "自插停机时间" + AiStopTime + "分钟。"; //"自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
+                if (AiStopTime == 0)
+                {
+                    AiParm = "自插停机时间" + AiStopTime + "分钟。";  //"自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
+                }
+                else
+                {
+                    AiParm = "自插停机时间" + AiStopTime + "分钟。"; //"自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
+                }
+
                 HandParm = "手插读取工程表6分钟，合计：" + HandPerson + "人*" + HandSopTime + "分=" + HandSopTotalTime + "分钟," + HandPerson + "人切换机种" + HandSwitchNum + "次" + HandSwitchTime + "分钟，合计：" + HandPerson + "人*" + HandSwitchTime + "分=" + HandSwitchTotalTime + "分钟。";
                 RepairParm = "修正读取工程表6分钟，合计：" + RepairPerson + "人*" + RepairSopTime + "分=" + RepairSopTotalTime + "分钟," + RepairPerson + "人切换机种" + RepairSwitchNum + "次" + RepairSwitchTime + "分钟，合计：" + RepairPerson + "人*" + RepairSwitchTime + "分=" + RepairSwitchTotalTime + "分钟。";
             }

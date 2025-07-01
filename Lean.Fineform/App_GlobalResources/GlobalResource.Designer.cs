@@ -835,6 +835,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Epp 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_OPHEpp {
+            get {
+                return ResourceManager.GetString("menu_Pp_OPHEpp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ActualQuery 的本地化字符串。
         /// </summary>
         internal static string menu_Pp_OPH_Actual {
@@ -867,6 +876,15 @@ namespace Resources {
         internal static string menu_Pp_P1d_Defect {
             get {
                 return ResourceManager.GetString("menu_Pp_P1d_Defect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 EppDefect 的本地化字符串。
+        /// </summary>
+        internal static string menu_Pp_P1d_Epp_Defect {
+            get {
+                return ResourceManager.GetString("menu_Pp_P1d_Epp_Defect", resourceCulture);
             }
         }
         
@@ -2356,11 +2374,83 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Line 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Line {
+            get {
+                return ResourceManager.GetString("sys_Button_Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Line_B 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Line_B {
+            get {
+                return ResourceManager.GetString("sys_Button_Line_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Line_E 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Line_E {
+            get {
+                return ResourceManager.GetString("sys_Button_Line_E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Line_N 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Line_N {
+            get {
+                return ResourceManager.GetString("sys_Button_Line_N", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 List 的本地化字符串。
         /// </summary>
         internal static string sys_Button_List {
             get {
                 return ResourceManager.GetString("sys_Button_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Model 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Model {
+            get {
+                return ResourceManager.GetString("sys_Button_Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Model_B 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Model_B {
+            get {
+                return ResourceManager.GetString("sys_Button_Model_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Model_E 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Model_E {
+            get {
+                return ResourceManager.GetString("sys_Button_Model_E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Model_N 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Model_N {
+            get {
+                return ResourceManager.GetString("sys_Button_Model_N", resourceCulture);
             }
         }
         

@@ -9,7 +9,10 @@ namespace LeanFine
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            Database.SetInitializer(new LeanFineDatabaseInitializer());
+            //启用code first模式
+            //Database.SetInitializer(new LeanFineDatabaseInitializer());
+            //取消code first模式
+            Database.SetInitializer<LeanFineContext>(null);
         }
 
         protected void Session_Start(object sender, EventArgs e)

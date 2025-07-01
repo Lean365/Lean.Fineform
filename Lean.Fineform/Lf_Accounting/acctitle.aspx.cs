@@ -271,7 +271,7 @@ namespace LeanFine.Lf_Accounting
 
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA会计科目");
                 Grid1.AllowPaging = true;
             }
             else

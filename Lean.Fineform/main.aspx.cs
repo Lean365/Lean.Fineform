@@ -319,8 +319,10 @@ namespace LeanFine
                     case "制二生产": node.Text = global::Resources.GlobalResource.menu_Pp_Manufacture_P2D; break;
                     case "切换记录": node.Text = global::Resources.GlobalResource.menu_Pp_P2d_SwitchNote; break;
                     case "改修不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Repair_Defect; break;
+                    case "Epp不良": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Epp_Defect; break;
                     case "改修生产": node.Text = global::Resources.GlobalResource.menu_Pp_P1d_Repair_Output; break;
                     case "生产日报": node.Text = global::Resources.GlobalResource.menu_Pp_OPH; break;
+                    case "EPP生产": node.Text = global::Resources.GlobalResource.menu_Pp_OPHEpp; break;
                     case "实绩查询": node.Text = global::Resources.GlobalResource.menu_Pp_OPH_Actual; break;
                     case "OPH查询": node.Text = global::Resources.GlobalResource.menu_Pp_OPH_Query; break;
                     case "生产进度": node.Text = global::Resources.GlobalResource.menu_Pp_ProducingProgress; break;

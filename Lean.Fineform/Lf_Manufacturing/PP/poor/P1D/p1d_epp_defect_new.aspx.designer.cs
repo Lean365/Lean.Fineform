@@ -11,7 +11,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 {
 
 
-    public partial class p1d_defect_order_totalled_edit
+    public partial class p1d_epp_defect_new
     {
 
         /// <summary>
@@ -96,40 +96,22 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// prodate 控件。
+        /// DefDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prodate;
+        protected global::FineUIPro.DatePicker DefDate;
 
         /// <summary>
-        /// FormRow3 控件。
+        /// prolinename 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.FormRow FormRow3;
-
-        /// <summary>
-        /// linename 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.Label linename;
-
-        /// <summary>
-        /// FormRow4 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow4;
+        protected global::FineUIPro.DropDownList prolinename;
 
         /// <summary>
         /// prolot 控件。
@@ -138,7 +120,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolot;
+        protected global::FineUIPro.DropDownList prolot;
 
         /// <summary>
         /// FormRow10 控件。
@@ -159,15 +141,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.Label prorealqty;
 
         /// <summary>
-        /// FormRow5 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow5;
-
-        /// <summary>
         /// pronobadqty 控件。
         /// </summary>
         /// <remarks>
@@ -175,15 +148,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.NumberBox pronobadqty;
-
-        /// <summary>
-        /// FormRow6 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow6;
 
         /// <summary>
         /// promodel 控件。
@@ -213,15 +177,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.Label promodelqty;
 
         /// <summary>
-        /// FormRow7 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow7;
-
-        /// <summary>
         /// proorder 控件。
         /// </summary>
         /// <remarks>
@@ -231,15 +186,6 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.Label proorder;
 
         /// <summary>
-        /// FormRow8 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow8;
-
-        /// <summary>
         /// proorderqty 控件。
         /// </summary>
         /// <remarks>
@@ -247,5 +193,95 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.Label proorderqty;
+
+        /// <summary>
+        /// Grid1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Grid Grid1;
+
+        /// <summary>
+        /// btnNew 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Button btnNew;
+
+        /// <summary>
+        /// btnReset 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Button btnReset;
+
+        /// <summary>
+        /// ToolbarSeparator1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarSeparator ToolbarSeparator1;
+
+        /// <summary>
+        /// ddlProngdept 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.DropDownList ddlProngdept;
+
+        /// <summary>
+        /// numProbadqty 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.NumberBox numProbadqty;
+
+        /// <summary>
+        /// txtProbadnote 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox txtProbadnote;
+
+        /// <summary>
+        /// txtProbadset 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox txtProbadset;
+
+        /// <summary>
+        /// txtProbadreason 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.TextBox txtProbadreason;
+
+        /// <summary>
+        /// MemoText 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Label MemoText;
     }
 }

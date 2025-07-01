@@ -7,6 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -512,23 +513,23 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         DB.Pp_P2d_OutputSubs.Add(item);
                         DB.SaveChanges();
                         //更新不良数据中的实绩生产数量，按日期，工单，班组
-                        UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+                        UpdatingP2dHelper.P2d_Defect_Realqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
                         //更新累计生产数量
-                        UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
+                        UpdatingP2dHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
                         //更新不良集计数据中的实绩生产数量,按工单
-                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_Realqty_Update(item.Proorder, userid, "PCBA");
 
                         //判断不良是否录入
-                        UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_Update_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
                         //更新无不良台数
-                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(item.Proorder, userid, "PCBA");
                         //更新订单已生产数量
-                        //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
+                        UpdatingP2dHelper.P2UpdateOrderRealQty(item.Proorder, userid);
                         //更新仕损工数
-                        UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
+                        UpdatingP2dHelper.P2UpdateLossTime(item.Prolinename, editrowID);
                         //新建日志
                         string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Protime + "," + item.Promodel + "," + item.Prohandoffnum + "," + item.Prohandofftime + "," + item.Prodowntime;
                         string OperateType = "新增";
@@ -709,23 +710,23 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         DB.Pp_P2d_OutputSubs.Add(item);
                         DB.SaveChanges();
                         //更新不良数据中的实绩生产数量，按日期，工单，班组
-                        UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+                        UpdatingP2dHelper.P2d_Defect_Realqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
                         //更新累计生产数量
-                        UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
+                        UpdatingP2dHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
                         //更新不良集计数据中的实绩生产数量,按工单
-                        UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_Realqty_Update(item.Proorder, userid, "PCBA");
 
                         //判断不良是否录入
-                        UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_Update_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
                         //更新无不良台数
-                        UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
+                        UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(item.Proorder, userid, "PCBA");
                         //更新订单已生产数量
                         //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
                         //更新仕损工数
-                        UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
+                        UpdatingP2dHelper.P2UpdateLossTime(item.Prolinename, editrowID);
                         //新建日志
                         string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Protime + "," + item.Promodel + "," + item.Prohandoffnum + "," + item.Prohandofftime + "," + item.Prodowntime;
                         string OperateType = "新增";
@@ -1085,23 +1086,23 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             DB.SaveChanges();
             afterInsNetOperateNotes();
             //更新不良数据中的实绩生产数量，按日期，工单，班组
-            UpdatingHelper.DefectRealqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
+            UpdatingP2dHelper.P2d_Defect_Realqty_Update(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新累计生产数量
-            UpdatingHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
+            UpdatingP2dHelper.UpdateP2DRealTotal(item.Proorder, item.Prodate, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
-            UpdatingHelper.DefectTotalRealqty_Update(item.Proorder, userid, "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_Realqty_Update(item.Proorder, userid, "PCBA");
 
             //判断不良是否录入
-            UpdatingHelper.CheckDefectData(item.Proorder, item.Prodate, item.Prolinename);
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_Update_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(item.Proorder, userid, "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(item.Proorder, userid, "PCBA");
             //更新订单已生产数量
             //UpdatingHelper.UpdateOrderRealQty(item.Proorder, userid);
             //更新仕损工数
-            UpdatingHelper.UpdateLossTime(item.Prolinename, editrowID);
+            UpdatingP2dHelper.P2UpdateLossTime(item.Prolinename, editrowID);
         }
 
         //根据字段获取信息
@@ -1247,7 +1248,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 // Common.UpdateDefectQty(Ophguid);
 
                 //更新累计生产数量
-                UpdatingHelper.UpdateP2DRealTotal(this.proorder.Text, this.prodate.Text, userid);
+                UpdatingP2dHelper.UpdateP2DRealTotal(this.proorder.Text, this.prodate.Text, userid);
             }
             catch (ArgumentNullException Message)
             {

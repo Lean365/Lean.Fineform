@@ -7,11 +7,11 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace LeanFine.Lf_Manufacturing.PP.poor
+namespace LeanFine.Lf_Manufacturing.PP.daily
 {
 
 
-    public partial class p1d_defect_order_totalled
+    public partial class p1d_zdtb_output_model
     {
 
         /// <summary>
@@ -42,22 +42,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.Panel Panel1;
 
         /// <summary>
-        /// Form2 控件。
+        /// Grid1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Form Form2;
-
-        /// <summary>
-        /// FormRow1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.FormRow FormRow1;
+        protected global::FineUIPro.Grid Grid1;
 
         /// <summary>
         /// DpStartDate 控件。
@@ -69,6 +60,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.DatePicker DpStartDate;
 
         /// <summary>
+        /// ToolbarFill2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarFill ToolbarFill2;
+
+        /// <summary>
         /// DpEndDate 控件。
         /// </summary>
         /// <remarks>
@@ -76,6 +76,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::FineUIPro.DatePicker DpEndDate;
+
+        /// <summary>
+        /// ToolbarFill3 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarFill ToolbarFill3;
 
         /// <summary>
         /// ttbSearchMessage 控件。
@@ -87,13 +96,31 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.TwinTriggerBox ttbSearchMessage;
 
         /// <summary>
-        /// Grid1 控件。
+        /// Toolbar1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Grid Grid1;
+        protected global::FineUIPro.Toolbar Toolbar1;
+
+        /// <summary>
+        /// ToolbarFill1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.ToolbarFill ToolbarFill1;
+
+        /// <summary>
+        /// BtnRepair 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Button BtnRepair;
 
         /// <summary>
         /// ToolbarSeparator2 控件。
@@ -123,12 +150,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.DropDownList ddlGridPageSize;
 
         /// <summary>
-        /// Window1 控件。
+        /// hfGrid1Summary 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Window Window1;
+        protected global::FineUIPro.HiddenField hfGrid1Summary;
     }
 }

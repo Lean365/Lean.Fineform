@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using static LeanFine.QueryExtensions;
 
@@ -75,7 +76,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             DateTime last = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01")).AddMonths(-1);
             //本月第一天时间
             DateTime dt = DateTime.Today;
-            DateTime dt_First = dt.AddDays(-(dt.Day) + 1);
+            DateTime dt_First = dt.AddMonths(-1).AddDays(-(dt.Day) + 1);
 
             //本月最后一天时间
             DateTime dt2 = dt.AddMonths(1);
@@ -135,14 +136,14 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
             //查询LINQ去重复
 
-            var a = from c in DB.Pp_Manhours
-                    where c.IsDeleted == 0
-                    //where c.Prowctext.Contains("二")
-                    select c.Proitem;
+            //var a = from c in DB.Pp_P2d_OutputSubs
+            //        where c.IsDeleted == 0
+            //        //where c.Prowctext.Contains("二")
+            //        select c.Prorealqty;
 
             var q = from e in DB.Pp_Orders
                         //where e.Pordertype.Contains("ZDTD") || e.Pordertype.Contains("ZDTE") || e.Pordertype.Contains("ZDTF")
-                    where a.Contains(e.Porderhbn)
+                        //where e.Porderqty != e.Porderreal
                     select new
                     {
                         e.Porderno
@@ -405,7 +406,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //更新单头机种
                 UpdateItem(strProModel);
                 //删除无单身数据
-                UpdatingHelper.DelOutputPcbaSubs(ParentID, "制二课", prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
+                UpdatingP2dHelper.DelOutputPcbaSubs(ParentID, "制二课", prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
             }
             catch (ArgumentNullException Message)
             {
@@ -669,652 +670,21 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     }
                     else
                     {
+                        //Alert.ShowInTop("没有机种或工时", String.Empty, ActiveWindow.GetHideReference());
                         //"请确认订单类别！\r\nZDTD，ZDTE，ZDTF为PCBA订单为类型。\r\n如果是SMT或自插，应该有相对应的Short数，请联系技术添加。<br/>\r\n如果是手插或修正，请联系电脑课修改订单类型。
-                        string strMsg = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.请确认订单类别。</div><div>2.ZDTD，ZDTE，ZDTF为<strong>PCBA订单为类型</strong>。</div><div>3.如果是SMT或自插，应该有相对应的Short数，<strong>请联系技术添加</strong>。</div><div>4.如果是手插或修正，<strong>请联系电脑课修改订单类型</strong>。</div>");
+                        string strMsg = "没有机种或工时";
+                        Alert.ShowInTop(strMsg, MessageBoxIcon.Error);
+
+                        return;
+                    }
+                    if (q_model.Count == 0)
+                    {
+                        string strMsg = "没有机种或工时";
+                        //"请确认订单类别！\r\nZDTD，ZDTE，ZDTF为PCBA订单为类型。\r\n如果是SMT或自插，应该有相对应的Short数，请联系技术添加。<br/>\r\n如果是手插或修正，请联系电脑课修改订单类型。
+                        //string strMsg = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.请确认订单类别。</div><div>2.ZDTD，ZDTE，ZDTF为<strong>PCBA订单为类型</strong>。</div><div>3.如果是SMT或自插，应该有相对应的Short数，<strong>请联系技术添加</strong>。</div><div>4.如果是手插或修正，<strong>请联系电脑课修改订单类型</strong>。</div>");
                         Alert.ShowInTop(strMsg, MessageBoxIcon.Error);
                         return;
                     }
-                    //var q_st = (from p in DB.Pp_Manhours
-                    //            where p.Proitem.Contains(itemhbn)
-                    //            //where p.Prowctext.Contains("SMT")
-                    //            orderby p.Prowctext
-                    //            //where p.Age > 30 && p.Department == "研发部"
-                    //            select p).ToList();
-                    //if (q_st.Any())
-                    //{
-                    //    for (int i = 0; i < q_st.Count(); i++)
-                    //    {
-                    //        if (q_st[i].Prowctext.ToString().Contains("SMT"))
-                    //        {
-                    //            //SMT设1，2班
-                    //            for (int j = 0; j < 1; j++)
-                    //            {
-                    //                string[] list = new string[] { "T", "B" };
-                    //                foreach (var val in list)
-                    //                {
-                    //                    Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                    // 添加父ID
-                    //                    //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                    item.Proordertype = pordertype.Text;
-                    //                    item.Parent = ParentID;
-                    //                    item.Prolinename = "SMT";
-                    //                    item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    item.Prodirect = 10;
-                    //                    item.Proindirect = 2;
-                    //                    item.Prolot = prolot.Text;
-                    //                    item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                    item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                    item.Promodel = q_st[i].Promodel.ToString();
-                    //                    strProModel = q_st[i].Promodel.ToString();
-                    //                    item.Prorate = Decimal.Parse(q_st[i].Prorate.ToString());
-                    //                    item.Prost = Decimal.Parse(q_st[i].Prost.ToString());
-                    //                    item.Proshort = Decimal.Parse(q_st[i].Proshort.ToString());
-                    //                    item.Propcbaside = val;
-                    //                    //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                    item.Prostdcapacity = 0;
-                    //                    item.Totaltag = true;
-                    //                    item.Proorder = proorder.SelectedItem.Text;
-                    //                    item.GUID = Guid.Parse(OPHID);
-                    //                    item.Propcbastated = "";
-                    //                    item.Protime = 0;
-                    //                    item.Prohandoffnum = 0;
-                    //                    item.Prohandofftime = 0;
-                    //                    item.Prodowntime = 0;
-                    //                    item.Prolosstime = 0;
-                    //                    item.Promaketime = 0;
-                    //                    item.Proworkst = 0;
-                    //                    item.Prostdiff = 0;
-                    //                    item.Proqtydiff = 0;
-                    //                    item.Proratio = 0;
-                    //                    item.Prostime = "SMT";
-                    //                    item.Proetime = "SMT";
-                    //                    item.UDF01 = "";
-                    //                    item.UDF02 = "";
-                    //                    item.UDF03 = "";
-                    //                    item.UDF04 = "";
-                    //                    item.UDF05 = "";
-                    //                    item.UDF06 = "";
-                    //                    item.UDF51 = 0;
-                    //                    item.UDF52 = 0;
-                    //                    item.UDF53 = 0;
-                    //                    item.UDF54 = 0;
-                    //                    item.UDF55 = 0;
-                    //                    item.UDF56 = 0;
-
-                    //                    item.Remark = remark.Text;
-                    //                    item.CreateDate = DateTime.Now;
-                    //                    item.Creator = GetIdentityName();
-                    //                    item.IsDeleted = 0;
-                    //                    DB.Pp_P2d_OutputSubs.Add(item);
-                    //                    DB.SaveChanges();
-
-                    //                    //新增日志
-
-                    //                    string Newtext = ParentID + "," + q_st[i].Prowctext + "~" + q_st[i].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                    string OperateType = "新增";
-
-                    //                    string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                }
-                    //            }
-                    //        }
-                    //        if (q_st[i].Prowctext.ToString().Contains("一"))
-                    //        {
-                    //            //SMT设1，2班
-                    //            for (int j = 0; j < 1; j++)
-                    //            {
-                    //                string[] list = new string[] { "手插", "修正", };
-                    //                foreach (var val in list)
-                    //                {
-                    //                    Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                    // 添加父ID
-                    //                    //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                    item.Proordertype = pordertype.Text;
-                    //                    item.Parent = ParentID;
-                    //                    item.Prolinename = val;
-                    //                    item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    item.Prodirect = 10;
-                    //                    item.Proindirect = 2;
-                    //                    item.Prolot = prolot.Text;
-                    //                    item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                    item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                    item.Promodel = q_st[i].Promodel.ToString();
-                    //                    strProModel = q_st[i].Promodel.ToString();
-                    //                    item.Prorate = Decimal.Parse(q_st[i].Prorate.ToString());
-                    //                    item.Prost = Decimal.Parse(q_st[i].Prost.ToString());
-                    //                    item.Proshort = Decimal.Parse(q_st[i].Proshort.ToString());
-                    //                    item.Propcbatype = "";
-                    //                    item.Propcbaside = "";
-                    //                    //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                    item.Prostdcapacity = 0;
-                    //                    item.Totaltag = true;
-                    //                    item.Proorder = proorder.SelectedItem.Text;
-                    //                    item.GUID = Guid.Parse(OPHID);
-                    //                    item.Prostime = val;
-                    //                    item.Proetime = val;
-                    //                    item.UDF01 = "";
-                    //                    item.UDF02 = "";
-                    //                    item.UDF03 = "";
-                    //                    item.UDF04 = "";
-                    //                    item.UDF05 = "";
-                    //                    item.UDF06 = "";
-                    //                    item.UDF51 = 0;
-                    //                    item.UDF52 = 0;
-                    //                    item.UDF53 = 0;
-                    //                    item.UDF54 = 0;
-                    //                    item.UDF55 = 0;
-                    //                    item.UDF56 = 0;
-
-                    //                    item.Remark = remark.Text;
-                    //                    item.CreateDate = DateTime.Now;
-                    //                    item.Creator = GetIdentityName();
-                    //                    item.IsDeleted = 0;
-                    //                    DB.Pp_P2d_OutputSubs.Add(item);
-                    //                    DB.SaveChanges();
-
-                    //                    //新增日志
-
-                    //                    string Newtext = ParentID + "," + q_st[i].Prowctext + "~" + q_st[i].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                    string OperateType = "新增";
-
-                    //                    string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                }
-                    //            }
-                    //        }
-                    //        if (q_st[i].Prowctext.ToString().Contains("一"))
-                    //        {
-                    //            //SMT设1，2班
-                    //            for (int j = 0; j < 1; j++)
-                    //            {
-                    //                string[] list = new string[] { "自插", };
-                    //                foreach (var val in list)
-                    //                {
-                    //                    Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                    // 添加父ID
-                    //                    //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                    item.Proordertype = pordertype.Text;
-                    //                    item.Parent = ParentID;
-                    //                    item.Prolinename = val;
-                    //                    item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    item.Prodirect = 10;
-                    //                    item.Proindirect = 2;
-                    //                    item.Prolot = prolot.Text;
-                    //                    item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                    item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                    item.Promodel = q_st[i].Promodel.ToString();
-                    //                    strProModel = q_st[i].Promodel.ToString();
-                    //                    item.Prorate = Decimal.Parse(q_st[i].Prorate.ToString());
-                    //                    item.Prost = Decimal.Parse(q_st[i].Prost.ToString());
-                    //                    item.Proshort = Decimal.Parse(q_st[i].Proshort.ToString());
-                    //                    item.Propcbatype = "";
-                    //                    item.Propcbaside = "";
-                    //                    //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                    item.Prostdcapacity = 0;
-                    //                    item.Totaltag = true;
-                    //                    item.Proorder = proorder.SelectedItem.Text;
-                    //                    item.GUID = Guid.Parse(OPHID);
-                    //                    item.Prostime = val;
-                    //                    item.Proetime = val;
-                    //                    item.UDF01 = "";
-                    //                    item.UDF02 = "";
-                    //                    item.UDF03 = "";
-                    //                    item.UDF04 = "";
-                    //                    item.UDF05 = "";
-                    //                    item.UDF06 = "";
-                    //                    item.UDF51 = 0;
-                    //                    item.UDF52 = 0;
-                    //                    item.UDF53 = 0;
-                    //                    item.UDF54 = 0;
-                    //                    item.UDF55 = 0;
-                    //                    item.UDF56 = 0;
-
-                    //                    item.Remark = remark.Text;
-                    //                    item.CreateDate = DateTime.Now;
-                    //                    item.Creator = GetIdentityName();
-                    //                    item.IsDeleted = 0;
-                    //                    DB.Pp_P2d_OutputSubs.Add(item);
-                    //                    DB.SaveChanges();
-
-                    //                    //新增日志
-
-                    //                    string Newtext = ParentID + "," + q_st[i].Prowctext + "~" + q_st[i].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                    string OperateType = "新增";
-
-                    //                    string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    //"请确认订单类别！\r\nZDTD，ZDTE，ZDTF为PCBA订单为类型。\r\n如果是SMT或自插，应该有相对应的Short数，请联系技术添加。<br/>\r\n如果是手插或修正，请联系电脑课修改订单类型。
-                    //    string strMsg = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.请确认订单类别。</div><div>2.ZDTD，ZDTE，ZDTF为<strong>PCBA订单为类型</strong>。</div><div>3.如果是SMT或自插，应该有相对应的Short数，<strong>请联系技术添加</strong>。</div><div>4.如果是手插或修正，<strong>请联系电脑课修改订单类型</strong>。</div>");
-                    //    Alert.ShowInTop(strMsg, MessageBoxIcon.Error);
-                    //    return;
-                    //}
-
-                    //var res = (from p in DB.Pp_Manhours
-                    //           where p.Proitem.Contains(itemhbn)
-                    //           where p.Prowctext.Contains("SMT")
-                    //           orderby p.Prowctext
-                    //           //where p.Age > 30 && p.Department == "研发部"
-                    //           select p).ToList();
-                    //int icount = res.Count();
-
-                    //if (itemtype.Contains("ZDTD") || itemtype.Contains("ZDTE") || itemtype.Contains("ZDTF") || itemtype.Contains("ZDTH"))
-                    //{
-                    //    //判断查询是否为空
-                    //    if (res.Any())
-                    //    {
-                    //        //遍历
-                    //        for (int s = 0; s < icount; s++)
-                    //        {
-                    //            if (res[s].Prowctext.ToString().Contains("SMT"))
-                    //            {
-                    //                //SMT设1，2班
-                    //                for (int j = 0; j < 1; j++)
-                    //                {
-                    //                    string[] list = new string[] { "T", "B" };
-                    //                    foreach (var val in list)
-                    //                    {
-                    //                        Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                        // 添加父ID
-                    //                        //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                        item.Proordertype = pordertype.Text;
-                    //                        item.Parent = ParentID;
-                    //                        item.Prolinename = "SMT";
-                    //                        item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                        item.Prodirect = 10;
-                    //                        item.Proindirect = 2;
-                    //                        item.Prolot = prolot.Text;
-                    //                        item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                        item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                        item.Promodel = res[s].Promodel.ToString();
-                    //                        strProModel = res[s].Promodel.ToString();
-                    //                        item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //                        item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //                        item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //                        item.Propcbaside = val;
-                    //                        //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                        item.Prostdcapacity = 0;
-                    //                        item.Totaltag = true;
-                    //                        item.Proorder = proorder.SelectedItem.Text;
-                    //                        item.GUID = Guid.Parse(OPHID);
-                    //                        item.Propcbastated = "";
-                    //                        item.Protime = 0;
-                    //                        item.Prohandoffnum = 0;
-                    //                        item.Prohandofftime = 0;
-                    //                        item.Prodowntime = 0;
-                    //                        item.Prolosstime = 0;
-                    //                        item.Promaketime = 0;
-                    //                        item.Proworkst = 0;
-                    //                        item.Prostdiff = 0;
-                    //                        item.Proqtydiff = 0;
-                    //                        item.Proratio = 0;
-                    //                        item.Prostime = "SMT";
-                    //                        item.Proetime = "SMT";
-                    //                        item.UDF01 = "";
-                    //                        item.UDF02 = "";
-                    //                        item.UDF03 = "";
-                    //                        item.UDF04 = "";
-                    //                        item.UDF05 = "";
-                    //                        item.UDF06 = "";
-                    //                        item.UDF51 = 0;
-                    //                        item.UDF52 = 0;
-                    //                        item.UDF53 = 0;
-                    //                        item.UDF54 = 0;
-                    //                        item.UDF55 = 0;
-                    //                        item.UDF56 = 0;
-
-                    //                        item.Remark = remark.Text;
-                    //                        item.CreateDate = DateTime.Now;
-                    //                        item.Creator = GetIdentityName();
-                    //                        item.IsDeleted = 0;
-                    //                        DB.Pp_P2d_OutputSubs.Add(item);
-                    //                        DB.SaveChanges();
-
-                    //                        //新增日志
-
-                    //                        string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                        string OperateType = "新增";
-
-                    //                        string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                        OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                    }
-                    //                }
-                    //            }
-                    //            //if (res[s].Prowctext.ToString().Contains("手"))
-                    //            //{
-                    //            //    string[] list = new string[] { "手插A", "手插B", "手插C", "手插D", "修正A", "修正B", "修正C", "修正D" };
-                    //            //    foreach (var val in list)
-                    //            //    {
-                    //            //        Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //            //        // 添加父ID
-                    //            //        //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //            //        item.Proordertype = pordertype.Text;
-                    //            //        item.Parent = ParentID;
-                    //            //        item.Prolinename = val;
-                    //            //        item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //            //        item.Prodirect = 10;
-                    //            //        item.Proindirect = 2;
-                    //            //        item.Prolot = prolot.Text;
-                    //            //        item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //            //        item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //            //        item.Promodel = res[s].Promodel.ToString();
-                    //            //        strProModel = res[s].Promodel.ToString();
-                    //            //        item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //            //        item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //            //        item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //            //        item.Propcbatype = "";
-                    //            //        //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //            //        item.Prostdcapacity = 0;
-                    //            //        item.Totaltag = true;
-                    //            //        item.Proorder = proorder.SelectedItem.Text;
-                    //            //        item.GUID = Guid.Parse(OPHID);
-                    //            //        item.Prostime = val;
-                    //            //        item.Proetime = val;
-                    //            //        item.UDF01 = "";
-                    //            //        item.UDF02 = "";
-                    //            //        item.UDF03 = "";
-                    //            //        item.UDF04 = "";
-                    //            //        item.UDF05 = "";
-                    //            //        item.UDF06 = "";
-                    //            //        item.UDF51 = 0;
-                    //            //        item.UDF52 = 0;
-                    //            //        item.UDF53 = 0;
-                    //            //        item.UDF54 = 0;
-                    //            //        item.UDF55 = 0;
-                    //            //        item.UDF56 = 0;
-
-                    //            //        item.Remark = remark.Text;
-                    //            //        item.CreateDate = DateTime.Now;
-                    //            //        item.Creator = GetIdentityName();
-                    //            //        item.IsDeleted = 0;
-                    //            //        DB.Pp_P2d_OutputSubs.Add(item);
-                    //            //        DB.SaveChanges();
-
-                    //            //        //新增日志
-
-                    //            //        string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //            //        string OperateType = "新增";
-
-                    //            //        string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //            //        OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //            //    }
-                    //            //}
-                    //            //if (res[s].Prowctext.ToString().Contains("自"))
-                    //            //{
-                    //            //    string[] list = new string[] { "自插A", "自插B", "自插C", "自插D" };
-                    //            //    foreach (var val in list)
-                    //            //    {
-                    //            //        Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //            //        // 添加父ID
-                    //            //        //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //            //        item.Proordertype = pordertype.Text;
-                    //            //        item.Parent = ParentID;
-                    //            //        item.Prolinename = val;
-                    //            //        item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //            //        item.Prodirect = 10;
-                    //            //        item.Proindirect = 2;
-                    //            //        item.Prolot = prolot.Text;
-                    //            //        item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //            //        item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //            //        item.Promodel = res[s].Promodel.ToString();
-                    //            //        strProModel = res[s].Promodel.ToString();
-                    //            //        item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //            //        item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //            //        item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //            //        item.Propcbatype = "";
-                    //            //        //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //            //        item.Prostdcapacity = 0;
-                    //            //        item.Totaltag = true;
-                    //            //        item.Proorder = proorder.SelectedItem.Text;
-                    //            //        item.GUID = Guid.Parse(OPHID);
-                    //            //        item.Prostime = val;
-                    //            //        item.Proetime = val;
-                    //            //        //item.UDF01 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //            //        //item.UDF02 = this.prolinename.SelectedItem.Text;
-                    //            //        item.UDF01 = "";
-                    //            //        item.UDF02 = "";
-                    //            //        item.UDF03 = "";
-                    //            //        item.UDF04 = "";
-                    //            //        item.UDF05 = "";
-                    //            //        item.UDF06 = "";
-                    //            //        item.UDF51 = 0;
-                    //            //        item.UDF52 = 0;
-                    //            //        item.UDF53 = 0;
-                    //            //        item.UDF54 = 0;
-                    //            //        item.UDF55 = 0;
-                    //            //        item.UDF56 = 0;
-
-                    //            //        item.Remark = remark.Text;
-                    //            //        item.CreateDate = DateTime.Now;
-                    //            //        item.Creator = GetIdentityName();
-                    //            //        item.IsDeleted = 0;
-                    //            //        DB.Pp_P2d_OutputSubs.Add(item);
-                    //            //        DB.SaveChanges();
-
-                    //            //        //新增日志
-
-                    //            //        string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //            //        string OperateType = "新增";
-
-                    //            //        string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //            //        OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //            //    }
-                    //            //}
-                    //        }
-                    //    }
-                    //    //更新单头机种名称
-                    //}
-                    //if (itemtype.Contains("ZDTA") || itemtype.Contains("ZDTB") || itemtype.Contains("ZDTC") || itemtype.Contains("ZDTG"))
-                    //{                         //判断查询是否为空
-                    //    if (res.Any())
-                    //    {
-                    //        //遍历
-                    //        for (int s = 0; s < icount; s++)
-                    //        {
-                    //            //if (res[s].Prowctext.ToString().Contains("SMT"))
-                    //            //{
-                    //            //    //SMT设1，2班
-                    //            //    for (int j = 0; j < 1; j++)
-                    //            //    {
-                    //            //        string[] list = new string[] { "A", "B" };
-                    //            //        foreach (var val in list)
-                    //            //        {
-                    //            //            Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //            //            // 添加父ID
-                    //            //            //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //            //            item.Proordertype = pordertype.Text;
-                    //            //            item.Parent = ParentID;
-                    //            //            item.Prolinename = "SMT" + (j + 1).ToString();
-                    //            //            item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //            //            item.Prodirect = 10;
-                    //            //            item.Proindirect = 2;
-                    //            //            item.Prolot = prolot.Text;
-                    //            //            item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //            //            item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //            //            item.Promodel = res[s].Promodel.ToString();
-                    //            //            strProModel = res[s].Promodel.ToString();
-                    //            //            item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //            //            item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //            //            item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //            //            item.Propcbatype = val;
-                    //            //            //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //            //            item.Prostdcapacity = 0;
-                    //            //            item.Totaltag = true;
-                    //            //            item.Proorder = proorder.SelectedItem.Text;
-                    //            //            item.GUID = Guid.Parse(OPHID);
-                    //            //            item.Prostime = "SMT" + (j + 1).ToString();
-                    //            //            item.Proetime = "SMT" + (j + 1).ToString();
-                    //            //            item.UDF01 = "";
-                    //            //            item.UDF02 = "";
-                    //            //            item.UDF03 = "";
-                    //            //            item.UDF04 = "";
-                    //            //            item.UDF05 = "";
-                    //            //            item.UDF06 = "";
-                    //            //            item.UDF51 = 0;
-                    //            //            item.UDF52 = 0;
-                    //            //            item.UDF53 = 0;
-                    //            //            item.UDF54 = 0;
-                    //            //            item.UDF55 = 0;
-                    //            //            item.UDF56 = 0;
-
-                    //            //            item.Remark = remark.Text;
-                    //            //            item.CreateDate = DateTime.Now;
-                    //            //            item.Creator = GetIdentityName();
-                    //            //            item.IsDeleted = 0;
-                    //            //            DB.Pp_P2d_OutputSubs.Add(item);
-                    //            //            DB.SaveChanges();
-
-                    //            //            //新增日志
-
-                    //            //            string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //            //            string OperateType = "新增";
-
-                    //            //            string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //            //            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //            //        }
-                    //            //    }
-                    //            //}
-                    //            if (res[s].Prowctext.ToString().Contains("一"))
-                    //            {
-                    //                string[] list = new string[] { "手插", "修正", };
-                    //                foreach (var val in list)
-                    //                {
-                    //                    Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                    // 添加父ID
-                    //                    //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                    item.Proordertype = pordertype.Text;
-                    //                    item.Parent = ParentID;
-                    //                    item.Prolinename = val;
-                    //                    item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    item.Prodirect = 10;
-                    //                    item.Proindirect = 2;
-                    //                    item.Prolot = prolot.Text;
-                    //                    item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                    item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                    item.Promodel = res[s].Promodel.ToString();
-                    //                    strProModel = res[s].Promodel.ToString();
-                    //                    item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //                    item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //                    item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //                    item.Propcbatype = "";
-                    //                    item.Propcbaside = "";
-                    //                    //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                    item.Prostdcapacity = 0;
-                    //                    item.Totaltag = true;
-                    //                    item.Proorder = proorder.SelectedItem.Text;
-                    //                    item.GUID = Guid.Parse(OPHID);
-                    //                    item.Prostime = val;
-                    //                    item.Proetime = val;
-                    //                    item.UDF01 = "";
-                    //                    item.UDF02 = "";
-                    //                    item.UDF03 = "";
-                    //                    item.UDF04 = "";
-                    //                    item.UDF05 = "";
-                    //                    item.UDF06 = "";
-                    //                    item.UDF51 = 0;
-                    //                    item.UDF52 = 0;
-                    //                    item.UDF53 = 0;
-                    //                    item.UDF54 = 0;
-                    //                    item.UDF55 = 0;
-                    //                    item.UDF56 = 0;
-
-                    //                    item.Remark = remark.Text;
-                    //                    item.CreateDate = DateTime.Now;
-                    //                    item.Creator = GetIdentityName();
-                    //                    item.IsDeleted = 0;
-                    //                    DB.Pp_P2d_OutputSubs.Add(item);
-                    //                    DB.SaveChanges();
-
-                    //                    //新增日志
-
-                    //                    string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                    string OperateType = "新增";
-
-                    //                    string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                }
-                    //            }
-                    //            if (res[s].Prowctext.ToString().Contains("一"))
-                    //            {
-                    //                string[] list = new string[] { "自插" };
-                    //                foreach (var val in list)
-                    //                {
-                    //                    Pp_P2d_OutputSub item = new Pp_P2d_OutputSub();
-
-                    //                    // 添加父ID
-                    //                    //Pp_P1d_Output ID = Attach<Pp_P1d_Output>(Convert.ToInt32(ParentID));
-                    //                    item.Proordertype = pordertype.Text;
-                    //                    item.Parent = ParentID;
-                    //                    item.Prolinename = val;
-                    //                    item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    item.Prodirect = 10;
-                    //                    item.Proindirect = 2;
-                    //                    item.Prolot = prolot.Text;
-                    //                    item.Prohbn = prohbn.Text;//prohbn.Text;
-                    //                    item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                    //                    item.Promodel = res[s].Promodel.ToString();
-                    //                    strProModel = res[s].Promodel.ToString();
-                    //                    item.Prorate = Decimal.Parse(res[s].Prorate.ToString());
-                    //                    item.Prost = Decimal.Parse(res[s].Prost.ToString());
-                    //                    item.Proshort = Decimal.Parse(res[s].Proshort.ToString());
-                    //                    item.Propcbatype = "";
-                    //                    item.Propcbaside = "";
-                    //                    //item.Prosubst = Decimal.Parse(prosubst.Text);
-                    //                    item.Prostdcapacity = 0;
-                    //                    item.Totaltag = true;
-                    //                    item.Proorder = proorder.SelectedItem.Text;
-                    //                    item.GUID = Guid.Parse(OPHID);
-                    //                    item.Prostime = val;
-                    //                    item.Proetime = val;
-                    //                    //item.UDF01 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                    //                    //item.UDF02 = this.prolinename.SelectedItem.Text;
-                    //                    item.UDF01 = "";
-                    //                    item.UDF02 = "";
-                    //                    item.UDF03 = "";
-                    //                    item.UDF04 = "";
-                    //                    item.UDF05 = "";
-                    //                    item.UDF06 = "";
-                    //                    item.UDF51 = 0;
-                    //                    item.UDF52 = 0;
-                    //                    item.UDF53 = 0;
-                    //                    item.UDF54 = 0;
-                    //                    item.UDF55 = 0;
-                    //                    item.UDF56 = 0;
-
-                    //                    item.Remark = remark.Text;
-                    //                    item.CreateDate = DateTime.Now;
-                    //                    item.Creator = GetIdentityName();
-                    //                    item.IsDeleted = 0;
-                    //                    DB.Pp_P2d_OutputSubs.Add(item);
-                    //                    DB.SaveChanges();
-
-                    //                    //新增日志
-
-                    //                    string Newtext = ParentID + "," + res[s].Prowctext + "~" + res[s].Prowctext + "," + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text;
-                    //                    string OperateType = "新增";
-
-                    //                    string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
-                    //                    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH实绩新增", OperateNotes);
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //    //更新单头机种名称}
-                    //}
                 }
             }
             catch (ArgumentNullException Message)
@@ -1382,7 +752,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// </summary>
         private void SaveDefect()
         {
-            Pp_Defect_Total item = new Pp_Defect_Total();
+            Pp_Defect_P2d_Order item = new Pp_Defect_P2d_Order();
 
             item.Prolot = prolot.Text;
             item.Prolinename = "制二课";
@@ -1390,18 +760,21 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             item.Proorder = proorder.SelectedItem.Text;
             item.Proorderqty = Convert.ToInt32(decimal.Parse(prolotqty.Text));
             item.Promodel = strProModel;
+            item.Proitem = prohbn.Text;
             item.Prorealqty = 0;
             item.Pronobadqty = 0;
             item.Probadtotal = 0;
             item.Prodirectrate = 0;
             item.Probadrate = 0;
+            item.Prodept = "PCBA";
             item.IsDeleted = 0;
+            item.UDF01 = prohbn.Text;
             item.Remark = "PCBA";
             //item.Promodel = promodel.Text;
             item.GUID = Guid.NewGuid();
             item.Creator = GetIdentityName();
             item.CreateDate = DateTime.Now;
-            DB.Pp_Defect_Totals.Add(item);
+            DB.Pp_Defect_P2d_Orders.Add(item);
             DB.SaveChanges();
 
             //新增日志
@@ -1441,7 +814,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                      where p.Proorder == (strorder)
                                      //.Where(s => s.Prolot.Contains(strPlot))
                                      // p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
-                                     group p by p.Prolot into g
+                                     group p by p.Proorder into g
                                      select new
                                      {
                                          g.Key,
@@ -1458,7 +831,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                          where p.Proorder == (strorder)
                          //.Where(s => s.Prolot.Contains(strPlot))
                          //where p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
-                         group p by p.Prolot into g
+                         group p by p.Proorder into g
                          select new
                          {
                              g.Key,
@@ -1470,7 +843,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             }
 
             string sedate = strminDate + "~" + strmaxDate;
-            DB.Pp_Defect_Totals
+            DB.Pp_Defect_P2d_Orders
                .Where(s => s.Proorder == strorder)
 
                .ToList()
@@ -1587,8 +960,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 try
                 {
                     var q = from a in DB.Pp_Orders
-                                //join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
-                                //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
+                            join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
+                            //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
                             where a.Porderno == proorder.SelectedItem.Text
                             //where a.Proecnmodel == strProecnmodel
                             //where a.Proecnbomitem == strProecnbomitem
@@ -1604,7 +977,9 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                                 a.Porderqty,
                                 a.Porderdate,
                                 a.Porderserial,
-                                a.Porderreal
+                                a.Porderreal,
+                                b.Promodel,
+
                                 //c.D_SAP_ZCA1D_Z033,
                             };
 
@@ -1613,10 +988,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                         // 切勿使用 source.Count() > 0
                         var qs = q.Distinct().Take(1).ToList();
 
-                        if (qs[0].Porderno != "")
+                        if (qs[0].Promodel != "")
                         {
                             //判断是否为制二课
-
+                            remark.Text = qs[0].Pordertype + "," + proorder.SelectedItem.Text + "," + qs[0].Promodel + "," + qs[0].Porderhbn + "+" + qs[0].Porderlot;
                             pordertype.Text = qs[0].Pordertype;
                             prohbn.Text = qs[0].Porderhbn;
                             //promodel.Text = qs[0].Promodel;
@@ -1625,6 +1000,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                             prolotqty.Text = qs[0].Porderqty.ToString();
                             //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
                             prosn.Text = qs[0].Porderserial;
+                            promodel.Text = qs[0].Promodel;
 
                             //var pShort = (from p in DB.Pp_Manhours
                             //              where p.Proitem.Contains(prohbn.Text)
@@ -1654,7 +1030,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
                             //if (!pShort.Any())
                             //{
-                            Alert.ShowInTop("订单不能为空！请再次确认！！！", MessageBoxIcon.Warning);
+                            Alert.ShowInTop("机种信息不存在！请再次确认！！！", MessageBoxIcon.Warning);
                             return;
                             //}
                             // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
@@ -1663,7 +1039,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                     else
                     {
                         // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
-                        Alert.ShowInTop("请再次确认订单号是否正确！！！", String.Empty, ActiveWindow.GetHideReference());
+                        Alert.ShowInTop("机种信息不存在！请再次确认！！！", String.Empty, ActiveWindow.GetHideReference());
                         return;
                     }
                 }

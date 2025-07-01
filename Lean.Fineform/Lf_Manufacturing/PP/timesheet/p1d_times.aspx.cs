@@ -78,14 +78,14 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.IsDeleted == 0
                     where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Promodel, p.Prohbn } into g
+                    group p by new { p.Prodate, p.Prolinename, Prolot = p.Prolot + "-" + p.Proorder, p.Promodel, p.Prohbn } into g
                     select new
                     {
-                        Prodate = g.Key.Prodate,
-                        Prolinename = g.Key.Prolinename,
-                        Prolot = g.Key.Prolot,
-                        Promodel = g.Key.Promodel,
-                        Prohbn = g.Key.Prohbn,
+                        g.Key.Prodate,
+                        g.Key.Prolinename,
+                        g.Key.Prolot,
+                        g.Key.Promodel,
+                        g.Key.Prohbn,
                         Proworktime = g.Sum(p => p.Prorealtime),
                         Prolosstime = g.Sum(p => p.Prolinestopmin),
                         Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
@@ -545,7 +545,7 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
                     //join b in DB.proOutputs on p.OPHID equals b.OPHID
                 where p.IsDeleted == 0
                 where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                group p by new { p.Promodel, p.Prohbn, p.Prolot, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
+                group p by new { p.Promodel, p.Prohbn, Prolot = p.Prolot + "-" + p.Proorder, p.Prodate, p.Prostime, p.Proetime, p.Prolinename, p.Prorealtime, p.Prostopcou, p.Prostopmemo, p.Probadcou, p.Probadmemo, p.Prolinemin, p.Prolinestopmin }
                 into g
                 select new
                 {

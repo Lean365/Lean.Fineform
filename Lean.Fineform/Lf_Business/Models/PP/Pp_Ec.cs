@@ -21,7 +21,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(500)]
         public string Ec_title { get; set; }//技术设变标题
 
-        [StringLength(4000)]
+        [StringLength(8000)]
         public string Ec_details { get; set; }//技术设变内容
 
         [StringLength(50)]

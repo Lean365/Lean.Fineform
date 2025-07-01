@@ -359,7 +359,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
             if (ExportTB != null && ExportTB.Rows.Count > 0)
             {
-                ExportHelper.EpplusToExcel(ExportTB, Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ExportTB, Prefix_XlsxName, Export_FileName, "DTA 品管检查明细");
             }
             else
             {

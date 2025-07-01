@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using static LeanFine.QueryExtensions;
 
@@ -305,7 +306,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             SaveSubItem();
             //删除无单身数据
-            UpdatingHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
+            UpdateP1dHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
         }
 
         //新增新增生产日报单身
@@ -417,7 +418,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             try
             {
-                Pp_Defect_Total item = new Pp_Defect_Total();
+                Pp_Defect_P1d_Order item = new Pp_Defect_P1d_Order();
 
                 item.Prolot = prolot.Text;
                 item.Prolinename = prolinename.SelectedItem.Text;
@@ -425,18 +426,20 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 item.Proorder = proorder.Text;
                 item.Proorderqty = Convert.ToInt32(decimal.Parse(prolotqty.Text));
                 item.Prorealqty = int.Parse(prolotqty.Text);
+                item.Proitem = prohbn.SelectedItem.Text;
+                item.Prodept = "ASSYM";
                 item.Pronobadqty = 0;
                 item.Probadtotal = 0;
                 item.Prodirectrate = 0;
                 item.Probadrate = 0;
                 item.IsDeleted = 0;
-                item.Remark = "";
+                item.Remark = "ASSYM";
 
                 item.Promodel = promodel.Text;
                 item.GUID = Guid.NewGuid();
                 item.Creator = GetIdentityName();
                 item.CreateDate = DateTime.Now;
-                DB.Pp_Defect_Totals.Add(item);
+                DB.Pp_Defect_P1d_Orders.Add(item);
                 DB.SaveChanges();
 
                 //新增日志
@@ -537,7 +540,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             }
 
             string sedate = strminDate + "~" + strmaxDate;
-            DB.Pp_Defect_Totals
+            DB.Pp_Defect_P1d_Orders
                .Where(s => s.Proorder == strorder)
 
                .ToList()
@@ -608,7 +611,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //判断重复
             string input = proorder.Text.Trim();
 
-            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input).FirstOrDefault();
+            Pp_Defect_P1d_Order current = DB.Pp_Defect_P1d_Orders.Where(u => u.Proorder == input).FirstOrDefault();
 
             if (current != null)
             {

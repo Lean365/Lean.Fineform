@@ -421,11 +421,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
+            Decimal wTotal = 0.0m;
             Decimal ratio = 0.0m;
 
             foreach (DataRow row in source.Rows)
             {
                 pTotal += Convert.ToDecimal(row["Proplanqty"]);
+                wTotal += Convert.ToDecimal(row["Proworktime"]);
                 rTotal += Convert.ToDecimal(row["Proworkqty"]);
                 ratio = rTotal / pTotal;
             }
@@ -434,6 +436,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //summary.Add("major", "全部合计");
 
             summary.Add("Proplanqty", pTotal.ToString("F2"));
+            summary.Add("Proworktime", wTotal.ToString("F2"));
             summary.Add("Proworkqty", rTotal.ToString("F2"));
             summary.Add("Proactivratio", ratio.ToString("p0"));
 

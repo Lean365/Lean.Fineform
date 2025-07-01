@@ -102,7 +102,8 @@
                         <f:BoundField DataField="Prolinename" ExpandUnusedSpace="true" SortField="Prolinename" Width="80px" HeaderText="班组" />
                         <f:BoundField DataField="Prodate" ExpandUnusedSpace="true" SortField="Prodate" Width="200px" HeaderText="日期" />
                         <f:BoundField DataField="Prolot" ExpandUnusedSpace="true" SortField="Prolot" Width="100px" HeaderText="批次" />
-                        <f:BoundField DataField="Prolotqty" ExpandUnusedSpace="true" SortField="Prolotqty" Width="80px" HeaderText="批次数量" />
+                        <f:BoundField DataField="Proorder" ExpandUnusedSpace="true" SortField="Proorder" Width="100px" HeaderText="订单" />
+                        <f:BoundField DataField="Prolotqty" ExpandUnusedSpace="true" SortField="Prolotqty" Width="80px" HeaderText="订单数量" />
                         <f:BoundField DataField="Prorealqty" ExpandUnusedSpace="true" SortField="Prorealqty" Width="80px" HeaderText="生产数量" />
                         <f:BoundField DataField="Pronobadqty" ExpandUnusedSpace="true" SortField="Pronobadqty" Width="80px" HeaderText="无不良数量" />
                         <f:BoundField DataField="Probadtotal" ExpandUnusedSpace="true" SortField="Probadtotal" Width="80px" HeaderText="不良件数" />

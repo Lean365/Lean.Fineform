@@ -27,7 +27,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #region Page_Load
 
-        public static string formNo, issueNo, strDpStartDate, strDpEndDate, strDate, strPline, strPlot, strDpdate, strDqty, strRqty, strPmodel, strPdept, strBrate, strCrate;
+        public static string formNo, issueNo, strDpStartDate, strDpEndDate, strDate, strPline, strPlot, strOrder, strDpdate, strDqty, strRqty, strPmodel, strPdept, strBrate, strCrate;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -75,11 +75,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
                 //查询在特定日期的全部工单
-                var q = from a in DB.Pp_Defect_Totals
+                var q = from a in DB.Pp_Defect_P1d_Orders
 
-                        join b in DB.Pp_P1d_Modify_Outputs on a.Prolot equals b.Prolot
+                        join b in DB.Pp_P1d_Modify_Defects on a.Prolot equals b.Prolot
                         where a.IsDeleted == 0
-                        where a.Proorder.Contains("M")
+                        where a.Prodept == ("ASSYM")
                         where b.IsDeleted == 0
                         //where a.Proorder.Substring(0, 2).Contains("44")
                         //where b.Prodate.Contains(Pdate)
@@ -147,8 +147,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                 Prorealqty = g.Sum(p => p.Prorealqty),
                                 Pronobadqty = g.Sum(p => p.Pronobadqty),
                                 Probadtotal = g.Sum(p => p.Probadtotal),
-                                Prodirectrate = (g.Sum(p => p.Pronobadqty) != 0 ? (g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
-                                Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                                Prodirectrate = (g.Sum(p => p.Prorealqty) != 0 ? (g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                                Probadrate = (g.Sum(p => p.Prorealqty) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
                             };
 
                 DataTable dtCount = ConvertHelper.LinqConvertToDataTable(count);
@@ -159,8 +159,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     string UpdatePline = "";
                     string UpdatePdate = "";
                     string clot = dtCount.Rows[f][0].ToString();
-                    var countlist = (from a in DB.Pp_Defect_Totals
+                    var countlist = (from a in DB.Pp_Defect_P1d_Orders
                                      where a.Prolot == clot
+                                     where a.Prodept == ("ASSYM")
                                      //where a.Prodate.Contains("202002")
                                      select a).ToList();
                     if (countlist.Any())
@@ -327,7 +328,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //DataTable ma=new DataTable();
             //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
 
-            //var q = from a in DB.Pp_Defect_Totals
+            //var q = from a in DB.Pp_Defect_P1d_Orders
             //        where a.Prongbdel == false
             //        where a.Prorealqty == a.Prolotqty
             //        where a.Pronobadqty != 0
@@ -443,12 +444,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             DataTable ma = new DataTable();
             //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
-            var q = from a in DB.Pp_Defect_Totals
-                    join b in DB.Pp_P1d_Modify_Outputs on a.Prolot equals b.Prolot
+            var q = from a in DB.Pp_Defect_P1d_Orders
+                    join b in DB.Pp_P1d_Modify_Defects on a.Prolot equals b.Prolot
                     where a.IsDeleted == 0
                     where b.IsDeleted == 0
-                    where a.Proorder.Contains("M")
-                    where a.Remark.Contains("ASSY")
+                    where a.Prodept == ("ASSYM")
                     //where a.Proorder.Substring(0, 2).Contains("44")
                     //where b.Prodate.Substring(0, 6).CompareTo(Pdate) == 0
                     //where a.Proorderqty == a.Prorealqty
@@ -493,12 +493,14 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              //where a.Proorderqty == a.Prorealqty
                          group a by new
                          {
+                             a.Proorder,
                              a.Prolot,
                          }
                       into g
                          select new
                          {
-                             Prolot = g.Key.Prolot,
+                             g.Key.Prolot,
+                             g.Key.Proorder,
                              Prolinename = "",
                              Prodate = "",
                              Promodel = "",
@@ -506,8 +508,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              Prorealqty = g.Sum(p => p.Prorealqty),
                              Pronobadqty = g.Sum(p => p.Pronobadqty),
                              Probadtotal = g.Sum(p => p.Probadtotal),
-                             Prodirectrate = (g.Sum(p => p.Pronobadqty) != 0 ? g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
-                             Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
+                             Prodirectrate = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
+                             Probadrate = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
                          };
 
             var count = (from a in counts
@@ -523,8 +525,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     p.Prorealqty,
                     p.Pronobadqty,
                     p.Probadtotal,
-                    Prodirectrate = p.Prodirectrate.ToString("0.00"),
-                    Probadrate = p.Probadrate.ToString("0.00"),// + "%",
+                    p.Prodirectrate,// = p.Prodirectrate.ToString("0.00"),
+                    p.Probadrate,// = p.Probadrate.ToString("0.00"),// + "%",
+                    p.Proorder,
                 }).ToList();
             DataTable dtCount = ConvertHelper.LinqConvertToDataTable(count.AsQueryable());
             //向DataTable中更新日期，班组，机种
@@ -536,8 +539,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string UpdatePdate = "";
                 string UpdatePmodel = "";
                 string clot = dtCount.Rows[f][0].ToString();
-                var countlist = (from a in DB.Pp_Defect_Totals
+                var countlist = (from a in DB.Pp_Defect_P1d_Orders
                                  where a.Prolot == clot
+                                 where a.Prodept == ("ASSYM")
                                  //where a.Prodate.Contains(edate)
                                  select a).ToList();
                 if (countlist.Any())
@@ -573,10 +577,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //向DataTable中的字段设定类型
             foreach (DataRow drExcel in dtCount.Rows)
             {
-                Decimal Prodirectrate = decimal.Parse(drExcel["Prodirectrate"].ToString()) * 100;
-                drExcel["Prodirectrate"] = decimal.Parse(Prodirectrate.ToString()).ToString("0.00") + "%";
-                Decimal Probadrate = decimal.Parse(drExcel["Probadrate"].ToString()) * 100;
-                drExcel["Probadrate"] = decimal.Parse(Probadrate.ToString()).ToString("0.00") + "%";
+                Decimal Prodirectrate = decimal.Parse(drExcel["Prodirectrate"].ToString());
+                //drExcel["Prodirectrate"] = decimal.Parse(Prodirectrate.ToString()).ToString("0.00") + "%";
+                Decimal Probadrate = decimal.Parse(drExcel["Probadrate"].ToString());
+                //drExcel["Probadrate"] = decimal.Parse(Probadrate.ToString()).ToString("0.00") + "%";
             }
             ma = dtCount;
             if (q.Any())
@@ -584,6 +588,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 for (int i = 0; i < ma.Rows.Count; i++)
                 {
                     strPlot = ma.Rows[i][0].ToString();
+                    strOrder = ma.Rows[i][10].ToString();
                     //string sorder = ma.Rows[i][1].ToString();
                     //strPline= ma.Rows[i][2].ToString();
                     strDpStartDate = ma.Rows[i][2].ToString().Substring(0, 8);
@@ -621,7 +626,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                };
                     DataTable ex = ConvertHelper.LinqConvertToDataTable(qsub);
                     //sheet名称不能包含以下字符"[","]","\","/","?",":","*"
-                    ex.TableName = strPlot;// + "_" + i;
+                    ex.TableName = strPlot + "_" + strOrder;// + "_" + i;
 
                     tables.Add(ex);
                 }
@@ -743,7 +748,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         原因 = E.Probadreason,
                     });
 
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 改修不良明细");
                 }
                 else
 

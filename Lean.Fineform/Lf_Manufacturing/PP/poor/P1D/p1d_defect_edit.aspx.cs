@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -979,10 +980,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             strPlot = prolot.Text;
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(strPorder, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(strPorder, userid, "ASSY");
 
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, userid, "ASSY");
+            UpdateP1dHelper.UpdatebadAmount(this.DefDate.Text, prolinename.Text, strPorder, userid, "ASSY");
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

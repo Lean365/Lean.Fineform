@@ -1284,4 +1284,34 @@
   <data name="sys_Export_Modify" xml:space="preserve">
     <value>导出改修明细</value>
   </data>
+  <data name="menu_Pp_OPHEpp" xml:space="preserve">
+    <value>Epp生产</value>
+  </data>
+  <data name="sys_Button_Line" xml:space="preserve">
+    <value>班组</value>
+  </data>
+  <data name="sys_Button_Model" xml:space="preserve">
+    <value>机种</value>
+  </data>
+  <data name="sys_Button_Line_B" xml:space="preserve">
+    <value>班组改修(B)</value>
+  </data>
+  <data name="sys_Button_Model_B" xml:space="preserve">
+    <value>机种(B)</value>
+  </data>
+  <data name="sys_Button_Line_N" xml:space="preserve">
+    <value>班组改修(N)</value>
+  </data>
+  <data name="sys_Button_Model_N" xml:space="preserve">
+    <value>机种(N)</value>
+  </data>
+  <data name="sys_Button_Line_E" xml:space="preserve">
+    <value>班组EPP</value>
+  </data>
+  <data name="sys_Button_Model_E" xml:space="preserve">
+    <value>机种EPP</value>
+  </data>
+  <data name="menu_Pp_P1d_Epp_Defect" xml:space="preserve">
+    <value>Epp不良</value>
+  </data>
 </root>

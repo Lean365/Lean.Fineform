@@ -272,7 +272,7 @@ namespace LeanFine.Lf_Manufacturing.SD.shipment
 
                 ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 序列号明细");
                 Grid1.AllowPaging = true;
             }
             else

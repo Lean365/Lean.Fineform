@@ -29,7 +29,7 @@
             </Toolbars>
             <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="false" ShowHeader="false" AllowCellEditing="true" ClicksToEdit="1" EnableCheckBoxSelect="true"
-                    DataKeyNames="ID" AllowSorting="true" SortField="Prostime" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true"
+                    DataKeyNames="ID" AllowSorting="true" SortField="Prostime" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
                     OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
                     <Columns>
                         <%--<f:RowNumberField />--%>
@@ -49,7 +49,7 @@
 
                         <f:RenderField Width="100px" ColumnID="Prostopcou" DataField="Prostopcou" HeaderText="停线原因" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProstopcou" runat="server" EnableMultiSelect="true">
+                                <f:DropDownList ID="ddlProstopcou" runat="server" EnableMultiSelect="true" EnableEdit="true" ForceSelection="false">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
@@ -61,14 +61,14 @@
                         </f:RenderField>
                         <f:RenderField Width="100px" ColumnID="Prolinestopmin" DataField="Prolinestopmin" HeaderText="停线时间" FieldType="Int">
                             <Editor>
-                                <f:NumberBox ID="numProlinestopmin" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server">
+                                <f:NumberBox ID="numProlinestopmin" NoDecimal="true" NoNegative="true" MinValue="0" MaxValue="9999" runat="server" Text="0">
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
                         <%--多选--%>
                         <f:RenderField Width="150px" ColumnID="Probadcou" DataField="Probadcou" HeaderText="未达成原因"  FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProbadcou" runat="server" EnableMultiSelect="true">
+                                <f:DropDownList ID="ddlProbadcou" runat="server" EnableMultiSelect="true" EnableEdit="true" ForceSelection="false">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
@@ -84,17 +84,11 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:BoundField DataField="Prorealtime" SortField="Prorealtime" Width="120px" HeaderText="实绩工数" />
-                        <f:BoundField DataField="Prolinename" SortField="Prolinename" Width="80px" HeaderText="班组" />
+                        <f:BoundField ColumnID="Prorealtime" DataField="Prorealtime" SortField="Prorealtime" Width="120px" HeaderText="实绩工数" />
+                        <f:BoundField ColumnID="Prolinename" DataField="Prolinename" SortField="Prolinename" Width="80px" HeaderText="班组" />
                         <%--<f:BoundField DataField="Parent_ID" SortField="Parent_ID"  Width="80px" HeaderText="Parent_ID"/>--%>
-                        <f:BoundField DataField="Prostdcapacity" SortField="Prostdcapacity" Width="80px" HeaderText="标准产能" />
+                        <f:BoundField ColumnID="Prostdcapacity" DataField="Prostdcapacity" SortField="Prostdcapacity" Width="80px" HeaderText="标准产能" />
                     </Columns>
-                    <Toolbars>
-                        <f:Toolbar runat="server" Position="Bottom">
-                            <Items>
-                            </Items>
-                        </f:Toolbar>
-                    </Toolbars>
                 </f:Grid>
                 <f:Panel Height="150px" ShowHeader="false" BodyPadding="10px"
                     ShowBorder="true" runat="server">

@@ -62,7 +62,7 @@ namespace LeanFine.Lf_Report
                          Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0 / g.Sum(p => p.Prorealqty)) * 100 : 0),
                      };
 
-            qs = qs.OrderByDescending(a => a.Pronobadqty).Take(15);
+            qs = qs.OrderByDescending(a => a.Pronobadqty);
             var qss = (from a in qs
                        orderby a.Pronobadqty descending
                        select a)

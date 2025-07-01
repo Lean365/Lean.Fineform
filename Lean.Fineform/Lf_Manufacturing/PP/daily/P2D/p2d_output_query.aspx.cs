@@ -446,7 +446,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
                 //导出2007格式
                 //ExportHelper.EpplusToExcel(Exdt, Prefix_XlsxName, Export_FileName);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "DTA 生产日报");
                 Grid1.AllowPaging = true;
             }
             else

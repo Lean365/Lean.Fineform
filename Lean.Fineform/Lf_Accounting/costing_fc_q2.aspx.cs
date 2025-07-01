@@ -417,7 +417,7 @@ namespace LeanFine.Lf_Accounting
                     DataTable result = ConvertHelper.DataTableRowToCol(qs, DimensionList, DynamicColumn, out AllDynamicColumn);
                     if (Grid1.RecordCount != 0)
                     {
-                        ExportHelper.EpplusToExcel(result, Prefix_XlsxName, Export_FileName);
+                        ExportHelper.EpplusToExcel(result, Prefix_XlsxName, Export_FileName, "DTA Forecast明细");
                     }
                     else
 

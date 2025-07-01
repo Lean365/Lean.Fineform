@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #region Page_Load
 
-        public static string tracestr, Prefix_XlsxName, Export_FileName;
+        public static string tracestr, Prefix_XlsxName, Export_FileName, strLot, strOrder;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -392,7 +392,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 //ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "DTA 生产不良日报");
                 Grid1.AllowPaging = true;
             }
             else
@@ -472,8 +472,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             var qs = q.Select(E => new
             {
+
                 E.Prolot,
                 E.Promodel,
+                E.Proorder,
             }).Distinct().AsQueryable();
 
             ma = ConvertHelper.LinqConvertToDataTable(qs);
@@ -481,8 +483,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 for (int i = 0; i < ma.Rows.Count; i++)
                 {
-                    string strLot = "";
+
                     strLot = ma.Rows[i][0].ToString();
+                    strOrder = ma.Rows[i][2].ToString();
                     string strPmodel = "";
                     strPmodel = ma.Rows[i][1].ToString();
                     var q2 =

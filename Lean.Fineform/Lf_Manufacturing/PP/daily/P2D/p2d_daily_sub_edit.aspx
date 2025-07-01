@@ -33,9 +33,9 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="guid" Label="生产日期" ShowRedStar="True">
+                                <f:Label runat="server" ID="guid" Label="Guid" ShowRedStar="True">
                                 </f:Label>
-                                <f:Label runat="server" ID="parent" Label="生产日期" ShowRedStar="True">
+                                <f:Label runat="server" ID="parent" Label="父ID" ShowRedStar="True">
                                 </f:Label>
                                 <f:Label ID="proordertype" runat="server" Label="订单类别"></f:Label>
 

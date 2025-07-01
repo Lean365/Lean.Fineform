@@ -173,7 +173,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
             //DataTable source = GetDataTable.Getdt(mysql);
             //导出2007格式
-            ExportHelper.EpplusToExcel(table, Prefix_XlsxName, Export_FileName);
+            ExportHelper.EpplusToExcel(table, Prefix_XlsxName, Export_FileName, "DTA 设变明细");
         }
 
         private string GetGridTableHtml(Grid grid)

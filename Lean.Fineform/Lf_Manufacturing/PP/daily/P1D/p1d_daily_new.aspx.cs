@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using static LeanFine.QueryExtensions;
 
@@ -93,7 +94,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             //通过DateTIme.Compare()进行比较（）
             int compNum = DateTime.Compare(Date10, nowDate);
-            //int compEdit= DateTime.Compare(nowDate, editDate);
+            //int compEdit = DateTime.Compare(nowDate, editDate);
 
             if (compNum == -1)
             {
@@ -304,7 +305,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             SaveSubItem();
             //删除无单身数据
-            UpdatingHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
+            UpdateP1dHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
         }
 
         //新增新增生产日报单身
@@ -356,6 +357,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         //时间
                         item.Prostime = res[i].DictValue.Substring(0, 5).TrimEnd().ToString();
                         item.Proetime = res[i].DictValue.Substring(6, 5).TrimEnd().ToString();
+                        //if (res[i].DictValue.Substring(0, 5).TrimEnd().ToString() == "11:10" || res[i].DictValue.Substring(0, 5).TrimEnd().ToString() == "16:40")
+                        //{
+                        //    item.Prostopcou = "清洁";
+                        //    item.Prolinestopmin = int.Parse(prodirect.Text) * 4;
+                        //}
                         //item.Udf001 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         //item.Udf002 = this.prolinename.SelectedItem.Text;
                         item.Remark = remark.Text;
@@ -415,26 +421,29 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             try
             {
-                Pp_Defect_Total item = new Pp_Defect_Total();
+                Pp_Defect_P1d_Order item = new Pp_Defect_P1d_Order();
 
                 item.Prolot = prolot.Text;
                 item.Prolinename = prolinename.SelectedItem.Text;
                 item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                 item.Proorder = proorder.SelectedItem.Text;
                 item.Proorderqty = Convert.ToInt32(decimal.Parse(prolotqty.Text));
+                item.Proitem = prohbn.Text;
                 item.Prorealqty = 0;
                 item.Pronobadqty = 0;
                 item.Probadtotal = 0;
                 item.Prodirectrate = 0;
                 item.Probadrate = 0;
                 item.IsDeleted = 0;
+                item.Prodept = "ASSY";
+                item.UDF01 = prohbn.Text;
                 item.Remark = "ASSY";
 
                 item.Promodel = promodel.Text;
                 item.GUID = Guid.NewGuid();
                 item.Creator = GetIdentityName();
                 item.CreateDate = DateTime.Now;
-                DB.Pp_Defect_Totals.Add(item);
+                DB.Pp_Defect_P1d_Orders.Add(item);
                 DB.SaveChanges();
 
                 //新增日志
@@ -506,7 +515,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                      where p.Proorder == (strorder)
                                      //.Where(s => s.Prolot.Contains(strPlot))
                                      // p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
-                                     group p by p.Prolot into g
+                                     group p by p.Proorder into g
                                      select new
                                      {
                                          g.Key,
@@ -523,7 +532,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                          where p.Proorder == (strorder)
                          //.Where(s => s.Prolot.Contains(strPlot))
                          //where p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
-                         group p by p.Prolot into g
+                         group p by p.Proorder into g
                          select new
                          {
                              g.Key,
@@ -535,7 +544,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             }
 
             string sedate = strminDate + "~" + strmaxDate;
-            DB.Pp_Defect_Totals
+            DB.Pp_Defect_P1d_Orders
                .Where(s => s.Proorder == strorder)
 
                .ToList()
@@ -719,6 +728,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         var qs = maxst.Distinct().Take(1).ToList();
                         if (qs[0].Prost != 0)
                         {
+                            remark.Text = qs[0].Pordertype + "," + proorder.SelectedItem.Text + "," + qs[0].Promodel + "," + qs[0].Porderhbn + "+" + qs[0].Porderlot;
                             ProOrderType = qs[0].Pordertype;
                             prohbn.Text = qs[0].Porderhbn;
                             promodel.Text = qs[0].Promodel;
@@ -774,7 +784,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             {
                 OPHRate();
                 decimal rate = (decimal)Prorate / 100;
-                prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.0");
+                prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.00");
             }
         }
     }

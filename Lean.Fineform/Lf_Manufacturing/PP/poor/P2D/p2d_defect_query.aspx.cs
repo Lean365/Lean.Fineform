@@ -27,7 +27,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         #region Page_Load
 
-        public static string tracestr;
+        public static string tracestr, strLot, strOrder;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -371,7 +371,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 //ConvertHelper.LinqConvertToDataTable(qs);
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "DTA 修理不良明细");
                 Grid1.AllowPaging = true;
             }
             else
@@ -415,6 +415,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
              //where p.Prodate.Substring(10, 6).CompareTo(strDpdate) <= 0
              group p by new
              {
+                 p.Proorder,
                  p.Prolot,
                  p.Promodel,
                  Prodate = p.Prodate.Substring(0, 6),
@@ -422,9 +423,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             into g
              select new
              {
-                 Prodate = g.Key.Prodate,
+                 g.Key.Prodate,
                  g.Key.Prolot,
                  g.Key.Promodel,
+                 g.Key.Proorder
              });
 
             //qs.Count();
@@ -452,6 +454,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 E.Prolot,
                 E.Promodel,
                 E.Prodate,
+                E.Proorder,
             }).Distinct().AsQueryable();
 
             ma = ConvertHelper.LinqConvertToDataTable(qs);
@@ -459,8 +462,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 for (int i = 0; i < ma.Rows.Count; i++)
                 {
-                    string strPlot = "";
-                    strPlot = ma.Rows[i][0].ToString();
+
+                    strLot = ma.Rows[i][0].ToString();
+                    strLot = ma.Rows[i][4].ToString();
                     string strPmodel = "";
                     strPmodel = ma.Rows[i][1].ToString();
                     string strPdate = "";
@@ -472,7 +476,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
                             .Where(s => s.Prodate.Substring(0, 6).CompareTo(strPdate) == 0)
                             //.Where(s => s.Prolinename.Contains(strPline))
-                            .Where(s => s.Prolot.Contains(strPlot))
+                            .Where(s => s.Prolot.Contains(strLot))
                             .Where(s => s.Promodel.CompareTo(strPmodel) == 0)
                             //.Where(s => s.Prorealqty==s.Proorderqty)
                             .OrderBy(s => s.Prongdept)
@@ -506,7 +510,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                };
                     DataTable ex = ConvertHelper.LinqConvertToDataTable(qsub);
 
-                    ex.TableName = strPlot + "_" + i;
+                    ex.TableName = strLot + "_" + strOrder + "_" + i;
 
                     tables.Add(ex);
                 }

@@ -556,7 +556,7 @@ namespace LeanFine.Lf_Manufacturing.MM
                     ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 易飞销售明细");
                     Grid1.AllowPaging = true;
                 }
                 else
@@ -680,7 +680,7 @@ namespace LeanFine.Lf_Manufacturing.MM
                     ConvertHelper.LinqConvertToDataTable(qs);
 
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 易飞销售明细");
                     Grid1.AllowPaging = true;
                 }
                 else

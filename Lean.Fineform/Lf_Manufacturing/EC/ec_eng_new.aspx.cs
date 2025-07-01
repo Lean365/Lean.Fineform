@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         #endregion ViewPower
 
-        public static string strMana, IsCheck, strMailto, strWhouse, strPur, strEol, strEcnno, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, fileName, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc;
+        public static string strMana, IsCheck, strMailto, strWhouse, strPur, strEol, strEcnno, strInv, bitem, sitem, oitem, oitemset, nitem, nitemset, fileName, txtPbookdoc, txtPpbookdoc, txtPjpbookdoc, txtPdoc, delEc, delBitem, delMitem, delOitem, delNitem;
         public static long iFileSizeLimit = Convert.ToInt32(ConfigurationManager.AppSettings["FileSizeLimit"]);
 
         #region Page_Load
@@ -142,6 +142,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region 停产机种不导入
 
             var q_NotEollist = from a in DB.Pp_SapEcnSubs
+                               where a.IsDeleted == 0
                                where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                                                                   where d.D_SAP_ZCA1D_Z034 == ""
                                                                   select d.D_SAP_ZCA1D_Z002)
@@ -274,7 +275,10 @@ namespace LeanFine.Lf_Manufacturing.EC
             Ec_leader.DataBind();
 
             // 选中根节点
+
             this.Ec_leader.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+
+            //Ec_leader.SelectedValue = "胡木儿";
         }
 
         protected void Grid1_Sort(object sender, GridSortEventArgs e)
@@ -307,6 +311,71 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         protected void Grid1_PreRowDataBound(object sender, GridPreRowEventArgs e)
         {
+            CheckPowerWithLinkButtonField("CoreEcENGSubDelete", Grid1, "deleteField");
+        }
+
+        protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
+        {
+            // 在操作之前进行权限检查
+            if (!CheckPower("CoreEcENGSubDelete"))
+            {
+                CheckPowerFailWithAlert();
+                return;
+            }
+
+            //查询选中行ID
+            int[] selections = Grid1.SelectedRowIndexArray;
+            foreach (int rowIndex in selections)
+            {
+                delEc = Grid1.DataKeys[rowIndex][0].ToString();
+                delBitem = Grid1.DataKeys[rowIndex][2].ToString();
+                delMitem = Grid1.DataKeys[rowIndex][3].ToString();
+                delOitem = Grid1.DataKeys[rowIndex][4].ToString();
+                delNitem = Grid1.DataKeys[rowIndex][5].ToString();
+            }
+            //Guid del_ID = Guid.Parse(GetSelectedDataKeyGUID(Grid1));
+
+            //删除日志
+            //int userID = GetSelectedDataKeyID(Grid1);
+            //var q = from a in DB.Pp_Ec_Subs
+            //        where a.Ec_no == keys[0].ToString()
+            //        where a.Ec_model == keys[1].ToString()
+            //        where a.Ec_bomitem == keys[2].ToString()
+            //        select a;
+
+            // Pp_Ec_Sub current = DB.Pp_Ec_Subs.Find(del_ID);
+            string Contectext = delEc + "," + Ec_model.Text + "," + delBitem + "," + delMitem + "," + delOitem + "," + delNitem;
+            string OperateType = "删除";//操作标记
+            string OperateNotes = "Del生产* " + Contectext + " *Del 的记录已删除";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "设变删除标记", OperateNotes);
+
+            DB.Pp_Ec_Subs
+                .Where(it => it.Ec_no == delEc && it.Ec_bomitem == delBitem && it.Ec_bomsubitem == delMitem && it.Ec_olditem == delOitem && it.Ec_newitem == delNitem)
+                .ToList()
+                .ForEach(x =>
+                {
+                    x.IsDeleted = 1;
+                    x.Modifier = GetIdentityName();
+                    x.ModifyDate = DateTime.Now;
+                });
+
+            DB.Pp_SapEcnSubs
+                .Where(it => it.D_SAP_ZPABD_S001 == delEc && it.D_SAP_ZPABD_S002 == delBitem && it.D_SAP_ZPABD_S003 == delMitem && it.D_SAP_ZPABD_S004 == delOitem && it.D_SAP_ZPABD_S008 == delNitem)
+                .ToList()
+                .ForEach(x =>
+                {
+                    x.IsDeleted = 1;
+                    x.Modifier = GetIdentityName();
+                    x.ModifyDate = DateTime.Now;
+                });
+            //DB.Pp_Ec_Subs.Where(it => it.Ec_no == keys[0].ToString() && it.Ec_model == keys[1].ToString() && it.Ec_bomitem == keys[2].ToString()).DeleteFromQuery();
+            //DB.Pp_P1d_Outputs.Where(l => l.ID == del_ID).DeleteFromQuery();
+
+            //更新订单已生产数量
+            //UpdatingHelper.DelUpdateOrderRealQty(current.Proorder, GetIdentityName());
+
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), "修改", "生产管理", "设变修改", OperateNotes);
+            BindGrid();
         }
 
         protected void Grid1_RowDataBound(object sender, GridRowEventArgs e)
@@ -332,7 +401,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             Ec_distinction.DataBind();
 
             // 选中根节点
-            Ec_distinction.SelectedValue = "0";
+            Ec_distinction.SelectedValue = "1";
         }
 
         private void BindDdltype()
@@ -398,7 +467,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                 item.Ec_leader = Ec_leader.SelectedItem.Text;//DTA担当
                 //金额
-                item.Ec_lossamount = int.Parse(Ec_lossamount.Text);//金额
+                item.Ec_lossamount = decimal.Parse(Ec_lossamount.Text);//金额取整Math.Ceiling()
                 item.Ec_distinction = int.Parse(Ec_distinction.SelectedValue);
                 item.Ec_entrydate = DateTime.Now.ToString("yyyyMMdd");
                 //技联NO Ec_letterno
@@ -650,6 +719,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 #region 停产机种不导入
 
                 var q_NotEollist = from a in DB.Pp_SapEcnSubs
+                                   where a.IsDeleted == 0
                                    where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                                                                       where d.D_SAP_ZCA1D_Z034 == ""
                                                                       select d.D_SAP_ZCA1D_Z002)
@@ -3722,6 +3792,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                 #region 6.更新旧品库存
 
                 var ItemStock = from a in DB.Pp_Ec_Subs
+                                where a.IsDeleted == 0
                                 where a.Ec_no.Contains(Ec_no.Text)
                                 where a.Ec_olditem != "0"
                                 select a;
@@ -3955,6 +4026,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         private void SaveBalance()//新增平衡表
         {
             var q = from a in DB.Pp_Ec_Subs
+                    where a.IsDeleted == 0
                     where a.Ec_olditem != "0"
                     //where a.D_SAP_ZPABD_S002.CompareTo("20190701") > 0
                     //join b in DB.ProSapModelDests on a.D_SAP_ZPABD_S002 equals b.D_SAP_DEST_Z001
@@ -4019,7 +4091,8 @@ namespace LeanFine.Lf_Manufacturing.EC
             //if (this.IsSopUpdate.SelectedValue == "1")
             //{
             var q_SopItem = from a in DB.Pp_Ec_Subs
-                                //join d in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals d.D_SAP_ZCA1D_Z002
+                            where a.IsDeleted == 0
+                            //join d in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals d.D_SAP_ZCA1D_Z002
                             where a.Ec_no.Contains(Ec_no.Text)
                             //where a.Ec_model.Contains()
                             //where b.Ec_no == strecn
@@ -4087,6 +4160,7 @@ namespace LeanFine.Lf_Manufacturing.EC
             #region 停产机种不导入
 
             var q_NotEollist = from a in DB.Pp_SapEcnSubs
+                               where a.IsDeleted == 0
                                where a.D_SAP_ZPABD_S002 != "" && (from d in DB.Pp_SapMaterials
                                                                   where d.D_SAP_ZCA1D_Z034 == ""
                                                                   select d.D_SAP_ZCA1D_Z002)
@@ -4409,44 +4483,48 @@ namespace LeanFine.Lf_Manufacturing.EC
 
         private void Mailto()
         {
-            //var q_user = from a in DB.Adm_Users
-            //             join b in DB.Adm_Depts on a.Dept.ID equals b.ID
-            //             where b.Name.CompareTo("采购课") == 0
-            //             where a.Email != "123@teac.com.cn"
-            //             select new
-            //             {
-            //                 a.Email,
-            //             };
-            //if (q_user.Any())
-            //{
-            //    var qs = q_user.ToList();
-            //    for (int i = 0; i < q_user.Count(); i++)
-            //    {
-            //        strMailto += qs[i].Email.ToString() + ",";
-            //    }
-            //}
-            //strMailto = strMailto.Remove(strMailto.LastIndexOf(","));
-            //if (Ec_distinction.SelectedItem.Text == "全部")
-            //{
-            //    strMana = "全部";
-            //}
-            //if (Ec_distinction.SelectedItem.Text == "部管课")
-            //{
-            //    strMana = "部管课";
-            //}
-            //if (Ec_distinction.SelectedItem.Text == "内部管理")
-            //{
-            //    strMana = "内部";
-            //}
-            //if (Ec_distinction.SelectedItem.Text != "技术课")
-            //{
-            //    strMana = "技术课";
-            //}
+            var q_user = from a in DB.Adm_Users
+                         join b in DB.Adm_Depts on a.Dept.ID equals b.ID
+                         where b.Name.CompareTo("采购课") == 0 || b.Name.CompareTo("生管课") == 0
+                         where a.Email != "123@teac.com.cn"
+                         select new
+                         {
+                             a.Email,
+                         };
+            if (q_user.Any())
+            {
+                var qs = q_user.ToList();
+                for (int i = 0; i < q_user.Count(); i++)
+                {
+                    strMailto += qs[i].Email.ToString() + ",";
+                }
+            }
+            if (!String.IsNullOrEmpty(strMailto))
+            {
+                strMailto = strMailto.Remove(strMailto.LastIndexOf(","));
+            }
 
-            //string mailTitle = "设变发行：" + Ec_no.Text + "担当：" + Ec_leader.SelectedItem.Text + "管理区分：" + strMana;
-            //string mailBody = "Dear All,\r\n" + "\r\n" + "此设变技术部门已处理。\r\n" + "请贵部门担当者及时处理为盼。\r\n" + "\r\n" + "よろしくお願いいたします。\r\n" + "\r\n" + "\r\n" + "「" + GetIdentityName() + "\r\n" + DateTime.Now.ToString() + "」\r\n" + "このメッセージはWebSiteから自動で送信されている。\r\n\n";  //发送邮件的正文
-            //MailHelper.SendEmail(strMailto, mailTitle, mailBody);
-            //strMailto = "";
+            if (Ec_distinction.SelectedItem.Text == "全部")
+            {
+                strMana = "全部";
+            }
+            if (Ec_distinction.SelectedItem.Text == "部管课")
+            {
+                strMana = "部管课";
+            }
+            if (Ec_distinction.SelectedItem.Text == "内部管理")
+            {
+                strMana = "内部";
+            }
+            if (Ec_distinction.SelectedItem.Text != "技术课")
+            {
+                strMana = "技术课";
+            }
+
+            string mailTitle = "设变发行：" + Ec_no.Text + "担当：" + Ec_leader.SelectedItem.Text + "管理区分：" + strMana;
+            string mailBody = "Dear All,\r\n" + "\r\n" + "此设变技术部门已处理。\r\n" + "请贵部门担当者及时处理为盼。\r\n" + "\r\n" + "よろしくお願いいたします。\r\n" + "\r\n" + "\r\n" + "「" + GetIdentityName() + "\r\n" + DateTime.Now.ToString() + "」\r\n" + "このメッセージはWebSiteから自動で送信されている。\r\n\n";  //发送邮件的正文
+            MailHelper.SendEmail(strMailto, mailTitle, mailBody);
+            strMailto = "";
         }
 
         #region NetOperateNotes
@@ -4454,7 +4532,7 @@ namespace LeanFine.Lf_Manufacturing.EC
         private void InsNetOperateNotes()
         {
             //发送邮件通知
-            //Mailto();
+            Mailto();
 
             //新增日志
             string Newtext = Ec_issuedate.Text + "," + Ec_no.Text + "," + Ec_leader.SelectedItem.Text + "," + txtPbookdoc + "," + txtPpbookdoc + "," + "," + txtPjpbookdoc + ",管理区分" + Ec_distinction.SelectedItem.Text + "," + txtPdoc + ",物料管理：1,SOP确认：1";

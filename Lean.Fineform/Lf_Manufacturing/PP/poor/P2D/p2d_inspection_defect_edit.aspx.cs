@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
 using FineUIPro;
+using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
 
@@ -36,7 +37,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 
         public static string userid;
         public static int NewRowID, rowID, delrowID, editrowID, totalSum, Oldnobadqty;
-        public static string strProinspdate, strPromodel, strPropcbtype, strProvisualtype, strProvctype, strProsideadate, strProsidebdate, strProdshiftname, strProcensor, strProorder, strProlot, strProorderqty, strProrealqty, strProispqty, strPropcbchecktype, strProlinename, strProinsqtime, strProaoitime, strProbadqty, strProhandle, strProbadserial, strProbadcontent, strProbadtype;
+        public static string strProinspdate, strPromodel, strPropcbtype, strProvisualtype, strProvctype, strProBsidedate, strProTsidedate, strProdshiftname, strProcensor, strProorder, strProlot, strProorderqty, strProrealqty, strProispqty, strPropcbchecktype, strProlinename, strProinsqtime, strProaoitime, strProbadqty, strProhandle, strProbadserial, strProbadcontent, strProbadtype;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -68,6 +69,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             defaultObj.Add("Probadqty", 0);
             defaultObj.Add("Prolinename", "1");
             defaultObj.Add("Probadcontent", "-");
+            defaultObj.Add("Prosideadate", "1900-1-1");//DateTime.Now.AddDays(-1)
+            defaultObj.Add("Prosidebdate", "1900-1-1");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");
             //defaultObj.Add("EntranceYear", "2015");
@@ -588,8 +591,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             strPropcbtype = tb.Rows[tb.Rows.Count - 1]["Propcbtype"].ToString();   //板别
                             strProvisualtype = tb.Rows[tb.Rows.Count - 1]["Provisualtype"].ToString();    //目视
                             strProvctype = tb.Rows[tb.Rows.Count - 1]["Provctype"].ToString();    //VC
-                            strProsideadate = tb.Rows[tb.Rows.Count - 1]["Prosideadate"].ToString(); //A面
-                            strProsidebdate = tb.Rows[tb.Rows.Count - 1]["Prosidebdate"].ToString(); //B面
+                            strProBsidedate = tb.Rows[tb.Rows.Count - 1]["Prosideadate"].ToString(); //B面
+                            strProTsidedate = tb.Rows[tb.Rows.Count - 1]["Prosidebdate"].ToString(); //T面
                             strProdshiftname = tb.Rows[tb.Rows.Count - 1]["Prodshiftname"].ToString();    //班别
                             strProcensor = tb.Rows[tb.Rows.Count - 1]["Procensor"].ToString();    //检查员
 
@@ -612,8 +615,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         item.Propcbtype = strPropcbtype;
                         item.Provisualtype = strProvisualtype;
                         item.Provctype = strProvctype;
-                        item.Prosideadate = DateTime.Parse(strProsideadate);
-                        item.Prosidebdate = DateTime.Parse(strProsidebdate);
+                        item.Prosideadate = DateTime.Parse(strProBsidedate);
+                        item.Prosidebdate = DateTime.Parse(strProTsidedate);
                         item.Prodshiftname = strProdshiftname;
                         item.Procensor = strProcensor;
                         item.Proorder = strProorder;
@@ -642,7 +645,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         DB.SaveChanges();
 
                         //新建日志
-                        string Contectext = item.GUID + "," + strProinspdate + "," + strPromodel + "," + strPropcbtype + "," + strProvisualtype + "," + strProvctype + "," + strProsideadate + "," + strProsidebdate + "," + strProdshiftname + "," + strProcensor + "," + strProorder + "," + strProlot + "," + strProorderqty + "," + strProrealqty + "," + strProispqty + "," + strPropcbchecktype + "," + strProlinename + "," + strProinsqtime + "," + strProaoitime + "," + strProbadqty + "," + strProhandle + "," + strProbadserial + "," + strProbadcontent + "," + strProbadtype;
+                        string Contectext = item.GUID + "," + strProinspdate + "," + strPromodel + "," + strPropcbtype + "," + strProvisualtype + "," + strProvctype + "," + strProBsidedate + "," + strProTsidedate + "," + strProdshiftname + "," + strProcensor + "," + strProorder + "," + strProlot + "," + strProorderqty + "," + strProrealqty + "," + strProispqty + "," + strPropcbchecktype + "," + strProlinename + "," + strProinsqtime + "," + strProaoitime + "," + strProbadqty + "," + strProhandle + "," + strProbadserial + "," + strProbadcontent + "," + strProbadtype;
                         string OperateType = "新增";
                         string OperateNotes = "New生产不良*" + Contectext + "*New生产不良 的记录已经将新增";
                         OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -734,8 +737,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                             strPropcbtype = tb.Rows[0]["Propcbtype"].ToString();   //板别
                             strProvisualtype = tb.Rows[0]["Provisualtype"].ToString();    //目视
                             strProvctype = tb.Rows[0]["Provctype"].ToString();    //VC
-                            strProsideadate = tb.Rows[0]["Prosideadate"].ToString(); //A面
-                            strProsidebdate = tb.Rows[0]["Prosidebdate"].ToString(); //B面
+                            strProBsidedate = tb.Rows[0]["Prosideadate"].ToString(); //B面
+                            strProTsidedate = tb.Rows[0]["Prosidebdate"].ToString(); //T面
                             strProdshiftname = tb.Rows[0]["Prodshiftname"].ToString();    //班别
                             strProcensor = tb.Rows[0]["Procensor"].ToString();    //检查员
 
@@ -758,8 +761,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         item.Propcbtype = strPropcbtype;
                         item.Provisualtype = strProvisualtype;
                         item.Provctype = strProvctype;
-                        item.Prosideadate = DateTime.Parse(strProsideadate);
-                        item.Prosidebdate = DateTime.Parse(strProsidebdate);
+                        item.Prosideadate = DateTime.Parse(strProBsidedate);
+                        item.Prosidebdate = DateTime.Parse(strProTsidedate);
                         item.Prodshiftname = strProdshiftname;
                         item.Procensor = strProcensor;
                         item.Proorder = strProorder;
@@ -788,7 +791,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                         DB.SaveChanges();
 
                         //新建日志
-                        string Contectext = item.GUID + "," + strProinspdate + "," + strPromodel + "," + strPropcbtype + "," + strProvisualtype + "," + strProvctype + "," + strProsideadate + "," + strProsidebdate + "," + strProdshiftname + "," + strProcensor + "," + strProorder + "," + strProlot + "," + strProorderqty + "," + strProrealqty + "," + strProispqty + "," + strPropcbchecktype + "," + strProlinename + "," + strProinsqtime + "," + strProaoitime + "," + strProbadqty + "," + strProhandle + "," + strProbadserial + "," + strProbadcontent + "," + strProbadtype;
+                        string Contectext = item.GUID + "," + strProinspdate + "," + strPromodel + "," + strPropcbtype + "," + strProvisualtype + "," + strProvctype + "," + strProBsidedate + "," + strProTsidedate + "," + strProdshiftname + "," + strProcensor + "," + strProorder + "," + strProlot + "," + strProorderqty + "," + strProrealqty + "," + strProispqty + "," + strPropcbchecktype + "," + strProlinename + "," + strProinsqtime + "," + strProaoitime + "," + strProbadqty + "," + strProhandle + "," + strProbadserial + "," + strProbadcontent + "," + strProbadtype;
                         string OperateType = "新增";
                         string OperateNotes = "New生产不良* " + Contectext + " *New生产不良 的记录已经将新增";
                         OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -867,21 +870,20 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             rowData["Promodel"] = lblPromodel.Text;
             rowData["Prolot"] = lblProlot.Text;
             rowData["Proorderqty"] = (int)decimal.Parse(lblProorderqty.Text);
-            //A面
-            if (dpProsideadate.SelectedDate == null)
-            { rowData["Prosideadate"] = "1900-1-1"; }
-            else
+
+            //B面
+            if (!string.IsNullOrEmpty(dpProsideadate.SelectedDate.ToString()))
             {
+                //DateTime beijingTime = TimeZoneInfo.ConvertTime(dpProsideadate.SelectedDate, beijingTimeZone);
                 rowData["Prosideadate"] = dpProsideadate.SelectedDate;
             }
 
-            //B面
-            if (dpProsidebdate.SelectedDate == null)
-            { rowData["Prosidebdate"] = "1900-1-1"; }
-            else
+            //T面
+            if (!string.IsNullOrEmpty(dpProsidebdate.SelectedDate.ToString()))
             {
                 rowData["Prosidebdate"] = dpProsidebdate.SelectedDate;
             }
+
             //线别
             rowData["Prolinename"] = "1";
             //检查台数
@@ -1043,7 +1045,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                 }
                 else
                 {
-                    item.Prosidebdate = DateTime.Parse(rowData["Probadtotal"].ToString());
+                    item.Prosidebdate = DateTime.Parse(rowData["Prosidebdate"].ToString());
                     //StopText = rowData["Probadtotal"].ToString();
                 }
             }
@@ -1432,7 +1434,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             strPlot = lblProlot.Text;
 
             //更新无不良台数
-            UpdatingHelper.noDefectQty_Update(strPorder, GetIdentityName(), "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_Orders_NoBadqty_Update(strPorder, GetIdentityName(), "PCBA");
 
             //UpdatingHelper.okOrder_Update(strPorder);
 
@@ -1440,7 +1442,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
             //UpdatingHelper.UpdatebadTotal(this.DefDate.Text, prolinename.Text, strPorder);
             //Common.UpdateDefectQty();
             //更新不具合合计
-            UpdatingHelper.UpdatebadAmount(this.lblProinspdate.Text, lblProlinename.Text, strPorder, GetIdentityName(), "PCBA");
+            UpdatingP2dHelper.Pp_Defect_P2d_BadTotal_Update(this.lblProinspdate.Text, lblProlinename.Text, strPorder, GetIdentityName(), "PCBA");
             //更新无不良台数
             //Common.UpdatenobadAmount(this.DefDate.Text, prolinename.Text, strPorder, nobadqty);
 

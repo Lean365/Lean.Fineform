@@ -42,6 +42,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected global::FineUIPro.TabStrip TabStrip1;
 
         /// <summary>
+        /// Tab1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Tab Tab1;
+
+        /// <summary>
         /// Tab2 控件。
         /// </summary>
         /// <remarks>
@@ -51,13 +60,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected global::FineUIPro.Tab Tab2;
 
         /// <summary>
-        /// Tab1 控件。
+        /// Tab3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Tab Tab1;
+        protected global::FineUIPro.Tab Tab3;
 
         /// <summary>
         /// Tab4 控件。
@@ -69,12 +78,39 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         protected global::FineUIPro.Tab Tab4;
 
         /// <summary>
-        /// Tab3 控件。
+        /// Tab5 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Tab Tab3;
+        protected global::FineUIPro.Tab Tab5;
+
+        /// <summary>
+        /// Tab6 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Tab Tab6;
+
+        /// <summary>
+        /// Tab7 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Tab Tab7;
+
+        /// <summary>
+        /// Tab8 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::FineUIPro.Tab Tab8;
     }
 }

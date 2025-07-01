@@ -312,7 +312,7 @@ namespace LeanFine.Lf_Manufacturing.EC.dept
             Export_FileName = Prefix_XlsxName + ".xlsx";
 
             Grid1.AllowPaging = false;
-            ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);
+            ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName, "DTA 设变明细");
             Grid1.AllowPaging = true;
         }
 

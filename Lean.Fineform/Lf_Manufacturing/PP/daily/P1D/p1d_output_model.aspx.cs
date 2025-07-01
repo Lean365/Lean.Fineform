@@ -185,7 +185,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                                    where p.IsDeleted == 0
                                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                                   where p.Proorder.Substring(0, 1).Contains("4")
+                                   where p.Proordertype.Contains("ZDTA") || p.Proordertype.Contains("ZDTC") || p.Proordertype.Contains("ZDTG")
                                    select new
                                    {
                                        p.Prodate,
@@ -294,7 +294,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                                    where p.IsDeleted == 0
                                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                                   where p.Proorder.Substring(0, 1).Contains("5")
+                                   where p.Proordertype.Contains("ZDTB")
                                    select new
                                    {
                                        p.Prodate,
@@ -530,7 +530,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                    //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                                where p.IsDeleted == 0
                                where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                               where p.Proorder.Substring(0, 1).Contains("4")
+                               where p.Proordertype.Contains("ZDTA") || p.Proordertype.Contains("ZDTC") || p.Proordertype.Contains("ZDTG")
                                select new
                                {
                                    Prodate = p.Prodate,
@@ -670,7 +670,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                    //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                                where p.IsDeleted == 0
                                where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                               where p.Proorder.Substring(0, 1).Contains("5")
+                               where p.Proordertype.Contains("ZDTB")
                                select new
                                {
                                    Prodate = p.Prodate,
@@ -814,11 +814,13 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             Decimal pTotal = 0.0m;
             Decimal rTotal = 0.0m;
+            Decimal wTotal = 0.0m;
             Decimal ratio = 0.0m;
 
             foreach (DataRow row in source.Rows)
             {
                 pTotal += Convert.ToDecimal(row["Proplanqty"]);
+                wTotal += Convert.ToDecimal(row["Proworkqty"]);
                 rTotal += Convert.ToDecimal(row["Proworkqty"]);
                 ratio = rTotal / pTotal;
             }
@@ -827,6 +829,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //summary.Add("major", "全部合计");
 
             summary.Add("Proplanqty", pTotal.ToString("F2"));
+            summary.Add("Proworktime", wTotal.ToString("F2"));
             summary.Add("Proworkqty", rTotal.ToString("F2"));
             summary.Add("Proactivratio", ratio.ToString("p0"));
 

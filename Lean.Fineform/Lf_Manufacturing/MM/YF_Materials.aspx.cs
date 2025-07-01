@@ -349,7 +349,7 @@ namespace LeanFine.Lf_Manufacturing.MM
 
                     ConvertHelper.LinqConvertToDataTable(q.AsQueryable());
                     Grid1.AllowPaging = false;
-                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(q.AsQueryable()), Prefix_XlsxName, Export_FileName);
+                    ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(q.AsQueryable()), Prefix_XlsxName, Export_FileName, "DTA 易飞物料明细");
                     Grid1.AllowPaging = true;
                 }
                 else

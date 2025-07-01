@@ -468,7 +468,7 @@ namespace LeanFine.Lf_Manufacturing.PP.tracking
                 ConvertHelper.LinqConvertToDataTable(qs);
 
                 Grid1.AllowPaging = false;
-                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName);
+                ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 批次追溯明细");
                 Grid1.AllowPaging = true;
             }
             else

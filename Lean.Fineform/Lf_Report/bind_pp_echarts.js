@@ -276,8 +276,8 @@ function BindChartData_Pp_Actual(name, value1, value2, value3, data) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2025目标',
-                        yAxis: 110,
+                        name: 'FY2026目标',
+                        yAxis: 108,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -990,10 +990,10 @@ function BindChartData_Pp_Rty(name, value3, value4) {
                 showAllSymbol: true,
                 // symbol: 'image://./static/images/guang-circle.png',
                 symbol: 'circle',
-                symbolSize: 25,
+                symbolSize: 5,
                 lineStyle: {
                     normal: {
-                        color: "#6c50f3",
+                        color: "#00a497",
                         shadowColor: 'rgba(0, 0, 0, .3)',
                         shadowBlur: 0,
                         shadowOffsetY: 5,
@@ -1005,14 +1005,14 @@ function BindChartData_Pp_Rty(name, value3, value4) {
                         show: true,
                         position: 'top',
                         textStyle: {
-                            color: '#6c50f3',
+                            color: '#00a497',
                         },
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
                     }
                 },
                 itemStyle: {
-                    color: "#6c50f3",
+                    color: "#00a497",
                     borderColor: "#fff",
                     borderWidth: 3,
                     shadowColor: 'rgba(0, 0, 0, .3)',
@@ -1049,10 +1049,10 @@ function BindChartData_Pp_Rty(name, value3, value4) {
                 showAllSymbol: true,
                 // symbol: 'image://./static/images/guang-circle.png',
                 symbol: 'circle',
-                symbolSize: 25,
+                symbolSize: 10,
                 lineStyle: {
                     normal: {
-                        color: "#00ca95",
+                        color: "#efab93",
                         shadowColor: 'rgba(0, 0, 0, .3)',
                         shadowBlur: 0,
                         shadowOffsetY: 5,
@@ -1062,9 +1062,9 @@ function BindChartData_Pp_Rty(name, value3, value4) {
                 label: {
                     normal: {
                         show: true,
-                        position: 'top',
+                        position: 'button',
                         textStyle: {
-                            color: '#00ca95',
+                            color: '#efab93',
                         },
                         //百分比格式
                         formatter: '{c}%'　　　　//这是关键，在需要的地方加上就行了
@@ -1072,7 +1072,7 @@ function BindChartData_Pp_Rty(name, value3, value4) {
                 },
 
                 itemStyle: {
-                    color: "#00ca95",
+                    color: "#efab93",
                     borderColor: "#fff",
                     borderWidth: 3,
                     shadowColor: 'rgba(0, 0, 0, .3)',
@@ -1303,8 +1303,8 @@ function BindChartData_Pp_Achieving_Rate(name, value3, value4) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2025目标',
-                        yAxis: 110,
+                        name: 'FY2026目标',
+                        yAxis: 108,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -2486,8 +2486,8 @@ function BindChartData_Pp_ModelAchieve(name, value3, value4) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2025目标',
-                        yAxis: 110,
+                        name: 'FY2026目标',
+                        yAxis: 108,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'
@@ -2765,8 +2765,8 @@ function BindChartData_Pp_YearAchieve(name, value1, value2, value3, data) {
                         width: 2
                     },
                     data: [{
-                        name: 'FY2025目标',
-                        yAxis: 110,
+                        name: 'FY2026目标',
+                        yAxis: 108,
                         itemStyle: {
                             normal: {
                                 color: '#ff6d9d'

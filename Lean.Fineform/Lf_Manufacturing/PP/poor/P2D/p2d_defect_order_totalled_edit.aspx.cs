@@ -58,7 +58,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             Guid id = Guid.Parse(GetQueryValue("GUID"));
 
-            var current = (from a in DB.Pp_Defect_Totals
+            var current = (from a in DB.Pp_Defect_P2d_Orders
                            where a.GUID == (id)
                            select a).ToList();
 
@@ -228,7 +228,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void SaveItem()//新增生产日报单头
         {
             Guid id = Guid.Parse(GetQueryValue("GUID"));
-            Pp_Defect_Total item = DB.Pp_Defect_Totals
+            Pp_Defect_P2d_Order item = DB.Pp_Defect_P2d_Orders
 
                 .Where(u => u.GUID == (id)).FirstOrDefault();
             //liclass();

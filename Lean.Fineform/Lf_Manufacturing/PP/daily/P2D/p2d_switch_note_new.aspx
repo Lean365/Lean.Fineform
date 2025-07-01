@@ -32,7 +32,7 @@
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
                                 <f:DatePicker FocusOnPageLoad="true" runat="server" Required="true" Label="生产日期" LabelWidth="200px" DateFormatString="yyyyMMdd" EmptyText="请选择生产日期"
-                                    ID="Prodate" ShowRedStar="True">
+                                    ID="Prodate" ShowRedStar="True" LabelAlign="Right">
                                 </f:DatePicker>
 
                             </Items>
@@ -47,20 +47,20 @@
                         </f:FormRow>
                         <f:FormRow ID="FormRow4" runat="server">
                             <Items>
-                                <f:NumberBox runat="server" Label="自插切换次数" LabelWidth="200px" ID="ProAitSwitchNum" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
+                                <f:NumberBox runat="server" Label="自插切换次数" LabelWidth="200px" ID="ProAitSwitchNum" Readonly="true" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
                                 </f:NumberBox>
-                                <f:NumberBox runat="server" Label="自插总切换时间" LabelWidth="200px" ID="ProAiStopTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
+                                <f:NumberBox runat="server" Label="自插停机时间" LabelWidth="200px" ID="ProAiStopTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
                                 </f:NumberBox>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow6" runat="server">
                             <Items>
-                                <f:NumberBox runat="server" Label="手插读SOP时间" LabelWidth="200px" ID="ProHandSopTime" NoDecimal="false" NoNegative="true" MinValue="6" MaxValue="6" DecimalPrecision="0" LabelAlign="Right" Readonly="true">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="手插读SOP时间" LabelWidth="200px" ID="ProHandSopTime" LabelAlign="Right">
+                                </f:Label>
                                 <f:NumberBox runat="server" Label="手插人数" LabelWidth="200px" ID="ProHandPerson" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right" OnTextChanged="ProHandPerson_TextChanged" AutoPostBack="true">
                                 </f:NumberBox>
-                                <f:NumberBox runat="server" Label="手插读SOP总时间" LabelWidth="200px" ID="ProHandSopTotalTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="手插读SOP总时间" LabelWidth="200px" ID="ProHandSopTotalTime" LabelAlign="Right">
+                                </f:Label>
 
                             </Items>
                         </f:FormRow>
@@ -71,19 +71,19 @@
                                 </f:NumberBox>
                                 <f:NumberBox runat="server" Label="手插切换时间" LabelWidth="200px" ID="ProHandSwitchTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right" OnTextChanged="ProHandPerson_TextChanged" AutoPostBack="true">
                                 </f:NumberBox>
-                                <f:NumberBox runat="server" Label="手插切换总时间" LabelWidth="200px" ID="ProHandSwitchTotalTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" LabelAlign="Right" Readonly="true">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="手插切换总时间" LabelWidth="200px" ID="ProHandSwitchTotalTime" LabelAlign="Right">
+                                </f:Label>
 
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:NumberBox runat="server" Label="修正读SOP时间" LabelWidth="200px" ID="ProRepairSopTime" NoDecimal="false" NoNegative="true" MinValue="6" MaxValue="6" DecimalPrecision="0" LabelAlign="Right" Readonly="true">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="修正读SOP时间" LabelWidth="200px" ID="ProRepairSopTime" LabelAlign="Right">
+                                </f:Label>
                                 <f:NumberBox runat="server" Label="修正人数" LabelWidth="200px" ID="ProRepairPerson" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right" OnTextChanged="ProRepairPerson_TextChanged" AutoPostBack="true">
                                 </f:NumberBox>
-                                <f:NumberBox runat="server" Label="修正读SOP总时间" LabelWidth="200px" ID="ProRepairSopTotalTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="修正读SOP总时间" LabelWidth="200px" ID="ProRepairSopTotalTime" LabelAlign="Right">
+                                </f:Label>
                             </Items>
                         </f:FormRow>
 
@@ -93,8 +93,8 @@
                                 </f:NumberBox>
                                 <f:NumberBox runat="server" Label="修正切换时间" LabelWidth="200px" ID="ProRepairSwitchTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" ShowRedStar="True" LabelAlign="Right" OnTextChanged="ProRepairPerson_TextChanged" AutoPostBack="true">
                                 </f:NumberBox>
-                                <f:NumberBox runat="server" Label="修正切换总时间" LabelWidth="200px" ID="ProRepairSwitchTotalTime" NoDecimal="false" NoNegative="true" MinValue="0" MaxValue="9999" DecimalPrecision="0" Required="True" LabelAlign="Right" Readonly="true">
-                                </f:NumberBox>
+                                <f:Label runat="server" Label="修正切换总时间" LabelWidth="200px" ID="ProRepairSwitchTotalTime" LabelAlign="Right" >
+                                </f:Label>
                             </Items>
                         </f:FormRow>
 

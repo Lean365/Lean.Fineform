@@ -13,7 +13,7 @@ namespace LeanFine
         public LeanFineContext()
            : base("SQLServer")
         {
-            this.Database.CommandTimeout = 3600000;
+            //this.Database.CommandTimeout = 3600000;
             //this.Database.CommandTimeout = 3600000; //时间单位是毫秒
         }
 
@@ -75,9 +75,11 @@ namespace LeanFine
         public DbSet<Pp_Tracking_Output> Pp_Tracking_Outputs { get; set; }
         public DbSet<Pp_Tracking_Time> Pp_Tracking_Times { get; set; }
         public DbSet<Pp_P1d_Defect> Pp_P1d_Defects { get; set; }
+        public DbSet<Pp_P1d_Epp_Defect> Pp_P1d_Epp_Defects { get; set; }
         public DbSet<Pp_P1d_Output> Pp_P1d_Outputs { get; set; }
         public DbSet<Pp_P1d_OutputSub> Pp_P1d_OutputSubs { get; set; }
-
+        public DbSet<Pp_P1d_Epp_Output> Pp_P1d_Epp_Outputs { get; set; }
+        public DbSet<Pp_P1d_Epp_OutputSub> Pp_P1d_Epp_OutputSubs { get; set; }
         public DbSet<Pp_P1d_Modify_Defect> Pp_P1d_Modify_Defects { get; set; }
         public DbSet<Pp_P1d_Modify_Output> Pp_P1d_Modify_Outputs { get; set; }
         public DbSet<Pp_P1d_Modify_OutputSub> Pp_P1d_Modify_OutputSubs { get; set; }
@@ -90,6 +92,10 @@ namespace LeanFine
         public DbSet<Pp_P2d_Smt_Output> Pp_P2d_Smt_Outputs { get; set; }
         public DbSet<Pp_P2d_Smt_Short> Pp_P2d_Smt_Shorts { get; set; }
         public DbSet<Pp_Defect_Total> Pp_Defect_Totals { get; set; }
+        public DbSet<Pp_Defect_P2d_Order> Pp_Defect_P2d_Orders { get; set; }
+        public DbSet<Pp_Defect_P2d_Lot> Pp_Defect_P2d_Lots { get; set; }
+        public DbSet<Pp_Defect_P1d_Order> Pp_Defect_P1d_Orders { get; set; }
+        public DbSet<Pp_Defect_P1d_Lot> Pp_Defect_P1d_Lots { get; set; }
         public DbSet<Pp_Transport> Pp_Transports { get; set; }
         public DbSet<Pp_Efficiency> Pp_Efficiencys { get; set; }
         public DbSet<Pp_Defect_Code> Pp_Defect_Codes { get; set; }

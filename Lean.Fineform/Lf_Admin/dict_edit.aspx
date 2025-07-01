@@ -9,9 +9,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <f:PageManager ID="PageManager1" AutoSizePanelID="TabStrip1" runat="server" />
-
-        <f:TabStrip ID="TabStrip1" runat="server" ActiveTabIndex="0" ShowBorder="True">
+        <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
+        <f:Panel ID="Panel1" ShowBorder="false" ShowHeader="false" AutoScroll="true" runat="server">
             <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>
@@ -26,29 +25,49 @@
                     </Items>
                 </f:Toolbar>
             </Toolbars>
-            <Tabs>
-                <f:Tab ID="Tab2" runat="server" BodyPadding="5px" Title="Tab1">
-                    <Items>
-                        <f:Panel ID="Panel3" ShowHeader="false" ShowBorder="false" runat="server">
+            <Items>
+                <f:Form ID="SimpleForm1" ShowBorder="false" ShowHeader="false" runat="server" BodyPadding="10px"
+                    Title="SimpleForm">
+                    <Rows>
+
+                        <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:Label ID="txtDictType" runat="server" Label="类型" LabelAlign="Right">
+                                <f:Label ID="txtDictType" runat="server" Label="字典类型">
                                 </f:Label>
-                                <f:TextBox ID="txtDictLabel" runat="server" Label="标签" ShowRedStar="True" Required="True" LabelAlign="Right">
+                                <f:TextBox ID="txtDictName" runat="server" Label="字典名称" ShowRedStar="True" Required="True" LabelAlign="Right">
                                 </f:TextBox>
-                                <f:TextBox ID="txtDictName" runat="server" Label="名称" ShowRedStar="True" Required="True" LabelAlign="Right">
+                            </Items>
+                        </f:FormRow>
+                        <f:FormRow ID="FormRow1" runat="server">
+                            <Items>
+                                <f:TextBox ID="txtDictLabel" runat="server" Label="字典标签" ShowRedStar="True" Required="True" LabelAlign="Right">
                                 </f:TextBox>
+
                                 <f:TextBox ID="txtDictValue" runat="server" Label="数值" ShowRedStar="True" Required="True" LabelAlign="Right">
                                 </f:TextBox>
-                                <f:NumberBox ID="numDictSort" runat="server" Label="排序" ShowRedStar="True" Required="True" LabelAlign="Right">
+
+
+                            </Items>
+                        </f:FormRow>
+                        <f:FormRow ID="FormRow6" runat="server">
+                            <Items>
+                                <f:NumberBox ID="numDictSort" runat="server" Label="排序" ShowRedStar="True"  Required="True" LabelAlign="Right">
                                 </f:NumberBox>
+                            </Items>
+                        </f:FormRow>
+
+
+
+                        <f:FormRow ID="FormRow5" runat="server">
+                            <Items>
                                 <f:TextArea ID="txtRemark" runat="server" Label="备注" ShowRedStar="True" Required="True" LabelAlign="Right">
                                 </f:TextArea>
                             </Items>
-                        </f:Panel>
-                    </Items>
-                </f:Tab>
-            </Tabs>
-        </f:TabStrip>
+                        </f:FormRow>
+                    </Rows>
+                </f:Form>
+            </Items>
+        </f:Panel>
         <f:Window ID="Window1" Title="编辑" Hidden="true" EnableIFrame="true" runat="server"
             EnableMaximize="true" EnableResize="true" Target="Top" IsModal="True" Width="700px"
             Height="650px">
