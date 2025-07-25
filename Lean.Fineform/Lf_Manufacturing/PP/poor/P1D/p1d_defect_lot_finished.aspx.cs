@@ -77,8 +77,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //查询在特定日期的全部工单
                 var q = from a in DB.Pp_Defect_P1d_Orders
                         join b in DB.Pp_P1d_Outputs on
-                new { a.Prolot, a.Proorder } equals
-                new { b.Prolot, b.Proorder }
+                new { a.Prolot, } equals
+                new { b.Prolot, }
                 //join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
                         where a.IsDeleted == 0
                         where a.Prodept == ("ASSY")
@@ -143,7 +143,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             select new
                             {
                                 g.Key.Prolot,
-                                //g.Key.Proorder,
+                                Proorder = "",
                                 Prolinename = "",
                                 Prodate = "",
                                 Prolotqty = g.Sum(p => p.Proorderqty),
@@ -161,6 +161,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 {
                     string UpdatePline = "";
                     string UpdatePdate = "";
+                    string UpdateOrders = "";
                     string clot = dtCount.Rows[f][0].ToString();
                     var countlist = (from a in DB.Pp_Defect_P1d_Orders
                                      where a.Prolot == clot
@@ -173,6 +174,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         {
                             UpdatePline += countlist[i].Prolinename.ToString() + ",";
                             UpdatePdate += countlist[i].Prodate.ToString() + ",";
+                            UpdateOrders += countlist[i].Proorder.ToString() + ",";
                         }
                         UpdatePline = String.Join(",", UpdatePline.Split(',').Distinct());
                         UpdatePline = UpdatePline.Remove(UpdatePline.LastIndexOf(","), 1);
@@ -180,6 +182,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         UpdatePdate = String.Join(",", UpdatePdate.Split(',').Distinct());
                         UpdatePdate = UpdatePdate.Remove(UpdatePdate.LastIndexOf(","), 1).Replace("~", ",").Replace("-", ",");
                         UpdatePdate = UpdatePdate.Split(',').Min(item => Convert.ToInt32(item)) + "~" + UpdatePdate.Split(',').Max(item => Convert.ToInt32(item));
+
+                        UpdateOrders = UpdateOrders.Remove(UpdateOrders.LastIndexOf(","), 1);
+
                         //更新DataTable
                         DataRow[] foundRows = dtCount.Select("Prolot = '" + clot + "'");
 
@@ -189,6 +194,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             DataRow row = foundRows[i];
                             row["Prolinename"] = UpdatePline;//统一对含_time的属性设置值.
                             row["Prodate"] = UpdatePdate;
+                            row["Proorder"] = UpdateOrders;
                         }
                     }
                 }
@@ -447,7 +453,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             var q = from a in DB.Pp_Defect_P1d_Orders
-                    join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
+                    join b in DB.Pp_P1d_Outputs on
+                new { a.Prolot, } equals
+                new { b.Prolot, }
                     where a.IsDeleted == 0
                     where b.IsDeleted == 0
                     where a.Prodept == ("ASSY")
@@ -496,13 +504,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                          group a by new
                          {
                              a.Prolot,
-                             a.Proorder
+                             //a.Proorder
                          }
                       into g
                          select new
                          {
                              g.Key.Prolot,
-                             g.Key.Proorder,
+                             Proorder = "",
                              Prolinename = "",
                              Prodate = "",
                              Promodel = "",
@@ -541,6 +549,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string UpdatePline = "";
                 string UpdatePdate = "";
                 string UpdatePmodel = "";
+                string UpdaterPorder = "";
                 //string Corder = dtCount.Rows[f][10].ToString();
                 string clot = dtCount.Rows[f][0].ToString();
                 var countlist = (from a in DB.Pp_Defect_P1d_Orders
@@ -555,6 +564,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         UpdatePline += countlist[i].Prolinename.ToString() + ",";
                         UpdatePdate += countlist[i].Prodate.ToString() + ",";
                         UpdatePmodel += countlist[i].Promodel.ToString() + ",";
+                        UpdaterPorder += countlist[i].Proorder.ToString() + ",";
                     }
                     UpdatePline = String.Join(",", UpdatePline.Split(',').Distinct());
                     UpdatePline = UpdatePline.Remove(UpdatePline.LastIndexOf(","), 1);
@@ -565,6 +575,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                     UpdatePmodel = String.Join(",", UpdatePmodel.Split(',').Distinct());
                     UpdatePmodel = UpdatePmodel.Remove(UpdatePmodel.LastIndexOf(","), 1);
+
+                    UpdaterPorder = UpdaterPorder.Remove(UpdaterPorder.LastIndexOf(","), 1);
                     //更新DataTable
                     DataRow[] foundRows = dtCount.Select("Prolot = '" + clot + "'");
 
@@ -575,6 +587,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         row["Prolinename"] = UpdatePline;//统一对含_time的属性设置值.
                         row["Prodate"] = UpdatePdate;
                         row["Promodel"] = UpdatePmodel;
+                        row["Proorder"] = UpdaterPorder;
                     }
                 }
             }
@@ -606,7 +619,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             .Where(s => s.Prodate.CompareTo(strDpEndDate) <= 0)
                             //.Where(s => s.Proorder.Contains(sorder))
                             .Where(s => (s.Prolot).Contains(strPlot))
-                             .Where(s => (s.Proorder).Contains(strOrder))
+                            //.Where(s => (s.Proorder).Contains(strOrder))
                             //.Where(s => s.Prorealqty==s.Proorderqty)
                             .OrderBy(s => s.Prongdept)
                             select new
@@ -631,14 +644,14 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                };
                     DataTable ex = ConvertHelper.LinqConvertToDataTable(qsub);
                     //sheet名称不能包含以下字符"[","]","\","/","?",":","*"
-                    ex.TableName = strPlot + "_" + strOrder;// + "_" + i;
+                    ex.TableName = strPlot + "_" + strOrder.Replace(",", "_"); // + "_" + i;
 
                     tables.Add(ex);
                 }
 
                 //ExportHelper.TableListToExcels(tables, ma, Export_FileName, 6);
 
-                ExportHelper.ExportMultipleSheets(tables, ma, Export_FileName);
+                ExportHelper.LotExportMultipleSheets(tables, ma, Export_FileName);
             }
             else
             {

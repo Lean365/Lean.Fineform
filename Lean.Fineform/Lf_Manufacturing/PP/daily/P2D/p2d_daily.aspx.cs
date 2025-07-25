@@ -973,8 +973,8 @@ RepairSwitchTotalTime;
                     AiParm = "自插停机时间" + AiStopTime + "分钟。"; //"自插切换" + AitSwitchNum + "次,总切换时间" + AiStopTime + "分钟。";
                 }
 
-                HandParm = "手插读取工程表6分钟，合计：" + HandPerson + "人*" + HandSopTime + "分=" + HandSopTotalTime + "分钟," + HandPerson + "人切换机种" + HandSwitchNum + "次" + HandSwitchTime + "分钟，合计：" + HandPerson + "人*" + HandSwitchTime + "分=" + HandSwitchTotalTime + "分钟。";
-                RepairParm = "修正读取工程表6分钟，合计：" + RepairPerson + "人*" + RepairSopTime + "分=" + RepairSopTotalTime + "分钟," + RepairPerson + "人切换机种" + RepairSwitchNum + "次" + RepairSwitchTime + "分钟，合计：" + RepairPerson + "人*" + RepairSwitchTime + "分=" + RepairSwitchTotalTime + "分钟。";
+                HandParm = "手插读取工程表合计：" + HandPerson + "人*" + HandSopTime + "分=" + HandSopTotalTime + "分钟," + HandPerson + "人切换机种" + HandSwitchNum + "次" + HandSwitchTime + "分钟，合计：" + HandPerson + "人*" + HandSwitchTime + "分=" + HandSwitchTotalTime + "分钟。";
+                RepairParm = "修正读取工程表合计：" + RepairPerson + "人*" + RepairSopTime + "分=" + RepairSopTotalTime + "分钟," + RepairPerson + "人切换机种" + RepairSwitchNum + "次" + RepairSwitchTime + "分钟，合计：" + RepairPerson + "人*" + RepairSwitchTime + "分=" + RepairSwitchTotalTime + "分钟。";
             }
             //else
 

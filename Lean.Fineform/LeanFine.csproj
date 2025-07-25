@@ -399,6 +399,8 @@
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_edit.aspx" />
     <Content Include="Lf_Manufacturing\PP\poor\P2D\p2d_repair_defect_new.aspx" />
     <Content Include="Lf_Manufacturing\PP\timesheet\p2d_times.aspx" />
+    <Content Include="Lf_Manufacturing\TL\liaison_local.aspx" />
+    <Content Include="Lf_Manufacturing\TL\liaison_remote.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_edit.aspx" />
     <Content Include="Lf_Manufacturing\TL\liaison_new.aspx" />
@@ -4115,6 +4117,7 @@
     <Compile Include="Lf_Business\Helper\JsonHelper.cs" />
     <Compile Include="Lf_Business\Helper\MailHelper.cs" />
     <Compile Include="Lf_Business\Helper\MenuHelper.cs" />
+    <Compile Include="Lf_Business\Helper\NetFileHelper.cs" />
     <Compile Include="Lf_Business\Helper\NetHelper.cs" />
     <Compile Include="Lf_Business\Helper\OperateLogHelper.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -7465,6 +7468,20 @@
     </Compile>
     <Compile Include="Lf_Manufacturing\PP\timesheet\p2d_times.aspx.designer.cs">
       <DependentUpon>p2d_times.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\TL\liaison_local.aspx.cs">
+      <DependentUpon>liaison_local.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\TL\liaison_local.aspx.designer.cs">
+      <DependentUpon>liaison_local.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\TL\liaison_remote.aspx.cs">
+      <DependentUpon>liaison_remote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lf_Manufacturing\TL\liaison_remote.aspx.designer.cs">
+      <DependentUpon>liaison_remote.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lf_Manufacturing\TL\liaison.aspx.cs">
       <DependentUpon>liaison.aspx</DependentUpon>

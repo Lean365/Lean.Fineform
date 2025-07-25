@@ -77,8 +77,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //查询在特定日期的全部工单
                 var q = from a in DB.Pp_Defect_P1d_Orders
                         join b in DB.Pp_P1d_Outputs on
-                new { a.Prolot, a.Proorder } equals
-                new { b.Prolot, b.Proorder }
+                new { a.Proorder } equals
+                new { b.Proorder }
                 //join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
                         where a.IsDeleted == 0
                         where a.Prodept == ("ASSY")
@@ -146,6 +146,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                 g.Key.Proorder,
                                 Prolinename = "",
                                 Prodate = "",
+                                Promodel = "",
                                 Prolotqty = g.Sum(p => p.Proorderqty),
                                 Prorealqty = g.Sum(p => p.Prorealqty),
                                 Pronobadqty = g.Sum(p => p.Pronobadqty),
@@ -161,10 +162,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 {
                     string UpdatePline = "";
                     string UpdatePdate = "";
-                    string clot = dtCount.Rows[f][0].ToString();
+                    string UpdatePmodel = "";
+                    //string clot = dtCount.Rows[f][0].ToString();
                     string corder = dtCount.Rows[f][1].ToString();
                     var countlist = (from a in DB.Pp_Defect_P1d_Orders
-                                     where a.Prolot == clot
+                                         //where a.Prolot == clot
                                      where a.Proorder == corder
                                      where a.Prodept == "ASSY"
                                      //where a.Prodate.Contains("202002")
@@ -175,6 +177,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         {
                             UpdatePline += countlist[i].Prolinename.ToString() + ",";
                             UpdatePdate += countlist[i].Prodate.ToString() + ",";
+                            UpdatePmodel += countlist[i].Promodel.ToString() + ",";
                         }
                         UpdatePline = String.Join(",", UpdatePline.Split(',').Distinct());
                         UpdatePline = UpdatePline.Remove(UpdatePline.LastIndexOf(","), 1);
@@ -182,6 +185,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         UpdatePdate = String.Join(",", UpdatePdate.Split(',').Distinct());
                         UpdatePdate = UpdatePdate.Remove(UpdatePdate.LastIndexOf(","), 1).Replace("~", ",").Replace("-", ",");
                         UpdatePdate = UpdatePdate.Split(',').Min(item => Convert.ToInt32(item)) + "~" + UpdatePdate.Split(',').Max(item => Convert.ToInt32(item));
+
+                        UpdatePmodel = String.Join(",", UpdatePmodel.Split(',').Distinct());
+                        UpdatePmodel = UpdatePmodel.Remove(UpdatePmodel.LastIndexOf(","), 1);
                         //更新DataTable
                         DataRow[] foundRows = dtCount.Select("Proorder = '" + corder + "'");
 
@@ -191,6 +197,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             DataRow row = foundRows[i];
                             row["Prolinename"] = UpdatePline;//统一对含_time的属性设置值.
                             row["Prodate"] = UpdatePdate;
+                            row["Promodel"] = UpdatePmodel;
                         }
                     }
                 }
@@ -446,16 +453,20 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             Export_FileName = Prefix_XlsxName + ".xlsx";
             List<DataTable> tables = new List<DataTable>();
             DataTable ma = new DataTable();
-            //string pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
             string Pdate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
+            //查询在特定日期的全部工单
             var q = from a in DB.Pp_Defect_P1d_Orders
-                    join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
+                    join b in DB.Pp_P1d_Outputs on
+            new { a.Proorder } equals
+            new { b.Proorder }
+            //join b in DB.Pp_P1d_Outputs on a.Prolot equals b.Prolot
                     where a.IsDeleted == 0
-                    where b.IsDeleted == 0
                     where a.Prodept == ("ASSY")
+                    where b.IsDeleted == 0
                     //where a.Proorder.Substring(0, 2).Contains("44")
-                    //where b.Prodate.Substring(0, 6).CompareTo(Pdate) == 0
+                    //where b.Prodate.Contains(Pdate)
                     //where a.Proorderqty == a.Prorealqty
+                    //where !a.Prolinename.Contains("制")
                     select new
                     {
                         a.Prolot,
@@ -481,8 +492,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             }
             else
             {
-                q = q.Where(u => u.Prodate.ToString().Contains(Pdate));
+                q = q.Where(u => u.Prodate.Contains(Pdate));
             }
+            q = q.Distinct();
+            //else
+            //{
+            //    //当前日期
+            //    string dd = DateTime.Now.ToString("yyyyMMdd");
+            //    q = q.Where(u => u.Prodate.ToString().Contains(dd));
+            //}
 
             //string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             //string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMM");
@@ -491,68 +509,47 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //{
             //    q = q.Where(u => u.Prodate.Contains(edate));
             //}
-            q = q.Distinct();
-            var counts = from a in q
-                             //where a.IsDeleted == 0
-                             //where a.Proorderqty == a.Prorealqty
-                         group a by new
-                         {
-                             a.Prolot,
-                             a.Proorder
-                         }
+
+            //查询在特定日期的全部批次并统计
+            var count = from a in q
+
+                            //where a.Proorderqty == a.Prorealqty
+                        group a by new
+                        {
+                            a.Prolot,
+                            a.Proorder
+                        }
                       into g
-                         select new
-                         {
-                             //g.Key.Prolot,
+                        select new
+                        {
+                            g.Key.Prolot,
+                            g.Key.Proorder,
+                            Prolinename = "",
+                            Prodate = "",
+                            Promodel = "",
+                            Prolotqty = g.Sum(p => p.Proorderqty),
+                            Prorealqty = g.Sum(p => p.Prorealqty),
+                            Pronobadqty = g.Sum(p => p.Pronobadqty),
+                            Probadtotal = g.Sum(p => p.Probadtotal),
+                            Prodirectrate = (g.Sum(p => p.Prorealqty) != 0 ? (g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                            Probadrate = (g.Sum(p => p.Prorealqty) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                        };
 
-                             g.Key.Prolot,
-                             g.Key.Proorder,
-                             Prolinename = "",
-                             Prodate = "",
-                             Promodel = "",
-                             Prolotqty = g.Sum(p => p.Proorderqty),
-                             Prorealqty = g.Sum(p => p.Prorealqty),
-                             Pronobadqty = g.Sum(p => p.Pronobadqty),
-                             Probadtotal = g.Sum(p => p.Probadtotal),
-                             Prodirectrate = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
-                             Probadrate = (g.Sum(p => p.Prorealqty) != 0 ? g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty) : 0),
-                         };
+            DataTable dtCount = ConvertHelper.LinqConvertToDataTable(count);
 
-            var count = (from a in counts
-                         select a)
-           .ToList().Select(
-                p => new
-                {
-
-                    p.Prolot,
-                    p.Proorder,
-                    p.Prolinename,
-                    p.Prodate,
-                    p.Promodel,
-                    p.Prolotqty,
-                    p.Prorealqty,
-                    p.Pronobadqty,
-                    p.Probadtotal,
-                    p.Prodirectrate,// = p.Prodirectrate.ToString("0.00"),
-                    p.Probadrate,// = p.Probadrate.ToString("0.00"),// + "%",
-
-                }).ToList();
-            DataTable dtCount = ConvertHelper.LinqConvertToDataTable(count.AsQueryable());
             //向DataTable中更新日期，班组，机种
             for (int f = 0; f < dtCount.Rows.Count; f++)
             {
-                strDpStartDate = "";
-                strDpEndDate = "";
                 string UpdatePline = "";
                 string UpdatePdate = "";
                 string UpdatePmodel = "";
-                string clot = dtCount.Rows[f][0].ToString();
+                //string clot = dtCount.Rows[f][0].ToString();
                 string corder = dtCount.Rows[f][1].ToString();
                 var countlist = (from a in DB.Pp_Defect_P1d_Orders
-                                 where a.Prolot == clot
+                                     //where a.Prolot == clot
                                  where a.Proorder == corder
-                                 where a.Prodept == ("ASSY")
-                                 //where a.Prodate.Contains(edate)
+                                 where a.Prodept == "ASSY"
+                                 //where a.Prodate.Contains("202002")
                                  select a).ToList();
                 if (countlist.Any())
                 {
@@ -561,6 +558,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         UpdatePline += countlist[i].Prolinename.ToString() + ",";
                         UpdatePdate += countlist[i].Prodate.ToString() + ",";
                         UpdatePmodel += countlist[i].Promodel.ToString() + ",";
+
                     }
                     UpdatePline = String.Join(",", UpdatePline.Split(',').Distinct());
                     UpdatePline = UpdatePline.Remove(UpdatePline.LastIndexOf(","), 1);
@@ -571,6 +569,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                     UpdatePmodel = String.Join(",", UpdatePmodel.Split(',').Distinct());
                     UpdatePmodel = UpdatePmodel.Remove(UpdatePmodel.LastIndexOf(","), 1);
+
                     //更新DataTable
                     DataRow[] foundRows = dtCount.Select("Proorder = '" + corder + "'");
 
@@ -601,17 +600,17 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     strOrder = ma.Rows[i][1].ToString();
                     //string sorder = ma.Rows[i][1].ToString();
                     //strPline= ma.Rows[i][2].ToString();
-                    strDpStartDate = ma.Rows[i][3].ToString().Substring(0, 8);
-                    strDpEndDate = ma.Rows[i][3].ToString().Substring(9, 8);
+                    //strDpStartDate = ma.Rows[i][3].ToString().Substring(0, 8);
+                    //strDpEndDate = ma.Rows[i][3].ToString().Substring(9, 8);
                     var q2 =
                             from p in DB.Pp_P1d_Defects
                             .Where(s => s.IsDeleted == 0)
-                            //.Where(s => s.Prodate.Contains(dd))
-                            //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
-                            .Where(s => s.Prodate.CompareTo(strDpStartDate) >= 0)
-                            .Where(s => s.Prodate.CompareTo(strDpEndDate) <= 0)
-                            //.Where(s => s.Proorder.Contains(sorder))
-                            .Where(s => (s.Prolot).Contains(strPlot))
+                             //.Where(s => s.Prodate.Contains(dd))
+                             //.Where(s => s.Prodate.Substring(0, 8).CompareTo(strDpStartDate) >= 0)
+                             //.Where(s => s.Prodate.CompareTo(strDpStartDate) >= 0)
+                             // .Where(s => s.Prodate.CompareTo(strDpEndDate) <= 0)
+                             //.Where(s => s.Proorder.Contains(sorder))
+                             //.Where(s => (s.Prolot).Contains(strPlot))
                              .Where(s => (s.Proorder).Contains(strOrder))
                             //.Where(s => s.Prorealqty==s.Proorderqty)
                             .OrderBy(s => s.Prongdept)
@@ -644,7 +643,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 //ExportHelper.TableListToExcels(tables, ma, Export_FileName, 6);
 
-                ExportHelper.ExportMultipleSheets(tables, ma, Export_FileName);
+                ExportHelper.MocExportMultipleSheets(tables, ma, Export_FileName);
             }
             else
             {

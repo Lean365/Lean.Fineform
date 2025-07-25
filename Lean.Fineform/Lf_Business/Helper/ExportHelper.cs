@@ -5018,5 +5018,1823 @@ namespace LeanFine
                 HttpContext.Current.Response.End();
             }
         }
+        /// <summary>
+        /// 导出Excel,多Sheet
+        /// </summary>
+        /// <param name="dataTables">数据表集合</param>
+        /// <param name="HeaderInfo">表头信息</param>
+        /// <param name="myExport_FileName">导出文件名称</param>
+        public static void LotExportMultipleSheets(List<DataTable> dataTables, DataTable HeaderInfo, string myExport_FileName)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                ExcelWorkbook wb = package.Workbook;
+
+                //配置文件属性
+                wb.Properties.Category = "制一课不良集计";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "不良集计";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "制一课不良集计";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+                for (int i = 0; i < dataTables.Count; i++)
+                {
+                    DataTable dt = dataTables[i];
+                    int pageCount = (int)Math.Ceiling(dt.Rows.Count / 41.0);
+                    if (dt.Rows.Count == 0)
+                    {
+                        // 创建工作表
+                        var worksheet = package.Workbook.Worksheets.Add(dt.TableName.Substring(0, dt.TableName.IndexOf('_')) + "_P1");
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        var qs = from g in HeaderInfo.AsEnumerable()
+                                 select g;
+                        //判断字符的位置并截取完整的生产批次
+                        string llot = dt.TableName.Substring(0, dt.TableName.IndexOf('_'));//.Substring(0, dt.TableName.IndexOf("_"));
+
+                        string strOrder = dt.TableName.Substring(dt.TableName.IndexOf('_') + 1).Replace("_", ",");
+                        var q =
+                        (from g in HeaderInfo.AsEnumerable()
+                         where g.Field<string>("Prolot") == llot
+                         //where g.Field<string>("Proorder") == sorder
+                         select g).ToList();
+                        if (q.Any())
+                        {
+                            int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                            worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                            worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                            worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                            worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                            worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                            worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                            worksheet.Cells["J3"].Value = Prorealqty;
+                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J5"].Value = Probadtotal;
+                        }
+
+                        // 加载图片
+                        worksheet.Cells["A1:B2"].Merge = true;
+
+                        //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                        var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                        //var image = new FileInfo(imagePath);
+                        if (image.Exists)
+                        {
+                            var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                            excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                            excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                            excelImage.From.Column = 0; // 设置图片起始列
+                            excelImage.From.Row = 0; // 设置图片起始行
+                        }
+
+                        // Center the image in the merged cell
+                        worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        // 设置边框
+                        var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                        A1B2.Top.Style = ExcelBorderStyle.Thin;
+                        A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                        A1B2.Left.Style = ExcelBorderStyle.Thin;
+                        A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C1:H1"].Merge = true;
+                        worksheet.Cells["C1"].Value = "文书名";
+                        worksheet.Cells["C1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                        var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                        c1h1.Top.Style = ExcelBorderStyle.Thin;
+                        c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                        c1h1.Left.Style = ExcelBorderStyle.Thin;
+                        c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I1:J1"].Merge = true;
+
+                        worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                        worksheet.Cells["I1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                        I1J1.Top.Style = ExcelBorderStyle.Thin;
+                        I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                        I1J1.Left.Style = ExcelBorderStyle.Thin;
+                        I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C2:H2"].Merge = true;
+                        worksheet.Cells["C2"].Value = "不良集计";
+
+                        worksheet.Cells["C2"].Style.Font.Size = 18;
+                        worksheet.Cells["C2"].Style.Font.Bold = true;
+                        //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                        var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                        C2H2.Top.Style = ExcelBorderStyle.Thin;
+                        C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                        C2H2.Left.Style = ExcelBorderStyle.Thin;
+                        C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I2:J2"].Merge = true;
+                        worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                        worksheet.Cells["I2"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                        var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                        I2J2.Top.Style = ExcelBorderStyle.Thin;
+                        I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                        I2J2.Left.Style = ExcelBorderStyle.Thin;
+                        I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["A3"].Value = "机种";
+                        worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A4"].Value = "批次";
+                        worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A5"].Value = "期间";
+                        worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B3:C3"].Merge = true;
+                        worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B4:C4"].Merge = true;
+                        worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B5:C5"].Merge = true;
+                        worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D3"].Value = "班组";
+                        worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D4"].Value = "直行率";
+                        worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D5"].Value = "不良率";
+                        worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["E3:G3"].Merge = true;
+                        worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E4:G4"].Merge = true;
+                        worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E5:G5"].Merge = true;
+                        worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["H3:I3"].Merge = true;
+                        worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Merge = true;
+                        worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Merge = true;
+                        worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Value = "生产数量";
+                        worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H4"].Value = "无不良台数";
+                        worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H5"].Value = "不良总件数";
+                        worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        //表头
+                        worksheet.Cells[6, 1].Value = "区分";
+                        worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 1].Style.Font.Bold = true;
+                        worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["B6:C6"].Merge = true;
+                        worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 2].Value = "不良症状";
+                        worksheet.Cells[6, 2].Style.Font.Bold = true;
+                        worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["D6:E6"].Merge = true;
+                        worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 4].Value = "不良个所";
+                        worksheet.Cells[6, 4].Style.Font.Bold = true;
+                        worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["F6:I6"].Merge = true;
+                        worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 6].Value = "不良原因";
+                        worksheet.Cells[6, 6].Style.Font.Bold = true;
+                        worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 10].Value = "件数";
+                        worksheet.Cells[6, 10].Style.Font.Bold = true;
+                        worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        // 计算当前页的记录范围
+                        int startRow = 1 * 41;
+                        int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                        int sq = 0;//dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                        for (int j = 0; j < sq; j++)
+                        {
+                            //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                            worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                            worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                            //for (int j = 0; j < dataTable.Columns.Count; j++)
+                            //{
+                            //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //}
+                        }
+                        int bkrowscount = 42 + 6;
+                        int bkrowstart = sq + 6;
+                        for (int b = bkrowstart; b < bkrowscount; b++)
+                        {
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        }
+
+                        worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:D52"].Merge = true;
+                        worksheet.Cells["A48"].Value = strOrder;
+
+                        worksheet.Cells["E48:F48"].Merge = true;
+                        worksheet.Cells["E48"].Value = "承认";
+                        worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E49:F52"].Merge = true;
+
+                        worksheet.Cells["G48:H48"].Merge = true;
+                        worksheet.Cells["G48"].Value = "确认";
+                        worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["G49:H52"].Merge = true;
+
+                        worksheet.Cells["I48:J48"].Merge = true;
+                        worksheet.Cells["I48"].Value = "担当";
+                        worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["I49:J52"].Merge = true;
+                        // 添加数据到工作表
+
+                        // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                        worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                        worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                        // Set footer with page number and ISO number
+                        worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                        worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + "1" + " of " + "1"; // &P for current page, &N for total pages
+                    }
+                    else
+                    {
+                        for (int page = 0; page < pageCount; page++)
+                        {
+                            // 创建工作表
+                            var worksheet = package.Workbook.Worksheets.Add(dt.TableName.Substring(0, dt.TableName.IndexOf('_')) + $"_P{page + 1}");
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            var qs = from g in HeaderInfo.AsEnumerable()
+                                     select g;
+                            //判断字符的位置并截取完整的生产批次
+                            string llot = dt.TableName.Substring(0, dt.TableName.IndexOf('_')); //.Substring(0, dt.TableName.IndexOf("_"));
+
+                            string strOrder = dt.TableName.Substring(dt.TableName.IndexOf('_') + 1).Replace("_", ",");
+                            var q =
+                            (from g in HeaderInfo.AsEnumerable()
+                             where g.Field<string>("Prolot") == llot
+                             //where g.Field<string>("Proorder") == sorder
+                             select g).ToList();
+                            if (q.Any())
+                            {
+                                int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                                worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                                worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                                worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                                worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                                worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                                worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                                worksheet.Cells["J3"].Value = Prorealqty;
+                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J5"].Value = Probadtotal;
+                            }
+
+                            // 加载图片
+                            worksheet.Cells["A1:B2"].Merge = true;
+
+                            //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                            var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                            //var image = new FileInfo(imagePath);
+                            if (image.Exists)
+                            {
+                                var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                                excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                                excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                                excelImage.From.Column = 0; // 设置图片起始列
+                                excelImage.From.Row = 0; // 设置图片起始行
+                            }
+
+                            // Center the image in the merged cell
+                            worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            // 设置边框
+                            var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                            A1B2.Top.Style = ExcelBorderStyle.Thin;
+                            A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                            A1B2.Left.Style = ExcelBorderStyle.Thin;
+                            A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C1:H1"].Merge = true;
+                            worksheet.Cells["C1"].Value = "文书名";
+                            worksheet.Cells["C1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                            c1h1.Top.Style = ExcelBorderStyle.Thin;
+                            c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                            c1h1.Left.Style = ExcelBorderStyle.Thin;
+                            c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I1:J1"].Merge = true;
+
+                            worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                            worksheet.Cells["I1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                            I1J1.Top.Style = ExcelBorderStyle.Thin;
+                            I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                            I1J1.Left.Style = ExcelBorderStyle.Thin;
+                            I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C2:H2"].Merge = true;
+                            worksheet.Cells["C2"].Value = "不良集计";
+
+                            worksheet.Cells["C2"].Style.Font.Size = 18;
+                            worksheet.Cells["C2"].Style.Font.Bold = true;
+                            //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                            C2H2.Top.Style = ExcelBorderStyle.Thin;
+                            C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                            C2H2.Left.Style = ExcelBorderStyle.Thin;
+                            C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I2:J2"].Merge = true;
+                            worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                            worksheet.Cells["I2"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                            var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                            I2J2.Top.Style = ExcelBorderStyle.Thin;
+                            I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                            I2J2.Left.Style = ExcelBorderStyle.Thin;
+                            I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["A3"].Value = "机种";
+                            worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A4"].Value = "批次";
+                            worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A5"].Value = "期间";
+                            worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B3:C3"].Merge = true;
+                            worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B4:C4"].Merge = true;
+                            worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B5:C5"].Merge = true;
+                            worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D3"].Value = "班组";
+                            worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D4"].Value = "直行率";
+                            worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D5"].Value = "不良率";
+                            worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["E3:G3"].Merge = true;
+                            worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E4:G4"].Merge = true;
+                            worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E5:G5"].Merge = true;
+                            worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["H3:I3"].Merge = true;
+                            worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Merge = true;
+                            worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Merge = true;
+                            worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Value = "生产数量";
+                            worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H4"].Value = "无不良台数";
+                            worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H5"].Value = "不良总件数";
+                            worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            //表头
+                            worksheet.Cells[6, 1].Value = "区分";
+                            worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 1].Style.Font.Bold = true;
+                            worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["B6:C6"].Merge = true;
+                            worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 2].Value = "不良症状";
+                            worksheet.Cells[6, 2].Style.Font.Bold = true;
+                            worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["D6:E6"].Merge = true;
+                            worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 4].Value = "不良个所";
+                            worksheet.Cells[6, 4].Style.Font.Bold = true;
+                            worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["F6:I6"].Merge = true;
+                            worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 6].Value = "不良原因";
+                            worksheet.Cells[6, 6].Style.Font.Bold = true;
+                            worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 10].Value = "件数";
+                            worksheet.Cells[6, 10].Style.Font.Bold = true;
+                            worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            // 计算当前页的记录范围
+                            int startRow = page * 41;
+                            int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                            int sq = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                            for (int j = 0; j < sq; j++)
+                            {
+                                //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                                worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                                worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                                //for (int j = 0; j < dataTable.Columns.Count; j++)
+                                //{
+                                //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //}
+                            }
+                            int bkrowscount = 42 + 6;
+                            int bkrowstart = sq + 6;
+                            for (int b = bkrowstart; b < bkrowscount; b++)
+                            {
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            }
+
+                            worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:D52"].Merge = true;
+                            worksheet.Cells["A48"].Value = strOrder;
+
+                            worksheet.Cells["E48:F48"].Merge = true;
+                            worksheet.Cells["E48"].Value = "承认";
+                            worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E49:F52"].Merge = true;
+
+                            worksheet.Cells["G48:H48"].Merge = true;
+                            worksheet.Cells["G48"].Value = "确认";
+                            worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["G49:H52"].Merge = true;
+
+                            worksheet.Cells["I48:J48"].Merge = true;
+                            worksheet.Cells["I48"].Value = "担当";
+                            worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["I49:J52"].Merge = true;
+                            // 添加数据到工作表
+
+                            // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                            worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                            worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                            // Set footer with page number and ISO number
+                            worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                            worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + $"{page + 1}" + " of " + pageCount; // &P for current page, &N for total pages
+                                                                                                                        //worksheet.HeaderFooter.Footer.Font.Size = 8; // Set font size to 8
+                        }
+                    }
+                }
+
+                // ... existing code ...
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(package.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        /// <summary>
+        /// 导出Excel,多Sheet
+        /// </summary>
+        /// <param name="dataTables">数据表集合</param>
+        /// <param name="HeaderInfo">表头信息</param>
+        /// <param name="myExport_FileName">导出文件名称</param>
+        public static void MocExportMultipleSheets(List<DataTable> dataTables, DataTable HeaderInfo, string myExport_FileName)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                ExcelWorkbook wb = package.Workbook;
+
+                //配置文件属性
+                wb.Properties.Category = "制一课不良集计";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "不良集计";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "制一课不良集计";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+                for (int i = 0; i < dataTables.Count; i++)
+                {
+                    DataTable dt = dataTables[i];
+                    int pageCount = (int)Math.Ceiling(dt.Rows.Count / 41.0);
+                    if (dt.Rows.Count == 0)
+                    {
+                        // 创建工作表
+                        var worksheet = package.Workbook.Worksheets.Add(dt.TableName + "_P1");
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                        // 设置 A4 页边距
+                        worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                        worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                        worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                        worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                        // 设置内容居中
+                        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                        var qs = from g in HeaderInfo.AsEnumerable()
+                                 select g;
+                        //判断字符的位置并截取完整的生产批次
+                        string llot = dt.TableName.Substring(0, dt.TableName.IndexOf('_'));//.Substring(0, dt.TableName.IndexOf("_"));
+
+                        string strOrder = dt.TableName.Substring(dt.TableName.IndexOf("_") + 1, dt.TableName.Length - dt.TableName.IndexOf("_") - 1);
+                        var q =
+                        (from g in HeaderInfo.AsEnumerable()
+                             //where g.Field<string>("Prolot") == llot
+                         where g.Field<string>("Proorder") == strOrder
+                         select g).ToList();
+                        if (q.Any())
+                        {
+                            int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                            worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                            worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                            worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                            worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                            worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                            worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                            worksheet.Cells["J3"].Value = Prorealqty;
+                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J5"].Value = Probadtotal;
+                        }
+
+                        // 加载图片
+                        worksheet.Cells["A1:B2"].Merge = true;
+
+                        //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                        var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                        //var image = new FileInfo(imagePath);
+                        if (image.Exists)
+                        {
+                            var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                            excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                            excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                            excelImage.From.Column = 0; // 设置图片起始列
+                            excelImage.From.Row = 0; // 设置图片起始行
+                        }
+
+                        // Center the image in the merged cell
+                        worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        // 设置边框
+                        var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                        A1B2.Top.Style = ExcelBorderStyle.Thin;
+                        A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                        A1B2.Left.Style = ExcelBorderStyle.Thin;
+                        A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C1:H1"].Merge = true;
+                        worksheet.Cells["C1"].Value = "文书名";
+                        worksheet.Cells["C1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                        var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                        c1h1.Top.Style = ExcelBorderStyle.Thin;
+                        c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                        c1h1.Left.Style = ExcelBorderStyle.Thin;
+                        c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I1:J1"].Merge = true;
+
+                        worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                        worksheet.Cells["I1"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                        I1J1.Top.Style = ExcelBorderStyle.Thin;
+                        I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                        I1J1.Left.Style = ExcelBorderStyle.Thin;
+                        I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["C2:H2"].Merge = true;
+                        worksheet.Cells["C2"].Value = "不良集计";
+
+                        worksheet.Cells["C2"].Style.Font.Size = 18;
+                        worksheet.Cells["C2"].Style.Font.Bold = true;
+                        //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                        var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                        C2H2.Top.Style = ExcelBorderStyle.Thin;
+                        C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                        C2H2.Left.Style = ExcelBorderStyle.Thin;
+                        C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["I2:J2"].Merge = true;
+                        worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                        worksheet.Cells["I2"].Style.Font.Size = 8;
+                        //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                        worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                        var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                        I2J2.Top.Style = ExcelBorderStyle.Thin;
+                        I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                        I2J2.Left.Style = ExcelBorderStyle.Thin;
+                        I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                        worksheet.Cells["A3"].Value = "机种";
+                        worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A4"].Value = "批次";
+                        worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["A5"].Value = "期间";
+                        worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B3:C3"].Merge = true;
+                        worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B4:C4"].Merge = true;
+                        worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["B5:C5"].Merge = true;
+                        worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D3"].Value = "班组";
+                        worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D4"].Value = "直行率";
+                        worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["D5"].Value = "不良率";
+                        worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["E3:G3"].Merge = true;
+                        worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E4:G4"].Merge = true;
+                        worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E5:G5"].Merge = true;
+                        worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["H3:I3"].Merge = true;
+                        worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Merge = true;
+                        worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Merge = true;
+                        worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Value = "生产数量";
+                        worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H4"].Value = "无不良台数";
+                        worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["H5"].Value = "不良总件数";
+                        worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                        worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        //表头
+                        worksheet.Cells[6, 1].Value = "区分";
+                        worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 1].Style.Font.Bold = true;
+                        worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["B6:C6"].Merge = true;
+                        worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 2].Value = "不良症状";
+                        worksheet.Cells[6, 2].Style.Font.Bold = true;
+                        worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["D6:E6"].Merge = true;
+                        worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 4].Value = "不良个所";
+                        worksheet.Cells[6, 4].Style.Font.Bold = true;
+                        worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["F6:I6"].Merge = true;
+                        worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 6].Value = "不良原因";
+                        worksheet.Cells[6, 6].Style.Font.Bold = true;
+                        worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[6, 10].Value = "件数";
+                        worksheet.Cells[6, 10].Style.Font.Bold = true;
+                        worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                        // 计算当前页的记录范围
+                        int startRow = 1 * 41;
+                        int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                        int sq = 0;//dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                        for (int j = 0; j < sq; j++)
+                        {
+                            //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                            worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                            worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                            worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                            worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                            //for (int j = 0; j < dataTable.Columns.Count; j++)
+                            //{
+                            //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            //}
+                        }
+                        int bkrowscount = 42 + 6;
+                        int bkrowstart = sq + 6;
+                        for (int b = bkrowstart; b < bkrowscount; b++)
+                        {
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        }
+
+                        worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells["A48:D52"].Merge = true;
+                        worksheet.Cells["A48"].Value = strOrder;
+
+                        worksheet.Cells["E48:F48"].Merge = true;
+                        worksheet.Cells["E48"].Value = "承认";
+                        worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["E49:F52"].Merge = true;
+
+                        worksheet.Cells["G48:H48"].Merge = true;
+                        worksheet.Cells["G48"].Value = "确认";
+                        worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["G49:H52"].Merge = true;
+
+                        worksheet.Cells["I48:J48"].Merge = true;
+                        worksheet.Cells["I48"].Value = "担当";
+                        worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                        worksheet.Cells["I49:J52"].Merge = true;
+                        // 添加数据到工作表
+
+                        // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                        worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                        worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                        // Set footer with page number and ISO number
+                        worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                        worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + "1" + " of " + "1"; // &P for current page, &N for total pages
+                    }
+                    else
+                    {
+                        for (int page = 0; page < pageCount; page++)
+                        {
+                            // 创建工作表
+                            var worksheet = package.Workbook.Worksheets.Add(dt.TableName + $"_P{page + 1}");
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
+                            // 设置 A4 页边距
+                            worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
+                            worksheet.PrinterSettings.RightMargin = 0.5m; // 右边距
+                            worksheet.PrinterSettings.TopMargin = 0.5m; // 上边距
+                            worksheet.PrinterSettings.BottomMargin = 0.5m; // 下边距
+
+                            // 设置内容居中
+                            worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                            var qs = from g in HeaderInfo.AsEnumerable()
+                                     select g;
+                            //判断字符的位置并截取完整的生产批次
+                            string llot = dt.TableName.Substring(0, dt.TableName.IndexOf('_')); //.Substring(0, dt.TableName.IndexOf("_"));
+                            string strOrder = dt.TableName.Substring(dt.TableName.IndexOf("_") + 1, dt.TableName.Length - dt.TableName.IndexOf("_") - 1);
+                            var q =
+                            (from g in HeaderInfo.AsEnumerable()
+                                 //where g.Field<string>("Prolot") == llot
+                             where g.Field<string>("Proorder") == strOrder
+                             select g).ToList();
+                            if (q.Any())
+                            {
+                                int Prorealqty = q.First().Field<Int32>("Prorealqty");
+                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Probadtotal = q.First().Field<Int32>("Probadtotal");
+
+                                worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
+                                worksheet.Cells["B4"].Value = q.First().Field<string>("Prolot");
+                                worksheet.Cells["B5"].Value = q.First().Field<string>("Prodate");
+                                worksheet.Cells["E3"].Value = q.First().Field<string>("Prolinename");
+                                worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
+                                worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
+                                worksheet.Cells["J3"].Value = Prorealqty;
+                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J5"].Value = Probadtotal;
+                            }
+
+                            // 加载图片
+                            worksheet.Cells["A1:B2"].Merge = true;
+
+                            //ws.Cells[0, 0, 0, 26].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                            var image = new FileInfo(HttpRuntime.AppDomainAppPath.ToString() + "/Lf_Resources/images/Flogo.png");
+                            //var image = new FileInfo(imagePath);
+                            if (image.Exists)
+                            {
+                                var excelImage = worksheet.Drawings.AddPicture("MyImage", image);
+                                excelImage.SetPosition(0, 8, 0, 8); // 设置图片位置（行，行偏移，列，列偏移）
+                                excelImage.SetSize(118, 24); // 设置图片大小（宽，高）
+                                excelImage.From.Column = 0; // 设置图片起始列
+                                excelImage.From.Row = 0; // 设置图片起始行
+                            }
+
+                            // Center the image in the merged cell
+                            worksheet.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            worksheet.Cells["A1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            // 设置边框
+                            var A1B2 = worksheet.Cells["A1:B2"].Style.Border;
+                            A1B2.Top.Style = ExcelBorderStyle.Thin;
+                            A1B2.Bottom.Style = ExcelBorderStyle.Thin;
+                            A1B2.Left.Style = ExcelBorderStyle.Thin;
+                            A1B2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C1:H1"].Merge = true;
+                            worksheet.Cells["C1"].Value = "文书名";
+                            worksheet.Cells["C1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                            var c1h1 = worksheet.Cells["C1:H1"].Style.Border;
+                            c1h1.Top.Style = ExcelBorderStyle.Thin;
+                            c1h1.Bottom.Style = ExcelBorderStyle.Thin;
+                            c1h1.Left.Style = ExcelBorderStyle.Thin;
+                            c1h1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I1:J1"].Merge = true;
+
+                            worksheet.Cells["I1"].Value = "发行元：DTA制一课";
+                            worksheet.Cells["I1"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                            var I1J1 = worksheet.Cells["I1:J1"].Style.Border;
+                            I1J1.Top.Style = ExcelBorderStyle.Thin;
+                            I1J1.Bottom.Style = ExcelBorderStyle.Thin;
+                            I1J1.Left.Style = ExcelBorderStyle.Thin;
+                            I1J1.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["C2:H2"].Merge = true;
+                            worksheet.Cells["C2"].Value = "不良集计";
+
+                            worksheet.Cells["C2"].Style.Font.Size = 18;
+                            worksheet.Cells["C2"].Style.Font.Bold = true;
+                            //worksheet.Cells["C2"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["C2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                            var C2H2 = worksheet.Cells["C2:H2"].Style.Border;
+                            C2H2.Top.Style = ExcelBorderStyle.Thin;
+                            C2H2.Bottom.Style = ExcelBorderStyle.Thin;
+                            C2H2.Left.Style = ExcelBorderStyle.Thin;
+                            C2H2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["I2:J2"].Merge = true;
+                            worksheet.Cells["I2"].Value = "发行日期：" + DateTime.Now.ToString("yyyy-MM-dd");
+                            worksheet.Cells["I2"].Style.Font.Size = 8;
+                            //worksheet.Cells["C1"].Style.Font.Color.SetColor(Color.DarkGray); //字体颜色
+                            worksheet.Cells["I2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                            var I2J2 = worksheet.Cells["I2:J2"].Style.Border;
+                            I2J2.Top.Style = ExcelBorderStyle.Thin;
+                            I2J2.Bottom.Style = ExcelBorderStyle.Thin;
+                            I2J2.Left.Style = ExcelBorderStyle.Thin;
+                            I2J2.Right.Style = ExcelBorderStyle.Thin;
+
+                            worksheet.Cells["A3"].Value = "机种";
+                            worksheet.Cells["A3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A4"].Value = "批次";
+                            worksheet.Cells["A4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["A5"].Value = "期间";
+                            worksheet.Cells["A5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B3:C3"].Merge = true;
+                            worksheet.Cells["B3:C3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B3:C3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B4:C4"].Merge = true;
+                            worksheet.Cells["B4:C4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B4:C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["B5:C5"].Merge = true;
+                            worksheet.Cells["B5:C5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B5:C5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D3"].Value = "班组";
+                            worksheet.Cells["D3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D4"].Value = "直行率";
+                            worksheet.Cells["D4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["D5"].Value = "不良率";
+                            worksheet.Cells["D5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["E3:G3"].Merge = true;
+                            worksheet.Cells["E3:G3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E3:G3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E4:G4"].Merge = true;
+                            worksheet.Cells["E4:G4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E4:G4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E5:G5"].Merge = true;
+                            worksheet.Cells["E5:G5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["E5:G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["H3:I3"].Merge = true;
+                            worksheet.Cells["H3:I3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3:I3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Merge = true;
+                            worksheet.Cells["H4:I4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4:I4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Merge = true;
+                            worksheet.Cells["H5:I5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5:I5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Value = "生产数量";
+                            worksheet.Cells["H3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H4"].Value = "无不良台数";
+                            worksheet.Cells["H4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["H5"].Value = "不良总件数";
+                            worksheet.Cells["H5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["H5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Distributed; // 设置分散对齐
+                            worksheet.Cells["J3"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J4"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["J5"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            //表头
+                            worksheet.Cells[6, 1].Value = "区分";
+                            worksheet.Cells["A6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 1].Style.Font.Bold = true;
+                            worksheet.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["B6:C6"].Merge = true;
+                            worksheet.Cells["B6:C6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["B6:C6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 2].Value = "不良症状";
+                            worksheet.Cells[6, 2].Style.Font.Bold = true;
+                            worksheet.Cells["B6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["D6:E6"].Merge = true;
+                            worksheet.Cells["D6:E6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["D6:E6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 4].Value = "不良个所";
+                            worksheet.Cells[6, 4].Style.Font.Bold = true;
+                            worksheet.Cells["D6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["F6:I6"].Merge = true;
+                            worksheet.Cells["F6:I6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["F6:I6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 6].Value = "不良原因";
+                            worksheet.Cells[6, 6].Style.Font.Bold = true;
+                            worksheet.Cells["F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            worksheet.Cells["J6"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["J6"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells[6, 10].Value = "件数";
+                            worksheet.Cells[6, 10].Style.Font.Bold = true;
+                            worksheet.Cells["J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+
+                            // 计算当前页的记录范围
+                            int startRow = page * 41;
+                            int endRow = Math.Min(startRow + 41, dt.Rows.Count);
+
+                            int sq = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows.Count;
+
+                            for (int j = 0; j < sq; j++)
+                            {
+                                //string ss = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["B" + i + 7 + ":C" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["D" + i + 7 + ":E" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //worksheet.Cells["F" + i + 7 + ":I" + i + 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //string ss = "B" + (i + 7) + ":C" + (i + 7);
+                                worksheet.Cells[j + 7, 1].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][0].ToString();
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + (j + 7) + ":A" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Merge = true;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][1].ToString();
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + (j + 7) + ":C" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // 设置分散对齐
+
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 4].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][2].ToString();
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + (j + 7) + ":E" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Merge = true;
+                                worksheet.Cells[j + 7, 6].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][3].ToString();
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + (j + 7) + ":I" + (j + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+                                worksheet.Cells[j + 7, 10].Value = dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable().Rows[j][4];
+                                worksheet.Cells[j + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells[j + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells[j + 7, 10].Style.Numberformat.Format = "0";
+                                //for (int j = 0; j < dataTable.Columns.Count; j++)
+                                //{
+                                //    worksheet.Cells[i + 7, j + 1].Value = dataTable.Rows[i][j].ToString();
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                //    worksheet.Cells[i + 7, j + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                                //}
+                            }
+                            int bkrowscount = 42 + 6;
+                            int bkrowstart = sq + 6;
+                            for (int b = bkrowstart; b < bkrowscount; b++)
+                            {
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["A" + b + ":A" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["B" + b + ":C" + b].Merge = true;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["B" + b + ":C" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["D" + b + ":E" + b].Merge = true;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["D" + b + ":E" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["F" + b + ":I" + b].Merge = true;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["F" + b + ":I" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                worksheet.Cells["J" + b + ":J" + b].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            }
+
+                            worksheet.Cells["A48:J52"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            worksheet.Cells["A48:D52"].Merge = true;
+                            worksheet.Cells["A48"].Value = strOrder;
+
+                            worksheet.Cells["E48:F48"].Merge = true;
+                            worksheet.Cells["E48"].Value = "承认";
+                            worksheet.Cells["E48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["E49:F52"].Merge = true;
+
+                            worksheet.Cells["G48:H48"].Merge = true;
+                            worksheet.Cells["G48"].Value = "确认";
+                            worksheet.Cells["G48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["G49:H52"].Merge = true;
+
+                            worksheet.Cells["I48:J48"].Merge = true;
+                            worksheet.Cells["I48"].Value = "担当";
+                            worksheet.Cells["I48"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // 设置分散对齐
+                            worksheet.Cells["I49:J52"].Merge = true;
+                            // 添加数据到工作表
+
+                            // worksheet.Cells["A7"].LoadFromDataTable(dt.AsEnumerable().Skip(startRow).Take(endRow - startRow).CopyToDataTable(), true);
+
+                            worksheet.Cells["E4"].Style.Numberformat.Format = "0.00%";
+                            worksheet.Cells["E5"].Style.Numberformat.Format = "0.00%";
+
+                            // Set footer with page number and ISO number
+                            worksheet.HeaderFooter.OddFooter.RightAlignedText = "FROM NO:DTA-04-Z038-C";
+                            worksheet.HeaderFooter.OddFooter.CenteredText = "页码：" + $"{page + 1}" + " of " + pageCount; // &P for current page, &N for total pages
+                                                                                                                        //worksheet.HeaderFooter.Footer.Font.Size = 8; // Set font size to 8
+                        }
+                    }
+                }
+
+                // ... existing code ...
+
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(package.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
     }
 }
