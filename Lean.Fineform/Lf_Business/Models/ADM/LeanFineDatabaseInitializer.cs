@@ -1,10 +1,10 @@
-﻿using System;
+﻿using LeanFine.Lf_Business.Models.PP;
+using LeanFine.Lf_Business.Models.QM;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security;
-using LeanFine.Lf_Business.Models.PP;
-using LeanFine.Lf_Business.Models.QM;
 
 namespace LeanFine
 {
@@ -800,7 +800,7 @@ namespace LeanFine
 
                                     SortIndex = 110,
                                     Remark = "三级菜单",
-                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_daily.aspx",
+                                    NavigateUrl = "~/Lf_Manufacturing/PP/daily/P1D/p1d_rpr_daily.aspx",
                                     ImageUrl = "~/Lf_Resources/menu/prorepaired.png",
                                     ButtonName="Btn_Lf_Pp_"+"p1d_daily",
                                     ViewPower = context.Adm_Powers.Where(p => p.Name == "CoreP1DOutputView").FirstOrDefault<Adm_Power>()

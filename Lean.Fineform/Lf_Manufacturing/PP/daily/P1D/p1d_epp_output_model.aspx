@@ -55,7 +55,7 @@
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server">
                                 </f:ToolbarFill>
                                 <f:Button ID="BtnExport" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
-                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_Modify%>" OnClick="BtnExport_Click" CssClass="marginr">
+                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_Epp%>" OnClick="BtnExport_Click" CssClass="marginr">
                                 </f:Button>
 
 

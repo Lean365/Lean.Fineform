@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FineUIPro;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
@@ -71,25 +71,43 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             try
             {
-                var q_all = from p in DB.Pp_P1d_Epp_OutputSubs
-                                //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                            where p.IsDeleted == 0
-                            where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                            select new
-                            {
-                                p.Prodate,
-                                p.Prolinename,
-                                p.Prodirect,
-                                p.Proindirect,
-                                p.Prolot,
-                                p.Prohbn,
-                                p.Prost,
-                                p.Promodel,
-                                p.Prorealtime,
-                                p.Prostdcapacity,
-                                p.Prorealqty,
-                            };
-
+                var q1 = from p in DB.Pp_P1d_Epp_Date_OutputSubs
+                             //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                         where p.IsDeleted == 0
+                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                         select new
+                         {
+                             Prodate = p.ProStartdate,
+                             p.Prolinename,
+                             p.Prodirect,
+                             p.Proindirect,
+                             p.Prolot,
+                             p.Prohbn,
+                             p.Prost,
+                             p.Promodel,
+                             p.Prorealtime,
+                             p.Prostdcapacity,
+                             p.Prorealqty,
+                         };
+                var q2 = from p in DB.Pp_P1d_Epp_OutputSubs
+                             //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                         where p.IsDeleted == 0
+                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                         select new
+                         {
+                             p.Prodate,
+                             p.Prolinename,
+                             p.Prodirect,
+                             p.Proindirect,
+                             p.Prolot,
+                             p.Prohbn,
+                             p.Prost,
+                             p.Promodel,
+                             p.Prorealtime,
+                             p.Prostdcapacity,
+                             p.Prorealqty,
+                         };
+                var q_all = q1.Union(q2);
                 var q =
                     from p in q_all
                     group p by new { Prodate = p.Prodate.Substring(0, 6), p.Promodel } into g
@@ -274,32 +292,50 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             string Prefix_XlsxName, Export_FileName, SheetName;
             SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             // mysql = "SELECT [Prodate] 日付,[Prohbn] 品目,[Prost] ST,[Proplanqty] 計画台数,[Proworktime] 投入工数,[Proworkqty] 実績台数,[Prodirect] 直接人数,[Proworkst] 実績ST,[Prodiffst] ST差異,[Prodiffqty] 台数差異,[Proactivratio] 稼働率  FROM [dbo].[Pp_Outputlinedatas] where left(Prodate,6)='" + DDLdate.SelectedText + "'";
-            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Modify(Model)_Output_Report";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_Epp(Model)_Output_Report";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
             Export_FileName = Prefix_XlsxName + ".xlsx";
 
             try
             {
                 //Decimal ra = 0.85m;//Math.Round((double )(g.Sum(c => c.capacity)),1, MidpointRounding.AwayFromZero )//  保留一位
-                var q_normal = from p in DB.Pp_P1d_Epp_OutputSubs
-                                   //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
-                               where p.IsDeleted == 0
-                               where p.Prorealtime != 0 || p.Prolinestopmin != 0
-                               //where p.Proorder.Substring(0, 1).Contains("4")
-                               select new
-                               {
-                                   Prodate = p.Prodate,
-                                   Prolinename = p.Prolinename,
-                                   Prodirect = p.Prodirect,
-                                   Proindirect = p.Proindirect,
-                                   Prolot = p.Prolot,
-                                   Prohbn = p.Prohbn,
-                                   Prost = p.Prost,
-                                   Promodel = p.Promodel,
-                                   Prorealtime = p.Prorealtime,
-                                   Prostdcapacity = p.Prostdcapacity,
-                                   Prorealqty = p.Prorealqty,
-                               };
+                var q1 = from p in DB.Pp_P1d_Epp_Date_OutputSubs
+                             //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                         where p.IsDeleted == 0
+                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                         select new
+                         {
+                             Prodate = p.ProStartdate,
+                             p.Prolinename,
+                             p.Prodirect,
+                             p.Proindirect,
+                             p.Prolot,
+                             p.Prohbn,
+                             p.Prost,
+                             p.Promodel,
+                             p.Prorealtime,
+                             p.Prostdcapacity,
+                             p.Prorealqty,
+                         };
+                var q2 = from p in DB.Pp_P1d_Epp_OutputSubs
+                             //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                         where p.IsDeleted == 0
+                         where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                         select new
+                         {
+                             p.Prodate,
+                             p.Prolinename,
+                             p.Prodirect,
+                             p.Proindirect,
+                             p.Prolot,
+                             p.Prohbn,
+                             p.Prost,
+                             p.Promodel,
+                             p.Prorealtime,
+                             p.Prostdcapacity,
+                             p.Prorealqty,
+                         };
+                var q_normal = q1.Union(q2);
 
                 var q =
                     from p in q_normal
@@ -378,7 +414,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                                   台数差异 = (decimal)Math.Round(p.Prodiffqty, 2),
                                   达成率 = (decimal)Math.Round(p.Proactivratio, 4),
                               };
-                    ExportHelper.ModifyModelOutput_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "M" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
+                    ExportHelper.EppModel_XlsxFile(ConvertHelper.LinqConvertToDataTable(qss), "M" + DpStartDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpStartDate.SelectedDate.Value.ToString("yyyyMM"));
                 }
                 else
 

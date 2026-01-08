@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FineUIPro;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
@@ -73,7 +73,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         {
             try
             {
-                var q =
+                var q1 =
                     from p in DB.Pp_P1d_OutputSubs
                         //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
                     where p.IsDeleted == 0
@@ -92,33 +92,78 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         Prolotqty = g.Key.Proorderqty,
                         Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
                         Prostdcapacity = g.Sum(p => p.Prostdcapacity),
-                        Prorealqty = g.Sum(p => p.Prorealqty),
+                        Prorealqty = (Decimal)g.Sum(p => p.Prorealqty),
+                        Proratio = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Prostdcapacity) : 0),
+                    };
+                var q2 =
+                    from p in DB.Pp_P1d_Epp_Date_OutputSubs
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                    where p.IsDeleted == 0
+                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                    group p by new { p.Proorder, p.Proorderqty, p.Prolinename, p.ProStartdate, p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
+                    select new
+                    {
+                        Prodate = g.Key.ProStartdate,
+                        Proorder = g.Key.Proorder,
+                        Prolinename = g.Key.Prolinename,
+                        Prodirect = g.Key.Prodirect,
+                        Prolot = g.Key.Prolot,
+                        Promodel = g.Key.Promodel,
+                        Prohbn = g.Key.Prohbn,
+                        Prost = g.Key.Prost,
+                        Prolotqty = g.Key.Proorderqty,
+                        Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
+                        Prostdcapacity = g.Sum(p => p.Prostdcapacity),
+                        Prorealqty = (Decimal)g.Sum(p => p.Prorealqty),
+                        Proratio = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Prostdcapacity) : 0),
+                    };
+                var q3 =
+                    from p in DB.Pp_P1d_Epp_OutputSubs
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                    where p.IsDeleted == 0
+                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                    group p by new { p.Proorder, p.Proorderqty, p.Prolinename, p.Prodate, p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
+                    select new
+                    {
+                        Prodate = g.Key.Prodate,
+                        Proorder = g.Key.Proorder,
+                        Prolinename = g.Key.Prolinename,
+                        Prodirect = g.Key.Prodirect,
+                        Prolot = g.Key.Prolot,
+                        Promodel = g.Key.Promodel,
+                        Prohbn = g.Key.Prohbn,
+                        Prost = g.Key.Prost,
+                        Prolotqty = g.Key.Proorderqty,
+                        Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
+                        Prostdcapacity = g.Sum(p => p.Prostdcapacity),
+                        Prorealqty = (Decimal)g.Sum(p => p.Prorealqty),
+                        Proratio = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Prostdcapacity) : 0),
+                    };
+                var q4 =
+                    from p in DB.Pp_P1d_Modify_OutputSubs
+                        //join b in DB.Pp_P1d_Outputs on p.Parent.ID equals b.ID
+                    where p.IsDeleted == 0
+                    where p.Prorealtime != 0 || p.Prolinestopmin != 0
+                    group p by new { p.Proorder, p.Proorderqty, p.Prolinename, p.Prodate, p.Prolot, p.Promodel, p.Prohbn, p.Prodirect, p.Prost, } into g
+                    select new
+                    {
+                        Prodate = g.Key.Prodate,
+                        Proorder = g.Key.Proorder,
+                        Prolinename = g.Key.Prolinename,
+                        Prodirect = g.Key.Prodirect,
+                        Prolot = g.Key.Prolot,
+                        Promodel = g.Key.Promodel,
+                        Prohbn = g.Key.Prohbn,
+                        Prost = g.Key.Prost,
+                        Prolotqty = g.Key.Proorderqty,
+                        Prospendtime = (Decimal)g.Sum(p => p.Prorealtime) + (Decimal)g.Sum(p => p.Prolinestopmin),
+                        Prostdcapacity = g.Sum(p => p.Prostdcapacity),
+                        Prorealqty = (Decimal)g.Sum(p => p.Prorealqty),
                         Proratio = (g.Sum(p => p.Prostdcapacity) != 0 ? g.Sum(p => p.Prorealqty) / g.Sum(p => p.Prostdcapacity) : 0),
                     };
 
-                //var qss =
-                //    from p in DB.Pp_P1d_OutputSubs
-                //    group p by new
-                //    {
-                //        p.Prolinename,
-                //        p.Prodate,
-                //        p.Prodirect,
-                //        p.Prolot,
-                //        p.Prohbn,
-                //        p.Promodel,
-                //        p.Prorealqty,
-                //        p.Prorealtime,
-                //    }
-                //    into g
-                //    select new
-                //    {
-                //        g.Key,
-                //        Qty = g.Sum(p => p.Prorealqty),
-                //        Min = g.Sum(p => p.Prorealtime),
-                //    };
-
-                //IQueryable<Pp_Output> q = DB.Pp_P1d_Outputs; //.Include(u => u.Dept);
-
+                var q = q1.Union(q2).Union(q3).Union(q4);
+                Console.WriteLine(q.ToString());
                 // 在用户名称中搜索
                 string searchText = ttbSearchMessage.Text.Trim();
 

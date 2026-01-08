@@ -1063,7 +1063,7 @@
     <value>PCBA.SOP</value>
   </data>
   <data name="menu_Pp_OPH_Report" xml:space="preserve">
-    <value>諸表</value>
+    <value>OPH諸表</value>
   </data>
   <data name="sys_Export_SheetDaily" xml:space="preserve">
     <value>OPH明細</value>
@@ -1300,7 +1300,7 @@
     <value>モデル(B)</value>
   </data>
   <data name="sys_Button_Line_N" xml:space="preserve">
-    <value>ライン別改修(N)</value>
+    <value>ライン別返工(N)</value>
   </data>
   <data name="sys_Button_Model_N" xml:space="preserve">
     <value>モデル(N)</value>
@@ -1313,5 +1313,23 @@
   </data>
   <data name="menu_Pp_P1d_Epp_Defect" xml:space="preserve">
     <value>Epp不良</value>
+  </data>
+  <data name="sys_Export_Epp" xml:space="preserve">
+    <value>Epp明細レポート</value>
+  </data>
+  <data name="sys_Export_Mp" xml:space="preserve">
+    <value>OPH明細レポート</value>
+  </data>
+  <data name="sys_Export_Rwr" xml:space="preserve">
+    <value>改修明細レポート</value>
+  </data>
+  <data name="sys_Export_Rpr" xml:space="preserve">
+    <value>返工明細レポート</value>
+  </data>
+  <data name="sys_Button_Date" xml:space="preserve">
+    <value>日付別</value>
+  </data>
+  <data name="sys_Button_Phase" xml:space="preserve">
+    <value>期間</value>
   </data>
 </root>

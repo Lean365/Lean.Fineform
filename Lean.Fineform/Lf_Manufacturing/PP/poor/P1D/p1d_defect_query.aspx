@@ -79,12 +79,14 @@
 
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="日期" />
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="台数" />
-                        <f:BoundField DataField="Prongdept" SortField="Prongdept" Width="80px" HeaderText="区分" />
-                        <f:BoundField DataField="Pronobadqty" SortField="Pronobadqty" ColumnID="Pronobadqty" Width="100px" HeaderText="无不良" />
-                        <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良" />
-                        <f:BoundField DataField="Probadnote" SortField="Probadnote" Width="120px" HeaderText="症状" />
-                        <f:BoundField DataField="Probadset" SortField="Probadset" Width="150px" HeaderText="个所" />
-                        <f:BoundField DataField="Probadreason" SortField="Probadreason" Width="150px" HeaderText="原因" />
+                        <f:BoundField DataField="Prodefectcategory" SortField="Prodefectcategory" Width="80px" HeaderText="区分" />
+                        <f:BoundField DataField="Prodzeroefects" SortField="Prodzeroefects" ColumnID="Prodzeroefects" Width="100px" HeaderText="无不良" />
+                        <f:BoundField DataField="Prorandomcard" SortField="Prorandomcard" ColumnID="Prorandomcard" Width="80px" HeaderText="随机卡" />
+                        <f:BoundField DataField="Prodefectoccurs" SortField="Prodefectoccurs" ColumnID="Prodefectoccurs" Width="80px" HeaderText="发生工程" />
+                        <f:BoundField DataField="Prodefectstep" SortField="Prodefectstep" ColumnID="Prodefectstep" Width="80px" HeaderText="步骤" />
+                        <f:BoundField DataField="Prodefectsymptom" SortField="Prodefectsymptom" Width="120px" HeaderText="症状" />
+                        <f:BoundField DataField="Prodefectlocation" SortField="Prodefectlocation" Width="150px" HeaderText="个所" />
+                        <f:BoundField DataField="Prodefectcause" SortField="Prodefectcause" Width="150px" HeaderText="原因" />
 
 
 

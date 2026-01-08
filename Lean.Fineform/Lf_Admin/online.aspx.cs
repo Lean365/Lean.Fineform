@@ -52,8 +52,9 @@ namespace LeanFine.Lf_Admin
                 q = q.Where(o => o.User.Name.Contains(searchText));
             }
 
-            DateTime lastD = DateTime.Now.AddHours(-2);
-            q = q.Where(o => o.UpdateTime > lastD);
+            // 使用统一的在线状态判断阈值
+            DateTime threshold = DateTime.Now.AddMinutes(-PageBase.ONLINE_THRESHOLD_MINUTES);
+            q = q.Where(o => o.UpdateTime > threshold);
 
             // 在添加条件之后，排序和分页之前获取总记录数
             Grid1.RecordCount = q.Count();

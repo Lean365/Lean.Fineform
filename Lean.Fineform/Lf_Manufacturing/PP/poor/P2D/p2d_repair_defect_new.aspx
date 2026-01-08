@@ -49,7 +49,7 @@
                                 </f:DatePicker>
                                 <%--<f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
                                 </f:DropDownList>--%>
-                                <f:DropDownList runat="server" ID="ddpProorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="ddpProorder_SelectedIndexChanged" TabIndex="3">
+                                <f:DropDownList runat="server" ID="ddlProorder" Label="生产订单" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="ddlProorder_SelectedIndexChanged" TabIndex="3">
                                 </f:DropDownList>
                             </Items>
                         </f:FormRow>
@@ -59,7 +59,7 @@
                             <Items>
                                 <%--<f:NumberBox ID="prorealqty" runat="server" Label="生产台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
                                 </f:NumberBox>--%>
-                                <%--<f:Label ID="pronobadqty" runat="server" Label="无不良台数" Text="0">
+                                <%--<f:Label ID="Prodzeroefects" runat="server" Label="无不良台数" Text="0">
                                 </f:Label>--%>
                                 <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
                                 <f:Label ID="lblProlot" runat="server" Label="生产LOT"></f:Label>
@@ -77,7 +77,7 @@
             <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="1" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
-                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
+                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange" EnableMultiSelect="false">
                     <Toolbars>
                         <f:Toolbar runat="server" Position="Top">
                             <Items>
@@ -120,9 +120,9 @@
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadnote" DataField="Probadnote" HeaderText="不良症状" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Prodefectsymptom" DataField="Prodefectsymptom" HeaderText="不良症状" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadnote" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtProdefectsymptom" Required="true" runat="server" Text="NG">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
@@ -132,9 +132,9 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadreason" DataField="Probadreason" HeaderText="不良原因" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Prodefectcause" DataField="Prodefectcause" HeaderText="不良原因" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadreason" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtProdefectcause" Required="true" runat="server" Text="NG">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
@@ -151,15 +151,15 @@
                             </Editor>
                         </f:RenderField>
 
-                        <f:RenderField Width="200px" ColumnID="Probadprop" SortField="Probadprop" DataField="Probadprop" HeaderText="不良性质" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Prodefectnature" SortField="Prodefectnature" DataField="Prodefectnature" HeaderText="不良性质" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProbadprop" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProdefectnature" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Probadrepairman" SortField="Probadrepairman" DataField="Probadrepairman" HeaderText="修理" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Prorepairman" SortField="Prorepairman" DataField="Prorepairman" HeaderText="修理" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProbadrepairman" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProrepairman" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>

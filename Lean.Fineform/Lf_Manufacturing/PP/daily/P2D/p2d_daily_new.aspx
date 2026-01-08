@@ -36,7 +36,7 @@
                                 <f:DatePicker FocusOnPageLoad="true" runat="server" Required="true" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择生产日期"
                                     ID="prodate" ShowRedStar="True">
                                 </f:DatePicker>
-                                <f:DropDownList ID="proorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="true" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
+                                <f:DropDownList ID="proorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="false" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
                                 </f:DropDownList>
 
                             </Items>

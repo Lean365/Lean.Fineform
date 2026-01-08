@@ -9,7 +9,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [Key]
         public Guid GUID { get; set; }
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string Prolot { get; set; }//生产LOT
 
         [StringLength(20)]
@@ -28,7 +28,7 @@ namespace LeanFine.Lf_Business.Models.PP
 
         public int Prorealqty { get; set; }//生产实绩
 
-        public int Pronobadqty { get; set; }//无不良数量
+        public int Prodzeroefects { get; set; }//无不良数量
 
         public int Probadtotal { get; set; }//不良件数（同一LOT集计数量）
 

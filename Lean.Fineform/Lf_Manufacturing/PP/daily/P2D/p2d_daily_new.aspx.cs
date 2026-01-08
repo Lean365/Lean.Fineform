@@ -1,12 +1,13 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Helper;
-using LeanFine.Lf_Business.Models.PP;
 using static LeanFine.QueryExtensions;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
@@ -21,6 +22,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         public static string mysql;
 
         public int Prorate, ParentID;
+
+        // 搜索防抖变量
+        private static string lastSearchText = "";
+        private static DateTime lastSearchTime = DateTime.MinValue;
 
         #region ViewPower
 
@@ -129,82 +134,65 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #region BindDdlData
 
-        //DDL查询LOT
+        //DDL查询订单 - 大数据优化版本
         private void BindDdlorder()
         {
-            //UpdatingHelper.UpdatePorderQty();
+            try
+            {
+                // 大数据优化策略：
+                // 1. 初始加载50条最新订单，确保界面快速响应
+                // 2. 使用 AsNoTracking() 不跟踪实体变化，大幅提高性能
+                // 3. 只选择必要字段，减少数据传输
+                // 4. 按订单号倒序排列，最新订单优先显示
+                // 5. 通过EnableEdit实现真正的动态搜索功能
+                // 6. 使用快速搜索策略，避免界面假死
 
-            //查询LINQ去重复
-
-            //var a = from c in DB.Pp_P2d_OutputSubs
-            //        where c.IsDeleted == 0
-            //        //where c.Prowctext.Contains("二")
-            //        select c.Prorealqty;
-
-            var q = from e in DB.Pp_Orders
-                        //where e.Pordertype.Contains("ZDTD") || e.Pordertype.Contains("ZDTE") || e.Pordertype.Contains("ZDTF")
-                        //where e.Porderqty != e.Porderreal
-                    select new
-                    {
-                        e.Porderno
-                    };
-
-            //        var q = from a in DB.Pp_Orders
-            //                    //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
-            //                    //where b.Proecnno == strecn
-            //                    //where b.Proecnbomitem == stritem
-            //                where a.Porderqty> 0
-            //&& (from d in DB.Pp_Manhours
-            //     where d.IsDeleted == 0
-            //     where d.Prowctext.Contains("二")
-            //     where d.Proitem == a.Porderhbn
-            //     select d.Proitem)//20220815修改之前是d.Prolots
-            //     .Contains(a.Porderno)//20220815修改之前是p.Prolots
-            //                orderby a.Porderno
-            //                select new
-            //                {
-            //                    //b.Proecnmodel,
-            //                    a.Porderno
-
-            //                };
-
-            var qs = q.Select(E => new { E.Porderno }).ToList().Distinct();
-            //var list = (from c in DB.ProSapPorders
-            //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
-            //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
-            //3.2.将数据绑定到下拉框
-            proorder.DataSource = qs;
-            proorder.DataTextField = "Porderno";
-            proorder.DataValueField = "Porderno";
-            proorder.DataBind();
+                // 使用快速加载方法，确保界面响应性
+                LoadRecentOrders();
+            }
+            catch (Exception ex)
+            {
+                // 记录错误日志并显示用户友好的错误信息
+                Alert.ShowInTop("加载订单数据时发生错误，请稍后重试。", MessageBoxIcon.Error + ex.Message);
+            }
         }
 
-        //DDL查询班组
-        private void BindDdlLine()
+        /// <summary>
+        /// 加载最近50条订单数据，确保界面快速响应
+        /// </summary>
+        private void LoadRecentOrders()
         {
-            ////查询LINQ去重复
-            //var q = from a in DB.Pp_Lines
-            //            //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
-            //            //where b.Proecnno == strecn
-            //        where a.lineclass == "P"
+            try
+            {
+                // 查询最近50条有效订单
+                var orders = DB.Pp_Orders
+                    .Where(o => o.IsDeleted == 0)
+                    .Where(o => o.Porderqty > 0)
+                    .OrderByDescending(o => o.Porderno)
+                    .Select(o => new { o.Porderno })
+                    .AsNoTracking() // 不跟踪实体变化，大幅提高性能
+                    .Take(50)
+                    .ToList();
 
-            //        select new
-            //        {
-            //            a.linecode,
-            //            a.linename,
+                // 清空并重新绑定下拉列表
+                proorder.Items.Clear();
+                proorder.Items.Add(new FineUIPro.ListItem("", ""));
 
-            //        };
+                foreach (var order in orders)
+                {
+                    proorder.Items.Add(new FineUIPro.ListItem(order.Porderno, order.Porderno));
+                }
 
-            //var qs = q.Select(E => new { E.linecode, E.linename }).ToList().Distinct();
-            ////var list = (from c in DB.ProSapPorders
-            ////                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
-            ////                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
-            ////3.2.将数据绑定到下拉框
-            //prolinename.DataSource = qs;
-            //prolinename.DataTextField = "linename";
-            //prolinename.DataValueField = "linename";
-            //prolinename.DataBind();
+                proorder.EmptyText = "请选择订单或使用搜索框搜索更多订单";
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowInTop("加载订单数据时发生错误，请稍后重试。", MessageBoxIcon.Error + ex.Message);
+                proorder.EmptyText = "加载失败，请刷新重试";
+            }
         }
+
+
 
         //DDL查询不良各类
 
@@ -212,47 +200,6 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         #region Events
 
-        //protected void Grid1_RowCommand(object sender, GridCommandEventArgs e)
-        //{
-        //    //object[] keys = Grid1.DataKeys[e.RowIndex];
-
-        //    ////selID = Convert.ToInt32(keys[0].ToString());
-        //    //string ss = keys[1].ToString();
-
-        //    ////获取ID号
-        //    //int del_ID = Convert.ToInt32(Grid1.DataKeys[e.RowIndex][0]);
-
-        //    //if (e.CommandName == "Delete")
-        //    //{
-        //    //    // 在操作之前进行权限检查
-        //    //    if (!CheckPower("CoreOutputDelete"))
-        //    //    {
-        //    //        CheckPowerFailWithAlert();
-        //    //        return;
-        //    //    }
-
-        //    //    Pp_P1d_Output current = DB.Pp_P1d_Outputs.Find(del_ID);
-        //    //    //删除日志
-        //    //    string Newtext = current.ID + "," + current.Prolinename + "," + current.Prolot + "," + current.Prodate + "," + current.Prorealqty + "," + current.Prongclass + "," + current.Prongcode + "," + current.Probadqty + "," + current.Probadtotal + "," + current.Probadcou;
-        //    //   string OperateType = "删除";//操作标记
-        //    //    string OperateNotes = "Del生产* " + Newtext + " *Del 的记录已删除";
-        //    //    OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报删除", OperateNotes);
-        //    //    //删除记录
-        //    //    //DB.Pp_Ecns.Where(l => l.ID == del_ID).Delete();
-        //    //    current.isDelete = 1;
-        //    //    DB.SaveChanges();
-        //    //    //重新绑定
-
-        //    //}
-        //}
-
-        //protected void Grid1_PreDataBound(object sender, EventArgs e)
-        //{
-        //    // 数据绑定之前，进行权限检查
-        //    CheckPowerWithLinkButtonField("CoreOutputDelete", Grid1, "deleteField");
-        //    // 设置LinkButtonField的点击客户端事件
-
-        //}
         private void OPHRate()//稼动率
         {
             Pp_Efficiency current = DB.Pp_Efficiencys
@@ -750,7 +697,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// <summary>
         /// 新增订单不良合计表
         /// </summary>
-        private void SaveDefect()
+        private void SaveOrderDefect()
         {
             Pp_Defect_P2d_Order item = new Pp_Defect_P2d_Order();
 
@@ -762,7 +709,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             item.Promodel = strProModel;
             item.Proitem = prohbn.Text;
             item.Prorealqty = 0;
-            item.Pronobadqty = 0;
+            item.Prodzeroefects = 0;
             item.Probadtotal = 0;
             item.Prodirectrate = 0;
             item.Probadrate = 0;
@@ -787,7 +734,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// <summary>
         /// 更新订单不良合计表
         /// </summary>
-        private void SaveDefectUpdate()
+        private void SaveOrderDefectUpdate()
         {
             //判断重复
             string strorder = proorder.SelectedItem.Text.Trim();
@@ -860,7 +807,119 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             strminDate = "";
             sedate = "";
         }
+        /// <summary>
+        /// 新增订单不良合计表
+        /// </summary>
+        private void SaveLotDefect()
+        {
+            Pp_Defect_P2d_Lot item = new Pp_Defect_P2d_Lot();
 
+            item.Prolot = prolot.Text;
+            item.Prolinename = "制二课";
+            item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
+            item.Proorder = proorder.SelectedItem.Text;
+            item.Proorderqty = Convert.ToInt32(decimal.Parse(prolotqty.Text));
+            item.Promodel = strProModel;
+            item.Proitem = prohbn.Text;
+            item.Prorealqty = 0;
+            item.Prodzeroefects = 0;
+            item.Probadtotal = 0;
+            item.Prodirectrate = 0;
+            item.Probadrate = 0;
+            item.Prodept = "PCBA";
+            item.IsDeleted = 0;
+            item.UDF01 = prohbn.Text;
+            item.Remark = "PCBA";
+            //item.Promodel = promodel.Text;
+            item.GUID = Guid.NewGuid();
+            item.Creator = GetIdentityName();
+            item.CreateDate = DateTime.Now;
+            DB.Pp_Defect_P2d_Lots.Add(item);
+            DB.SaveChanges();
+
+            //新增日志
+            string Contectext = prolot.Text + "制二课" + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + proorder.SelectedItem.Text + "," + prolotqty.Text;
+            string OperateType = "新增";
+            string OperateNotes = "New生产订单不良* " + Contectext + " New生产订单不良* 的记录已新增";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计新增", OperateNotes);
+        }
+
+        /// <summary>
+        /// 更新订单不良合计表
+        /// </summary>
+        private void SaveLotDefectUpdate()
+        {
+            //判断重复
+            string strorder = proorder.SelectedItem.Text.Trim();
+            string strlot = prolot.Text.Trim();
+
+            var line = (from p in DB.Pp_P2d_OutputSubs
+                            //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
+                        where p.Proorder == (strorder)
+
+                        select new
+                        {
+                            p.Prolinename
+                        }).Distinct().ToList();
+            if (line.Any())
+            {
+                for (int i = 0; i < line.Count(); i++)
+                {
+                    strPline += line[i].Prolinename.ToString() + ",";
+                }
+            }
+            var maxdate =
+                                    (from p in DB.Pp_P2d_OutputSubs
+                                         //join b in DB.proOutputs on p.OPHID equals b.OPHID
+                                     where p.Proorder == (strorder)
+                                     //.Where(s => s.Prolot.Contains(strPlot))
+                                     // p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
+                                     group p by p.Proorder into g
+                                     select new
+                                     {
+                                         g.Key,
+                                         mdate = g.Max(p => p.Prodate)
+                                     }).Distinct().ToList();
+            if (maxdate.Any())
+            {
+                strmaxDate = maxdate[0].mdate;
+            }
+
+            var mindate =
+                        (from p in DB.Pp_P2d_OutputSubs
+                             //join b in DB.proOutputs on p.OPHID equals b.OPHID
+                         where p.Proorder == (strorder)
+                         //.Where(s => s.Prolot.Contains(strPlot))
+                         //where p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
+                         group p by p.Proorder into g
+                         select new
+                         {
+                             g.Key,
+                             mdate = g.Min(p => p.Prodate)
+                         }).Distinct().ToList();
+            if (mindate.Any())
+            {
+                strminDate = mindate[0].mdate;
+            }
+
+            string sedate = strminDate + "~" + strmaxDate;
+            DB.Pp_Defect_P2d_Lots
+               .Where(s => s.Proorder == strorder)
+
+               .ToList()
+               .ForEach(x => { x.Promodel = strProModel; x.Prolinename = strPline; x.Prodate = sedate; x.Modifier = GetIdentityName(); x.ModifyDate = DateTime.Now; });
+            DB.SaveChanges();
+
+            //新增日志
+            string Contectext = strorder + "," + strlot + "," + strPline + "," + sedate;
+            string OperateType = "修改";
+            string OperateNotes = "Edit生产不良*" + Contectext + " *Edit生产不良 的记录已修改";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计修改", OperateNotes);
+            strPline = "";
+            strmaxDate = "";
+            strminDate = "";
+            sedate = "";
+        }
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -912,19 +971,31 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             }
 
             //判断重复
-            string input = proorder.SelectedItem.Text.Trim();
+            string inputOrder = proorder.SelectedItem.Text.Trim();
 
-            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input && u.Remark.Contains("PCBA")).FirstOrDefault();
+            Pp_Defect_P2d_Order currentOrder = DB.Pp_Defect_P2d_Orders.Where(u => u.Proorder == inputOrder && u.Prodept.Contains("PCBA")).FirstOrDefault();
 
-            if (current != null)
+            if (currentOrder != null)
             {
-                SaveDefectUpdate();
+                SaveOrderDefectUpdate();
             }
             else
             {
-                SaveDefect();
+                SaveOrderDefect();
             }
+            //判断重复
+            string inputLot = proorder.SelectedItem.Text.Trim();
 
+            Pp_Defect_P2d_Order currentLot = DB.Pp_Defect_P2d_Orders.Where(u => u.Prolot == inputLot && u.Prodept.Contains("PCBA")).FirstOrDefault();
+
+            if (currentLot != null)
+            {
+                SaveLotDefectUpdate();
+            }
+            else
+            {
+                SaveLotDefect();
+            }
             //表格数据已重新绑定
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
@@ -955,106 +1026,182 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
 
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.proorder.SelectedIndex != -1 && this.proorder.SelectedIndex != 0)
+            try
             {
-                try
+                // 获取用户输入的文本
+                string inputText = proorder.Text.Trim();
+
+                // 防抖机制：避免频繁搜索
+                if (!string.IsNullOrEmpty(inputText) && inputText.Length >= 1 && inputText.Length <= 6)
                 {
-                    var q = from a in DB.Pp_Orders
-                            join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
-                            //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
-                            where a.Porderno == proorder.SelectedItem.Text
-                            //where a.Proecnmodel == strProecnmodel
-                            //where a.Proecnbomitem == strProecnbomitem
-                            //where a.Proecnoldhbn == strProecnoldhbn
-                            //where a.Proecnnewhbn == strProecnnewhbn
-                            orderby a.Porderno descending
-                            select new
-                            {
-                                a.Pordertype,
-                                a.Porderno,
-                                a.Porderhbn,
-                                a.Porderlot,
-                                a.Porderqty,
-                                a.Porderdate,
-                                a.Porderserial,
-                                a.Porderreal,
-                                b.Promodel,
-
-                                //c.D_SAP_ZCA1D_Z033,
-                            };
-
-                    if (q.Any())
+                    // 检查是否是重复搜索
+                    if (inputText == lastSearchText && (DateTime.Now - lastSearchTime).TotalSeconds < 1)
                     {
-                        // 切勿使用 source.Count() > 0
-                        var qs = q.Distinct().Take(1).ToList();
+                        return; // 1秒内重复搜索，直接返回
+                    }
 
-                        if (qs[0].Promodel != "")
-                        {
-                            //判断是否为制二课
-                            remark.Text = qs[0].Pordertype + "," + proorder.SelectedItem.Text + "," + qs[0].Promodel + "," + qs[0].Porderhbn + "+" + qs[0].Porderlot;
-                            pordertype.Text = qs[0].Pordertype;
-                            prohbn.Text = qs[0].Porderhbn;
-                            //promodel.Text = qs[0].Promodel;
-                            prolot.Text = (qs[0].Porderlot == "" ? proorder.SelectedItem.Text + "||" + qs[0].Porderqty.ToString() : (qs[0].Porderlot));
-                            //prost.Text = qs[0].Prost.ToString();
-                            prolotqty.Text = qs[0].Porderqty.ToString();
-                            //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
-                            prosn.Text = qs[0].Porderserial;
-                            promodel.Text = qs[0].Promodel;
+                    // 更新搜索记录
+                    lastSearchText = inputText;
+                    lastSearchTime = DateTime.Now;
 
-                            //var pShort = (from p in DB.Pp_Manhours
-                            //              where p.Proitem.Contains(prohbn.Text)
-                            //              where p.Prowctext.Contains("SMT") || p.Prowctext.Contains("自插")
-                            //              orderby p.Prowctext
-                            //              //where p.Age > 30 && p.Department == "研发部"
-                            //              select p).ToList();
+                    // 显示搜索提示
+                    proorder.EmptyText = "正在搜索...";
 
-                            //if (!pShort.Any())
-                            //{
-                            //    //"请确认订单类别！\r\nZDTD，ZDTE，ZDTF为PCBA订单为类型。\r\n如果是SMT或自插，应该有相对应的Short数，请联系技术添加。<br/>\r\n如果是手插或修正，请联系电脑课修改订单类型。
-                            //    string strMsg = String.Format("<div style=\"margin-bottom:10px;color: #0000FF;\"><strong>填写说明：</strong></div><div>1.请确认订单类别。</div><div>2.ZDTD，ZDTE，ZDTF为<strong>PCBA订单为类型</strong>。</div><div>3.如果是SMT或自插，应该有相对应的Short数，<strong>请联系技术添加</strong>。</div><div>4.如果是手插或修正，<strong>请联系电脑课修改订单类型</strong>。</div>");
-                            //    Alert.ShowInTop(strMsg, MessageBoxIcon.Error);
-                            //    return;
-                            //}
+                    // 使用快速搜索方法
+                    var orderNumbers = SearchOrdersFast(inputText);
 
-                            //HourQty();
-                        }
-                        else
-                        {
-                            //var pShort = (from p in DB.Pp_Manhours
-                            //              where p.Proitem.Contains(prohbn.Text)
-                            //              where p.Prowctext.Contains("SMT")
-                            //              orderby p.Prowctext
-                            //              //where p.Age > 30 && p.Department == "研发部"
-                            //              select p).ToList();
+                    // 更新下拉列表
+                    proorder.Items.Clear();
+                    proorder.Items.Add(new FineUIPro.ListItem("", ""));
 
-                            //if (!pShort.Any())
-                            //{
-                            Alert.ShowInTop("机种信息不存在！请再次确认！！！", MessageBoxIcon.Warning);
-                            return;
-                            //}
-                            // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
-                        }
+                    foreach (var orderNo in orderNumbers)
+                    {
+                        proorder.Items.Add(new FineUIPro.ListItem(orderNo, orderNo));
+                    }
+
+                    // 如果找到匹配项，自动选择第一个
+                    if (orderNumbers.Count > 0)
+                    {
+                        proorder.SelectedIndex = 1; // 跳过空项
+                        string selectedOrder = proorder.SelectedItem.Text;
+
+                        // 使用缓存的查询结果，避免重复查询
+                        LoadOrderDetails(selectedOrder);
                     }
                     else
                     {
-                        // 参数错误，首先弹出Alert对话框然后关闭弹出窗口
-                        Alert.ShowInTop("机种信息不存在！请再次确认！！！", String.Empty, ActiveWindow.GetHideReference());
+                        proorder.EmptyText = "未找到匹配的订单";
+                        Alert.ShowInTop("未找到匹配的订单", MessageBoxIcon.Warning);
                         return;
                     }
                 }
-                catch (ArgumentNullException Message)
+                else if (this.proorder.SelectedIndex != -1 && this.proorder.SelectedIndex != 0)
                 {
-                    Alert.ShowInTop("异常1:" + Message);
+                    // 用户选择了下拉列表中的项目
+                    string selectedOrder = proorder.SelectedItem.Text;
+                    LoadOrderDetails(selectedOrder);
                 }
-                catch (InvalidCastException Message)
+            }
+            catch (ArgumentNullException Message)
+            {
+                Alert.ShowInTop("异常1:" + Message);
+            }
+            catch (InvalidCastException Message)
+            {
+                Alert.ShowInTop("异常2:" + Message);
+            }
+            catch (Exception Message)
+            {
+                Alert.ShowInTop("异常3:" + Message);
+            }
+        }
+
+        /// <summary>
+        /// 快速搜索6位订单号
+        /// </summary>
+        private List<string> SearchOrdersFast(string searchText)
+        {
+            try
+            {
+                // 利用6位固定长度的特点进行快速搜索
+                if (searchText.Length == 6)
                 {
-                    Alert.ShowInTop("异常2:" + Message);
+                    // 精确匹配6位订单号
+                    var exactMatch = DB.Pp_Orders
+                        .Where(o => o.IsDeleted == 0)
+                        .Where(o => o.Porderqty > 0)
+                        .Where(o => o.Porderno == searchText)
+                        .Select(o => o.Porderno)
+                        .AsNoTracking()
+                        .FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(exactMatch))
+                    {
+                        return new List<string> { exactMatch };
+                    }
                 }
-                catch (Exception Message)
+                else
                 {
-                    Alert.ShowInTop("异常3:" + Message);
+                    // 前缀匹配
+                    return DB.Pp_Orders
+                        .Where(o => o.IsDeleted == 0)
+                        .Where(o => o.Porderqty > 0)
+                        .Where(o => o.Porderno.Length == 6)
+                        .Where(o => o.Porderno.StartsWith(searchText))
+                        .OrderByDescending(o => o.Porderno)
+                        .Select(o => o.Porderno)
+                        .AsNoTracking()
+                        .Take(20)
+                        .ToList();
                 }
+
+                return new List<string>();
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowInTop("搜索出错: " + ex.Message, MessageBoxIcon.Error);
+                return new List<string>();
+            }
+        }
+
+        /// <summary>
+        /// 加载订单详细信息（优化版本）
+        /// </summary>
+        private void LoadOrderDetails(string orderNo)
+        {
+            try
+            {
+                // 使用单次查询获取所有需要的信息
+                var orderInfo = DB.Pp_Orders
+                    .Where(o => o.Porderno == orderNo && o.IsDeleted == 0)
+                    .Select(o => new
+                    {
+                        o.Pordertype,
+                        o.Porderno,
+                        o.Porderhbn,
+                        o.Porderlot,
+                        o.Porderqty,
+                        o.Porderdate,
+                        o.Porderserial,
+                        o.Porderreal
+                    })
+                    .AsNoTracking()
+                    .FirstOrDefault();
+
+                if (orderInfo != null)
+                {
+                    // 查询机种信息
+                    var modelInfo = DB.Pp_Manhours
+                        .Where(m => m.Proitem == orderInfo.Porderhbn)
+                        .Select(m => m.Promodel)
+                        .AsNoTracking()
+                        .FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(modelInfo))
+                    {
+                        remark.Text = orderInfo.Pordertype + "," + orderInfo.Porderno + "," + modelInfo + "," + orderInfo.Porderhbn + "+" + (string.IsNullOrEmpty(orderInfo.Porderlot) ? orderInfo.Porderno + "||" + orderInfo.Porderqty.ToString() : orderInfo.Porderlot);
+                        pordertype.Text = orderInfo.Pordertype;
+                        prohbn.Text = orderInfo.Porderhbn;
+                        prolot.Text = (string.IsNullOrEmpty(orderInfo.Porderlot) ? orderInfo.Porderno + "||" + orderInfo.Porderqty.ToString() : orderInfo.Porderlot);
+                        prolotqty.Text = orderInfo.Porderqty.ToString();
+                        prosn.Text = orderInfo.Porderserial;
+                        promodel.Text = modelInfo;
+                    }
+                    else
+                    {
+                        Alert.ShowInTop("机种信息不存在！请再次确认！！！", MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    Alert.ShowInTop("订单信息不存在！请再次确认！！！", String.Empty, ActiveWindow.GetHideReference());
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowInTop("加载订单详情时出错: " + ex.Message, MessageBoxIcon.Error);
             }
         }
 
@@ -1083,5 +1230,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         }
 
         #endregion 计算产能率
+
+
     }
 }

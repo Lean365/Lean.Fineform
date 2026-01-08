@@ -222,22 +222,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
         protected global::FineUIPro.DropDownList ddlProvctype;
 
         /// <summary>
-        /// dpProsideadate 控件。
+        /// ddlPropcbside 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.DatePicker dpProsideadate;
-
-        /// <summary>
-        /// dpProsidebdate 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.DatePicker dpProsidebdate;
+        protected global::FineUIPro.DropDownList ddlPropcbside;
 
         /// <summary>
         /// ddlProdshiftname 控件。

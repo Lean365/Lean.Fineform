@@ -1,4 +1,9 @@
-﻿using System;
+﻿using FineUIPro;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -7,11 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 namespace LeanFine
 {
@@ -1693,8 +1693,8 @@ namespace LeanFine
             }
         }
 
-        //按班组导出Line Output Report
-        public static void ModifyLineOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        //按班组导出有工单 Output Report
+        public static void RprLine_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -1732,7 +1732,7 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別改修OPH)";
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別工单改修OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -1754,7 +1754,7 @@ namespace LeanFine
                 ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                 ws.Cells[2, 15].Style.Font.Size = 10;
                 //ws.Cells[2, 1].Value = "Date";
-                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Value = "備考:SAP指図発行済み";
                 ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
 
                 ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
@@ -1826,8 +1826,8 @@ namespace LeanFine
             }
         }
 
-        //按班组导出Rework Output Report
-        public static void ReworkLine_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        //按班组导出无工单 Output Report
+        public static void RwrLine_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -1865,7 +1865,138 @@ namespace LeanFine
                 dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
 
                 //赋值单元格
-                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別改修OPH)";
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別返工改修OPH)";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 14].Value = "稼働率:";
+                ws.Cells[2, 14].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 14].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 14].Style.Font.Size = 10;
+                ws.Cells[2, 15].Value = "85.00%";
+                ws.Cells[2, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 15].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 15].Style.Font.Size = 10;
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                ws.Cells[3, 15].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 15].Style.Font.Size = 6;
+                ws.Cells[4, 15].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 15].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 15].Style.Font.Size = 10;
+                ws.Cells[5, 1, 5, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Dotted;
+                ws.Cells[5, 15].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 15].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 15].Style.Font.Size = 6;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 15].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 16);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                // 设置 X 列为百分数格式
+                ws.Cells["O7:O" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+        //按班组导出Epp Output Report
+        public static void EppLine_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
+                //配置文件属性
+                wb.Properties.Category = "Rework Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Rework by Lines Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                var aTableRange = ws.Cells[1, 1, 1, 15];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                var bTableRange = ws.Cells[2, 1, 2, 26];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var cTableRange = ws.Cells[3, 1, 3, 23];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var dTableRange = ws.Cells[5, 1, 5, 15];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+
+                //赋值单元格
+                ws.Cells[1, 1].Value = "DTA製造1課生産月報(班別Epp OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
 
@@ -1957,7 +2088,6 @@ namespace LeanFine
                 HttpContext.Current.Response.End();
             }
         }
-
         //按班组导出Model Output Report
         public static void ModelOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
@@ -2095,7 +2225,7 @@ namespace LeanFine
         }
 
         //按班组导出Model Output Report
-        public static void ModifyModelOutput_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        public static void RprModel_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -2122,7 +2252,7 @@ namespace LeanFine
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別改修OPH)";
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別工单改修OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
@@ -2153,7 +2283,7 @@ namespace LeanFine
                 bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
                 //ws.Cells[2, 1].Value = "Date";
-                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Value = "備考:SAP指図発行済み";
                 ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
                 //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
@@ -2234,8 +2364,8 @@ namespace LeanFine
             }
         }
 
-        //按班组导出Rework Model Report
-        public static void ReworkModel_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        //按班组导出无工单 Model Report
+        public static void RwrModel_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
             // If you are a commercial business and have
             // purchased commercial licenses use the static property
@@ -2262,7 +2392,145 @@ namespace LeanFine
                 wb.Properties.LastModifiedBy = "Davis.Ching";
 
                 //赋值单元格
-                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別改修OPH)";
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別返工改修OPH)";
+                ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
+                ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
+                ws.Cells[1, 7].Value = "1時間当たりの生産量";
+                ws.Cells[1, 7].Style.Font.Size = 8;
+                //ws.Cells[1, 1].Style.Border.Bottom.Color.SetColor(Color.FromArgb(0, 0, 0));
+                var aTableRange = ws.Cells[1, 1, 1, 11];
+                aTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                aTableRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //aTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[2, 1].Value = "Date";
+                ws.Cells[2, 2].Value = update;
+                ws.Cells[2, 2].Style.Font.Color.SetColor(Color.Red); //字体颜色
+
+                ws.Cells[2, 4].Value = "Company:";
+                ws.Cells[2, 5].Value = "DongGuan TEAC Electronics Co.,Ltd";
+                ws.Cells[2, 10].Value = "稼働率:";
+                ws.Cells[2, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 10].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 10].Style.Font.Size = 10;
+                ws.Cells[2, 11].Value = "85.00%";
+                ws.Cells[2, 11].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[2, 11].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));//设置单元格背景色
+                ws.Cells[2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[2, 11].Style.Font.Size = 10;
+                //ws.Cells[2, 10, 2, 11].Merge = true;//合并单元格
+                var bTableRange = ws.Cells[2, 1, 2, 11];
+                bTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //ws.Cells[2, 1].Value = "Date";
+                ws.Cells[3, 3].Value = "備考:SAP指図を発行せず，生管から連絡書のみ。";
+                ws.Cells[3, 3].Style.Font.Color.SetColor(Color.Red); //字体颜色
+                //bTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //bTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[3, 11].Value = "Program Designer : DTA EDP Davis.Ching " + update.Substring(0, 4);
+                ws.Cells[3, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[3, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[3, 11].Style.Font.Size = 6;
+                var cTableRange = ws.Cells[3, 1, 3, 11];
+                cTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[4, 11].Value = "OPH入力実績(集計条件：ACTUALQTY>0)";
+                ws.Cells[4, 11].Style.Font.Color.SetColor(Color.DarkSeaGreen);
+                ws.Cells[4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[4, 11].Style.Font.Size = 10;
+                //cTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //cTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[5, 11].Value = "ACT_ST = ACTUALTIME*DIRECTWORKER/ACTUALQTY*0.85";
+                ws.Cells[5, 11].Style.Font.Color.SetColor(Color.DarkGray);
+                ws.Cells[5, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ws.Cells[5, 11].Style.Font.Size = 6;
+                var dTableRange = ws.Cells[5, 1, 5, 11];
+                dTableRange.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //dTableRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //dTableRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells["A6"].LoadFromDataTable(mydt, true);
+                ws.Cells[6, 1, 6, 11].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                //pck.Save();
+                ws.View.FreezePanes(7, 12);
+                //Example how to Format Column 1 as numeric
+                //using (ExcelRange col = ws.Cells[2, 3, 2 + mydt.Rows.Count, 3])
+                //{
+                //    col.Style.Numberformat.Format = "#,##0.00";
+                //    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                //}
+
+                //integer (not really needed unless you need to round numbers, Excel with use default cell properties)
+                //ws.Cells["C2:C125"].Style.Numberformat.Format = "0";
+                ws.Column(3).Style.Numberformat.Format = "0.00";//设置列宽
+                                                                //integer without displaying the number 0 in the cell
+                                                                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#";
+
+                ////number with 1 decimal place
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.0";
+
+                ////number with 2 decimal places
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0.00";
+
+                ////number with 2 decimal places and thousand separator
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "#,##0.00";
+
+                ////number with 2 decimal places and thousand separator and money symbol
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "€#,##0.00";
+
+                ////percentage (1 = 100%, 0.01 = 1%)
+                //ws.Cells["A1:A25"].Style.Numberformat.Format = "0%";
+                //foreach (var dc in dateColumns)
+                //{
+                //    sheet.Cells[2, dc, rowCount + 1, dc].Style.Numberformat.Format = "###,##%";
+                //}
+                //Write it back to the client
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment;  filename=ExcelDemo.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                // 设置 X 列为百分数格式
+                ws.Cells["K7:K" + mydt.Rows.Count + 7].Style.Numberformat.Format = "0.00%";
+                //写到客户端（下载）
+                HttpContext.Current.Response.Clear();
+                //asp.net输出的Excel文件名
+                //如果文件名是中文的话，需要进行编码转换，否则浏览器看到的下载文件是乱码。
+                string fileName = HttpUtility.UrlEncode(myExport_FileName);
+                HttpContext.Current.Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                HttpContext.Current.Response.BinaryWrite(pck.GetAsByteArray());
+                //ep.SaveAs(Response.OutputStream);    第二种方式
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+            }
+        }
+        //按班组导出Epp Model Report
+        public static void EppModel_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
+        {
+            // If you are a commercial business and have
+            // purchased commercial licenses use the static property
+            // LicenseContext of the ExcelPackage class :
+            //ExcelPackage.LicenseContext = LicenseContext.Commercial;
+
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorkbook wb = pck.Workbook;
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(mySheetName);
+                //配置文件属性
+                wb.Properties.Category = "Rework Report";
+                wb.Properties.Author = "Davis.Ching";
+                wb.Properties.Comments = "Lean365 Inc.";
+                wb.Properties.Company = "DTA";
+                wb.Properties.Keywords = "OPH";
+                wb.Properties.Manager = "Davis.Ching";
+                wb.Properties.Status = "Normal";
+                wb.Properties.Subject = "Lean Manufacturing";
+                wb.Properties.Title = "DTA Rework by Models Output Report";
+                wb.Properties.LastModifiedBy = "Davis.Ching";
+
+                //赋值单元格
+                ws.Cells[1, 2].Value = "DTA製造1課生産月報(機種別Epp OPH)";
                 ws.Cells[1, 2].Style.Font.Size = 12;//字体大小
                 ws.Cells[1, 1].Style.Font.Bold = true;//字体为粗体
                 ws.Cells[1, 7].Value = "1時間当たりの生産量";
@@ -2372,7 +2640,6 @@ namespace LeanFine
                 HttpContext.Current.Response.End();
             }
         }
-
         //检查集计表 Inspection Report
         public static void Inspection_XlsxFile(DataTable mydt, string mySheetName, string myExport_FileName, string update)
         {
@@ -3015,7 +3282,7 @@ namespace LeanFine
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
         //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
 
-        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Prodzeroefects"));
         //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
         //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
@@ -3342,7 +3609,7 @@ namespace LeanFine
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
         //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
 
-        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Prodzeroefects"));
         //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
         //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
@@ -3665,7 +3932,7 @@ namespace LeanFine
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(3, 3, 6, 8));
         //                sheet.GetRow(3).GetCell(6).SetCellValue("无不良台数");
 
-        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Pronobadqty"));
+        //                sheet.GetRow(3).GetCell(9).SetCellValue(q[0].Field<Int32>("Prodzeroefects"));
         //                //sheet.GetRow(2).GetCell(5).SetCellType(CellType.Numeric);
         //                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(4, 4, 6, 8));
         //                sheet.GetRow(4).GetCell(6).SetCellValue("不良总件数");
@@ -4178,7 +4445,7 @@ namespace LeanFine
                         if (q.Any())
                         {
                             int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                             int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                             worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -4188,7 +4455,7 @@ namespace LeanFine
                             worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                             worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                             worksheet.Cells["J3"].Value = Prorealqty;
-                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J4"].Value = Prodzeroefects;
                             worksheet.Cells["J5"].Value = Probadtotal;
                         }
 
@@ -4609,7 +4876,7 @@ namespace LeanFine
                             if (q.Any())
                             {
                                 int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                                 int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                                 worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -4619,7 +4886,7 @@ namespace LeanFine
                                 worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                                 worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                                 worksheet.Cells["J3"].Value = Prorealqty;
-                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J4"].Value = Prodzeroefects;
                                 worksheet.Cells["J5"].Value = Probadtotal;
                             }
 
@@ -5050,6 +5317,7 @@ namespace LeanFine
                     {
                         // 创建工作表
                         var worksheet = package.Workbook.Worksheets.Add(dt.TableName.Substring(0, dt.TableName.IndexOf('_')) + "_P1");
+                        //var worksheet = package.Workbook.Worksheets.Add(dt.TableName + "_P1");
                         worksheet.PrinterSettings.PaperSize = ePaperSize.A4;
                         // 设置 A4 页边距
                         worksheet.PrinterSettings.LeftMargin = 0.5m; // 左边距
@@ -5086,7 +5354,7 @@ namespace LeanFine
                         if (q.Any())
                         {
                             int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                             int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                             worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -5096,7 +5364,7 @@ namespace LeanFine
                             worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                             worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                             worksheet.Cells["J3"].Value = Prorealqty;
-                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J4"].Value = Prodzeroefects;
                             worksheet.Cells["J5"].Value = Probadtotal;
                         }
 
@@ -5449,7 +5717,8 @@ namespace LeanFine
                         worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                         worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                         worksheet.Cells["A48:D52"].Merge = true;
-                        worksheet.Cells["A48"].Value = strOrder;
+                        worksheet.Cells["A48"].Value = strOrder + "\r\n说明:NO为随机卡，PE为发生工程，\r\nSWP为步骤，ADR为症状";
+                        worksheet.Cells["A48"].Style.WrapText = true;// 设置自动换行
 
                         worksheet.Cells["E48:F48"].Merge = true;
                         worksheet.Cells["E48"].Value = "承认";
@@ -5518,7 +5787,7 @@ namespace LeanFine
                             if (q.Any())
                             {
                                 int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                                 int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                                 worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -5528,7 +5797,7 @@ namespace LeanFine
                                 worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                                 worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                                 worksheet.Cells["J3"].Value = Prorealqty;
-                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J4"].Value = Prodzeroefects;
                                 worksheet.Cells["J5"].Value = Probadtotal;
                             }
 
@@ -5881,7 +6150,8 @@ namespace LeanFine
                             worksheet.Cells["A48:J52"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                             worksheet.Cells["A48:J52"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                             worksheet.Cells["A48:D52"].Merge = true;
-                            worksheet.Cells["A48"].Value = strOrder;
+                            worksheet.Cells["A48"].Value = strOrder + "\r\n说明:NO为随机卡，PE为发生工程，\r\nSWP为步骤，ADR为症状";
+                            worksheet.Cells["A48"].Style.WrapText = true;
 
                             worksheet.Cells["E48:F48"].Merge = true;
                             worksheet.Cells["E48"].Value = "承认";
@@ -5996,7 +6266,7 @@ namespace LeanFine
                         if (q.Any())
                         {
                             int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                            int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                            int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                             int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                             worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -6006,7 +6276,7 @@ namespace LeanFine
                             worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                             worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                             worksheet.Cells["J3"].Value = Prorealqty;
-                            worksheet.Cells["J4"].Value = Pronobadqty;
+                            worksheet.Cells["J4"].Value = Prodzeroefects;
                             worksheet.Cells["J5"].Value = Probadtotal;
                         }
 
@@ -6427,7 +6697,7 @@ namespace LeanFine
                             if (q.Any())
                             {
                                 int Prorealqty = q.First().Field<Int32>("Prorealqty");
-                                int Pronobadqty = q.First().Field<Int32>("Pronobadqty");
+                                int Prodzeroefects = q.First().Field<Int32>("Prodzeroefects");
                                 int Probadtotal = q.First().Field<Int32>("Probadtotal");
 
                                 worksheet.Cells["B3"].Value = q.First().Field<string>("Promodel");
@@ -6437,7 +6707,7 @@ namespace LeanFine
                                 worksheet.Cells["E4"].Value = q.First().Field<decimal>("Prodirectrate");
                                 worksheet.Cells["E5"].Value = q.First().Field<decimal>("Probadrate");
                                 worksheet.Cells["J3"].Value = Prorealqty;
-                                worksheet.Cells["J4"].Value = Pronobadqty;
+                                worksheet.Cells["J4"].Value = Prodzeroefects;
                                 worksheet.Cells["J5"].Value = Probadtotal;
                             }
 

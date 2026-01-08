@@ -1,10 +1,10 @@
-﻿using System.Data.Entity;
-using LeanFine.Lf_Business.Models.FICO;
+﻿using LeanFine.Lf_Business.Models.FICO;
 using LeanFine.Lf_Business.Models.MM;
 using LeanFine.Lf_Business.Models.OA;
 using LeanFine.Lf_Business.Models.PP;
 using LeanFine.Lf_Business.Models.QM;
 using LeanFine.Lf_Business.Models.SD;
+using System.Data.Entity;
 
 namespace LeanFine
 {
@@ -78,8 +78,11 @@ namespace LeanFine
         public DbSet<Pp_P1d_Epp_Defect> Pp_P1d_Epp_Defects { get; set; }
         public DbSet<Pp_P1d_Output> Pp_P1d_Outputs { get; set; }
         public DbSet<Pp_P1d_OutputSub> Pp_P1d_OutputSubs { get; set; }
+
         public DbSet<Pp_P1d_Epp_Output> Pp_P1d_Epp_Outputs { get; set; }
         public DbSet<Pp_P1d_Epp_OutputSub> Pp_P1d_Epp_OutputSubs { get; set; }
+        public DbSet<Pp_P1d_Epp_Date_Output> Pp_P1d_Epp_Date_Outputs { get; set; }
+        public DbSet<Pp_P1d_Epp_Date_OutputSub> Pp_P1d_Epp_Date_OutputSubs { get; set; }
         public DbSet<Pp_P1d_Modify_Defect> Pp_P1d_Modify_Defects { get; set; }
         public DbSet<Pp_P1d_Modify_Output> Pp_P1d_Modify_Outputs { get; set; }
         public DbSet<Pp_P1d_Modify_OutputSub> Pp_P1d_Modify_OutputSubs { get; set; }

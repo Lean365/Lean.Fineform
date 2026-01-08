@@ -56,7 +56,7 @@
                     <Toolbars>
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <%--                                <f:Button ID="btnDeleteSelected" Icon="Delete" runat="server" Text="删除选中记录" OnClick="btnDeleteSelected_Click">
+                                <%--<f:Button ID="btnDeleteSelected" Icon="Delete" runat="server" Text="删除选中记录" OnClick="btnDeleteSelected_Click">
                                 </f:Button>--%>
                                 <f:ToolbarSeparator ID="ToolbarSeparator1" runat="server">
                                 </f:ToolbarSeparator>

@@ -68,9 +68,6 @@
                                 <f:Button ID="BtnReason" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
                                     runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetReason%>" OnClick="BtnReason_Click" CssClass="marginr">
                                 </f:Button>
-                                <f:Button ID="BtnRework" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
-                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetRework%>" OnClick="BtnRework_Click" CssClass="marginr">
-                                </f:Button>
                                 <f:Button ID="BtnReasonSub" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
                                     runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetReasonClassify%>" OnClick="BtnReasonSub_Click" CssClass="marginr">
                                 </f:Button>

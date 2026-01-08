@@ -23,7 +23,7 @@
 
 <body>
     <form id="form1" runat="server">
-        
+
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" ShowBorder="false" ShowHeader="false" AutoScroll="true" runat="server">
             <Toolbars>
@@ -60,7 +60,7 @@
                             <Items>
                                 <%--<f:NumberBox ID="prorealqty" runat="server" Label="生产台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
                                 </f:NumberBox>--%>
-                                <%--<f:Label ID="pronobadqty" runat="server" Label="无不良台数" Text="0">
+                                <%--<f:Label ID="Prodzeroefects" runat="server" Label="无不良台数" Text="0">
                                 </f:Label>--%>
                                 <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
                                 <f:Label ID="lblProlot" runat="server" Label="生产LOT"></f:Label>
@@ -78,7 +78,7 @@
             <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="2" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
-                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
+                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange" EnableMultiSelect="false">
                     <Toolbars>
                         <f:Toolbar runat="server" Position="Top">
                             <Items>
@@ -116,7 +116,15 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面实装" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
+
+                        <f:RenderField Width="200px" ColumnID="Propcbside" SortField="Propcbside" DataField="Propcbside" HeaderText="板面" FieldType="String">
+                            <Editor>
+                                <f:DropDownList ID="ddlPropcbside" runat="server" EnableEdit="true" ForceSelection="true">
+                                </f:DropDownList>
+                            </Editor>
+                        </f:RenderField>
+
+                        <%--<f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面实装" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
                             <Editor>
                                 <f:DatePicker ID="dpProsideadate" Required="true" runat="server">
                                 </f:DatePicker>
@@ -127,7 +135,7 @@
                                 <f:DatePicker ID="dpProsidebdate" Required="true" runat="server">
                                 </f:DatePicker>
                             </Editor>
-                        </f:RenderField>
+                        </f:RenderField>--%>
                         <f:RenderField Width="200px" ColumnID="Prodshiftname" DataField="Prodshiftname" HeaderText="生产班别" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlProdshiftname" Required="true" runat="server" EnableEdit="true" ForceSelection="true" AutoPostBack="True">

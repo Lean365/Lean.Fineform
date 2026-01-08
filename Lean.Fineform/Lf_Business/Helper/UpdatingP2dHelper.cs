@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
 namespace LeanFine.Lf_Business.Helper
 {
     public class UpdatingP2dHelper : PageBase
@@ -48,7 +48,7 @@ namespace LeanFine.Lf_Business.Helper
         /// 制二课更新订单不良集计表（Pp_Defect_P2d_Orders），条件按订单,生产实绩（Prorealqty）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void Pp_Defect_P2d_Orders_Realqty_Update(string strPorder, string uid, string strProdept)
+        public static void Pp_Defect_P2d_Orders_Realqty_Update(string strPorder, string uid)
         {
             int realQty = 0;
 
@@ -70,16 +70,16 @@ namespace LeanFine.Lf_Business.Helper
 
             DB.Pp_Defect_P2d_Orders
               .Where(s => s.Proorder == strPorder)
-              .Where(s => s.Prodept == (strProdept))
+              //.Where(s => s.Prodept == (strProdept))
               .ToList()
               .ForEach(x => { x.Prorealqty = realQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
         /// <summary>
-        /// 制二课更新无不良台数，条件生产订单，（Pronobadqty）
+        /// 制二课更新无不良台数，条件生产订单，（Prodzeroefects）
         /// </summary>
         /// <param name="strPorder"></param>
-        public static void Pp_Defect_P2d_Orders_NoBadqty_Update(string strPorder, string uid, string strProdept)
+        public static void Pp_Defect_P2d_Orders_NoBadqty_Update(string strPorder, string uid)
         {
             int noQty = 0;
             int okQty = 0;
@@ -92,7 +92,7 @@ namespace LeanFine.Lf_Business.Helper
                     p.Prolinename,
                     p.Prodate,
                     p.Proorder,
-                    p.Pronobadqty,
+                    p.Prodzeroefects,
                 }
                      into g
                 select new
@@ -100,7 +100,7 @@ namespace LeanFine.Lf_Business.Helper
                     g.Key.Prodate,
                     g.Key.Prolinename,
                     g.Key.Proorder,
-                    g.Key.Pronobadqty,
+                    g.Key.Prodzeroefects,
                 };
 
             //统计无不良台数（有不良录入时）
@@ -112,7 +112,7 @@ namespace LeanFine.Lf_Business.Helper
                         into g
                          select new
                          {
-                             TotalQty = g.Sum(p => p.Pronobadqty)
+                             TotalQty = g.Sum(p => p.Prodzeroefects)
                          }).ToList();
 
             if (noqty.Any())
@@ -138,10 +138,10 @@ namespace LeanFine.Lf_Business.Helper
 
             DB.Pp_Defect_P2d_Orders
                   .Where(s => s.Proorder == strPorder)
-                  .Where(s => s.Prodept == (strProdept))
+                  //.Where(s => s.Prodept == (strProdept))
 
                   .ToList()
-                  .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                  .ForEach(x => { x.Prodzeroefects = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
         /// <summary>
@@ -704,7 +704,7 @@ namespace LeanFine.Lf_Business.Helper
                      into g
                  select new
                  {
-                     TotalQty = g.Sum(p => p.Pronobadqty)
+                     TotalQty = g.Sum(p => p.Prodzeroefects)
                  }).ToList();
             if (noqs.Any())
             {
@@ -724,7 +724,7 @@ namespace LeanFine.Lf_Business.Helper
         /// <param name="pdate"></param>
         /// <param name="pline"></param>
         /// <param name="porder"></param>
-        public static void Pp_Defect_P2d_BadTotal_Update(string pdate, string pline, string porder, string uid, string strProdept)
+        public static void Pp_Defect_P2d_BadTotal_Update(string pdate, string pline, string porder, string uid)
         {
             //求和
             var q =
@@ -797,7 +797,7 @@ namespace LeanFine.Lf_Business.Helper
                 DB.SaveChanges();
                 DB.Pp_Defect_P2d_Orders
                    .Where(s => s.Proorder == porder)
-                  .Where(s => s.Prodept == (strProdept))
+                   //.Where(s => s.Prodept == (strProdept))
                    .ToList()
                    .ForEach(x => { x.Probadtotal = ccs; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
                 DB.SaveChanges();

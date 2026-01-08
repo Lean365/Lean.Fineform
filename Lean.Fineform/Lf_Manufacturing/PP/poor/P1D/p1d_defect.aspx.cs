@@ -1,11 +1,11 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Web.UI.WebControls;
-using FineUIPro;
+﻿using FineUIPro;
 using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -65,6 +65,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         private void BindGrid()
         {
+            //IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects; //.Include(u => u.Dept);
+            //                                                 // 在查询添加之后，排序和分页之前获取总记录数
+            //Grid1.RecordCount = q.Count();
+
+            //// 排列和数据库分页
+            //q = SortAndPage<Pp_P1d_Defect>(q, Grid1);
+
+            //Grid1.DataSource = q;
+            //Grid1.DataBind();
+
             var LineType = (from a in DB.Adm_Dicts
                                 //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                                 //where b.Proecnno == strecn
@@ -81,7 +91,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -111,11 +121,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // 排列和数据库分页
             q = SortAndPage<Pp_P1d_Defect>(q_include, Grid1);
-
-            Grid1.DataSource = q_include;
+            var pagedData = SortAndPage<Pp_P1d_Defect>(q_include, Grid1);
+            Grid1.DataSource = pagedData;
             Grid1.DataBind();
             //ttbSearchMessage.Text = "";
-            ConvertHelper.LinqConvertToDataTable(q_include);
+            var sss = ConvertHelper.LinqConvertToDataTable(q_include);
             // 当前页的合计
             GridSummaryData(ConvertHelper.LinqConvertToDataTable(q_include));
         }
@@ -126,7 +136,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                 //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                                 //where b.Proecnno == strecn
                                 //where b.Proecnbomitem == stritem
-                            where a.DictType.Contains("reason_type_m")
+                            where a.DictType.Contains("line_type_m")
                             select new
                             {
                                 a.DictLabel,
@@ -144,7 +154,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     };
 
             //包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictValue));
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel));
 
             var qs = q_include.Select(E => new { E.Prolinename, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -152,8 +162,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             DdlLine.DataSource = qs;
-            DdlLine.DataTextField = "DictLabel";
-            DdlLine.DataValueField = "DictValue";
+            DdlLine.DataTextField = "Prolinename";
+            DdlLine.DataValueField = "Prolinename";
             DdlLine.DataBind();
 
             this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
@@ -233,10 +243,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 DB.Pp_P1d_Defects.Where(l => l.ID == del_ID).DeleteFromQuery();
 
                 //更新无不良台数
-                UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(current.Proorder, GetIdentityName(), "ASSY");
+                UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(current.Prodate.Substring(0, 6), current.Proorder, GetIdentityName());
 
                 //更新不具合合计
-                UpdateP1dHelper.UpdatebadAmount(current.Prodate, current.Prolinename, current.Proorder, GetIdentityName(), "ASSY");
+                UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_TotalBadQty(current.Prodate, current.Prolinename, current.Proorder, GetIdentityName());
 
                 BindGrid();
             }
@@ -296,17 +306,28 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string Prefix_XlsxName, Export_FileName, SheetName;
 
             SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMM");
-            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "DefectRecord_Data";
+            Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "_DefectRecord_Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
-            Export_FileName = Prefix_XlsxName + ".xlsx";
 
+
+            var LineType = (from a in DB.Adm_Dicts
+                                //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                                //where b.Proecnno == strecn
+                                //where b.Proecnbomitem == stritem
+                            where a.DictType.Contains("line_type_m")
+                            select new
+                            {
+                                a.DictLabel,
+                                a.DictValue
+                            }).ToList();
             IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + searchText.Trim().ToUpper() + "_Prod_Defect_Data";
+                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -322,22 +343,35 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-
-            q = q.Where(u => u.IsDeleted == 0);
-            if (q.Any())
+            if (this.DdlLine.SelectedIndex != -1 && this.DdlLine.SelectedIndex != 0)
             {
-                var qs = from p in q
+                Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + DdlLine.SelectedText + searchText.Trim().ToUpper() + "_DefectRecord_Data";
+                q = q.Where(u => u.Prolinename.Contains(this.DdlLine.SelectedText));
+            }
+            q = q.Where(u => u.IsDeleted == 0);
+
+            //查询包含子集
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable().OrderBy(u => u.Prodate);
+            Export_FileName = Prefix_XlsxName + ".xlsx";
+            if (q_include.Any())
+            {
+                var qs = from p in q_include
                          .OrderBy(s => s.Prodate)
                          select new
                          {
                              生产批次 = p.Prolot,
+                             生产机种 = p.Promodel,
+                             生产订单 = p.Proorder,
                              生产班组 = p.Prolinename,
                              生产日期 = p.Prodate,
                              生产数量 = p.Prorealqty,
-                             不良区分 = p.Prongdept,
-                             不良症状 = p.Probadnote,
-                             不良个所 = p.Probadset,
-                             不良原因 = p.Probadreason,
+                             随机卡号 = p.Prorandomcard,
+                             发生工程 = p.Prodefectoccurs,
+                             检查名 = p.Prodefectstep,
+                             不良区分 = p.Prodefectcategory,
+                             不良症状 = p.Prodefectsymptom,
+                             不良个所 = p.Prodefectlocation,
+                             不良原因 = p.Prodefectcause,
                              不良件数 = p.Probadqty,
                          };
 

@@ -127,9 +127,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 //      Prolotqty = g.Sum(p => p.Proorderqty),
                 //      Prorealqty = g.Sum(p => p.Prorealqty),
-                //      Pronobadqty = g.Sum(p => p.Pronobadqty),
+                //      Prodzeroefects = g.Sum(p => p.Prodzeroefects),
                 //      Probadtotal = g.Sum(p => p.Probadtotal),
-                //      Prodirectrate = (g.Sum(p => p.Pronobadqty) != 0 ? (g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                //      Prodirectrate = (g.Sum(p => p.Prodzeroefects) != 0 ? (g.Sum(p => p.Prodzeroefects) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
                 //      Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
                 //  };
 

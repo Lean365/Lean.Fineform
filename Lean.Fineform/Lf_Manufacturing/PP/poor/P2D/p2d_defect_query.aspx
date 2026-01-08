@@ -84,11 +84,11 @@
 
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="生产日期" />
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="80px" HeaderText="生产数量" />
-                        <f:BoundField DataField="Prongdept" SortField="Prongdept" Width="80px" HeaderText="不良区分" />
-                        <f:BoundField DataField="Pronobadqty" SortField="Pronobadqty" ColumnID="Pronobadqty" Width="100px" HeaderText="无不良台数" />
+                        <f:BoundField DataField="Prodefectcategory" SortField="Prodefectcategory" Width="80px" HeaderText="不良区分" />
+                        <f:BoundField DataField="Prodzeroefects" SortField="Prodzeroefects" ColumnID="Prodzeroefects" Width="100px" HeaderText="无不良台数" />
                         <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良件数" />
-                        <f:BoundField DataField="Probadnote" SortField="Probadnote" Width="120px" HeaderText="不良症状" />
-                        <f:BoundField DataField="Probadreason" SortField="Probadreason" Width="150px" HeaderText="不良原因" />
+                        <f:BoundField DataField="Prodefectsymptom" SortField="Prodefectsymptom" Width="120px" HeaderText="不良症状" />
+                        <f:BoundField DataField="Prodefectcause" SortField="Prodefectcause" Width="150px" HeaderText="不良原因" />
 
 
 

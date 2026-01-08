@@ -102,15 +102,15 @@
                         <f:BoundField DataField="Prorealqty" ExpandUnusedSpace="true" SortField="Prorealqty" MinWidth="100px" HeaderText="生产实绩" />
                         <f:BoundField DataField="Prolinename" ExpandUnusedSpace="true" SortField="Prolinename" MinWidth="100px" HeaderText="生产组别" />
                         <f:BoundField DataField="Propcbcardno" ExpandUnusedSpace="true" SortField="Propcbcardno" MinWidth="100px" HeaderText="卡号" />
-                        <f:BoundField DataField="Probadnote" ExpandUnusedSpace="true" SortField="Probadnote" MinWidth="100px" HeaderText="不良症状" />
+                        <f:BoundField DataField="Prodefectsymptom" ExpandUnusedSpace="true" SortField="Prodefectsymptom" MinWidth="100px" HeaderText="不良症状" />
                         <f:BoundField DataField="Propcbcheckout" ExpandUnusedSpace="true" SortField="Propcbcheckout" MinWidth="100px" HeaderText="检出工程" />
-                        <f:BoundField DataField="Probadreason" ExpandUnusedSpace="true" SortField="Probadreason" MinWidth="100px" HeaderText="不良原因" />
+                        <f:BoundField DataField="Prodefectcause" ExpandUnusedSpace="true" SortField="Prodefectcause" MinWidth="100px" HeaderText="不良原因" />
                         <f:BoundField DataField="Probadqty" ExpandUnusedSpace="true" SortField="Probadqty" MinWidth="100px" HeaderText="不良数量" />
                         <f:BoundField DataField="Probadtotal" ExpandUnusedSpace="true" SortField="Probadtotal" MinWidth="100px" HeaderText="不良台数" />
                         <f:BoundField DataField="Probadresponsibility" ExpandUnusedSpace="true" SortField="Probadresponsibility" MinWidth="100px" HeaderText="责任归属" />
-                        <f:BoundField DataField="Probadprop" ExpandUnusedSpace="true" SortField="Probadprop" MinWidth="100px" HeaderText="不良性质" />
+                        <f:BoundField DataField="Prodefectnature" ExpandUnusedSpace="true" SortField="Prodefectnature" MinWidth="100px" HeaderText="不良性质" />
                         <f:BoundField DataField="Probadserial" ExpandUnusedSpace="true" SortField="Probadserial" MinWidth="100px" HeaderText="序列号" />
-                        <f:BoundField DataField="Probadrepairman" ExpandUnusedSpace="true" SortField="Probadrepairman" MinWidth="100px" HeaderText="修理" />
+                        <f:BoundField DataField="Prorepairman" ExpandUnusedSpace="true" SortField="Prorepairman" MinWidth="100px" HeaderText="修理" />
 
 
 

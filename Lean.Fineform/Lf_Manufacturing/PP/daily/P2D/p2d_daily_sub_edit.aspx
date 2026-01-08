@@ -96,7 +96,7 @@
                         <%--                        <f:RenderField Width="180px" ColumnID="Prodate" DataField="Prodate" HeaderText="日期" FieldType="String">
                             <Editor>
                                 <f:DatePicker  runat="server" Required="true" DateFormatString="yyyyMMdd"
-                                    ID="dpkProdate" ShowRedStar="True">
+                                    ID="dpProdate" ShowRedStar="True">
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>--%>

@@ -33,7 +33,7 @@ namespace LeanFine.Lf_Business.Models.PP
 
         public int Proindirect { get; set; }//间接人员
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string Prolot { get; set; }//LOT批次
 
         [StringLength(50)]

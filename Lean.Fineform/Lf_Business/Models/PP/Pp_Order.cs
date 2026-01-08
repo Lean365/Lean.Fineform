@@ -21,7 +21,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [Required, StringLength(20)]
         public string Porderhbn { get; set; }//物料
 
-        [StringLength(20)]
+        [StringLength(40)]
         public string Porderlot { get; set; }//Lot
 
         [Required]

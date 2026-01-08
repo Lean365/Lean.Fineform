@@ -1823,13 +1823,13 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    proLine cline = DB.proLines
                 //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
 
-                //    item.Prongdept = Prongdept;
+                //    item.Prodefectcategory = Prodefectcategory;
                 //    item.Prolineclass = cline.lineclass;
                 //    item.Prolinename = this.prolinename.SelectedItem.Text;
 
                 //    item.Prodate = prodate.Text;
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
-                //    item.Prongdept = "OK";
+                //    item.Prodefectcategory = "OK";
                 //    //种类
                 //    proDefectcode cclass = DB.proDefectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
@@ -1848,8 +1848,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    item.Probadqty = 0;
 
                 //    item.Probadtotal = 0;
-                //    item.Probadnote = "OK";
-                //    item.Probadreason = "OK";
+                //    item.Prodefectsymptom = "OK";
+                //    item.Prodefectcause = "OK";
                 //    item.Prongbdel = false;
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
@@ -1860,7 +1860,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    DB.SaveChanges();
 
                 //    //新建日志
-                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                 //    string NewOperateType = item.Defectguid;
                 //    string NewOperateNotes = "beNew* " + NewText + " *beNew 的记录已经将新增";
                 //    NetCountHelper.NetLogRecord(userid, NewOperateType, "不具合管理", "不具合新增", NewOperateNotes);
@@ -2057,12 +2057,12 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    proLine cline = DB.proLines
                 //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
 
-                //    item.Prongdept = Prongdept;
+                //    item.Prodefectcategory = Prodefectcategory;
                 //    item.Prolineclass = cline.lineclass;
                 //    item.Prolinename = this.prolinename.SelectedItem.Text;
                 //    item.Prodate = this.prodate.Text;
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
-                //    item.Prongdept = "OK";
+                //    item.Prodefectcategory = "OK";
                 //    //种类
                 //    proDefectcode cclass = DB.proDefectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
@@ -2081,8 +2081,8 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    item.Probadqty = 0;
 
                 //    item.Probadtotal = 0;
-                //    item.Probadnote = "OK";
-                //    item.Probadreason = "OK";
+                //    item.Prodefectsymptom = "OK";
+                //    item.Prodefectcause = "OK";
                 //    item.Prongbdel = false;
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
@@ -2093,7 +2093,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
                 //    DB.SaveChanges();
 
                 //    //新建日志
-                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                 //    string NewOperateType = item.Defectguid;
                 //    string NewOperateNotes = "beNew * " + NewText + " *beNew 的记录已经将新增";
                 //    NetCountHelper.NetLogRecord(userid, NewOperateType, "不具合管理", "不具合新增", NewOperateNotes);
@@ -2214,7 +2214,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
                 item.qmAcceptqty = decimal.Parse(rowData["qmAcceptqty"].ToString());
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
             //不良级别
             if (rowDict.ContainsKey("qmJudgmentlevel"))
@@ -2223,7 +2223,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
                 item.qmJudgmentlevel = rowData["qmJudgmentlevel"].ToString();
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
             //验退数
             if (rowDict.ContainsKey("qmRejectqty"))
@@ -2232,7 +2232,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
                 item.qmRejectqty = decimal.Parse(rowData["qmRejectqty"].ToString());
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
             //检查号码
             if (rowDict.ContainsKey("qmCheckNotes"))
@@ -2241,7 +2241,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
                 item.qmCheckNotes = rowData["qmCheckNotes"].ToString();
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
             //特记事项
             if (rowDict.ContainsKey("qmSpecialNotes"))
@@ -2250,7 +2250,7 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
 
                 item.qmSpecialNotes = rowData["qmSpecialNotes"].ToString();
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
             item.ModifyDate = DateTime.Now;
             item.Modifier = userid;

@@ -22,7 +22,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            ShowHeader="false" Title="LeanCloud">
+            ShowHeader="false" Title="Lean365">
             <Items>
                 <f:Form ID="Form2" runat="server" Height="36px" BodyPadding="5px" ShowHeader="false"
                     ShowBorder="false" LabelAlign="Right">
@@ -103,13 +103,13 @@
                         <f:BoundField DataField="Propcbcardno" SortField="Propcbcardno" Width="120px" HeaderText="卡号" />
                         <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良" />
                         <%--<f:BoundField DataField="Probadamount" SortField="Probadamount"  Width="100px" HeaderText="不良总数" />--%>
-                        <f:BoundField DataField="Probadnote" SortField="Probadnote" Width="120px" HeaderText="症状" />
+                        <f:BoundField DataField="Prodefectsymptom" SortField="Prodefectsymptom" Width="120px" HeaderText="症状" />
                         <%--<f:BoundField DataField="Propcbcheckout" SortField="Propcbcheckout" Width="120px" HeaderText="检出工程" />--%>
-                        <f:BoundField DataField="Probadreason" SortField="Probadreason" Width="150px" HeaderText="原因" />
+                        <f:BoundField DataField="Prodefectcause" SortField="Prodefectcause" Width="150px" HeaderText="原因" />
                         <f:BoundField DataField="Probadresponsibility" SortField="Probadresponsibility" Width="150px" HeaderText="责任" />
-                        <f:BoundField DataField="Probadprop" SortField="Probadprop" Width="150px" HeaderText="性质" />
+                        <f:BoundField DataField="Prodefectnature" SortField="Prodefectnature" Width="150px" HeaderText="性质" />
                         <%--<f:BoundField DataField="Probadserial" SortField="Probadserial" Width="150px" HeaderText="流水" />--%>
-                        <f:BoundField DataField="Probadrepairman" SortField="Probadrepairman" Width="150px" HeaderText="修理" />
+                        <f:BoundField DataField="Prorepairman" SortField="Prorepairman" Width="150px" HeaderText="修理" />
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"
                             HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>"
                             ToolTip="<%$ Resources:GlobalResource,sys_Button_Delete%>" ConfirmText="<%$ Resources:GlobalResource,sys_Button_DeleteConfirmText%>"

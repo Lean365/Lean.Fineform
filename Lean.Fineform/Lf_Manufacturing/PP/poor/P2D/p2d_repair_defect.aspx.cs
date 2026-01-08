@@ -1,12 +1,11 @@
-﻿using System;
-
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
+using System;
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
 {
@@ -341,15 +340,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor.P2D
                              当日生产台数 = p.Prorealqty,
                              线别 = p.Prolinename,
                              卡号 = p.Propcbcardno,
-                             不良症状 = p.Probadnote,
+                             不良症状 = p.Prodefectsymptom,
                              检出工程 = p.Propcbcheckout,
-                             不良原因 = p.Probadreason,
+                             不良原因 = p.Prodefectcause,
                              不良数量 = p.Probadqty,
                              总不良 = p.Probadtotal,
                              责任单位 = p.Probadresponsibility,
-                             不良性质 = p.Probadprop,
+                             不良性质 = p.Prodefectnature,
                              流水 = p.Probadserial,
-                             修理 = p.Probadrepairman,
+                             修理 = p.Prorepairman,
                              //不良率 = p.Probadqty/ p.Prorealqty,
                              当天不良率 = (p.Prorealqty != 0 ? (decimal)p.Probadqty / p.Prorealqty : 0)
                          };

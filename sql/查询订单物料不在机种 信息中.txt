@@ -1,0 +1,24 @@
+/****** SSMS 的 SelectTopNRows 命令的脚本  ******/
+SELECT
+      [D_SAP_COOIS_C002]
+      ,[D_SAP_COOIS_C003]
+
+  FROM [LeanFine_Pord].[dbo].[PP_SapOrder] where D_SAP_COOIS_C003
+NOT IN (
+    SELECT [D_SAP_DEST_Z001] FROM  [LeanFine_Pord].[dbo].[PP_SapModelDest] WHERE [D_SAP_DEST_Z001] IS NOT NULL
+)
+
+
+
+/****** SSMS 的 SelectTopNRows 命令的脚本  ******/
+SELECT
+      [D_SAP_COOIS_C002]
+      ,[D_SAP_COOIS_C003]
+
+  FROM [LeanFine_Pord].[dbo].[PP_SapOrder] where D_SAP_COOIS_C003
+NOT IN (
+    SELECT [D_SAP_ZPBLD_Z002] FROM  [LeanFine_Pord].[dbo].PP_SapManhour WHERE [D_SAP_ZPBLD_Z002] IS NOT NULL
+)
+
+
+

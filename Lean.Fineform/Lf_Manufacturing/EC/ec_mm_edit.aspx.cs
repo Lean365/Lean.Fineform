@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -206,7 +207,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                         where b.Ec_location != "C003"
                         where a.Ec_no == strEc_no
                         where b.Ec_model == strEc_model
-                        where string.IsNullOrEmpty(b.Ec_mmdate)
+                        //where string.IsNullOrEmpty(b.Ec_mmdate)
                         //where b.Ec_mmlot != ("仓库C003")
                         //where a.Ec_bomitem == strEc_bomitem
                         //where a.Ec_olditem == strEc_olditem
@@ -234,7 +235,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                             b.Ec_bstock,
                             //c.D_SAP_ZCA1D_Z033,
                         };
-                bool sss = q.Any();
+                //bool sss = q.Any();
                 if (q.Any())
                 { // 切勿使用 source.Count() > 0
                     var qs = q.Select(E => new
@@ -280,7 +281,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                         }
                         else
                         {
-                            Ec_mmlot.Text = qs[0].Ec_model.Replace("-", "") + DateTime.Now.ToString("yyM");
+                            Ec_mmlot.Text = qs[0].Ec_model.Replace("-", "") + LotSuffix.GetSpecialFormattedDate();
                         }
                     }
                     else

@@ -80,7 +80,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -292,7 +292,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -320,10 +320,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              生产班组 = p.Prolinename,
                              生产日期 = p.Prodate,
                              生产数量 = p.Prorealqty,
-                             不良区分 = p.Prongdept,
-                             不良症状 = p.Probadnote,
-                             不良个所 = p.Probadset,
-                             不良原因 = p.Probadreason,
+                             不良区分 = p.Prodefectcategory,
+                             不良症状 = p.Prodefectsymptom,
+                             不良个所 = p.Prodefectlocation,
+                             不良原因 = p.Prodefectcause,
                              不良件数 = p.Probadqty,
                          };
 

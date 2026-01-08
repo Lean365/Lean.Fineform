@@ -82,7 +82,7 @@ namespace LeanFine.Lf_Business.Helper
 
 
         /// <summary>
-        /// 制一课更新无不良台数，条件生产订单，（Pronobadqty）
+        /// 制一课更新无不良台数，条件生产订单，（Prodzeroefects）
         /// </summary>
         /// <param name="strPorder"></param>
         public static void P1d_Defect_Modi_Orders_Update_For_NoBadQty(string strPorder, string uid, string strProdept)
@@ -98,7 +98,7 @@ namespace LeanFine.Lf_Business.Helper
                     p.Prolinename,
                     p.Prodate,
                     p.Proorder,
-                    p.Pronobadqty,
+                    p.Prodzeroefects,
                 }
                      into g
                 select new
@@ -106,7 +106,7 @@ namespace LeanFine.Lf_Business.Helper
                     g.Key.Prodate,
                     g.Key.Prolinename,
                     g.Key.Proorder,
-                    g.Key.Pronobadqty,
+                    g.Key.Prodzeroefects,
                 };
 
             //统计无不良台数（有不良录入时）
@@ -118,7 +118,7 @@ namespace LeanFine.Lf_Business.Helper
                         into g
                          select new
                          {
-                             TotalQty = g.Sum(p => p.Pronobadqty)
+                             TotalQty = g.Sum(p => p.Prodzeroefects)
                          }).ToList();
 
             if (noqty.Any())
@@ -147,7 +147,7 @@ namespace LeanFine.Lf_Business.Helper
                  .Where(s => s.Prodept == (strProdept))
 
                   .ToList()
-                  .ForEach(x => { x.Pronobadqty = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
+                  .ForEach(x => { x.Prodzeroefects = noQty + okQty; x.Modifier = uid; x.ModifyDate = DateTime.Now; });
             DB.SaveChanges();
         }
 
@@ -177,7 +177,7 @@ namespace LeanFine.Lf_Business.Helper
                      into g
                  select new
                  {
-                     TotalQty = g.Sum(p => p.Pronobadqty)
+                     TotalQty = g.Sum(p => p.Prodzeroefects)
                  }).ToList();
             if (noqs.Any())
             {

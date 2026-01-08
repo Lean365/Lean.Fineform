@@ -104,6 +104,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
         /// </remarks>
         protected global::FineUIPro.DatePicker prodate;
 
+
+
         /// <summary>
         /// pordertype 控件。
         /// </summary>

@@ -112,9 +112,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                               p.Proorder,
                               p.Proorderqty,
                               p.Prorealqty,
-                              p.Pronobadqty,
+                              p.Prodzeroefects,
                               p.Probadtotal,
-                              Prodirectrate = ((p.Prorealqty == 0 ? 0 : (decimal)p.Pronobadqty / p.Prorealqty)),//  保留一位,
+                              Prodirectrate = ((p.Prorealqty == 0 ? 0 : (decimal)p.Prodzeroefects / p.Prorealqty)),//  保留一位,
                               Probadrate = ((p.Prorealqty == 0 ? 0 : (decimal)p.Probadtotal / p.Prorealqty)),
                               Promodel = p.Promodel,
                           }); ;
@@ -314,7 +314,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                          生产班组 = p.Prolinename,
                          生产日期 = p.Prodate,
                          生产数量 = p.Prorealqty,
-                         无不良台数 = p.Pronobadqty,
+                         无不良台数 = p.Prodzeroefects,
                          生产订单 = p.Proorder,
                          生产机种 = p.Promodel,
                          订单数量 = p.Proorderqty,
@@ -338,7 +338,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             foreach (DataRow row in source.Rows)
             {
                 pTotal += Convert.ToDecimal(row["Prorealqty"]);
-                rTotal += Convert.ToDecimal(row["Pronobadqty"]);
+                rTotal += Convert.ToDecimal(row["Prodzeroefects"]);
                 ratio += Convert.ToDecimal(row["Probadtotal"]);
             }
 
@@ -346,7 +346,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //summary.Add("major", "全部合计");
 
             summary.Add("Prorealqty", pTotal.ToString("F0"));
-            summary.Add("Pronobadqty", rTotal.ToString("F0"));
+            summary.Add("Prodzeroefects", rTotal.ToString("F0"));
             summary.Add("Probadtotal", ratio.ToString("F0"));
 
             Grid1.SummaryData = summary;

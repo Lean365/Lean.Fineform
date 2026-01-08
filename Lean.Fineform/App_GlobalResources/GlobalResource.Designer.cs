@@ -2338,6 +2338,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Button_New_Epp 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Date {
+            get {
+                return ResourceManager.GetString("sys_Button_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Delete 的本地化字符串。
         /// </summary>
         internal static string sys_Button_Delete {
@@ -2500,6 +2509,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Button_Phase 的本地化字符串。
+        /// </summary>
+        internal static string sys_Button_Phase {
+            get {
+                return ResourceManager.GetString("sys_Button_Phase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 PrintPreview 的本地化字符串。
         /// </summary>
         internal static string sys_Button_Preview {
@@ -2608,11 +2626,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查找类似 Export_Epp 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_Epp {
+            get {
+                return ResourceManager.GetString("sys_Export_Epp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Export Modify Detl 的本地化字符串。
         /// </summary>
         internal static string sys_Export_Modify {
             get {
                 return ResourceManager.GetString("sys_Export_Modify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export_Mp 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_Mp {
+            get {
+                return ResourceManager.GetString("sys_Export_Mp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export_Rpr 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_Rpr {
+            get {
+                return ResourceManager.GetString("sys_Export_Rpr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Export_Rwr 的本地化字符串。
+        /// </summary>
+        internal static string sys_Export_Rwr {
+            get {
+                return ResourceManager.GetString("sys_Export_Rwr", resourceCulture);
             }
         }
         

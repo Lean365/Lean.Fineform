@@ -13,11 +13,11 @@
         <f:TabStrip ID="TabStrip1" IsFluid="true" CssClass="blockpanel" Height="500px" ShowBorder="true" ActiveTabIndex="0"
             runat="server">
             <Tabs>
-                <f:Tab ID="Tab1" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_moc_finished.aspx"
-                    Title="工单不良" runat="server">
-                </f:Tab>
-                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_lot_finished.aspx"
+                <f:Tab ID="Tab1" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_lot_finished.aspx"
                     Title="批次不良" runat="server">
+                </f:Tab>
+                <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P1D/p1d_defect_moc_finished.aspx"
+                    Title="工单不良" runat="server">
                 </f:Tab>
                 <f:Tab ID="Tab3" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/poor/P1D/p1d_modify_defect_lot_finished.aspx"
                     Title="改修不良" runat="server">

@@ -34,49 +34,49 @@
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
                                 <f:DatePicker FocusOnPageLoad="true" runat="server" Required="true" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择生产日期"
-                                    ID="prodate" ShowRedStar="True">
+                                    ID="dpProdate" ShowRedStar="True">
                                 </f:DatePicker>
-                                <f:DropDownList runat="server" ID="prolinename" Label="生产班别" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ForceSelection="true" ShowRedStar="True" Required="True">
+                                <f:DropDownList runat="server" ID="ddlProlinename" Label="生产班别" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ForceSelection="true" ShowRedStar="True" Required="True">
                                 </f:DropDownList>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:NumberBox ID="prodirect" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="30" MinValue="1">
+                                <f:NumberBox ID="numProdirect" runat="server" Label="直接人数" Text="0" OnTextChanged="prodirect_TextChanged" AutoPostBack="true" MaxValue="30" MinValue="1">
                                 </f:NumberBox>
-                                <f:NumberBox ID="proindirect" runat="server" Label="间接人数" Text="0" MaxValue="10" MinValue="0">
+                                <f:NumberBox ID="numProindirect" runat="server" Label="间接人数" Text="0" MaxValue="10" MinValue="0">
                                 </f:NumberBox>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow6" runat="server">
                             <Items>
-                                <f:DropDownList ID="proorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="true" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
+                                <f:DropDownList ID="ddlProorder" runat="server" Label="SAP订单" ShowRedStar="True" EnableEdit="true" ForceSelection="true" AutoPostBack="True" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" OnSelectedIndexChanged="proorder_SelectedIndexChanged">
                                 </f:DropDownList>
-                                <f:Label runat="server" ID="prolot" Label="生产LOT" ShowRedStar="True">
+                                <f:Label runat="server" ID="lblProlot" Label="生产LOT" ShowRedStar="True">
                                 </f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow10" runat="server">
                             <Items>
-                                <f:Label runat="server" ID="prohbn" Label="品号" ShowRedStar="True">
+                                <f:Label runat="server" ID="lblProhbn" Label="品号" ShowRedStar="True">
                                 </f:Label>
-                                <f:Label ID="promodel" runat="server" Label="机种">
+                                <f:Label ID="lblPromodel" runat="server" Label="机种">
                                 </f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow3" runat="server">
                             <Items>
-                                <f:Label ID="prost" runat="server" Label="工时" Text="0.00" ShowRedStar="True">
+                                <f:Label ID="lblProst" runat="server" Label="工时" Text="0.00" ShowRedStar="True">
                                 </f:Label>
-                                <f:Label ID="prostdcapacity" runat="server" Label="标准产能" Text="0.00" ShowRedStar="True">
+                                <f:Label ID="lblProstdcapacity" runat="server" Label="标准产能" Text="0.00" ShowRedStar="True">
                                 </f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow4" runat="server">
                             <Items>
-                                <f:Label ID="prolotqty" runat="server" Label="订单台数" Text="0.0" ShowRedStar="True">
+                                <f:Label ID="lblProlotqty" runat="server" Label="订单台数" Text="0.0" ShowRedStar="True">
                                 </f:Label>
-                                <f:Label ID="prosn" runat="server" Label="生产序号" Text="*">
+                                <f:Label ID="lblProsn" runat="server" Label="生产序号" Text="*">
                                 </f:Label>
 
                             </Items>
@@ -84,7 +84,7 @@
                         <f:FormRow ID="FormRow9" runat="server">
                             <Items>
 
-                                <f:TextBox ID="remark" runat="server" Label="备注">
+                                <f:TextBox ID="txtRemark" runat="server" Label="备注">
                                 </f:TextBox>
                             </Items>
                         </f:FormRow>

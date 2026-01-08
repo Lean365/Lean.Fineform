@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -270,7 +271,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                         }
                         else
                         {
-                            Ec_p2dlot.Text = qs[0].Ec_model.Replace("-", "") + DateTime.Now.ToString("yyM");
+                            Ec_p2dlot.Text = qs[0].Ec_model.Replace("-", "") + LotSuffix.GetSpecialFormattedDate();
                         }
                     }
                     else

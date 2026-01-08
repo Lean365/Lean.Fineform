@@ -104,9 +104,9 @@
                         <f:BoundField DataField="Prolot" ExpandUnusedSpace="true" SortField="Prolot" Width="100px" HeaderText="批次" />
                         <f:BoundField DataField="Promodel" ExpandUnusedSpace="true" SortField="Promodel" Width="100px" HeaderText="机种" />
                         <f:BoundField DataField="Proorder" ExpandUnusedSpace="true" SortField="Proorder" Width="100px" HeaderText="订单" />
-                        <f:BoundField DataField="Prolotqty" ExpandUnusedSpace="true" SortField="Prolotqty" Width="80px" HeaderText="订单数量" />
+                        <f:BoundField DataField="Proorderqty" ExpandUnusedSpace="true" SortField="Proorderqty" Width="80px" HeaderText="订单数量" />
                         <f:BoundField DataField="Prorealqty" ExpandUnusedSpace="true" SortField="Prorealqty" Width="80px" HeaderText="生产数量" />
-                        <f:BoundField DataField="Pronobadqty" ExpandUnusedSpace="true" SortField="Pronobadqty" Width="80px" HeaderText="无不良数量" />
+                        <f:BoundField DataField="Prodzeroefects" ExpandUnusedSpace="true" SortField="Prodzeroefects" Width="80px" HeaderText="无不良数量" />
                         <f:BoundField DataField="Probadtotal" ExpandUnusedSpace="true" SortField="Probadtotal" Width="80px" HeaderText="不良件数" />
                         <f:BoundField DataField="Prodirectrate" ExpandUnusedSpace="true" SortField="Prodirectrate" Width="80px" HeaderText="直行率" DataFormatString="{0:p2}" />
                         <f:BoundField DataField="Probadrate" ExpandUnusedSpace="true" SortField="Probadrate" Width="80px" HeaderText="不良率" DataFormatString="{0:p2}" />

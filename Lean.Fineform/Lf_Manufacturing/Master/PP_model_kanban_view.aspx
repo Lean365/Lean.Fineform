@@ -22,7 +22,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            ShowHeader="false" Title="LeanCloud">
+            ShowHeader="false" Title="Lean365">
             <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server">
                     <Items>

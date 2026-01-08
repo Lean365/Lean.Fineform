@@ -21,16 +21,16 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(20)]
         public string Promodel { get; set; }//生产机种
 
-        public int Prolotqty { get; set; }//批次数量
+        public Decimal Prolotqty { get; set; }//批次数量
 
         [StringLength(200)]
         public string Proitem { get; set; }//生产物料
 
-        public int Proorderqty { get; set; }//订单数量
+        public Decimal Proorderqty { get; set; }//订单数量
 
-        public int Prorealqty { get; set; }//生产实绩
+        public Decimal Prorealqty { get; set; }//生产实绩
 
-        public int Pronobadqty { get; set; }//无不良数量
+        public int Prodzeroefects { get; set; }//无不良数量
 
         public int Probadtotal { get; set; }//不良件数（同一LOT集计数量）
 

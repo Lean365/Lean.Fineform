@@ -1,0 +1,32 @@
+-- 最终优化版本（保持您的原始计算逻辑）
+
+
+
+SELECT 
+    [Prolot],
+    SUM([Prorealqty]) AS [Prorealqty],
+    SUM([Pronobadqty]) AS [Pronobadqty],
+    SUM([Probadqty]) AS [Probadqty]
+FROM (
+    -- 内层查询：按工单+批次+日期+数量分组
+    SELECT
+        [Prolot],
+        [Proorder],
+        [Prodate],
+        [Prorealqty],
+        [Pronobadqty],
+        SUM([Probadqty]) AS [Probadqty]
+    FROM 
+        [LeanFine_Pord].[dbo].[Pp_P1d_Defect]
+    WHERE 
+        [isDeleted] = 0
+    GROUP BY
+        [Prolot],
+        [Proorder],
+        [Prodate],
+        [Prorealqty],
+        [Pronobadqty]
+) AS DetailedData
+   
+GROUP BY
+    [Prolot];

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -6,8 +8,6 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.EC
 {
@@ -824,7 +824,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                //    //部管
                                                                Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                Ec_mmlot = "与部管无关",
-                                                               Ec_mmlotno = "与部管无关",
+                                                               Ec_mmlotno = "40000",
                                                                Ec_mmnote = "与部管无关",
                                                                mmModifier = GetIdentityName(),
                                                                mmModifyDate = DateTime.Now,
@@ -1029,16 +1029,16 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                     #endregion 2.新物料为空
 
-                    #region 3.采购件非C003
+                    #region 3.采购件6F
 
-                    //1.采购件非C003
+                    //1.采购件6F
 
                     var MMPurchase = from a in q_NotEollist
 
                                      join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                      join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                      where b.D_SAP_ZCA1D_Z010 == "F"
-                                     where b.D_SAP_ZCA1D_Z030 != "C003"
+                                     where !b.D_SAP_ZCA1D_Z032.Contains("5F")
                                      select new
                                      {
                                          Ec_no = a.D_SAP_ZPABD_S001,
@@ -1173,19 +1173,18 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_MMPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 3.采购件非C003
+                    #endregion 3.采购件6F
 
-                    #region 4.采购件C003
+                    #region 4.采购件5F
 
-                    //1.采购件C003
-                    //1.采购件非C003
+                    //1.采购件5F
 
                     var P2dPurchase = from a in q_NotEollist
 
                                       join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                       join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                       where b.D_SAP_ZCA1D_Z010 == "F"
-                                      where b.D_SAP_ZCA1D_Z030 == "C003"
+                                      where b.D_SAP_ZCA1D_Z032.Contains("5F")
                                       select new
                                       {
                                           Ec_no = a.D_SAP_ZPABD_S001,
@@ -1265,7 +1264,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                       //    //部管
                                                                       Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                       Ec_mmlot = "与部管无关",
-                                                                      Ec_mmlotno = "与部管无关",
+                                                                      Ec_mmlotno = "40000",
                                                                       Ec_mmnote = "与部管无关",
                                                                       mmModifier = GetIdentityName(),
                                                                       mmModifyDate = DateTime.Now,
@@ -1320,7 +1319,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_result_P2dPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 4.采购件C003
+                    #endregion 4.采购件5F
                 }
                 if (this.Ec_distinction.SelectedValue == "2")//部管
                 {
@@ -1411,7 +1410,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                //    //部管
                                                                Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                Ec_mmlot = "与部管无关",
-                                                               Ec_mmlotno = "与部管无关",
+                                                               Ec_mmlotno = "40000",
                                                                Ec_mmnote = "与部管无关",
                                                                mmModifier = GetIdentityName(),
                                                                mmModifyDate = DateTime.Now,
@@ -1615,16 +1614,16 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                     #endregion 2.新物料为空
 
-                    #region 3.采购件非C003
+                    #region 3.采购件6F
 
-                    //1.采购件非C003
+                    //1.采购件6F
 
                     var MMPurchase = from a in q_NotEollist
 
                                      join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                      join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                      where b.D_SAP_ZCA1D_Z010 == "F"
-                                     where b.D_SAP_ZCA1D_Z030 != "C003"
+                                     where !b.D_SAP_ZCA1D_Z032.Contains("5F")
                                      select new
                                      {
                                          Ec_no = a.D_SAP_ZPABD_S001,
@@ -1759,19 +1758,17 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_MMPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 3.采购件非C003
+                    #endregion 3.采购件6F
 
-                    #region 4.采购件C003
+                    #region 4.采购件5F
 
-                    //1.采购件C003
-                    //1.采购件非C003
-
+                    //1.采购件5F
                     var P2dPurchase = from a in q_NotEollist
 
                                       join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                       join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                       where b.D_SAP_ZCA1D_Z010 == "F"
-                                      where b.D_SAP_ZCA1D_Z030 == "C003"
+                                      where b.D_SAP_ZCA1D_Z032.Contains("5F")
                                       select new
                                       {
                                           Ec_no = a.D_SAP_ZPABD_S001,
@@ -1851,7 +1848,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                       //    //部管
                                                                       Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                       Ec_mmlot = "与部管无关",
-                                                                      Ec_mmlotno = "与部管无关",
+                                                                      Ec_mmlotno = "40000",
                                                                       Ec_mmnote = "与部管无关",
                                                                       mmModifier = GetIdentityName(),
                                                                       mmModifyDate = DateTime.Now,
@@ -1906,7 +1903,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_result_P2dPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 4.采购件C003
+                    #endregion 4.采购件5F
                 }
                 if (this.Ec_distinction.SelectedValue == "3")//内部
                 {
@@ -1997,7 +1994,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                //    //部管
                                                                Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                Ec_mmlot = "与部管无关",
-                                                               Ec_mmlotno = "与部管无关",
+                                                               Ec_mmlotno = "40000",
                                                                Ec_mmnote = "与部管无关",
                                                                mmModifier = GetIdentityName(),
                                                                mmModifyDate = DateTime.Now,
@@ -2207,16 +2204,15 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                     #endregion 2.新物料为空
 
-                    #region 3.采购件非C003
+                    #region 3.采购件6F
 
-                    //1.采购件非C003
-
+                    //1.采购件6F
                     var MMPurchase = from a in q_NotEollist
 
                                      join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                      join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                      where b.D_SAP_ZCA1D_Z010 == "F"
-                                     where b.D_SAP_ZCA1D_Z030 != "C003"
+                                     where !b.D_SAP_ZCA1D_Z032.Contains("5F")
                                      select new
                                      {
                                          Ec_no = a.D_SAP_ZPABD_S001,
@@ -2351,19 +2347,18 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_MMPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 3.采购件非C003
+                    #endregion 3.采购件6F
 
-                    #region 4.采购件C003
+                    #region 4.采购件5F
 
-                    //1.采购件C003
-                    //1.采购件非C003
+                    //1.采购件5F
 
                     var P2dPurchase = from a in q_NotEollist
 
                                       join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                       join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                       where b.D_SAP_ZCA1D_Z010 == "F"
-                                      where b.D_SAP_ZCA1D_Z030 == "C003"
+                                      where b.D_SAP_ZCA1D_Z032.Contains("5F")
                                       select new
                                       {
                                           Ec_no = a.D_SAP_ZPABD_S001,
@@ -2443,7 +2438,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                                                                       //    //部管
                                                                       Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                                       Ec_mmlot = "与部管无关",
-                                                                      Ec_mmlotno = "与部管无关",
+                                                                      Ec_mmlotno = "40000",
                                                                       Ec_mmnote = "与部管无关",
                                                                       mmModifier = GetIdentityName(),
                                                                       mmModifyDate = DateTime.Now,
@@ -2498,7 +2493,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_result_P2dPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 4.采购件C003
+                    #endregion 4.采购件5F
                 }
                 if (this.Ec_distinction.SelectedValue == "4")//技术
                 {
@@ -2792,16 +2787,16 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                     #endregion 2.新物料为空
 
-                    #region 3.采购件非C003
+                    #region 3.采购件6F
 
-                    //1.采购件非C003
+                    //1.采购件6F
 
                     var MMPurchase = from a in q_NotEollist
 
                                      join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                      join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                      where b.D_SAP_ZCA1D_Z010 == "F"
-                                     where b.D_SAP_ZCA1D_Z030 != "C003"
+                                     where !b.D_SAP_ZCA1D_Z032.Contains("5F")
                                      select new
                                      {
                                          Ec_no = a.D_SAP_ZPABD_S001,
@@ -2936,19 +2931,18 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_MMPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 3.采购件非C003
+                    #endregion 3.采购件6F
 
-                    #region 4.采购件C003
+                    #region 4.采购件5F
 
-                    //1.采购件C003
-                    //1.采购件非C003
+
 
                     var P2dPurchase = from a in q_NotEollist
 
                                       join b in DB.Pp_SapMaterials on a.D_SAP_ZPABD_S008 equals b.D_SAP_ZCA1D_Z002
                                       join c in DB.Pp_SapModelDests on a.D_SAP_ZPABD_S002 equals c.D_SAP_DEST_Z001
                                       where b.D_SAP_ZCA1D_Z010 == "F"
-                                      where b.D_SAP_ZCA1D_Z030 == "C003"
+                                      where b.D_SAP_ZCA1D_Z032.Contains("5F")
                                       select new
                                       {
                                           Ec_no = a.D_SAP_ZPABD_S001,
@@ -3083,7 +3077,7 @@ namespace LeanFine.Lf_Manufacturing.EC
                     DB.BulkInsert(New_result_P2dPurchaseList);
                     DB.BulkSaveChanges();
 
-                    #endregion 4.采购件C003
+                    #endregion 4.采购件5F
                 }
 
                 if (this.Ec_distinction.SelectedValue != "4")

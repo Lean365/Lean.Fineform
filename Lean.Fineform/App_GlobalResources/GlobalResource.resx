@@ -1329,4 +1329,28 @@
     <value>EppDefect</value>
     <comment>EppDefect</comment>
   </data>
+  <data name="sys_Export_Epp" xml:space="preserve">
+    <value>Export_Epp</value>
+    <comment>Epp明细导出</comment>
+  </data>
+  <data name="sys_Export_Mp" xml:space="preserve">
+    <value>Export_Mp</value>
+    <comment>生产明细导出</comment>
+  </data>
+  <data name="sys_Export_Rwr" xml:space="preserve">
+    <value>Export_Rwr</value>
+    <comment>改修明细导出</comment>
+  </data>
+  <data name="sys_Export_Rpr" xml:space="preserve">
+    <value>Export_Rpr</value>
+    <comment>返工明细导出</comment>
+  </data>
+  <data name="sys_Button_Date" xml:space="preserve">
+    <value>Button_New_Epp</value>
+    <comment>日期</comment>
+  </data>
+  <data name="sys_Button_Phase" xml:space="preserve">
+    <value>Button_Phase</value>
+    <comment>按时段</comment>
+  </data>
 </root>

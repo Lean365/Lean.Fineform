@@ -1,12 +1,12 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Helper;
-using LeanFine.Lf_Business.Models.PP;
 using static LeanFine.QueryExtensions;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
@@ -17,7 +17,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         public static int rowID, delrowID, editrowID, totalSum;
 
         public static string userid, badSum;
-        public static string ProOrderType, Prolot, Prolinename, Prodate, Prorealqty, strPline, strmaxDate, strminDate, Probadqty, Probadtotal, Probadcou;
+        public static string ProOrderType, Prolot, Prolinename, Prodate, Prorealqty, strOrder, strPline, strmaxDate, strminDate, Probadqty, Probadtotal, Probadcou;
         public static string mysql;
 
         public int Prorate, ParentID;
@@ -98,15 +98,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             if (compNum == -1)
             {
-                this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
-                this.prodate.MinDate = dt_First;
-                this.prodate.MaxDate = dt_Final;
+                this.dpProdate.SelectedDate = DateTime.Now.AddDays(-1);
+                this.dpProdate.MinDate = dt_First;
+                this.dpProdate.MaxDate = dt_Final;
             }
             if (compNum == 1)
             {
-                this.prodate.SelectedDate = DateTime.Now.AddDays(-1);
-                this.prodate.MinDate = lastFirst;
-                this.prodate.MaxDate = dt_Final;
+                this.dpProdate.SelectedDate = DateTime.Now.AddDays(-1);
+                this.dpProdate.MinDate = lastFirst;
+                this.dpProdate.MaxDate = dt_Final;
             }
             userid = GetIdentityName();
             //Publisher.Text = GetIdentityName();
@@ -150,10 +150,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            proorder.DataSource = qs;
-            proorder.DataTextField = "Porderno";
-            proorder.DataValueField = "Porderno";
-            proorder.DataBind();
+            ddlProorder.DataSource = qs;
+            ddlProorder.DataTextField = "Porderno";
+            ddlProorder.DataValueField = "Porderno";
+            ddlProorder.DataBind();
         }
 
         //DDL查询班组
@@ -173,10 +173,10 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            prolinename.DataSource = qs;
-            prolinename.DataTextField = "DictLabel";
-            prolinename.DataValueField = "DictValue";
-            prolinename.DataBind();
+            ddlProlinename.DataSource = qs;
+            ddlProlinename.DataTextField = "DictLabel";
+            ddlProlinename.DataValueField = "DictValue";
+            ddlProlinename.DataBind();
         }
 
         //DDL查询不良各类
@@ -244,29 +244,29 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             item.GUID = Guid.NewGuid();
             //item.Prolineclass = prolinename.SelectedValue.ToString();
             item.Proordertype = ProOrderType;
-            item.Prolinename = prolinename.SelectedItem.Text;
+            item.Prolinename = ddlProlinename.SelectedItem.Text;
 
-            item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-            item.Prodirect = int.Parse(prodirect.Text);
-            item.Proindirect = int.Parse(proindirect.Text);
-            item.Prolot = prolot.Text;
-            item.Prohbn = prohbn.Text;//prohbn.Text;
-            if (prosn.Text == "")
+            item.Prodate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+            item.Prodirect = int.Parse(numProdirect.Text);
+            item.Proindirect = int.Parse(numProindirect.Text);
+            item.Prolot = lblProlot.Text;
+            item.Prohbn = lblProhbn.Text;//prohbn.Text;
+            if (lblProsn.Text == "")
             {
                 item.Prosn = "DTA0000~9999";
             }
             else
             {
-                item.Prosn = prosn.Text;
+                item.Prosn = lblProsn.Text;
             }
 
-            item.Proorderqty = Decimal.Parse(prolotqty.Text);
-            item.Promodel = promodel.Text;
-            item.Prost = Decimal.Parse(prost.Text);
+            item.Proorderqty = Decimal.Parse(lblProlotqty.Text);
+            item.Promodel = lblPromodel.Text;
+            item.Prost = Decimal.Parse(lblProst.Text);
             //item.Prosubst = Decimal.Parse(prosubst.Text);
-            item.Prostdcapacity = Decimal.Parse(prostdcapacity.Text);
+            item.Prostdcapacity = Decimal.Parse(lblProstdcapacity.Text);
 
-            item.Proorder = proorder.SelectedItem.Text;
+            item.Proorder = ddlProorder.SelectedItem.Text;
 
             //item.Prostime = prostime.Text;
             //item.Proetime = proetime.Text;
@@ -288,7 +288,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             // 添加所有用户
 
             item.IsDeleted = 0;
-            item.Remark = remark.Text;
+            item.Remark = txtRemark.Text;
             item.CreateDate = DateTime.Now;
             item.Creator = GetIdentityName();
             DB.Pp_P1d_Outputs.Add(item);
@@ -298,14 +298,14 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             ParentID = item.ID;
             //新增日志
 
-            string Contectext = ParentID + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
+            string Contectext = ParentID + "," + ddlProlinename.SelectedItem.Text + "," + dpProdate.SelectedDate.Value.ToString("yyyyMMdd") + "," + lblProlot.Text + "," + lblProhbn.Text + "," + lblProstdcapacity.Text;
             string OperateType = "新增";//操作标记
             string OperateNotes = "New生产OPH* " + Contectext + " *New生产OPH 的记录已新增";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产日报新增", OperateNotes);
 
             SaveSubItem();
             //删除无单身数据
-            UpdateP1dHelper.DelOutputAssySubs(ParentID, prolinename.SelectedItem.Text, prodate.SelectedDate.Value.ToString("yyyyMMdd"), prolot.Text, prohbn.Text, GetIdentityName());
+            UpdateP1dHelper.DelOutputAssySubs(ParentID, ddlProlinename.SelectedItem.Text, dpProdate.SelectedDate.Value.ToString("yyyyMMdd"), lblProlot.Text, lblProhbn.Text, GetIdentityName());
         }
 
         //新增新增生产日报单身
@@ -339,20 +339,20 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         // 添加父ID
                         //Pp_Output ID = Attach<Pp_Output>(Convert.ToInt32(ParentID));
                         item.Parent = ParentID;
-                        item.Prolinename = prolinename.SelectedItem.Text;
+                        item.Prolinename = ddlProlinename.SelectedItem.Text;
                         item.Proordertype = ProOrderType;
-                        item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                        item.Prodirect = int.Parse(prodirect.Text);
-                        item.Proindirect = int.Parse(proindirect.Text);
-                        item.Prolot = prolot.Text;
-                        item.Prohbn = prohbn.Text;//prohbn.Text;
-                        item.Proorderqty = Decimal.Parse(prolotqty.Text);
-                        item.Promodel = promodel.Text;
-                        item.Prost = Decimal.Parse(prost.Text);
+                        item.Prodate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+                        item.Prodirect = int.Parse(numProdirect.Text);
+                        item.Proindirect = int.Parse(numProindirect.Text);
+                        item.Prolot = lblProlot.Text;
+                        item.Prohbn = lblProhbn.Text;//prohbn.Text;
+                        item.Proorderqty = Decimal.Parse(lblProlotqty.Text);
+                        item.Promodel = lblPromodel.Text;
+                        item.Prost = Decimal.Parse(lblProst.Text);
                         //item.Prosubst = Decimal.Parse(prosubst.Text);
-                        item.Prostdcapacity = Decimal.Parse(prostdcapacity.Text);
+                        item.Prostdcapacity = Decimal.Parse(lblProstdcapacity.Text);
                         item.Totaltag = true;
-                        item.Proorder = proorder.SelectedItem.Text;
+                        item.Proorder = ddlProorder.SelectedItem.Text;
                         item.GUID = Guid.Parse(OPHID);
                         //时间
                         item.Prostime = res[i].DictValue.Substring(0, 5).TrimEnd().ToString();
@@ -364,7 +364,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         //}
                         //item.Udf001 = prodate.SelectedDate.Value.ToString("yyyyMMdd");
                         //item.Udf002 = this.prolinename.SelectedItem.Text;
-                        item.Remark = remark.Text;
+                        item.Remark = txtRemark.Text;
                         item.CreateDate = DateTime.Now;
                         item.Creator = GetIdentityName();
                         item.IsDeleted = 0;
@@ -373,7 +373,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
                         //新增日志
 
-                        string Newtext = ParentID + "," + res[i].DictValue + "," + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + prohbn.Text + "," + prostdcapacity.Text;
+                        string Newtext = ParentID + "," + res[i].DictValue + "," + ddlProlinename.SelectedItem.Text + "," + dpProdate.SelectedDate.Value.ToString("yyyyMMdd") + "," + lblProlot.Text + "," + lblProhbn.Text + "," + lblProstdcapacity.Text;
                         string OperateType = "新增";
 
                         string OperateNotes = "New生产OPH_SUB* " + Newtext + " *New生产OPH_SUB 的记录已新增";
@@ -417,29 +417,38 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         /// <summary>
         /// 新增订单不良合计表
         /// </summary>
-        private void SaveDefect()
+        private void SaveOrderDefect()
         {
             try
             {
                 Pp_Defect_P1d_Order item = new Pp_Defect_P1d_Order();
 
-                item.Prolot = prolot.Text;
-                item.Prolinename = prolinename.SelectedItem.Text;
-                item.Prodate = prodate.SelectedDate.Value.ToString("yyyyMMdd");
-                item.Proorder = proorder.SelectedItem.Text;
-                item.Proorderqty = Convert.ToInt32(decimal.Parse(prolotqty.Text));
-                item.Proitem = prohbn.Text;
+                item.Prolot = lblProlot.Text;
+                item.Prolinename = ddlProlinename.SelectedItem.Text;
+                item.Prodate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+                item.Proorder = ddlProorder.SelectedItem.Text;
+                item.Proorderqty = Convert.ToInt32(decimal.Parse(lblProlotqty.Text));
+                item.Proitem = lblProhbn.Text;
                 item.Prorealqty = 0;
-                item.Pronobadqty = 0;
+                item.Prodzeroefects = 0;
                 item.Probadtotal = 0;
                 item.Prodirectrate = 0;
                 item.Probadrate = 0;
                 item.IsDeleted = 0;
-                item.Prodept = "ASSY";
-                item.UDF01 = prohbn.Text;
-                item.Remark = "ASSY";
+                if (ProOrderType.Contains("ZDTA"))
+                {
+                    item.Prodept = "ASSY";
+                    item.Remark = "ASSY";
+                }
+                else
+                {
+                    item.Prodept = "ASSYR";
+                    item.Remark = "ASSYR";
+                }
+                item.UDF01 = lblProhbn.Text;
 
-                item.Promodel = promodel.Text;
+
+                item.Promodel = lblPromodel.Text;
                 item.GUID = Guid.NewGuid();
                 item.Creator = GetIdentityName();
                 item.CreateDate = DateTime.Now;
@@ -447,7 +456,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                 DB.SaveChanges();
 
                 //新增日志
-                string Contectext = prolot.Text + prolinename.SelectedItem.Text + "," + prodate.SelectedDate.Value.ToString("yyyyMMdd") + "," + prolot.Text + "," + proorder.SelectedItem.Text + "," + prolotqty.Text;
+                string Contectext = lblProlot.Text + ddlProlinename.SelectedItem.Text + "," + dpProdate.SelectedDate.Value.ToString("yyyyMMdd") + "," + lblProlot.Text + "," + ddlProorder.SelectedItem.Text + "," + lblProlotqty.Text;
                 string OperateType = "新增";
                 string OperateNotes = "New生产订单不良* " + Contectext + " New生产订单不良* 的记录已新增";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计新增", OperateNotes);
@@ -488,11 +497,11 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         /// <summary>
         /// 更新订单不良合计表
         /// </summary>
-        private void SaveDefectUpdate()
+        private void SaveOrderDefectUpdate()
         {
             //判断重复
-            string strorder = proorder.SelectedItem.Text.Trim();
-            string strlot = prolot.Text.Trim();
+            string strorder = ddlProorder.SelectedItem.Text.Trim();
+            string strlot = lblProlot.Text.Trim();
 
             var line = (from p in DB.Pp_P1d_OutputSubs
                             //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
@@ -561,7 +570,107 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             strminDate = "";
             sedate = "";
         }
+        /// <summary>
+        /// 新增订单不良合计表
+        /// </summary>
+        private void SaveLotDefect()
+        {
+            try
+            {
+                Pp_Defect_P1d_Lot item = new Pp_Defect_P1d_Lot();
 
+                item.Prolot = lblProlot.Text;
+                item.Prolinename = ddlProlinename.SelectedItem.Text;
+                item.Prodate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+                item.Proorder = ddlProorder.SelectedItem.Text;
+                item.Proorderqty = Convert.ToInt32(decimal.Parse(lblProlotqty.Text));
+                item.Proitem = lblProhbn.Text;
+                item.Prorealqty = 0;
+                item.Prodzeroefects = 0;
+                item.Probadtotal = 0;
+                item.Prodirectrate = 0;
+                item.Probadrate = 0;
+                item.IsDeleted = 0;
+                if (ProOrderType.Contains("ZDTA"))
+                {
+                    item.Prodept = "ASSY";
+                    item.Remark = "ASSY";
+                }
+                else
+                {
+                    item.Prodept = "ASSYR";
+                    item.Remark = "ASSYR";
+                }
+                item.UDF01 = lblProhbn.Text;
+
+
+                item.Promodel = lblPromodel.Text;
+                item.GUID = Guid.NewGuid();
+                item.Creator = GetIdentityName();
+                item.CreateDate = DateTime.Now;
+                DB.Pp_Defect_P1d_Lots.Add(item);
+                DB.SaveChanges();
+
+                //新增日志
+                string Contectext = lblProlot.Text + ddlProlinename.SelectedItem.Text + "," + dpProdate.SelectedDate.Value.ToString("yyyyMMdd") + "," + lblProlot.Text + "," + ddlProorder.SelectedItem.Text + "," + lblProlotqty.Text;
+                string OperateType = "新增";
+                string OperateNotes = "New生产订单不良* " + Contectext + " New生产订单不良* 的记录已新增";
+                OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计新增", OperateNotes);
+            }
+            catch (ArgumentNullException Message)
+            {
+                Alert.ShowInTop("空参数传递(err:null):" + Message);
+            }
+            catch (InvalidCastException Message)
+            {
+                Alert.ShowInTop("使用无效的类:" + Message);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                //var errorMessages = ex.EntityValidationErrors
+                //        .SelectMany(x => x.ValidationErrors)
+                //        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                //var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                //var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                //throw new System.Data.Entity.Validation.DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+
+                //判断字段赋值
+                var msg = string.Empty;
+                var errors = (from u in ex.EntityValidationErrors select u.ValidationErrors).ToList();
+                foreach (var item in errors)
+                    msg += item.FirstOrDefault().ErrorMessage;
+                Alert.ShowInTop("实体验证失败,赋值有异常:" + msg);
+            }
+        }
+
+        /// <summary>
+        /// 更新批次不良合计表
+        /// </summary>
+        private void SaveLotDefectUpdate()
+        {
+            //判断重复
+            string strorder = ddlProorder.SelectedItem.Text.Trim();
+            string strlot = lblProlot.Text.Trim();
+            string sedate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_TotalOrderqty(strlot, userid);
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_Realqty(strlot, userid);
+            //新增日志
+            string Contectext = strorder + "," + strlot + "," + strPline + "," + sedate;
+            string OperateType = "修改";
+            string OperateNotes = "Edit生产不良*" + Contectext + " *Edit生产不良 的记录已修改";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计修改", OperateNotes);
+            strPline = "";
+            strmaxDate = "";
+            strminDate = "";
+            sedate = "";
+        }
         /// <summary>
         /// 保存数据
         /// </summary>
@@ -613,19 +722,30 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             }
 
             //判断重复
-            string input = proorder.SelectedItem.Text.Trim();
+            string inputOrder = ddlProorder.SelectedItem.Text.Trim();
 
-            Pp_Defect_Total current = DB.Pp_Defect_Totals.Where(u => u.Proorder == input && u.Remark.Contains("ASSY")).FirstOrDefault();
+            Pp_Defect_P1d_Order currentOrder = DB.Pp_Defect_P1d_Orders.Where(u => u.Proorder == inputOrder && u.Prodept.Contains("ASSY")).FirstOrDefault();
 
-            if (current != null)
+            if (currentOrder != null)
             {
-                SaveDefectUpdate();
+                SaveOrderDefectUpdate();
             }
             else
             {
-                SaveDefect();
+                SaveOrderDefect();
             }
+            string inputLot = lblProlot.Text.Trim();
 
+            Pp_Defect_P1d_Lot currentLot = DB.Pp_Defect_P1d_Lots.Where(u => u.Prolot == inputLot && u.Prodept.Contains("ASSY")).FirstOrDefault();
+
+            if (currentLot != null)
+            {
+                SaveLotDefectUpdate();
+            }
+            else
+            {
+                SaveLotDefect();
+            }
             //表格数据已重新绑定
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
@@ -654,14 +774,14 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
         protected void proorder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.proorder.SelectedIndex != -1 && this.proorder.SelectedIndex != 0)
+            if (this.ddlProorder.SelectedIndex != -1 && this.ddlProorder.SelectedIndex != 0)
             {
                 try
                 {
                     var q = from a in DB.Pp_Orders
                             join b in DB.Pp_Manhours on a.Porderhbn equals b.Proitem
                             //join c in DB.Pp_SapMaterials on a.Proecnoldhbn equals c.D_SAP_ZCA1D_Z002
-                            where a.Porderno == proorder.SelectedItem.Text
+                            where a.Porderno == ddlProorder.SelectedItem.Text
                             //where a.Proecnmodel == strProecnmodel
                             //where a.Proecnbomitem == strProecnbomitem
                             //where a.Proecnoldhbn == strProecnoldhbn
@@ -728,15 +848,15 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
                         var qs = maxst.Distinct().Take(1).ToList();
                         if (qs[0].Prost != 0)
                         {
-                            remark.Text = qs[0].Pordertype + "," + proorder.SelectedItem.Text + "," + qs[0].Promodel + "," + qs[0].Porderhbn + "+" + qs[0].Porderlot;
+                            txtRemark.Text = qs[0].Pordertype + "," + ddlProorder.SelectedItem.Text + "," + qs[0].Promodel + "," + qs[0].Porderhbn + "+" + qs[0].Porderlot;
                             ProOrderType = qs[0].Pordertype;
-                            prohbn.Text = qs[0].Porderhbn;
-                            promodel.Text = qs[0].Promodel;
-                            prolot.Text = qs[0].Porderlot;
-                            prost.Text = qs[0].Prost.ToString();
-                            prolotqty.Text = qs[0].Porderqty.ToString();
+                            lblProhbn.Text = qs[0].Porderhbn;
+                            lblPromodel.Text = qs[0].Promodel;
+                            lblProlot.Text = qs[0].Porderlot;
+                            lblProst.Text = qs[0].Prost.ToString();
+                            lblProlotqty.Text = qs[0].Porderqty.ToString();
                             //prorealqty.Text = (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) - decimal.Parse(DSstr1.Tables[0].Rows[0][16].ToString())).ToString();
-                            prosn.Text = qs[0].Porderserial;
+                            lblProsn.Text = qs[0].Porderserial;
                             HourQty();
                         }
                         else
@@ -779,12 +899,12 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
         /// </summary>
         private void HourQty()
         {
-            decimal stdiff = (decimal.Parse(prost.Text));
+            decimal stdiff = (decimal.Parse(lblProst.Text));
             if (stdiff != 0)
             {
                 OPHRate();
                 decimal rate = (decimal)Prorate / 100;
-                prostdcapacity.Text = ((decimal.Parse(prodirect.Text) * 60) / (decimal.Parse(prost.Text)) * rate).ToString("0.00");
+                lblProstdcapacity.Text = ((decimal.Parse(numProdirect.Text) * 60) / (decimal.Parse(lblProst.Text)) * rate).ToString("0.00");
             }
         }
     }

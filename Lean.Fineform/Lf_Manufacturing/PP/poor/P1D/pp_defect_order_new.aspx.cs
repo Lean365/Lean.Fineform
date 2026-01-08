@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public static string mysql, userid, ConnStr;
         public static int rowID, delrowID, editrowID, totalSum;
-        //public static string Prolot, Linename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept;
+        //public static string Prolot, Linename, Prodate, Prorealqty, Prodefectsymptom, Proorder, Prodefectcause, Prodzeroefects, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prodefectcategory;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -139,7 +139,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             if (ddlProlinename.SelectedIndex != 0 && ddlProlinename.SelectedIndex != -1)
             {
                 lblProrealqty.Text = "";
-                numPronobadqty.Text = "";
+                numProdzeroefects.Text = "";
                 lblPromodel.Text = "";
                 lblProorder.Text = "";
                 lblProorderqty.Text = "";
@@ -156,7 +156,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             else
             {
                 lblProrealqty.Text = "";
-                numPronobadqty.Text = "";
+                numProdzeroefects.Text = "";
                 lblPromodel.Text = "";
                 lblProorder.Text = "";
                 lblProorderqty.Text = "";
@@ -221,7 +221,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 if (qs.Any())
                 {
                     lblProrealqty.Text = qs[0].Prorealqty.ToString();
-                    numPronobadqty.Text = qs[0].Prorealqty.ToString();
+                    numProdzeroefects.Text = qs[0].Prorealqty.ToString();
                     lblPromodel.Text = qs[0].Prohbn.ToString();
                     lblProitem.Text = qs[0].Promodel.ToString();
                     lblProorder.Text = sorder;
@@ -315,7 +315,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             item.Proorder = lblProorder.Text;
             item.Proorderqty = (int)decimal.Parse(lblProorderqty.Text);
             item.Prorealqty = int.Parse(lblProrealqty.Text);
-            item.Pronobadqty = int.Parse(numPronobadqty.Text);
+            item.Prodzeroefects = int.Parse(numProdzeroefects.Text);
             item.Probadtotal = int.Parse(numProbadtotal.Text);
             item.Prodept = lblProdept.Text;
             item.GUID = Guid.NewGuid();
@@ -480,7 +480,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     int iid = q[i].ID;
                     Pp_P1d_Defect item = DB.Pp_P1d_Defects
                      .Where(u => u.ID == iid).FirstOrDefault();
-                    item.Pronobadqty = int.Parse(numPronobadqty.Text);//无不良台数更新
+                    item.Prodzeroefects = int.Parse(numProdzeroefects.Text);//无不良台数更新
                     item.ModifyDate = DateTime.Now;
                     item.Modifier = GetIdentityName();
                     DB.SaveChanges();

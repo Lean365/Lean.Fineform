@@ -150,15 +150,6 @@ namespace LeanFine.Lf_Manufacturing.PP.timesheet
         protected global::FineUIPro.Button BtnReason;
 
         /// <summary>
-        /// BtnRework 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::FineUIPro.Button BtnRework;
-
-        /// <summary>
         /// BtnReasonSub 控件。
         /// </summary>
         /// <remarks>

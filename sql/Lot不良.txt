@@ -1,0 +1,88 @@
+-- 第一步：获取所有不重复的批次列表
+WITH BatchList AS (
+    SELECT DISTINCT [Prolot] FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub]
+),
+
+-- 第二步：计算每个批次的日期范围
+BatchDateRange AS (
+    SELECT 
+        [Prolot],
+        MIN([Prodate]) AS MinDate,
+        MAX([Prodate]) AS MaxDate
+    FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub]
+    GROUP BY [Prolot]
+),
+
+-- 第三步：计算每个工单的计划量和实际产量
+OrderStats AS (
+    SELECT 
+        [Prolot],
+        [Proorder],
+        MAX([Proorderqty]) AS PlanQty,  -- 每个工单的计划量（取最大值）
+        SUM([Prorealqty]) AS ActualQty   -- 每个工单的实际产量总和
+    FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub]
+    GROUP BY [Prolot], [Proorder]
+),
+
+-- 第四步：计算批次级汇总数据
+BatchSummary AS (
+    SELECT 
+        b.[Prolot],
+        SUM(o.PlanQty) AS TotalPlanQty,
+        SUM(o.ActualQty) AS TotalActualQty
+    FROM BatchList b
+    JOIN OrderStats o ON b.[Prolot] = o.[Prolot]
+    GROUP BY b.[Prolot]
+),
+
+-- 第五步：统一合并所有文本字段
+MergedFields AS (
+    SELECT
+        [Prolot],
+        -- 机种（与工单相同的合并方法）
+        STUFF((
+            SELECT ',' + [Promodel]
+            FROM (SELECT DISTINCT [Promodel] FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub] WHERE [Prolot] = t.[Prolot]) AS sub
+            FOR XML PATH('')
+        ), 1, 1, '') AS MergedModels,
+        
+        -- 班组（与工单相同的合并方法）
+        STUFF((
+            SELECT ',' + [Prolinename]
+            FROM (SELECT DISTINCT [Prolinename] FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub] WHERE [Prolot] = t.[Prolot]) AS sub
+            FOR XML PATH('')
+        ), 1, 1, '') AS MergedLines,
+        
+        -- 工单列表
+        STUFF((
+            SELECT ',' + [Proorder]
+            FROM (SELECT DISTINCT [Proorder] FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub] WHERE [Prolot] = t.[Prolot]) AS sub
+            FOR XML PATH('')
+        ), 1, 1, '') AS MergedOrders,
+        
+        -- 物料列表
+        STUFF((
+            SELECT ',' + [Prohbn]
+            FROM (SELECT DISTINCT [Prohbn] FROM [LeanFine_Pord].[dbo].[Pp_P1d_OutputSub] WHERE [Prolot] = t.[Prolot]) AS sub
+            FOR XML PATH('')
+        ), 1, 1, '') AS MergedMaterials
+    FROM BatchList t
+)
+
+-- 最终结果
+SELECT 
+CONVERT(VARCHAR(10), d.MinDate, 120) + '~' + CONVERT(VARCHAR(10), d.MaxDate, 120) AS '期间',
+m.MergedLines AS '班组',
+
+m.[Prolot] AS '批次',
+m.MergedOrders AS '工单',
+m.MergedModels AS '机种',
+s.TotalPlanQty AS '工单数量',
+m.MergedMaterials AS '物料',
+s.TotalPlanQty AS '工单数量',
+s.TotalActualQty AS '生产数量'
+
+FROM BatchSummary s
+JOIN MergedFields m ON s.[Prolot] = m.[Prolot]
+JOIN BatchDateRange d ON s.[Prolot] = d.[Prolot]
+ORDER BY m.[Prolot]

@@ -92,7 +92,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    q = q.Where(u => u.Promodel.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolot.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolinename.Contains(searchText) || u.Propcbcheckout.Contains(searchText) || u.Probadresponsibility.Contains(searchText) || u.Probadrepairman.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                    q = q.Where(u => u.Promodel.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolot.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolinename.Contains(searchText) || u.Propcbcheckout.Contains(searchText) || u.Probadresponsibility.Contains(searchText) || u.Prorepairman.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                 }
                 q = q.Distinct();
                 //else
@@ -127,9 +127,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 //      Prolotqty = g.Sum(p => p.Proorderqty),
                 //      Prorealqty = g.Sum(p => p.Prorealqty),
-                //      Pronobadqty = g.Sum(p => p.Pronobadqty),
+                //      Prodzeroefects = g.Sum(p => p.Prodzeroefects),
                 //      Probadtotal = g.Sum(p => p.Probadtotal),
-                //      Prodirectrate = (g.Sum(p => p.Pronobadqty) != 0 ? (g.Sum(p => p.Pronobadqty) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
+                //      Prodirectrate = (g.Sum(p => p.Prodzeroefects) != 0 ? (g.Sum(p => p.Prodzeroefects) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
                 //      Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0m / g.Sum(p => p.Prorealqty)) : 0),
                 //  };
 
@@ -315,7 +315,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 string searchText = ttbSearchMessage.Text.Trim();
                 if (!String.IsNullOrEmpty(searchText))
                 {
-                    q = q.Where(u => u.Promodel.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolot.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolinename.Contains(searchText) || u.Propcbcheckout.Contains(searchText) || u.Probadresponsibility.Contains(searchText) || u.Probadrepairman.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                    q = q.Where(u => u.Promodel.Contains(searchText) || u.Proorder.Contains(searchText) || u.Prolot.Contains(searchText) || u.Propcbtype.Contains(searchText) || u.Prolinename.Contains(searchText) || u.Propcbcheckout.Contains(searchText) || u.Probadresponsibility.Contains(searchText) || u.Prorepairman.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
                 }
                 //else
                 //{
@@ -345,15 +345,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         生产实绩 = E.Prorealqty,
                         生产组别 = E.Prolinename,
                         卡号 = E.Propcbcardno,
-                        不良症状 = E.Probadnote,
+                        不良症状 = E.Prodefectsymptom,
                         检出工程 = E.Propcbcheckout,
-                        不良原因 = E.Probadreason,
+                        不良原因 = E.Prodefectcause,
                         不良数量 = E.Probadqty,
                         不良台数 = E.Probadtotal,
                         责任归属 = E.Probadresponsibility,
-                        不良性质 = E.Probadprop,
+                        不良性质 = E.Prodefectnature,
                         序列号 = E.Probadserial,
-                        修理 = E.Probadrepairman,
+                        修理 = E.Prorepairman,
                     });
 
                     ExportHelper.Repair_XlsxFile(ConvertHelper.LinqConvertToDataTable(qs), "Pr" + DpEndDate.SelectedDate.Value.ToString("yyyyMM"), Export_FileName, DpEndDate.SelectedDate.Value.ToString("yyyyMM"));

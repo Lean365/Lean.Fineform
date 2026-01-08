@@ -1300,7 +1300,7 @@
     <value>机种(B)</value>
   </data>
   <data name="sys_Button_Line_N" xml:space="preserve">
-    <value>班组改修(N)</value>
+    <value>班组返工(N)</value>
   </data>
   <data name="sys_Button_Model_N" xml:space="preserve">
     <value>机种(N)</value>
@@ -1313,5 +1313,23 @@
   </data>
   <data name="menu_Pp_P1d_Epp_Defect" xml:space="preserve">
     <value>Epp不良</value>
+  </data>
+  <data name="sys_Export_Epp" xml:space="preserve">
+    <value>Epp明细导出</value>
+  </data>
+  <data name="sys_Export_Mp" xml:space="preserve">
+    <value>生产明细导出</value>
+  </data>
+  <data name="sys_Export_Rwr" xml:space="preserve">
+    <value>改修明细导出</value>
+  </data>
+  <data name="sys_Export_Rpr" xml:space="preserve">
+    <value>返工明细导出</value>
+  </data>
+  <data name="sys_Button_Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="sys_Button_Phase" xml:space="preserve">
+    <value>时段</value>
   </data>
 </root>

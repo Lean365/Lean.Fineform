@@ -1,0 +1,76 @@
+BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    DECLARE @strPorder NVARCHAR(50) = '454185';
+    DECLARE @uid NVARCHAR(50) = 'admin'; -- 请替换为实际的用户ID
+    
+    -- 检查目标表是否存在该订单
+    IF NOT EXISTS (SELECT 1 FROM Pp_Defect_P1d_Order WHERE Proorder = @strPorder)
+    BEGIN
+        PRINT '警告：订单 ' + @strPorder + ' 在目标表中不存在，已跳过';
+        RETURN;
+    END
+    
+    -- 查询源数据的最小和最大日期
+    DECLARE @minDate NVARCHAR(8), @maxDate NVARCHAR(8);
+    
+    SELECT 
+        @minDate = CONVERT(NVARCHAR(8), MIN(Prodate), 112),
+        @maxDate = CONVERT(NVARCHAR(8), MAX(Prodate), 112)
+    FROM Pp_P1d_OutputSub
+    WHERE Proorder = @strPorder
+      AND Prodate IS NOT NULL;
+    
+    -- 检查是否有源数据
+    IF @minDate IS NULL OR @maxDate IS NULL
+    BEGIN
+        RAISERROR('订单 %s 在源表中无数据', 16, 1, @strPorder);
+        RETURN;
+    END
+    
+    -- 查询不重复的生产线名称并排序
+    DECLARE @prolines NVARCHAR(MAX);
+    
+    WITH DistinctLines AS (
+        SELECT DISTINCT Prolinename 
+        FROM Pp_P1d_OutputSub 
+        WHERE Proorder = @strPorder
+          AND Prolinename IS NOT NULL
+    )
+    SELECT @prolines = STRING_AGG(Prolinename, '，') WITHIN GROUP (ORDER BY Prolinename)
+    FROM DistinctLines;
+    
+    -- 更新目标表（仅当数据有变化时）
+    UPDATE Pp_Defect_P1d_Order
+    SET 
+        Prodate = @minDate + '~' + @maxDate,
+        Prolinename = @prolines,
+        ModifyDate = GETDATE(),
+        Modifier = @uid
+    WHERE Proorder = @strPorder
+      AND (
+          ISNULL(Prodate, '') <> @minDate + '~' + @maxDate OR
+          ISNULL(Prolinename, '') <> ISNULL(@prolines, '') OR
+          Modifier <> @uid OR
+          ModifyDate < DATEADD(MINUTE, -5, GETDATE())
+      );
+    
+    -- 检查是否实际更新了记录
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT '订单 ' + @strPorder + ' 数据未变更，无需更新';
+    END
+    ELSE
+    BEGIN
+        PRINT '成功更新订单 ' + @strPorder;
+    END
+    
+    COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+        
+    DECLARE @ErrorMessage NVARCHAR(4000) = '更新订单 ' + @strPorder + ' 失败: ' + ERROR_MESSAGE();
+    RAISERROR(@ErrorMessage, 16, 1);
+END CATCH

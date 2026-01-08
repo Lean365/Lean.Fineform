@@ -20,7 +20,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(20)]
         public string Proorder { get; set; }//生产订单
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string Prolot { get; set; }//生产LOT
 
         public int Proorderqty { get; set; }//订单台数
@@ -37,13 +37,13 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Propcbcardno { get; set; }//卡号
 
         [StringLength(200)]
-        public string Probadnote { get; set; }//不良症状
+        public string Prodefectsymptom { get; set; }//不良症状
 
         [StringLength(30)]
         public string Propcbcheckout { get; set; }//检出工程 类别L
 
         [StringLength(200)]
-        public string Probadreason { get; set; }//不良原因
+        public string Prodefectcause { get; set; }//不良原因
 
         public int Probadqty { get; set; }//不良数量
         public int Probadtotal { get; set; }//不良台数（同一LOT同一类别集计数量）
@@ -52,13 +52,13 @@ namespace LeanFine.Lf_Business.Models.PP
         public string Probadresponsibility { get; set; }//责任归属 类别C
 
         [StringLength(200)]
-        public string Probadprop { get; set; }//不良性质  类别 E
+        public string Prodefectnature { get; set; }//不良性质  类别 E
 
         [StringLength(200)]
         public string Probadserial { get; set; }//序列号
 
         [StringLength(200)]
-        public string Probadrepairman { get; set; }//修理 类别M
+        public string Prorepairman { get; set; }//修理 类别M
 
         [StringLength(255)]
         public string UDF01 { get; set; }

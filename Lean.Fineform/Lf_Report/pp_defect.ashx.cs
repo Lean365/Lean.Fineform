@@ -26,19 +26,19 @@ namespace LeanFine.Lf_Report
 
             //查询在特定日期的全部工单
             //查询在特定日期的全部工单
-            var q = from a in DBCharts.Pp_Defect_Totals
+            var q = from a in DBCharts.Pp_Defect_P1d_Orders
                         //join b in DBCharts.PP_Outputs on a.Prolot equals b.Prolot
                     where a.IsDeleted == 0
                     //where b.IsDeleted == 0
                     where a.Prodate.Contains(atedate)
-                    //where a.Prorealqty != a.Pronobadqty
+                    //where a.Prorealqty != a.Prodzeroefects
                     select new
                     {
                         a.Prolot,
                         a.Proorder,
                         a.Proorderqty,
                         a.Prorealqty,
-                        a.Pronobadqty,
+                        a.Prodzeroefects,
                         a.Probadtotal,
                     };
             q = q.Distinct();
@@ -56,15 +56,15 @@ namespace LeanFine.Lf_Report
                          Prolot = g.Key.Prolot,
                          Prolotqty = g.Sum(p => p.Proorderqty),
                          Prorealqty = g.Sum(p => p.Prorealqty),
-                         Pronobadqty = g.Sum(p => p.Pronobadqty),
+                         Prodzeroefects = g.Sum(p => p.Prodzeroefects),
                          Probadtotal = g.Sum(p => p.Probadtotal),
-                         Prodirectrate = (g.Sum(p => p.Pronobadqty) != 0 ? ((g.Sum(p => p.Pronobadqty) * 1.0 / g.Sum(p => p.Prorealqty)) * 100) : 0),
+                         Prodirectrate = (g.Sum(p => p.Prodzeroefects) != 0 ? ((g.Sum(p => p.Prodzeroefects) * 1.0 / g.Sum(p => p.Prorealqty)) * 100) : 0),
                          Probadrate = (g.Sum(p => p.Probadtotal) != 0 ? (g.Sum(p => p.Probadtotal) * 1.0 / g.Sum(p => p.Prorealqty)) * 100 : 0),
                      };
 
-            qs = qs.OrderByDescending(a => a.Pronobadqty);
+            qs = qs.OrderByDescending(a => a.Prodzeroefects);
             var qss = (from a in qs
-                       orderby a.Pronobadqty descending
+                       orderby a.Prodzeroefects descending
                        select a)
                      .ToList().Select(
                 p => new
@@ -72,7 +72,7 @@ namespace LeanFine.Lf_Report
                     p.Prolot,
                     p.Prolotqty,
                     p.Prorealqty,
-                    p.Pronobadqty,
+                    p.Prodzeroefects,
                     p.Probadtotal,
                     Prodirectrate = p.Prodirectrate.ToString("0.00"),
                     Probadrate = p.Probadrate.ToString("0.00"),
@@ -88,7 +88,7 @@ namespace LeanFine.Lf_Report
                 //List<object> lists = new List<object>();                       //创建object类型的泛型
                 foreach (DataRow dr in dt.Rows)
                 {
-                    var obj = new { name = dr["Prolot"], value1 = dr["Pronobadqty"], value2 = dr["Probadtotal"], value3 = dr["Prodirectrate"], value4 = dr["Probadrate"] };  //key，value
+                    var obj = new { name = dr["Prolot"], value1 = dr["Prodzeroefects"], value2 = dr["Probadtotal"], value3 = dr["Prodirectrate"], value4 = dr["Probadrate"] };  //key，value
                     lists.Add(obj);
                 }
                 //var jsS = new JavaScriptSerializer();                           //创建json对象

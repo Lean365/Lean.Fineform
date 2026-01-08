@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -83,13 +83,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //    where p.Prongbdel == false
             //    where p.Prorealqty != 0
             //    where p.Probadtotal != 0
-            //    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Prongdept, p.Proclassmatter, p.Prongmatter, p.Prorealqty, p.Probadtotal } into g
+            //    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Prodefectcategory, p.Proclassmatter, p.Prongmatter, p.Prorealqty, p.Probadtotal } into g
             //    select new
             //    {
             //        Prodate = g.Key.Prodate,
             //        Prolinename = g.Key.Prolinename,
             //        Prolot = g.Key.Prolot,
-            //        Prongdept = g.Key.Prongdept,
+            //        Prodefectcategory = g.Key.Prodefectcategory,
             //        Proclassmatter = g.Key.Proclassmatter,
             //        Prongmatter = g.Key.Prongmatter,
             //        Prorealqty = g.Key.Prorealqty,
@@ -361,10 +361,10 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //             生产日期 = g.Prodate,
             //             生产批次 = g.Prolot,
             //             生产班组 = g.Prolinename,
-            //             不良区分 = g.Prongdept,
+            //             不良区分 = g.Prodefectcategory,
             //             不良件数 = g.Probadqty,
-            //             不请症状 = g.Probadnote,
-            //             不良原因 = g.Probadreason,
+            //             不请症状 = g.Prodefectsymptom,
+            //             不良原因 = g.Prodefectcause,
 
             //         };
             if (Grid1.RecordCount != 0)
@@ -479,7 +479,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             .Where(s => s.Prolot.Contains(strLot))
                             .Where(s => s.Promodel.CompareTo(strPmodel) == 0)
                             //.Where(s => s.Prorealqty==s.Proorderqty)
-                            .OrderBy(s => s.Prongdept)
+                            .OrderBy(s => s.Prodefectcategory)
                             select new
                             {
                                 p.Prolot,
@@ -487,15 +487,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                 p.Prolinename,
                                 p.Prodate,
                                 p.Prorealqty,
-                                p.Prongdept,
-                                p.Probadnote,
-                                p.Probadreason,
+                                p.Prodefectcategory,
+                                p.Prodefectsymptom,
+                                p.Prodefectcause,
                                 p.Probadqty,
                             };
 
                     //IEnumerable 转换IQueryable//AsEnumerable//AsQueryable
                     var qsub = from p in q2
-                             .OrderBy(s => s.Prongdept)
+                             .OrderBy(s => s.Prodefectcategory)
                                select new
                                {
                                    批次 = p.Prolot,
@@ -503,9 +503,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                    生产日期 = p.Prodate,
                                    生产班组 = p.Prolinename,
                                    生产实绩 = p.Prorealqty,
-                                   不良区分 = p.Prongdept,
-                                   不良症状 = p.Probadnote,
-                                   不良原因 = p.Probadreason,
+                                   不良区分 = p.Prodefectcategory,
+                                   不良症状 = p.Prodefectsymptom,
+                                   不良原因 = p.Prodefectcause,
                                    不良件数 = p.Probadqty,
                                };
                     DataTable ex = ConvertHelper.LinqConvertToDataTable(qsub);

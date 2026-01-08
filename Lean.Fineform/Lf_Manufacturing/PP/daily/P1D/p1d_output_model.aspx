@@ -52,24 +52,10 @@
                         </f:Toolbar>
                         <f:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <f:RadioButton ID="rbtnFirstAuto" Label="" Checked="true" GroupName="MyRadioGroup2"
-                                    Text="<%$ Resources:GlobalResource,sys_Status_Pp_All%>" runat="server" OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnSecondAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_Normal%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-                                <f:RadioButton ID="rbtnThirdAuto" GroupName="MyRadioGroup2" ShowEmptyLabel="true" Text="<%$ Resources:GlobalResource,sys_Status_Pp_Rework%>" runat="server"
-                                    OnCheckedChanged="rbtnAuto_CheckedChanged" AutoPostBack="true">
-                                </f:RadioButton>
-
-
                                 <f:ToolbarFill ID="ToolbarFill1" runat="server">
                                 </f:ToolbarFill>
                                 <f:Button ID="BtnExport" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
                                     runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetNormal%>" OnClick="BtnExport_Click" CssClass="marginr">
-                                </f:Button>
-                                <f:Button ID="BtnRepair" IconUrl="~/res/icon/Eexcel.png" EnableAjax="false" DisableControlBeforePostBack="false"
-                                    runat="server" Text="<%$ Resources:GlobalResource,sys_Export_SheetRework%>" OnClick="BtnRepair_Click" CssClass="marginr">
                                 </f:Button>
 
                             </Items>

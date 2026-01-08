@@ -22,7 +22,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            ShowHeader="false" Title="LeanCloud">
+            ShowHeader="false" Title="Lean365">
             <Items>
                 <f:Form ID="Form2" runat="server" Height="36px" BodyPadding="5px" ShowHeader="false"
                     ShowBorder="false" LabelAlign="Right">
@@ -78,7 +78,7 @@
                         <f:BoundField DataField="Proorderqty" SortField="Proorderqty" Width="100px" HeaderText="工单数量" />
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="200px" HeaderText="生产日期" />
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" ColumnID="Prorealqty" Width="100px" HeaderText="生产数量" />
-                        <f:BoundField DataField="Pronobadqty" SortField="Pronobadqty" ColumnID="Pronobadqty" Width="100px" HeaderText="无不良台数" />
+                        <f:BoundField DataField="Prodzeroefects" SortField="Prodzeroefects" ColumnID="Prodzeroefects" Width="100px" HeaderText="无不良台数" />
                         <f:BoundField DataField="Probadtotal" SortField="Probadtotal" ColumnID="Probadtotal" Width="100px" HeaderText="不良总数" />
                         <f:BoundField DataField="Prodirectrate" SortField="Prodirectrate" ColumnID="Prodirectrate" Width="100px" HeaderText="直行率" HtmlEncode="false" DataFormatString="{0:p2}" />
                         <f:BoundField DataField="Probadrate" SortField="Probadrate" ColumnID="Probadrate" Width="100px" HeaderText="不良率" HtmlEncode="false" DataFormatString="{0:p2}" />

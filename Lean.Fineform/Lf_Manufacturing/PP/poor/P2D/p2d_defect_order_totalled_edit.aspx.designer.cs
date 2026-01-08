@@ -96,13 +96,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow2;
 
         /// <summary>
-        /// DefDate 控件。
+        /// lblProdate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label DefDate;
+        protected global::FineUIPro.Label lblProdate;
 
         /// <summary>
         /// FormRow3 控件。
@@ -114,13 +114,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow3;
 
         /// <summary>
-        /// prolinename 控件。
+        /// lblProlinename 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolinename;
+        protected global::FineUIPro.Label lblProlinename;
 
         /// <summary>
         /// FormRow4 控件。
@@ -132,13 +132,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow4;
 
         /// <summary>
-        /// prolot 控件。
+        /// lblProlot 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prolot;
+        protected global::FineUIPro.Label lblProlot;
 
         /// <summary>
         /// FormRow10 控件。
@@ -150,13 +150,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow10;
 
         /// <summary>
-        /// prorealqty 控件。
+        /// lblProrealqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label prorealqty;
+        protected global::FineUIPro.Label lblProrealqty;
 
         /// <summary>
         /// FormRow5 控件。
@@ -168,13 +168,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow5;
 
         /// <summary>
-        /// pronobadqty 控件。
+        /// numProdzeroefects 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.NumberBox pronobadqty;
+        protected global::FineUIPro.NumberBox numProdzeroefects;
 
         /// <summary>
         /// FormRow6 控件。
@@ -186,13 +186,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow6;
 
         /// <summary>
-        /// promodel 控件。
+        /// lblPromodel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label promodel;
+        protected global::FineUIPro.Label lblPromodel;
 
         /// <summary>
         /// FormRow1 控件。
@@ -204,13 +204,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow1;
 
         /// <summary>
-        /// promodelqty 控件。
+        /// lblPromodelqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label promodelqty;
+        protected global::FineUIPro.Label lblPromodelqty;
 
         /// <summary>
         /// FormRow7 控件。
@@ -222,13 +222,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow7;
 
         /// <summary>
-        /// proorder 控件。
+        /// lblProorder 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label proorder;
+        protected global::FineUIPro.Label lblProorder;
 
         /// <summary>
         /// FormRow8 控件。
@@ -240,12 +240,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         protected global::FineUIPro.FormRow FormRow8;
 
         /// <summary>
-        /// proorderqty 控件。
+        /// lblProorderqty 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::FineUIPro.Label proorderqty;
+        protected global::FineUIPro.Label lblProorderqty;
     }
 }

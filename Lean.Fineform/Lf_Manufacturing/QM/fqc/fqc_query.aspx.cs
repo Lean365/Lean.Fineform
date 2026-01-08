@@ -77,13 +77,13 @@ namespace LeanFine.Lf_Manufacturing.QM.fqc
             //    where p.Prongbdel == false
             //    where p.Prorealqty != 0
             //    where p.Probadtotal != 0
-            //    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Prongdept, p.Proclassmatter, p.Prongmatter, p.Prorealqty, p.Probadtotal } into g
+            //    group p by new { p.Prodate, p.Prolinename, p.Prolot, p.Prodefectcategory, p.Proclassmatter, p.Prongmatter, p.Prorealqty, p.Probadtotal } into g
             //    select new
             //    {
             //        Prodate = g.Key.Prodate,
             //        Prolinename = g.Key.Prolinename,
             //        Prolot = g.Key.Prolot,
-            //        Prongdept = g.Key.Prongdept,
+            //        Prodefectcategory = g.Key.Prodefectcategory,
             //        Proclassmatter = g.Key.Proclassmatter,
             //        Prongmatter = g.Key.Prongmatter,
             //        Prorealqty = g.Key.Prorealqty,

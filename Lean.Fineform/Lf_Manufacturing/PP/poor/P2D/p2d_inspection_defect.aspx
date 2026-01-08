@@ -27,7 +27,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            ShowHeader="false" Title="LeanCloud">
+            ShowHeader="false" Title="Lean365">
             <Items>
                 <f:Form ID="Form2" runat="server" Height="36px" BodyPadding="5px" ShowHeader="false"
                     ShowBorder="false" LabelAlign="Right">
@@ -102,8 +102,9 @@
                         <f:BoundField DataField="Propcbtype" SortField="Propcbtype" Width="80px" HeaderText="板别" />
                         <%-- <f:BoundField DataField="Provisualtype" SortField="Provisualtype" Width="80px" HeaderText="目视" />--%>
                         <%--<f:BoundField DataField="Provctype" SortField="Provctype" Width="80px" HeaderText="VC线别" />--%>
-                        <f:BoundField DataField="Prosideadate" SortField="Prosideadate" Width="80px" HeaderText="B面实装" />
-                        <f:BoundField DataField="Prosidebdate" SortField="Prosidebdate" Width="80px" HeaderText="T面实装" />
+                        <f:BoundField DataField="Propcbside" SortField="Propcbside" Width="80px" HeaderText="板面" />
+                        <%--<f:BoundField DataField="Prosideadate" SortField="Prosideadate" Width="80px" HeaderText="B面实装" />--%>
+                        <%--<f:BoundField DataField="Prosidebdate" SortField="Prosidebdate" Width="80px" HeaderText="T面实装" />--%>
                         <%--<f:BoundField DataField="Prodshiftname" SortField="Prodshiftname" Width="80px" HeaderText="生产班别" />--%>
                         <f:BoundField DataField="Procensor" SortField="Procensor" Width="80px" HeaderText="检查" />
                         <%--<f:BoundField DataField="Proorder" SortField="Proorder" Width="80px" HeaderText="订单" />--%>

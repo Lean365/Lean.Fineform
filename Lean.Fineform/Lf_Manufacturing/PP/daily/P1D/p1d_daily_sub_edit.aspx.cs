@@ -1,15 +1,14 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-
 //using EntityFramework.Extensions;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Helper;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
@@ -32,7 +31,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
         #region Page_Load
 
-        public static string mysql, RealQty, StopCheck, StopMinute, StopText, ResonText, WorkText, strProline, strProdate, strProlot, strPromodel, strProst, strProstdcapacity, strProorder;
+        public static string mysql, RealQty, StopCheck, StopMinute, StopText, ResonText, WorkText, strProline, strProStartdate, strProlot, strPromodel, strProst, strProstdcapacity, strProorder;
         public static int prorate;
         public static int ParentID, rowID;
         public static decimal orderqty, ophqty;
@@ -97,7 +96,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             ParentID = int.Parse(strgroup[0].ToString().Trim());
             strProline = strgroup[1].ToString().Trim();
-            strProdate = strgroup[2].ToString().Trim();
+            strProStartdate = strgroup[2].ToString().Trim();
             strProlot = strgroup[3].ToString().Trim();
             strPromodel = strgroup[4].ToString().Trim();
             strProst = strgroup[5].ToString().Trim();
@@ -295,15 +294,23 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             UpdateP1dHelper.Pp_P1d_Defect_Update_For_Realqty(item.Proorder, item.Prodate, item.Prolinename, userid);
 
             //更新不良集计数据中的实绩生产数量,按工单
-            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_Realqty(item.Proorder, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_Realqty(item.Proorder, userid);
 
             //判断不良是否录入
             UpdateP1dHelper.Pp_P1d_Defect_For_Check(item.Proorder, item.Prodate, item.Prolinename);
 
             //更新无不良台数
-            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(item.Proorder, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(item.Prodate.Substring(0, 6), item.Proorder, userid);
             //更新订单已生产数量
             UpdateP1dHelper.UpdateOrderRealQty(item.Proorder, userid);
+            //更新订单总生产数量按Lot
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_Realqty(item.Prolot, userid);
+
+            //更新订单总生产数量按Lot
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_TotalOrderqty(item.Prolot, userid);
+
+            //更新无不良台数按Lot
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_NoBadQty(item.Prolot, userid);
         }
 
         //// 根据行ID来获取行数据

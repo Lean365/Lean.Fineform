@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -29,7 +29,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public static string mysql, userid, ConnStr;
         public static int rowID, delrowID, editrowID, totalSum;
-        public static string Prolot, Prolinename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept;
+        public static string Prolot, Prolinename, Prodate, Prorealqty, Prodefectsymptom, Proorder, Prodefectcause, Prodzeroefects, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prodefectcategory;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -69,20 +69,20 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 return;
             }
 
-            DefDate.Text = current[0].Prodate;
+            lblProdate.Text = current[0].Prodate;
             // 选中当前节点的父节点
-            prolinename.Text = current[0].Prolinename;
+            lblProlinename.Text = current[0].Prolinename;
 
-            prolot.Text = current[0].Prolot;
+            lblProlot.Text = current[0].Prolot;
 
-            promodel.Text = current[0].Promodel;
+            lblPromodel.Text = current[0].Promodel;
 
-            proorderqty.Text = current[0].Proorderqty.ToString();
+            lblProorderqty.Text = current[0].Proorderqty.ToString();
 
-            proorder.Text = current[0].Proorder;
+            lblProorder.Text = current[0].Proorder;
 
             var rqty = (from a in DB.Pp_P1d_OutputSubs
-                        where a.Proorder == proorder.Text
+                        where a.Proorder == lblProorder.Text
                         group a by a.Proorder into g
                         select new
                         {
@@ -90,20 +90,20 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         }).ToList();
             if (rqty.Any())
             {
-                prorealqty.Text = rqty[0].rqty.ToString();
+                lblProrealqty.Text = rqty[0].rqty.ToString();
             }
             else
             {
-                prorealqty.Text = current[0].Prorealqty.ToString();
+                lblProrealqty.Text = current[0].Prorealqty.ToString();
             }
 
-            if (current[0].Pronobadqty != 0)
+            if (current[0].Prodzeroefects != 0)
             {
-                pronobadqty.Text = current[0].Pronobadqty.ToString();
+                numProdzeroefects.Text = current[0].Prodzeroefects.ToString();
             }
             else
             {
-                pronobadqty.Text = current[0].Prorealqty.ToString();
+                numProdzeroefects.Text = current[0].Prorealqty.ToString();
             }
 
             //Editor1.setContent("")
@@ -117,7 +117,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //InitUserTitle(current);
 
             //修改前日志
-            string BeforeModi = current[0].Prodate + "," + current[0].Prolinename + "," + current[0].Prolot + "," + current[0].Prorealqty + "," + current[0].Proorder + "," + current[0].Pronobadqty;
+            string BeforeModi = current[0].Prodate + "," + current[0].Prolinename + "," + current[0].Prolot + "," + current[0].Prorealqty + "," + current[0].Proorder + "," + current[0].Prodzeroefects;
             string OperateType = "修改";
             string OperateNotes = "beEdit生产不良*" + BeforeModi + " *beEdit生产不良 的订单记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "系统管理", "不具合修改", OperateNotes);
@@ -125,12 +125,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
-            if (Decimal.Parse(pronobadqty.Text) > Decimal.Parse(prorealqty.Text))
+            if (Decimal.Parse(numProdzeroefects.Text) > Decimal.Parse(lblProrealqty.Text))
             {
                 Alert.ShowInTop("无不良台数不能大于生产台数");
                 return;
             }
-            if (Decimal.Parse(pronobadqty.Text) <= Decimal.Parse(prorealqty.Text))
+            if (Decimal.Parse(numProdzeroefects.Text) <= Decimal.Parse(lblProrealqty.Text))
             {
                 UpdateDefectQty();
                 UpdateOqty();
@@ -141,7 +141,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void UpdateOqty()
         {
             var q = (from a in DB.Pp_P1d_Defects
-                     where a.Prolot == prolot.Text
+                     where a.Prolot == lblProlot.Text
                      select a).ToList();
             if (q.Any())
             {
@@ -150,7 +150,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     int iid = q[i].ID;
                     Pp_P1d_Defect item = DB.Pp_P1d_Defects
                      .Where(u => u.ID == iid).FirstOrDefault();
-                    item.Pronobadqty = int.Parse(pronobadqty.Text);//无不良台数更新
+                    item.Prodzeroefects = int.Parse(numProdzeroefects.Text);//无不良台数更新
                     item.ModifyDate = DateTime.Now;
                     item.Modifier = GetIdentityName();
                     DB.SaveChanges();
@@ -160,7 +160,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public void UpdateDefectQty()
         {
-            string dd = DefDate.Text.Substring(0, 6);
+            string dd = lblProdate.Text.Substring(0, 6);
             var q =
                 from p in DB.Pp_P1d_OutputSubs
                         .Where(s => s.Prodate.Substring(0, 6).CompareTo(dd) == 0)
@@ -236,7 +236,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //ngcode();
             //item.ID = GetQueryIntValue("id");
 
-            //item.Prongdept = Prongdept.SelectedItem.Text;
+            //item.Prodefectcategory = Prodefectcategory.SelectedItem.Text;
 
             //item.Proclassmatter = proclassmatter.SelectedItem.Text;
             //item.Prongclass = nclass;
@@ -246,14 +246,14 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //item.Probadqty = int.Parse(probadqty.Text);
             ////item.Probadtotal =0;
             ////item.Prongbdel = false;
-            //item.Probadnote = Probadnote.Text;
+            //item.Prodefectsymptom = Prodefectsymptom.Text;
 
             //// 添加所有用户
 
             //item.Remark = remark.Text;
-            item.Prorealqty = int.Parse(prorealqty.Text);
-            item.Pronobadqty = int.Parse(pronobadqty.Text);
-            item.Prodirectrate = (decimal)int.Parse(pronobadqty.Text) / int.Parse(prorealqty.Text);
+            item.Prorealqty = int.Parse(lblProrealqty.Text);
+            item.Prodzeroefects = int.Parse(numProdzeroefects.Text);
+            item.Prodirectrate = (decimal)int.Parse(numProdzeroefects.Text) / int.Parse(lblProrealqty.Text);
 
             item.Modifier = GetIdentityName();
             item.ModifyDate = DateTime.Now;
@@ -262,7 +262,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             DB.SaveChanges();
 
             //修改后日志
-            string ModifiedText = prolot.Text.Trim() + "," + prolot.Text + "," + DefDate.Text + "," + prolinename.Text + "," + prorealqty.Text + "," + pronobadqty.Text + "," + promodel.Text;
+            string ModifiedText = lblProlot.Text.Trim() + "," + lblProlot.Text + "," + lblProdate.Text + "," + lblProlinename.Text + "," + lblProrealqty.Text + "," + numProdzeroefects.Text + "," + lblPromodel.Text;
             string OperateType = "修改";
             string OperateNotes = "afEdit生产不良* " + ModifiedText + "*afEdit生产不良 的订单记录已修改";
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "系统管理", "不具合修改", OperateNotes);

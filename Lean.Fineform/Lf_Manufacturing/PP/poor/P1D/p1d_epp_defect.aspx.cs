@@ -1,11 +1,11 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Web.UI.WebControls;
-using FineUIPro;
+﻿using FineUIPro;
 using LeanFine.Lf_Business.Helper;
 using LeanFine.Lf_Business.Models.PP;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -81,7 +81,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -126,7 +126,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                                 //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                                 //where b.Proecnno == strecn
                                 //where b.Proecnbomitem == stritem
-                            where a.DictType.Contains("reason_type_m")
+                            where a.DictType.Contains("line_type_m")
                             select new
                             {
                                 a.DictLabel,
@@ -134,7 +134,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             }).ToList();
             string sdate = DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             string edate = DpEndDate.SelectedDate.Value.ToString("yyyyMMdd");
-            var q = from a in DB.Pp_P1d_Defects
+            var q = from a in DB.Pp_P1d_Epp_Defects
                         //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
                     where a.Prodate.CompareTo(sdate) >= 0
                     where a.Prodate.CompareTo(edate) <= 0
@@ -144,7 +144,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                     };
 
             //包含子集
-            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictValue));
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel));
 
             var qs = q_include.Select(E => new { E.Prolinename, }).ToList().Distinct();
             //var list = (from c in DB.ProSapPorders
@@ -152,8 +152,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
             DdlLine.DataSource = qs;
-            DdlLine.DataTextField = "DictLabel";
-            DdlLine.DataValueField = "DictValue";
+            DdlLine.DataTextField = "Prolinename";
+            DdlLine.DataValueField = "Prolinename";
             DdlLine.DataBind();
 
             this.DdlLine.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
@@ -224,13 +224,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
                 //删除日志
                 //int userID = GetSelectedDataKeyID(Grid1);
-                Pp_P1d_Defect current = DB.Pp_P1d_Defects.Find(del_ID);
+                Pp_P1d_Epp_Defect current = DB.Pp_P1d_Epp_Defects.Find(del_ID);
                 string Contectext = current.ID.ToString() + "," + current.GUID.ToString();
                 string OperateType = "删除";//操作标记
                 string OperateNotes = "Del生产* " + Contectext + " *Del 的记录已删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "生产不良删除标记", OperateNotes);
 
-                DB.Pp_P1d_Defects.Where(l => l.ID == del_ID).DeleteFromQuery();
+                DB.Pp_P1d_Epp_Defects.Where(l => l.ID == del_ID).DeleteFromQuery();
 
                 //更新无不良台数
                 UpdateEppHelper.P1d_Defect_Epp_Orders_Update_For_NoBadQty(current.Proorder, GetIdentityName(), "ASSYE");
@@ -297,15 +297,26 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             SheetName = "D" + DpStartDate.SelectedDate.Value.ToString("yyyyMMdd");
             Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + "EppDefectRecord_Data";
             //mysql = "EXEC DTA.dbo.SP_BOM_EXPAND '" + Prefix_XlsxName + "'";
-            Export_FileName = Prefix_XlsxName + ".xlsx";
 
-            IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects; //.Include(u => u.Dept);
+
+            var LineType = (from a in DB.Adm_Dicts
+                                //join b in DB.Pp_EcnSubs on a.Porderhbn equals b.Proecnbomitem
+                                //where b.Proecnno == strecn
+                                //where b.Proecnbomitem == stritem
+                            where a.DictType.Contains("line_type_m")
+                            select new
+                            {
+                                a.DictLabel,
+                                a.DictValue
+                            }).ToList();
+            IQueryable<Pp_P1d_Epp_Defect> q = DB.Pp_P1d_Epp_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
             string searchText = ttbSearchMessage.Text.Trim();
             if (!String.IsNullOrEmpty(searchText))
             {
-                q = q.Where(u => u.Prodate.Contains(searchText) || u.Prongdept.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
+                Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + searchText.Trim().ToUpper() + "_DefectRecord_Data";
+                q = q.Where(u => u.Promodel.Contains(searchText) || u.Prodate.Contains(searchText) || u.Prodefectcategory.Contains(searchText) || u.Prolot.Contains(searchText) || u.Prolinename.Contains(searchText)); //|| u.CreateDate.Contains(searchText));
             }
 
             // 在用户名称中搜索
@@ -321,11 +332,19 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             {
                 q = q.Where(u => u.Prodate.CompareTo(edate) <= 0);
             }
-
-            q = q.Where(u => u.IsDeleted == 0);
-            if (q.Any())
+            if (this.DdlLine.SelectedIndex != -1 && this.DdlLine.SelectedIndex != 0)
             {
-                var qs = from p in q
+                Prefix_XlsxName = DpStartDate.SelectedDate.Value.ToString("yyyyMM") + DdlLine.SelectedText + searchText.Trim().ToUpper() + "_DefectRecord_Data";
+                q = q.Where(u => u.Prolinename.Contains(this.DdlLine.SelectedText));
+            }
+            q = q.Where(u => u.IsDeleted == 0);
+
+            //查询包含子集
+            var q_include = q.AsEnumerable().Where(p => LineType.Any(g => p.Prolinename == g.DictLabel)).AsQueryable().OrderBy(u => u.Prodate);
+
+            if (q_include.Any())
+            {
+                var qs = from p in q_include
                          .OrderBy(s => s.Prodate)
                          select new
                          {
@@ -333,13 +352,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                              生产班组 = p.Prolinename,
                              生产日期 = p.Prodate,
                              生产数量 = p.Prorealqty,
-                             不良区分 = p.Prongdept,
-                             不良症状 = p.Probadnote,
-                             不良个所 = p.Probadset,
-                             不良原因 = p.Probadreason,
+                             不良区分 = p.Prodefectcategory,
+                             不良症状 = p.Prodefectsymptom,
+                             不良个所 = p.Prodefectlocation,
+                             不良原因 = p.Prodefectcause,
                              不良件数 = p.Probadqty,
                          };
-
+                Export_FileName = Prefix_XlsxName + ".xlsx";
                 ExportHelper.EpplusToExcel(ConvertHelper.LinqConvertToDataTable(qs), Prefix_XlsxName, Export_FileName, "DTA 改修不良明细");
                 //Grid1.AllowPaging = false;
                 //ExportHelper.EpplusToExcel(ExportHelper.GetGridDataTable(Grid1), Prefix_XlsxName, Export_FileName);

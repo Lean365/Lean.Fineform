@@ -21,10 +21,10 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(20)]
         public string Proorder { get; set; }//生产订单
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string Prolot { get; set; }//生产LOT
 
-        public int Proorderqty { get; set; }//订单台数
+        public Decimal Proorderqty { get; set; }//订单台数
 
         [StringLength(30)]
         public string Propcbtype { get; set; }//板别
@@ -32,15 +32,21 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(20)]
         public string Prolinename { get; set; }//生产组别
 
-        public int Prorealqty { get; set; }//生产实绩
+        public Decimal Prorealqty { get; set; }//生产实绩
 
         [StringLength(30)]
         public string Propcbcardno { get; set; }//卡号
+        [StringLength(200)]
 
-        public int Pronobadqty { get; set; }//无不良数量
+        public string Prodefectoccurs { get; set; }//发生工程
+        [StringLength(200)]
+
+        public string Prodefectstep { get; set; }//步骤
+
+        public int Prodzeroefects { get; set; }//无不良数量
 
         [StringLength(20)]//不良类别
-        public string Prongdept { get; set; }
+        public string Prodefectcategory { get; set; }
 
         public int Probadqty { get; set; }//不良数量
 
@@ -48,19 +54,19 @@ namespace LeanFine.Lf_Business.Models.PP
         public int Probadamount { get; set; }//不良台数（同一LOT同一类别集计数量）
 
         [StringLength(200)]
-        public string Probadnote { get; set; }//不良症状
+        public string Prodefectsymptom { get; set; }//不良症状
 
         [StringLength(200)]
-        public string Probadset { get; set; }//不良个所
+        public string Prodefectlocation { get; set; }//不良个所
 
         [StringLength(200)]
-        public string Probadreason { get; set; }//不良原因
+        public string Prodefectcause { get; set; }//不良原因
 
         [StringLength(200)]
-        public string Probadprop { get; set; }//不良性质
+        public string Prodefectnature { get; set; }//不良性质
 
         [StringLength(200)]
-        public string Probadrepairman { get; set; }//修理
+        public string Prorepairman { get; set; }//修理
 
         [StringLength(255)]
         public string UDF01 { get; set; }

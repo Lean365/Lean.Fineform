@@ -26,6 +26,9 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(30)]
         public string Provctype { get; set; }//vc线别
 
+        [StringLength(30)]
+        public string Propcbside { get; set; }//板名称
+
         public DateTime? Prosideadate { get; set; }//实装A
 
         public DateTime? Prosidebdate { get; set; }//实装B
@@ -39,7 +42,7 @@ namespace LeanFine.Lf_Business.Models.PP
         [StringLength(20)]
         public string Proorder { get; set; }//生产订单
 
-        [StringLength(20)]
+        [StringLength(100)]
         public string Prolot { get; set; }//生产LOT
 
         public int Proorderqty { get; set; }//订单台数

@@ -90,7 +90,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily.P2D
             //prorealtotal.Text = current.Prorealtotal.ToString();
             //prolinestop.Checked = current.Prolinestop;
             //prolinestopmin.Text = current.Prolinestopmin.ToString();
-            //Probadnote.Text = current.Probadnote;
+            //Prodefectsymptom.Text = current.Prodefectsymptom;
             //proratio.Text = current.Proratio.ToString();
             remark.Text = current.Remark;
             //Editor1.setContent("")

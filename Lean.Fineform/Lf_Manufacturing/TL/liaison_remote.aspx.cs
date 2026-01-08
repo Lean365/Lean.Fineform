@@ -1,14 +1,13 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Helper;
 
 namespace LeanFine.Lf_Manufacturing.TL
 {
@@ -149,7 +148,7 @@ namespace LeanFine.Lf_Manufacturing.TL
                 if (!string.IsNullOrEmpty(path))
                 {
                     System.Diagnostics.Debug.WriteLine($"处理路径: {path}");
-                    
+
                     // 检查是否为网络共享路径
                     if (IsUncPath(path))
                     {
@@ -248,7 +247,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             }
             catch (Exception ex)
             {
-                // 记录错误但不中断处理
+                Alert.ShowInTop("加载网络共享数据时发生错误，请稍后重试。", MessageBoxIcon.Error + ex.Message);// 记录错误但不中断处理
             }
         }
 
@@ -283,7 +282,7 @@ namespace LeanFine.Lf_Manufacturing.TL
             string subPath = ConfigurationManager.AppSettings["NetworkShareSubPath"];
             System.Diagnostics.Debug.WriteLine($"配置的网络共享路径: {shareRoot}");
             System.Diagnostics.Debug.WriteLine($"配置的子目录: {subPath}");
-            
+
             if (!string.IsNullOrEmpty(shareRoot) && !string.IsNullOrEmpty(subPath))
             {
                 System.Diagnostics.Debug.WriteLine($"处理网络共享目录: {shareRoot} 子目录: {subPath}");
@@ -375,7 +374,7 @@ namespace LeanFine.Lf_Manufacturing.TL
         private DataTable ApplySearchFilter(DataTable table)
         {
             DataTable filteredTable = table.Clone();
-            
+
             // 文本搜索过滤
             string searchText = ttbSearchMessage.Text.Trim();
             if (!string.IsNullOrEmpty(searchText))
@@ -388,7 +387,7 @@ namespace LeanFine.Lf_Manufacturing.TL
                 table = filteredTable;
                 filteredTable = table.Clone();
             }
-            
+
             // 分类过滤
             if (this.DDLModel.SelectedIndex != 0 && this.DDLModel.SelectedIndex != -1)
             {
@@ -403,13 +402,13 @@ namespace LeanFine.Lf_Manufacturing.TL
                     return filteredTable;
                 }
             }
-            
+
             // 如果没有分类过滤，返回所有数据
             if (string.IsNullOrEmpty(searchText))
             {
                 return table;
             }
-            
+
             return filteredTable;
         }
 
@@ -442,17 +441,17 @@ namespace LeanFine.Lf_Manufacturing.TL
         private void BindDdlModel()
         {
             // 获取文件分类列表
-            var categories = new[] { 
-                "全部", 
-                "PDF文档", 
-                "Word文档", 
-                "Excel表格", 
-                "PowerPoint演示", 
-                "CAD图纸", 
-                "图片文件", 
-                "压缩文件", 
-                "文本文件", 
-                "其他文件" 
+            var categories = new[] {
+                "全部",
+                "PDF文档",
+                "Word文档",
+                "Excel表格",
+                "PowerPoint演示",
+                "CAD图纸",
+                "图片文件",
+                "压缩文件",
+                "文本文件",
+                "其他文件"
             };
 
             DDLModel.DataTextField = "Category";

@@ -45,11 +45,11 @@
                     <Rows>
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
-                                <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="DefDate" ShowRedStar="True" OnTextChanged="DefDate_TextChanged" TabIndex="1" FocusOnPageLoad="true">
+                                <f:DatePicker runat="server" Label="生产日期" DateFormatString="yyyyMMdd" EmptyText="请选择开始日期" AutoPostBack="true" ID="dpProdate" ShowRedStar="True" OnTextChanged="dpProdate_TextChanged" TabIndex="1" FocusOnPageLoad="true">
                                 </f:DatePicker>
-                                <f:DropDownList runat="server" ID="prolinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
+                                <f:DropDownList runat="server" ID="ddlProlinename" Label="生产班组" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolinename_SelectedIndexChanged" TabIndex="2">
                                 </f:DropDownList>
-                                <f:DropDownList runat="server" ID="prolot" Label="生产LOT" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolot_SelectedIndexChanged" TabIndex="3">
+                                <f:DropDownList runat="server" ID="ddlProlot" Label="生产LOT" EmptyText="<%$ Resources:GlobalResource,Query_Select%>" ShowRedStar="True" Required="true" EnableEdit="true" ForceSelection="true" AutoPostBack="True" OnSelectedIndexChanged="prolot_SelectedIndexChanged" TabIndex="3">
                                 </f:DropDownList>
                             </Items>
                         </f:FormRow>
@@ -57,18 +57,18 @@
 
                         <f:FormRow ID="FormRow10" runat="server">
                             <Items>
-                                <f:Label ID="prorealqty" runat="server" Label="生产台数" Text="0">
+                                <f:Label ID="lblProrealqty" runat="server" Label="生产台数" Text="0">
                                 </f:Label>
-                                <f:NumberBox ID="pronobadqty" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
+                                <f:NumberBox ID="numProdzeroefects" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
                                 </f:NumberBox>
-                                <f:Label ID="promodel" runat="server" Label="机种名称"></f:Label>
+                                <f:Label ID="lblPromodel" runat="server" Label="机种名称"></f:Label>
                             </Items>
                         </f:FormRow>
                         <f:FormRow ID="FormRow1" runat="server">
                             <Items>
-                                <f:Label ID="promodelqty" runat="server" Label="机种台数"></f:Label>
-                                <f:Label ID="proorder" runat="server" Label="生产订单"></f:Label>
-                                <f:Label ID="proorderqty" runat="server" Label="订单台数"></f:Label>
+                                <f:Label ID="lblPromodelqty" runat="server" Label="机种台数"></f:Label>
+                                <f:Label ID="lblProorder" runat="server" Label="生产订单"></f:Label>
+                                <f:Label ID="lblProorderqty" runat="server" Label="订单台数"></f:Label>
                             </Items>
                         </f:FormRow>
 
@@ -78,7 +78,7 @@
             <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="2" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
-                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
+                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange" EnableMultiSelect="false">
                     <Toolbars>
                         <f:Toolbar runat="server" Position="Top">
                             <Items>
@@ -97,9 +97,9 @@
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete" ToolTip="删除"
                             ConfirmText="确定删除此记录？" ConfirmTarget="Top" CommandName="Delete" Width="50px" />
 
-                        <f:RenderField Width="200px" ColumnID="Prongdept" SortField="Prongdept" DataField="Prongdept" HeaderText="不良区分" FieldType="String">
+                        <f:RenderField Width="200px" ColumnID="Prodefectcategory" SortField="Prodefectcategory" DataField="Prodefectcategory" HeaderText="不良区分" FieldType="String">
                             <Editor>
-                                <f:DropDownList ID="ddlProngdept" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
+                                <f:DropDownList ID="ddlProdefectcategory" Required="true" runat="server" EnableEdit="true" ForceSelection="true">
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
@@ -109,21 +109,39 @@
                                 </f:NumberBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadnote"  SortField="Probadnote" DataField="Probadnote" HeaderText="不良症状" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Prorandomcard" SortField="Prorandomcard" DataField="Prorandomcard" HeaderText="随机卡" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadnote" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtProrandomcard" Required="true" runat="server" Text="">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadset"  SortField="Probadset" DataField="Probadset" HeaderText="不良个所" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Prodefectoccurs" SortField="Prodefectoccurs" DataField="Prodefectoccurs" HeaderText="发生工程" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadset" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtProdefectoccurs" Required="true" runat="server" Text="">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="300px" ColumnID="Probadreason"  SortField="Probadreason" DataField="Probadreason" HeaderText="不良原因" FieldType="String">
+                        <f:RenderField Width="300px" ColumnID="Prodefectstep" SortField="Prodefectstep" DataField="Prodefectstep" HeaderText="检查名" FieldType="String">
                             <Editor>
-                                <f:TextBox ID="txtProbadreason" Required="true" runat="server" Text="NG">
+                                <f:TextBox ID="txtProdefectstep" Required="true" runat="server" Text="">
+                                </f:TextBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="300px" ColumnID="Prodefectsymptom" SortField="Prodefectsymptom" DataField="Prodefectsymptom" HeaderText="不良症状" FieldType="String">
+                            <Editor>
+                                <f:TextBox ID="txtProdefectsymptom" Required="true" runat="server" Text="NG">
+                                </f:TextBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="300px" ColumnID="Prodefectlocation" SortField="Prodefectlocation" DataField="Prodefectlocation" HeaderText="不良个所" FieldType="String">
+                            <Editor>
+                                <f:TextBox ID="txtProdefectlocation" Required="true" runat="server" Text="NG">
+                                </f:TextBox>
+                            </Editor>
+                        </f:RenderField>
+                        <f:RenderField Width="300px" ColumnID="Prodefectcause" SortField="Prodefectcause" DataField="Prodefectcause" HeaderText="不良原因" FieldType="String">
+                            <Editor>
+                                <f:TextBox ID="txtProdefectcause" Required="true" runat="server" Text="NG">
                                 </f:TextBox>
                             </Editor>
                         </f:RenderField>

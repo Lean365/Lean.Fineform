@@ -1,16 +1,17 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Models.PP;
 
 namespace LeanFine.Lf_Manufacturing.PP.daily
 {
     public partial class p1d_daily_edit : PageBase
     {
         public int SubOphID, Prorate;
-        public static string lclass, OPHID, ConnStr, nclass, ncode;
+        public static string lclass, OPHID, ConnStr, nclass, ncode, strOrder, strPline, strmaxDate, strminDate;
         public static int rowID, delrowID, editrowID, totalSum;
 
         public static string userid, badSum;
@@ -90,7 +91,7 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
             //prorealtotal.Text = current.Prorealtotal.ToString();
             //prolinestop.Checked = current.Prolinestop;
             //prolinestopmin.Text = current.Prolinestopmin.ToString();
-            //Probadnote.Text = current.Probadnote;
+            //Prodefectsymptom.Text = current.Prodefectsymptom;
             //proratio.Text = current.Proratio.ToString();
             remark.Text = current.Remark;
             //Editor1.setContent("")
@@ -204,7 +205,105 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "生产管理", "OPH修改", OperateNotes);
         }
+        /// <summary>
+        /// 更新订单不良合计表
+        /// </summary>
+        private void SaveOrderDefectUpdate()
+        {
+            //判断重复
+            string strorder = proorder.Text.Trim();
+            string strlot = prolot.Text.Trim();
 
+            var line = (from p in DB.Pp_P1d_OutputSubs
+                            //join b in DB.Pp_P1d_Outputs on p.OPHID equals b.OPHID
+                        where p.Proorder == (strorder)
+
+                        select new
+                        {
+                            p.Prolinename
+                        }).Distinct().ToList();
+            if (line.Any())
+            {
+                for (int i = 0; i < line.Count(); i++)
+                {
+                    strPline += (line[i].Prolinename.ToString() + ",").TrimEnd(',');
+                }
+            }
+            var maxdate =
+                                    (from p in DB.Pp_P1d_OutputSubs
+                                         //join b in DB.proOutputs on p.OPHID equals b.OPHID
+                                     where p.Proorder == (strorder)
+                                     //.Where(s => s.Prolot.Contains(strPlot))
+                                     // p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
+                                     group p by p.Proorder into g
+                                     select new
+                                     {
+                                         g.Key,
+                                         mdate = g.Max(p => p.Prodate)
+                                     }).Distinct().ToList();
+            if (maxdate.Any())
+            {
+                strmaxDate = maxdate[0].mdate;
+            }
+
+            var mindate =
+                        (from p in DB.Pp_P1d_OutputSubs
+                             //join b in DB.proOutputs on p.OPHID equals b.OPHID
+                         where p.Proorder == (strorder)
+                         //.Where(s => s.Prolot.Contains(strPlot))
+                         //where p.Prodate.Substring(0, 6).CompareTo(strDpdate) <= 0
+                         group p by p.Proorder into g
+                         select new
+                         {
+                             g.Key,
+                             mdate = g.Min(p => p.Prodate)
+                         }).Distinct().ToList();
+            if (mindate.Any())
+            {
+                strminDate = mindate[0].mdate;
+            }
+
+            string sedate = strminDate + "~" + strmaxDate;
+            DB.Pp_Defect_P1d_Orders
+               .Where(s => s.Proorder == strorder)
+
+               .ToList()
+               .ForEach(x => { x.Prolinename = strPline; x.Prodate = sedate; x.Modifier = GetIdentityName(); x.ModifyDate = DateTime.Now; });
+            DB.SaveChanges();
+
+            //新增日志
+            string Contectext = strorder + "," + strlot + "," + strPline + "," + sedate;
+            string OperateType = "修改";
+            string OperateNotes = "Edit生产不良*" + Contectext + " *Edit生产不良 的记录已修改";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计修改", OperateNotes);
+            strPline = "";
+            strmaxDate = "";
+            strminDate = "";
+            sedate = "";
+        }
+
+        /// <summary>
+        /// 更新批次不良合计表
+        /// </summary>
+        private void SaveLotDefectUpdate()
+        {
+            //判断重复
+            string strorder = proorder.Text.Trim();
+            string strlot = prolot.Text.Trim();
+            string sedate = prodate.ToString();
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_TotalOrderqty(strlot, userid);
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_Realqty(strlot, userid);
+
+            //新增日志
+            string Contectext = strorder + "," + strlot + "," + strPline + "," + sedate;
+            string OperateType = "修改";
+            string OperateNotes = "Edit生产不良*" + Contectext + " *Edit生产不良 的记录已修改";
+            OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不良管理", "工单不良集计修改", OperateNotes);
+            strPline = "";
+            strmaxDate = "";
+            strminDate = "";
+            sedate = "";
+        }
         //新增新增生产日报单身
 
         protected void btnSaveClose_Click(object sender, EventArgs e)
@@ -216,7 +315,8 @@ namespace LeanFine.Lf_Manufacturing.PP.daily
 
             //保存OPH数据
             SaveItem();
-
+            SaveOrderDefectUpdate();
+            SaveLotDefectUpdate();
             //保存不具合数据
             //EditDefectDataRow();
             //Alert.ShowInTop("数据保存成功！（表格数据已重新绑定）");

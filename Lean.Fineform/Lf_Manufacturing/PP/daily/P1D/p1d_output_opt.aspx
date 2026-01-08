@@ -19,16 +19,16 @@
                 <f:Tab ID="Tab2" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_output_model.aspx"
                     Title="<%$ Resources:GlobalResource,sys_Button_Model%>" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab3" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_zdtb_output_line.aspx"
+                <f:Tab ID="Tab3" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_rpr_output_line.aspx"
                     Title="<%$ Resources:GlobalResource,sys_Button_Line_B%>" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab4" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_zdtb_output_model.aspx"
+                <f:Tab ID="Tab4" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_rpr_output_model.aspx"
                     Title="<%$ Resources:GlobalResource,sys_Button_Model_B%>" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab5" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_output_line.aspx"
+                <f:Tab ID="Tab5" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_rwr_output_line.aspx"
                     Title="<%$ Resources:GlobalResource,sys_Button_Line_N%>" runat="server">
                 </f:Tab>
-                <f:Tab ID="Tab6" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_modify_output_model.aspx"
+                <f:Tab ID="Tab6" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_rwr_output_model.aspx"
                     Title="<%$ Resources:GlobalResource,sys_Button_Model_N%>" runat="server">
                 </f:Tab>
                 <f:Tab ID="Tab7" EnableIFrame="true" Layout="Fit" BodyPadding="10px" IFrameUrl="~/Lf_Manufacturing/PP/daily/P1D/p1d_epp_output_line.aspx"

@@ -1,7 +1,7 @@
 ﻿/* !
  * Echarts图表封装模板
  * 版 本 20200416.008(https://github.com/Lean365)
- * Copyright 2020 LeanCloud.Inc
+ * Copyright 2020 Lean365.Inc
  * 创建人：Davis.Ching
  * 商业授权&遵循License: GNU GPL 3.0.
  * 描  述：Ajax异步交互式数据更新

@@ -1,0 +1,70 @@
+BEGIN TRY
+    BEGIN TRANSACTION;
+    
+    DECLARE @strPorder NVARCHAR(50) = '454185'; -- 使用具体订单号
+    DECLARE @uid NVARCHAR(50) = '当前用户ID'; -- 替换为实际用户ID
+    
+    -- 创建临时表存储有不良记录的标识
+    CREATE TABLE #DefectRecords (
+        RecordKey NVARCHAR(200) PRIMARY KEY
+    );
+    
+    -- 插入有不良记录的标识
+    INSERT INTO #DefectRecords
+    SELECT CONCAT(Prodate, Proorder, Prolinename)
+    FROM Pp_P1d_Defects
+    WHERE IsDeleted = 0;
+    
+    -- 统计有不良录入的无不良台数
+    DECLARE @noQty INT;
+    
+    SELECT @noQty = ISNULL(SUM(Pronobadqty), 0)
+    FROM Pp_P1d_Defects
+    WHERE IsDeleted = 0 
+      AND Proorder = @strPorder;
+    
+    -- 统计无不良录入的实际生产数量
+    DECLARE @okQty INT;
+    
+    SELECT @okQty = ISNULL(SUM(Prorealqty), 0)
+    FROM Pp_P1d_OutputSubs o
+    WHERE NOT EXISTS (
+        SELECT 1 FROM #DefectRecords d 
+        WHERE d.RecordKey = CONCAT(o.Prodate, o.Proorder, o.Prolinename)
+    )
+    AND o.Proorder = @strPorder
+    AND o.IsDeleted = 0;
+    
+    -- 更新目标表
+    UPDATE Pp_Defect_P1d_Orders
+    SET 
+        Pronobadqty = @noQty + @okQty,
+        Modifier = @uid,
+        ModifyDate = GETDATE()
+    WHERE Proorder = @strPorder;
+    
+    -- 检查更新结果
+    IF @@ROWCOUNT > 0
+    BEGIN
+        PRINT '成功更新订单 ' + @strPorder + ' 的无不良台数为: ' + CAST((@noQty + @okQty) AS NVARCHAR(10));
+    END
+    ELSE
+    BEGIN
+        PRINT '订单 ' + @strPorder + ' 不存在于目标表中';
+    END
+    
+    -- 清理临时表
+    DROP TABLE #DefectRecords;
+    
+    COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+    
+    IF OBJECT_ID('tempdb..#DefectRecords') IS NOT NULL
+        DROP TABLE #DefectRecords;
+        
+    DECLARE @ErrorMessage NVARCHAR(4000) = '更新订单 ' + @strPorder + ' 失败: ' + ERROR_MESSAGE();
+    RAISERROR(@ErrorMessage, 16, 1);
+END CATCH

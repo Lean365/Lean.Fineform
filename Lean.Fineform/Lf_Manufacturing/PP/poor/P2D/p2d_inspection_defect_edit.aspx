@@ -81,7 +81,7 @@
             <Items>
                 <f:Grid ID="Grid1" runat="server" BoxFlex="1" ForceFit="true" ShowBorder="true" ShowHeader="true" AllowCellEditing="true" ClicksToEdit="2" EnableCheckBoxSelect="true"
                     DataKeyNames="ID" AllowSorting="true" SortField="ID" SortDirection="ASC" AllowPaging="true" IsDatabasePaging="true" EnableSummary="true" SummaryPosition="Bottom"
-                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" EnableMultiSelect="false">
+                    OnPreDataBound="Grid1_PreDataBound" OnRowCommand="Grid1_RowCommand" OnPageIndexChange="Grid1_PageIndexChange" EnableMultiSelect="false">
                     <Toolbars>
                         <f:Toolbar runat="server" Position="Top">
                             <Items>
@@ -119,18 +119,25 @@
                                 </f:DropDownList>
                             </Editor>
                         </f:RenderField>
-                        <f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面实装"  Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
+                        <f:RenderField Width="200px" ColumnID="Propcbside" SortField="Propcbside" DataField="Propcbside" HeaderText="板面" FieldType="String">
                             <Editor>
-                                <f:DatePicker ID="dpProsideadate" Required="true" runat="server" >
+                                <f:DropDownList ID="ddlPropcbside" runat="server" EnableEdit="true" ForceSelection="true">
+                                </f:DropDownList>
+                            </Editor>
+                        </f:RenderField>
+
+                        <%--<f:RenderField Width="200px" ColumnID="Prosideadate" SortField="Prosideadate" DataField="Prosideadate" HeaderText="B面实装" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
+                            <Editor>
+                                <f:DatePicker ID="dpProsideadate" Required="true" runat="server">
                                 </f:DatePicker>
                             </Editor>
                         </f:RenderField>
                         <f:RenderField Width="200px" ColumnID="Prosidebdate" SortField="Prosidebdate" DataField="Prosidebdate" HeaderText="T面实装" Renderer="Date" RendererArgument="yyyy-MM-dd" FieldType="Date">
-                            <Editor>
-                                <f:DatePicker ID="dpProsidebdate" Required="true" runat="server" >
+                            <Editor>                                
+                                <f:DatePicker ID="dpProsidebdate" Required="true" runat="server">
                                 </f:DatePicker>
                             </Editor>
-                        </f:RenderField>
+                        </f:RenderField>--%>
                         <f:RenderField Width="200px" ColumnID="Prodshiftname" DataField="Prodshiftname" HeaderText="生产班别" FieldType="String">
                             <Editor>
                                 <f:DropDownList ID="ddlProdshiftname" Required="true" runat="server" EnableEdit="true" ForceSelection="true" AutoPostBack="True">

@@ -1339,7 +1339,7 @@ namespace LeanFine.Lf_Manufacturing.EC
 
                                                    Ec_mmdate = DateTime.Now.ToString("yyyyMMdd"),
                                                    Ec_mmlot = "与部管无关",
-                                                   Ec_mmlotno = "与部管无关",
+                                                   Ec_mmlotno = "40000",
                                                    Ec_mmnote = "与部管无关",
                                                    mmModifier = item.mmModifier,
                                                    mmModifyDate = item.mmModifyDate,

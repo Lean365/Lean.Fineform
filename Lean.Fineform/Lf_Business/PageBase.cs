@@ -27,6 +27,17 @@ namespace LeanFine
         private static readonly string CHECK_POWER_FAIL_PAGE_MESSAGE = "您无权访问此页面！";
         private static readonly string CHECK_POWER_FAIL_ACTION_MESSAGE = "您无权进行此操作！";
 
+        // 在线状态相关常量
+        /// <summary>
+        /// 在线状态更新间隔（分钟）- 每5分钟更新一次在线状态
+        /// </summary>
+        private const int ONLINE_UPDATE_INTERVAL_MINUTES = 5;
+
+        /// <summary>
+        /// 在线状态判断阈值（分钟）- 15分钟内有活动视为在线
+        /// </summary>
+        public const int ONLINE_THRESHOLD_MINUTES = 15;
+
         #endregion 只读静态变量
 
         #region 上传文件类型判断
@@ -341,20 +352,39 @@ namespace LeanFine
 
         #region 在线用户相关
 
+        /// <summary>
+        /// 更新用户在线状态
+        /// 采用节流机制，每5分钟更新一次数据库，避免频繁写入
+        /// </summary>
+        /// <param name="username">用户名</param>
         protected void UpdateOnlineUser(string username)
         {
+            if (string.IsNullOrEmpty(username))
+            {
+                return;
+            }
+
             DateTime now = DateTime.Now;
             object lastUpdateTime = Session[SK_ONLINE_UPDATE_TIME];
-            if (lastUpdateTime == null || (Convert.ToDateTime(lastUpdateTime).Subtract(now).TotalMinutes > 5))
+            
+            // 节流：只有超过指定间隔才更新数据库
+            if (lastUpdateTime == null || (now.Subtract(Convert.ToDateTime(lastUpdateTime)).TotalMinutes >= ONLINE_UPDATE_INTERVAL_MINUTES))
             {
                 // 记录本次更新时间
                 Session[SK_ONLINE_UPDATE_TIME] = now;
 
-                Adm_Online online = DB.Adm_Onlines.Where(o => o.User.Name == username).FirstOrDefault();
-                if (online != null)
+                try
                 {
-                    online.UpdateTime = now;
-                    DB.SaveChanges();
+                    Adm_Online online = DB.Adm_Onlines.Where(o => o.User.Name == username).FirstOrDefault();
+                    if (online != null)
+                    {
+                        online.UpdateTime = now;
+                        DB.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    // 在线状态更新失败不应影响正常业务，忽略异常
                 }
             }
         }
@@ -383,13 +413,14 @@ namespace LeanFine
         }
 
         /// <summary>
-        /// 在线人数
+        /// 获取在线用户数量
+        /// 根据ONLINE_THRESHOLD_MINUTES判断，在阈值时间内有活动的用户视为在线
         /// </summary>
-        /// <returns></returns>
+        /// <returns>在线用户数量</returns>
         protected int GetOnlineCount()
         {
-            DateTime lastM = DateTime.Now.AddMinutes(-15);
-            return DB.Adm_Onlines.Where(o => o.UpdateTime > lastM).Count();
+            DateTime threshold = DateTime.Now.AddMinutes(-ONLINE_THRESHOLD_MINUTES);
+            return DB.Adm_Onlines.Where(o => o.UpdateTime > threshold).Count();
         }
 
         #endregion 在线用户相关

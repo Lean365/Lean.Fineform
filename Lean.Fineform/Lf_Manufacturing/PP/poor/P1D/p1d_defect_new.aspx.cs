@@ -1,13 +1,13 @@
-﻿using System;
+﻿using FineUIPro;
+using LeanFine.Lf_Business.Helper;
+using LeanFine.Lf_Business.Models.PP;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.UI.WebControls;
-using FineUIPro;
-using LeanFine.Lf_Business.Helper;
-using LeanFine.Lf_Business.Models.PP;
-using Newtonsoft.Json.Linq;
 
 namespace LeanFine.Lf_Manufacturing.PP.poor
 {
@@ -38,7 +38,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
         public static string userid;
         public static int rowID, delrowID, editrowID, totalSum;
-        public static string Prolot, Prolinename, Prodate, Prorealqty, Probadnote, Proorder, Probadreason, Pronobadqty, Proorderqty, Promodel, Promodelqty, Probadqty, Probadtotal, Probadamount, Prongdept, Probadset;
+        public static string statProlot, statProlinename, statProdate, statProrealqty, statProdefectsymptom, statProorder, statProdefectcause, statProdzeroefects, statProorderqty, statPromodel, statPromodelqty, statProbadqty, statProbadtotal, statProbadamount, statProdefectcategory, statProdefectlocation, statProrandomcard, statProdefectoccurs, statProdefectstep;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -67,7 +67,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             // 新增数据初始值
             JObject defaultObj = new JObject();
-            defaultObj.Add("Prongdept", "组立");
+            defaultObj.Add("Prodefectcategory", "组立");
             defaultObj.Add("Probadqty", "1");
             //defaultObj.Add("Name", "用户名");
             //defaultObj.Add("Gender", "1");
@@ -87,7 +87,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //btnDel.OnClientClick = Grid1.GetNoSelectionAlertReference("请至少选择一项！");
             //this.prodate.SelectedDate = DateTime.Now;
 
-            DefDate.SelectedDate = DateTime.Now.AddDays(-1);
+            dpProdate.SelectedDate = DateTime.Now.AddDays(-1);
 
             BindDdlLine();
 
@@ -99,8 +99,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             IQueryable<Pp_P1d_Defect> q = DB.Pp_P1d_Defects; //.Include(u => u.Dept);
 
             // 在用户名称中搜索
-            string ddate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
-            q = q.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(prolinename.SelectedItem.Text) && u.Prolot.Contains(prolot.SelectedItem.Text) && u.Prodate.Contains(ddate));
+            string ddate = this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+            q = q.Where(u => u.IsDeleted == 0 && u.Prolinename.Contains(ddlProlinename.SelectedItem.Text) && u.Prolot.Contains(ddlProlot.SelectedItem.Text) && u.Prodate.Contains(ddate));
 
             //if (GetIdentityName() != "admin")
             //{)
@@ -138,15 +138,15 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             //查询LINQ去重复
 
-            if (this.DefDate.SelectedDate.Value.ToString("yyyyMMdd").Length == 8)
+            if (this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd").Length == 8)
             {
-                Prodate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
-                string pline = this.prolinename.SelectedItem.Text;
+                statProdate = this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+                string pline = this.ddlProlinename.SelectedItem.Text;
                 var q = from p in DB.Pp_P1d_Outputs
-                        where p.Prodate.Contains(Prodate) && p.Prolinename.Contains(pline)
+                        where p.Prodate.Contains(statProdate) && p.Prolinename.Contains(pline)
                             && !(from d in DB.Pp_P1d_Defects
                                  where d.IsDeleted == 0
-                                 where d.Prodate == Prodate
+                                 where d.Prodate == statProdate
                                  where d.Prolinename == p.Prolinename
                                  select d.Proorder)//20220815修改之前是d.Prolots
                                  .Contains(p.Proorder)//20220815修改之前是p.Prolots
@@ -160,11 +160,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
                 //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
                 //3.2.将数据绑定到下拉框
-                prolot.DataSource = qs;
-                prolot.DataTextField = "Prolot";
-                prolot.DataValueField = "Prolot";
-                prolot.DataBind();
-                this.prolot.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+                ddlProlot.DataSource = qs;
+                ddlProlot.DataTextField = "Prolot";
+                ddlProlot.DataValueField = "Prolot";
+                ddlProlot.DataBind();
+                this.ddlProlot.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             }
         }
 
@@ -172,19 +172,19 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void BindDdlLine()
 
         {
-            if (DefDate.SelectedDate.HasValue)
+            if (dpProdate.SelectedDate.HasValue)
             {
-                Prodate = DefDate.SelectedDate.Value.ToString("yyyyMMdd");
+                statProdate = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
 
                 //查询LINQ去重复
                 var q = from a in DB.Pp_P1d_Outputs
                             //join b in DB.proEcnSubs on a.Porderhbn equals b.Proecnbomitem
                             //where b.Proecnno == strecn
-                        where a.Prodate.Contains(Prodate) && !(from d in DB.Pp_P1d_Defects
-                                                               where d.IsDeleted == 0
-                                                               where d.Prodate == Prodate
-                                                               where d.Prolinename == a.Prolinename
-                                                               select d.Prolot)
+                        where a.Prodate.Contains(statProdate) && !(from d in DB.Pp_P1d_Defects
+                                                                   where d.IsDeleted == 0
+                                                                   where d.Prodate == statProdate
+                                                                   where d.Prolinename == a.Prolinename
+                                                                   select d.Prolot)
                                     .Contains(a.Prolot)//投入日期
                         select new
                         {
@@ -196,11 +196,11 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
                 //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
                 //3.2.将数据绑定到下拉框
-                prolinename.DataSource = qs;
-                prolinename.DataTextField = "Prolinename";
-                prolinename.DataValueField = "Prolinename";
-                prolinename.DataBind();
-                this.prolinename.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
+                ddlProlinename.DataSource = qs;
+                ddlProlinename.DataTextField = "Prolinename";
+                ddlProlinename.DataValueField = "Prolinename";
+                ddlProlinename.DataBind();
+                this.ddlProlinename.Items.Insert(0, new FineUIPro.ListItem(global::Resources.GlobalResource.Query_Select, ""));
             }
         }
 
@@ -225,37 +225,37 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //                where c.D_SAP_COOIS_C006- c.D_SAP_COOIS_C005< 0
             //                select c.D_SAP_COOIS_C002+"//"+c.D_SAP_COOIS_C003 + "//" + c.D_SAP_COOIS_C004).ToList();
             //3.2.将数据绑定到下拉框
-            ddlProngdept.DataSource = qs;
-            ddlProngdept.DataTextField = "DictLabel";
-            ddlProngdept.DataValueField = "DictValue";
-            ddlProngdept.DataBind();
+            ddlProdefectcategory.DataSource = qs;
+            ddlProdefectcategory.DataTextField = "DictLabel";
+            ddlProdefectcategory.DataValueField = "DictValue";
+            ddlProdefectcategory.DataBind();
         }
 
         #endregion BindDdl Dropdown ListData
 
         #region Events
 
-        protected void prolinename_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlProlinename_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (prolinename.SelectedIndex != 0 && prolinename.SelectedIndex != -1)
+            if (ddlProlinename.SelectedIndex != 0 && ddlProlinename.SelectedIndex != -1)
             {
-                prorealqty.Text = "";
-                pronobadqty.Text = "";
-                promodel.Text = "";
-                proorder.Text = "";
-                proorderqty.Text = "";
+                lblProrealqty.Text = "";
+                numProdzeroefects.Text = "";
+                lblPromodel.Text = "";
+                lblProorder.Text = "";
+                lblProorderqty.Text = "";
                 BindDdlprolot();
             }
         }
 
-        protected void prolot_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlProlot_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (prolot.SelectedIndex != -1 && prolot.SelectedIndex != 0 && prolinename.SelectedIndex != -1 && prolinename.SelectedIndex != 0)
+            if (ddlProlot.SelectedIndex != -1 && ddlProlot.SelectedIndex != 0 && ddlProlinename.SelectedIndex != -1 && ddlProlinename.SelectedIndex != 0)
             {
-                string sdate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
-                string sline = prolinename.SelectedItem.Text;
-                string slot = prolot.SelectedItem.Text.Substring(0, prolot.SelectedItem.Text.IndexOf(","));
-                string sorder = prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1);
+                string sdate = this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
+                string sline = ddlProlinename.SelectedItem.Text;
+                string slot = ddlProlot.SelectedItem.Text.Substring(0, ddlProlot.SelectedItem.Text.IndexOf(","));
+                string sorder = ddlProlot.SelectedItem.Text.Substring(ddlProlot.SelectedItem.Text.IndexOf(",") + 1, ddlProlot.SelectedItem.Text.Length - ddlProlot.SelectedItem.Text.IndexOf(",") - 1);
 
                 var q_output = from a in DB.Pp_P1d_OutputSubs
                                    //join b in DB.Pp_P1d_OutputSubs on a.ID equals b.Parent.ID
@@ -296,85 +296,28 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 var qs = q.ToList();
                 if (qs.Any())
                 {
-                    prorealqty.Text = qs[0].Prorealqty.ToString();
-                    pronobadqty.Text = qs[0].Prorealqty.ToString();
-                    promodel.Text = qs[0].Promodel.ToString();
+                    lblProrealqty.Text = qs[0].Prorealqty.ToString();
+                    numProdzeroefects.Text = qs[0].Prorealqty.ToString();
+                    lblPromodel.Text = qs[0].Promodel.ToString();
 
-                    proorder.Text = sorder;
+                    lblProorder.Text = sorder;
 
                     var orderqty = (from a in DB.Pp_Orders
-                                    where a.Porderno == proorder.Text
+                                    where a.Porderno == lblProorder.Text
                                     select a).ToList();
                     if (orderqty.Any())
                     {
-                        proorderqty.Text = orderqty[0].Porderqty.ToString();
-                        promodelqty.Text = orderqty[0].Porderqty.ToString();
+                        lblProorderqty.Text = orderqty[0].Porderqty.ToString();
+                        //lblPromodelqty.Text = orderqty[0].Porderqty.ToString();
                     }
                     else
                     {
-                        proorderqty.Text = "0";
-                        promodelqty.Text = "0";
+                        lblProorderqty.Text = "0";
+                        //lblPromodelqty.Text = "0";
                     }
-                    //机种总数量不再需要
-                    //var modelqty = (from a in DB.Pp_P1d_OutputSubs
-
-                    //                where a.Prolot == slot
-
-                    //                group a by new
-                    //                {
-                    //                    a.Prolot,
-                    //                }
-                    //                into g
-                    //                select new
-                    //                {
-                    //                    Prolot = g.Key.Prolot,
-                    //                    Promodelqty = g.Sum(a => a.Prorealqty),
-                    //                }).ToList();
-                    //if (modelqty.Any())
-                    //{
-                    //    promodelqty.Text = modelqty[0].Promodelqty.ToString();
-                    //}
-
-                    //proorderqty.Text = modelqty[0].Porderqty.ToString();
 
                     BindGrid();
                 }
-
-                //ConnStr = "SELECT [Prolinename],[Prodate],[Prolot],sum([Prorealqty])[Prorealqty] " +
-                //            " FROM [dbo].[Pp_P1d_OutputSubs] where Prodate='" + this.DefDate.SelectedDate.Value.ToString("yyyyMMdd") + "' and  [Prolot] = '" + prolot.SelectedItem.Text + "' and  [Prolinename]='" + prolinename.SelectedItem.Text + "'" +
-                //            "  group by[Prolinename],[Prodate],[Prolot]";
-
-                //SqlDataAdapter DAstr1 = new SqlDataAdapter(ConnStr, AppConn);
-                //DataSet DSstr1 = new DataSet();
-                //DAstr1.Fill(DSstr1);
-                ////赋值给订单序列号字段[MC008]
-                //if (JudgeHelper.IfExitData(DSstr1, 0))
-                //{
-                //    if (decimal.Parse(DSstr1.Tables[0].Rows[0][3].ToString()) >= 0)
-                //    {
-                //        prorealqty.Text = DSstr1.Tables[0].Rows[0][3].ToString();
-
-                //        BindGrid();
-                //    }
-                //    else
-                //    {
-                //        Alert alert = new Alert();
-                //        alert.Message = "ST为0,不能参与计算,请先确认！";
-                //        alert.IconFont = IconFont.Warning;
-                //        alert.Target = Target.Top;
-                //        Alert.ShowInTop();
-                //        return;
-                //    }
-                //}
-                //else
-                //{
-                //    Alert alert = new Alert();
-                //    alert.Message = "数据不能为空，请检查机种，LOT数量，ST！源数据在生产订单中，请确认！";
-                //    alert.IconFont = IconFont.Warning;
-                //    alert.Target = Target.Top;
-                //    Alert.ShowInTop();
-                //    return;
-                //}
             }
         }
 
@@ -397,7 +340,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 Pp_P1d_Defect item = DB.Pp_P1d_Defects
                 .Where(u => u.ID == delrowID).FirstOrDefault();
                 //删除日志
-                string Contectext = item.ID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Pronobadqty + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                string Contectext = item.ID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Prodzeroefects + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                 string OperateType = "删除";
                 string OperateNotes = "Del* " + Contectext + " *Del 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
@@ -452,65 +395,71 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             tb.Rows[0]["ID"].ToString();
 
                             //批次
-                            Prolot = tb.Rows[tb.Rows.Count - 1]["Prolot"].ToString();
+                            statProlot = tb.Rows[tb.Rows.Count - 1]["Prolot"].ToString();
                             //机种
-                            Promodel = tb.Rows[tb.Rows.Count - 1]["Promodel"].ToString();
+                            statPromodel = tb.Rows[tb.Rows.Count - 1]["Promodel"].ToString();
                             //订单
-                            Proorder = tb.Rows[tb.Rows.Count - 1]["Proorder"].ToString();
+                            statProorder = tb.Rows[tb.Rows.Count - 1]["Proorder"].ToString();
                             //班组
-                            Prolinename = tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();
+                            statProlinename = tb.Rows[tb.Rows.Count - 1]["Prolinename"].ToString();
                             //生产日期
-                            Prodate = tb.Rows[tb.Rows.Count - 1]["Prodate"].ToString();
+                            statProdate = tb.Rows[tb.Rows.Count - 1]["Prodate"].ToString();
                             //订单台数
-                            Proorderqty = tb.Rows[tb.Rows.Count - 1]["Proorderqty"].ToString();
+                            statProorderqty = tb.Rows[tb.Rows.Count - 1]["Proorderqty"].ToString();
                             //机种台数
                             //Promodelqty = tb.Rows[tb.Rows.Count - 1]["Promodelqty"].ToString();
                             //生产台数
-                            Prorealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();
+                            statProrealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();
                             //无不良台数
-                            Pronobadqty = tb.Rows[tb.Rows.Count - 1]["Pronobadqty"].ToString();
+                            statProdzeroefects = tb.Rows[tb.Rows.Count - 1]["Prodzeroefects"].ToString();
                             //生产实绩
-                            Prorealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();
+                            statProrealqty = tb.Rows[tb.Rows.Count - 1]["Prorealqty"].ToString();
                             //不良症状
-                            Probadnote = tb.Rows[tb.Rows.Count - 1]["Probadnote"].ToString();
+                            statProdefectsymptom = tb.Rows[tb.Rows.Count - 1]["Prodefectsymptom"].ToString();
                             //不良个所
-                            Probadset = tb.Rows[tb.Rows.Count - 1]["Probadset"].ToString();
+                            statProdefectlocation = tb.Rows[tb.Rows.Count - 1]["Prodefectlocation"].ToString();
                             //不良原因
-                            Probadreason = tb.Rows[tb.Rows.Count - 1]["Probadreason"].ToString();
+                            statProdefectcause = tb.Rows[tb.Rows.Count - 1]["Prodefectcause"].ToString();
                             //不良件数
-                            Probadqty = tb.Rows[tb.Rows.Count - 1]["Probadqty"].ToString();
-                            //不良件数
-                            Prongdept = tb.Rows[tb.Rows.Count - 1]["Prongdept"].ToString();
+                            statProbadqty = tb.Rows[tb.Rows.Count - 1]["Probadqty"].ToString();
+                            //不良区分
+                            statProdefectcategory = tb.Rows[tb.Rows.Count - 1]["Prodefectcategory"].ToString();
+                            //随机卡
+                            statProrandomcard = tb.Rows[tb.Rows.Count - 1]["Prorandomcard"].ToString();
+                            //发生工程
+                            statProdefectoccurs = tb.Rows[tb.Rows.Count - 1]["Prodefectlocation"].ToString();
+                            //检查名
+                            statProdefectstep = tb.Rows[tb.Rows.Count - 1]["Procheckname"].ToString();
                         }
                         Pp_P1d_Defect item = new Pp_P1d_Defect();
 
-                        item.Prolot = Prolot;
+                        item.Prolot = statProlot;
                         //班组
-                        item.Prolinename = Prolinename;
+                        item.Prolinename = statProlinename;
                         //机种
-                        item.Promodel = Promodel;
+                        item.Promodel = statPromodel;
                         //订单
-                        item.Proorder = proorder.Text;
+                        item.Proorder = lblProorder.Text;
                         //班组
-                        item.Prolinename = Prolinename;
+                        item.Prolinename = statProlinename;
                         //日期
-                        item.Prodate = Prodate;
+                        item.Prodate = statProdate;
                         //订单台数
-                        item.Proorderqty = (int)decimal.Parse(proorderqty.Text.ToString());
+                        item.Proorderqty = (int)decimal.Parse(lblProorderqty.Text.ToString());
                         //机种台数
 
                         //item.Promodelqty = (int)decimal.Parse(promodelqty.Text.ToString());
                         //生产实绩
-                        item.Prorealqty = int.Parse(Prorealqty);
+                        item.Prorealqty = int.Parse(lblProrealqty.Text);
 
                         //无不良台数
-                        item.Pronobadqty = int.Parse(pronobadqty.Text);
+                        item.Prodzeroefects = int.Parse(numProdzeroefects.Text);
 
                         //区分
-                        item.Prongdept = Prongdept;
+                        item.Prodefectcategory = statProdefectcategory;
 
                         //不良数量
-                        item.Probadqty = int.Parse(Probadqty);
+                        item.Probadqty = int.Parse(statProbadqty);
                         //item.Probadtotal = int.Parse(Probadtotal);
 
                         //不良集计
@@ -518,11 +467,17 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         //不良合计
                         item.Probadamount = 0;
                         //不良症状
-                        item.Probadnote = Probadnote;
+                        item.Prodefectsymptom = statProdefectsymptom;
                         //不良个所
-                        item.Probadset = Probadset;
+                        item.Prodefectlocation = statProdefectlocation;
                         //不良原因
-                        item.Probadreason = Probadreason;
+                        item.Prodefectcause = statProdefectcause;
+                        //随机卡
+                        item.Prorandomcard = statProrandomcard;
+                        //发生工程
+                        item.Prodefectoccurs = statProdefectoccurs;
+                        //检查名
+                        item.Prodefectstep = statProdefectstep;
                         item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
@@ -533,7 +488,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         DB.SaveChanges();
 
                         //新建日志
-                        string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Pronobadqty + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                        string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Prodzeroefects + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                         string OperateType = "新增";
                         string OperateNotes = "New生产不良* " + Contectext + "*New生产不良 的记录已经将新增";
                         OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -549,13 +504,13 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    proLine cline = DB.proLines
                 //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
 
-                //    item.Prongdept = Prongdept;
+                //    item.Prodefectcategory = Prodefectcategory;
                 //    item.Prolineclass = cline.lineclass;
                 //    item.Prolinename = this.prolinename.SelectedItem.Text;
 
                 //    item.Prodate = prodate.Text;
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
-                //    item.Prongdept = "OK";
+                //    item.Prodefectcategory = "OK";
                 //    //种类
                 //    Pp_P1d_Defectcode cclass = DB.Pp_P1d_Defectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
@@ -574,8 +529,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    item.Probadqty = 0;
 
                 //    item.Probadtotal = 0;
-                //    item.Probadnote = "OK";
-                //    item.Probadreason = "OK";
+                //    item.Prodefectsymptom = "OK";
+                //    item.Prodefectcause = "OK";
                 //    item.Prongbdel = false;
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
@@ -586,7 +541,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    DB.SaveChanges();
 
                 //    //新建日志
-                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                 //    string NewOperateType = item.Defectguid;
                 //    string OperateNotes = "New* " + NewText + " New* 的记录已经将新增";
                 //    NetCountHelper.InsNetOperateNotes(userid, NewOperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -618,66 +573,72 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                             //第一条记录
                             tb.Rows[0]["ID"].ToString();
                             //批次
-                            Prolot = tb.Rows[0]["Prolot"].ToString();
+                            statProlot = tb.Rows[0]["Prolot"].ToString();
                             //机种
-                            Promodel = tb.Rows[0]["Promodel"].ToString();
+                            statPromodel = tb.Rows[0]["Promodel"].ToString();
                             //订单
-                            Proorder = tb.Rows[0]["Proorder"].ToString();
+                            statProorder = tb.Rows[0]["Proorder"].ToString();
                             //班组
-                            Prolinename = tb.Rows[0]["Prolinename"].ToString();
+                            statProlinename = tb.Rows[0]["Prolinename"].ToString();
                             //生产日期
-                            Prodate = tb.Rows[0]["Prodate"].ToString();
+                            statProdate = tb.Rows[0]["Prodate"].ToString();
                             //订单台数
-                            Proorderqty = tb.Rows[0]["Proorderqty"].ToString();
+                            statProorderqty = tb.Rows[0]["Proorderqty"].ToString();
                             //机种台数
                             //Promodelqty = tb.Rows[0]["Promodelqty"].ToString();
                             //生产台数
-                            Prorealqty = tb.Rows[0]["Prorealqty"].ToString();
+                            statProrealqty = tb.Rows[0]["Prorealqty"].ToString();
                             //无不良台数
-                            Pronobadqty = tb.Rows[0]["Pronobadqty"].ToString();
+                            statProdzeroefects = tb.Rows[0]["Prodzeroefects"].ToString();
                             //生产实绩
-                            Prorealqty = tb.Rows[0]["Prorealqty"].ToString();
+                            statProrealqty = tb.Rows[0]["Prorealqty"].ToString();
                             //不良症状
-                            Probadnote = tb.Rows[0]["Probadnote"].ToString();
+                            statProdefectsymptom = tb.Rows[0]["Prodefectsymptom"].ToString();
 
                             //不良个所
-                            Probadset = tb.Rows[0]["Probadset"].ToString();
+                            statProdefectlocation = tb.Rows[0]["Prodefectlocation"].ToString();
                             //不良原因
-                            Probadreason = tb.Rows[0]["Probadreason"].ToString();
+                            statProdefectcause = tb.Rows[0]["Prodefectcause"].ToString();
                             //不良件数
-                            Probadqty = tb.Rows[0]["Probadqty"].ToString();
-                            //不良件数
-                            Prongdept = tb.Rows[0]["Prongdept"].ToString();
+                            statProbadqty = tb.Rows[0]["Probadqty"].ToString();
+                            //不良区分
+                            statProdefectcategory = tb.Rows[0]["Prodefectcategory"].ToString();
+                            //随机卡
+                            statProrandomcard = tb.Rows[0]["Prorandomcard"].ToString();
+                            //发生工程
+                            statProdefectoccurs = tb.Rows[0]["Prodefectoccurs"].ToString();
+                            //检查名   
+                            statProdefectstep = tb.Rows[0]["Prodefectstep"].ToString();
                         }
                         Pp_P1d_Defect item = new Pp_P1d_Defect();
 
-                        item.Prolot = Prolot;
+                        item.Prolot = statProlot;
                         //班组
-                        item.Prolinename = Prolinename;
+                        item.Prolinename = statProlinename;
                         //机种
-                        item.Promodel = Promodel;
+                        item.Promodel = statPromodel;
                         //订单
-                        item.Proorder = proorder.Text;
+                        item.Proorder = lblProorder.Text;
                         //班组
                         //item.Prolinename = Prolinename;
                         //日期
-                        item.Prodate = Prodate;
+                        item.Prodate = statProdate;
                         //订单台数
-                        item.Proorderqty = (int)decimal.Parse(proorderqty.Text.ToString());
+                        item.Proorderqty = (int)decimal.Parse(lblProorderqty.Text.ToString());
                         //机种台数
 
                         //item.Promodelqty = (int)decimal.Parse(promodelqty.Text.ToString());
                         //生产实绩
-                        item.Prorealqty = int.Parse(Prorealqty);
+                        item.Prorealqty = int.Parse(lblProrealqty.Text);
 
                         //无不良台数
-                        item.Pronobadqty = int.Parse(pronobadqty.Text);
+                        item.Prodzeroefects = int.Parse(numProdzeroefects.Text);
 
                         //区分
-                        item.Prongdept = Prongdept;
+                        item.Prodefectcategory = statProdefectcategory;
 
                         //不良数量
-                        item.Probadqty = int.Parse(Probadqty);
+                        item.Probadqty = int.Parse(statProbadqty);
                         //item.Probadtotal = int.Parse(Probadtotal);
 
                         //不良集计
@@ -685,13 +646,19 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         //不良合计
                         item.Probadamount = 0;
                         //不良症状
-                        item.Probadnote = Probadnote;
+                        item.Prodefectsymptom = statProdefectsymptom;
 
                         //不良个所
 
-                        item.Probadset = Probadset;
+                        item.Prodefectlocation = statProdefectlocation;
                         //不良原因
-                        item.Probadreason = Probadreason;
+                        item.Prodefectcause = statProdefectcause;
+                        //随机卡
+                        item.Prorandomcard = statProrandomcard;
+                        //发生工程
+                        item.Prodefectoccurs = statProdefectoccurs;
+                        //检查名
+                        item.Prodefectstep = statProdefectstep;
                         item.IsDeleted = 0;
                         item.Remark = "";
                         item.GUID = Guid.NewGuid();
@@ -702,7 +669,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                         DB.SaveChanges();
 
                         //新建日志
-                        string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Pronobadqty + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                        string Contectext = item.GUID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Prodzeroefects + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                         string OperateType = "新增";
                         string OperateNotes = "New生产不良* " + Contectext + "*New生产不良 的记录已经将新增";
                         OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -719,12 +686,12 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    proLine cline = DB.proLines
                 //        .Where(u => u.linename == this.prolinename.SelectedItem.Text).FirstOrDefault();
 
-                //    item.Prongdept = Prongdept;
+                //    item.Prodefectcategory = Prodefectcategory;
                 //    item.Prolineclass = cline.lineclass;
                 //    item.Prolinename = this.prolinename.SelectedItem.Text;
                 //    item.Prodate = this.prodate.Text;
                 //    item.Prorealqty = decimal.Parse(this.prorealqty.Text);
-                //    item.Prongdept = "OK";
+                //    item.Prodefectcategory = "OK";
                 //    //种类
                 //    Pp_P1d_Defectcode cclass = DB.Pp_P1d_Defectcodes
                 //           .Where(u => u.cn_classmatter == "OK").FirstOrDefault();
@@ -743,8 +710,8 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    item.Probadqty = 0;
 
                 //    item.Probadtotal = 0;
-                //    item.Probadnote = "OK";
-                //    item.Probadreason = "OK";
+                //    item.Prodefectsymptom = "OK";
+                //    item.Prodefectcause = "OK";
                 //    item.Prongbdel = false;
                 //    item.Remark = "";
                 //    item.Defectguid = Guid.NewGuid().ToString();
@@ -755,7 +722,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //    DB.SaveChanges();
 
                 //    //新建日志
-                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+                //    string NewText = item.Defectguid + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Proclassmatter + "," + item.Prongmatter + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
                 //    string NewOperateType = item.Defectguid;
                 //    string OperateNotes = "New * " + NewText + " New* 的记录已经将新增";
                 //    NetCountHelper.InsNetOperateNotes(userid, NewOperateType, "不具合管理", "不具合新增", OperateNotes);
@@ -779,28 +746,29 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             rowData["ID"] = GetNextRowID();
 
             //批次
-            rowData["Prolot"] = prolot.SelectedItem.Text.Substring(0, prolot.SelectedItem.Text.IndexOf(","));
+            rowData["Prolot"] = ddlProlot.SelectedItem.Text.Substring(0, ddlProlot.SelectedItem.Text.IndexOf(","));
             //机种
 
             //rowData["Prongclass"] = promodelqty.Text;
-            rowData["Promodel"] = promodel.Text;
+            rowData["Promodel"] = lblPromodel.Text;
             //订单
-            rowData["Proorder"] = proorder.Text;
+            rowData["Proorder"] = lblProorder.Text;
             //班组
-            rowData["Prolinename"] = prolinename.SelectedItem.Text;
+            rowData["Prolinename"] = ddlProlinename.SelectedItem.Text;
             //生产日期
-            rowData["Prodate"] = DefDate.SelectedDate.Value.ToString("yyyyMMdd");
+            rowData["Prodate"] = dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
             //订单台数
-            rowData["Proorderqty"] = proorder.Text;
+            rowData["Proorderqty"] = lblProorder.Text;
             //机种台数
             //rowData["Promodelqty"] = proorder.Text;
             //生产台数
-            rowData["Prorealqty"] = this.prorealqty.Text;
+            rowData["Prorealqty"] = this.lblProrealqty.Text;
             //无不良台数
-            rowData["Pronobadqty"] = pronobadqty.Text;
+            rowData["Prodzeroefects"] = numProdzeroefects.Text;
             //区分
 
-            rowData["Prongdept"] = Prongdept;
+            rowData["Prodefectcategory"] = statProdefectcategory;
+
 
             //不良台数
             rowData["Probadqty"] = 0;
@@ -809,14 +777,21 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
 
             //不良全计
             rowData["Probadamount"] = 0;
-
+            //随机卡
+            rowData["Prorandomcard"] = "";
+            //发生工程
+            rowData["Prodefectoccurs"] = "";
+            //检查名
+            rowData["Prodefectstep"] = "";
             //不良症状
-            rowData["Probadnote"] = "";
+            rowData["Prodefectsymptom"] = "";
 
             //不良个所
-            rowData["Probadset"] = "";
+            rowData["Prodefectlocation"] = "";
             //不良原因
-            rowData["Probadreason"] = "";
+            rowData["Prodefectcause"] = "";
+
+
 
             rowData["IsDeleted"] = 0;
 
@@ -851,16 +826,16 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 .Where(u => u.ID == editrowID).FirstOrDefault();
 
             //修改前日志
-            string BeforeContectext = item.ID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Pronobadqty + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Probadnote;
+            string BeforeContectext = item.ID + "," + item.Prolinename + "," + item.Prolot + "," + item.Prodate + "," + item.Prorealqty + "," + item.Prodzeroefects + "," + item.Promodel + "," + item.Probadqty + "," + item.Probadtotal + "," + item.Prodefectsymptom;
             string BeforeOperateType = "修改";
             string BeforeOperateNotes = "beEdit生产不良* " + BeforeContectext + " *beEdit生产不良 的记录可能将被修改";
             OperateLogHelper.InsNetOperateNotes(userid, BeforeOperateType, "不具合管理", "不具合修改", BeforeOperateNotes);
 
             // 不良区分
-            if (rowDict.ContainsKey("Prongdept"))
+            if (rowDict.ContainsKey("Prodefectcategory"))
             {
-                rowData["Prongdept"] = rowDict["Prongdept"];
-                item.Prongdept = rowData["Prongdept"].ToString();
+                rowData["Prodefectcategory"] = rowDict["Prodefectcategory"];
+                item.Prodefectcategory = rowData["Prodefectcategory"].ToString();
                 //RealQty = rowData["Proclassmatter"].ToString();
                 //
                 //OrderFinish();
@@ -896,43 +871,62 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 item.Probadtotal = int.Parse(rowData["Probadtotal"].ToString());
                 //StopText = rowData["Probadtotal"].ToString();
             }
-            // 改善对策
-            if (rowDict.ContainsKey("Probadnote"))
+            //随机卡
+            if (rowDict.ContainsKey("Prorandomcard"))
             {
-                rowData["Probadnote"] = rowDict["Probadnote"];
-                if (rowData["Probadnote"].ToString() == "")
+                rowData["Prorandomcard"] = rowDict["Prorandomcard"];
+                item.Prorandomcard = rowData["Prorandomcard"].ToString();
+            }
+            //发生工程
+            if (rowDict.ContainsKey("Prodefectoccurs"))
+            {
+                rowData["Prodefectoccurs"] = rowDict["Prodefectoccurs"];
+                item.Prodefectoccurs = rowData["Prodefectoccurs"].ToString();
+            }
+            //检查名
+            if (rowDict.ContainsKey("Prodefectstep"))
+            {
+                rowData["Prodefectstep"] = rowDict["Prodefectstep"];
+                item.Prodefectstep = rowData["Prodefectstep"].ToString();
+            }
+            // 改善对策
+            if (rowDict.ContainsKey("Prodefectsymptom"))
+            {
+                rowData["Prodefectsymptom"] = rowDict["Prodefectsymptom"];
+                if (rowData["Prodefectsymptom"].ToString() == "")
                 {
                     Alert.ShowInTop("不良症状不能为空！");
                     return;
                 }
                 else
                 {
-                    item.Probadnote = rowData["Probadnote"].ToString();
+                    item.Prodefectsymptom = rowData["Prodefectsymptom"].ToString();
                 }
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
-            if (rowDict.ContainsKey("Probadset"))
+            if (rowDict.ContainsKey("Prodefectlocation"))
             {
-                rowData["Probadset"] = rowDict["Probadset"];
+                rowData["Prodefectlocation"] = rowDict["Prodefectlocation"];
 
-                item.Probadset = rowData["Probadset"].ToString();
+                item.Prodefectlocation = rowData["Prodefectlocation"].ToString();
 
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
-            if (rowDict.ContainsKey("Probadreason"))
+            if (rowDict.ContainsKey("Prodefectcause"))
             {
-                rowData["Probadreason"] = rowDict["Probadreason"];
-                if (rowData["Probadreason"].ToString() == "")
+                rowData["Prodefectcause"] = rowDict["Prodefectcause"];
+                if (rowData["Prodefectcause"].ToString() == "")
                 {
                     Alert.ShowInTop("不良原因不能为空！");
                     return;
                 }
                 else
                 {
-                    item.Probadreason = rowData["Probadreason"].ToString();
+                    item.Prodefectcause = rowData["Prodefectcause"].ToString();
                 }
-                //ResonText = rowData["Probadnote"].ToString();
+                //ResonText = rowData["Prodefectsymptom"].ToString();
             }
+
             item.ModifyDate = DateTime.Now;
             item.Modifier = userid;
 
@@ -943,7 +937,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                      .Where(u => u.ID == editrowID).FirstOrDefault();
 
             //修改后日志
-            string AfterContectext = edititem.ID + "," + edititem.Prolinename + "," + edititem.Prolot + "," + edititem.Prodate + "," + edititem.Prorealqty + "," + edititem.Pronobadqty + "," + edititem.Promodel + "," + edititem.Probadqty + "," + edititem.Probadtotal + "," + edititem.Probadnote;
+            string AfterContectext = edititem.ID + "," + edititem.Prolinename + "," + edititem.Prolot + "," + edititem.Prodate + "," + edititem.Prorealqty + "," + edititem.Prodzeroefects + "," + edititem.Promodel + "," + edititem.Probadqty + "," + edititem.Probadtotal + "," + edititem.Prodefectsymptom;
             string AfterOperateType = "修改";
             string AfterOperateNotes = "afEdit生产不良* " + AfterContectext + " *afEdit生产不良 的记录已经将被修改";
             OperateLogHelper.InsNetOperateNotes(userid, AfterOperateType, "不具合管理", "不具合修改", AfterOperateNotes);
@@ -953,7 +947,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         private void InsertDefectDataRow(Dictionary<string, object> rowDict, DataRow rowData)
         {
             // 区分
-            BindDeftctDataRow("Prongdept", rowDict, rowData);
+            BindDeftctDataRow("Prodefectcategory", rowDict, rowData);
 
             // 种类
             //BindDeftctDataRow("Proclassmatter", rowDict, rowData);
@@ -968,11 +962,18 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //BindDeftctDataRow("Probadtotal", rowDict, rowData);
 
             // 对策
-            BindDeftctDataRow("Probadnote", rowDict, rowData);
+            BindDeftctDataRow("Prodefectsymptom", rowDict, rowData);
 
-            BindDeftctDataRow("Probadset", rowDict, rowData);
+            BindDeftctDataRow("Prodefectlocation", rowDict, rowData);
             // 对策
-            BindDeftctDataRow("Probadreason", rowDict, rowData);
+            BindDeftctDataRow("Prodefectcause", rowDict, rowData);
+
+            // 随机卡
+            BindDeftctDataRow("Prorandomcard", rowDict, rowData);
+            // 工程
+            BindDeftctDataRow("Prodefectoccurs", rowDict, rowData);
+            // 检查
+            BindDeftctDataRow("Prodefectstep", rowDict, rowData);
         }
 
         //根据字段获取信息
@@ -1048,7 +1049,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
                 //int userID = GetSelectedDataKeyID(Grid1);
                 Pp_P1d_Defect current = DB.Pp_P1d_Defects.Find(del_ID);
                 //删除日志
-                string Contectext = current.ID + "," + current.Prolinename + "," + current.Prolot + "," + current.Prodate + "," + current.Prorealqty + "," + current.Promodel + "," + current.Pronobadqty + "," + current.Probadqty + "," + current.Probadtotal + "," + current.Probadnote;
+                string Contectext = current.ID + "," + current.Prolinename + "," + current.Prolot + "," + current.Prodate + "," + current.Prorealqty + "," + current.Promodel + "," + current.Prodzeroefects + "," + current.Probadqty + "," + current.Probadtotal + "," + current.Prodefectsymptom;
                 string OperateType = "删除";
                 string OperateNotes = "Del生产不良* " + Contectext + " *Del生产不良 的记录可能将被删除";
                 OperateLogHelper.InsNetOperateNotes(GetIdentityName(), OperateType, "不具合管理", "不具合删除", OperateNotes);
@@ -1071,10 +1072,14 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             CheckPowerWithLinkButtonField("CoreP1DDefectDelete", Grid1, "deleteField");
             // 设置LinkButtonField的点击客户端事件
         }
-
+        protected void Grid1_PageIndexChange(object sender, GridPageEventArgs e)
+        {
+            Grid1.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
         public static string lclass, nclass, ncode, ConnStr;
 
-        protected void DefDate_TextChanged(object sender, EventArgs e)
+        protected void dpProdate_TextChanged(object sender, EventArgs e)
         {
             //绑定DDL
             BindDdlLine();
@@ -1086,7 +1091,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
         {
             try
             {
-                if (Decimal.Parse(pronobadqty.Text) > Decimal.Parse(prorealqty.Text))
+                if (Decimal.Parse(numProdzeroefects.Text) > Decimal.Parse(lblProrealqty.Text))
                 {
                     Alert.ShowInTop("无不良台数不能大于生产台数");
                     return;
@@ -1133,9 +1138,9 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //string strPorder = "";
             //string pdate = "";
             //string pline = "";
-            // nobadqty = int.Parse(pronobadqty.Text);
+            // nobadqty = int.Parse(Prodzeroefects.Text);
             // strPorder = proorder.Text;
-            // pdate = this.DefDate.SelectedDate.Value.ToString("yyyyMMdd");
+            // pdate = this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd");
             //pline = prolinename.SelectedItem.Text;
             ////更新生产实绩
             //int rQty = 0;
@@ -1158,7 +1163,7 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //    //.Where(s => s.Prodate.Substring(0, 6) == pdate)
             //       .Where(s=>s.Proorder== strPorder)
             //       .ToList()
-            //       .ForEach(x => { x.Pronobadqty = nobadqty; x.Prorealqty = rQty; x.ModiUser = GetIdentityName(); x.ModiTime = DateTime.Now; });
+            //       .ForEach(x => { x.Prodzeroefects = nobadqty; x.Prorealqty = rQty; x.ModiUser = GetIdentityName(); x.ModiTime = DateTime.Now; });
             //DB.SaveChanges();
 
             //DB.Pp_P1d_Defects
@@ -1169,12 +1174,27 @@ namespace LeanFine.Lf_Manufacturing.PP.poor
             //  .ForEach(x => { x.Prorealqty = rQty; x.ModiUser = GetIdentityName(); x.ModiTime = DateTime.Now; });
             //DB.SaveChanges();
 
-            string order = prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1);
-            string lot = prolot.SelectedItem.Text.Substring(0, prolot.SelectedItem.Text.IndexOf(","));
+            string order = ddlProlot.SelectedItem.Text.Substring(ddlProlot.SelectedItem.Text.IndexOf(",") + 1, ddlProlot.SelectedItem.Text.Length - ddlProlot.SelectedItem.Text.IndexOf(",") - 1);
+            string lot = ddlProlot.SelectedItem.Text.Substring(0, ddlProlot.SelectedItem.Text.IndexOf(","));
+
             //更新无不良台数
-            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(order, userid, "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_NoBadQty(dpProdate.SelectedDate.Value.ToString("yyyyMMdd").Substring(0, 6), order, userid);
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_NoBadQty(lot, userid);
+
+            //更新日程和班组
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_ExistingDefectOrderOnly(order, userid);
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_ExistingDefectLotsOnly(lot, userid);
+            //更新生产实际数量
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_Realqty(lot, userid);
+            //更新批次订单合计数量
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_TotalOrderqty(lot, userid);
+
             //更新不具合合计
-            UpdateP1dHelper.UpdatebadAmount(this.DefDate.SelectedDate.Value.ToString("yyyyMMdd"), prolinename.SelectedItem.Text, prolot.SelectedItem.Text.Substring(prolot.SelectedItem.Text.IndexOf(",") + 1, prolot.SelectedItem.Text.Length - prolot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName(), "ASSY");
+            UpdateP1dHelper.Pp_P1d_Defect_Orders_Update_For_TotalBadQty(this.dpProdate.SelectedDate.Value.ToString("yyyyMMdd"), ddlProlinename.SelectedItem.Text, ddlProlot.SelectedItem.Text.Substring(ddlProlot.SelectedItem.Text.IndexOf(",") + 1, ddlProlot.SelectedItem.Text.Length - ddlProlot.SelectedItem.Text.IndexOf(",") - 1), GetIdentityName());
+            UpdateP1dHelper.Pp_P1d_Defect_Lots_Update_For_TotalBadQty(lot, userid);
+            //更新随机卡
+            //UpdateP1dHelper.UpdateBoundNumForOrder(order, userid);
+            //UpdateP1dHelper.UpdateBoundNumForLot(lot, userid);
 
             PageContext.RegisterStartupScript(ActiveWindow.GetHidePostBackReference());
         }

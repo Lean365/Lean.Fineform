@@ -22,7 +22,7 @@
         <f:PageManager ID="PageManager1" AutoSizePanelID="Panel1" runat="server" />
         <f:Panel ID="Panel1" runat="server" BodyPadding="5px"
             ShowBorder="false" Layout="VBox" BoxConfigAlign="Stretch" BoxConfigPosition="Start"
-            ShowHeader="false" Title="LeanCloud">
+            ShowHeader="false" Title="Lean365">
             <Items>
                 <f:Form ID="Form2" runat="server" Height="36px" BodyPadding="5px" ShowHeader="false"
                     ShowBorder="false" LabelAlign="Right">
@@ -96,13 +96,15 @@
 
                         <f:BoundField DataField="Prodate" SortField="Prodate" Width="80px" HeaderText="生产日期" />
                         <f:BoundField DataField="Prorealqty" SortField="Prorealqty" Width="80px" HeaderText="生产" />
-                        <f:BoundField DataField="Pronobadqty" SortField="Pronobadqty" Width="80px" HeaderText="无不良" />
-                        <f:BoundField DataField="Prongdept" SortField="Prongdept" Width="60px" HeaderText="区分" />
+                        <f:BoundField DataField="Prodzeroefects" SortField="Prodzeroefects" Width="80px" HeaderText="无不良" />
+                        <f:BoundField DataField="Prodefectcategory" SortField="Prodefectcategory" Width="60px" HeaderText="区分" />
                         <f:BoundField DataField="Probadqty" SortField="Probadqty" ColumnID="Probadqty" Width="80px" HeaderText="不良" />
-                        <%--<f:BoundField DataField="Probadamount" SortField="Probadamount"  Width="100px" HeaderText="不良总数" />--%>
-                        <f:BoundField DataField="Probadnote" SortField="Probadnote" Width="120px" HeaderText="症状" />
-                        <f:BoundField DataField="Probadset" SortField="Probadset" Width="120px" HeaderText="个所" />
-                        <f:BoundField DataField="Probadreason" SortField="Probadreason" Width="150px" HeaderText="原因" />
+                        <f:BoundField DataField="Prorandomcard" SortField="Prorandomcard"  Width="100px" HeaderText="随机卡" />
+                        <f:BoundField DataField="Prodefectoccurs" SortField="Prodefectoccurs"  Width="100px" HeaderText="发生工程" />
+                        <f:BoundField DataField="Prodefectstep" SortField="Prodefectstep"  Width="100px" HeaderText="检查名" />
+                        <f:BoundField DataField="Prodefectsymptom" SortField="Prodefectsymptom" Width="120px" HeaderText="症状" />
+                        <f:BoundField DataField="Prodefectlocation" SortField="Prodefectlocation" Width="120px" HeaderText="个所" />
+                        <f:BoundField DataField="Prodefectcause" SortField="Prodefectcause" Width="150px" HeaderText="原因" />
                         <f:LinkButtonField ColumnID="deleteField" TextAlign="Center" Icon="Delete"
                             HeaderText="<%$ Resources:GlobalResource,sys_Button_Delete%>" Text="<%$ Resources:GlobalResource,sys_Button_Delete%>"
                             ToolTip="<%$ Resources:GlobalResource,sys_Button_Delete%>" ConfirmText="<%$ Resources:GlobalResource,sys_Button_DeleteConfirmText%>"

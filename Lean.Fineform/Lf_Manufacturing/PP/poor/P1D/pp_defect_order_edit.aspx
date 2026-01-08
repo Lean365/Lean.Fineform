@@ -49,7 +49,7 @@
                         <f:FormRow ID="FormRow2" runat="server">
                             <Items>
 
-                                <f:NumberBox ID="numPronobadqty" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
+                                <f:NumberBox ID="numProdzeroefects" runat="server" Label="无不良台数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
                                 </f:NumberBox>
                                 <f:NumberBox ID="numProbadtotal" runat="server" Label="不良件数" Text="0" NoDecimal="true" NoNegative="true" Required="true" ShowRedStar="true">
                                 </f:NumberBox>
